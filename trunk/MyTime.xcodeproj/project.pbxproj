@@ -1,0 +1,224 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXFileReference section */
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		906AC1E40D502EFB0065CC89 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
+		906AC1E50D502EFB0065CC89 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
+		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
+		ACBEE6970D2427BA007CEA24 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
+		ACBEE6AE0D24289B007CEA24 /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CallView.m; sourceTree = "<group>"; };
+		ACBEE6B00D2428BF007CEA24 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		ACBEE6B20D2428D1007CEA24 /* PublicationView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = PublicationView.m; sourceTree = "<group>"; };
+		ACBEE6B90D242A44007CEA24 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
+		ACBEE6EE0D24350F007CEA24 /* App.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = App.m; sourceTree = "<group>"; };
+		ACBEE71A0D2460D8007CEA24 /* PublicationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublicationView.h; sourceTree = "<group>"; };
+		ACBEE7920D246672007CEA24 /* MainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		ACC7A7550D2706B20090157B /* SortedCallsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortedCallsView.h; sourceTree = "<group>"; };
+		ACC7A7560D2706B20090157B /* SortedCallsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortedCallsView.m; sourceTree = "<group>"; };
+		ACC7A7570D2706D20090157B /* AddressView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
+		ACC7A7580D2706F30090157B /* App.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
+		ACC7AA610D27765D0090157B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		ACC7AA620D2776690090157B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		ACC7AA630D2776760090157B /* street.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = street.png; sourceTree = "<group>"; };
+		ACC7AA640D27768D0090157B /* streetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streetSelected.png; sourceTree = "<group>"; };
+		ACC7AA650D27768D0090157B /* timeSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeSelected.png; sourceTree = "<group>"; };
+		ACC7AA660D27768D0090157B /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
+		D90F56E20C671CD1007AE76B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /Developer/SDKs/iPhone.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		D90F56E30C671CD1007AE76B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = /Developer/SDKs/iPhone.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = "<absolute>"; };
+		D92591D70C6B431100BBDBBC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* MyTime */ = {
+			isa = PBXGroup;
+			children = (
+				D92591D70C6B431100BBDBBC /* Makefile */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = MyTime;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				ACC7A7580D2706F30090157B /* App.h */,
+				ACBEE6EE0D24350F007CEA24 /* App.m */,
+				ACBEE6B90D242A44007CEA24 /* Main.m */,
+				ACBEE71A0D2460D8007CEA24 /* PublicationView.h */,
+				ACBEE6B20D2428D1007CEA24 /* PublicationView.m */,
+				ACBEE7920D246672007CEA24 /* MainView.h */,
+				ACBEE6B00D2428BF007CEA24 /* MainView.m */,
+				90BC4F090D3F104500E70FB1 /* CallView.h */,
+				ACBEE6AE0D24289B007CEA24 /* CallView.m */,
+				ACC7A7570D2706D20090157B /* AddressView.h */,
+				ACBEE6970D2427BA007CEA24 /* AddressView.m */,
+				ACC7A7550D2706B20090157B /* SortedCallsView.h */,
+				ACC7A7560D2706B20090157B /* SortedCallsView.m */,
+				906AC1E40D502EFB0065CC89 /* DatePickerView.h */,
+				906AC1E50D502EFB0065CC89 /* DatePickerView.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ACC7AA640D27768D0090157B /* streetSelected.png */,
+				ACC7AA650D27768D0090157B /* timeSelected.png */,
+				ACC7AA660D27768D0090157B /* time.png */,
+				ACC7AA630D2776760090157B /* street.png */,
+				ACC7AA620D2776690090157B /* icon.png */,
+				ACC7AA610D27765D0090157B /* Default.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D90F56E20C671CD1007AE76B /* Foundation.framework */,
+				D90F56E30C671CD1007AE76B /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		D92591D10C6B42C700BBDBBC /* MyTime */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = D92591D40C6B42CE00BBDBBC /* Build configuration list for PBXLegacyTarget "MyTime" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = MyTime;
+			passBuildSettingsInEnvironment = 1;
+			productName = MyTime;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MyTime" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* MyTime */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D92591D10C6B42C700BBDBBC /* MyTime */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm;
+				CC = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				CVSROOT = ":ext:bpriddy@priddy.homeip.net:/home/bpriddy/cvsroot";
+				CVS_RSH = ssh;
+				CXX = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/iPhone.sdk;
+				SHARED_PRECOMPS_DIR = "/Library/Caches/com.apple.Xcode.iPhone.$(UID)/SharedPrecompiledHeaders";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm;
+				CC = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				CVSROOT = ":ext:bpriddy@priddy.homeip.net:/home/bpriddy/cvsroot";
+				CVS_RSH = ssh;
+				CXX = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD = "/usr/local/iphonedev/bin/arm-apple-darwin-cc";
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/iPhone.sdk;
+				SHARED_PRECOMPS_DIR = "/Library/Caches/com.apple.Xcode.iPhone.$(UID)/SharedPrecompiledHeaders";
+			};
+			name = Release;
+		};
+		D92591D50C6B42CE00BBDBBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = MyTime;
+			};
+			name = Debug;
+		};
+		D92591D60C6B42CE00BBDBBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = MyTime;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MyTime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D92591D40C6B42CE00BBDBBC /* Build configuration list for PBXLegacyTarget "MyTime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D92591D50C6B42CE00BBDBBC /* Debug */,
+				D92591D60C6B42CE00BBDBBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
