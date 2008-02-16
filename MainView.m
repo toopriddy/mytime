@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/CDStructures.h>
@@ -17,6 +24,7 @@
 #import "App.h"
 #import "MainView.h"
 #import "CallView.h"
+#import "TimeView.h"
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
@@ -31,6 +39,7 @@ NSString const * const CallReturnVisitNotes = @"notes";
 NSString const * const CallReturnVisitDate = @"date";
 NSString const * const CallReturnVisitPublications = @"publications";
 NSString const * const CallReturnVisitPublicationTitle = @"title";
+NSString const * const CallReturnVisitPublicationType = @"type";
 NSString const * const CallReturnVisitPublicationName = @"name";
 NSString const * const CallReturnVisitPublicationYear = @"year";
 NSString const * const CallReturnVisitPublicationMonth = @"month";
@@ -176,6 +185,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
+			[_timeView reloadData];
 			[ self transition:0 toView:_timeView];
 			break;
     }
@@ -215,46 +225,6 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 			[_settings setObject:calls forKey:SettingsCalls];
 		}
 		
-// dummy data
-#if 0
-        NSMutableDictionary *call = [[[NSMutableDictionary alloc] init] autorelease];
-
-        // initalize with dummy information
-        [call setObject:@"thename" forKey:CallName];
-        [call setObject:@"thestreet" forKey:CallStreet];
-        [call setObject:@"thecity" forKey:CallCity];
-        [call setObject:@"thestate" forKey:CallState];
-
-        NSMutableArray *returnVisits = [[[NSMutableArray alloc] init] autorelease];
-        // create a visit
-        NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
-        // add notes to the visit
-        [visit setObject:@"This is a note" forKey:CallReturnVisitNotes];
-
-        // add a publication to the visit
-        NSMutableArray *publications = [[[NSMutableArray alloc] init] autorelease];
-        NSMutableDictionary *publication = [[[NSMutableDictionary alloc] init] autorelease];
-        [publication setObject:@"Bible Teach" forKey:CallReturnVisitPublicationName];
-        [publication setObject:[[[NSNumber alloc] initWithInt:0] autorelease] forKey:CallReturnVisitPublicationYear];
-        [publication setObject:[[[NSNumber alloc] initWithInt:0] autorelease] forKey:CallReturnVisitPublicationMonth];
-        [publication setObject:[[[NSNumber alloc] initWithInt:0] autorelease] forKey:CallReturnVisitPublicationDay];
-        [publication setObject:@"Bible Teach" forKey:CallReturnVisitPublicationTitle];
-        [publications insertObject:publication atIndex:0];
-        [visit setObject:publications forKey:CallReturnVisitPublications];
-        // set the date of the visit
-        [visit setObject:[NSCalendarDate calendarDate] forKey:CallReturnVisitDate];
-
-        // add the visit to the array of visits
-        [returnVisits addObject:visit];
-        
-        // add the return visits to the call
-        [call setObject:returnVisits forKey:CallReturnVisits];
-
-        // add the call to the list of calls
-        [calls addObject:call];
-        NSLog(@"created calls=%@", calls);
-#endif
-
 		// create the transition view to change between the time and sorted calls view
         _transitionView = [[UITransitionView alloc] initWithFrame:rect];
         VERBOSE(NSLog(@"MainView initWithFrame: %p", self);)
@@ -271,8 +241,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 													       sortBy:CALLS_SORTED_BY_STREET];
 
 		// create the TimeView
-		_timeView = [[UIView alloc] initWithFrame:rect];
-		[_timeView addSubview:[[UITable alloc] initWithFrame:rect]];
+		_timeView = [[TimeView alloc] initWithFrame:rect];
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];

@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UIApplication.h>
@@ -7,6 +14,7 @@
 #import <UIKit/UIButtonBar.h>
 #import "PublicationView.h"
 #import "SortedCallsView.h"
+#import "TimeView.h"
 
 typedef enum {
 	VIEW_SORTED_BY_STREET = 1,
@@ -18,7 +26,7 @@ typedef enum {
     CGRect _rect;
 
 	SortedCallsView *_sortedCallsView;
-	UIView *_timeView;
+	TimeView *_timeView;
 	UIButtonBar *_buttonBar;
 	
 	SelectedButtonBarView _currentButtonBarView;
@@ -64,10 +72,16 @@ extern NSString const * const CallReturnVisitNotes;
 extern NSString const * const CallReturnVisitDate;
 extern NSString const * const CallReturnVisitPublications;
 extern NSString const * const CallReturnVisitPublicationTitle;
+extern NSString const * const CallReturnVisitPublicationType;
 extern NSString const * const CallReturnVisitPublicationName;
 extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
+
+#define PublicationTypeBook @"Book"
+#define PublicationTypeBroshure @"Broshure"
+#define PublicationTypeMagazine @"Magazine"
+#define PublicationTypeSpecial @"Special"
 
 extern NSString const * const SettingsCalls;
 extern NSString const * const SettingsLastCallStreetNumber;

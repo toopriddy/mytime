@@ -8,6 +8,7 @@ CallView.m \
 AddressView.m \
 SortedCallsView.m \
 DatePickerView.m \
+TimeView.m \
 
 
 RESOURCES=\
@@ -57,6 +58,8 @@ all: $(PRODUCT_ABS)
 copy:
 	scp build/Release/MyTime.app/MyTime root@10.10.10.254:/Applications/MyTime.app/
 
+backup:
+	scp root@10.10.10.254:/var/root/Library/MyTime/record.plist ./
 
 $(PRODUCT_ABS): $(APP_ABS) $(OBJECTS_ABS)
 	$(LD) $(LDFLAGS) -o $(PRODUCT_ABS) $(OBJECTS_ABS)
