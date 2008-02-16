@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/CDStructures.h>
@@ -68,8 +75,13 @@
 		{
 			case 0: // done
 				_editing = NO;
-				_showAddCall = NO;
+				_showAddCall = YES;
+				_showDeleteButton = YES;
 				
+				// we dont save a new call untill they hit "Done"
+				_newCall = NO;
+				[self save];
+
 				// remove the editing navigation bar entry
 				[_navigationBar showLeftButton:@"All Calls" withStyle:2 rightButton:@"Edit" withStyle:0];
 				
@@ -81,12 +93,9 @@
 				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 				[_table reloadData];
 				
-				// we dont save a new call untill they hit "Done"
-				_newCall = NO;
-				[self save];
 				break;
 
-			case 1: // cancel
+			case 1: // cancel (this is only viewable if this is a new call)
 				[_table setKeyboardVisible:NO animated:NO];
 				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 				if(_cancelObject != nil)
@@ -254,6 +263,10 @@
                             [publication setObject:@"" forKey:CallReturnVisitPublicationTitle];
                         if([publication objectForKey:CallReturnVisitPublicationName] == nil)
                             [publication setObject:@"" forKey:CallReturnVisitPublicationName];
+						// the older version that no one should really have had things saved without a type
+						// go ahead and initalize this as a magazine
+                        if([publication objectForKey:CallReturnVisitPublicationType] == nil)
+                            [publication setObject:PublicationTypeMagazine forKey:CallReturnVisitPublicationType];
                         if([publication objectForKey:CallReturnVisitPublicationYear] == nil)
                             [publication setObject:[[[NSNumber alloc] initWithInt:0] autorelease] forKey:CallReturnVisitPublicationYear];
                         if([publication objectForKey:CallReturnVisitPublicationMonth] == nil)
@@ -377,6 +390,7 @@
     VERBOSE(NSLog(@"_editingPublication was = %@", _editingPublication);)
     [_editingPublication setObject:[publicationView publication] forKey:CallReturnVisitPublicationName];
     [_editingPublication setObject:[publicationView publicationTitle] forKey:CallReturnVisitPublicationTitle];
+    [_editingPublication setObject:[publicationView publicationType] forKey:CallReturnVisitPublicationType];
     [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView year]] autorelease] forKey:CallReturnVisitPublicationYear];
     [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView month]] autorelease] forKey:CallReturnVisitPublicationMonth];
     [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView day]] autorelease] forKey:CallReturnVisitPublicationDay];
@@ -498,7 +512,7 @@
 {
     VERBOSE(NSLog(@"numberOfGroupsInPreferencesTable:");)
     int count = 0;
-	// Name
+	// Name (even though we will make this small if there is no name)
 	count++;
 
 	// Address
@@ -572,7 +586,7 @@
 				// add in the "Change Date" entry if we are editing
 				count += 1;
             }
-			VERY_VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d == %d\n%@", group, count, [_call objectForKey:CallReturnVisits]);)
+			VERY_VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d == %d\n%@", group, count, visit);)
             return(count);
         }
     }
@@ -584,7 +598,13 @@
 //	UIImageAndTextTableCell *cell = nil;
     UIPreferencesTextTableCell *cell = nil;
 	const int adjust = _editing && _showAddCall ? 3 : 2;
-    if(group >= adjust && [[_call objectForKey:CallReturnVisits] count] > group-adjust)
+	int count = [[_call objectForKey:CallReturnVisits] count];
+	// so if the group number is >= adjust then we should print the call date
+	// but make sure that the return visits array has anything in it
+	// and we are not going to index beyond the end of the array
+    if(group >= adjust && 
+	   count > 0 &&
+	   count > group-adjust)
     {
         NSMutableDictionary *publications = [[_call objectForKey:CallReturnVisits] objectAtIndex:group-adjust];
         VERBOSE(NSLog(@"%@", publications);)
@@ -746,7 +766,7 @@
             }
             break;
 
-        // Name
+        // New Call?
         case 2:
 			if(_editing && _showAddCall)
 			{
@@ -766,6 +786,7 @@
         // notes
         default:
         {
+			// see if we should show the delete button
 			if(_editing && _showDeleteButton && [[_call objectForKey:CallReturnVisits] count] == group-adjust)
 			{
 				// DELETE
@@ -776,6 +797,12 @@
 //				UIPushButton *button = [[UIPushButton alloc] initWithTitle:@"Delete Call"];
 //				[cell addSubview:button];
 //				[button sizeToFit];
+			}
+			else if([[_call objectForKey:CallReturnVisits] count] <= group-adjust)
+			{
+				// for some reason we are beyond the end of what we should display
+				// return a nil cell
+				break;
 			}
 			else
 			{
@@ -824,7 +851,13 @@
 					int offset = _editing ? 2 : 1;
 				
 					NSMutableArray *publications = [info objectForKey:CallReturnVisitPublications];
-					if((row-offset) == [publications count])
+					if((row-offset) > [publications count])
+					{
+						// they are indexing beyond the end of what we will display
+						// return a nil cell
+						break;
+					}
+					else if((row-offset) == [publications count])
 					{
 						if(_editing)
 						{
@@ -1151,9 +1184,12 @@
     while(row >= 0)
     {
         row -= 1; // for group entry
+		
+		// they can not delete the "Add Placed publication entry"
 		if(i == [[_call objectForKey:CallReturnVisits] count])
 			return(NO);
-			
+
+		// grab the next return visit to see if this would have been the row displyed
         NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:i];
         num = [[info objectForKey:CallReturnVisitPublications] count];
         num++; // add one for the notes entry
@@ -1292,8 +1328,9 @@
 				// save the data
 				[self save];
 
-				// animate the removal of this row 
-				[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow+1, num-1)] viaEdge:1];
+				// animate the removal of the next rows (change date publications and insert publication cells)
+//				[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow-1, num+1)] viaEdge:1];
+				[_table reloadData];
             }
             else if(row == 1)
 			{

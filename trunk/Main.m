@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <UIKit/UIKit.h>
 
 #import "App.h"
@@ -13,7 +20,7 @@ int main(int argc, char **argv)
 		{
 			if(0 == strcmp("-v", argv[i]))
 			{
-				debugging = YES;
+				debugging++;
 			}
 		}
 	}

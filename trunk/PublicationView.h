@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UIApplication.h>
@@ -49,6 +56,11 @@
  */
 - (NSString *)publicationTitle;
 
+/**
+ * get the publicationType (PublicationType*)
+ * @returns one of the PublicationType* strings
+ */
+- (NSString *)publicationType; 
 
 /**
  * get the day of the publication

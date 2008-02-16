@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/CDStructures.h>
@@ -13,17 +20,30 @@
 #import <UIKit/UIPickerView.h>
 #import "PublicationView.h"
 #import "App.h"
+#import "MainView.h"
 
 #define YEAR_OFFSET 1900
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 @implementation PublicationView
 
-static NSString *PUBLICATIONS[] = {
-    @"Watchtower",
-    @"Awake",
-    @"Bible Teach",
-    @"My Book of Bible Stories",
+
+// these should be sorted by (in alphabetical order, except for watchtower and awake)
+// MAGIZINES
+// BROSHURES
+// BOOKS
+// ADDED TYPES
+
+typedef struct {
+	NSString * name;
+	NSString * type;
+} PublicationInformation;
+
+static PublicationInformation PUBLICATIONS[] = {
+    {@"Watchtower",                      PublicationTypeMagazine}
+,   {@"Awake",                           PublicationTypeMagazine}
+,   {@"Bible Teach",                     PublicationTypeBook}
+,   {@"My Book of Bible Stories",        PublicationTypeBook}
 };
 
 static NSString *MONTHS[] = {
@@ -180,7 +200,7 @@ static NSString *MONTHS[] = {
     if(col == 0)
     {
 		[cell setAlignment: 0];
-		[cell setTitle: PUBLICATIONS[row]];
+		[cell setTitle: PUBLICATIONS[row].name];
     }
     else
     {
@@ -347,7 +367,7 @@ static NSString *MONTHS[] = {
     int month = [now monthOfYear];
     int day = 1;
 
-    return([self initWithFrame:rect publication:PUBLICATIONS[publication] year:year month:month day:day]);
+    return([self initWithFrame:rect publication:PUBLICATIONS[publication].name year:year month:month day:day]);
 }
 
 // initialize this view given the curent configuration
@@ -364,7 +384,7 @@ static NSString *MONTHS[] = {
         _publication = 0;
         for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
         {
-            if([publication isEqual:PUBLICATIONS[i]])
+            if([publication isEqual:PUBLICATIONS[i].name])
             {
                 _publication = i;
                 break;
@@ -473,7 +493,7 @@ static NSString *MONTHS[] = {
 // string of the publication name
 - (NSString *)publication
 {
-    return([NSString stringWithString: PUBLICATIONS[_publication]]);
+    return([NSString stringWithString: PUBLICATIONS[_publication].name]);
 }
 
 // string of the publication title
@@ -492,8 +512,14 @@ static NSString *MONTHS[] = {
     }
     else
     {
-        return([NSString stringWithString: PUBLICATIONS[_publication]]);
+        return([NSString stringWithString: PUBLICATIONS[_publication].name]);
     }
+}
+
+// string of the publication name
+- (NSString *)publicationType
+{
+    return([NSString stringWithString: PUBLICATIONS[_publication].type]);
 }
 
 

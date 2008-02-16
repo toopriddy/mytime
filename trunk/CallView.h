@@ -1,3 +1,10 @@
+//
+//  MyTime
+//
+//  Created by Brent Priddy on 12/29/07.
+//  Copyright 2007 PG Software. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UIApplication.h>

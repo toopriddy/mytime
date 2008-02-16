@@ -8,6 +8,8 @@
 
 /* Begin PBXFileReference section */
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9058ABF20D668F74006AE013 /* TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeView.h; sourceTree = "<group>"; };
+		9058ABF30D668F74006AE013 /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
 		906AC1E40D502EFB0065CC89 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		906AC1E50D502EFB0065CC89 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
@@ -80,6 +82,8 @@
 				ACC7A7560D2706B20090157B /* SortedCallsView.m */,
 				906AC1E40D502EFB0065CC89 /* DatePickerView.h */,
 				906AC1E50D502EFB0065CC89 /* DatePickerView.m */,
+				9058ABF20D668F74006AE013 /* TimeView.h */,
+				9058ABF30D668F74006AE013 /* TimeView.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
