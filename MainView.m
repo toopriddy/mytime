@@ -113,6 +113,17 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
           @"time.png", kUIButtonBarButtonInfo,
           @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_SORTED_BY_DATE], kUIButtonBarButtonTag,
+            self, kUIButtonBarButtonTarget,
+          @"Calls by Date", kUIButtonBarButtonTitle,
+          @"0", kUIButtonBarButtonType,
+          nil 
+        ],
+
+        [ NSDictionary dictionaryWithObjectsAndKeys:
+          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
+          @"time.png", kUIButtonBarButtonInfo,
+          @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_TIME], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
           @"Time", kUIButtonBarButtonTitle,
@@ -136,7 +147,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_TIME };
+    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME };
     [button registerButtonGroup:0 withButtons:buttons withCount: ARRAY_SIZE(buttons)];
     [button showButtonGroup: 0 withDuration: 0.0f];
 
@@ -181,7 +192,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
         case VIEW_SORTED_BY_DATE:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_DATE");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_DATE];
-			[self transition:0 toView:_sortedCallsView ];
+			[self transition:0 toView:_sortedCallsViewDate ];
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
@@ -239,6 +250,10 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
 													       sortBy:CALLS_SORTED_BY_STREET];
+
+		_sortedCallsViewDate = [[SortedCallsView alloc] initWithFrame:rect 
+		                                                    calls:[_settings objectForKey:SettingsCalls]
+													       sortBy:CALLS_SORTED_BY_DATE];
 
 		// create the TimeView
 		_timeView = [[TimeView alloc] initWithFrame:rect];
