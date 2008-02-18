@@ -75,6 +75,8 @@ static NSString *MONTHS[] = {
 	// save off this month and last month for quick compares
 	_thisMonth = [[NSCalendarDate calendarDate] monthOfYear];
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
+	_thisYear = [[NSCalendarDate calendarDate] yearOfCommonEra];
+	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
 	
 	// go through all of the calls and see what the counts are for this month and last month
 	for(callIndex = 0; callIndex < callCount; ++callIndex)
@@ -99,19 +101,21 @@ static NSString *MONTHS[] = {
 					date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
 				
 					int month = [date monthOfYear];
+					int year = [date yearOfCommonEra];
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
 					{
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						if(month == _thisMonth)
+						if(month == _thisMonth && year == _thisYear)
 							_thisMonthReturnVisits++;
-						else if(month == _lastMonth)
+						else if(month == _lastMonth && year == _thisYear)
 							_lastMonthReturnVisits++;
 					}
 
 					// we only care about counting this month's or last month's returnVisits' calls
-					if(month == _thisMonth || month == _lastMonth)
+					if((month == _thisMonth && year == _thisYear) || 
+					   (month == _lastMonth && year == _lastYear))
 					{
 						// go through all of the calls and see if we need to count the statistics
 						if([visit objectForKey:CallReturnVisitPublications] != nil)
@@ -129,30 +133,30 @@ static NSString *MONTHS[] = {
 								{
 									if([type isEqual:PublicationTypeBook])
 									{
-										if(month == _thisMonth)
+										if(month == _thisMonth && year == _thisYear)
 											_thisMonthBooks++;
-										else if(month == _lastMonth)
+										else if(month == _lastMonth && year == _thisYear)
 											_lastMonthBooks++;
 									}
 									else if([type isEqual:PublicationTypeBroshure])
 									{
-										if(month == _thisMonth)
+										if(month == _thisMonth && year == _thisYear)
 											_thisMonthBroshures++;
-										else if(month == _lastMonth)
+										else if(month == _lastMonth && year == _thisYear)
 											_lastMonthBroshures++;
 									}
 									else if([type isEqual:PublicationTypeMagazine])
 									{
-										if(month == _thisMonth)
+										if(month == _thisMonth && year == _thisYear)
 											_thisMonthMagazines++;
-										else if(month == _lastMonth)
+										else if(month == _lastMonth && year == _thisYear)
 											_lastMonthMagazines++;
 									}
 									else if([type isEqual:PublicationTypeSpecial])
 									{
-										if(month == _thisMonth)
+										if(month == _thisMonth && year == _thisYear)
 											_thisMonthSpecialPublications++;
-										else if(month == _lastMonth)
+										else if(month == _lastMonth && year == _thisYear)
 											_lastMonthSpecialPublications++;
 									}
 								}
