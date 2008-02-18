@@ -159,8 +159,11 @@ int sortByStreet(id v1, id v2, void *context)
 {
 	NSString *street1 = [v1 objectForKey:CallStreet];
 	NSString *street2 = [v2 objectForKey:CallStreet];
+	NSNumber *house1 = [v1 objectForKey:CallStreetNumber];
+	NSNumber *house2 = [v2 objectForKey:CallStreetNumber];
 	
-	return([street1 localizedCaseInsensitiveCompare:street2]);
+	int streetName = [street1 localizedCaseInsensitiveCompare:street2];
+	return(streetName == 0 ? [house1 compare:house2] : streetName);
 }
 
 int sortByDate(id v1, id v2, void *context)
