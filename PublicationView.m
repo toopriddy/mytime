@@ -506,9 +506,9 @@ static NSString *MONTHS[] = {
     if(_publication == 0 || _publication == 1)
     {
         if(day)
-            return([NSString stringWithFormat:@"%@ %@ %d, %d",PUBLICATIONS[_publication], MONTHS[month-1], day, year ]);
+            return([NSString stringWithFormat:@"%@ %@ %d, %d",PUBLICATIONS[_publication].name, MONTHS[month-1], day, year ]);
         else
-            return([NSString stringWithFormat:@"%@ %@ %d",PUBLICATIONS[_publication], MONTHS[month-1], year ]);
+            return([NSString stringWithFormat:@"%@ %@ %d",PUBLICATIONS[_publication].name, MONTHS[month-1], year ]);
     }
     else
     {
