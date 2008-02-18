@@ -9,6 +9,7 @@ AddressView.m \
 SortedCallsView.m \
 DatePickerView.m \
 TimeView.m \
+svn_version.c \
 
 
 RESOURCES=\
@@ -61,6 +62,17 @@ copy:
 backup:
 	scp root@10.10.10.254:/var/root/Library/MyTime/record.plist ./
 
+
+##
+## on every build, record the working copy revision string
+##
+.PHONY:svn_version.c
+svn_version.c:
+	echo -n 'const char* svn_version(void) { const char* SVN_Version = "' > svn_version.c
+	svnversion -n .                   >> svn_version.c
+	echo '"; return SVN_Version; }'   >> svn_version.c
+
+
 $(PRODUCT_ABS): $(APP_ABS) $(OBJECTS_ABS)
 	$(LD) $(LDFLAGS) -o $(PRODUCT_ABS) $(OBJECTS_ABS)
 
@@ -70,6 +82,10 @@ $(APP_ABS): $(INFOPLIST_ABS)
 	cp $(RESOURCES_ABS) $(APP_ABS)/
 
 $(CONFIGURATION_BUILD_DIR)/%.o: $(SRCROOT)/%.m
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -Wp,-MF -Wp,$(@:.o=.d) -c $< -o $@
+
+$(CONFIGURATION_BUILD_DIR)/%.o: $(SRCROOT)/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -Wp,-MF -Wp,$(@:.o=.d) -c $< -o $@
 

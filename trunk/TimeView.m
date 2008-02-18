@@ -22,6 +22,8 @@
 #import "TimeView.h"
 #import "App.h"
 
+const char* svn_version(void);
+
 static NSString *MONTHS[] = {
 	@"January",
 	@"February",
@@ -219,6 +221,8 @@ static NSString *MONTHS[] = {
 	// LastMonth
 	count++;
 
+	// version
+	count++;
 	// how are we going to do the time...
 	
 	VERBOSE(NSLog(@"count=%d", count);)
@@ -264,6 +268,10 @@ static NSString *MONTHS[] = {
 			if(_lastMonthBibleStudies)
 				count++;
 			break;
+		
+		// version 
+		case 2:
+			count = 1;
     }
 	return(count);
 }
@@ -323,6 +331,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Hours"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthHours]];
+				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthBooks && row-- == 0)
 			{
@@ -330,6 +339,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Books"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
+				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthBroshures && row-- == 0)
 			{
@@ -337,6 +347,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Broshures"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBroshures]];
+				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthMagazines && row-- == 0)
 			{
@@ -344,6 +355,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Magazines"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthMagazines]];
+				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthReturnVisits && row-- == 0)
 			{
@@ -351,6 +363,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Return Visits"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthReturnVisits]];
+				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthBibleStudies && row-- == 0)
 			{
@@ -358,6 +371,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Bible Studies"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBibleStudies]];
+				[cell setShowSelection:NO];
 			}
             break;
 
@@ -369,6 +383,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Hours"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthHours]];
+				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthBooks && row-- == 0)
 			{
@@ -376,6 +391,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Books"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
+				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthBroshures && row-- == 0)
 			{
@@ -383,6 +399,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Broshures"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBroshures]];
+				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthMagazines && row-- == 0)
 			{
@@ -390,6 +407,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Magazines"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthMagazines]];
+				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthReturnVisits && row-- == 0)
 			{
@@ -397,6 +415,7 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Return Visits"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthReturnVisits]];
+				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthBibleStudies && row-- == 0)
 			{
@@ -404,11 +423,21 @@ static NSString *MONTHS[] = {
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
 				[cell setTitle:@"Bible Studies"];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBibleStudies]];
+				[cell setShowSelection:NO];
 			}
 			break;
+		
+		case 2:
+			if(row == 0)
+			{
+				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+				[cell setTitle:@"MyTime Build Version"];
+				[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
+				[cell setShowSelection:NO];
+			}
     }
 
-   // [ cell setShowSelection: NO ];
+    // [ cell setShowSelection: NO ];
     return(cell);
 }
 
