@@ -104,22 +104,53 @@
 
 - (int)numberOfSectionsInSectionList:(UISectionList *)aSectionList 
 {
-	int ret = [_streetSections count];
-	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%d", ret);)
+	int ret;
+	switch(_sortBy)
+	{
+		case CALLS_SORTED_BY_DATE:
+			ret = 1;
+			break;
+			
+		case CALLS_SORTED_BY_STREET:
+			ret = [_streetSections count];
+			VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%d", ret);)
+			break;
+	}
 	return ret;
 }
 
 - (NSString *)sectionList:(UISectionList *)aSectionList titleForSection:(int)section 
 {
-	NSString *name = [_streetSections objectAtIndex:section];
-	VERBOSE(NSLog(@"sectionList: titleForSection:%d return = %@", section, name);)
+	NSString *name;
+
+	switch(_sortBy)
+	{
+		case CALLS_SORTED_BY_DATE:
+			name = @"Oldest Return Visits First";
+			break;
+			
+		case CALLS_SORTED_BY_STREET:
+			name = [_streetSections objectAtIndex:section];
+			VERBOSE(NSLog(@"sectionList: titleForSection:%d return = %@", section, name);)
+			break;
+	}
 	return(name);
 }       
 
 - (int)sectionList:(UISectionList *)aSectionList rowForSection:(int)section 
 {
-	int ret = [[_streetOffsets objectAtIndex:section] intValue];
-	VERBOSE(NSLog(@"sectionList: section:%d (cont=%d) return=%d", section, [_streetOffsets count], ret);)
+	int ret;
+	switch(_sortBy)
+	{
+		case CALLS_SORTED_BY_DATE:
+			ret = 0;
+			break;
+			
+		case CALLS_SORTED_BY_STREET:
+			ret = [[_streetOffsets objectAtIndex:section] intValue];
+			VERBOSE(NSLog(@"sectionList: section:%d (cont=%d) return=%d", section, [_streetOffsets count], ret);)
+			break;
+	}
 	return(ret);
 }
 
@@ -166,12 +197,34 @@ int sortByStreet(id v1, id v2, void *context)
 	return(streetName == 0 ? [house1 compare:house2] : streetName);
 }
 
+// sort by date where the earlier dates come first
 int sortByDate(id v1, id v2, void *context)
 {
-	NSString *street1 = [v1 objectForKey:CallStreet];
-	NSString *street2 = [v2 objectForKey:CallStreet];
-	
-	return([street1 localizedCaseInsensitiveCompare:street2]);
+	// for speed sake we are going to assume that the first entry in the array
+	// is the most recent entry	
+	NSArray *returnVisits1 = [v1 objectForKey:CallReturnVisits];
+	NSArray *returnVisits2 = [v2 objectForKey:CallReturnVisits];
+	if([returnVisits1 count] == 0)
+	{
+		// if there are no calls, then just sort by the street since there
+		// are no dates to sort by
+		if([returnVisits2 count] == 0)
+			return(sortByStreet(v1, v2, context));
+		else
+			return(-1); // v1 is less since there is no date
+	}
+	else if([returnVisits2 count] == 0)
+	{
+		return(1); // v1 is greater than v2
+	}
+	else
+	{
+		// ok, we need to compare the dates of the calls since we have
+		// at least one call for each of 
+		NSDate *date1 = [[returnVisits1 objectAtIndex:0] objectForKey:CallReturnVisitDate];
+		NSDate *date2 = [[returnVisits2 objectAtIndex:0] objectForKey:CallReturnVisitDate];
+		return([date1 compare:date2]);
+	}
 }
 
 - (void)updateSections
@@ -296,9 +349,11 @@ int sortByDate(id v1, id v2, void *context)
 		[_table setControlTint:1]; // don't know ?
 		[_table setAllowsScrollIndicators:YES];		
 
-		_sectionIndex = [[UISectionIndex alloc] initWithSectionTable:_table];
-		[_section addSubview:_sectionIndex];
-
+		if(_sortBy == CALLS_SORTED_BY_STREET)
+		{
+			_sectionIndex = [[UISectionIndex alloc] initWithSectionTable:_table];
+			[_section addSubview:_sectionIndex];
+		}
 		[self updateSections];
 		[self addSubview: _section];
     }
