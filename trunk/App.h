@@ -35,6 +35,16 @@ extern int debugging;
 
 - (NSMutableDictionary *)getSavedData;
 - (void)setCalls:(NSMutableArray *)calls;
+// 0 nothing
+// 1 slide left with the to view to the right
+// 2 slide right with the to view to the left
+// 3 from bottom up with the to view right below the from view
+// 4 from bottom up, but background seems to be invisible
+// 5 from top down, but background seems to be invisible
+// 6 fade away to the to view
+// 7 down with the to view above the from view
+// 8 from bottom up sliding ontop of
+// 9 from top down sliding ontop of
 - (void)transition:(int)transition fromView:(UIView *)from toView:(UIView *)to;
 + (App *)getInstance;
 - (void)dealloc;

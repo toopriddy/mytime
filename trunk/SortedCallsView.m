@@ -303,9 +303,25 @@ int sortByDate(id v1, id v2, void *context)
 	BOOL refresh = _sortBy != sortBy;
 	
 	_sortBy = sortBy;
-	
+
 	if(refresh)
+	{
+		if(_sectionIndex)
+		{
+			[_sectionIndex removeFromSuperview];
+			[_sectionIndex release];
+		}
+		if(_sortBy == CALLS_SORTED_BY_STREET)
+		{
+			_sectionIndex = [[UISectionIndex alloc] initWithSectionTable:_table];
+			[_section addSubview:_sectionIndex];
+		}
+		else
+		{
+			_sectionIndex = nil;
+		}
 		[self updateSections];
+	}
 }
 
 - (id) initWithFrame: (CGRect)rect calls:(NSMutableArray *)calls sortBy:(SortCallsType) sortBy
@@ -314,8 +330,8 @@ int sortByDate(id v1, id v2, void *context)
     {
         _calls = calls;
 		[_calls retain];
-		
-		_sortBy = sortBy;
+
+		_sortBy = -1;
 		
         // we should read from the file the _calls
 		_streetSections = [[NSMutableArray alloc] init];
@@ -349,12 +365,9 @@ int sortByDate(id v1, id v2, void *context)
 		[_table setControlTint:1]; // don't know ?
 		[_table setAllowsScrollIndicators:YES];		
 
-		if(_sortBy == CALLS_SORTED_BY_STREET)
-		{
-			_sectionIndex = [[UISectionIndex alloc] initWithSectionTable:_table];
-			[_section addSubview:_sectionIndex];
-		}
-		[self updateSections];
+		_sortBy = -1;
+		[self setSortBy:sortBy];
+		
 		[self addSubview: _section];
     }
     
