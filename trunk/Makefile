@@ -62,12 +62,15 @@ copy:
 backup:
 	scp root@10.10.10.254:/var/root/Library/MyTime/record.plist ./
 
+zip:
+	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
+	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./
 
 ##
 ## on every build, record the working copy revision string
 ##
 .PHONY:svn_version.c
-svn_version.c:
+svn_version.c: 
 	echo -n 'const char* svn_version(void) { const char* SVN_Version = "' > svn_version.c
 	svnversion -n .                   >> svn_version.c
 	echo '"; return SVN_Version; }'   >> svn_version.c
