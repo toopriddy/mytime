@@ -192,7 +192,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
         case VIEW_SORTED_BY_DATE:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_DATE");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_DATE];
-			[self transition:0 toView:_sortedCallsViewDate ];
+			[self transition:0 toView:_sortedCallsView ];
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
@@ -250,10 +250,6 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
 													       sortBy:CALLS_SORTED_BY_STREET];
-
-		_sortedCallsViewDate = [[SortedCallsView alloc] initWithFrame:rect 
-		                                                    calls:[_settings objectForKey:SettingsCalls]
-													       sortBy:CALLS_SORTED_BY_DATE];
 
 		// create the TimeView
 		_timeView = [[TimeView alloc] initWithFrame:rect];
