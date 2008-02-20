@@ -26,7 +26,6 @@ typedef enum {
     CGRect _rect;
 
 	SortedCallsView *_sortedCallsView;
-	SortedCallsView *_sortedCallsViewDate;
 	TimeView *_timeView;
 	UIButtonBar *_buttonBar;
 	
