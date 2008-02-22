@@ -29,6 +29,15 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithFrame: (CGRect)rect timeEntries:(NSMutableArray **)timeEntries;
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (void)dealloc;
+
+
+- (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
+- (int)numberOfRowsInTable:(UITable*)table;
+- (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column;
+-(BOOL)table:(UITable*)table showDisclosureForRow:(int)row;
+-(BOOL)table:(UITable*)table canDeleteRow:(int)row;
+-(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow;
+
 @end

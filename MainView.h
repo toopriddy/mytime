@@ -92,7 +92,11 @@ extern NSString const * const SettingsLastCallStreet;
 extern NSString const * const SettingsLastCallCity;
 extern NSString const * const SettingsLastCallState;
 extern NSString const * const SettingsCurrentButtonBarView;
+
+extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
+extern NSString const * const SettingsTimeEntryDate;
+extern NSString const * const SettingsTimeEntryMinutes;
 
 @end
 

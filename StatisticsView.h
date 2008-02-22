@@ -18,6 +18,7 @@
 @interface StatisticsView : UIView {
     CGRect _rect;
     UIPreferencesTable *_table;
+	NSMutableDictionary *_settings;
 	
 	int _thisMonth;
 	int _lastMonth;
@@ -48,7 +49,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithFrame: (CGRect)rect;
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings;
 - (void)dealloc;
 - (void)reloadData;
 @end
