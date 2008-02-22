@@ -14,12 +14,14 @@
 #import <UIKit/UIButtonBar.h>
 #import "PublicationView.h"
 #import "SortedCallsView.h"
+#import "StatisticsView.h"
 #import "TimeView.h"
 
 typedef enum {
-	VIEW_SORTED_BY_STREET = 1,
-	VIEW_SORTED_BY_DATE,
-	VIEW_TIME
+	  VIEW_SORTED_BY_STREET = 1
+	, VIEW_SORTED_BY_DATE
+	, VIEW_TIME
+	, VIEW_STATISTICS
 } SelectedButtonBarView;
 
 @interface MainView : UIView {
@@ -27,6 +29,7 @@ typedef enum {
 
 	SortedCallsView *_sortedCallsView;
 	TimeView *_timeView;
+	StatisticsView *_statisticsView;
 	UIButtonBar *_buttonBar;
 	
 	SelectedButtonBarView _currentButtonBarView;
@@ -77,6 +80,7 @@ extern NSString const * const CallReturnVisitPublicationName;
 extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
+extern NSString const * const SettingsCurrentButtonBarView;
 
 #define PublicationTypeBook @"Book"
 #define PublicationTypeBroshure @"Broshure"

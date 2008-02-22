@@ -9,6 +9,7 @@ AddressView.m \
 SortedCallsView.m \
 DatePickerView.m \
 TimeView.m \
+StatisticsView.m \
 svn_version.c \
 
 
