@@ -80,7 +80,6 @@ extern NSString const * const CallReturnVisitPublicationName;
 extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
-extern NSString const * const SettingsCurrentButtonBarView;
 
 #define PublicationTypeBook @"Book"
 #define PublicationTypeBroshure @"Broshure"
@@ -92,6 +91,8 @@ extern NSString const * const SettingsLastCallStreetNumber;
 extern NSString const * const SettingsLastCallStreet;
 extern NSString const * const SettingsLastCallCity;
 extern NSString const * const SettingsLastCallState;
+extern NSString const * const SettingsCurrentButtonBarView;
+extern NSString const * const SettingsTimeEntries;
 
 @end
 

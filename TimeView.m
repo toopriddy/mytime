@@ -24,22 +24,6 @@
 
 const char* svn_version(void);
 
-static NSString *MONTHS[] = {
-	@"January",
-	@"February",
-	@"March",
-	@"April",
-	@"May",
-	@"June",
-	@"July",
-	@"August",
-	@"September",
-	@"October",
-	@"November",
-	@"December"
-};
-
-
 @implementation TimeView
 
 - (void)dealloc
@@ -50,12 +34,15 @@ static NSString *MONTHS[] = {
 }
 
 
-- (id) initWithFrame: (CGRect)rect
+- (id) initWithFrame: (CGRect)rect timeEntries:(NSMutableArray **)timeEntries
 {
     if((self = [super initWithFrame: rect])) 
     {
         DEBUG(NSLog(@"CallView initWithFrame:");)
 
+		_timeEntries = [[NSMutableArray alloc] initWithArray:*timeEntries];
+		*timeEntries = _timeEntries;
+		
         _rect = rect;   
         // make the navigation bar with
         //                        +
@@ -76,7 +63,6 @@ static NSString *MONTHS[] = {
         [_table setDelegate: self];
         [_table setDataSource: self];
 		[_table enableRowDeletion: YES animated:YES];
-		[self reloadData];
     }
     
     return(self);
@@ -89,131 +75,65 @@ static NSString *MONTHS[] = {
  *
  ******************************************************************/
 
-
-- (UIPreferencesTableCell *)preferencesTable: (UIPreferencesTable *)table cellForRow: (int)row inGroup: (int)group 
+- (int)numberOfRowsInTable:(UITable*)table
 {
-    VERBOSE(NSLog(@"preferencesTable: cellForRow:%d inGroup:%d", row, group);)
-    UIPreferencesTableCell *cell = nil;
-
-    switch (group) 
-    {
-        // Name
-        case 0:
-			if(row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Hours"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthHours]];
-				[cell setShowSelection:NO];
-			}
-			else if(_thisMonthBooks && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Books"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
-				[cell setShowSelection:NO];
-			}
-			else if(_thisMonthBroshures && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Broshures"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBroshures]];
-				[cell setShowSelection:NO];
-			}
-			else if(_thisMonthMagazines && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Magazines"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthMagazines]];
-				[cell setShowSelection:NO];
-			}
-			else if(_thisMonthReturnVisits && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Return Visits"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthReturnVisits]];
-				[cell setShowSelection:NO];
-			}
-			else if(_thisMonthBibleStudies && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Bible Studies"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBibleStudies]];
-				[cell setShowSelection:NO];
-			}
-            break;
-
-        // Address
-        case 1:
-			if(row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Hours"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthHours]];
-				[cell setShowSelection:NO];
-			}
-			else if(_lastMonthBooks && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Books"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
-				[cell setShowSelection:NO];
-			}
-			else if(_lastMonthBroshures && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Broshures"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBroshures]];
-				[cell setShowSelection:NO];
-			}
-			else if(_lastMonthMagazines && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Magazines"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthMagazines]];
-				[cell setShowSelection:NO];
-			}
-			else if(_lastMonthReturnVisits && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Return Visits"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthReturnVisits]];
-				[cell setShowSelection:NO];
-			}
-			else if(_lastMonthBibleStudies && row-- == 0)
-			{
-				// if we are not editing, then 
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Bible Studies"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBibleStudies]];
-				[cell setShowSelection:NO];
-			}
-			break;
-		
-		case 2:
-			if(row == 0)
-			{
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"MyTime Build Version"];
-				[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
-				[cell setShowSelection:NO];
-			}
-    }
-
-    // [ cell setShowSelection: NO ];
-    return(cell);
+	return [_timeEntries count];
 }
+
+- (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column
+{
+#if 0
+	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
+	NSString *title = [[[NSString alloc] init] autorelease];
+	NSString *houseNumber = [[_calls objectAtIndex:row] objectForKey:CallStreetNumber ];
+	NSString *street = [[_calls objectAtIndex:row] objectForKey:CallStreet];
+
+	if(houseNumber && [houseNumber length])
+		title = [title stringByAppendingFormat:@"%@ ", houseNumber];
+	if(street && [street length])
+		title = [title stringByAppendingString:street];
+	if([title length] == 0)
+		title = @"(unknown street)";
+
+	[cell setTitle: title];
+
+	CGSize s = CGSizeMake( [column width], [table rowHeight] );
+	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(200,0,s.width,s.height)] autorelease];
+	float bgColor[] = { 0,0,0,0 };
+	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
+	[label setText:[[_calls objectAtIndex:row] objectForKey:CallName]];
+	[cell addSubview: label];
+
+	return cell;
+#endif
+return nil;
+}
+
+-(BOOL)table:(UITable*)table showDisclosureForRow:(int)row
+{
+    return(NO);
+}
+
+-(BOOL)table:(UITable*)table canDeleteRow:(int)row
+{
+	return YES;
+}
+
+-(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow
+{
+    DEBUG(NSLog(@"table: movedRow");)
+}
+
+- (void)tableRowSelected:(NSNotification*)notification
+{
+    int row = [[notification object] selectedRow];
+    DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d", notification, row);)
+
+    if(row < [_timeEntries count])
+    {
+    }
+}
+
 
 
 @end
