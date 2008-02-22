@@ -52,6 +52,7 @@ NSString const * const SettingsLastCallStreet = @"lastStreet";
 NSString const * const SettingsLastCallCity = @"lastCity";
 NSString const * const SettingsLastCallState = @"lastState";
 NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
+NSString const * const SettingsTimeEntries = @"timeEntries";
 
 static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 
@@ -280,7 +281,9 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 													       sortBy:CALLS_SORTED_BY_STREET];
 
 		// create the TimeView
-		_timeView = [[TimeView alloc] initWithFrame:rect];
+		NSMutableArray *timeEntries = [_settings objectForKey:SettingsTimeEntries];
+		_timeView = [[TimeView alloc] initWithFrame:rect timeEntries:&timeEntries];
+		[_settings setObject:timeEntries forKey:SettingsTimeEntries];
 
 		// create the TimeView
 		_statisticsView = [[StatisticsView alloc] initWithFrame:rect];

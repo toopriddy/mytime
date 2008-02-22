@@ -20,27 +20,7 @@
     UIPreferencesTable *_table;
 	UINavigationBar *_navigationBar;
 	
-	int _thisMonth;
-	int _lastMonth;
-	int _thisYear;
-	int _lastYear;
-	
-	int _thisMonthBooks;
-	int _thisMonthBroshures;
-	int _thisMonthHours;
-	int _thisMonthMagazines;
-	int _thisMonthReturnVisits;
-	int _thisMonthBibleStudies;
-	int _thisMonthSpecialPublications;
-	
-	int _lastMonthBooks;
-	int _lastMonthBroshures;
-	int _lastMonthHours;
-	int _lastMonthMagazines;
-	int _lastMonthReturnVisits;
-	int _lastMonthBibleStudies;
-	int _lastMonthSpecialPublications;
-
+	NSMutableArray *_timeEntries;
 }
 
 /**
@@ -49,7 +29,6 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithFrame: (CGRect)rect;
+- (id) initWithFrame: (CGRect)rect timeEntries:(NSMutableArray **)timeEntries;
 - (void)dealloc;
-- (void)reloadData;
 @end
