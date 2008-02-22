@@ -8,6 +8,8 @@
 
 /* Begin PBXFileReference section */
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		904C6E1C0D6E9CE700DEF41A /* StatisticsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsView.h; sourceTree = "<group>"; };
+		904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsView.m; sourceTree = "<group>"; };
 		9058ABF20D668F74006AE013 /* TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeView.h; sourceTree = "<group>"; };
 		9058ABF30D668F74006AE013 /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
 		906AC1E40D502EFB0065CC89 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
@@ -84,6 +86,8 @@
 				906AC1E50D502EFB0065CC89 /* DatePickerView.m */,
 				9058ABF20D668F74006AE013 /* TimeView.h */,
 				9058ABF30D668F74006AE013 /* TimeView.m */,
+				904C6E1C0D6E9CE700DEF41A /* StatisticsView.h */,
+				904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

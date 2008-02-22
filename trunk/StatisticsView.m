@@ -19,7 +19,6 @@
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPickerView.h>
 #import <UIKit/UITextFieldLabel.h>
-#import "TimeView.h"
 #import "StatisticsView.h"
 #import "App.h"
 
@@ -68,11 +67,8 @@ static NSString *MONTHS[] = {
 	_lastMonthBibleStudies = 0;
 	_lastMonthSpecialPublications = 0;
 	
-
-
-	NSMutableDictionary *settings = [[App getInstance] getSavedData];
 	int callIndex;
-	NSArray *calls = [settings objectForKey:SettingsCalls];
+	NSArray *calls = [_settings objectForKey:SettingsCalls];
 	int callCount = [calls count];
 	
 	// save off this month and last month for quick compares
@@ -174,13 +170,14 @@ static NSString *MONTHS[] = {
 	[_table reloadData];
 }
 
-- (id) initWithFrame: (CGRect)rect
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings
 {
     if((self = [super initWithFrame: rect])) 
     {
         DEBUG(NSLog(@"CallView initWithFrame:");)
 
         _rect = rect;   
+		_settings = settings;
         
         _table = [[UIPreferencesTable alloc] initWithFrame: _rect];
         [self addSubview: _table];

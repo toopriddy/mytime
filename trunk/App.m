@@ -45,7 +45,6 @@ App *me;
 	[_mainView setCalls:calls];
 }
 
-
 - (UIWindow *)window
 {
 	return(_window);

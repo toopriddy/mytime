@@ -52,7 +52,11 @@ NSString const * const SettingsLastCallStreet = @"lastStreet";
 NSString const * const SettingsLastCallCity = @"lastCity";
 NSString const * const SettingsLastCallState = @"lastState";
 NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
+
+NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
+NSString const * const SettingsTimeEntryDate = @"date";
+NSString const * const SettingsTimeEntryMinutes = @"minutes";
 
 static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 
@@ -173,7 +177,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
             setFrame:CGRectMake( (i*width), 1.0, width, 48.0)
         ];
     }
-    [ button showSelectionForButton: buttons[0]];
+    [ button showSelectionForButton: _currentButtonBarView];
 
     return button;
 }
@@ -187,15 +191,8 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 	}
 }
 
-- (void)buttonBarItemTapped:(id) sender 
+- (void)setView:(int)button
 {
-    int button = [ sender tag ];
-	DEBUG(NSLog(@"buttonBarItemTapped: %d", button);)
-	
-	// if they clicked on the button that we are currently on, then just return dont do anything
-	if(button == _currentButtonBarView)
-		return;
-		
     switch (button) 
 	{
         case VIEW_SORTED_BY_STREET:
@@ -218,9 +215,21 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 			[ self transition:0 toView:_statisticsView];
 			break;
     }
+}
+
+- (void)buttonBarItemTapped:(id) sender 
+{
+    int button = [ sender tag ];
+	DEBUG(NSLog(@"buttonBarItemTapped: %d", button);)
+	
+	// if they clicked on the button that we are currently on, then just return dont do anything
+	if(button == _currentButtonBarView)
+		return;
+
+	[self setView:button];
+	
 	_currentButtonBarView = button;
     [_settings setObject:[[[NSNumber alloc] initWithInt:_currentButtonBarView] autorelease] forKey:SettingsCurrentButtonBarView];
-    [self saveData];
 }
 
 
@@ -281,16 +290,14 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 													       sortBy:CALLS_SORTED_BY_STREET];
 
 		// create the TimeView
-		NSMutableArray *timeEntries = [_settings objectForKey:SettingsTimeEntries];
-		_timeView = [[TimeView alloc] initWithFrame:rect timeEntries:&timeEntries];
-		[_settings setObject:timeEntries forKey:SettingsTimeEntries];
+		_timeView = [[TimeView alloc] initWithFrame:rect settings:_settings];
 
 		// create the TimeView
-		_statisticsView = [[StatisticsView alloc] initWithFrame:rect];
+		_statisticsView = [[StatisticsView alloc] initWithFrame:rect settings:_settings];
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
-		[self transition:0 toView:_sortedCallsView];
+		[self setView:_currentButtonBarView];
 
 		
 		// create the buttonbar and add it at the lat 49pix of the screen
