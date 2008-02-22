@@ -25,6 +25,7 @@
 #import "MainView.h"
 #import "CallView.h"
 #import "TimeView.h"
+#import "StatisticsView.h"
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
@@ -50,6 +51,7 @@ NSString const * const SettingsLastCallStreetNumber = @"lastStreetNumber";
 NSString const * const SettingsLastCallStreet = @"lastStreet";
 NSString const * const SettingsLastCallCity = @"lastCity";
 NSString const * const SettingsLastCallState = @"lastState";
+NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
 
 static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 
@@ -131,6 +133,17 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
           nil 
         ], 
 
+        [ NSDictionary dictionaryWithObjectsAndKeys:
+          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
+          @"time.png", kUIButtonBarButtonInfo,
+          @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_STATISTICS], kUIButtonBarButtonTag,
+            self, kUIButtonBarButtonTarget,
+          @"Statistics", kUIButtonBarButtonTitle,
+          @"0", kUIButtonBarButtonType,
+          nil 
+        ], 
+
         nil
     ];
 }
@@ -147,7 +160,7 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME };
+    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME, VIEW_STATISTICS };
     [button registerButtonGroup:0 withButtons:buttons withCount: ARRAY_SIZE(buttons)];
     [button showButtonGroup: 0 withDuration: 0.0f];
 
@@ -196,11 +209,17 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
-			[_timeView reloadData];
 			[ self transition:0 toView:_timeView];
+			break;
+        case VIEW_STATISTICS:
+			DEBUG(NSLog(@"VIEW_STATISTICS");)
+			[_statisticsView reloadData];
+			[ self transition:0 toView:_statisticsView];
 			break;
     }
 	_currentButtonBarView = button;
+    [_settings setObject:[[[NSNumber alloc] initWithInt:_currentButtonBarView] autorelease] forKey:SettingsCurrentButtonBarView];
+    [self saveData];
 }
 
 
@@ -245,14 +264,26 @@ static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 		// take away the height of the button bar
 		rect.size.height -= 49.0f;
 		// create the SortedCallsView
-	
-		_currentButtonBarView = VIEW_SORTED_BY_STREET;
+        NSNumber *buttonBarValue = [_settings objectForKey:SettingsCurrentButtonBarView];
+        if(buttonBarValue != nil)
+        {
+            _currentButtonBarView = [buttonBarValue intValue];
+        }
+        else
+        {
+		    _currentButtonBarView = VIEW_SORTED_BY_STREET;
+        }
+
+        // create the calls view
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
 													       sortBy:CALLS_SORTED_BY_STREET];
 
 		// create the TimeView
 		_timeView = [[TimeView alloc] initWithFrame:rect];
+
+		// create the TimeView
+		_statisticsView = [[StatisticsView alloc] initWithFrame:rect];
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
