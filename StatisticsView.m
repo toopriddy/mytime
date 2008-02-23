@@ -53,7 +53,7 @@ static NSString *MONTHS[] = {
 {
 	_thisMonthBooks = 0;
 	_thisMonthBroshures = 0;
-	_thisMonthHours = 0;
+	_thisMonthMinutes = 0;
 	_thisMonthMagazines = 0;
 	_thisMonthReturnVisits = 0;
 	_thisMonthBibleStudies = 0;
@@ -61,7 +61,7 @@ static NSString *MONTHS[] = {
 	
 	_lastMonthBooks = 0;
 	_lastMonthBroshures = 0;
-	_lastMonthHours = 0;
+	_lastMonthMinutes = 0;
 	_lastMonthMagazines = 0;
 	_lastMonthReturnVisits = 0;
 	_lastMonthBibleStudies = 0;
@@ -76,6 +76,33 @@ static NSString *MONTHS[] = {
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
 	_thisYear = [[NSCalendarDate calendarDate] yearOfCommonEra];
 	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
+
+
+	NSArray *timeEntries = [_settings objectForKey:SettingsTimeEntries];
+	int timeIndex;
+	int timeCount = [timeEntries count];
+	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
+	{
+		NSDictionary *timeEntry = [timeEntries objectAtIndex:timeIndex];
+		NSCalendarDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];
+		NSNumber *minutes = [timeEntry objectForKey:SettingsTimeEntryMinutes];
+		if(date && minutes)
+		{
+			date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
+			int month = [date monthOfYear];
+			int year = [date yearOfCommonEra];
+
+			if(month == _thisMonth && year == _thisYear)
+			{
+				_thisMonthMinutes += [minutes intValue];
+			}
+			else if(month == _lastMonth && year == _lastYear)
+			{
+				_lastMonthMinutes += [minutes intValue];
+			}
+		}
+	}
+
 	
 	// go through all of the calls and see what the counts are for this month and last month
 	for(callIndex = 0; callIndex < callCount; ++callIndex)
@@ -314,8 +341,17 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Hours"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthHours]];
+				[cell setTitle:@"Time"];
+				int hours = _thisMonthMinutes / 60;
+				int minutes = _thisMonthMinutes % 60;
+				if(hours && minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
+				else if(hours)
+					[cell setValue:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
+				else if(minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+				else
+					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthBooks && row-- == 0)
@@ -366,8 +402,17 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Hours"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthHours]];
+				[cell setTitle:@"Time"];
+				int hours = _lastMonthMinutes / 60;
+				int minutes = _lastMonthMinutes % 60;
+				if(hours && minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
+				else if(hours)
+					[cell setValue:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
+				else if(minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+				else
+					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthBooks && row-- == 0)

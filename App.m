@@ -89,6 +89,13 @@ App *me;
     [_transitionView transition:0 toView:_mainView]; 
 }
 
+
+- (void)applicationSuspend:(GSEvent*)event
+{
+	[self saveData];
+	[self terminate];
+}
+
 - (BOOL)respondsToSelector:(SEL)selector
 {
     VERBOSE(NSLog(@"App respondsToSelector: %s", selector);)

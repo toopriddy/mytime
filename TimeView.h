@@ -12,6 +12,7 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
+#import "TimePickerView.h"
 
 enum kSwipeDirection {
 	kSwipeDirectionUp=1, 
@@ -48,6 +49,9 @@ enum kSwipeDirection {
  */
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (void)dealloc;
+
+- (void)addTimeCancelAction: (TimePickerView *)view;
+- (void)addTimeSaveAction: (TimePickerView *)view;
 
 //datasource methods
 - (int)numberOfRowsInTable:(UITable*)table;

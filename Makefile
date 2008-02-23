@@ -10,6 +10,7 @@ SortedCallsView.m \
 DatePickerView.m \
 TimeView.m \
 StatisticsView.m \
+TimePickerView.m \
 svn_version.c \
 
 

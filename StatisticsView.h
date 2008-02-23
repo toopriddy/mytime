@@ -27,7 +27,7 @@
 	
 	int _thisMonthBooks;
 	int _thisMonthBroshures;
-	int _thisMonthHours;
+	int _thisMonthMinutes;
 	int _thisMonthMagazines;
 	int _thisMonthReturnVisits;
 	int _thisMonthBibleStudies;
@@ -35,7 +35,7 @@
 	
 	int _lastMonthBooks;
 	int _lastMonthBroshures;
-	int _lastMonthHours;
+	int _lastMonthMinutes;
 	int _lastMonthMagazines;
 	int _lastMonthReturnVisits;
 	int _lastMonthBibleStudies;
