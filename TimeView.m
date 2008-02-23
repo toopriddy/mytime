@@ -19,8 +19,91 @@
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPickerView.h>
 #import <UIKit/UITextFieldLabel.h>
+#import <GraphicsServices/GraphicsServices.h>
+#import <UIKit/UIKit.h>
 #import "TimeView.h"
 #import "App.h"
+
+
+@implementation TimeTable
+
+- (id)initWithFrame:(CGRect) rect timeEntries:(NSMutableArray*) timeEntries;
+{
+    if((self = [super initWithFrame: rect])) 
+    {
+		DEBUG(NSLog(@"TimeTable: initWithFrame");)
+		_timeEntries = timeEntries;
+		_offset = rect.origin;
+		[self setSeparatorStyle: 1];
+		[self enableRowDeletion: YES animated:YES];
+		
+	}
+	return self;
+}
+
+
+- (int)swipe:(int)direction withEvent:(struct __GSEvent *)event;
+{
+	if ((direction == kSwipeDirectionRight) || (direction == kSwipeDirectionLeft) )
+	{
+        // The line below should be used with the newer toolchain.  If you
+        // are using the older toolchain, comment this one out and use the
+        // two commented out lines below.
+        CGPoint point = GSEventGetLocationInWindow(event);
+
+        // The next two lines are used with the old toolchain.  If you are
+        // using the older toolchain uncomment these two lines and comment
+        // out the line above.
+//	CGRect rect = GSEventGetLocationInWindow(event);
+//	CGPoint point = CGPointMake(rect.origin.x, rect.origin.y-50.0f); 
+
+		point.x -= _offset.x;
+		point.y -= _offset.y;
+		
+		int row = [self rowAtPoint:point];
+
+		if( [[self visibleCellForRow:row column:0] isRemoveControlVisible] )
+		{
+			[[self visibleCellForRow:row column:0] _showDeleteOrInsertion:NO 
+														   withDisclosure:NO 
+																 animated:NO 
+																 isDelete:NO 
+													andRemoveConfirmation:NO];
+		}
+		else
+		{
+			[[self visibleCellForRow:row column:0] _showDeleteOrInsertion:YES
+		                                                   withDisclosure:NO 
+														         animated:YES 
+																 isDelete:YES 
+													andRemoveConfirmation:YES];
+		}	
+	}
+	return [super swipe:direction withEvent:event];
+}
+
+- (BOOL)respondsToSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"TimeTable respondsToSelector: %s", selector);)
+	return [super respondsToSelector:selector];
+}
+
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"TimeTable methodSignatureForSelector: %s", selector);)
+	return [super methodSignatureForSelector:selector];
+}
+
+- (void)forwardInvocation:(NSInvocation*)invocation
+{
+	VERY_VERBOSE(NSLog(@"TimeTable forwardInvocation: %s", [invocation selector]);)
+	[super forwardInvocation:invocation];
+}
+@end
+
+
+
+
 
 @implementation TimeView
 
@@ -36,7 +119,7 @@
 {
     if((self = [super initWithFrame: rect])) 
     {
-        DEBUG(NSLog(@"CallView initWithFrame:");)
+        DEBUG(NSLog(@"TimeView initWithFrame:");)
 
 		_timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:SettingsTimeEntries]];
 		[settings setObject:_timeEntries forKey:SettingsTimeEntries];
@@ -61,14 +144,13 @@
 		{
 			[_navigationBar showLeftButton:@"Add Time" withStyle:0 rightButton:@"Stop Time" withStyle:1];
 		}
-        
-        _table = [[UITable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height)];
+		_table = [[TimeTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
+		                              timeEntries:_timeEntries];
+
 		[_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Times" identifier:nil width: rect.size.width] autorelease]];
-        [self addSubview: _table];
         [_table setDelegate: self];
         [_table setDataSource: self];
-		[_table setSeparatorStyle: 1];
-		[_table enableRowDeletion: YES animated:YES];
+        [self addSubview: _table];
 		[_table reloadData];
     }
     
@@ -102,6 +184,7 @@
 				// 2 = left arrow
 				// 3 = blue
 				[nav showLeftButton:@"Add Time" withStyle:0 rightButton:@"Stop Time" withStyle:1];
+				[_table reloadData];
 			}
 			else
 			{
@@ -130,7 +213,6 @@
 	}
 }
 
-
 /******************************************************************
  *
  *   TABLE DELEGATE FUNCTIONS
@@ -139,6 +221,7 @@
 
 - (int)numberOfRowsInTable:(UITable*)table
 {
+    DEBUG(NSLog(@"numberOfRowsInTable:");)
 	int count = [_timeEntries count];
     DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
 	return(count);
@@ -149,6 +232,8 @@
     DEBUG(NSLog(@"table: cellForRow: %d", row);)
 	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
 	
+	[cell setShowSelection:NO];
+	
 	NSMutableDictionary *entry = [_timeEntries objectAtIndex:row];
 
 	NSNumber *time = [entry objectForKey:SettingsTimeEntryMinutes];
@@ -157,7 +242,7 @@
 	[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d"]];
 
 	CGSize s = CGSizeMake( [column width], [table rowHeight] );
-	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(200,0,s.width,s.height)] autorelease];
+	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(150,0,s.width,s.height)] autorelease];
 	float bgColor[] = { 0,0,0,0 };
 	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 
@@ -174,6 +259,14 @@
 	[cell addSubview: label];
 
 	return cell;
+}
+
+-(BOOL)table:(UITable*)table deleteRow:(int)row
+{
+    DEBUG(NSLog(@"table: deleteRow: %d", row);)
+	[_timeEntries removeObjectAtIndex:row];
+	[[App getInstance] saveData];
+	
 }
 
 -(BOOL)table:(UITable*)table showDisclosureForRow:(int)row
@@ -193,16 +286,24 @@
     DEBUG(NSLog(@"table: movedRow");)
 }
 
-- (void)tableRowSelected:(NSNotification*)notification
-{
-    int row = [[notification object] selectedRow];
-    DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d", notification, row);)
 
-    if(row < [_timeEntries count])
-    {
-    }
+- (BOOL)respondsToSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"TimeView respondsToSelector: %s", selector);)
+	return [super respondsToSelector:selector];
 }
 
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"TimeView methodSignatureForSelector: %s", selector);)
+	return [super methodSignatureForSelector:selector];
+}
+
+- (void)forwardInvocation:(NSInvocation*)invocation
+{
+	VERY_VERBOSE(NSLog(@"TimeView forwardInvocation: %s", [invocation selector]);)
+	[super forwardInvocation:invocation];
+}
 
 
 @end

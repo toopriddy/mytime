@@ -176,7 +176,7 @@
 
 - (id) initWithFrame: (CGRect)rect
 {
-    DEBUG(NSLog(@"CallView initWithFrame: %p", self);)
+    DEBUG(NSLog(@"CallView 1initWithFrame: %p", self);)
     return([self initWithFrame:rect call:nil]);
 }
 
@@ -186,7 +186,7 @@
     {
 		[self becomeFirstResponder];
         NSString *temp;
-        DEBUG(NSLog(@"CallView initWithFrame: %p call:%@", self, call);)
+        DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
 
 		_addressCell = nil;
         _saveObject = nil;

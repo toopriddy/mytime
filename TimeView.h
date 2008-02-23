@@ -12,12 +12,29 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
-#import "AddressView.h"
-#import "PublicationView.h"
+
+enum kSwipeDirection {
+	kSwipeDirectionUp=1, 
+	kSwipeDirectionDown=2, 
+	kSwipeDirectionRight=4, 
+	kSwipeDirectionLeft=8
+};
+
+@interface TimeTable : UITable {
+	NSMutableArray *_timeEntries;
+	CGPoint _offset;
+}
+- (id)initWithFrame:(CGRect) rect timeEntries:(NSMutableArray*) timeEntries;
+- (int)swipe:(int)direction withEvent:(struct __GSEvent *)event;
+
+
+
+@end
+
 
 @interface TimeView : UIView {
     CGRect _rect;
-    UIPreferencesTable *_table;
+    TimeTable *_table;
 	UINavigationBar *_navigationBar;
 	
 	NSMutableArray *_timeEntries;
@@ -32,12 +49,13 @@
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (void)dealloc;
 
-
-- (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
+//datasource methods
 - (int)numberOfRowsInTable:(UITable*)table;
 - (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column;
+- (BOOL)table:(UITable*)table canDeleteRow:(int)row;
 -(BOOL)table:(UITable*)table showDisclosureForRow:(int)row;
--(BOOL)table:(UITable*)table canDeleteRow:(int)row;
 -(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow;
+
+- (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
 
 @end
