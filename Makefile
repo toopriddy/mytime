@@ -78,7 +78,7 @@ svn_version.c:
 	echo '"; return SVN_Version; }'   >> svn_version.c
 
 
-$(PRODUCT_ABS): $(APP_ABS) $(OBJECTS_ABS)
+$(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
 	$(LD) $(LDFLAGS) -o $(PRODUCT_ABS) $(OBJECTS_ABS)
 
 $(APP_ABS): $(INFOPLIST_ABS)
@@ -95,7 +95,7 @@ $(CONFIGURATION_BUILD_DIR)/%.o: $(SRCROOT)/%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -Wp,-MF -Wp,$(@:.o=.d) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS_ABS) $(OBJECTS_ABS:.o=.d)
+	rm -f $(OBJECTS_ABS) $(OBJECTS_ABS:.o=.d) svn_version.c
 	rm -rf $(APP_ABS)
 
 ifdef OBJECTS_ABS
