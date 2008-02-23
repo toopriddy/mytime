@@ -426,6 +426,23 @@ static NSString *MONTHS[] = {
     return(cell);
 }
 
+- (BOOL)respondsToSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"StatisticsView respondsToSelector: %s", selector);)
+	return [super respondsToSelector:selector];
+}
+
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+{
+	VERY_VERBOSE(NSLog(@"StatisticsView methodSignatureForSelector: %s", selector);)
+	return [super methodSignatureForSelector:selector];
+}
+
+- (void)forwardInvocation:(NSInvocation*)invocation
+{
+	VERY_VERBOSE(NSLog(@"StatisticsView forwardInvocation: %s", [invocation selector]);)
+	[super forwardInvocation:invocation];
+}
 
 @end
 
