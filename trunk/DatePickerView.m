@@ -95,7 +95,12 @@
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f", pickerSize.height, pickerSize.width);)
 
         // we are managing the picker's data and display
-    	[_picker setDelegate: self];   
+    	[_picker setDelegate: self];
+		// 0: hour, min, AM/PM
+		// 1: Month, date, year   
+		// 2: date(day of week, month, date), hor, min, am/pm
+		// 3: hours, mins
+		[_picker setDatePickerMode:1];
     	[self addSubview: _picker];
 
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f", 0.0, navSize.height + pickerSize.height, rect.size.height - navSize.height - pickerSize.height, rect.size.width);)

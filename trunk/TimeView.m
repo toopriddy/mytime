@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "TimeView.h"
 #import "App.h"
-
+#import "TimePickerView.h"
 
 @implementation TimeTable
 
@@ -107,6 +107,42 @@
 
 @implementation TimeView
 
+static int sortByDate(id v1, id v2, void *context)
+{
+	// ok, we need to compare the dates of the calls since we have
+	// at least one call for each of 
+	NSDate *date1 = [v1 objectForKey:SettingsTimeEntryDate];
+	NSDate *date2 = [v2 objectForKey:SettingsTimeEntryDate];
+	return(-[date1 compare:date2]);
+}
+
+
+// sort the time entries and remove the 3 month old entries
+- (void)sort
+{
+	int i;
+	NSArray *sortedArray = [_timeEntries sortedArrayUsingFunction:sortByDate context:NULL];
+	[sortedArray retain];
+	[_timeEntries setArray:sortedArray];
+	[sortedArray release];
+
+	// remove all entries that are older than 3 months
+	NSCalendarDate *now = [[NSCalendarDate calendarDate] dateByAddingYears:0 months:-3 days:0 hours:0 minutes:0 seconds:0];
+	int count = [_timeEntries count];
+	for(i = 0; i < count; ++i)
+	{
+		NSLog(@"Comparing %d to %d", now, [[_timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]);
+		if([now compare:[[_timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]] > 0)
+		{
+			[_timeEntries removeObjectAtIndex:i];
+			--i;
+			count = [_timeEntries count];
+		}
+	}
+	
+	[_table reloadData];
+}
+
 - (void)dealloc
 {
 	[_table release];
@@ -156,6 +192,41 @@
     
     return(self);
 }
+/******************************************************************
+ *
+ *   DATE PICKER VIEW CALLBACKS
+ *
+ ******************************************************************/
+
+- (void)addTimeCancelAction: (TimePickerView *)view
+{
+    DEBUG(NSLog(@"TieView changeCallDateCancelAction:");)
+    [[App getInstance] transition:9 fromView:view toView:self];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
+}
+
+- (void)addTimeSaveAction: (TimePickerView *)view
+{
+    DEBUG(NSLog(@"CallView changeCallDateSaveAction:");)
+    VERBOSE(NSLog(@"date is = %@, minutes %d", [view date], [view minutes]);)
+
+	NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
+
+	[entry setObject:[view date] forKey:SettingsTimeEntryDate];
+	[entry setObject:[[[NSNumber alloc] initWithInt:[view minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
+	[_timeEntries insertObject:entry atIndex:0];
+    
+    [[App getInstance] transition:9 fromView:view toView:self];
+
+	[self sort];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
+
+	// save the data
+	[[App getInstance] saveData];
+}
+
 
 
 /******************************************************************
@@ -170,7 +241,21 @@
 	switch(button)
 	{
 		case 1: // Add Time
+		{
+			[self retain];
+			TimePickerView *p = [[[TimePickerView alloc] initWithFrame:_rect] autorelease];
+
+			// setup the callbacks for save or cancel
+			[p setCancelAction: @selector(addTimeCancelAction:) forObject:self];
+			[p setSaveAction: @selector(addTimeSaveAction:) forObject:self];
+
+			// transition from bottom up sliding ontop of the old view
+			// first refcount us so that when we are not the main UIView
+			// we dont get deleted prematurely
+			[self retain];
+			[[App getInstance] transition:8 fromView:self toView:p];
 			break;
+		}
 		
 		case 0: // start/stop time
 		{
@@ -250,11 +335,11 @@
 	int hours = minutes / 60;
 	minutes %= 60;
 	if(hours && minutes)
-		[label setText:[NSString stringWithFormat:@"%d hours %d minutes", hours, minutes]];
+		[label setText:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
 	else if(hours)
-		[label setText:[NSString stringWithFormat:@"%d hours", hours]];
+		[label setText:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
 	else if(minutes)
-		[label setText:[NSString stringWithFormat:@"%d minutes", minutes]];
+		[label setText:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
 	
 	[cell addSubview: label];
 
