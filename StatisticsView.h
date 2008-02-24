@@ -26,7 +26,7 @@
 	int _lastYear;
 	
 	int _thisMonthBooks;
-	int _thisMonthBroshures;
+	int _thisMonthBrochures;
 	int _thisMonthMinutes;
 	int _thisMonthMagazines;
 	int _thisMonthReturnVisits;
@@ -34,7 +34,7 @@
 	int _thisMonthSpecialPublications;
 	
 	int _lastMonthBooks;
-	int _lastMonthBroshures;
+	int _lastMonthBrochures;
 	int _lastMonthMinutes;
 	int _lastMonthMagazines;
 	int _lastMonthReturnVisits;

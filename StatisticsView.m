@@ -52,7 +52,7 @@ static NSString *MONTHS[] = {
 - (void)reloadData
 {
 	_thisMonthBooks = 0;
-	_thisMonthBroshures = 0;
+	_thisMonthBrochures = 0;
 	_thisMonthMinutes = 0;
 	_thisMonthMagazines = 0;
 	_thisMonthReturnVisits = 0;
@@ -60,7 +60,7 @@ static NSString *MONTHS[] = {
 	_thisMonthSpecialPublications = 0;
 	
 	_lastMonthBooks = 0;
-	_lastMonthBroshures = 0;
+	_lastMonthBrochures = 0;
 	_lastMonthMinutes = 0;
 	_lastMonthMagazines = 0;
 	_lastMonthReturnVisits = 0;
@@ -164,12 +164,12 @@ static NSString *MONTHS[] = {
 										else if(month == _lastMonth && year == _thisYear)
 											_lastMonthBooks++;
 									}
-									else if([type isEqual:PublicationTypeBroshure])
+									else if([type isEqual:PublicationTypeBrochure])
 									{
 										if(month == _thisMonth && year == _thisYear)
-											_thisMonthBroshures++;
+											_thisMonthBrochures++;
 										else if(month == _lastMonth && year == _thisYear)
-											_lastMonthBroshures++;
+											_lastMonthBrochures++;
 									}
 									else if([type isEqual:PublicationTypeMagazine])
 									{
@@ -252,7 +252,7 @@ static NSString *MONTHS[] = {
 			count++; // always show hours
 			if(_thisMonthBooks)
 				count++;
-			if(_thisMonthBroshures)
+			if(_thisMonthBrochures)
 				count++;
 			if(_thisMonthMagazines)
 				count++;
@@ -269,7 +269,7 @@ static NSString *MONTHS[] = {
 			count++; // always show hours
 			if(_lastMonthBooks)
 				count++;
-			if(_lastMonthBroshures)
+			if(_lastMonthBrochures)
 				count++;
 			if(_lastMonthMagazines)
 				count++;
@@ -362,12 +362,12 @@ static NSString *MONTHS[] = {
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
 				[cell setShowSelection:NO];
 			}
-			else if(_thisMonthBroshures && row-- == 0)
+			else if(_thisMonthBrochures && row-- == 0)
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Broshures"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBroshures]];
+				[cell setTitle:@"Brochures"];
+				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
 			else if(_thisMonthMagazines && row-- == 0)
@@ -423,12 +423,12 @@ static NSString *MONTHS[] = {
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
 				[cell setShowSelection:NO];
 			}
-			else if(_lastMonthBroshures && row-- == 0)
+			else if(_lastMonthBrochures && row-- == 0)
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Broshures"];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBroshures]];
+				[cell setTitle:@"Brochures"];
+				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
 			else if(_lastMonthMagazines && row-- == 0)
