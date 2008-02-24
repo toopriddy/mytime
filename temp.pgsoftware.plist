@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>info</key>
+	<dict>
+		<key>category</key>
+		<string>PG Software</string>
+		<key>contact</key>
+		<string>toopriddy@gmail.com</string>
+		<key>description</key>
+		<string>Priddy Good Software, not great just good</string>
+		<key>maintainer</key>
+		<string>Brent</string>
+		<key>name</key>
+		<string>PG Software</string>
+		<key>url</key>
+		<string>http://mytime.googlecode.com/</string>
+	</dict>
+	<key>packages</key>
+	<array>
+		<dict>
+			<key>bundleIdentifier</key>
+			<string>net.pgsoftware.iphone.MyTime</string>
+			<key>category</key>
+			<string>Productivity</string>
+			<key>contact</key>
+			<string>toopriddy@gmail.com</string>
+			<key>date</key>
+			<string>DATESTRING</string>
+			<key>description</key>
+			<string>Application to keep up with Field Service Information</string>
+			<key>hash</key>
+			<string>MD5STRING</string>
+			<key>location</key>
+			<string>http://mytime.googlecode.com/files/MyTime-VERSIONSTRING.zip</string>
+			<key>maintainer</key>
+			<string>Brent</string>
+			<key>name</key>
+			<string>MyTime</string>
+			<key>scripts</key>
+			<dict>
+				<key>install</key>
+				<array>
+					<array>
+						<string>CopyPath</string>
+						<string>MyTime.app/</string>
+						<string>/Applications/MyTime.app</string>
+					</array>
+				</array>
+				<key>uninstall</key>
+				<array>
+					<array>
+						<string>RemovePath</string>
+						<string>/Applications/MyTime.app</string>
+					</array>
+				</array>
+			</dict>
+			<key>size</key>
+			<string>FILELENGTHSTRING</string>
+			<key>url</key>
+			<string>http://mytime.googlecode.com/</string>
+			<key>version</key>
+			<string>VERSIONSTRING</string>
+		</dict>
+	</array>
+</dict>
+</plist>
