@@ -66,7 +66,11 @@ backup:
 
 zip:
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
-	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./
+	cat temp.pgsoftware.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
+	                            sed -e "s/VERSIONSTRING/`svnversion -n . | tr ":" "."`/g" | \
+	                            sed -e "s/FILELENGTHSTRING/`ls -l  $(CONFIGURATION_BUILD_DIR)/MyTime.zip |sed -e "s/  / /g" | cut -d " " -f 5`/g" | \
+	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > pgsoftware.plist
+	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-`svnversion -n . | tr ":" "."`.zip
 
 ##
 ## on every build, record the working copy revision string
