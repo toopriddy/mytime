@@ -42,8 +42,87 @@ typedef struct {
 static PublicationInformation PUBLICATIONS[] = {
     {@"Watchtower",                      PublicationTypeMagazine}
 ,   {@"Awake",                           PublicationTypeMagazine}
-,   {@"Bible Teach",                     PublicationTypeBook}
+
+,   {@"   BOOKS",    @""}
+,   {@"Bible",    PublicationTypeBook}
+
+,   {@"All Scripture",    PublicationTypeBook}
+,   {@"Bible Stories",    PublicationTypeBook}
+,   {@"Bible Teach",    PublicationTypeBook}
+,   {@"Close to Jehovah",    PublicationTypeBook}
+,   {@"Concordance",    PublicationTypeBook}
+,   {@"Creation",    PublicationTypeBook}
+,   {@"Creator",    PublicationTypeBook}
+,   {@"Daniel's Prophecy",    PublicationTypeBook}
+,   {@"Family Happiness",    PublicationTypeBook}
+,   {@"God's Word",    PublicationTypeBook}
+,   {@"Greatest Man",    PublicationTypeBook}
+,   {@"Insight",    PublicationTypeBook}
+,   {@"Isaiah's Prophecy I",    PublicationTypeBook}
+,   {@"Isaiah's Prophecy II",    PublicationTypeBook}
+,   {@"Jehovah's Day",    PublicationTypeBook}
+,   {@"Knowledge",    PublicationTypeBook}
+,   {@"Mankind's Search for God",    PublicationTypeBook}
+,   {@"Ministry School",    PublicationTypeBook}
 ,   {@"My Book of Bible Stories",        PublicationTypeBook}
+,   {@"Organized",    PublicationTypeBook}
+,   {@"Proclaimers",    PublicationTypeBook}
+,   {@"Revelation Climax",    PublicationTypeBook}
+,   {@"Sing Praises",    PublicationTypeBook}
+,   {@"Teacher",    PublicationTypeBook}
+,   {@"Worship God",    PublicationTypeBook}
+,   {@"Young People Ask",    PublicationTypeBook}
+,   {@"Reasoning",    PublicationTypeBook}
+
+,   {@"   BROCHURES",    @""}
+,   {@"Blood",    PublicationTypeBrochure}
+,   {@"Book for All",    PublicationTypeBrochure}
+,   {@"Divine Name",    PublicationTypeBrochure}
+,   {@"Does God Care",    PublicationTypeBrochure}
+,   {@"Education",    PublicationTypeBrochure}
+,   {@"God's Friend",    PublicationTypeBrochure}
+,   {@"Good Land",    PublicationTypeBrochure}
+,   {@"Government",    PublicationTypeBrochure}
+,   {@"Guidance of God",    PublicationTypeBrochure}
+,   {@"Jehovah's Witnesses",    PublicationTypeBrochure}
+,   {@"Lasting Peace",    PublicationTypeBrochure}
+,   {@"Life on Earth",    PublicationTypeBrochure}
+,   {@"Look!",    PublicationTypeBrochure}
+,   {@"Nations",    PublicationTypeBrochure}
+,   {@"Our Problems",    PublicationTypeBrochure}
+,   {@"Purpose of Life",    PublicationTypeBrochure}
+,   {@"Require",    PublicationTypeBrochure}
+,   {@"Satisfying Life",    PublicationTypeBrochure}
+,   {@"Spirits of the Dead",    PublicationTypeBrochure}
+,   {@"Trinity",    PublicationTypeBrochure}
+,   {@"Watch!",    PublicationTypeBrochure}
+,   {@"When Someone Dies",    PublicationTypeBrochure}
+,   {@"When We Die",    PublicationTypeBrochure}
+,   {@"Why Worship God",    PublicationTypeBrochure}
+,   {@"World Without War",    PublicationTypeBrochure}
+
+
+,   {@"   TRACTS",    @""}
+,   {@"A Peaceful New World-Will It Come?",    PublicationTypeTract}
+,   {@"Does Fate Rule Our Lives",    PublicationTypeTract}
+,   {@"Hellfire-Is It Part of Divine Justice?",    PublicationTypeTract}
+,   {@"How to Find the Road to Paradise",    PublicationTypeTract}
+,   {@"Immortal Spirit",    PublicationTypeTract}
+,   {@"Jehovah's Witnesses-What Do They Believe?",    PublicationTypeTract}
+,   {@"The Greatest Name",    PublicationTypeTract}
+,   {@"Who Are Jehovah's Witnesses?",    PublicationTypeTract}
+,   {@"Comfort for the Depressed",    PublicationTypeTract}
+,   {@"Enjoy Family Life",    PublicationTypeTract}
+,   {@"Jehovah-Who Is He?",    PublicationTypeTract}
+,   {@"Jesus Christ-Who Is He?",    PublicationTypeTract}
+,   {@"Know the Bible",    PublicationTypeTract}
+,   {@"Peaceful New World",    PublicationTypeTract}
+,   {@"Suffering to End",    PublicationTypeTract}
+,   {@"What Do Jehovah's Witnesses Believe?",    PublicationTypeTract}
+,   {@"What Hope for Dead Loved Ones?",    PublicationTypeTract}
+,   {@"Who Really Rules the World?",    PublicationTypeTract}
+,   {@"Why You Can Trust the Bible",    PublicationTypeTract}
+,   {@"Will This World Survive?",    PublicationTypeTract}
 };
 
 static NSString *MONTHS[] = {

@@ -82,8 +82,9 @@ extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
 
 #define PublicationTypeBook @"Book"
-#define PublicationTypeBroshure @"Broshure"
+#define PublicationTypeBrochure @"Brochure"
 #define PublicationTypeMagazine @"Magazine"
+#define PublicationTypeTract @"Tract"
 #define PublicationTypeSpecial @"Special"
 
 extern NSString const * const SettingsCalls;
