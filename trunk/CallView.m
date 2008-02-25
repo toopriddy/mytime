@@ -53,9 +53,8 @@
 	}
 }
 
-- (void)setFocus: (NSTimer *)timer
+- (void)setFocus:(UIPreferencesTextTableCell *)cell
 {
-	UIPreferencesTextTableCell *cell = [timer userInfo];
 	[cell becomeFirstResponder];
 }
 
@@ -688,11 +687,9 @@
 						if(_setFirstResponderGroup == group)
 						{
 							_setFirstResponderGroup = -1;
-							[NSTimer scheduledTimerWithTimeInterval:.3 
-							                                 target:self 
-														   selector:@selector(setFocus:) 
-														   userInfo:_name 
-														    repeats:NO];
+							[self performSelector: @selector(setFocus:) 
+									   withObject:_name
+									   afterDelay:.3];
 						}
 					}
 					else
@@ -818,11 +815,9 @@
 						if(_setFirstResponderGroup == group)
 						{
 							_setFirstResponderGroup = -1;
-							[NSTimer scheduledTimerWithTimeInterval:.3 
-							                                 target:self 
-														   selector:@selector(setFocus:) 
-														   userInfo:text 
-														    repeats:NO];
+							[self performSelector: @selector(setFocus:) 
+									   withObject:text 
+									   afterDelay:.3];
 						}
 					}
 					else
@@ -888,6 +883,7 @@
 
 - (void)alertSheet:(UIAlertSheet*)sheet buttonClicked:(int)button
 {
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[sheet dismissAnimated:YES];
 	if(button == 1)
 	{
@@ -898,9 +894,9 @@
 	}
 }
 
-- (void)animateInsertRows: (NSTimer *)timer
+- (void)animateInsertRows: (NSNumber *)start
 {
-	NSNumber *start = [timer userInfo];
+//	NSNumber *start = [timer userInfo];
 	VERBOSE(NSLog(@"animateInsertRows for %d", [start intValue]);)
 	// reload the group title
 	[_table reloadCellAtRow: [start intValue] - 1 column:0 animated:YES];
@@ -1045,12 +1041,15 @@
 //		[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
 //		[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow, 1)] viaEdge:1 animated:YES];
 		[_table animateDeletionOfCellAtRow:_selectedRow column:0 viaEdge:1];
-
-		[NSTimer scheduledTimerWithTimeInterval:.5
-										 target:self 
-									   selector:@selector(animateInsertRows:) 
-									   userInfo:[[NSNumber alloc] initWithInt:_selectedRow]
-										repeats:NO];
+// I could also use 
+        [self performSelector: @selector(animateInsertRows:) 
+				   withObject:[[NSNumber alloc] initWithInt:_selectedRow] 
+				   afterDelay:.5];
+//		[NSTimer scheduledTimerWithTimeInterval:.5
+//										 target:self 
+//									   selector:@selector(animateInsertRows:) 
+//									   userInfo:[[NSNumber alloc] initWithInt:_selectedRow]
+//										repeats:NO];
 		_setFirstResponderGroup = 2;
 		
 		// unselect this row 
@@ -1075,7 +1074,14 @@
 			[alertSheet setBodyText:@"Are you sure you want to delete the call?"];
 			[alertSheet addButtonWithTitle:@"Yes"];
 			[alertSheet addButtonWithTitle:@"No"];
+			[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
+			[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 1]];
 			[alertSheet setDelegate:self];
+			// 0: grey with grey and black buttons
+			// 1: black background with grey and black buttons
+			// 2: transparent black background with grey and black buttons
+			// 3: grey transparent background
+			[alertSheet setAlertSheetStyle: 0];
 			[alertSheet presentSheetFromAboveView:self];		
 			break;
 		}
