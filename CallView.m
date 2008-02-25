@@ -16,6 +16,7 @@
 #import <UIKit/UIHardware.h>
 #import <UIKit/UIPreferencesTable.h>
 #import <UIKit/UIPreferencesTextTableCell.h>
+#import <UIKit/UIPreferencesDeleteTableCell.h>
 #import <UIKit/UIPickerView.h>
 #import <UIKit/UITextFieldLabel.h>
 #import "App.h"
@@ -787,13 +788,16 @@
 			if(_editing && _showDeleteButton && [[_call objectForKey:CallReturnVisits] count] == group-adjust)
 			{
 				// DELETE
-				cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
+				cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
 				[ cell setShowDisclosure: NO ];
-				[ cell setValue:@"Delete Call"];
-				
-//				UIPushButton *button = [[UIPushButton alloc] initWithTitle:@"Delete Call"];
-//				[cell addSubview:button];
-//				[button sizeToFit];
+				[ cell setTitle:@"Delete Call"];
+				[ cell setAlignment:2 ];
+				float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
+				CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+				CGColorRef whiteColor = CGColorCreate(rgbSpace, wcolorComponents);
+				CGColorSpaceRelease(rgbSpace);
+
+				[ [cell titleTextLabel] setColor:whiteColor];
 			}
 			else if([[_call objectForKey:CallReturnVisits] count] <= group-adjust)
 			{
