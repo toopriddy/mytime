@@ -58,7 +58,8 @@ NSString const * const SettingsTimeEntries = @"timeEntries";
 NSString const * const SettingsTimeEntryDate = @"date";
 NSString const * const SettingsTimeEntryMinutes = @"minutes";
 
-static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
+//static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
+static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 @implementation MainView
 
