@@ -58,6 +58,8 @@ PRODUCT_ABS=$(APP_ABS)/$(EXECUTABLE_NAME)
 all: $(PRODUCT_ABS)
 
 
+$(CONFIGURATION_BUILD_DIR)/svn_version.o: $(SRCROOT)/svn_version.c
+
 copy:
 	scp build/Release/MyTime.app/MyTime root@10.10.10.254:/Applications/MyTime.app/
 
@@ -87,6 +89,7 @@ $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
 
 $(APP_ABS): $(INFOPLIST_ABS)
 	mkdir -p $(APP_ABS)
+	chmod 775 $(APP_ABS)
 	cp $(INFOPLIST_ABS) $(APP_ABS)/
 	cp $(RESOURCES_ABS) $(APP_ABS)/
 
