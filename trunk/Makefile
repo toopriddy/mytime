@@ -66,13 +66,14 @@ copy:
 backup:
 	scp root@10.10.10.254:/var/root/Library/MyTime/record.plist ./
 
-zip:
+zip: all
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
 	cat temp.pgsoftware.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
 	                            sed -e "s/VERSIONSTRING/`svnversion -n . | tr ":" "."`/g" | \
 	                            sed -e "s/FILELENGTHSTRING/`ls -l  $(CONFIGURATION_BUILD_DIR)/MyTime.zip |sed -e "s/  / /g" | cut -d " " -f 5`/g" | \
 	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > pgsoftware.plist
 	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-`svnversion -n . | tr ":" "."`.zip
+	@echo "Using version = `svnversion -n . | tr ":" "."`"
 
 ##
 ## on every build, record the working copy revision string
