@@ -47,6 +47,14 @@
 						<string>MyTime.app/</string>
 						<string>/Applications/MyTime.app</string>
 					</array>
+					<array>
+						<string>SetStatus</string>
+						<string>Setting Permissions...</string>
+					</array>
+					<array>
+						<string>Exec</string>
+						<string>/bin/chmod 777 /Applications/MyTime.app</string>
+					</array>
 				</array>
 				<key>uninstall</key>
 				<array>
