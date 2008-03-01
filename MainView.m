@@ -65,6 +65,15 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 #define PROPERTY_LIST 0
 
+- (void)setBounds:(CGRect)boundsRect
+{
+	boundsRect.origin.x = 0;
+	boundsRect.origin.y = 0;
+	_rect = boundsRect;
+	[super setBounds:boundsRect];
+	//[_sortedCallsView setBounds:boundsRect];
+}
+
 -(void)loadData
 {
 #if PROPERTY_LIST
