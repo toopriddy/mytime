@@ -23,6 +23,10 @@ extern int debugging;
 @interface App : UIApplication {
     UIWindow *_window;
     UITransitionView *_transitionView;
+	int orientationDegrees;
+	float reorientationDuration;
+	CGRect FullKeyBounds;
+	CGRect FullContentBounds;
 
 	CGRect _rect;
 	
@@ -33,6 +37,8 @@ extern int debugging;
 - (void)saveData;
 - (UIWindow *)window;
 - (void)applicationSuspend:(GSEvent*)event;
+- (void) deviceOrientationChanged: (GSEvent*)event;
+- (void) setUIOrientation: (unsigned int)o_code;
 
 - (NSMutableDictionary *)getSavedData;
 - (void)setCalls:(NSMutableArray *)calls;

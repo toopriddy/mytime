@@ -29,6 +29,13 @@
 
 @implementation SortedCallsView
 
+- (void)setBounds:(CGRect)boundsRect
+{
+	_rect = boundsRect;
+	[super setBounds:boundsRect];
+}
+
+
 - (int)numberOfRowsInTable:(UITable*)table
 {
 	return [_calls count];

@@ -38,6 +38,7 @@ typedef enum {
 	NSMutableArray *_streetOffsets;
 }
 
+- (void)setBounds:(CGRect)boundsRect;
 - (id) initWithFrame: (CGRect)rect calls:(NSMutableArray *)calls sortBy:(SortCallsType) sortBy;
 
 - (void)updateSections;
