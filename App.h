@@ -11,7 +11,9 @@
 #import <UIKit/UIPushButton.h>
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
+#import "UIOrientingApplication.h"
 #import "MainView.h"
+#import "MainTransitionView.h"
 
 extern int debugging;
 
@@ -20,25 +22,31 @@ extern int debugging;
 #define VERY_VERBOSE(a) if(debugging > 2) { a }
 
 
-@interface App : UIApplication {
+#define resize_SpringLeft 0x01
+#define resize_SpringWidth 0x02
+#define resize_SpringRight 0x04
+#define resize_SpringTop 0x08
+#define resize_SpringHeight 0x10
+#define resize_SpringBottom 0x20
+#define kMainAreaResizeMask (resize_SpringWidth | resize_SpringHeight)
+#define kTopBarResizeMask resize_SpringWidth
+#define kBottomBarResizeMask (resize_SpringWidth | resize_SpringTop)
+
+
+@interface App : UIOrientingApplication {
     UIWindow *_window;
-    UITransitionView *_transitionView;
-	int orientationDegrees;
-	float reorientationDuration;
-	CGRect FullKeyBounds;
-	CGRect FullContentBounds;
+    MainTransitionView *_transitionView;
 
 	CGRect _rect;
 	
 	MainView *_mainView;
 }
 
+- (id)init;
 - (CGRect)rect;
 - (void)saveData;
 - (UIWindow *)window;
 - (void)applicationSuspend:(GSEvent*)event;
-- (void) deviceOrientationChanged: (GSEvent*)event;
-- (void) setUIOrientation: (unsigned int)o_code;
 
 - (NSMutableDictionary *)getSavedData;
 - (void)setCalls:(NSMutableArray *)calls;

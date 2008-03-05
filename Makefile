@@ -11,6 +11,8 @@ DatePickerView.m \
 TimeView.m \
 StatisticsView.m \
 TimePickerView.m \
+UIOrientingApplication.m \
+MainTransitionView.m \
 svn_version.c \
 
 

@@ -21,6 +21,7 @@
 #import "App.h"
 #import "MainView.h"
 
+
 @implementation App
 
 App *me;
@@ -75,23 +76,23 @@ App *me;
     _rect = [UIHardware fullScreenApplicationContentRect];
     _window = [[UIWindow alloc] initWithContentRect: _rect];
 
-	reorientationDuration = 0.35f;
-	orientationDegrees = -1;
-
 	[_window orderFront: self];
 	[_window makeKey: self];
     [_window _setHidden: NO];
 
+	[_window setAutoresizingMask: kMainAreaResizeMask];
+	[_window setAutoresizesSubviews: YES];
+
 	_rect.origin.x = 0;
 	_rect.origin.y = 0;
 
-    _transitionView = [[UITransitionView alloc] initWithFrame: _rect];
+    _transitionView = [[MainTransitionView alloc] initWithFrame: _rect];
     [_window setContentView: _transitionView];
     
     _mainView = [[MainView alloc] initWithFrame: _rect];
     [_transitionView transition:0 toView:_mainView]; 
-	[self setUIOrientation: 1];
-
+	[_transitionView setAutoresizingMask: kMainAreaResizeMask];
+	[_transitionView setAutoresizesSubviews: YES];
 }
 
 
@@ -101,93 +102,44 @@ App *me;
 	[self terminate];
 }
 
-- (void) deviceOrientationChanged: (GSEvent*)event 
+/* Here's the recommended method for doing custom stuff when the screen's rotation has changed... */
+- (void) setUIOrientation: (int) o_code 
 {
-//	[self setUIOrientation: [UIHardware deviceOrientation:YES]];
-}
-
-static const int orientations[7] = {-1, 0, -1, 90, -90, -1, -1};
-
-- (void) setUIOrientation: (unsigned int)o_code 
-{
-	DEBUG(NSLog(@"setUIOrientation: %d", o_code);)
-	if (o_code > 6) 
-		return;
-	/* Degrees should technically be a float, but without integers here, rounding errors seem to screw up the UI over time.
-		The compiler will automatically cast to a float when appropriate API calls are made. */
-	int degrees = orientations[o_code];
-	if (degrees == -1) 
-		return;
-	if (degrees == orientationDegrees) 
-		return;
-	if(orientationDegrees == -1)
-		orientationDegrees = 0;
-	
-	/* Find the rect a fullscreen app would use under the new rotation... */
-	bool landscape = (degrees == 90 || degrees == -90);
-	struct CGSize size = [UIHardware mainScreenSize];
-	float statusBar = [UIHardware statusBarHeight];
-	
-	if (landscape) 
-	{
-		size.width -= statusBar;
-	} 
-	else 
-	{
-		size.height -= statusBar;
-	}
-	
-	FullKeyBounds.origin.x = (degrees == 90) ? statusBar : 0;
-	FullKeyBounds.origin.y = 0;
-	FullKeyBounds.size = size;
-	
-	FullContentBounds.origin.x = FullContentBounds.origin.y = 0;
-	FullContentBounds.size = (landscape) ? CGSizeMake(size.height, size.width) : size; 
-	
-	/* Now that our member variable is set, we try to apply these changes to the key view, if present.
-		If this routine is called before there is a key view, it will still set the rects and move the statusbar. */
-	UIWindow *key = [UIWindow keyWindow];
-	if (key) 
-	{
-		
-		[self setStatusBarMode:[self statusBarMode]
-			       orientation: (degrees == 180) ? 0 : degrees
-			          duration:reorientationDuration 
-					   fenceID:0 
-					 animation:3];
-	
-		UIView *content = [key contentView];
-		if (content) 
-		{
-			struct CGSize oldSize = [content bounds].size;
-
-			[UIView beginAnimations: nil];
-				[UIView setAnimationDuration: reorientationDuration];
-		
-				[content setBounds: FullContentBounds];
-				[_mainView setBounds: FullContentBounds];
-				[content resizeSubviewsWithOldSize: oldSize];
-				[key setBounds: FullKeyBounds];
-				[content setRotationBy: degrees - orientationDegrees];
-			[UIView endAnimations];
-			
-		} 
-		else 
-		{
-			[key setBounds: FullKeyBounds];
-		}
-	} 
-	else 
-	{
-		[self setStatusBarMode: [self statusBarMode] 
-		           orientation: (degrees == 180) ? 0 : degrees 
-				      duration:0.0f];
-	}
-	orientationDegrees = degrees;
+	NSLog(@"orientation changed %d", o_code);
+	int oldAngle = orientationDegrees;
 	[super setUIOrientation: o_code];
+	if (oldAngle != orientationDegrees) 
+	{
+		/* We know that the display was reoriented, and can now take action. */
+		[self vibrateForDuration: 1];
+	}
 }
 
+- (void)rotateme: (NSNumber *)value
+{
+	int val = [value intValue];
+	[self setUIOrientation: val];
+	
+	[self performSelector: @selector(rotateme:) 
+			   withObject:[[NSNumber alloc] initWithInt:(val == 3 ? 1 : 3)] 
+			   afterDelay:5];
+}
 
+- (id)init
+{
+	if((self = [super init])) 
+    {
+		NSLog(@"App init");
+		[self setUIOrientation: [UIHardware deviceOrientation:YES]];
+
+	}
+#if 0
+	[self performSelector: @selector(rotateme:) 
+			   withObject:[[NSNumber alloc] initWithInt:3] 
+			   afterDelay:5];
+#endif
+	return self;
+}
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
