@@ -338,6 +338,9 @@ int sortByDate(id v1, id v2, void *context)
         _calls = calls;
 		[_calls retain];
 
+		[self setAutoresizingMask: kMainAreaResizeMask];
+		[self setAutoresizesSubviews: YES];
+
 		_sortBy = -1;
 		
         // we should read from the file the _calls
@@ -352,6 +355,9 @@ int sortByDate(id v1, id v2, void *context)
         CGSize s = [UINavigationBar defaultSize];
         _navigationBar = [[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, s.height)];
         [_navigationBar setDelegate: self];
+		[_navigationBar setAutoresizingMask: kTopBarResizeMask];
+		[_navigationBar setAutoresizesSubviews: YES];
+		
         [self addSubview: _navigationBar]; 
 
 		[_navigationBar showLeftButton:nil withStyle:0 rightButton:@"+" withStyle:3];
@@ -362,6 +368,8 @@ int sortByDate(id v1, id v2, void *context)
         [_section setDataSource:self];
 		[_section setShouldHideHeaderInShortLists:NO];
 		[_section setAllowsScrollIndicators:YES];
+		[_section setAutoresizingMask: kMainAreaResizeMask];
+		[_section setAutoresizesSubviews: YES];
 		
         _table = [_section table];
         [_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Calls" identifier:nil width:rect.size.width] autorelease]];

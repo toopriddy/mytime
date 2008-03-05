@@ -16,7 +16,7 @@
 {
 	NSLog(@"(%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
 	[super setBounds:rect];
-	[[[self subviews] objectAtIndex:0] setBounds:rect];
+//	[[[self subviews] objectAtIndex:0] setBounds:rect];
 }
 
 @end
