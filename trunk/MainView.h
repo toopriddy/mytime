@@ -39,7 +39,7 @@ typedef enum {
     NSMutableDictionary *_settings;
 }
 
-- (void)setBounds:(CGRect)boundsRect;
+- (void)setBounds:(CGRect)rect;
 
 - (NSMutableDictionary *)getSavedData;
 - (void)saveData;
