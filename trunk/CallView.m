@@ -185,6 +185,9 @@
     if((self = [super initWithFrame: rect])) 
     {
 		[self becomeFirstResponder];
+		[self setAutoresizingMask: kMainAreaResizeMask];
+		[self setAutoresizesSubviews: YES];
+		
         NSString *temp;
         DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
 
@@ -290,6 +293,8 @@
         CGSize s = [UINavigationBar defaultSize];
         _navigationBar = [[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, s.height)];
         [_navigationBar setDelegate: self];
+		[_navigationBar setAutoresizingMask: kTopBarResizeMask];
+		[_navigationBar setAutoresizesSubviews: YES];
         [self addSubview: _navigationBar]; 
 
 		// 0 = greay
@@ -313,6 +318,8 @@
         [_table setDelegate: self];
         [_table setDataSource: self];
 		[_table enableRowDeletion: YES animated:YES];
+		[_table setAutoresizingMask: kMainAreaResizeMask];
+		[_table setAutoresizesSubviews: YES];
         [_table reloadData];
     }
     

@@ -278,6 +278,8 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		
 		// create the transition view to change between the time and sorted calls view
         _transitionView = [[UITransitionView alloc] initWithFrame:rect];
+		[_transitionView setAutoresizingMask: kMainAreaResizeMask];
+		[_transitionView setAutoresizesSubviews: YES];
         VERBOSE(NSLog(@"MainView initWithFrame: %p", self);)
 		// we are given the full screen rect, now lets chop it up
         _rect = rect;
@@ -299,12 +301,18 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
 													       sortBy:CALLS_SORTED_BY_STREET];
+		[_sortedCallsView setAutoresizingMask: kMainAreaResizeMask];
+		[_sortedCallsView setAutoresizesSubviews: YES];
 
 		// create the TimeView
 		_timeView = [[TimeView alloc] initWithFrame:rect settings:_settings];
+		[_timeView setAutoresizingMask: kMainAreaResizeMask];
+		[_timeView setAutoresizesSubviews: YES];
 
 		// create the TimeView
 		_statisticsView = [[StatisticsView alloc] initWithFrame:rect settings:_settings];
+		[_statisticsView setAutoresizingMask: kMainAreaResizeMask];
+		[_statisticsView setAutoresizesSubviews: YES];
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
@@ -315,15 +323,9 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		rect.origin.y = rect.size.height;
 		rect.size.height = 49.0f; 
 		_buttonBar = [self allocButtonBarWithFrame:rect];
-		[self addSubview: _buttonBar];
-
-
 		[_buttonBar setAutoresizingMask: kBottomBarResizeMask];
-		[_transitionView setAutoresizingMask: kMainAreaResizeMask];
-		[_sortedCallsView setAutoresizingMask: kMainAreaResizeMask];
-		[_timeView setAutoresizingMask: kMainAreaResizeMask];
-		[_statisticsView setAutoresizingMask: kMainAreaResizeMask];
-		
+		[_buttonBar setAutoresizesSubviews: YES];
+		[self addSubview: _buttonBar];
     }
     
     return(self);
@@ -332,6 +334,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 - (void)setBounds:(CGRect)rect
 {
 	[super setBounds:rect];
+#if 0
 	rect.origin.x = 0;
 	rect.origin.y = 0;
 
@@ -349,6 +352,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	rect.size.height = 49.0f; 
 	NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
 	[_buttonBar setBounds:rect];
+#endif
 }
 
 
