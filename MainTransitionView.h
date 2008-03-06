@@ -15,5 +15,6 @@
 
 }
 
+- (id) initWithFrame: (CGRect)rect;
 - (void)setBounds:(CGRect)rect;
 @end

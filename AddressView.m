@@ -98,6 +98,8 @@
         CGSize s = [UINavigationBar defaultSize];
         _navigationBar = [[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, s.height)];
         [_navigationBar setDelegate: self];
+		[_navigationBar setAutoresizingMask: kTopBarResizeMask];
+		[_navigationBar setAutoresizesSubviews: YES];
         [self addSubview: _navigationBar]; 
         // 0 = greay
         // 1 = red
@@ -145,6 +147,8 @@
         [_table setDelegate: self];
         [_table setDataSource: self];
         [_table reloadData];
+		[_table setAutoresizingMask: kMainAreaResizeMask];
+		[_table setAutoresizesSubviews: YES];
 
 		[NSTimer scheduledTimerWithTimeInterval:.5
 										 target:self 

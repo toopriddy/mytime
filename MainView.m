@@ -197,6 +197,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 {
 	if(_currentView != view)
 	{
+//		[view setBounds:_rect];
 		[_transitionView transition:transition fromView:_currentView toView:view ];
 		_currentView = view;
 	}
@@ -334,6 +335,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 - (void)setBounds:(CGRect)rect
 {
 	[super setBounds:rect];
+	_rect = rect;
 #if 0
 	rect.origin.x = 0;
 	rect.origin.y = 0;

@@ -165,6 +165,8 @@ static int sortByDate(id v1, id v2, void *context)
         CGSize s = [UINavigationBar defaultSize];
         _navigationBar = [[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, s.height)];
         [_navigationBar setDelegate: self];
+		[_navigationBar setAutoresizingMask: kTopBarResizeMask];
+		[_navigationBar setAutoresizesSubviews: YES];
         [self addSubview: _navigationBar]; 
 
 		// 0 = gray
@@ -186,6 +188,8 @@ static int sortByDate(id v1, id v2, void *context)
 		[_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Times" identifier:nil width: rect.size.width] autorelease]];
         [_table setDelegate: self];
         [_table setDataSource: self];
+		[_table setAutoresizingMask: kMainAreaResizeMask];
+		[_table setAutoresizesSubviews: YES];
         [self addSubview: _table];
 		[_table reloadData];
     }
@@ -248,6 +252,8 @@ static int sortByDate(id v1, id v2, void *context)
 			// setup the callbacks for save or cancel
 			[p setCancelAction: @selector(addTimeCancelAction:) forObject:self];
 			[p setSaveAction: @selector(addTimeSaveAction:) forObject:self];
+			[p enableRowDeletion: YES animated:YES];
+			[p setAutoresizingMask: kMainAreaResizeMask];
 
 			// transition from bottom up sliding ontop of the old view
 			// first refcount us so that when we are not the main UIView

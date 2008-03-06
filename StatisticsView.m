@@ -211,6 +211,8 @@ static NSString *MONTHS[] = {
         [_table setDelegate: self];
         [_table setDataSource: self];
 		[_table enableRowDeletion: YES animated:YES];
+		[_table setAutoresizingMask: kMainAreaResizeMask];
+		[_table setAutoresizesSubviews: YES];
 		[self reloadData];
     }
     
