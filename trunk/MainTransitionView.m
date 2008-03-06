@@ -11,6 +11,14 @@
 
 @implementation MainTransitionView
 
+- (id) initWithFrame: (CGRect)rect
+{
+    if((self = [super initWithFrame: rect])) 
+    {
+	}
+	
+	return(self);
+}
 
 - (void)setBounds:(CGRect)rect;
 {

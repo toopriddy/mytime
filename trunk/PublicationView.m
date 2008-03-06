@@ -498,6 +498,8 @@ static NSString *MONTHS[] = {
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
         [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Select Publication"] autorelease] ];
+		[nav setAutoresizingMask: kTopBarResizeMask];
+		[nav setAutoresizesSubviews: YES];
 //        [nav setBarStyle: 1];
         [self addSubview: nav]; 
         // 0 = greay
@@ -511,6 +513,8 @@ static NSString *MONTHS[] = {
     	CGSize pickerSize = [UIPickerView defaultSize];
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f", pickerSize.height, pickerSize.width);)
         _picker = [[UIPickerView alloc] initWithFrame: CGRectMake(0, navSize.height, rect.size.width, pickerSize.height)];
+		[_picker setAutoresizingMask: kPickerResizeMask];
+		[_picker setAutoresizesSubviews: YES];
 
         pickerSize = [_picker bounds].size;
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f", pickerSize.height, pickerSize.width);)
@@ -534,6 +538,8 @@ static NSString *MONTHS[] = {
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f", 0.0, navSize.height + pickerSize.height, rect.size.height - navSize.height - pickerSize.height, rect.size.width);)
         UITable *table = [[UITable alloc] initWithFrame: CGRectMake(0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height)];
         [table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Placed Publications" identifier:nil width:rect.size.width] autorelease]];
+		[table setAutoresizingMask: kMainAreaResizeMask];
+		[table setAutoresizesSubviews: YES];
 //      [table setDataSource: self];
 //      [table setDelegate: self];
         [self addSubview: table];

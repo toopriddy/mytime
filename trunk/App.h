@@ -29,6 +29,7 @@ extern int debugging;
 #define resize_SpringHeight 0x10
 #define resize_SpringBottom 0x20
 #define kMainAreaResizeMask (resize_SpringWidth | resize_SpringHeight)
+#define kPickerResizeMask resize_SpringWidth
 #define kTopBarResizeMask resize_SpringWidth
 #define kBottomBarResizeMask (resize_SpringWidth | resize_SpringTop)
 

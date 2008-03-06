@@ -77,6 +77,8 @@
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
         [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Select Time"] autorelease] ];
+		[nav setAutoresizingMask: kTopBarResizeMask];
+		[nav setAutoresizesSubviews: YES];
         [self addSubview: nav]; 
         // 0 = greay
         // 1 = red
@@ -99,6 +101,8 @@
 		// 2: date(day of week, month, date), hor, min, am/pm
 		// 3: hours, mins
 		[_datePicker setDatePickerMode:1];
+		[_datePicker setAutoresizingMask: kPickerResizeMask];
+		[_datePicker setAutoresizesSubviews: YES];
     	[self addSubview: _datePicker];
 
 
@@ -106,6 +110,8 @@
 		// init to display one hour zero minutes
 		[_timePicker setDate:[[[NSCalendarDate alloc] initWithYear: 1978 month:7 day:26 hour:1 minute:0 second:0 timeZone:nil] autorelease]];
 		// 0: hour, min, AM/PM
+		[_timePicker setAutoresizingMask: kPickerResizeMask];
+		[_timePicker setAutoresizesSubviews: YES];
 		// 1: Month, date, year   
 		// 2: date(day of week, month, date), hor, min, am/pm
 		// 3: hours, mins
