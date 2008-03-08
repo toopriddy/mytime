@@ -100,8 +100,8 @@
         [p setCancelAction: @selector(editCallCancelAction:) forObject:self];
         [p setSaveAction: @selector(editCallSaveAction:) forObject:self];
         [p setDeleteAction: @selector(editCallDeleteAction:) forObject:self];
-		[p enableRowDeletion: YES animated:YES];
 		[p setAutoresizingMask: kMainAreaResizeMask];
+		[p setAutoresizesSubviews: YES];
 
         // transition from bottom up sliding ontop of the old view
         // first refcount us so that when we are not the main UIView
@@ -175,8 +175,8 @@
 		// setup the callbacks for save or cancel
 		[p setCancelAction: @selector(addNewCallCancelAction:) forObject:self];
 		[p setSaveAction: @selector(addNewCallSaveAction:) forObject:self];
-		[p enableRowDeletion: YES animated:YES];
 		[p setAutoresizingMask: kMainAreaResizeMask];
+		[p setAutoresizesSubviews: YES];
 
 		// transition from bottom up sliding ontop of the old view
 		// first refcount us so that when we are not the main UIView

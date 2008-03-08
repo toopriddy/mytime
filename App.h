@@ -32,6 +32,7 @@ extern int debugging;
 #define kPickerResizeMask resize_SpringWidth
 #define kTopBarResizeMask resize_SpringWidth
 #define kBottomBarResizeMask (resize_SpringWidth | resize_SpringTop)
+#define kButtonBarResizeMask (resize_SpringWidth | resize_SpringLeft | resize_SpringRight | resize_SpringTop)
 
 
 @interface App : UIOrientingApplication {

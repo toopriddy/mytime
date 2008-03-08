@@ -959,8 +959,8 @@
 														  street:street
 															city:city
 														   state:state] autorelease];
-			[p enableRowDeletion: YES animated:YES];
 			[p setAutoresizingMask: kMainAreaResizeMask];
+			[p setAutoresizesSubviews: YES];
 
 			// setup the callbacks for save or cancel
 			[p setCancelAction: @selector(editAddressCancelAction:) forObject:self];
@@ -1124,8 +1124,8 @@
 				// setup the callbacks for save or cancel
 				[p setCancelAction: @selector(changeCallDateCancelAction:) forObject:self];
 				[p setSaveAction: @selector(changeCallDateSaveAction:) forObject:self];
-				[p enableRowDeletion: YES animated:YES];
 				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
 				// first refcount us so that when we are not the main UIView
@@ -1147,8 +1147,8 @@
 				// setup the callbacks for save or cancel
 				[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
 				[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
-				[p enableRowDeletion: YES animated:YES];
 				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
 				// first refcount us so that when we are not the main UIView
@@ -1174,8 +1174,8 @@
 				// setup the callbacks for save or cancel
 				[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
 				[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
-				[p enableRowDeletion: YES animated:YES];
 				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
 				// first refcount us so that when we are not the main UIView
