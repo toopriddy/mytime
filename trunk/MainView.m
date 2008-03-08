@@ -324,7 +324,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		rect.origin.y = rect.size.height;
 		rect.size.height = 49.0f; 
 		_buttonBar = [self allocButtonBarWithFrame:rect];
-		[_buttonBar setAutoresizingMask: kBottomBarResizeMask];
+		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
 		[_buttonBar setAutoresizesSubviews: YES];
 		[self addSubview: _buttonBar];
     }
@@ -335,8 +335,8 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 - (void)setBounds:(CGRect)rect
 {
 	[super setBounds:rect];
-	_rect = rect;
-#if 0
+	CGSize oldSize;
+
 	rect.origin.x = 0;
 	rect.origin.y = 0;
 
@@ -344,17 +344,24 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	rect.size.height -= 49.0f;
 
 	NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
-	[_transitionView setBounds:rect];
+
+	oldSize = [_sortedCallsView bounds].size;
 	[_sortedCallsView setBounds:rect];
+	[_sortedCallsView resizeSubviewsWithOldSize: oldSize];
+	oldSize = [_timeView bounds].size;
 	[_timeView setBounds:rect];
+	[_timeView resizeSubviewsWithOldSize: oldSize];
+	oldSize = [_statisticsView bounds].size;
 	[_statisticsView setBounds:rect];
+	[_statisticsView resizeSubviewsWithOldSize: oldSize];
 
 	// create the buttonbar and add it at the lat 49pix of the screen
 	rect.origin.y = rect.size.height;
 	rect.size.height = 49.0f; 
 	NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
-	[_buttonBar setBounds:rect];
-#endif
+//	[_buttonBar setBounds:rect];
+
+	_rect = rect;
 }
 
 

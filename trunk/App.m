@@ -135,7 +135,7 @@ App *me;
 		[self setUIOrientation: [UIHardware deviceOrientation:YES]];
 
 	}
-#if 0
+#if 1
 	[self performSelector: @selector(rotateme:) 
 			   withObject:[[NSNumber alloc] initWithInt:3] 
 			   afterDelay:5];

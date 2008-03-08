@@ -252,8 +252,8 @@ static int sortByDate(id v1, id v2, void *context)
 			// setup the callbacks for save or cancel
 			[p setCancelAction: @selector(addTimeCancelAction:) forObject:self];
 			[p setSaveAction: @selector(addTimeSaveAction:) forObject:self];
-			[p enableRowDeletion: YES animated:YES];
 			[p setAutoresizingMask: kMainAreaResizeMask];
+			[p setAutoresizesSubviews: YES];
 
 			// transition from bottom up sliding ontop of the old view
 			// first refcount us so that when we are not the main UIView
