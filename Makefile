@@ -76,7 +76,7 @@ zip: all
 	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > temp1.pgsoftware.plist
 ifdef CHANGES
 	cat temp1.pgsoftware.plist |sed -e "s/IFCHANGES//g" | \
-	                            sed -e "s/CHANGESSTRING/$(CHANGES)/g" > pgsoftware.plist
+	                            sed -e "s%CHANGESSTRING%$(CHANGES)%g" > pgsoftware.plist
 else
 	cat temp1.pgsoftware.plist |grep -v IFCHANGES > pgsoftware.plist
 endif
