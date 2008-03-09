@@ -19,10 +19,14 @@
 	int orientationDegrees;
 	bool orientationLocked;
 	float reorientationDuration;
+
+	NSMutableArray *rotateThese;
 }
 
 - (id) init;
 
+- (void) rotateObject: (UIView *)view;
+- (void) dontRotateObject: (UIView *)view;
 - (void) lockUIOrientation;
 - (void) lockUIToOrientation: (unsigned int)o_code;
 - (void) unlockUIOrientation;

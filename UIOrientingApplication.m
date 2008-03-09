@@ -103,6 +103,17 @@ NSLog(@"UI (%f, %f) height=%f width=%f", FullContentBounds.origin.x, FullContent
 				[key setBounds: FullKeyBounds];
 				[content setRotationBy: degrees - orientationDegrees];
 			[UIView endAnimations];
+			int i;
+			for(i = 0; i < [rotateThese count]; ++i)
+			{
+				UIView *view = [rotateThese objectAtIndex:i];
+				if(view != content)
+				{
+					[view setBounds: FullContentBounds];
+					[view resizeSubviewsWithOldSize: oldSize];
+					[view setRotationBy: degrees - orientationDegrees];
+				}
+			}
 		} 
 		else 
 		{
@@ -133,6 +144,16 @@ NSLog(@"UI (%f, %f) height=%f width=%f", FullContentBounds.origin.x, FullContent
 
 - (bool) orientationLocked {
 	return orientationLocked;
+}
+
+- (void) rotateObject: (UIView *)view
+{
+	[rotateThese addObject:view];
+}
+
+- (void) dontRotateObject: (UIView *)view
+{
+	[rotateThese removeObject: view];
 }
 
 @end
