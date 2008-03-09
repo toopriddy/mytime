@@ -104,10 +104,7 @@
 		[p setAutoresizesSubviews: YES];
 
         // transition from bottom up sliding ontop of the old view
-        // first refcount us so that when we are not the main UIView
-        // we dont get deleted prematurely
-        [self retain];
-        [[App getInstance] transition:1 fromView:self toView:p];
+        [[App getInstance] transition:1 fromView:[[App getInstance] mainView] toView:p];
     }
 }
 
@@ -179,10 +176,7 @@
 		[p setAutoresizesSubviews: YES];
 
 		// transition from bottom up sliding ontop of the old view
-		// first refcount us so that when we are not the main UIView
-		// we dont get deleted prematurely
-		[self retain];
-		[[App getInstance] transition:8 fromView:self toView:p];
+		[[App getInstance] transition:8 fromView:[[App getInstance] mainView] toView:p];
 	}
 }
 
@@ -412,9 +406,8 @@ int sortByDate(id v1, id v2, void *context)
     // 8 from bottom up sliding ontop of
     // 9 from top down sliding ontop of
 	[self updateSections];
-    [[App getInstance] transition:9 fromView:callView toView:self];
-    // release the refcount on ourselves since we are now the main UIView
-    [self release];
+    [[App getInstance] transition:9 fromView:callView toView:[[App getInstance] mainView]];
+
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[[App getInstance] saveData];
 }
@@ -435,10 +428,9 @@ int sortByDate(id v1, id v2, void *context)
     // 8 from bottom up sliding ontop of
     // 9 from top down sliding ontop of
 	[self updateSections];
-    [[App getInstance] transition:2 fromView:callView toView:self];
-    // release the refcount on ourselves since we are now the main UIView
+    [[App getInstance] transition:2 fromView:callView toView:[[App getInstance] mainView]];
+
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-    [self release];
 }
 
 - (void)editCallSaveAction: (CallView *)callView
@@ -464,9 +456,7 @@ int sortByDate(id v1, id v2, void *context)
     // 7 down with the to view above the from view
     // 8 from bottom up sliding ontop of
     // 9 from top down sliding ontop of
-    [[App getInstance] transition:9 fromView:callView toView:self];
-    // release the refcount on ourselves since we are now the main UIView
-    [self release];
+    [[App getInstance] transition:9 fromView:callView toView:[[App getInstance] mainView]];
 }
 
 - (void)addNewCallSaveAction: (CallView *)callView
@@ -477,9 +467,8 @@ int sortByDate(id v1, id v2, void *context)
     [_calls addObject:[callView call]];
 
 	[self updateSections];
-    [[App getInstance] transition:9 fromView:callView toView:self];
-    // release the refcount on ourselves since we are now the main UIView
-    [self release];
+    [[App getInstance] transition:9 fromView:callView toView:[[App getInstance] mainView]];
+
 	[[App getInstance] saveData];
 }
 

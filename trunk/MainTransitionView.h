@@ -17,4 +17,8 @@
 
 - (id) initWithFrame: (CGRect)rect;
 - (void)setBounds:(CGRect)rect;
+
+- (BOOL)respondsToSelector:(SEL)selector;
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
+- (void)forwardInvocation:(NSInvocation*)invocation;
 @end

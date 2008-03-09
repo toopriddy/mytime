@@ -204,15 +204,13 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)addTimeCancelAction: (TimePickerView *)view
 {
-    DEBUG(NSLog(@"TieView changeCallDateCancelAction:");)
-    [[App getInstance] transition:9 fromView:view toView:self];
-    // release the refcount on ourselves since we are now the main UIView
-    [self release];
+    DEBUG(NSLog(@"TimeView addTimeCancelAction:");)
+    [[App getInstance] transition:9 fromView:view toView:[[App getInstance] mainView]];
 }
 
 - (void)addTimeSaveAction: (TimePickerView *)view
 {
-    DEBUG(NSLog(@"CallView changeCallDateSaveAction:");)
+    DEBUG(NSLog(@"TimeView addTimeSaveAction:");)
     VERBOSE(NSLog(@"date is = %@, minutes %d", [view date], [view minutes]);)
 
 	NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
@@ -221,11 +219,9 @@ static int sortByDate(id v1, id v2, void *context)
 	[entry setObject:[[[NSNumber alloc] initWithInt:[view minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
 	[_timeEntries insertObject:entry atIndex:0];
     
-    [[App getInstance] transition:9 fromView:view toView:self];
+    [[App getInstance] transition:9 fromView:view toView:[[App getInstance] mainView]];
 
 	[self sort];
-    // release the refcount on ourselves since we are now the main UIView
-    [self release];
 
 	// save the data
 	[[App getInstance] saveData];
@@ -256,10 +252,7 @@ static int sortByDate(id v1, id v2, void *context)
 			[p setAutoresizesSubviews: YES];
 
 			// transition from bottom up sliding ontop of the old view
-			// first refcount us so that when we are not the main UIView
-			// we dont get deleted prematurely
-			[self retain];
-			[[App getInstance] transition:8 fromView:self toView:p];
+			[[App getInstance] transition:8 fromView:[[App getInstance] mainView] toView:p];
 			break;
 		}
 		

@@ -28,6 +28,10 @@ App *me;
 
 - (void)transition:(int)transition fromView:(UIView *)from toView:(UIView *)to
 {
+	if(from)
+	{
+		[to setFrame:[from frame]];
+	}
     [_transitionView transition:transition fromView:from toView:to];
 }
 
@@ -51,6 +55,11 @@ App *me;
 	return(_window);
 }
 
+- (UIView *)mainView
+{
+	return(_mainView);
+}
+
 - (CGRect)rect
 {
 	return(_rect);
@@ -65,6 +74,7 @@ App *me;
 {
     [_window release];
     [_transitionView release];
+	[_mainView release];
 
     [super dealloc];
 
@@ -135,7 +145,7 @@ App *me;
 		[self setUIOrientation: [UIHardware deviceOrientation:YES]];
 
 	}
-#if 1
+#if 0
 	[self performSelector: @selector(rotateme:) 
 			   withObject:[[NSNumber alloc] initWithInt:3] 
 			   afterDelay:5];

@@ -197,7 +197,11 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 {
 	if(_currentView != view)
 	{
-//		[view setBounds:_rect];
+		if(_currentView)
+		{
+			[view setFrame:[_currentView frame]];
+		}
+
 		[_transitionView transition:transition fromView:_currentView toView:view ];
 		_currentView = view;
 	}
@@ -257,10 +261,12 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 {
     if((self = [super initWithFrame: rect])) 
     {
+		_currentView = nil;
+		
         //calls = [[NSMutableArray alloc] init];
 		//create the calls array from a file's data
 		[self loadData];
-
+		
 		// get the calls array and make sure that there is one
 		NSMutableArray *calls = [_settings objectForKey:SettingsCalls];
 		if(calls == nil)
