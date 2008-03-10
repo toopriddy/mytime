@@ -376,9 +376,10 @@
 {
     DEBUG(NSLog(@"CallView addNewPublicationCancelAction:");)
     [[App getInstance] transition:2 fromView:publicationView toView:self];
-
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
 }
 
 - (void)addNewPublicationSaveAction: (PublicationView *)publicationView
@@ -410,6 +411,9 @@
 	// reload like we inserted a publication at the row they clicked on
 //	[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
 
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
+
 	// save the data
 	[self save];
 }
@@ -428,6 +432,8 @@
     [[App getInstance] transition:2 fromView:view toView:self];
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
 }
 
 - (void)changeCallDateSaveAction: (DatePickerView *)view
@@ -442,6 +448,8 @@
     [[App getInstance] transition:2 fromView:view toView:self];
 
 	[_table reloadData];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
 
 	// save the data
 	[self save];
@@ -470,6 +478,8 @@
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
 }
 
 - (void)editAddressSaveAction: (AddressView *)addressView
@@ -492,6 +502,8 @@
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+    // release the refcount on ourselves since we are now the main UIView
+    [self release];
 
 	// save the data
 	[self save];
@@ -955,6 +967,9 @@
 			[p setSaveAction: @selector(editAddressSaveAction:) forObject:self];
 
 			// transition from bottom up sliding ontop of the old view
+			// first refcount us so that when we are not the main UIView
+			// we dont get deleted prematurely
+			[self retain];
 			[[App getInstance] transition:1 fromView:self toView:p];
 		
 			return;
@@ -1113,6 +1128,9 @@
 				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
 				[[App getInstance] transition:1 fromView:self toView:p];
 				break;
 			}
@@ -1133,6 +1151,9 @@
 				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
 				[[App getInstance] transition:1 fromView:self toView:p];
 			}
 			else
@@ -1157,6 +1178,9 @@
 				[p setAutoresizesSubviews: YES];
 
 				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
 				[[App getInstance] transition:1 fromView:self toView:p];
 			}
             break;
@@ -1415,8 +1439,3 @@
 
 
 @end
-
-
-
-
-
