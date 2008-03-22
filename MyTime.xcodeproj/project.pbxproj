@@ -13,6 +13,7 @@
 		904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsView.m; sourceTree = "<group>"; };
 		904C6F5B0D70B17B00DEF41A /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
 		904C6F5C0D70B17B00DEF41A /* TimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerView.m; sourceTree = "<group>"; };
+		904C70770D72685400DEF41A /* temp.mytime.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = temp.mytime.plist; sourceTree = "<group>"; };
 		9058ABF20D668F74006AE013 /* TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeView.h; sourceTree = "<group>"; };
 		9058ABF30D668F74006AE013 /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
 		906AC1E40D502EFB0065CC89 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				904C70770D72685400DEF41A /* temp.mytime.plist */,
 				902691FF0D95A0B20077B1BF /* mytime.plist */,
 				ACC7AA640D27768D0090157B /* streetSelected.png */,
 				ACC7AA650D27768D0090157B /* timeSelected.png */,
