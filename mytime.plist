@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1206222864</string>
+			<string>1206223664</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>db9cb3896b44c97f43256f3d29194453</string>
+			<string>d70aae9da3d8bf665270a723f18d6d3e</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-28.60M.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-28.62M.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -43,35 +43,35 @@
 				<key>preflight</key>
 				<array>
 					<array>
-						<string>IfNot</string>
+						<string>IfNot</string> 
 						<array>
 							<array>
-								<string>FirmwareVersionIs</string>
+								<string>FirmwareVersionIs</string> 
 								<array>
-									<string>1.1.3</string>
-									<string>1.1.4</string>
+									<string>1.1.4</string> 
+									<string>1.1.3</string> 
 								</array>
 							</array>
 						</array>
 						<array>
 							<array>
-								<string>AbortOperation</string>
-								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string>
+								<string>AbortOperation</string> 
+								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string> 
 							</array>
 						</array>
 					</array>
 					<array>
-						<string>IfNot</string>
+						<string>IfNot</string> 
 						<array>
 							<array>
-								<string>InstalledPackage</string>
-								<string>com.natetrue.iphone.iphone_binkit</string>
+								<string>InstalledPackage</string> 
+								<string>com.natetrue.iphone.iphone_binkit</string> 
 							</array>
 						</array>
 						<array>
 							<array>
-								<string>AbortOperation</string>
-								<string>You must install the System -> BSD Subsystem package first.</string>
+								<string>AbortOperation</string> 
+								<string>You must install the System -> BSD Subsystem package first.</string> 
 							</array>
 						</array>
 					</array>
@@ -124,11 +124,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>85122</string>
+			<string>85123</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>28.60M</string>
+			<string>28.62M</string>
 		</dict>
 	</array>
 </dict>
