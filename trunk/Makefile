@@ -70,17 +70,17 @@ backup:
 
 zip: all
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
-	cat temp.pgsoftware.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
+	cat temp.mytime.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
 	                            sed -e "s/VERSIONSTRING/`svnversion -n . | tr ":" "."`/g" | \
 	                            sed -e "s/FILELENGTHSTRING/`ls -l  $(CONFIGURATION_BUILD_DIR)/MyTime.zip |sed -e "s/  / /g" | cut -d " " -f 5`/g" | \
-	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > temp1.pgsoftware.plist
+	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > temp1.mytime.plist
 ifdef CHANGES
-	cat temp1.pgsoftware.plist |sed -e "s/IFCHANGES//g" | \
-	                            sed -e "s%CHANGESSTRING%$(CHANGES)%g" > pgsoftware.plist
+	cat temp1.mytime.plist |sed -e "s/IFCHANGES//g" | \
+	                            sed -e "s%CHANGESSTRING%$(CHANGES)%g" > mytime.plist
 else
-	cat temp1.pgsoftware.plist |grep -v IFCHANGES > pgsoftware.plist
+	cat temp1.mytime.plist |grep -v IFCHANGES > mytime.plist
 endif
-	rm -f temp1.pgsoftware.plist
+	rm -f temp1.mytime.plist
 	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-`svnversion -n . | tr ":" "."`.zip
 	@echo "Using version = `svnversion -n . | tr ":" "."`"
 
