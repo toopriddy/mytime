@@ -41,7 +41,7 @@
 			<key>scripts</key>
 			<dict>
 				<key>preflight</key>
-				
+
 <array>
 	<array>
 <string>IfNot</string>
@@ -49,6 +49,7 @@
 	<array>
 <string>FirmwareVersionIs</string>
 	<array>
+<string>1.1.2</string>
 <string>1.1.3</string>
 </array>
 </array>
@@ -71,11 +72,12 @@
 	<array>
 	<array>
 <string>AbortOperation</string>
-<string>You must install the System -> BSD Subsystem package first.</string>
+<string>You must install the System/BSD Subsystem package first.</string>
 </array>
 </array>
 </array>
-</array>				
+</array>
+			
 				<key>install</key>
 				<array>
 					<array>
