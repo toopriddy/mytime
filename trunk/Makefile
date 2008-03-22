@@ -86,7 +86,7 @@ endif
 	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-$(VERSION).zip
 	@echo "Using version = $(VERSION)"
 	@echo "You need to visit this to get your password: http://code.google.com/hosting/settings"
-	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -p mytime MyTime-$(VERSION).zip
+	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -P `cat ~/.googlecodepassword` -p mytime MyTime-$(VERSION).zip
 	svn commit mytime.plist --force-log  -m "updating to version $(VERSION)"
 
 ##
