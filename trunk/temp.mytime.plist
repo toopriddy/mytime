@@ -43,35 +43,35 @@
 				<key>preflight</key>
 				<array>
 					<array>
-						<string>IfNot</string> 
+						<string>IfNot</string>
 						<array>
 							<array>
-								<string>FirmwareVersionIs</string> 
+								<string>FirmwareVersionIs</string>
 								<array>
-									<string>1.1.4</string> 
-									<string>1.1.3</string> 
+									<string>1.1.3</string>
+									<string>1.1.4</string>
 								</array>
 							</array>
 						</array>
 						<array>
 							<array>
-								<string>AbortOperation</string> 
-								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string> 
+								<string>AbortOperation</string>
+								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string>
 							</array>
 						</array>
 					</array>
 					<array>
-						<string>IfNot</string> 
+						<string>IfNot</string>
 						<array>
 							<array>
-								<string>InstalledPackage</string> 
-								<string>com.natetrue.iphone.iphone_binkit</string> 
+								<string>InstalledPackage</string>
+								<string>com.natetrue.iphone.iphone_binkit</string>
 							</array>
 						</array>
 						<array>
 							<array>
-								<string>AbortOperation</string> 
-								<string>You must install the System -> BSD Subsystem package first.</string> 
+								<string>AbortOperation</string>
+								<string>You must install the "System -> BSD Subsystem" package first.</string>
 							</array>
 						</array>
 					</array>

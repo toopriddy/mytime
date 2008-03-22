@@ -57,6 +57,8 @@ OBJECTS_ABS=$(addprefix $(CONFIGURATION_BUILD_DIR)/,$(OBJECTS))
 APP_ABS=$(CONFIGURATION_BUILD_DIR)/$(WRAPPER_NAME)
 PRODUCT_ABS=$(APP_ABS)/$(EXECUTABLE_NAME)
 
+VERSION=$(shell svnversion -n . | tr ":" ".")
+
 all: $(PRODUCT_ABS)
 
 
@@ -71,7 +73,7 @@ backup:
 zip: all
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
 	cat temp.mytime.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
-	                            sed -e "s/VERSIONSTRING/`svnversion -n . | tr ":" "."`/g" | \
+	                            sed -e "s/VERSIONSTRING/$(VERSION)/g" | \
 	                            sed -e "s/FILELENGTHSTRING/`ls -l  $(CONFIGURATION_BUILD_DIR)/MyTime.zip |sed -e "s/  / /g" | cut -d " " -f 5`/g" | \
 	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > temp1.mytime.plist
 ifdef CHANGES
@@ -81,17 +83,18 @@ else
 	cat temp1.mytime.plist |grep -v IFCHANGES > mytime.plist
 endif
 	rm -f temp1.mytime.plist
-	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-`svnversion -n . | tr ":" "."`.zip
-	@echo "Using version = `svnversion -n . | tr ":" "."`"
+	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-$(VERSION).zip
+	@echo "Using version = $(VERSION)"
+	@echo "You need to visit this to get your password: http://code.google.com/hosting/settings"
+	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -p mytime MyTime-$(VERSION).zip
+	svn commit mytime.plist --force-log  -m "updating to version $(VERSION)"
 
 ##
 ## on every build, record the working copy revision string
 ##
 .PHONY:svn_version.c
 svn_version.c: 
-	echo -n 'const char* svn_version(void) { const char* SVN_Version = "' > svn_version.c
-	svnversion -n .                   >> svn_version.c
-	echo '"; return SVN_Version; }'   >> svn_version.c
+	echo -n 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
 
 
 $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
