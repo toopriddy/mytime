@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>info</key>
+	<dict>
+		<key>category</key>
+		<string>PG Software</string>
+		<key>contact</key>
+		<string>toopriddy@gmail.com</string>
+		<key>description</key>
+		<string>Priddy Good Software, not great just good</string>
+		<key>maintainer</key>
+		<string>Brent</string>
+		<key>name</key>
+		<string>PG Software</string>
+		<key>url</key>
+		<string>http://mytime.googlecode.com/</string>
+	</dict>
+	<key>packages</key>
+	<array>
+		<dict>
+			<key>bundleIdentifier</key>
+			<string>net.pgsoftware.iphone.MyTime</string>
+			<key>category</key>
+			<string>Productivity</string>
+			<key>contact</key>
+			<string>toopriddy@gmail.com</string>
+			<key>date</key>
+			<string>1205156100</string>
+			<key>description</key>
+			<string>Application to keep up with Field Service Information</string>
+			<key>hash</key>
+			<string>0f5496e234a4b744a962ecc1eff28e8c</string>
+			<key>location</key>
+			<string>http://mytime.googlecode.com/files/MyTime-28.49.zip</string>
+			<key>maintainer</key>
+			<string>Brent</string>
+			<key>name</key>
+			<string>MyTime</string>
+			<key>scripts</key>
+			<dict>
+				<key>preflight</key>
+						<string>IfNot</string>
+						<array>
+							<array>
+								<string>FirmwareVersionIs</string>
+								<array>
+									<string>1.1.3</string>
+									<string>1.1.4</string>
+								</array>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>AbortOperation</string>
+								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string>
+							</array>
+						</array>
+						<string>IfNot</string>
+						<array>
+							<array>
+								<string>InstalledPackage</string>
+								<string>com.natetrue.iphone.iphone_binkit</string>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>AbortOperation</string>
+								<string>You must install the System -> BSD Subsystem package first.</string>
+							</array>
+						</array>
+				<key>install</key>
+				<array>
+					<array>
+						<string>CopyPath</string>
+						<string>MyTime.app/</string>
+						<string>/Applications/MyTime.app</string>
+					</array>
+					<array>
+						<string>SetStatus</string>
+						<string>Setting Permissions...</string>
+					</array>
+					<array>
+						<string>Exec</string>
+						<string>/bin/chmod 777 /Applications/MyTime.app</string>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
+								<string>/var/mobile/Library/MyTime/record.plist</string>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/mobile/Library/MyTime/</string>
+							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/mobile/Library/MyTime/record.plist</string>
+							</array>
+							<array>
+								<string>Notice</string>
+								<string>Change Log: Fixed crashes when editing calls</string>
+							</array>
+						</array>
+					</array>
+				</array>
+				<key>uninstall</key>
+				<array>
+					<array>
+						<string>RemovePath</string>
+						<string>/Applications/MyTime.app</string>
+					</array>
+				</array>
+			</dict>
+			<key>size</key>
+			<string>85111</string>
+			<key>url</key>
+			<string>http://mytime.googlecode.com/</string>
+			<key>version</key>
+			<string>28.49</string>
+		</dict>
+	</array>
+</dict>
+</plist>
