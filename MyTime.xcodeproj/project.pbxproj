@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		902691FF0D95A0B20077B1BF /* mytime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mytime.plist; sourceTree = "<group>"; };
 		904C6E1C0D6E9CE700DEF41A /* StatisticsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsView.h; sourceTree = "<group>"; };
 		904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsView.m; sourceTree = "<group>"; };
 		904C6F5B0D70B17B00DEF41A /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				902691FF0D95A0B20077B1BF /* mytime.plist */,
 				ACC7AA640D27768D0090157B /* streetSelected.png */,
 				ACC7AA650D27768D0090157B /* timeSelected.png */,
 				ACC7AA660D27768D0090157B /* time.png */,
