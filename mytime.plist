@@ -41,6 +41,7 @@
 			<key>scripts</key>
 			<dict>
 				<key>preflight</key>
+				<array>
 						<string>IfNot</string>
 						<array>
 							<array>
@@ -70,6 +71,7 @@
 								<string>You must install the System -> BSD Subsystem package first.</string>
 							</array>
 						</array>
+				</array>
 				<key>install</key>
 				<array>
 					<array>
