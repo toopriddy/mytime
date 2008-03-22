@@ -60,21 +60,6 @@
 							</array>
 						</array>
 					</array>
-					<array>
-						<string>IfNot</string>
-						<array>
-							<array>
-								<string>InstalledPackage</string>
-								<string>com.natetrue.iphone.iphone_binkit</string>
-							</array>
-						</array>
-						<array>
-							<array>
-								<string>AbortOperation</string>
-								<string>You must install the System -> BSD Subsystem package first.</string>
-							</array>
-						</array>
-					</array>
 				</array>
 				<key>install</key>
 				<array>
