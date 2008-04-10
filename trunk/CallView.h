@@ -123,6 +123,8 @@
 - (void)buildReturnVisitsNotes;
 - (void)saveReturnVisitsNotes;
 
+- (void)setBounds:(CGRect)rect;
+
 
 // navigation bar callback functions
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;

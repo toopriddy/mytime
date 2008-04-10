@@ -16,12 +16,14 @@
 #import "SortedCallsView.h"
 #import "StatisticsView.h"
 #import "TimeView.h"
+#import "SettingsView.h"
 
 typedef enum {
 	  VIEW_SORTED_BY_STREET = 1
 	, VIEW_SORTED_BY_DATE
 	, VIEW_TIME
 	, VIEW_STATISTICS
+	, VIEW_SETTINGS
 } SelectedButtonBarView;
 
 @interface MainView : UIView {
@@ -30,6 +32,8 @@ typedef enum {
 	SortedCallsView *_sortedCallsView;
 	TimeView *_timeView;
 	StatisticsView *_statisticsView;
+	SettingsView *_settingsView;
+	
 	UIButtonBar *_buttonBar;
 	
 	SelectedButtonBarView _currentButtonBarView;
@@ -55,6 +59,9 @@ typedef enum {
  *     NSString street
  *     NSString city
  *     NSString state
+ *     NSMutableArray phoneNumbers
+ *            NSString type
+ *            NSString number
  *     NSMutableArray returnVisits of NSMutableDictionary
  *            NSString notes
  *            NSCalendarDate date
@@ -72,6 +79,9 @@ extern NSString const * const CallStreetNumber;
 extern NSString const * const CallStreet;
 extern NSString const * const CallCity;
 extern NSString const * const CallState;
+extern NSString const * const CallPhoneNumbers;
+extern NSString const * const CallPhoneNumberType;
+extern NSString const * const CallPhoneNumber;
 extern NSString const * const CallReturnVisits;
 extern NSString const * const CallReturnVisitNotes;
 extern NSString const * const CallReturnVisitDate;
@@ -100,6 +110,10 @@ extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
 extern NSString const * const SettingsTimeEntryDate;
 extern NSString const * const SettingsTimeEntryMinutes;
+
+extern NSString const * const SettingsDonated;
+extern NSString const * const SettingsFirstView;
+extern NSString const * const SettingsSecondView;
 
 @end
 
