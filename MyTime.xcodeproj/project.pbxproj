@@ -18,6 +18,8 @@
 		9058ABF30D668F74006AE013 /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
 		906AC1E40D502EFB0065CC89 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		906AC1E50D502EFB0065CC89 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
+		907894840DADAD8700B6173D /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		907894850DADAD8700B6173D /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		9099FD5C0D7E20FD00D8CA9C /* UIOrientingApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIOrientingApplication.h; sourceTree = "<group>"; };
 		9099FD5D0D7E20FD00D8CA9C /* UIOrientingApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIOrientingApplication.m; sourceTree = "<group>"; };
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
@@ -102,6 +104,8 @@
 				904C6F5C0D70B17B00DEF41A /* TimePickerView.m */,
 				9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */,
 				9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */,
+				907894840DADAD8700B6173D /* SettingsView.h */,
+				907894850DADAD8700B6173D /* SettingsView.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

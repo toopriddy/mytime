@@ -235,10 +235,6 @@ static NSString *MONTHS[] = {
 	// LastMonth
 	count++;
 
-	// version
-	count++;
-	// how are we going to do the time...
-	
 	VERBOSE(NSLog(@"count=%d", count);)
     return(count);
 }
@@ -282,10 +278,6 @@ static NSString *MONTHS[] = {
 			if(_lastMonthBibleStudies)
 				count++;
 			break;
-		
-		// version 
-		case 2:
-			count = 1;
     }
 	return(count);
 }
@@ -459,14 +451,6 @@ static NSString *MONTHS[] = {
 			}
 			break;
 		
-		case 2:
-			if(row == 0)
-			{
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"MyTime Build Version"];
-				[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
-				[cell setShowSelection:NO];
-			}
     }
 
     // [ cell setShowSelection: NO ];

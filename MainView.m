@@ -35,6 +35,9 @@ NSString const * const CallStreetNumber = @"streetNumber";
 NSString const * const CallStreet = @"street";
 NSString const * const CallCity = @"city";
 NSString const * const CallState = @"state";
+NSString const * const CallPhoneNumbers = @"phoneNumbers";
+NSString const * const CallPhoneNumberType = @"type";
+NSString const * const CallPhoneNumber = @"number";
 NSString const * const CallReturnVisits = @"returnVisits";
 NSString const * const CallReturnVisitNotes = @"notes";
 NSString const * const CallReturnVisitDate = @"date";
@@ -57,6 +60,12 @@ NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
 NSString const * const SettingsTimeEntryDate = @"date";
 NSString const * const SettingsTimeEntryMinutes = @"minutes";
+
+
+NSString const * const SettingsDonated = @"donated";
+NSString const * const SettingsFirstView = @"firstView";
+NSString const * const SettingsSecondView = @"secondView";
+
 
 //static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
 static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
@@ -122,7 +131,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
           @"streetSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_STREET], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Calls by Street", kUIButtonBarButtonTitle,
+          @"Street Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ],
@@ -133,15 +142,15 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
           @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_DATE], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Calls by Date", kUIButtonBarButtonTitle,
+          @"Date Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ],
 
         [ NSDictionary dictionaryWithObjectsAndKeys:
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
-          @"time.png", kUIButtonBarButtonInfo,
-          @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
+          @"timer.png", kUIButtonBarButtonInfo,
+          @"timerSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_TIME], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
           @"Time", kUIButtonBarButtonTitle,
@@ -151,11 +160,22 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
         [ NSDictionary dictionaryWithObjectsAndKeys:
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
-          @"time.png", kUIButtonBarButtonInfo,
-          @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
+          @"statistics.png", kUIButtonBarButtonInfo,
+          @"statisticsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_STATISTICS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
           @"Statistics", kUIButtonBarButtonTitle,
+          @"0", kUIButtonBarButtonType,
+          nil 
+        ], 
+
+        [ NSDictionary dictionaryWithObjectsAndKeys:
+          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
+          @"settings.png", kUIButtonBarButtonInfo,
+          @"settingsSelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_SETTINGS], kUIButtonBarButtonTag,
+            self, kUIButtonBarButtonTarget,
+          @"Settings", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ], 
@@ -176,7 +196,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME, VIEW_STATISTICS };
+    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME, VIEW_STATISTICS, VIEW_SETTINGS };
     [button registerButtonGroup:0 withButtons:buttons withCount: ARRAY_SIZE(buttons)];
     [button showButtonGroup: 0 withDuration: 0.0f];
 
@@ -229,6 +249,11 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
 			[_statisticsView reloadData];
 			[ self transition:0 toView:_statisticsView];
+			break;
+        case VIEW_SETTINGS:
+			DEBUG(NSLog(@"VIEW_SETTINGS");)
+			[_settingsView reloadData];
+			[ self transition:0 toView:_settingsView];
 			break;
     }
 }
@@ -310,6 +335,11 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 													       sortBy:CALLS_SORTED_BY_STREET];
 		[_sortedCallsView setAutoresizingMask: kMainAreaResizeMask];
 		[_sortedCallsView setAutoresizesSubviews: YES];
+
+		// create the SettingsView
+		_settingsView = [[SettingsView alloc] initWithFrame:rect settings:_settings];
+		[_settingsView setAutoresizingMask: kMainAreaResizeMask];
+		[_settingsView setAutoresizesSubviews: YES];
 
 		// create the TimeView
 		_timeView = [[TimeView alloc] initWithFrame:rect settings:_settings];

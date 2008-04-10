@@ -220,6 +220,7 @@
         else
             [_call setObject:@"" forKey:CallName];
 
+
         // address (make sure that everything is initialized)
         if([_call objectForKey:CallStreet] == nil)
             [_call setObject:@"" forKey:CallStreet];
@@ -228,6 +229,32 @@
         if([_call objectForKey:CallState] == nil)
             [_call setObject:@"" forKey:CallState];
 
+		// phone numbers
+        if([_call objectForKey:CallPhoneNumbers] == nil)
+        {
+            [_call setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallPhoneNumbers];
+        }
+        else
+        {
+           // lets check all of the ReturnVisits to make sure that everything was 
+            // initialized correctly
+            NSMutableArray *numbers = [_call objectForKey:CallPhoneNumbers];
+            NSMutableDictionary *entry;
+			
+            int i;
+            int end = [numbers count];
+            for(i = 0; i < end; ++i)
+            {
+                entry = [numbers objectAtIndex:i];
+                if([entry objectForKey:CallPhoneNumberType] == nil)
+                    [entry setObject:@"home" forKey:CallPhoneNumberType];
+                
+                if([entry objectForKey:CallPhoneNumber] == nil)
+                    [entry setObject:@"" forKey:CallReturnVisitNotes];
+			}
+		}
+		
+		// return visits
         if([_call objectForKey:CallReturnVisits] == nil)
         {
             [_call setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisits];
@@ -320,6 +347,7 @@
 		[_table enableRowDeletion: YES animated:YES];
 		[_table setAutoresizingMask: kMainAreaResizeMask];
 		[_table setAutoresizesSubviews: YES];
+
         [_table reloadData];
     }
     
@@ -1418,6 +1446,19 @@
     VERBOSE(NSLog(@"CallView call: %@", _call);)
     return(_call);
 }
+
+
+- (void)setBounds:(CGRect)rect
+{
+	if([_table keyboardVisible])
+	{
+		CGRect frame = [[UIKeyboard activeKeyboard] frame];
+		frame.size = [UIKeyboard defaultSizeForOrientation:[[App getInstance] orientation]];
+		[[_table keyboard] setFrame:frame];
+	}
+	[super setBounds:rect];
+}
+
 
 - (BOOL)respondsToSelector:(SEL)selector
 {

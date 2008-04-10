@@ -11,6 +11,7 @@ DatePickerView.m \
 TimeView.m \
 StatisticsView.m \
 TimePickerView.m \
+SettingsView.m \
 UIOrientingApplication.m \
 MainTransitionView.m \
 svn_version.c \
@@ -23,6 +24,12 @@ time.png \
 timeSelected.png \
 Default.png \
 icon.png \
+settings.png \
+settingsSelected.png \
+statistics.png \
+statisticsSelected.png \
+timer.png \
+timerSelected.png \
 
 HEAVENLY=/usr/local/share/iphone-filesystem/
 CC=/usr/local/bin/arm-apple-darwin-gcc
@@ -65,10 +72,10 @@ all: $(PRODUCT_ABS)
 $(CONFIGURATION_BUILD_DIR)/svn_version.o: $(SRCROOT)/svn_version.c
 
 copy:
-	scp build/Release/MyTime.app/MyTime root@10.10.10.254:/Applications/MyTime.app/
+	scp build/Release/MyTime.app/MyTime root@10.10.10.220:/Applications/MyTime.app/
 
 backup:
-	scp root@10.10.10.254:/var/root/Library/MyTime/record.plist ./
+	scp root@10.10.10.220:/var/root/Library/MyTime/record.plist ./
 
 zip: all
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
@@ -100,7 +107,8 @@ svn_version.c:
 $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
 	$(LD) $(LDFLAGS) -o $(PRODUCT_ABS) $(OBJECTS_ABS)
 
-$(APP_ABS): $(INFOPLIST_ABS)
+.PHONY: $(APP_ABS)
+$(APP_ABS):
 	mkdir -p $(APP_ABS)
 	chmod 775 $(APP_ABS)
 	cp $(INFOPLIST_ABS) $(APP_ABS)/
