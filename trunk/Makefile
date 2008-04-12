@@ -14,6 +14,7 @@ TimePickerView.m \
 SettingsView.m \
 UIOrientingApplication.m \
 MainTransitionView.m \
+SortedByPickerView.m \
 svn_version.c \
 
 

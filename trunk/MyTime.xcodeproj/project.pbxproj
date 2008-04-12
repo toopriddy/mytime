@@ -25,6 +25,8 @@
 		907895800DADD49F00B6173D /* timerSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timerSelected.png; sourceTree = "<group>"; };
 		907895810DADD49F00B6173D /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		907895820DADD49F00B6173D /* settingsSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsSelected.png; sourceTree = "<group>"; };
+		9078958B0DAECB7600B6173D /* SortedByPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortedByPickerView.h; sourceTree = "<group>"; };
+		9078958C0DAECB7600B6173D /* SortedByPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortedByPickerView.m; sourceTree = "<group>"; };
 		9099FD5C0D7E20FD00D8CA9C /* UIOrientingApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIOrientingApplication.h; sourceTree = "<group>"; };
 		9099FD5D0D7E20FD00D8CA9C /* UIOrientingApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIOrientingApplication.m; sourceTree = "<group>"; };
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 				9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */,
 				907894840DADAD8700B6173D /* SettingsView.h */,
 				907894850DADAD8700B6173D /* SettingsView.m */,
+				9078958B0DAECB7600B6173D /* SortedByPickerView.h */,
+				9078958C0DAECB7600B6173D /* SortedByPickerView.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

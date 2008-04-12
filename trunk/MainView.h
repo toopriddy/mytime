@@ -35,7 +35,8 @@ typedef enum {
 	SettingsView *_settingsView;
 	
 	UIButtonBar *_buttonBar;
-	
+	int _buttons[5];
+
 	SelectedButtonBarView _currentButtonBarView;
 	UIView *_currentView;
 	UITransitionView *_transitionView;
@@ -48,6 +49,8 @@ typedef enum {
 - (NSMutableDictionary *)getSavedData;
 - (void)saveData;
 - (void)setCalls:(NSMutableArray *)calls;
+
+- (void)buttonBarCustomize;
 
 /*
  * Settings Dictionary:
@@ -114,6 +117,8 @@ extern NSString const * const SettingsTimeEntryMinutes;
 extern NSString const * const SettingsDonated;
 extern NSString const * const SettingsFirstView;
 extern NSString const * const SettingsSecondView;
+extern NSString const * const SettingsThirdView;
+extern NSString const * const SettingsFourthView;
 
 @end
 
