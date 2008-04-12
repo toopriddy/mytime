@@ -48,7 +48,7 @@ extern int debugging;
 - (CGRect)rect;
 - (void)saveData;
 - (UIWindow *)window;
-- (UIView *)mainView;
+- (MainView *)mainView;
 - (void)applicationSuspend:(GSEvent*)event;
 
 - (NSMutableDictionary *)getSavedData;

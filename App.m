@@ -55,7 +55,7 @@ App *me;
 	return(_window);
 }
 
-- (UIView *)mainView
+- (MainView *)mainView
 {
 	return(_mainView);
 }

@@ -1144,9 +1144,6 @@
 				// they clicked on the Change Date
 				_editingReturnVisit = info;
 				// make the new call view 
-				// first refcount us so that when we are not the main UIView
-				// we dont get deleted prematurely
-				[self retain];
 				DatePickerView *p = [[[DatePickerView alloc] initWithFrame:_rect date:[_editingReturnVisit objectForKey:CallReturnVisitDate]] autorelease];
 
 				// setup the callbacks for save or cancel
@@ -1190,9 +1187,6 @@
 				_editingReturnVisit = info;
 				_editingPublication = [[info objectForKey:CallReturnVisitPublications] objectAtIndex:row-2];// row offset from "notes" and "change date"
 				// make the new call view 
-				// first refcount us so that when we are not the main UIView
-				// we dont get deleted prematurely
-				[self retain];
 				PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect 
 																 publication: [ _editingPublication objectForKey:CallReturnVisitPublicationName]
 																		year: [[_editingPublication objectForKey:CallReturnVisitPublicationYear] intValue]
