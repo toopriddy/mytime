@@ -18,6 +18,7 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UITableColumn.h>
 #import <UIKit/UIPickerView.h>
+#import <UIKit/UIButtonBar.h>
 #import <UIKit/UISectionIndex.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/NSPropertyList.h>
@@ -65,6 +66,8 @@ NSString const * const SettingsTimeEntryMinutes = @"minutes";
 NSString const * const SettingsDonated = @"donated";
 NSString const * const SettingsFirstView = @"firstView";
 NSString const * const SettingsSecondView = @"secondView";
+NSString const * const SettingsThirdView = @"thirdView";
+NSString const * const SettingsFourthView = @"fourthView";
 
 
 //static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
@@ -196,21 +199,51 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME, VIEW_STATISTICS, VIEW_SETTINGS };
-    [button registerButtonGroup:0 withButtons:buttons withCount: ARRAY_SIZE(buttons)];
-    [button showButtonGroup: 0 withDuration: 0.0f];
+#if 1
+    _buttons[0] = ([_settings objectForKey:SettingsFirstView] == nil) ?  VIEW_SORTED_BY_STREET : [[_settings objectForKey:SettingsFirstView] intValue];
+	_buttons[1] = ([_settings objectForKey:SettingsSecondView] == nil) ? VIEW_SORTED_BY_DATE   : [[_settings objectForKey:SettingsSecondView] intValue];
+	_buttons[2] = ([_settings objectForKey:SettingsThirdView] == nil) ?  VIEW_TIME             : [[_settings objectForKey:SettingsThirdView] intValue];
+	_buttons[3] = ([_settings objectForKey:SettingsFourthView] == nil) ? VIEW_STATISTICS       : [[_settings objectForKey:SettingsFourthView] intValue];
 
+
+#else
+    _buttons[0] = VIEW_SORTED_BY_STREET ;
+	_buttons[1] = VIEW_SORTED_BY_DATE   ;
+	_buttons[2] = VIEW_TIME             ;
+	_buttons[3] = VIEW_STATISTICS       ;
+#endif
+	_buttons[4] = VIEW_SETTINGS;
+
+	[_settings setObject:[NSNumber numberWithInt:_buttons[0]] forKey:SettingsFirstView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[1]] forKey:SettingsSecondView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[2]] forKey:SettingsThirdView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[3]] forKey:SettingsFourthView];
+		
+	
+    [button registerButtonGroup:0 withButtons:_buttons withCount: ARRAY_SIZE(_buttons)];
+    [button showButtonGroup: 0 withDuration: 0.0f];
+	[button setDelegate:self];
 	int i;
-	float width = rect.size.width/ARRAY_SIZE(buttons);
-    for(i = 0; i < ARRAY_SIZE(buttons); i++) 
+	float width = rect.size.width/ARRAY_SIZE(_buttons);
+    for(i = 0; i < ARRAY_SIZE(_buttons); i++) 
 	{
-        [ [ button viewWithTag:buttons[i] ] 
-            setFrame:CGRectMake( (i*width), 1.0, width, 48.0)
-        ];
+        [[button viewWithTag:_buttons[i]] setFrame:CGRectMake( (i*width), 1.0, width, 48.0)];
     }
     [ button showSelectionForButton: _currentButtonBarView];
 
     return button;
+}
+
+- (void)buttonBar:(UIButtonBar *) bar didDismissCustomizeUI:(BOOL)did
+{
+	unsigned int count;
+	[bar getVisibleButtonTags:_buttons count:&count maxItems:5];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[0]] forKey:SettingsFirstView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[1]] forKey:SettingsSecondView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[2]] forKey:SettingsThirdView];
+	[_settings setObject:[NSNumber numberWithInt:_buttons[3]] forKey:SettingsFourthView];
+
+	[self saveData];
 }
 
 - (void)transition:(int)transition toView:(UIView *)view
@@ -412,9 +445,15 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	[self saveData];
 }
 
+- (void)buttonBarCustomize
+{
+	[_buttonBar customize:_buttons withCount:(ARRAY_SIZE(_buttons) - 1)];
+}
+
 - (BOOL)respondsToSelector:(SEL)selector
 {
     VERY_VERBOSE(NSLog(@"MainView respondsToSelector: %s", selector);)
+    NSLog(@"MainView respondsToSelector: %s", selector);
     return [super respondsToSelector:selector];
 }
 
