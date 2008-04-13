@@ -174,11 +174,22 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
         [ NSDictionary dictionaryWithObjectsAndKeys:
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
+          @"studies.png", kUIButtonBarButtonInfo,
+          @"studiesSelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_STUDIES], kUIButtonBarButtonTag,
+            self, kUIButtonBarButtonTarget,
+          @"Studies", kUIButtonBarButtonTitle,
+          @"0", kUIButtonBarButtonType,
+          nil 
+        ], 
+
+        [ NSDictionary dictionaryWithObjectsAndKeys:
+          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
           @"settings.png", kUIButtonBarButtonInfo,
           @"settingsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SETTINGS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Settings", kUIButtonBarButtonTitle,
+          @"More", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ], 
@@ -199,27 +210,12 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-#if 1
     _buttons[0] = ([_settings objectForKey:SettingsFirstView] == nil) ?  VIEW_SORTED_BY_STREET : [[_settings objectForKey:SettingsFirstView] intValue];
 	_buttons[1] = ([_settings objectForKey:SettingsSecondView] == nil) ? VIEW_SORTED_BY_DATE   : [[_settings objectForKey:SettingsSecondView] intValue];
 	_buttons[2] = ([_settings objectForKey:SettingsThirdView] == nil) ?  VIEW_TIME             : [[_settings objectForKey:SettingsThirdView] intValue];
 	_buttons[3] = ([_settings objectForKey:SettingsFourthView] == nil) ? VIEW_STATISTICS       : [[_settings objectForKey:SettingsFourthView] intValue];
-
-
-#else
-    _buttons[0] = VIEW_SORTED_BY_STREET ;
-	_buttons[1] = VIEW_SORTED_BY_DATE   ;
-	_buttons[2] = VIEW_TIME             ;
-	_buttons[3] = VIEW_STATISTICS       ;
-#endif
 	_buttons[4] = VIEW_SETTINGS;
 
-	[_settings setObject:[NSNumber numberWithInt:_buttons[0]] forKey:SettingsFirstView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[1]] forKey:SettingsSecondView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[2]] forKey:SettingsThirdView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[3]] forKey:SettingsFourthView];
-		
-	
     [button registerButtonGroup:0 withButtons:_buttons withCount: ARRAY_SIZE(_buttons)];
     [button showButtonGroup: 0 withDuration: 0.0f];
 	[button setDelegate:self];
@@ -276,17 +272,22 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
-			[ self transition:0 toView:_timeView];
+			[self transition:0 toView:_timeView];
 			break;
         case VIEW_STATISTICS:
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
 			[_statisticsView reloadData];
-			[ self transition:0 toView:_statisticsView];
+			[self transition:0 toView:_statisticsView];
+			break;
+		case VIEW_STUDIES:
+			DEBUG(NSLog(@"VIEW_STUDIES");)
+			[_settingsView reloadData];
+			//[self transition:0 toView:_studiesView];
 			break;
         case VIEW_SETTINGS:
 			DEBUG(NSLog(@"VIEW_SETTINGS");)
 			[_settingsView reloadData];
-			[ self transition:0 toView:_settingsView];
+			[self transition:0 toView:_settingsView];
 			break;
     }
 }
@@ -447,7 +448,14 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 - (void)buttonBarCustomize
 {
-	[_buttonBar customize:_buttons withCount:(ARRAY_SIZE(_buttons) - 1)];
+	int buttons[] = {
+		VIEW_SORTED_BY_STREET,
+		VIEW_SORTED_BY_DATE,
+		VIEW_TIME,
+		VIEW_STATISTICS,
+		VIEW_STUDIES
+	};
+	[_buttonBar customize:buttons withCount:(ARRAY_SIZE(buttons))];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector
