@@ -31,6 +31,9 @@ statistics.png \
 statisticsSelected.png \
 timer.png \
 timerSelected.png \
+studies.png \
+studiesSelected.png \
+
 
 HEAVENLY=/usr/local/share/iphone-filesystem/
 CC=/usr/local/bin/arm-apple-darwin-gcc

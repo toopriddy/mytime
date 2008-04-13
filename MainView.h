@@ -19,11 +19,16 @@
 #import "SettingsView.h"
 
 typedef enum {
+/*
+ * DO NOT CHANGE THE ORDER OF THESE AND ONLY INSERT AT THE END
+ */
 	  VIEW_SORTED_BY_STREET = 1
 	, VIEW_SORTED_BY_DATE
 	, VIEW_TIME
 	, VIEW_STATISTICS
 	, VIEW_SETTINGS
+	, VIEW_STUDIES
+	, VIEW_PLACEMENTS
 } SelectedButtonBarView;
 
 @interface MainView : UIView {
