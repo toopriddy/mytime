@@ -43,6 +43,7 @@ typedef enum {
 	int _buttons[5];
 
 	SelectedButtonBarView _currentButtonBarView;
+	BOOL _inMoreView;
 	UIView *_currentView;
 	UITransitionView *_transitionView;
 

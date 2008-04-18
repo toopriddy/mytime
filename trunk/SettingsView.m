@@ -42,7 +42,10 @@ const char* svn_version(void);
 
 	_donatedAlready = [_donated intValue] != 0;
 
+	[_table setKeyboardVisible:NO animated:NO];
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[_table reloadData];
+
 }
 
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings
@@ -201,7 +204,8 @@ const char* svn_version(void);
 {
     VERBOSE(NSLog(@"preferencesTable: cellForRow:%d inGroup:%d", row, group);)
     UIPreferencesTableCell *cell = nil;
-
+	UIImage *image = nil;
+	
     switch (group) 
     {
         // Donate
@@ -226,26 +230,36 @@ const char* svn_version(void);
 				{
 					case VIEW_SORTED_BY_STREET:
 						cell = [[UIPreferencesTableCell alloc] init];
+						image = [UIImage applicationImageNamed:@"streetSelected.png"];
+						[cell setImage:image];
 						[cell setTitle:@"Calls Sorted by Street"];
 						[cell setShowDisclosure: YES];
 						break;
 					case VIEW_SORTED_BY_DATE:
 						cell = [[UIPreferencesTableCell alloc] init];
+						image = [UIImage applicationImageNamed:@"timeSelected.png"];
+						[cell setImage:image];
 						[cell setTitle:@"Calls Sorted by Date"];
 						[cell setShowDisclosure: YES];
 						break;
 					case VIEW_TIME:
 						cell = [[UIPreferencesTableCell alloc] init];
+						image = [UIImage applicationImageNamed:@"timerSelected.png"];
+						[cell setImage:image];
 						[cell setTitle:@"Time"];
 						[cell setShowDisclosure: YES];
 						break;
 					case VIEW_STATISTICS:
 						cell = [[UIPreferencesTableCell alloc] init];
+						image = [UIImage applicationImageNamed:@"statisticsSelected.png"];
+						[cell setImage:image];
 						[cell setTitle:@"Statistics"];
 						[cell setShowDisclosure: YES];
 						break;
 					case VIEW_STUDIES:
 						cell = [[UIPreferencesTableCell alloc] init];
+						image = [UIImage applicationImageNamed:@"studiesSelected.png"];
+						[cell setImage:image];
 						[cell setTitle:@"Studies"];
 						[cell setShowDisclosure: YES];
 						break;
@@ -307,6 +321,12 @@ const char* svn_version(void);
     return(cell);
 }
 
+- (void)deferredSelectTableRow:(NSNumber *)row
+{
+	[_table setKeyboardVisible:NO animated:NO];
+	[_table selectRow:[row intValue] byExtendingSelection:NO withFade:YES];
+	[row release];
+}
 
 - (void)tableRowSelected:(NSNotification*)notification
 {

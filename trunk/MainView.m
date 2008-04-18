@@ -238,6 +238,8 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	[_settings setObject:[NSNumber numberWithInt:_buttons[2]] forKey:SettingsThirdView];
 	[_settings setObject:[NSNumber numberWithInt:_buttons[3]] forKey:SettingsFourthView];
 
+	[_settingsView reloadData];
+
 	[self saveData];
 }
 
@@ -295,8 +297,8 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 - (void)setViewFromMore:(int)view
 {
 	[self setView:view transition:1];
+	_inMoreView = YES;
 	_currentButtonBarView = view;
-	[_buttonBar showSelectionForButton:_currentButtonBarView];
 }
 
 - (void)buttonBarItemTapped:(id) sender 
@@ -307,8 +309,9 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	// if they clicked on the button that we are currently on, then just return dont do anything
 	if(button == _currentButtonBarView)
 		return;
-
-	[self setView:button transition:0];
+	
+	[self setView:button transition:(_inMoreView ? 2 : 0)];
+	_inMoreView = NO;
 	
 	_currentButtonBarView = button;
     [_settings setObject:[[[NSNumber alloc] initWithInt:_currentButtonBarView] autorelease] forKey:SettingsCurrentButtonBarView];
@@ -375,6 +378,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		CGRect buttonBarRect = rect;
 		buttonBarRect.origin.y = buttonBarRect.size.height;
 		buttonBarRect.size.height = 49.0f; 
+		_inMoreView = NO;
 		_buttonBar = [self allocButtonBarWithFrame:buttonBarRect];
 		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
 		[_buttonBar setAutoresizesSubviews: YES];
