@@ -36,4 +36,6 @@
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings;
 - (void)dealloc;
 - (void)reloadData;
+- (void)tableRowSelected:(NSNotification*)notification;
+
 @end

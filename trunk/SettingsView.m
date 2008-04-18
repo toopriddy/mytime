@@ -81,7 +81,10 @@ const char* svn_version(void);
 	// Donate View
 	count++;
 	
-	// First/second View
+	// Other Views
+	count++;
+
+	// Settings
 	count++;
 
 	// mytime website
@@ -96,7 +99,6 @@ const char* svn_version(void);
 
 - (int) preferencesTable: (UIPreferencesTable *)table numberOfRowsInGroup: (int) group 
 {
-    VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d", group);)
 	int count = 0;
 
     switch (group)
@@ -106,23 +108,28 @@ const char* svn_version(void);
 			count++; // always show hours
 			break;
 
-        // First/Second
+        // Other Views
         case 1:
-			count++; 
+			[[[App getInstance] mainView] unusedViewsWithCount:&count];
+			break;
+		
+        // Settings
+        case 2:
 			count++; 
 			break;
 		
         // Website
-        case 2:
+        case 3:
 			count++; 
 			count++; 
 			break;
 		
 		// version 
-		case 3:
+		case 4:
 			count++; //version
 			count++; //build date
     }
+    VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d count:%d", group, count);)
 	return(count);
 }
 
@@ -136,20 +143,26 @@ const char* svn_version(void);
 		case 0:
 			break;
 
-        // First/Second
+        // Other Views
 		case 1:
+			cell = [[UIPreferencesTableCell alloc] init];
+			[cell setTitle:@"Other Views"];
+			break;
+		
+        // First/Second
+		case 2:
 			cell = [[UIPreferencesTableCell alloc] init];
 			[cell setTitle:@"Settings"];
 			break;
 		
         // Website
-        case 2:
+        case 3:
 			cell = [[UIPreferencesTableCell alloc] init];
 			[cell setTitle:@"Contact Information"];
 			break;
 		
 		// version 
-		case 3:
+		case 4:
 			cell = [[UIPreferencesTableCell alloc] init];
 			[cell setTitle:@"Version"];
 			break;
@@ -202,8 +215,46 @@ const char* svn_version(void);
 			}
             break;
 
-        // First/Second
+        // Other Views
 		case 1:
+		{
+			int count;
+			int *buttons = [[[App getInstance] mainView] unusedViewsWithCount:&count];
+			if(row < count)
+			{
+				switch(buttons[row])
+				{
+					case VIEW_SORTED_BY_STREET:
+						cell = [[UIPreferencesTableCell alloc] init];
+						[cell setTitle:@"Calls Sorted by Street"];
+						[cell setShowDisclosure: YES];
+						break;
+					case VIEW_SORTED_BY_DATE:
+						cell = [[UIPreferencesTableCell alloc] init];
+						[cell setTitle:@"Calls Sorted by Date"];
+						[cell setShowDisclosure: YES];
+						break;
+					case VIEW_TIME:
+						cell = [[UIPreferencesTableCell alloc] init];
+						[cell setTitle:@"Time"];
+						[cell setShowDisclosure: YES];
+						break;
+					case VIEW_STATISTICS:
+						cell = [[UIPreferencesTableCell alloc] init];
+						[cell setTitle:@"Statistics"];
+						[cell setShowDisclosure: YES];
+						break;
+					case VIEW_STUDIES:
+						cell = [[UIPreferencesTableCell alloc] init];
+						[cell setTitle:@"Studies"];
+						[cell setShowDisclosure: YES];
+						break;
+				}
+			}
+			break;
+		}
+        // First/Second
+		case 2:
 			switch(row)
 			{
 				case 0:
@@ -212,18 +263,11 @@ const char* svn_version(void);
                     [cell setShowDisclosure: YES];
 					break;
 					
-				case 1:
-					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:@"Something else"];
-					[cell setValue:_secondView];
-                    [cell setShowDisclosure: YES];
-					break;
-					
 			}
 			break;
 		
         // Website
-        case 2:
+        case 3:
 			switch(row)
 			{
 				case 0:
@@ -241,7 +285,7 @@ const char* svn_version(void);
 			break;
 		
 		// version 
-		case 3:
+		case 4:
 			switch(row)
 			{
 				case 0:
@@ -257,6 +301,7 @@ const char* svn_version(void);
 					[cell setShowSelection:NO];
 					break;
 			}
+			break;
     }
 
     return(cell);
@@ -274,43 +319,66 @@ const char* svn_version(void);
 	_selectedRow = row;
 
 	// Donate
-	switch(row)
+	if(--row == 0)
 	{
-		case 1:
-		{
-			// open up a url
-			NSURL *url = [NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=toopriddy%40gmail%2ecom&item_name=PG%20Software&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"];
-			[[App getInstance] openURL:url];
-			break;
-		}
-		
-		case 3:
-		{
-			[[[App getInstance] mainView] buttonBarCustomize];
-			break;
-		}
-		
-		case 4:
-		{
-			break;
-		}
+		// open up a url
+		NSURL *url = [NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=toopriddy%40gmail%2ecom&item_name=PG%20Software&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"];
+		[[App getInstance] openURL:url];
+		return;
+	}
 
-		case 6:
+	--row; // gap
+
+	// Other Views
+	int count;
+	int *buttons = [[[App getInstance] mainView] unusedViewsWithCount:&count];
+	int i;
+	for(i = 0; i < count; i++)
+	{
+		if(--row == 0)
 		{
-			// open up a url to mytime.googlecode.com
-			NSURL *url = [NSURL URLWithString:@"http://mytime.googlecode.com"];
-			[[App getInstance] openURL:url];
-			break;
+			switch(buttons[row])
+			{
+				case VIEW_SORTED_BY_STREET:
+				case VIEW_SORTED_BY_DATE:
+				case VIEW_TIME:
+				case VIEW_STATISTICS:
+				case VIEW_STUDIES:
+					[self retain];
+					[[[App getInstance] mainView] setViewFromMore:buttons[row]];
+					break;
+			}
 		}
-		
-		case 7:
-		{
-			// email me
-			NSURL *url = [NSURL URLWithString:@"mailto:toopriddy@gmail.com?subject=Regarding%20your%20MyTime%20application"];
-			[[App getInstance] openURL:url];
-			break;
-		}
-		
+	}
+	
+	--row; // gap
+
+	
+	// Edit buttons
+	if(--row == 0)
+	{
+		[[[App getInstance] mainView] buttonBarCustomize];
+		return;
+	}
+
+	--row; // gap
+
+	// website
+	if(--row == 0)
+	{
+		// open up a url to mytime.googlecode.com
+		NSURL *url = [NSURL URLWithString:@"http://mytime.googlecode.com"];
+		[[App getInstance] openURL:url];
+		return;
+	}
+
+	// email me
+	if(--row == 0)
+	{
+		// email me
+		NSURL *url = [NSURL URLWithString:@"mailto:toopriddy@gmail.com?subject=Regarding%20your%20MyTime%20application"];
+		[[App getInstance] openURL:url];
+		return;
 	}
 }
 

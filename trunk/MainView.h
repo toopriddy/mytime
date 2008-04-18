@@ -49,6 +49,13 @@ typedef enum {
     NSMutableDictionary *_settings;
 }
 
+
+- (void)setView:(int)button transition:(int)transition;
+- (void)setViewFromMore:(int)view;
+
+- (int *)allViewsWithCount:(int *)count;
+- (int *)unusedViewsWithCount:(int *)count;
+
 - (void)setBounds:(CGRect)rect;
 
 - (NSMutableDictionary *)getSavedData;

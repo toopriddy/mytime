@@ -225,7 +225,6 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	{
         [[button viewWithTag:_buttons[i]] setFrame:CGRectMake( (i*width), 1.0, width, 48.0)];
     }
-    [ button showSelectionForButton: _currentButtonBarView];
 
     return button;
 }
@@ -256,40 +255,48 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	}
 }
 
-- (void)setView:(int)button
+- (void)setView:(int)button transition:(int)transition
 {
     switch (button) 
 	{
         case VIEW_SORTED_BY_STREET:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_STREET");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_STREET];
-			[self transition:0 toView:_sortedCallsView ];
+			[self transition:transition toView:_sortedCallsView ];
             break;
         case VIEW_SORTED_BY_DATE:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_DATE");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_DATE];
-			[self transition:0 toView:_sortedCallsView ];
+			[self transition:transition toView:_sortedCallsView ];
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
-			[self transition:0 toView:_timeView];
+			[self transition:transition toView:_timeView];
 			break;
         case VIEW_STATISTICS:
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
 			[_statisticsView reloadData];
-			[self transition:0 toView:_statisticsView];
+			[self transition:transition toView:_statisticsView];
 			break;
 		case VIEW_STUDIES:
 			DEBUG(NSLog(@"VIEW_STUDIES");)
 			[_settingsView reloadData];
-			//[self transition:0 toView:_studiesView];
+			//[self transition:transition toView:_studiesView];
+			[self transition:transition toView:_statisticsView];
 			break;
         case VIEW_SETTINGS:
 			DEBUG(NSLog(@"VIEW_SETTINGS");)
 			[_settingsView reloadData];
-			[self transition:0 toView:_settingsView];
+			[self transition:transition toView:_settingsView];
 			break;
     }
+}
+
+- (void)setViewFromMore:(int)view
+{
+	[self setView:view transition:1];
+	_currentButtonBarView = view;
+	[_buttonBar showSelectionForButton:_currentButtonBarView];
 }
 
 - (void)buttonBarItemTapped:(id) sender 
@@ -301,7 +308,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 	if(button == _currentButtonBarView)
 		return;
 
-	[self setView:button];
+	[self setView:button transition:0];
 	
 	_currentButtonBarView = button;
     [_settings setObject:[[[NSNumber alloc] initWithInt:_currentButtonBarView] autorelease] forKey:SettingsCurrentButtonBarView];
@@ -363,6 +370,15 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 		    _currentButtonBarView = VIEW_SORTED_BY_STREET;
         }
 
+		
+		// create the buttonbar and add it at the lat 49pix of the screen
+		CGRect buttonBarRect = rect;
+		buttonBarRect.origin.y = buttonBarRect.size.height;
+		buttonBarRect.size.height = 49.0f; 
+		_buttonBar = [self allocButtonBarWithFrame:buttonBarRect];
+		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
+		[_buttonBar setAutoresizesSubviews: YES];
+
         // create the calls view
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
@@ -387,16 +403,11 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
-		[self setView:_currentButtonBarView];
+		[self setView:_currentButtonBarView transition:0];
 
-		
-		// create the buttonbar and add it at the lat 49pix of the screen
-		rect.origin.y = rect.size.height;
-		rect.size.height = 49.0f; 
-		_buttonBar = [self allocButtonBarWithFrame:rect];
-		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
-		[_buttonBar setAutoresizesSubviews: YES];
 		[self addSubview: _buttonBar];
+		[_buttonBar showSelectionForButton: _currentButtonBarView];
+
     }
     
     return(self);
@@ -448,14 +459,57 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 - (void)buttonBarCustomize
 {
-	int buttons[] = {
+	int count;
+	int *buttons = [self allViewsWithCount:&count];
+	[_buttonBar customize:buttons withCount:count];
+}
+
+- (int *)allViewsWithCount:(int *)count
+{
+	static int buttons[] = {
 		VIEW_SORTED_BY_STREET,
 		VIEW_SORTED_BY_DATE,
 		VIEW_TIME,
 		VIEW_STATISTICS,
 		VIEW_STUDIES
 	};
-	[_buttonBar customize:buttons withCount:(ARRAY_SIZE(buttons))];
+	*count = ARRAY_SIZE(buttons);
+	return(buttons);
+}
+
+- (int *)unusedViewsWithCount:(int *)count
+{
+	static int *unused = NULL;
+	int allButtonsCount;
+	int *allButtons = [self allViewsWithCount:&allButtonsCount];
+	int i;
+	int j;
+	int unusedCount = 0;
+	BOOL found;
+	NSLog(@" allbuttons = %d", allButtonsCount);
+	if(unused == NULL)
+	{
+		unused = (int *)malloc(sizeof(int) * (allButtonsCount - 4));
+	}
+	
+	for(i = 0; i < allButtonsCount; i++)
+	{
+		found = NO;
+		for(j = 0; j < 4; j++)
+		{
+			if(allButtons[i] == _buttons[j])
+			{
+			NSLog(@"found %d", _buttons[j]);
+				found = YES;
+			}
+		}
+		if(!found)
+		{
+			unused[unusedCount++] = allButtons[i];
+		}
+	}
+	*count = unusedCount;
+	return(unused);
 }
 
 - (BOOL)respondsToSelector:(SEL)selector
