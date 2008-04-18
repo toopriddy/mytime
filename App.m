@@ -101,7 +101,7 @@ App *me;
 	[_transitionView setAutoresizesSubviews: YES];
     [_window setContentView: _transitionView];
     
-    _mainView = [[MainView alloc] initWithFrame: _rect];
+    [(_mainView = [MainView alloc]) initWithFrame: _rect];
     [_transitionView transition:0 toView:_mainView]; 
 	[_mainView setAutoresizingMask: kMainAreaResizeMask];
 	[_mainView setAutoresizesSubviews: YES];
