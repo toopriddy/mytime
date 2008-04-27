@@ -70,8 +70,9 @@ NSString const * const SettingsThirdView = @"thirdView";
 NSString const * const SettingsFourthView = @"fourthView";
 
 
-//static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
-static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
+static NSString *oldDataFile = @"/var/root/Library/MyTime/record.plist";
+static NSString *newDataFile = @"/var/mobile/Library/MyTime/record.plist";
+static NSString *newDataPath = @"/var/mobile/Library/";
 
 @implementation MainView
 
@@ -89,9 +90,21 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 #endif
 -(void)loadData
 {
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	BOOL isDir = NO;
+	NSString *theDataFile;
+	if([fileManager fileExistsAtPath:newDataPath isDirectory:&isDir] && isDir)
+	{
+		theDataFile = newDataFile;
+	}
+	else
+	{
+		theDataFile = oldDataFile;
+	}
+
 #if PROPERTY_LIST
 	NSString *errorString = nil;
-	NSData *data = [[NSData alloc] initWithContentsOfFile: dataPath];
+	NSData *data = [[NSData alloc] initWithContentsOfFile: theDataFile];
 	_settings = [NSPropertyListSerialization propertyListFromData:data 
 	                                             mutabilityOption:NSPropertyListMutableContainersAndLeaves
 			                                               format:nil
@@ -99,7 +112,7 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 	[data release];
 #else
-	_settings = [[NSMutableDictionary alloc] initWithContentsOfFile: dataPath];
+	_settings = [[NSMutableDictionary alloc] initWithContentsOfFile: theDataFile];
 #endif
 	if(_settings == nil)
 	{
@@ -113,15 +126,27 @@ static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 -(void)saveData
 {
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	BOOL isDir = NO;
+	NSString *theDataFile;
+	if([fileManager fileExistsAtPath:newDataPath isDirectory:&isDir] && isDir)
+	{
+		theDataFile = newDataFile;
+	}
+	else
+	{
+		theDataFile = oldDataFile;
+	}
+
 	DEBUG(NSLog(@"saveData");)
 #if PROPERTY_LIST
 	NSString *errorString = nil;
 	NSData *data = [NSPropertyListSerialization dataFromPropertyList:_settings format: NSPropertyListBinaryFormat_v1_0 errorDescription:&errorString];
-	[data writeToFile:dataPath atomically:YES];
+	[data writeToFile:theDataFile atomically:YES];
 	NSLog(@"%@", errorString);
 #else
-	[[NSFileManager defaultManager] createDirectoryAtPath: [dataPath stringByDeletingLastPathComponent] attributes: nil];
-	[_settings writeToFile: dataPath atomically: YES];
+	[[NSFileManager defaultManager] createDirectoryAtPath:[theDataFile stringByDeletingLastPathComponent] attributes: nil];
+	[_settings writeToFile:theDataFile atomically: YES];
 #endif
 }
 

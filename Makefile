@@ -76,7 +76,7 @@ all: $(PRODUCT_ABS)
 $(CONFIGURATION_BUILD_DIR)/svn_version.o: $(SRCROOT)/svn_version.c
 
 copy:
-	scp build/Release/MyTime.app/MyTime root@10.22.254.193:/Applications/MyTime.app/
+	scp build/Release/MyTime.app/MyTime root@10.10.10.220:/Applications/MyTime.app/
 
 backup:
 	scp root@10.10.10.220:/var/root/Library/MyTime/record.plist ./
