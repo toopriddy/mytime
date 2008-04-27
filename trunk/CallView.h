@@ -35,6 +35,9 @@
     NSMutableDictionary *_call;
 	NSMutableArray *_returnVisitNotes;
 	
+	NSMutableArray *_displayInformation;
+	NSMutableDictionary *_currentGroup;
+	
 	BOOL _showAddCall;
 	BOOL _showDeleteButton;
 	BOOL _newCall;
@@ -120,10 +123,12 @@
 - (void)editAddressSaveAction: (AddressView *)publicationView;
 
 // used to build and save the notes fields
-- (void)buildReturnVisitsNotes;
 - (void)saveReturnVisitsNotes;
 
 - (void)setBounds:(CGRect)rect;
+
+// dont use this
+- (void)reloadData;
 
 
 // navigation bar callback functions

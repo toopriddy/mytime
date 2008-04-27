@@ -70,6 +70,7 @@ typedef enum {
 
 - (void)setFocus:(UIPreferencesTextTableCell *)cell
 {
+	DEBUG(NSLog(@"setFocus:");)
 	[cell becomeFirstResponder];
 }
 
@@ -131,7 +132,7 @@ typedef enum {
 				//   the per call insert a new publication
 				[_table setKeyboardVisible:NO animated:NO];
 				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-				[_table reloadData];
+				[self reloadData];
 				
 				break;
 
@@ -172,7 +173,7 @@ typedef enum {
 				//   the name field if it is not there already
 				//   the insert new call
 				//   the per call insert a new publication
-				[_table reloadData];
+				[self reloadData];
 				break;
 			
 		}
@@ -202,15 +203,22 @@ typedef enum {
  *   Callback functions
  *   
  ******************************************************************/
+- (void)dummyFunction
+{
+}
+
 - (void)unselectRow
 {
+	DEBUG(NSLog(@"unselectRow");)
 	// unselect the row
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 }
 
 - (void)deleteReturnVisitAtIndex:(NSNumber *)index
 {
+	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", index);)
 	int i = [index intValue];
+	[index release];
 
 	// save off the notes before we delete this return visit
 	[self saveReturnVisitsNotes];
@@ -236,10 +244,13 @@ typedef enum {
 
 - (void)deleteReturnVisitAtIndex:(NSNumber *)index publicationAtIndex:(NSNumber *)publicationIndex
 {
+	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
 	// this is the entry that we need to delete
 	[[[[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]] 
 	                                                  objectForKey:CallReturnVisitPublications] 
 													      removeObjectAtIndex:[publicationIndex intValue]];
+
+	[index release];
 	// save the data
 	[self save];
 	
@@ -248,6 +259,7 @@ typedef enum {
 
 - (void)addressSelected
 {
+	DEBUG(NSLog(@"addressSelected");)
 	if(_editing)
 	{
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
@@ -340,6 +352,7 @@ typedef enum {
 
 - (void)addReturnVisitSelected
 {
+	DEBUG(NSLog(@"addReturnVisitSelected");)
 	_showAddCall = NO;
 	// save off the notes before we create the other return visit
 	[self saveReturnVisitsNotes];
@@ -355,8 +368,6 @@ typedef enum {
 	
 	[returnVisits insertObject:visit atIndex:0];
 
-	// rebuild the notes before we make the table reloadData
-	[self buildReturnVisitsNotes];
 	
 	// animate the two new rows
 //		[_table reloadData];
@@ -370,10 +381,12 @@ typedef enum {
 	
 	// unselect this row 
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+	[self reloadData];
 }
 
 - (void)deleteCall
 {
+	DEBUG(NSLog(@"deleteCall");)
 	UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
 	[alertSheet setTitle:@"Delete Call?"];
 	[alertSheet setBodyText:@"Are you sure you want to delete the call?"];
@@ -392,8 +405,11 @@ typedef enum {
 
 - (void)changeDateOfReturnVisitAtIndex:(NSNumber *)index
 {
+	DEBUG(NSLog(@"changeDateOfReturnVisitAtIndex: %@", index);)
 	// they clicked on the Change Date
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
+	[index release];
+	
 	// make the new call view 
 	DatePickerView *p = [[[DatePickerView alloc] initWithFrame:_rect date:[_editingReturnVisit objectForKey:CallReturnVisitDate]] autorelease];
 
@@ -412,8 +428,11 @@ typedef enum {
 
 - (void)addPublicationToReturnVisitAtIndex:(NSNumber *)index
 {
+	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %@ publicationAtIndex:%@", index);)
 	//this is the add a new entry one
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
+	[index release];
+	
 	_editingPublication = nil; // we are making a new one
 	
 	// make the new call view 
@@ -432,11 +451,14 @@ typedef enum {
 	[[App getInstance] transition:1 fromView:self toView:p];
 }
 
-- (void)changeReturnVisitAtIndex:(NSNumber *)index withPublicationIndex:(NSNumber *)publicationIndex
+- (void)changeReturnVisitAtIndex:(NSNumber *)index publicationAtIndex:(NSNumber *)publicationIndex
 {
+	DEBUG(NSLog(@"changeReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
 	// they selected an existing entry
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
 	_editingPublication = [[_editingReturnVisit objectForKey:CallReturnVisitPublications] objectAtIndex:[publicationIndex intValue]];
+	[index release];
+	[publicationIndex release];
 	
 	// make the new call view 
 	PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect 
@@ -465,6 +487,7 @@ typedef enum {
 
 - (void)addGroup:(id)groupCell rowHeight:(int)rowHeight
 {
+	DEBUG(NSLog(@"addGroup: rowHeight:%d", rowHeight);)
 	_currentGroup = [[[NSMutableDictionary alloc] init] autorelease];
 	
 	// initialize the arrays
@@ -476,10 +499,10 @@ typedef enum {
 	// set the group's settings
 	if(groupCell != nil)
 		[_currentGroup setObject:groupCell forKey:CallViewGroupCell];
-	if(rowHeight >= 0)
-		[_currentGroup setObject:[NSNumber numberWithInt:rowHeight] forKey:CallViewRowHeight];
+	[_currentGroup setObject:[NSNumber numberWithInt:rowHeight] forKey:CallViewRowHeight];
 
 	[_displayInformation addObject:_currentGroup];
+	NSLog(@"_displayInformation count = %d", [_displayInformation count]);
 }
 
 - (void)     addRow:(id)cell 
@@ -498,9 +521,13 @@ typedef enum {
 
 - (void)reloadData
 {
-	[_displayInformation release];
+	DEBUG(NSLog(@"CallView reloadData");)
 
+	[_displayInformation release];
+	_displayInformation = [[NSMutableArray alloc] init];
+	
 	// Name
+	if(_editing || [[_call objectForKey:CallName] length])
 	{
 		[self addGroup:nil rowHeight:50];
 
@@ -534,8 +561,17 @@ typedef enum {
 			  selectInvocation:nil
 			  deleteInvocation:nil];
 		}
+		
+		if(_setFirstResponderGroup == 0)
+		{
+			[self performSelector: @selector(setFocus:) 
+					   withObject:_name
+					   afterDelay:.3];
+			_setFirstResponderGroup = -1;
+		}
 	}
 	
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 	// Address
 	{
@@ -547,63 +583,83 @@ typedef enum {
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
 
-		NSMutableString *top = [[NSMutableString alloc] init];
+		NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
 		[top setString:@""];
-		NSMutableString *bottom = [[NSMutableString alloc] init];
+		NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
 		[bottom setString:@""];
 
+		BOOL found = NO;
 		if(streetNumber != nil &&[streetNumber length])
+		{
 			[top appendFormat:@"%@ ", streetNumber];
+			found = YES;
+		}
 		if(street != nil && [street length])
+		{
 			[top appendFormat:@"%@", street];
+			found = YES;
+		}
 		if(city != nil && [city length])
+		{
 			[bottom appendFormat:@"%@", city];
+			found = YES;
+		}
 		if(state != nil && [state length])
+		{
 			[bottom appendFormat:@", %@", state];
+			found = YES;
+		}
 		VERY_VERBOSE(NSLog(@"address:\n%@\n%@", top, bottom);)
 
-		UIView *view = [[UIView alloc] init];
-		UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
-		[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
-		float bgColor[] = { 0,0,0,0 };
-		[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-		[label setText:top];
-		[label sizeToFit];
-		CGRect lrect = [label bounds];
-		lrect.origin.x += 100.0f;
-		lrect.origin.y += 15.0f;
-		[label setFrame: lrect];
-		[view addSubview:label];
+		// if there was no street information then just dont display
+		// the address (unless we are editing
+		if(found || _editing)
+		{
+			UIView *view = [[UIView alloc] init];
+			UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
+			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
+			float bgColor[] = { 0,0,0,0 };
+			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
+			[label setText:top];
+			[label sizeToFit];
+			CGRect lrect = [label bounds];
+			lrect.origin.x += 100.0f;
+			lrect.origin.y += 15.0f;
+			[label setFrame: lrect];
+			[view addSubview:label];
 
-		label = [[[UITextLabel alloc] init] autorelease];
-		[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
-		[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-		[label setText:bottom];
-		[label sizeToFit];
-		lrect = [label bounds];
-		lrect.origin.x += 100.0f;
-		lrect.origin.y += 35.0f;
-		[label setFrame: lrect];
-		[view addSubview:label];
-		[cell addSubview:view];
-		[cell setShowDisclosure: _editing];
-		[cell updateHighlightColors];
+			label = [[[UITextLabel alloc] init] autorelease];
+			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
+			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
+			[label setText:bottom];
+			[label sizeToFit];
+			lrect = [label bounds];
+			lrect.origin.x += 100.0f;
+			lrect.origin.y += 35.0f;
+			[label setFrame: lrect];
+			[view addSubview:label];
+			[cell addSubview:view];
+			[cell setShowDisclosure: _editing];
+			[cell updateHighlightColors];
 
-		// add a group for the name
-		[self addGroup:nil rowHeight:70];
-		
-		// add the name to the group
-		[self       addRow:cell
-			insertOrDelete:kNone
-		  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
-		  deleteInvocation:nil];
+			// add a group for the name
+			[self addGroup:nil rowHeight:70];
+			
+			// add the name to the group
+			[self       addRow:cell
+				insertOrDelete:kNone
+			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
+			  deleteInvocation:nil];
+		}
 	}
 
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
+
 	// Add new Call
-	if(_showAddCall)
+	if(_showAddCall && _editing)
 	{
 		// we need a larger row height
-		[self addGroup:nil rowHeight:70];
+		[self addGroup:nil rowHeight:-1];
 		
 		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
 		[ cell setShowDisclosure: NO ];
@@ -620,6 +676,8 @@ typedef enum {
 		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
 		  deleteInvocation:nil];
 	}
+
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// RETURN VISITS
 	{
@@ -645,7 +703,7 @@ typedef enum {
 			// create dictionary entry for This Return Visit
 			[self addGroup:cell rowHeight:-1];
 
-
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
 			if(_editing)
 			{
@@ -657,7 +715,15 @@ typedef enum {
 				[self       addRow:text
 					insertOrDelete:kCanDelete
 				  selectInvocation:nil
-				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[NSNumber numberWithInt:i]]];
+				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
+
+				if(_setFirstResponderGroup == 2 && i == 0)
+				{
+					[self performSelector: @selector(setFocus:) 
+							   withObject:text
+							   afterDelay:.5];
+					_setFirstResponderGroup = -1;
+				}
 			}
 			else
 			{
@@ -676,6 +742,8 @@ typedef enum {
 				  deleteInvocation:nil];
 			}
 
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
+	
 			// CHANGE DATE
 			if(_editing)
 			{
@@ -686,11 +754,13 @@ typedef enum {
 				
 				[self       addRow:cell
 					insertOrDelete:kNone
-				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:[NSNumber numberWithInt:i]]
+				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
 				  deleteInvocation:nil];
 			}
 
 		
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
+	
 			// Publications
 			if([visit objectForKey:CallReturnVisitPublications] != nil)
 			{
@@ -703,6 +773,7 @@ typedef enum {
 				{
 					publication = [publications objectAtIndex:j];
 
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
 					NSMutableDictionary *publication = [publications objectAtIndex:j];
 					cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
@@ -714,8 +785,8 @@ typedef enum {
 					{
 						[self       addRow:cell
 							insertOrDelete:kCanDelete
-						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicatoinAtIndex:) withArgument:[NSNumber numberWithInt:i] andArgument:[NSNumber numberWithInt:j]]
-						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:[NSNumber numberWithInt:i] andArgument:[NSNumber numberWithInt:j]]];
+						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]
+						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]];
 					}
 					else
 					{
@@ -727,6 +798,7 @@ typedef enum {
 				}
 			}
 			
+	
 			// add publication
 			if(_editing)
 			{
@@ -736,38 +808,40 @@ typedef enum {
 
 				[self       addRow:cell
 					insertOrDelete:kCanInsert
-				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[NSNumber numberWithInt:i]]
-				  deleteInvocation:nil];
-			}
-			
-			
-			// DELETE call
-			if(_editing)
-			{
-				[self addGroup:nil rowHeight:-1];
-
-				// DELETE
-				cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
-				[cell setShowDisclosure: NO ];
-				[cell setTitle:@"Delete Call"];
-				[cell setAlignment:2 ];
-				float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
-				CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-				CGColorRef whiteColor = CGColorCreate(rgbSpace, wcolorComponents);
-				CGColorSpaceRelease(rgbSpace);
-
-				[[cell titleTextLabel] setColor:whiteColor];
-			
-				[self       addRow:cell
-					insertOrDelete:kNone
-				  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
+				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
 				  deleteInvocation:nil];
 			}
 		}
-		
 	}
+
+	// DELETE call
+	if(_editing && !_newCall)
+	{
+		[self addGroup:nil rowHeight:-1];
+
+		// DELETE
+		UIPreferencesDeleteTableCell *cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
+		[cell setShowDisclosure: NO ];
+		[cell setTitle:@"Delete Call"];
+		[cell setAlignment:2 ];
+		float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
+		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+		CGColorRef whiteColor = CGColorCreate(rgbSpace, wcolorComponents);
+		CGColorSpaceRelease(rgbSpace);
+
+		[[cell titleTextLabel] setColor:whiteColor];
+	
+		[self       addRow:cell
+			insertOrDelete:kNone
+		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
+		  deleteInvocation:nil];
+	}
+
+	
+	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 	
 	[_table reloadData];
+	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 }
 
 
@@ -810,6 +884,7 @@ typedef enum {
 		_deleteObject = nil;
 		_setFirstResponderGroup = -1;
 
+		_displayInformation = nil;
 
 		_newCall = (call == nil);
 		_editing = _newCall;
@@ -1023,7 +1098,7 @@ typedef enum {
     VERBOSE(NSLog(@"_editingPublication is = %@", _editingPublication);)
 
     [_table setKeyboardVisible:NO animated:NO];
-	[_table reloadData];
+	[self reloadData];
     [[App getInstance] transition:2 fromView:publicationView toView:self];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 
@@ -1066,7 +1141,7 @@ typedef enum {
     [_table setKeyboardVisible:NO animated:NO];
     [[App getInstance] transition:2 fromView:view toView:self];
 
-	[_table reloadData];
+	[self reloadData];
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 
@@ -1162,9 +1237,12 @@ typedef enum {
     VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
 	if(row == 0)
 	{
-		return([[[_displayInformation objectAtIndex:group] objectForKey:CallViewRowHeight] intValue]);
+		float height = [[[_displayInformation objectAtIndex:group] objectForKey:CallViewRowHeight] floatValue];
+		
+		VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
+		if(height >= 0)
+			return(height);
 	}
-#if 0
 	else if (row == -1) 
 	{
 		if([[_displayInformation objectAtIndex:group] objectForKey:CallViewGroupCell] != nil)
@@ -1172,7 +1250,6 @@ typedef enum {
 			return 40;
 		}
 	}
-#endif
     return proposed;
 }
 
@@ -1287,6 +1364,7 @@ typedef enum {
 	[_table reloadCellAtRow: [start intValue] - 1 column:0 animated:YES];
 	// reload the inserted rows
 	[_table reloadDataForInsertionOfRows:NSMakeRange([start intValue], 3) animated:YES];
+	[start release];
 }
 
 - (void)tableRowSelected:(NSNotification*)notification
@@ -1312,6 +1390,7 @@ typedef enum {
 		{
 			if(row == 0)
 			{
+				DEBUG(NSLog(@"calling invoking handler");)
 				[[[info objectForKey:CallViewSelectedInvocations] objectAtIndex:i] invoke];
 				return;
 			}
@@ -1407,7 +1486,7 @@ typedef enum {
 		{
 			if(row == 0)
 			{
-				[[info objectForKey:CallViewDeleteInvocations] invoke];
+				[[[info objectForKey:CallViewDeleteInvocations] objectAtIndex:i] invoke];
 				return;
 			}
 			--row;
