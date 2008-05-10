@@ -515,6 +515,7 @@ static NSString *MONTHS[] = {
         _picker = [[UIPickerView alloc] initWithFrame: CGRectMake(0, navSize.height, rect.size.width, pickerSize.height)];
 		[_picker setAutoresizingMask: kPickerResizeMask];
 		[_picker setAutoresizesSubviews: YES];
+		[_picker setSoundsEnabled:NO];
 
         pickerSize = [_picker bounds].size;
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f", pickerSize.height, pickerSize.width);)

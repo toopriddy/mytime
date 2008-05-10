@@ -59,6 +59,7 @@ typedef enum {
 
 - (void)save
 {
+	DEBUG(NSLog(@"save");)
 	// save the notes
 	[self saveReturnVisitsNotes];
 	
@@ -70,7 +71,10 @@ typedef enum {
 
 - (void)setFocus:(UIPreferencesTextTableCell *)cell
 {
-	DEBUG(NSLog(@"setFocus:");)
+	DEBUG(NSLog(@"setFocus: %@", cell);)
+	// unselect the row
+	[_table setKeyboardVisible:YES animated:YES];
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[cell becomeFirstResponder];
 }
 
@@ -86,7 +90,7 @@ typedef enum {
 - (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument
 {
 	NSInvocation *invocation = [self invocationForSelector:selector];
-	[invocation setArgument:argument atIndex:2];
+	[invocation setArgument:&argument atIndex:2];
 	
 	return(invocation);
 }
@@ -94,7 +98,7 @@ typedef enum {
 - (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument andArgument:(void *)anotherArgument
 {
 	NSInvocation *invocation = [self invocationForSelector:selector withArgument:argument];
-	[invocation setArgument:anotherArgument atIndex:3];
+	[invocation setArgument:&anotherArgument atIndex:3];
 	
 	return(invocation);
 }
@@ -352,7 +356,7 @@ typedef enum {
 
 - (void)addReturnVisitSelected
 {
-	DEBUG(NSLog(@"addReturnVisitSelected");)
+	DEBUG(NSLog(@"addReturnVisitSelected _selectedRow=%d", _selectedRow);)
 	_showAddCall = NO;
 	// save off the notes before we create the other return visit
 	[self saveReturnVisitsNotes];
@@ -373,14 +377,18 @@ typedef enum {
 //		[_table reloadData];
 //		[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
 //		[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow, 1)] viaEdge:1 animated:YES];
+#if 0
 	[_table animateDeletionOfCellAtRow:_selectedRow column:0 viaEdge:1];
 	[self performSelector: @selector(animateInsertRows:) 
 			   withObject:[[NSNumber alloc] initWithInt:_selectedRow] 
 			   afterDelay:.5];
 	_setFirstResponderGroup = 2;
-	
+#endif	
+
+
 	// unselect this row 
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+//	_shouldReloadAll = NO;
 	[self reloadData];
 }
 
@@ -428,7 +436,7 @@ typedef enum {
 
 - (void)addPublicationToReturnVisitAtIndex:(NSNumber *)index
 {
-	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %@ publicationAtIndex:%@", index);)
+	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %p", index);)
 	//this is the add a new entry one
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
 	[index release];
@@ -511,10 +519,10 @@ typedef enum {
    deleteInvocation:(NSInvocation *)deleteInvocation
 {
 	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
-	NSInvocation *unselectInvocation = [self invocationForSelector:@selector(unselectRow)];
+//	NSInvocation *unselectInvocation = [self invocationForSelector:@selector(unselectRow)];
 
 	[[_currentGroup objectForKey:CallViewRows] addObject:cell];
-	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : unselectInvocation)];
+	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewDeleteInvocations] addObject:(deleteInvocation ? deleteInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewInsertDelete] addObject:[NSNumber numberWithInt:insertOrDelete]];
 }
@@ -547,8 +555,17 @@ typedef enum {
 			// use the textfield
 			[self       addRow:_name
 			    insertOrDelete:kNone
-			  selectInvocation:nil
+			  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:_name]
 			  deleteInvocation:nil];
+
+ 			if(_setFirstResponderGroup == 0)
+			{
+				[self performSelector: @selector(setFocus:) 
+						   withObject:_name
+						   afterDelay:.3];
+				_setFirstResponderGroup = -1;
+			}
+
 		}
 		else
 		{
@@ -561,23 +578,12 @@ typedef enum {
 			  selectInvocation:nil
 			  deleteInvocation:nil];
 		}
-		
-		if(_setFirstResponderGroup == 0)
-		{
-			[self performSelector: @selector(setFocus:) 
-					   withObject:_name
-					   afterDelay:.3];
-			_setFirstResponderGroup = -1;
-		}
 	}
 	
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 	// Address
 	{
-		UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] init ];
-		[ cell setTitle:@"Address" ];
-
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
@@ -615,6 +621,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// the address (unless we are editing
 		if(found || _editing)
 		{
+			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] init ];
+			[ cell setTitle:@"Address" ];
+
 			UIView *view = [[UIView alloc] init];
 			UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
 			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
@@ -638,6 +647,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			lrect.origin.y += 35.0f;
 			[label setFrame: lrect];
 			[view addSubview:label];
+
 			[cell addSubview:view];
 			[cell setShowDisclosure: _editing];
 			[cell updateHighlightColors];
@@ -708,13 +718,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			if(_editing)
 			{
 				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] init ] autorelease];
-				[ [text textField] setPlaceholder:@"Return Visit Notes" ];
-				[ text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
+				[[text textField] setPlaceholder:@"Return Visit Notes" ];
+				[text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
 				[_returnVisitNotes addObject:text];
 
 				[self       addRow:text
 					insertOrDelete:kCanDelete
-				  selectInvocation:nil
+				  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:text]
 				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
 
 				if(_setFirstResponderGroup == 2 && i == 0)
@@ -752,6 +762,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[cell setValue:@"Change Date"];
 				[cell setShowSelection:NO];
 				
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
 					insertOrDelete:kNone
 				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
@@ -783,6 +794,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 					if(_editing)
 					{
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						[self       addRow:cell
 							insertOrDelete:kCanDelete
 						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]
@@ -790,6 +802,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					}
 					else
 					{
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						[self       addRow:cell
 							insertOrDelete:kNone
 						  selectInvocation:nil
@@ -806,9 +819,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[cell setShowDisclosure: YES];
 				[cell setValue:@"Add a placed publication"];
 
+DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
 					insertOrDelete:kCanInsert
-				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
+				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber numberWithInt:i] retain]]
 				  deleteInvocation:nil];
 			}
 		}
@@ -839,8 +853,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
-	
-	[_table reloadData];
+
+	if(_shouldReloadAll)
+		[_table reloadData];
+	_shouldReloadAll = YES;
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 }
 
@@ -883,7 +899,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
         _cancelObject = nil;
 		_deleteObject = nil;
 		_setFirstResponderGroup = -1;
-
+		_shouldReloadAll = YES;
+		
 		_displayInformation = nil;
 
 		_newCall = (call == nil);
@@ -1192,7 +1209,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[settings setObject:[addressView city] forKey:SettingsLastCallCity];
 	[settings setObject:[addressView state] forKey:SettingsLastCallState];
 
-	[_table reloadCellAtRow:_selectedRow column:0 animated:YES];
+//	[_table reloadCellAtRow:_selectedRow column:0 animated:YES];
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
@@ -1201,6 +1218,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// save the data
 	[self save];
+	
+	[self reloadData];
 }
 
 
@@ -1265,82 +1284,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     VERBOSE(NSLog(@"preferencesTable: cellForRow:%d inGroup:%d", row, group);)
 
 	return([[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] objectAtIndex:row]);
-
-#if 0	
-    switch (group) 
-    {
-        // Name
-        case 0:
-            switch (row) 
-            {
-                case 0:
-                    // 0 regular
-                    // 1 numbers
-                    // 2 telephone
-                    // 3 web
-                    // 4 normal with a numberpad as the numbers
-                    // 5 seethrough black keyboard normal
-                    // 6 telephone without +
-                    // 7 seethrough black telephone without +
-                    // 8 email address keyboard with space @ . and _ - +
-                    // 9 email address keyboard with @ . .com
-                    //[[text textField] setPreferredKeyboardType: 0];
-					if(_editing)
-					{
-						[_name retain];
-						cell = _name;
-						if(_setFirstResponderGroup == group)
-						{
-							_setFirstResponderGroup = -1;
-							[self performSelector: @selector(setFocus:) 
-									   withObject:_name
-									   afterDelay:.3];
-						}
-					}
-					else
-					{
-						// if we are not editing, then 
-						cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-						[cell setTitle:[_call objectForKey:CallName]];
-						[cell setShowSelection:NO];
-					}
-                    break;
-            }
-            break;
-
-				NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:group-adjust];
-				if(row == 0)
-				{
-					// NOTES
-					if(_editing)
-					{
-						// pull the cell from the prebuilt _returnVisitNotes
-						UIPreferencesTextTableCell *text = [_returnVisitNotes objectAtIndex:group-adjust];
-						cell = text;
-						if(_setFirstResponderGroup == group)
-						{
-							_setFirstResponderGroup = -1;
-							[self performSelector: @selector(setFocus:) 
-									   withObject:text 
-									   afterDelay:.3];
-						}
-					}
-					else
-					{
-						// if we are not editing, then 
-						cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-						if([[info objectForKey:CallReturnVisitNotes] length] == 0)
-							[cell setValue:@"Return Visit Notes"];
-						else
-							[cell setValue:[info objectForKey:CallReturnVisitNotes]];
-						[cell setShowSelection:NO];
-					}
-					
-				}
-            break;
-        }
-    }
-#endif
 }
 
 - (void)alertSheet:(UIAlertSheet*)sheet buttonClicked:(int)button

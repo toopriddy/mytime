@@ -42,6 +42,7 @@
 	BOOL _showDeleteButton;
 	BOOL _newCall;
 	BOOL _editing;
+	BOOL _shouldReloadAll;
 	
 	int _selectedRow;
 	int _setFirstResponderGroup;
@@ -130,6 +131,8 @@
 // dont use this
 - (void)reloadData;
 
+
+- (void)setFocus:(UIPreferencesTextTableCell *)cell;
 
 // navigation bar callback functions
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
