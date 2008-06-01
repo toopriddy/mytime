@@ -103,7 +103,6 @@
 		[_datePicker setDatePickerMode:1];
 		[_datePicker setAutoresizingMask: kPickerResizeMask];
 		[_datePicker setAutoresizesSubviews: YES];
-		[_datePicker setSoundsEnabled:NO];
     	[self addSubview: _datePicker];
 
 
@@ -117,7 +116,6 @@
 		// 2: date(day of week, month, date), hor, min, am/pm
 		// 3: hours, mins
 		[_timePicker setDatePickerMode:3];
-		[_timePicker setSoundsEnabled:NO];
     	[self addSubview: _timePicker];
     }
     

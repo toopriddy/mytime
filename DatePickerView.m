@@ -105,7 +105,6 @@
 		[_picker setDatePickerMode:1];
 		[_picker setAutoresizingMask: kPickerResizeMask];
 		[_picker setAutoresizesSubviews: YES];
-		[_picker setSoundsEnabled:NO];
     	[self addSubview: _picker];
 
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f", 0.0, navSize.height + pickerSize.height, rect.size.height - navSize.height - pickerSize.height, rect.size.width);)

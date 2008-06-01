@@ -18,7 +18,6 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UITableColumn.h>
 #import <UIKit/UIPickerView.h>
-#import <UIKit/UIButtonBar.h>
 #import <UIKit/UISectionIndex.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/NSPropertyList.h>
@@ -66,13 +65,10 @@ NSString const * const SettingsTimeEntryMinutes = @"minutes";
 NSString const * const SettingsDonated = @"donated";
 NSString const * const SettingsFirstView = @"firstView";
 NSString const * const SettingsSecondView = @"secondView";
-NSString const * const SettingsThirdView = @"thirdView";
-NSString const * const SettingsFourthView = @"fourthView";
 
 
-static NSString *oldDataFile = @"/var/root/Library/MyTime/record.plist";
-static NSString *newDataFile = @"/var/mobile/Library/MyTime/record.plist";
-static NSString *newDataPath = @"/var/mobile/Library/";
+//static NSString *dataPath = @"/var/root/Library/MyTime/record.plist";
+static NSString *dataPath = @"/var/mobile/Library/MyTime/record.plist";
 
 @implementation MainView
 
@@ -90,21 +86,9 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 #endif
 -(void)loadData
 {
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	BOOL isDir = NO;
-	NSString *theDataFile;
-	if([fileManager fileExistsAtPath:newDataPath isDirectory:&isDir] && isDir)
-	{
-		theDataFile = newDataFile;
-	}
-	else
-	{
-		theDataFile = oldDataFile;
-	}
-
 #if PROPERTY_LIST
 	NSString *errorString = nil;
-	NSData *data = [[NSData alloc] initWithContentsOfFile: theDataFile];
+	NSData *data = [[NSData alloc] initWithContentsOfFile: dataPath];
 	_settings = [NSPropertyListSerialization propertyListFromData:data 
 	                                             mutabilityOption:NSPropertyListMutableContainersAndLeaves
 			                                               format:nil
@@ -112,7 +96,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 	[data release];
 #else
-	_settings = [[NSMutableDictionary alloc] initWithContentsOfFile: theDataFile];
+	_settings = [[NSMutableDictionary alloc] initWithContentsOfFile: dataPath];
 #endif
 	if(_settings == nil)
 	{
@@ -126,27 +110,15 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 -(void)saveData
 {
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	BOOL isDir = NO;
-	NSString *theDataFile;
-	if([fileManager fileExistsAtPath:newDataPath isDirectory:&isDir] && isDir)
-	{
-		theDataFile = newDataFile;
-	}
-	else
-	{
-		theDataFile = oldDataFile;
-	}
-
 	DEBUG(NSLog(@"saveData");)
 #if PROPERTY_LIST
 	NSString *errorString = nil;
 	NSData *data = [NSPropertyListSerialization dataFromPropertyList:_settings format: NSPropertyListBinaryFormat_v1_0 errorDescription:&errorString];
-	[data writeToFile:theDataFile atomically:YES];
+	[data writeToFile:dataPath atomically:YES];
 	NSLog(@"%@", errorString);
 #else
-	[[NSFileManager defaultManager] createDirectoryAtPath:[theDataFile stringByDeletingLastPathComponent] attributes: nil];
-	[_settings writeToFile:theDataFile atomically: YES];
+	[[NSFileManager defaultManager] createDirectoryAtPath: [dataPath stringByDeletingLastPathComponent] attributes: nil];
+	[_settings writeToFile: dataPath atomically: YES];
 #endif
 }
 
@@ -199,22 +171,11 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
         [ NSDictionary dictionaryWithObjectsAndKeys:
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
-          @"studies.png", kUIButtonBarButtonInfo,
-          @"studiesSelected.png", kUIButtonBarButtonSelectedInfo,
-          [ NSNumber numberWithInt: VIEW_STUDIES], kUIButtonBarButtonTag,
-            self, kUIButtonBarButtonTarget,
-          @"Studies", kUIButtonBarButtonTitle,
-          @"0", kUIButtonBarButtonType,
-          nil 
-        ], 
-
-        [ NSDictionary dictionaryWithObjectsAndKeys:
-          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
           @"settings.png", kUIButtonBarButtonInfo,
           @"settingsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SETTINGS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"More", kUIButtonBarButtonTitle,
+          @"Settings", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ], 
@@ -235,37 +196,21 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    _buttons[0] = ([_settings objectForKey:SettingsFirstView] == nil) ?  VIEW_SORTED_BY_STREET : [[_settings objectForKey:SettingsFirstView] intValue];
-	_buttons[1] = ([_settings objectForKey:SettingsSecondView] == nil) ? VIEW_SORTED_BY_DATE   : [[_settings objectForKey:SettingsSecondView] intValue];
-	_buttons[2] = ([_settings objectForKey:SettingsThirdView] == nil) ?  VIEW_TIME             : [[_settings objectForKey:SettingsThirdView] intValue];
-	_buttons[3] = ([_settings objectForKey:SettingsFourthView] == nil) ? VIEW_STATISTICS       : [[_settings objectForKey:SettingsFourthView] intValue];
-	_buttons[4] = VIEW_SETTINGS;
-
-    [button registerButtonGroup:0 withButtons:_buttons withCount: ARRAY_SIZE(_buttons)];
+    int buttons[] = { VIEW_SORTED_BY_STREET, VIEW_SORTED_BY_DATE, VIEW_TIME, VIEW_STATISTICS, VIEW_SETTINGS };
+    [button registerButtonGroup:0 withButtons:buttons withCount: ARRAY_SIZE(buttons)];
     [button showButtonGroup: 0 withDuration: 0.0f];
-	[button setDelegate:self];
+
 	int i;
-	float width = rect.size.width/ARRAY_SIZE(_buttons);
-    for(i = 0; i < ARRAY_SIZE(_buttons); i++) 
+	float width = rect.size.width/ARRAY_SIZE(buttons);
+    for(i = 0; i < ARRAY_SIZE(buttons); i++) 
 	{
-        [[button viewWithTag:_buttons[i]] setFrame:CGRectMake( (i*width), 1.0, width, 48.0)];
+        [ [ button viewWithTag:buttons[i] ] 
+            setFrame:CGRectMake( (i*width), 1.0, width, 48.0)
+        ];
     }
+    [ button showSelectionForButton: _currentButtonBarView];
 
     return button;
-}
-
-- (void)buttonBar:(UIButtonBar *) bar didDismissCustomizeUI:(BOOL)did
-{
-	unsigned int count;
-	[bar getVisibleButtonTags:_buttons count:&count maxItems:5];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[0]] forKey:SettingsFirstView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[1]] forKey:SettingsSecondView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[2]] forKey:SettingsThirdView];
-	[_settings setObject:[NSNumber numberWithInt:_buttons[3]] forKey:SettingsFourthView];
-
-	[_settingsView reloadData];
-
-	[self saveData];
 }
 
 - (void)transition:(int)transition toView:(UIView *)view
@@ -282,48 +227,35 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 	}
 }
 
-- (void)setView:(int)button transition:(int)transition
+- (void)setView:(int)button
 {
     switch (button) 
 	{
         case VIEW_SORTED_BY_STREET:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_STREET");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_STREET];
-			[self transition:transition toView:_sortedCallsView ];
+			[self transition:0 toView:_sortedCallsView ];
             break;
         case VIEW_SORTED_BY_DATE:
 			DEBUG(NSLog(@"VIEW_SORTED_BY_DATE");)
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_DATE];
-			[self transition:transition toView:_sortedCallsView ];
+			[self transition:0 toView:_sortedCallsView ];
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
-			[self transition:transition toView:_timeView];
+			[ self transition:0 toView:_timeView];
 			break;
         case VIEW_STATISTICS:
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
 			[_statisticsView reloadData];
-			[self transition:transition toView:_statisticsView];
-			break;
-		case VIEW_STUDIES:
-			DEBUG(NSLog(@"VIEW_STUDIES");)
-			[_settingsView reloadData];
-			//[self transition:transition toView:_studiesView];
-			[self transition:transition toView:_statisticsView];
+			[ self transition:0 toView:_statisticsView];
 			break;
         case VIEW_SETTINGS:
 			DEBUG(NSLog(@"VIEW_SETTINGS");)
 			[_settingsView reloadData];
-			[self transition:transition toView:_settingsView];
+			[ self transition:0 toView:_settingsView];
 			break;
     }
-}
-
-- (void)setViewFromMore:(int)view
-{
-	[self setView:view transition:1];
-	_inMoreView = YES;
-	_currentButtonBarView = view;
 }
 
 - (void)buttonBarItemTapped:(id) sender 
@@ -334,9 +266,8 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 	// if they clicked on the button that we are currently on, then just return dont do anything
 	if(button == _currentButtonBarView)
 		return;
-	
-	[self setView:button transition:(_inMoreView ? 2 : 0)];
-	_inMoreView = NO;
+
+	[self setView:button];
 	
 	_currentButtonBarView = button;
     [_settings setObject:[[[NSNumber alloc] initWithInt:_currentButtonBarView] autorelease] forKey:SettingsCurrentButtonBarView];
@@ -398,16 +329,6 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		    _currentButtonBarView = VIEW_SORTED_BY_STREET;
         }
 
-		
-		// create the buttonbar and add it at the lat 49pix of the screen
-		CGRect buttonBarRect = rect;
-		buttonBarRect.origin.y = buttonBarRect.size.height;
-		buttonBarRect.size.height = 49.0f; 
-		_inMoreView = NO;
-		_buttonBar = [self allocButtonBarWithFrame:buttonBarRect];
-		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
-		[_buttonBar setAutoresizesSubviews: YES];
-
         // create the calls view
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
 		                                                    calls:[_settings objectForKey:SettingsCalls]
@@ -432,11 +353,16 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
-		[self setView:_currentButtonBarView transition:0];
+		[self setView:_currentButtonBarView];
 
+		
+		// create the buttonbar and add it at the lat 49pix of the screen
+		rect.origin.y = rect.size.height;
+		rect.size.height = 49.0f; 
+		_buttonBar = [self allocButtonBarWithFrame:rect];
+		[_buttonBar setAutoresizingMask: kButtonBarResizeMask];
+		[_buttonBar setAutoresizesSubviews: YES];
 		[self addSubview: _buttonBar];
-		[_buttonBar showSelectionForButton: _currentButtonBarView];
-
     }
     
     return(self);
@@ -486,65 +412,9 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 	[self saveData];
 }
 
-- (void)buttonBarCustomize
-{
-	int count;
-	int *buttons = [self allViewsWithCount:&count];
-	[_buttonBar customize:buttons withCount:count];
-}
-
-- (int *)allViewsWithCount:(int *)count
-{
-	static int buttons[] = {
-		VIEW_SORTED_BY_STREET,
-		VIEW_SORTED_BY_DATE,
-		VIEW_TIME,
-		VIEW_STATISTICS,
-		VIEW_STUDIES
-	};
-	*count = ARRAY_SIZE(buttons);
-	return(buttons);
-}
-
-- (int *)unusedViewsWithCount:(int *)count
-{
-	static int *unused = NULL;
-	int allButtonsCount;
-	int *allButtons = [self allViewsWithCount:&allButtonsCount];
-	int i;
-	int j;
-	int unusedCount = 0;
-	BOOL found;
-	NSLog(@" allbuttons = %d", allButtonsCount);
-	if(unused == NULL)
-	{
-		unused = (int *)malloc(sizeof(int) * (allButtonsCount - 4));
-	}
-	
-	for(i = 0; i < allButtonsCount; i++)
-	{
-		found = NO;
-		for(j = 0; j < 4; j++)
-		{
-			if(allButtons[i] == _buttons[j])
-			{
-			NSLog(@"found %d", _buttons[j]);
-				found = YES;
-			}
-		}
-		if(!found)
-		{
-			unused[unusedCount++] = allButtons[i];
-		}
-	}
-	*count = unusedCount;
-	return(unused);
-}
-
 - (BOOL)respondsToSelector:(SEL)selector
 {
     VERY_VERBOSE(NSLog(@"MainView respondsToSelector: %s", selector);)
-    NSLog(@"MainView respondsToSelector: %s", selector);
     return [super respondsToSelector:selector];
 }
 

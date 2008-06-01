@@ -28,20 +28,6 @@
 
 #define PLACEMENT_OBJECT_COUNT 2
 
-const NSString *CallViewRowHeight = @"rowHeight";
-const NSString *CallViewGroupCell = @"group";
-const NSString *CallViewRows = @"rows";
-const NSString *CallViewSelectedInvocations = @"select";
-const NSString *CallViewDeleteInvocations = @"delete";
-const NSString *CallViewInsertDelete = @"insertdelete";
-typedef enum {
-	kNone,
-	kCanInsert,
-	kCanDelete
-} CanInsertOrDelete;
-
-
-
 /* TODOS:
 . make the delete button at the end of the editing screen work
 . fix the "add new call" "done" display of cell entries
@@ -59,7 +45,6 @@ typedef enum {
 
 - (void)save
 {
-	DEBUG(NSLog(@"save");)
 	// save the notes
 	[self saveReturnVisitsNotes];
 	
@@ -71,38 +56,8 @@ typedef enum {
 
 - (void)setFocus:(UIPreferencesTextTableCell *)cell
 {
-	DEBUG(NSLog(@"setFocus: %@", cell);)
-	// unselect the row
-	[_table setKeyboardVisible:YES animated:YES];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[cell becomeFirstResponder];
 }
-
-- (NSInvocation *)invocationForSelector:(SEL)selector
-{
-	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[[self class] instanceMethodSignatureForSelector:selector]];
-	[invocation setTarget:self];
-	[invocation setSelector:selector];
-	
-	return(invocation);
-}
-
-- (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument
-{
-	NSInvocation *invocation = [self invocationForSelector:selector];
-	[invocation setArgument:&argument atIndex:2];
-	
-	return(invocation);
-}
-
-- (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument andArgument:(void *)anotherArgument
-{
-	NSInvocation *invocation = [self invocationForSelector:selector withArgument:argument];
-	[invocation setArgument:&anotherArgument atIndex:3];
-	
-	return(invocation);
-}
-
 
 
 /******************************************************************
@@ -136,7 +91,7 @@ typedef enum {
 				//   the per call insert a new publication
 				[_table setKeyboardVisible:NO animated:NO];
 				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-				[self reloadData];
+				[_table reloadData];
 				
 				break;
 
@@ -177,7 +132,7 @@ typedef enum {
 				//   the name field if it is not there already
 				//   the insert new call
 				//   the per call insert a new publication
-				[self reloadData];
+				[_table reloadData];
 				break;
 			
 		}
@@ -202,664 +157,6 @@ typedef enum {
     _saveSelector = aSelector;
 }
 
-/******************************************************************
- *
- *   Callback functions
- *   
- ******************************************************************/
-- (void)dummyFunction
-{
-}
-
-- (void)unselectRow
-{
-	DEBUG(NSLog(@"unselectRow");)
-	// unselect the row
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-}
-
-- (void)deleteReturnVisitAtIndex:(NSNumber *)index
-{
-	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", index);)
-	int i = [index intValue];
-	[index release];
-
-	// save off the notes before we delete this return visit
-	[self saveReturnVisitsNotes];
-
-	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
-	NSMutableArray *array = [[[NSMutableArray alloc] initWithArray:returnVisits] autorelease];
-	[_call setObject:array forKey:CallReturnVisits];
-	DEBUG(NSLog(@"got %@", array);)
-	returnVisits = array;
-	// if they click on the notes, then it is like they are deleting
-	// the whole return visit
-	DEBUG(NSLog(@"trying to remove row %d", i);)
-	[returnVisits removeObjectAtIndex:[index intValue]];
-	DEBUG(NSLog(@"got %@", returnVisits);)
-
-	// save the data
-	[self save];
-
-	// animate the removal of the next rows (change date publications and insert publication cells)
-//	[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow-1, num+1)] viaEdge:1];
-	[self reloadData];
-}
-
-- (void)deleteReturnVisitAtIndex:(NSNumber *)index publicationAtIndex:(NSNumber *)publicationIndex
-{
-	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
-	// this is the entry that we need to delete
-	[[[[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]] 
-	                                                  objectForKey:CallReturnVisitPublications] 
-													      removeObjectAtIndex:[publicationIndex intValue]];
-
-	[index release];
-	// save the data
-	[self save];
-	
-	[self reloadData];
-}
-
-- (void)addressSelected
-{
-	DEBUG(NSLog(@"addressSelected");)
-	if(_editing)
-	{
-		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-		NSString *street = [_call objectForKey:CallStreet];
-		NSString *city = [_call objectForKey:CallCity];
-		NSString *state = [_call objectForKey:CallState];
-		
-		// if they have not initialized the address then assume that it is
-		// the same as the last one
-		if((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
-		   (street == nil || [street isEqualToString:@""]) &&
-		   (city == nil || [city isEqualToString:@""]) &&
-		   (state == nil || [state isEqualToString:@""]))
-		{
-			NSMutableDictionary *settings = [[App getInstance] getSavedData];
-			streetNumber = @"";
-			street = [settings objectForKey:SettingsLastCallStreet];
-			city = [settings objectForKey:SettingsLastCallCity];
-			state = [settings objectForKey:SettingsLastCallState];
-		}
-		// open up the edit address view 
-		AddressView *p = [[[AddressView alloc] initWithFrame:_rect 
-												streetNumber:streetNumber
-													  street:street
-														city:city
-													   state:state] autorelease];
-		[p setAutoresizingMask: kMainAreaResizeMask];
-		[p setAutoresizesSubviews: YES];
-
-		// setup the callbacks for save or cancel
-		[p setCancelAction: @selector(editAddressCancelAction:) forObject:self];
-		[p setSaveAction: @selector(editAddressSaveAction:) forObject:self];
-
-		// transition from bottom up sliding ontop of the old view
-		// first refcount us so that when we are not the main UIView
-		// we dont get deleted prematurely
-		[self retain];
-		[[App getInstance] transition:1 fromView:self toView:p];
-	
-		return;
-	}
-	else
-	{
-		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-		NSString *street = [_call objectForKey:CallStreet];
-		NSString *city = [_call objectForKey:CallCity];
-		NSString *state = [_call objectForKey:CallState];
-		
-		// if they have not initialized the address then dont show the map program
-		if(!((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
-			 (street == nil || [street isEqualToString:@""]) &&
-			 (city == nil || [city isEqualToString:@""]) &&
-			 (state == nil || [state isEqualToString:@""])))
-		{
-			// pop up a alert sheet to display buttons to show in google maps?
-			//http://maps.google.com/?hl=en&q=kansas+city
-			NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-			NSString *street = [_call objectForKey:CallStreet];
-			NSString *city = [_call objectForKey:CallCity];
-			NSString *state = [_call objectForKey:CallState];
-
-			// make sure that we have default values for each of the address parts
-			if(streetNumber == nil)
-				streetNumber = @"";
-			if(street == nil)
-				street = @"";
-			if(city == nil)
-				city = @"";
-			if(state == nil)
-				state = @"";
-
-			// open up a url
-			NSURL *url = [NSURL URLWithString:[NSString 
-										 stringWithFormat:@"http://maps.google.com/?lh=en&q=%@+%@+%@,+%@", 
-														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [street stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [city stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [state stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
-			DEBUG(NSLog(@"Trying to open url %@", url);)
-			// open up the google map page for this call
-			[[App getInstance] openURL:url];
-		}
-		else
-		{
-			// unselect the row
-			[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-		}
-	}
-}
-
-- (void)addReturnVisitSelected
-{
-	DEBUG(NSLog(@"addReturnVisitSelected _selectedRow=%d", _selectedRow);)
-	_showAddCall = NO;
-	// save off the notes before we create the other return visit
-	[self saveReturnVisitsNotes];
-	
-	NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
-	[_call setObject:returnVisits forKey:CallReturnVisits];
-	
-	NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
-
-	[visit setObject:[NSCalendarDate calendarDate] forKey:CallReturnVisitDate];
-	[visit setObject:@"" forKey:CallReturnVisitNotes];
-	[visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
-	
-	[returnVisits insertObject:visit atIndex:0];
-
-	
-	// animate the two new rows
-//		[_table reloadData];
-//		[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
-//		[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow, 1)] viaEdge:1 animated:YES];
-#if 0
-	[_table animateDeletionOfCellAtRow:_selectedRow column:0 viaEdge:1];
-	[self performSelector: @selector(animateInsertRows:) 
-			   withObject:[[NSNumber alloc] initWithInt:_selectedRow] 
-			   afterDelay:.5];
-	_setFirstResponderGroup = 2;
-#endif	
-
-
-	// unselect this row 
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-//	_shouldReloadAll = NO;
-	[self reloadData];
-}
-
-- (void)deleteCall
-{
-	DEBUG(NSLog(@"deleteCall");)
-	UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
-	[alertSheet setTitle:@"Delete Call?"];
-	[alertSheet setBodyText:@"Are you sure you want to delete the call?"];
-	[alertSheet addButtonWithTitle:@"Yes"];
-	[alertSheet addButtonWithTitle:@"No"];
-	[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
-	[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 1]];
-	[alertSheet setDelegate:self];
-	// 0: grey with grey and black buttons
-	// 1: black background with grey and black buttons
-	// 2: transparent black background with grey and black buttons
-	// 3: grey transparent background
-	[alertSheet setAlertSheetStyle: 0];
-	[alertSheet presentSheetFromAboveView:self];		
-}
-
-- (void)changeDateOfReturnVisitAtIndex:(NSNumber *)index
-{
-	DEBUG(NSLog(@"changeDateOfReturnVisitAtIndex: %@", index);)
-	// they clicked on the Change Date
-	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
-	[index release];
-	
-	// make the new call view 
-	DatePickerView *p = [[[DatePickerView alloc] initWithFrame:_rect date:[_editingReturnVisit objectForKey:CallReturnVisitDate]] autorelease];
-
-	// setup the callbacks for save or cancel
-	[p setCancelAction: @selector(changeCallDateCancelAction:) forObject:self];
-	[p setSaveAction: @selector(changeCallDateSaveAction:) forObject:self];
-	[p setAutoresizingMask: kMainAreaResizeMask];
-	[p setAutoresizesSubviews: YES];
-
-	// transition from bottom up sliding ontop of the old view
-	// first refcount us so that when we are not the main UIView
-	// we dont get deleted prematurely
-	[self retain];
-	[[App getInstance] transition:1 fromView:self toView:p];
-}
-
-- (void)addPublicationToReturnVisitAtIndex:(NSNumber *)index
-{
-	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %p", index);)
-	//this is the add a new entry one
-	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
-	[index release];
-	
-	_editingPublication = nil; // we are making a new one
-	
-	// make the new call view 
-	PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect] autorelease];
-
-	// setup the callbacks for save or cancel
-	[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
-	[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
-	[p setAutoresizingMask: kMainAreaResizeMask];
-	[p setAutoresizesSubviews: YES];
-
-	// transition from bottom up sliding ontop of the old view
-	// first refcount us so that when we are not the main UIView
-	// we dont get deleted prematurely
-	[self retain];
-	[[App getInstance] transition:1 fromView:self toView:p];
-}
-
-- (void)changeReturnVisitAtIndex:(NSNumber *)index publicationAtIndex:(NSNumber *)publicationIndex
-{
-	DEBUG(NSLog(@"changeReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
-	// they selected an existing entry
-	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
-	_editingPublication = [[_editingReturnVisit objectForKey:CallReturnVisitPublications] objectAtIndex:[publicationIndex intValue]];
-	[index release];
-	[publicationIndex release];
-	
-	// make the new call view 
-	PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect 
-													 publication: [ _editingPublication objectForKey:CallReturnVisitPublicationName]
-															year: [[_editingPublication objectForKey:CallReturnVisitPublicationYear] intValue]
-														   month: [[_editingPublication objectForKey:CallReturnVisitPublicationMonth] intValue]
-															 day: [[_editingPublication objectForKey:CallReturnVisitPublicationDay] intValue]] autorelease];
-
-	// setup the callbacks for save or cancel
-	[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
-	[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
-	[p setAutoresizingMask: kMainAreaResizeMask];
-	[p setAutoresizesSubviews: YES];
-
-	// transition from bottom up sliding ontop of the old view
-	// first refcount us so that when we are not the main UIView
-	// we dont get deleted prematurely
-	[self retain];
-	[[App getInstance] transition:1 fromView:self toView:p];
-}
-
-
-
-
-
-
-- (void)addGroup:(id)groupCell rowHeight:(int)rowHeight
-{
-	DEBUG(NSLog(@"addGroup: rowHeight:%d", rowHeight);)
-	_currentGroup = [[[NSMutableDictionary alloc] init] autorelease];
-	
-	// initialize the arrays
-	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewRows];
-	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewSelectedInvocations];
-	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewDeleteInvocations];
-	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewInsertDelete];
-
-	// set the group's settings
-	if(groupCell != nil)
-		[_currentGroup setObject:groupCell forKey:CallViewGroupCell];
-	[_currentGroup setObject:[NSNumber numberWithInt:rowHeight] forKey:CallViewRowHeight];
-
-	[_displayInformation addObject:_currentGroup];
-	NSLog(@"_displayInformation count = %d", [_displayInformation count]);
-}
-
-- (void)     addRow:(id)cell 
-     insertOrDelete:(CanInsertOrDelete)insertOrDelete 
-   selectInvocation:(NSInvocation *)selectInvocation 
-   deleteInvocation:(NSInvocation *)deleteInvocation
-{
-	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
-//	NSInvocation *unselectInvocation = [self invocationForSelector:@selector(unselectRow)];
-
-	[[_currentGroup objectForKey:CallViewRows] addObject:cell];
-	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
-	[[_currentGroup objectForKey:CallViewDeleteInvocations] addObject:(deleteInvocation ? deleteInvocation : dummyInvocation)];
-	[[_currentGroup objectForKey:CallViewInsertDelete] addObject:[NSNumber numberWithInt:insertOrDelete]];
-}
-
-- (void)reloadData
-{
-	DEBUG(NSLog(@"CallView reloadData");)
-
-	[_displayInformation release];
-	_displayInformation = [[NSMutableArray alloc] init];
-	
-	// Name
-	if(_editing || [[_call objectForKey:CallName] length])
-	{
-		[self addGroup:nil rowHeight:50];
-
-		if(_editing)
-		{
-			// 0 regular
-			// 1 numbers
-			// 2 telephone
-			// 3 web
-			// 4 normal with a numberpad as the numbers
-			// 5 seethrough black keyboard normal
-			// 6 telephone without +
-			// 7 seethrough black telephone without +
-			// 8 email address keyboard with space @ . and _ - +
-			// 9 email address keyboard with @ . .com
-			//[[text textField] setPreferredKeyboardType: 0];
-			// use the textfield
-			[self       addRow:_name
-			    insertOrDelete:kNone
-			  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:_name]
-			  deleteInvocation:nil];
-
- 			if(_setFirstResponderGroup == 0)
-			{
-				[self performSelector: @selector(setFocus:) 
-						   withObject:_name
-						   afterDelay:.3];
-				_setFirstResponderGroup = -1;
-			}
-
-		}
-		else
-		{
-			// if we are not editing, then just display the name
-			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-			[cell setTitle:[_call objectForKey:CallName]];
-			[cell setShowSelection:NO];
-			[self       addRow:cell
-			    insertOrDelete:kNone
-			  selectInvocation:nil
-			  deleteInvocation:nil];
-		}
-	}
-	
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-	
-	// Address
-	{
-		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-		NSString *street = [_call objectForKey:CallStreet];
-		NSString *city = [_call objectForKey:CallCity];
-		NSString *state = [_call objectForKey:CallState];
-
-		NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-		[top setString:@""];
-		NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
-		[bottom setString:@""];
-
-		BOOL found = NO;
-		if(streetNumber != nil &&[streetNumber length])
-		{
-			[top appendFormat:@"%@ ", streetNumber];
-			found = YES;
-		}
-		if(street != nil && [street length])
-		{
-			[top appendFormat:@"%@", street];
-			found = YES;
-		}
-		if(city != nil && [city length])
-		{
-			[bottom appendFormat:@"%@", city];
-			found = YES;
-		}
-		if(state != nil && [state length])
-		{
-			[bottom appendFormat:@", %@", state];
-			found = YES;
-		}
-		VERY_VERBOSE(NSLog(@"address:\n%@\n%@", top, bottom);)
-
-		// if there was no street information then just dont display
-		// the address (unless we are editing
-		if(found || _editing)
-		{
-			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] init ];
-			[ cell setTitle:@"Address" ];
-
-			UIView *view = [[UIView alloc] init];
-			UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
-			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
-			float bgColor[] = { 0,0,0,0 };
-			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-			[label setText:top];
-			[label sizeToFit];
-			CGRect lrect = [label bounds];
-			lrect.origin.x += 100.0f;
-			lrect.origin.y += 15.0f;
-			[label setFrame: lrect];
-			[view addSubview:label];
-
-			label = [[[UITextLabel alloc] init] autorelease];
-			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
-			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-			[label setText:bottom];
-			[label sizeToFit];
-			lrect = [label bounds];
-			lrect.origin.x += 100.0f;
-			lrect.origin.y += 35.0f;
-			[label setFrame: lrect];
-			[view addSubview:label];
-
-			[cell addSubview:view];
-			[cell setShowDisclosure: _editing];
-			[cell updateHighlightColors];
-
-			// add a group for the name
-			[self addGroup:nil rowHeight:70];
-			
-			// add the name to the group
-			[self       addRow:cell
-				insertOrDelete:kNone
-			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
-			  deleteInvocation:nil];
-		}
-	}
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-
-	// Add new Call
-	if(_showAddCall && _editing)
-	{
-		// we need a larger row height
-		[self addGroup:nil rowHeight:-1];
-		
-		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
-		[ cell setShowDisclosure: NO ];
-		if([[_call objectForKey:CallReturnVisits] count])
-		{
-			[ cell setValue:@"Add a return visit"];
-		}
-		else
-		{
-			[ cell setValue:@"Add a initial visit"];
-		}
-		[self       addRow:cell
-			insertOrDelete:kCanInsert
-		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
-		  deleteInvocation:nil];
-	}
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-
-	// RETURN VISITS
-	{
-		NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
-		NSMutableDictionary *visit;
-
-		// release old return visits notes
-		[_returnVisitNotes removeAllObjects];
-
-
-		
-		int i;
-		int end = [returnVisits count];
-		for(i = 0; i < end; ++i)
-		{
-			visit = [returnVisits objectAtIndex:i];
-
-			// GROUP TITLE
-			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] init];
-			NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[visit objectForKey:CallReturnVisitDate] timeIntervalSinceReferenceDate]] autorelease];	
-			[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
-
-			// create dictionary entry for This Return Visit
-			[self addGroup:cell rowHeight:-1];
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-			// NOTES
-			if(_editing)
-			{
-				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] init ] autorelease];
-				[[text textField] setPlaceholder:@"Return Visit Notes" ];
-				[text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
-				[_returnVisitNotes addObject:text];
-
-				[self       addRow:text
-					insertOrDelete:kCanDelete
-				  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:text]
-				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
-
-				if(_setFirstResponderGroup == 2 && i == 0)
-				{
-					[self performSelector: @selector(setFocus:) 
-							   withObject:text
-							   afterDelay:.5];
-					_setFirstResponderGroup = -1;
-				}
-			}
-			else
-			{
-				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
-				if([notes length] == 0)
-					[cell setValue:@"Return Visit Notes"];
-				else
-					[cell setValue:notes];
-				[cell setShowSelection:NO];
-
-
-				[self       addRow:cell
-					insertOrDelete:kNone
-				  selectInvocation:nil
-				  deleteInvocation:nil];
-			}
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-	
-			// CHANGE DATE
-			if(_editing)
-			{
-				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setShowDisclosure:YES];
-				[cell setValue:@"Change Date"];
-				[cell setShowSelection:NO];
-				
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-				[self       addRow:cell
-					insertOrDelete:kNone
-				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
-				  deleteInvocation:nil];
-			}
-
-		
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-	
-			// Publications
-			if([visit objectForKey:CallReturnVisitPublications] != nil)
-			{
-				// they had an array of publications, lets check them too
-				NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-				NSMutableDictionary *publication;
-				int j;
-				int endPublications = [publications count];
-				for(j = 0; j < endPublications; ++j)
-				{
-					publication = [publications objectAtIndex:j];
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-					// PUBLICATION
-					NSMutableDictionary *publication = [publications objectAtIndex:j];
-					cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
-					[cell setShowDisclosure: _editing ];
-					[cell setShowSelection: _editing];
-					[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
-
-					if(_editing)
-					{
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-						[self       addRow:cell
-							insertOrDelete:kCanDelete
-						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]
-						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]];
-					}
-					else
-					{
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-						[self       addRow:cell
-							insertOrDelete:kNone
-						  selectInvocation:nil
-						  deleteInvocation:nil];
-					}
-				}
-			}
-			
-	
-			// add publication
-			if(_editing)
-			{
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setShowDisclosure: YES];
-				[cell setValue:@"Add a placed publication"];
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-				[self       addRow:cell
-					insertOrDelete:kCanInsert
-				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber numberWithInt:i] retain]]
-				  deleteInvocation:nil];
-			}
-		}
-	}
-
-	// DELETE call
-	if(_editing && !_newCall)
-	{
-		[self addGroup:nil rowHeight:-1];
-
-		// DELETE
-		UIPreferencesDeleteTableCell *cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
-		[cell setShowDisclosure: NO ];
-		[cell setTitle:@"Delete Call"];
-		[cell setAlignment:2 ];
-		float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
-		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-		CGColorRef whiteColor = CGColorCreate(rgbSpace, wcolorComponents);
-		CGColorSpaceRelease(rgbSpace);
-
-		[[cell titleTextLabel] setColor:whiteColor];
-	
-		[self       addRow:cell
-			insertOrDelete:kNone
-		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
-		  deleteInvocation:nil];
-	}
-
-	
-	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
-
-	if(_shouldReloadAll)
-		[_table reloadData];
-	_shouldReloadAll = YES;
-	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
-}
-
 
 - (void)dealloc
 {
@@ -868,7 +165,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     [_call release];
     [_navigationBar release];
     [_table release];
-	[_displayInformation release];
 
     [super dealloc];
 }
@@ -895,13 +191,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
         NSString *temp;
         DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
 
+		_addressCell = nil;
         _saveObject = nil;
         _cancelObject = nil;
 		_deleteObject = nil;
 		_setFirstResponderGroup = -1;
-		_shouldReloadAll = YES;
-		
-		_displayInformation = nil;
+
 
 		_newCall = (call == nil);
 		_editing = _newCall;
@@ -1015,6 +310,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
         }
 		
 		_returnVisitNotes = [[NSMutableArray alloc] init];
+
+		[self buildReturnVisitsNotes];
+
         
         _rect = rect;   
         // make the navigation bar with
@@ -1050,10 +348,29 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[_table setAutoresizingMask: kMainAreaResizeMask];
 		[_table setAutoresizesSubviews: YES];
 
-        [self reloadData];
+        [_table reloadData];
     }
     
     return(self);
+}
+
+- (void)buildReturnVisitsNotes
+{
+	VERY_VERBOSE(NSLog(@"buildReturnVisitsNotes");)
+	// clear out the old return visit notes
+	[_returnVisitNotes removeAllObjects];
+
+	// rebuild the return visit notes
+	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
+	int count = [returnVisits count];
+	int i;
+	for(i = 0; i < count; ++i)
+	{
+		UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] init ] autorelease];
+		[ [text textField] setPlaceholder:@"Return Visit Notes" ];
+		[ text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
+		[_returnVisitNotes addObject:text];
+	}
 }
 
 - (void)saveReturnVisitsNotes
@@ -1115,7 +432,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     VERBOSE(NSLog(@"_editingPublication is = %@", _editingPublication);)
 
     [_table setKeyboardVisible:NO animated:NO];
-	[self reloadData];
+	[_table reloadData];
     [[App getInstance] transition:2 fromView:publicationView toView:self];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 
@@ -1158,7 +475,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     [_table setKeyboardVisible:NO animated:NO];
     [[App getInstance] transition:2 fromView:view toView:self];
 
-	[self reloadData];
+	[_table reloadData];
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 
@@ -1209,7 +526,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[settings setObject:[addressView city] forKey:SettingsLastCallCity];
 	[settings setObject:[addressView state] forKey:SettingsLastCallState];
 
-//	[_table reloadCellAtRow:_selectedRow column:0 animated:YES];
+	[_table reloadCellAtRow:_selectedRow column:0 animated:YES];
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
@@ -1218,8 +535,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// save the data
 	[self save];
-	
-	[self reloadData];
 }
 
 
@@ -1231,44 +546,142 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 - (int) numberOfGroupsInPreferencesTable: (UIPreferencesTable *)table 
 {
     VERBOSE(NSLog(@"numberOfGroupsInPreferencesTable:");)
-    int count = [_displayInformation count];
+    int count = 0;
+	// Name (even though we will make this small if there is no name)
+	count++;
+
+	// Address
+	count++;
+	
+	// one call to add
+	if(_editing && _showAddCall)
+		count++; 
+	
+	// Publication
+	// Notes
+	count += [[_call objectForKey:CallReturnVisits] count];
+
+	// delete
+	if(_editing && _showDeleteButton)
+		count++;
 	VERBOSE(NSLog(@"count=%d", count);)
     return(count);
 }
+
 - (int) preferencesTable: (UIPreferencesTable *)table numberOfRowsInGroup: (int) group 
 {
     VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d", group);)
-    int count = [[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] count];
-	VERBOSE(NSLog(@"count=%d", count);)
-	return(count);
+    int count;
+	const int adjust = _editing && _showAddCall ? 3 : 2;
+    switch (group)
+    { 
+        // Name
+        case 0:
+			// if there is no name for the call, then dont bother displaying it
+			// unless we are editing
+			if(_editing || [[_call objectForKey:CallName] length])
+				return(1);
+			else
+				return(0);
+            
+        // Address
+        case 1:
+            return(1);
+
+        // Add a New Call
+        case 2:
+			if(_editing && _showAddCall)
+				return(1);
+			// fallthrough
+			
+        // Publication
+        // Publication
+        // Notes 
+        default:
+        {
+			// if this group is one past the CallReturnVisit array, then it is the delete button
+			if(_editing && _showDeleteButton && [[_call objectForKey:CallReturnVisits] count] == group-adjust)
+				return(1);
+				
+			if([[_call objectForKey:CallReturnVisits] count] <= group-adjust)
+				return(0);
+				
+            NSMutableDictionary *visit = [[_call objectForKey:CallReturnVisits] objectAtIndex:group-adjust];
+            // initialize the count with one space for the notes
+            count = 1;
+            // add in the count of the number of publications
+            if(visit != nil)
+            {
+                count += [[visit objectForKey:CallReturnVisitPublications] count];
+            }
+			if(_editing)
+			{
+				// add in the "insert another publication here" entry if we are editing
+				count += 1;
+				// add in the "Change Date" entry if we are editing
+				count += 1;
+            }
+			VERY_VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d == %d\n%@", group, count, visit);)
+            return(count);
+        }
+    }
 }
 
 - (UIPreferencesTableCell *)preferencesTable:(UIPreferencesTable *)aTable cellForGroup:(int)group
 {
     VERBOSE(NSLog(@"preferencesTable: cellForGroup:%d", group);)
+//	UIImageAndTextTableCell *cell = nil;
+    UIPreferencesTextTableCell *cell = nil;
+	const int adjust = _editing && _showAddCall ? 3 : 2;
+	int count = [[_call objectForKey:CallReturnVisits] count];
+	// so if the group number is >= adjust then we should print the call date
+	// but make sure that the return visits array has anything in it
+	// and we are not going to index beyond the end of the array
+    if(group >= adjust && 
+	   count > 0 &&
+	   count > group-adjust)
+    {
+        NSMutableDictionary *publications = [[_call objectForKey:CallReturnVisits] objectAtIndex:group-adjust];
+        VERBOSE(NSLog(@"%@", publications);)
+        cell = [[UIPreferencesTableCell alloc] init];
 
-    UIPreferencesTextTableCell *cell = [[_displayInformation objectAtIndex:group] objectForKey:CallViewGroupCell];
+		NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[publications objectForKey:CallReturnVisitDate] timeIntervalSinceReferenceDate]] autorelease];	
+        [cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
+    }
     return(cell);
 } 
 
 - (float)preferencesTable: (UIPreferencesTable *)table heightForRow: (int)row inGroup:(int)group withProposedHeight: (float)proposed 
 {
     VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
-	if(row == 0)
-	{
-		float height = [[[_displayInformation objectAtIndex:group] objectForKey:CallViewRowHeight] floatValue];
-		
-		VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
-		if(height >= 0)
-			return(height);
-	}
-	else if (row == -1) 
-	{
-		if([[_displayInformation objectAtIndex:group] objectForKey:CallViewGroupCell] != nil)
-		{
-			return 40;
-		}
-	}
+    switch(group)
+    {
+        case 0: // name
+            if(row == 0)
+            {
+                return 50;
+            }
+            break;
+            
+        case 1: // address
+            if(row == 0)
+            {
+                return 70;
+            }
+            break;
+               
+        case 2: // add new call
+			if(_editing && _showAddCall)
+				break;
+			// fallthrough
+			
+        default:
+            if (row == -1) 
+            {
+                return 40;
+            }
+            break;
+    }
     return proposed;
 }
 
@@ -1282,8 +695,229 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 - (UIPreferencesTableCell *)preferencesTable: (UIPreferencesTable *)table cellForRow: (int)row inGroup: (int)group 
 {
     VERBOSE(NSLog(@"preferencesTable: cellForRow:%d inGroup:%d", row, group);)
+    UIPreferencesTableCell *cell = nil;
+	int adjust = _editing && _showAddCall ? 3 : 2;
+	
+    switch (group) 
+    {
+        // Name
+        case 0:
+            switch (row) 
+            {
+                case 0:
+                    // 0 regular
+                    // 1 numbers
+                    // 2 telephone
+                    // 3 web
+                    // 4 normal with a numberpad as the numbers
+                    // 5 seethrough black keyboard normal
+                    // 6 telephone without +
+                    // 7 seethrough black telephone without +
+                    // 8 email address keyboard with space @ . and _ - +
+                    // 9 email address keyboard with @ . .com
+                    //[[text textField] setPreferredKeyboardType: 0];
+					if(_editing)
+					{
+						[_name retain];
+						cell = _name;
+						if(_setFirstResponderGroup == group)
+						{
+							_setFirstResponderGroup = -1;
+							[self performSelector: @selector(setFocus:) 
+									   withObject:_name
+									   afterDelay:.3];
+						}
+					}
+					else
+					{
+						// if we are not editing, then 
+						cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+						[cell setTitle:[_call objectForKey:CallName]];
+						[cell setShowSelection:NO];
+					}
+                    break;
+            }
+            break;
 
-	return([[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] objectAtIndex:row]);
+        // Address
+        case 1:
+            switch (row) 
+            {
+                case 0:
+					[_addressCell release];
+                    cell = [[UIPreferencesTableCell alloc ] init ];
+                    [ cell setTitle:@"Address" ];
+
+                    NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+                    NSString *street = [_call objectForKey:CallStreet];
+                    NSString *city = [_call objectForKey:CallCity];
+                    NSString *state = [_call objectForKey:CallState];
+
+                    NSMutableString *top = [[NSMutableString alloc] init];
+                    [top setString:@""];
+                    NSMutableString *bottom = [[NSMutableString alloc] init];
+                    [bottom setString:@""];
+
+                    if(streetNumber != nil &&[streetNumber length])
+                        [top appendFormat:@"%@ ", streetNumber];
+                    if(street != nil && [street length])
+                        [top appendFormat:@"%@", street];
+                    if(city != nil && [city length])
+                        [bottom appendFormat:@"%@", city];
+                    if(state != nil && [state length])
+                        [bottom appendFormat:@", %@", state];
+                    VERY_VERBOSE(NSLog(@"address:\n%@\n%@", top, bottom);)
+
+                    UIView *view = [[UIView alloc] init];
+                    UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
+                    [label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
+                	float bgColor[] = { 0,0,0,0 };
+                	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
+                    [label setText:top];
+                    [label sizeToFit];
+                    CGRect lrect = [label bounds];
+                    lrect.origin.x += 100.0f;
+                    lrect.origin.y += 15.0f;
+                    [label setFrame: lrect];
+                    [view addSubview:label];
+
+                    label = [[[UITextLabel alloc] init] autorelease];
+                    [label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
+                	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
+                    [label setText:bottom];
+                    [label sizeToFit];
+                    lrect = [label bounds];
+                    lrect.origin.x += 100.0f;
+                    lrect.origin.y += 35.0f;
+                    [label setFrame: lrect];
+                    [view addSubview:label];
+                    [cell addSubview:view];
+                    [cell setShowDisclosure: _editing];
+                    [cell updateHighlightColors];
+					_addressCell = cell;
+                    break;
+            }
+            break;
+
+        // New Call?
+        case 2:
+			if(_editing && _showAddCall)
+			{
+				switch (row) 
+				{
+					case 0:
+						cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
+						[ cell setShowDisclosure: NO ];
+						[ cell setValue:@"Add a new call"];
+						break;
+				}
+				break;
+			}
+			// fallthrough
+
+        // Publication
+        // notes
+        default:
+        {
+			// see if we should show the delete button
+			if(_editing && _showDeleteButton && [[_call objectForKey:CallReturnVisits] count] == group-adjust)
+			{
+				// DELETE
+				cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
+				[ cell setShowDisclosure: NO ];
+				[ cell setTitle:@"Delete Call"];
+				[ cell setAlignment:2 ];
+				float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
+				CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+				CGColorRef whiteColor = CGColorCreate(rgbSpace, wcolorComponents);
+				CGColorSpaceRelease(rgbSpace);
+
+				[ [cell titleTextLabel] setColor:whiteColor];
+			}
+			else if([[_call objectForKey:CallReturnVisits] count] <= group-adjust)
+			{
+				// for some reason we are beyond the end of what we should display
+				// return a nil cell
+				break;
+			}
+			else
+			{
+				NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:group-adjust];
+				if(row == 0)
+				{
+					// NOTES
+					if(_editing)
+					{
+						// pull the cell from the prebuilt _returnVisitNotes
+						UIPreferencesTextTableCell *text = [_returnVisitNotes objectAtIndex:group-adjust];
+						cell = text;
+						if(_setFirstResponderGroup == group)
+						{
+							_setFirstResponderGroup = -1;
+							[self performSelector: @selector(setFocus:) 
+									   withObject:text 
+									   afterDelay:.3];
+						}
+					}
+					else
+					{
+						// if we are not editing, then 
+						cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+						if([[info objectForKey:CallReturnVisitNotes] length] == 0)
+							[cell setValue:@"Return Visit Notes"];
+						else
+							[cell setValue:[info objectForKey:CallReturnVisitNotes]];
+						[cell setShowSelection:NO];
+					}
+					
+				}
+				else
+				{
+					// if we are editing then we need to display the "Change Date" entry
+					if(row == 1 && _editing)
+					{
+						// if we are not editing, then 
+						cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+						[cell setShowDisclosure:YES];
+						[cell setValue:@"Change Date"];
+						break;
+					}
+					int offset = _editing ? 2 : 1;
+				
+					NSMutableArray *publications = [info objectForKey:CallReturnVisitPublications];
+					if((row-offset) > [publications count])
+					{
+						// they are indexing beyond the end of what we will display
+						// return a nil cell
+						break;
+					}
+					else if((row-offset) == [publications count])
+					{
+						if(_editing)
+						{
+							// ADD NEW CALL
+							cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+							[cell setShowDisclosure: YES];
+							[cell setValue:@"Add a placed publication"];
+						}
+					}
+					else
+					{
+						// PUBLICATION
+						NSMutableDictionary *publication = [publications objectAtIndex:row-offset];
+						cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
+						[ cell setShowDisclosure: _editing ];
+						[ cell setShowSelection: _editing];
+						[ cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
+					}
+				}
+			}
+            break;
+        }
+    }
+
+   // [ cell setShowSelection: NO ];
+    return(cell);
 }
 
 - (void)alertSheet:(UIAlertSheet*)sheet buttonClicked:(int)button
@@ -1307,40 +941,284 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_table reloadCellAtRow: [start intValue] - 1 column:0 animated:YES];
 	// reload the inserted rows
 	[_table reloadDataForInsertionOfRows:NSMakeRange([start intValue], 3) animated:YES];
-	[start release];
 }
 
 - (void)tableRowSelected:(NSNotification*)notification
 {
     int row = [[notification object] selectedRow];
     DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d editing%d", notification, row, _editing);)
-	_selectedRow = row;
-
-	// there is nothing to select in row 1
-	if(row == 0)
-		return;
-	int groupCount = [_displayInformation count];
-	int group;
-	int i;
-	int rowCount;
-	for(group = 0; group < groupCount; ++group)
+	if(row == 2147483647)
 	{
-		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
-		// sutract off the group's row
-		--row;
-		rowCount = [[info objectForKey:CallViewInsertDelete] count];
-		for(i = 0; i < rowCount; ++i)
-		{
-			if(row == 0)
-			{
-				DEBUG(NSLog(@"calling invoking handler");)
-				[[[info objectForKey:CallViewSelectedInvocations] objectAtIndex:i] invoke];
-				return;
-			}
-			--row;
-		}
+		return;
 	}
+	_selectedRow = row;
 	
+	// if they have not entered a name then we hide it so that they dont have to look at stuff that does
+	// not matter, but this causes a problem in this function. to help aleviate this, just add one to
+	// the row and treat it like the name still is showing
+	if(!(_editing || [[_call objectForKey:CallName] length]))
+		row++;
+
+    if(row == 3)
+    {
+		if(_editing)
+		{
+			NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+			NSString *street = [_call objectForKey:CallStreet];
+			NSString *city = [_call objectForKey:CallCity];
+			NSString *state = [_call objectForKey:CallState];
+			
+			// if they have not initialized the address then assume that it is
+			// the same as the last one
+			if((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
+			   (street == nil || [street isEqualToString:@""]) &&
+			   (city == nil || [city isEqualToString:@""]) &&
+			   (state == nil || [state isEqualToString:@""]))
+			{
+				NSMutableDictionary *settings = [[App getInstance] getSavedData];
+				streetNumber = @"";
+				street = [settings objectForKey:SettingsLastCallStreet];
+				city = [settings objectForKey:SettingsLastCallCity];
+				state = [settings objectForKey:SettingsLastCallState];
+			}
+			// open up the edit address view 
+			AddressView *p = [[[AddressView alloc] initWithFrame:_rect 
+													streetNumber:streetNumber
+														  street:street
+															city:city
+														   state:state] autorelease];
+			[p setAutoresizingMask: kMainAreaResizeMask];
+			[p setAutoresizesSubviews: YES];
+
+			// setup the callbacks for save or cancel
+			[p setCancelAction: @selector(editAddressCancelAction:) forObject:self];
+			[p setSaveAction: @selector(editAddressSaveAction:) forObject:self];
+
+			// transition from bottom up sliding ontop of the old view
+			// first refcount us so that when we are not the main UIView
+			// we dont get deleted prematurely
+			[self retain];
+			[[App getInstance] transition:1 fromView:self toView:p];
+		
+			return;
+		}
+		else
+		{
+			NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+			NSString *street = [_call objectForKey:CallStreet];
+			NSString *city = [_call objectForKey:CallCity];
+			NSString *state = [_call objectForKey:CallState];
+			
+			// if they have not initialized the address then dont show the map program
+			if(!((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
+			     (street == nil || [street isEqualToString:@""]) &&
+			     (city == nil || [city isEqualToString:@""]) &&
+			     (state == nil || [state isEqualToString:@""])))
+			{
+				// pop up a alert sheet to display buttons to show in google maps?
+				//http://maps.google.com/?hl=en&q=kansas+city
+				NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+				NSString *street = [_call objectForKey:CallStreet];
+				NSString *city = [_call objectForKey:CallCity];
+				NSString *state = [_call objectForKey:CallState];
+
+				// make sure that we have default values for each of the address parts
+				if(streetNumber == nil)
+					streetNumber = @"";
+				if(street == nil)
+					street = @"";
+				if(city == nil)
+					city = @"";
+				if(state == nil)
+					state = @"";
+
+				// open up a url
+				NSURL *url = [NSURL URLWithString:[NSString 
+											 stringWithFormat:@"http://maps.google.com/?lh=en&q=%@+%@+%@,+%@", 
+															  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
+															  [street stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
+															  [city stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
+															  [state stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
+				DEBUG(NSLog(@"Trying to open url %@", url);)
+				// open up the google map page for this call
+				[[App getInstance] openURL:url];
+			}
+			else
+			{
+				// unselect the row
+				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+			}
+		}
+    }
+
+	if(!_editing)
+	{
+		// unselect the row
+		[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+		return;
+	}
+    if(_showAddCall && row == 5)
+    {
+		_showAddCall = NO;
+		// save off the notes before we create the other return visit
+		[self saveReturnVisitsNotes];
+		
+        NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
+		[_call setObject:returnVisits forKey:CallReturnVisits];
+		
+		NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
+
+		[visit setObject:[NSCalendarDate calendarDate] forKey:CallReturnVisitDate];
+		[visit setObject:@"" forKey:CallReturnVisitNotes];
+		[visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
+		
+		[returnVisits insertObject:visit atIndex:0];
+
+		// rebuild the notes before we make the table reloadData
+		[self buildReturnVisitsNotes];
+		
+		// animate the two new rows
+//		[_table reloadData];
+//		[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
+//		[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow, 1)] viaEdge:1 animated:YES];
+		[_table animateDeletionOfCellAtRow:_selectedRow column:0 viaEdge:1];
+// I could also use 
+        [self performSelector: @selector(animateInsertRows:) 
+				   withObject:[[NSNumber alloc] initWithInt:_selectedRow] 
+				   afterDelay:.5];
+//		[NSTimer scheduledTimerWithTimeInterval:.5
+//										 target:self 
+//									   selector:@selector(animateInsertRows:) 
+//									   userInfo:[[NSNumber alloc] initWithInt:_selectedRow]
+//										repeats:NO];
+		_setFirstResponderGroup = 2;
+		
+		// unselect this row 
+		[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
+        return;
+    }
+
+    row -= 2; // for name + name group 
+    row -= 2; // for address + address group
+	if(_showAddCall)
+		row -= 2; // for the new call + name group 
+
+    int i = 0;
+    int num;
+    while(row >= 0)
+    {
+		if(i == [[_call objectForKey:CallReturnVisits] count])
+		{
+			UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
+			[alertSheet setTitle:@"Delete Call?"];
+			[alertSheet setBodyText:@"Are you sure you want to delete the call?"];
+			[alertSheet addButtonWithTitle:@"Yes"];
+			[alertSheet addButtonWithTitle:@"No"];
+			[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
+			[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 1]];
+			[alertSheet setDelegate:self];
+			// 0: grey with grey and black buttons
+			// 1: black background with grey and black buttons
+			// 2: transparent black background with grey and black buttons
+			// 3: grey transparent background
+			[alertSheet setAlertSheetStyle: 0];
+			[alertSheet presentSheetFromAboveView:self];		
+			break;
+		}
+        row -= 1; // for group entry
+        NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:i];
+        num = [[info objectForKey:CallReturnVisitPublications] count];
+        num++; // add one for the notes entry
+		num++; // add one for the "Change Date" entry
+        // if the current row is less than the number of publications
+        // then they must have selected one of the publications in this returnVisit
+        if(row <= num)
+        {
+            if(row == 0)
+            {
+                // they clicked on the notes
+            }
+            else if(row == 1)
+			{
+				// they clicked on the Change Date
+				_editingReturnVisit = info;
+				// make the new call view 
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
+				DatePickerView *p = [[[DatePickerView alloc] initWithFrame:_rect date:[_editingReturnVisit objectForKey:CallReturnVisitDate]] autorelease];
+
+				// setup the callbacks for save or cancel
+				[p setCancelAction: @selector(changeCallDateCancelAction:) forObject:self];
+				[p setSaveAction: @selector(changeCallDateSaveAction:) forObject:self];
+				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
+
+				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
+				[[App getInstance] transition:1 fromView:self toView:p];
+				break;
+			}
+			// is this the last entry in the group?
+			else if(row == num)
+			{
+				//this is the add a new entry one
+				_editingReturnVisit = info;
+				_editingPublication = nil; // we are making a new one
+				
+				// make the new call view 
+				PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect] autorelease];
+	
+				// setup the callbacks for save or cancel
+				[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
+				[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
+				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
+
+				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
+				[[App getInstance] transition:1 fromView:self toView:p];
+			}
+			else
+			{
+				// they selected an existing entry
+				_editingReturnVisit = info;
+				_editingPublication = [[info objectForKey:CallReturnVisitPublications] objectAtIndex:row-2];// row offset from "notes" and "change date"
+				// make the new call view 
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
+				PublicationView *p = [[[PublicationView alloc] initWithFrame:_rect 
+																 publication: [ _editingPublication objectForKey:CallReturnVisitPublicationName]
+																		year: [[_editingPublication objectForKey:CallReturnVisitPublicationYear] intValue]
+																	   month: [[_editingPublication objectForKey:CallReturnVisitPublicationMonth] intValue]
+																		 day: [[_editingPublication objectForKey:CallReturnVisitPublicationDay] intValue]] autorelease];
+
+				// setup the callbacks for save or cancel
+				[p setCancelAction: @selector(addNewPublicationCancelAction:) forObject:self];
+				[p setSaveAction: @selector(addNewPublicationSaveAction:) forObject:self];
+				[p setAutoresizingMask: kMainAreaResizeMask];
+				[p setAutoresizesSubviews: YES];
+
+				// transition from bottom up sliding ontop of the old view
+				// first refcount us so that when we are not the main UIView
+				// we dont get deleted prematurely
+				[self retain];
+				[[App getInstance] transition:1 fromView:self toView:p];
+			}
+            break;
+        }
+		// now count the "Add a publication"
+		num++;
+        // skip over this returnVisit
+        row -= num;
+		i++; // next row
+    }
 }
 
 -(BOOL)table:(UITable*)table canDeleteRow:(int)row
@@ -1349,29 +1227,59 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	if(!_editing)
 		return(NO);
 		
-	// cant insert/delete the group title
-	if(row == 0)
-		return(NO);
+    row -= 2; // for name + name group 
+    row -= 2; // for address + address group
+    if(_showAddCall)
+		row -= 2; // for the new call + name group 
 
-	int groupCount = [_displayInformation count];
-	int group;
-	int i;
-	int rowCount;
-	for(group = 0; group < groupCount; ++group)
-	{
-		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
-		// sutract off the group's row
-		--row;
-		rowCount = [[info objectForKey:CallViewInsertDelete] count];
-		for(i = 0; i < rowCount; ++i)
-		{
-			if(row == 0)
-			{
-				return( [[[info objectForKey:CallViewInsertDelete] objectAtIndex:i] intValue] == kCanDelete);
-			}
-			--row;
-		}
-	}
+    int i = 0;
+    int num;
+    while(row >= 0)
+    {
+        row -= 1; // for group entry
+		
+		// they can not delete the "Add Placed publication entry"
+		if(i == [[_call objectForKey:CallReturnVisits] count])
+			return(NO);
+
+		// grab the next return visit to see if this would have been the row displyed
+        NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:i];
+        num = [[info objectForKey:CallReturnVisitPublications] count];
+        num++; // add one for the notes entry
+        num++; // add one for the change date entry
+
+		VERBOSE(NSLog(@"row=%d num = %d", row, num);)
+        // if the current row is less than the number of publications
+        // then they must have selected one of the publications in this returnVisit
+        if(row <= num)
+        {
+            if(row == 0)
+            {
+				// if they click on the notes, then it is like they are deleting
+				// the whole return visit
+                return(YES);
+            }
+            else if(row == 1)
+            {
+				// cant delete the change date entry
+                return(NO);
+            }
+            else
+            {
+				// they can delete each of the publications except the last "add a new entry" row
+                if(row != num)
+                {
+                    return(YES);
+                }
+            }
+            break;
+        }
+		// now count the "Add a publication"
+		num++;
+        // skip over this returnVisit
+        row -= num;
+		i++; // next row
+    }
     return(NO);    
 }
 
@@ -1379,62 +1287,127 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 {
     VERBOSE(NSLog(@"table: canInsertAtRow: %d", row);)
 	
-	// cant insert/delete the group title
-	if(row == 0)
+	if(!_editing)
 		return(NO);
+	
+	if(_showAddCall && row == 5)
+		return(YES);
+		
+    row -= 2; // for name + name group 
+    row -= 2; // for address + address group
+	if(_showAddCall)
+		row -= 2; // for the new call + name group 
 
-	int groupCount = [_displayInformation count];
-	int group;
-	int i;
-	int rowCount;
-	for(group = 0; group < groupCount; ++group)
-	{
-		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
-		// sutract off the group's row
-		--row;
-		rowCount = [[info objectForKey:CallViewInsertDelete] count];
-		for(i = 0; i < rowCount; ++i)
-		{
-			if(row == 0)
+    int i = 0;
+    int num;
+    while(row >= 0)
+    {
+        row -= 1; // for group entry
+		if(i == [[_call objectForKey:CallReturnVisits] count])
+			return(NO);
+        NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:i];
+        num = [[info objectForKey:CallReturnVisitPublications] count];
+        num++; // add one for the notes entry
+        num++; // add one for the "change date" entry
+        // if the current row is less than the number of publications
+        // then they must have selected one of the publications in this returnVisit
+        if(row <= num)
+        {
+			// we can only insert at the last entry in the row
+			if(row == num)
 			{
-				return( [[[info objectForKey:CallViewInsertDelete] objectAtIndex:i] intValue] == kCanInsert);
+				return(YES);
 			}
-			--row;
-		}
-	}
+            break;
+        }
+		// now count the "Add a publication"
+		num++;
+        // skip over this returnVisit
+        row -= num;
+		i++; // next row
+    }
     return(NO);    
 }
 
 -(void)table:(UITable*)table deleteRow:(int)row
 {
     DEBUG(NSLog(@"table: deleteRow:%d", row);)
-
-	// cant insert/delete the group title
-	if(row == 0)
+	if(!_editing)
 		return;
-
+	
 	_selectedRow = row;
+	
+	// lets adjust the row down to be 0 based starting with the 
+	// array of calls
+    row -= 2; // for name + name group 
+    row -= 2; // for address + address group
+	if(_showAddCall)
+		row -= 2; // for the new call + name group 
 
-	int groupCount = [_displayInformation count];
-	int group;
-	int i;
-	int rowCount;
-	for(group = 0; group < groupCount; ++group)
-	{
-		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
-		// sutract off the group's row
-		--row;
-		rowCount = [[info objectForKey:CallViewInsertDelete] count];
-		for(i = 0; i < rowCount; ++i)
-		{
-			if(row == 0)
+    int i = 0;
+    int num;
+    while(row >= 0)
+    {
+        row -= 1; // for group entry
+        NSMutableDictionary *info = [[_call objectForKey:CallReturnVisits] objectAtIndex:i];
+        num = [[info objectForKey:CallReturnVisitPublications] count];
+        num++; // add one for the notes entry
+        num++; // add one for the change date entry
+        // if the current row is less than the number of publications
+        // then they must have selected one of the publications in this returnVisit
+        if(row <= num)
+        {
+            if(row == 0)
+            {
+				// save off the notes before we delete this return visit
+				[self saveReturnVisitsNotes];
+
+				NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
+				NSMutableArray *array = [[[NSMutableArray alloc] initWithArray:returnVisits] autorelease];
+				[_call setObject:array forKey:CallReturnVisits];
+				DEBUG(NSLog(@"got %@", array);)
+				returnVisits = array;
+				// if they click on the notes, then it is like they are deleting
+				// the whole return visit
+				info = nil;
+				DEBUG(NSLog(@"trying to remove row %d", i);)
+				[returnVisits removeObjectAtIndex:i];
+				DEBUG(NSLog(@"got %@", returnVisits);)
+
+
+				// rebuild the return visit notes after we deleted this return visit
+				[self buildReturnVisitsNotes];
+
+				// save the data
+				[self save];
+
+				// animate the removal of the next rows (change date publications and insert publication cells)
+//				[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow-1, num+1)] viaEdge:1];
+				[_table reloadData];
+            }
+            else if(row == 1)
 			{
-				[[[info objectForKey:CallViewDeleteInvocations] objectAtIndex:i] invoke];
-				return;
+				// change date entry
 			}
-			--row;
-		}
-	}
+			else
+            {
+                if(row != num)
+                {
+					// this is the entry that we need to delete
+					[[info objectForKey:CallReturnVisitPublications] removeObjectAtIndex:row-2]; // 2 = notes + change date
+
+					// save the data
+					[self save];
+                }
+            }
+            break;
+        }
+		// now count the "Add a publication"
+		num++;
+        // skip over this returnVisit
+        row -= num;
+		i++; // next row
+    }
 }
 
 /******************************************************************

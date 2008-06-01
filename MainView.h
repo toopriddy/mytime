@@ -19,16 +19,11 @@
 #import "SettingsView.h"
 
 typedef enum {
-/*
- * DO NOT CHANGE THE ORDER OF THESE AND ONLY INSERT AT THE END
- */
 	  VIEW_SORTED_BY_STREET = 1
 	, VIEW_SORTED_BY_DATE
 	, VIEW_TIME
 	, VIEW_STATISTICS
 	, VIEW_SETTINGS
-	, VIEW_STUDIES
-	, VIEW_PLACEMENTS
 } SelectedButtonBarView;
 
 @interface MainView : UIView {
@@ -40,30 +35,19 @@ typedef enum {
 	SettingsView *_settingsView;
 	
 	UIButtonBar *_buttonBar;
-	int _buttons[5];
-
+	
 	SelectedButtonBarView _currentButtonBarView;
-	BOOL _inMoreView;
 	UIView *_currentView;
 	UITransitionView *_transitionView;
 
     NSMutableDictionary *_settings;
 }
 
-
-- (void)setView:(int)button transition:(int)transition;
-- (void)setViewFromMore:(int)view;
-
-- (int *)allViewsWithCount:(int *)count;
-- (int *)unusedViewsWithCount:(int *)count;
-
 - (void)setBounds:(CGRect)rect;
 
 - (NSMutableDictionary *)getSavedData;
 - (void)saveData;
 - (void)setCalls:(NSMutableArray *)calls;
-
-- (void)buttonBarCustomize;
 
 /*
  * Settings Dictionary:
@@ -130,8 +114,6 @@ extern NSString const * const SettingsTimeEntryMinutes;
 extern NSString const * const SettingsDonated;
 extern NSString const * const SettingsFirstView;
 extern NSString const * const SettingsSecondView;
-extern NSString const * const SettingsThirdView;
-extern NSString const * const SettingsFourthView;
 
 @end
 
