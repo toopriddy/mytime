@@ -101,7 +101,7 @@ endif
 ##
 .PHONY:svn_version.c
 svn_version.c: 
-	echo -n 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
+	echo 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
 
 
 $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
