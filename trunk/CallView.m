@@ -73,8 +73,8 @@ typedef enum {
 {
 	DEBUG(NSLog(@"setFocus: %@", cell);)
 	// unselect the row
-	[_table setKeyboardVisible:YES animated:YES];
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+	[_table setKeyboardVisible:YES animated:YES];
 	[cell becomeFirstResponder];
 }
 
@@ -372,23 +372,11 @@ typedef enum {
 	
 	[returnVisits insertObject:visit atIndex:0];
 
-	
-	// animate the two new rows
-//		[_table reloadData];
-//		[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
-//		[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow, 1)] viaEdge:1 animated:YES];
-#if 0
 	[_table animateDeletionOfCellAtRow:_selectedRow column:0 viaEdge:1];
-	[self performSelector: @selector(animateInsertRows:) 
-			   withObject:[[NSNumber alloc] initWithInt:_selectedRow] 
-			   afterDelay:.5];
 	_setFirstResponderGroup = 2;
-#endif	
-
 
 	// unselect this row 
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-//	_shouldReloadAll = NO;
 	[self reloadData];
 }
 
@@ -531,7 +519,11 @@ typedef enum {
 {
 	DEBUG(NSLog(@"CallView reloadData");)
 
-	[_displayInformation release];
+	[_lastDisplayInformation release];
+	// lets store the information till later so that if the iPhone is still using some of this data
+	// in current displays, it does not disappear while still using it.  This is kind of a kludge but
+	// I do not know of a way to find and fix this problem (I spent hours in the simulator trying to find the memory issue)
+	_lastDisplayInformation = _displayInformation;
 	_displayInformation = [[NSMutableArray alloc] init];
 	
 	// Name
@@ -555,7 +547,7 @@ typedef enum {
 			// use the textfield
 			[self       addRow:_name
 			    insertOrDelete:kNone
-			  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:_name]
+			  selectInvocation:nil
 			  deleteInvocation:nil];
 
  			if(_setFirstResponderGroup == 0)
@@ -570,7 +562,7 @@ typedef enum {
 		else
 		{
 			// if we are not editing, then just display the name
-			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 			[cell setTitle:[_call objectForKey:CallName]];
 			[cell setShowSelection:NO];
 			[self       addRow:cell
@@ -621,11 +613,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// the address (unless we are editing
 		if(found || _editing)
 		{
-			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] init ];
+			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ];
 			[ cell setTitle:@"Address" ];
 
-			UIView *view = [[UIView alloc] init];
-			UITextLabel *label = [[[UITextLabel alloc] init] autorelease];
+			UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+			UITextLabel *label = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
 			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
 			float bgColor[] = { 0,0,0,0 };
 			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
@@ -637,7 +629,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[label setFrame: lrect];
 			[view addSubview:label];
 
-			label = [[[UITextLabel alloc] init] autorelease];
+			label = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
 			[label setHighlightedColor:[[cell titleTextLabel] highlightedColor]];
 			[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 			[label setText:bottom];
@@ -671,7 +663,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// we need a larger row height
 		[self addGroup:nil rowHeight:-1];
 		
-		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
+		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 		[ cell setShowDisclosure: NO ];
 		if([[_call objectForKey:CallReturnVisits] count])
 		{
@@ -706,7 +698,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			visit = [returnVisits objectAtIndex:i];
 
 			// GROUP TITLE
-			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] init];
+			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 			NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[visit objectForKey:CallReturnVisitDate] timeIntervalSinceReferenceDate]] autorelease];	
 			[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
 
@@ -717,14 +709,14 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
 			if(_editing)
 			{
-				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] init ] autorelease];
+				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 				[[text textField] setPlaceholder:@"Return Visit Notes" ];
 				[text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
 				[_returnVisitNotes addObject:text];
 
 				[self       addRow:text
 					insertOrDelete:kCanDelete
-				  selectInvocation:[self invocationForSelector:@selector(setFocus:) withArgument:text]
+				  selectInvocation:nil
 				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
 
 				if(_setFirstResponderGroup == 2 && i == 0)
@@ -737,7 +729,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			}
 			else
 			{
-				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 				if([notes length] == 0)
 					[cell setValue:@"Return Visit Notes"];
@@ -757,10 +749,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// CHANGE DATE
 			if(_editing)
 			{
-				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				[cell setShowDisclosure:YES];
 				[cell setValue:@"Change Date"];
-				[cell setShowSelection:NO];
+//				[cell setShowSelection:NO];
 				
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
@@ -787,7 +779,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
 					NSMutableDictionary *publication = [publications objectAtIndex:j];
-					cell = [[[UIPreferencesTableCell alloc ] init ] autorelease];
+					cell = [[[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 					[cell setShowDisclosure: _editing ];
 					[cell setShowSelection: _editing];
 					[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
@@ -815,7 +807,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// add publication
 			if(_editing)
 			{
-				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
+				cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				[cell setShowDisclosure: YES];
 				[cell setValue:@"Add a placed publication"];
 
@@ -902,6 +894,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		_shouldReloadAll = YES;
 		
 		_displayInformation = nil;
+		_lastDisplayInformation = nil;
 
 		_newCall = (call == nil);
 		_editing = _newCall;
@@ -917,7 +910,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		_showAddCall = YES;
 
 
-        _name = [[UIPreferencesTextTableCell alloc] init];
+        _name = [[UIPreferencesTextTableCell alloc] initWithFrame:CGRectZero];
         // _name (make sure that it is initalized)
         [_name setTitle:@"Name"];
         if((temp = [_call objectForKey:CallName]) != nil)
@@ -1088,7 +1081,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     DEBUG(NSLog(@"CallView addNewPublicationCancelAction:");)
     [[App getInstance] transition:2 fromView:publicationView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
+
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 }
@@ -1117,10 +1116,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     [_table setKeyboardVisible:NO animated:NO];
 	[self reloadData];
     [[App getInstance] transition:2 fromView:publicationView toView:self];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 
-	// reload like we inserted a publication at the row they clicked on
-//	[_table reloadDataForInsertionOfRows:NSMakeRange(_selectedRow, 2) animated:YES];
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
 
     // release the refcount on ourselves since we are now the main UIView
     [self release];
@@ -1142,7 +1143,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     DEBUG(NSLog(@"CallView changeCallDateCancelAction:");)
     [[App getInstance] transition:2 fromView:view toView:self];
     [_table setKeyboardVisible:NO animated:NO];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
+
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 }
@@ -1154,7 +1161,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
     [_editingReturnVisit setObject:[view date] forKey:CallReturnVisitDate];
     
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
+
     [_table setKeyboardVisible:NO animated:NO];
     [[App getInstance] transition:2 fromView:view toView:self];
 
@@ -1188,7 +1200,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     // 9 from top down sliding ontop of
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
+
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 }
@@ -1212,7 +1230,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 //	[_table reloadCellAtRow:_selectedRow column:0 animated:YES];
     [[App getInstance] transition:2 fromView:addressView toView:self];
     [_table setKeyboardVisible:NO animated:NO];
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_name
+			   afterDelay:.2];
+
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 
@@ -1307,6 +1331,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_table reloadCellAtRow: [start intValue] - 1 column:0 animated:YES];
 	// reload the inserted rows
 	[_table reloadDataForInsertionOfRows:NSMakeRange([start intValue], 3) animated:YES];
+	[self reloadData];
 	[start release];
 }
 
@@ -1328,7 +1353,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
 		// sutract off the group's row
 		--row;
-		rowCount = [[info objectForKey:CallViewInsertDelete] count];
+		rowCount = [[info objectForKey:CallViewSelectedInvocations] count];
 		for(i = 0; i < rowCount; ++i)
 		{
 			if(row == 0)

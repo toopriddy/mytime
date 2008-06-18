@@ -36,6 +36,7 @@
 	NSMutableArray *_returnVisitNotes;
 	
 	NSMutableArray *_displayInformation;
+	NSMutableArray *_lastDisplayInformation;
 	NSMutableDictionary *_currentGroup;
 	
 	BOOL _showAddCall;
