@@ -69,7 +69,7 @@ APP_ABS=$(CONFIGURATION_BUILD_DIR)/$(WRAPPER_NAME)
 PRODUCT_ABS=$(APP_ABS)/$(EXECUTABLE_NAME)
 
 VERSION=$(shell svnversion -n . | tr ":" ".")
-IPHONE=10.10.10.231
+IPHONE=10.10.10.239
 
 all: $(PRODUCT_ABS)
 
@@ -79,8 +79,11 @@ $(CONFIGURATION_BUILD_DIR)/svn_version.o: $(SRCROOT)/svn_version.c
 copy:
 	scp build/Release/MyTime.app/MyTime root@$(IPHONE):/Applications/MyTime.app/
 
+copy-resources:
+	scp $(RESOURCES) root@$(IPHONE):/Applications/MyTime.app/
+
 backup:
-	scp root@$(IPHONE):/var/root/Library/MyTime/record.plist ./
+	scp root@$(IPHONE):/var/mobile/Library/MyTime/record.plist ./
 
 zip: all
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip MyTime.zip $(WRAPPER_NAME)/*
@@ -106,7 +109,7 @@ endif
 ##
 .PHONY:svn_version.c
 svn_version.c: 
-	echo -n 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
+	echo 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
 
 
 $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)
