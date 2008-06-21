@@ -519,7 +519,13 @@ typedef enum {
 {
 	DEBUG(NSLog(@"CallView reloadData");)
 
+	// save off the return visit notes before we go and blow them away
+	[self saveReturnVisitsNotes];
+
+
+	// get rid of the last display information, we double buffer this to get around a douple reloadData call
 	[_lastDisplayInformation release];
+	
 	// lets store the information till later so that if the iPhone is still using some of this data
 	// in current displays, it does not disappear while still using it.  This is kind of a kludge but
 	// I do not know of a way to find and fix this problem (I spent hours in the simulator trying to find the memory issue)
