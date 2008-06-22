@@ -12,62 +12,23 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPickerView.h>
+#import "PublicationPicker.h"
 
 @interface PublicationView : UIView {
-    UIPickerView *_picker;
-    
+    PublicationPicker *_picker;
+	UIPickerView *_countPicker;
+	
     NSObject *_saveObject;
     SEL _saveSelector;
     
     NSObject *_cancelObject;
     SEL _cancelSelector;
-    
-    int _year;
-    int _month;
-    int _publication;
-    int _day;
 }
 
 /**
- * year of our common era
- *
- * @returns year of our common era
+ * get the publiction picker 
  */
-- (int)year;
-
-/**
- * get the month of the publication
- *
- * @returns 1-12 where 0=not used
- */
-- (int)month;    
-
-/**
- * get the name of the publication
- *
- * @returns the string name of the publication
- */
-- (NSString *)publication;
-
-/**
- * get the title of the publication
- *
- * @returns the official title of the publication like "Watchtower Jan 15, 2007"
- */
-- (NSString *)publicationTitle;
-
-/**
- * get the publicationType (PublicationType*)
- * @returns one of the PublicationType* strings
- */
-- (NSString *)publicationType; 
-
-/**
- * get the day of the publication
- *
- * @returns 0 = not used and 1, 8, 15, 22 for the day of the month
- */
-- (int)day;
+- (PublicationPicker *)publicationPicker;
 
 /**
  * initialize this view with a watchtower at the current month/year
@@ -85,8 +46,10 @@
  * @param year - the year of our common era
  * @param month - the month where 0 = Jan
  * @param day - the day of the month for a watchtower or awake
+ * @param showCount - show a picker for the number of publications placed
  * @returns self
  */
+- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)showCount number:(int)_number;
 - (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day;
 
 
@@ -108,11 +71,6 @@
  */
 - (void)setSaveAction: (SEL)aSelector forObject:(NSObject *)obj;
 
-
-// picker handler callback functions
-- (int)numberOfColumnsInPickerView: (UIPickerView*)p;
-- (int) pickerView:(UIPickerView*)p numberOfRowsInColumn:(int)col;
-- (id) pickerView:(UIPickerView*)p tableCellForRow:(int)row inColumn:(int)col;
 
 // navigation bar callback functions
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;

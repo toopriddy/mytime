@@ -17,6 +17,7 @@
 #import "StatisticsView.h"
 #import "TimeView.h"
 #import "SettingsView.h"
+#import "MainTransitionView.h"
 
 typedef enum {
 /*
@@ -45,13 +46,13 @@ typedef enum {
 	SelectedButtonBarView _currentButtonBarView;
 	BOOL _inMoreView;
 	UIView *_currentView;
-	UITransitionView *_transitionView;
+	MainTransitionView *_transitionView;
 
     NSMutableDictionary *_settings;
 }
 
-
-- (void)setView:(int)button transition:(int)transition;
+- (void)transition:(int)transition toView:(UIView *)view withAlert:(NSString *)alert;
+- (void)transition:(int)transition toView:(UIView *)view;
 - (void)setViewFromMore:(int)view;
 
 - (int *)allViewsWithCount:(int *)count;
@@ -115,12 +116,20 @@ extern NSString const * const CallReturnVisitPublicationDay;
 #define PublicationTypeTract @"Tract"
 #define PublicationTypeSpecial @"Special"
 
+extern NSString const * const MagazinePlacementDate;
+extern NSString const * const MagazinePlacementCount;
+
+
 extern NSString const * const SettingsCalls;
+extern NSString const * const SettingsMagazinePlacements;
 extern NSString const * const SettingsLastCallStreetNumber;
 extern NSString const * const SettingsLastCallStreet;
 extern NSString const * const SettingsLastCallCity;
 extern NSString const * const SettingsLastCallState;
 extern NSString const * const SettingsCurrentButtonBarView;
+
+
+extern NSString const * const SettingsTimeAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
