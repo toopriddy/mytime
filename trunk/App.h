@@ -35,6 +35,14 @@ extern int debugging;
 #define kButtonBarResizeMask (resize_SpringWidth | resize_SpringLeft | resize_SpringRight | resize_SpringTop)
 #define kKeyboardResizeMask resize_SpringWidth
 
+enum kSwipeDirection {
+	kSwipeDirectionUp=1, 
+	kSwipeDirectionDown=2, 
+	kSwipeDirectionRight=4, 
+	kSwipeDirectionLeft=8
+};
+
+
 @interface App : UIOrientingApplication {
     UIWindow *_window;
     MainTransitionView *_transitionView;

@@ -15,6 +15,9 @@ SettingsView.m \
 UIOrientingApplication.m \
 MainTransitionView.m \
 SortedByPickerView.m \
+NotesTextView.m \
+PublicationPicker.m \
+NumberedPicker.m \
 svn_version.c \
 
 

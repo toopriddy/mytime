@@ -133,7 +133,7 @@
 - (void)reloadData;
 
 
-- (void)setFocus:(UIPreferencesTextTableCell *)cell;
+- (void)setFocus:(UIResponder *)cell;
 
 // navigation bar callback functions
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;

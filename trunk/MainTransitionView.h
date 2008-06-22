@@ -12,11 +12,12 @@
 #import <UIKit/UITransitionView.h>
 
 @interface MainTransitionView : UITransitionView {
-
+	NSString *_alertSheetText;
 }
 
 - (id) initWithFrame: (CGRect)rect;
-- (void)setBounds:(CGRect)rect;
+
+- (void)transition:(int)transition fromView:(UIView*)fromView toView:(UIView *)toView withAlert:(NSString *)alert;
 
 - (BOOL)respondsToSelector:(SEL)selector;
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;

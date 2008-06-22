@@ -25,8 +25,11 @@
 #import "AddressView.h"
 #import "MainView.h"
 #import "DatePickerView.h"
+#import "NotesTextView.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
+
+#define USE_TEXT_VIEW 0
 
 const NSString *CallViewRowHeight = @"rowHeight";
 const NSString *CallViewGroupCell = @"group";
@@ -69,9 +72,9 @@ typedef enum {
 	}
 }
 
-- (void)setFocus:(UIPreferencesTextTableCell *)cell
+- (void)setFocus:(UIResponder *)cell
 {
-	DEBUG(NSLog(@"setFocus: %@", cell);)
+	DEBUG(NSLog(@"setFocus: ");)
 	// unselect the row
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[_table setKeyboardVisible:YES animated:YES];
@@ -224,9 +227,6 @@ typedef enum {
 	int i = [index intValue];
 	[index release];
 
-	// save off the notes before we delete this return visit
-	[self saveReturnVisitsNotes];
-
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
 	NSMutableArray *array = [[[NSMutableArray alloc] initWithArray:returnVisits] autorelease];
 	[_call setObject:array forKey:CallReturnVisits];
@@ -266,6 +266,9 @@ typedef enum {
 	DEBUG(NSLog(@"addressSelected");)
 	if(_editing)
 	{
+		// save off the notes before we delete this return visit
+		[self saveReturnVisitsNotes];
+		
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
@@ -425,6 +428,10 @@ typedef enum {
 - (void)addPublicationToReturnVisitAtIndex:(NSNumber *)index
 {
 	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %p", index);)
+
+	// save off the notes before we move to another view
+	[self saveReturnVisitsNotes];
+	
 	//this is the add a new entry one
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
 	[index release];
@@ -450,6 +457,10 @@ typedef enum {
 - (void)changeReturnVisitAtIndex:(NSNumber *)index publicationAtIndex:(NSNumber *)publicationIndex
 {
 	DEBUG(NSLog(@"changeReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
+
+	// save off the notes before we move to another view
+	[self saveReturnVisitsNotes];
+	
 	// they selected an existing entry
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:[index intValue]];
 	_editingPublication = [[_editingReturnVisit objectForKey:CallReturnVisitPublications] objectAtIndex:[publicationIndex intValue]];
@@ -481,9 +492,9 @@ typedef enum {
 
 
 
-- (void)addGroup:(id)groupCell rowHeight:(int)rowHeight
+- (void)addGroup:(id)groupCell
 {
-	DEBUG(NSLog(@"addGroup: rowHeight:%d", rowHeight);)
+	DEBUG(NSLog(@"addGroup: ");)
 	_currentGroup = [[[NSMutableDictionary alloc] init] autorelease];
 	
 	// initialize the arrays
@@ -491,17 +502,18 @@ typedef enum {
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewSelectedInvocations];
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewDeleteInvocations];
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewInsertDelete];
+	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewRowHeight];
 
 	// set the group's settings
 	if(groupCell != nil)
 		[_currentGroup setObject:groupCell forKey:CallViewGroupCell];
-	[_currentGroup setObject:[NSNumber numberWithInt:rowHeight] forKey:CallViewRowHeight];
 
 	[_displayInformation addObject:_currentGroup];
 	NSLog(@"_displayInformation count = %d", [_displayInformation count]);
 }
 
 - (void)     addRow:(id)cell 
+			 rowHeight:(int)rowHeight
      insertOrDelete:(CanInsertOrDelete)insertOrDelete 
    selectInvocation:(NSInvocation *)selectInvocation 
    deleteInvocation:(NSInvocation *)deleteInvocation
@@ -513,15 +525,12 @@ typedef enum {
 	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewDeleteInvocations] addObject:(deleteInvocation ? deleteInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewInsertDelete] addObject:[NSNumber numberWithInt:insertOrDelete]];
+	[[_currentGroup objectForKey:CallViewRowHeight] addObject:[NSNumber numberWithInt:rowHeight]];
 }
 
 - (void)reloadData
 {
 	DEBUG(NSLog(@"CallView reloadData");)
-
-	// save off the return visit notes before we go and blow them away
-	[self saveReturnVisitsNotes];
-
 
 	// get rid of the last display information, we double buffer this to get around a douple reloadData call
 	[_lastDisplayInformation release];
@@ -535,7 +544,7 @@ typedef enum {
 	// Name
 	if(_editing || [[_call objectForKey:CallName] length])
 	{
-		[self addGroup:nil rowHeight:50];
+		[self addGroup:nil];
 
 		if(_editing)
 		{
@@ -552,6 +561,7 @@ typedef enum {
 			//[[text textField] setPreferredKeyboardType: 0];
 			// use the textfield
 			[self       addRow:_name
+					 rowHeight:50
 			    insertOrDelete:kNone
 			  selectInvocation:nil
 			  deleteInvocation:nil];
@@ -572,6 +582,7 @@ typedef enum {
 			[cell setTitle:[_call objectForKey:CallName]];
 			[cell setShowSelection:NO];
 			[self       addRow:cell
+					 rowHeight:50
 			    insertOrDelete:kNone
 			  selectInvocation:nil
 			  deleteInvocation:nil];
@@ -651,10 +662,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[cell updateHighlightColors];
 
 			// add a group for the name
-			[self addGroup:nil rowHeight:70];
+			[self addGroup:nil];
 			
 			// add the name to the group
 			[self       addRow:cell
+					 rowHeight:70
 				insertOrDelete:kNone
 			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
 			  deleteInvocation:nil];
@@ -667,7 +679,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	if(_showAddCall && _editing)
 	{
 		// we need a larger row height
-		[self addGroup:nil rowHeight:-1];
+		[self addGroup:nil];
 		
 		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 		[ cell setShowDisclosure: NO ];
@@ -680,6 +692,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[ cell setValue:@"Add a initial visit"];
 		}
 		[self       addRow:cell
+				 rowHeight:-1
 			insertOrDelete:kCanInsert
 		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
 		  deleteInvocation:nil];
@@ -709,18 +722,42 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
 
 			// create dictionary entry for This Return Visit
-			[self addGroup:cell rowHeight:-1];
+			[self addGroup:cell];
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
 			if(_editing)
 			{
+#if USE_TEXT_VIEW
+				NotesTextView *cell = [[[NotesTextView alloc] initWithString:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes] editing:YES] autorelease];
+
+				[_returnVisitNotes addObject:cell];
+				NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!Height = %f", [cell height]);
+				[cell sizeToFit];
+				[cell setAutoresizingMask: kMainAreaResizeMask];
+				[cell setAutoresizesSubviews: YES];
+				
+				[self       addRow:cell
+						 rowHeight:[cell height]
+					insertOrDelete:kCanDelete
+				  selectInvocation:nil
+				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
+				
+				if(_setFirstResponderGroup == 2 && i == 0)
+				{
+					[self performSelector: @selector(setFocus:) 
+							   withObject:[cell textView]
+							   afterDelay:.5];
+					_setFirstResponderGroup = -1;
+				}
+#else
 				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 				[[text textField] setPlaceholder:@"Return Visit Notes" ];
 				[text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
 				[_returnVisitNotes addObject:text];
 
 				[self       addRow:text
+						 rowHeight:-1
 					insertOrDelete:kCanDelete
 				  selectInvocation:nil
 				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]];
@@ -732,9 +769,25 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 							   afterDelay:.5];
 					_setFirstResponderGroup = -1;
 				}
+#endif
 			}
 			else
 			{
+#if USE_TEXT_VIEW
+				NSString *string;
+				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
+				if([notes length] == 0)
+					string = @"Return Visit Notes";
+				else
+					string = notes;
+				NotesTextView *cell = [[[NotesTextView alloc] initWithString:string editing:NO] autorelease];
+				
+				[self       addRow:cell
+						 rowHeight:-1
+					insertOrDelete:kNone
+				  selectInvocation:nil
+				  deleteInvocation:nil];
+#else
 				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 				if([notes length] == 0)
@@ -745,9 +798,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 
 				[self       addRow:cell
+						 rowHeight:-1
 					insertOrDelete:kNone
 				  selectInvocation:nil
 				  deleteInvocation:nil];
+#endif
 			}
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
@@ -762,6 +817,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
+						 rowHeight:-1
 					insertOrDelete:kNone
 				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
 				  deleteInvocation:nil];
@@ -794,6 +850,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					{
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						[self       addRow:cell
+								 rowHeight:-1
 							insertOrDelete:kCanDelete
 						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]
 						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i] andArgument:[[NSNumber alloc] initWithInt:j]]];
@@ -802,6 +859,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					{
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						[self       addRow:cell
+								 rowHeight:-1
 							insertOrDelete:kNone
 						  selectInvocation:nil
 						  deleteInvocation:nil];
@@ -819,6 +877,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
+						 rowHeight:-1
 					insertOrDelete:kCanInsert
 				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber numberWithInt:i] retain]]
 				  deleteInvocation:nil];
@@ -829,7 +888,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	// DELETE call
 	if(_editing && !_newCall)
 	{
-		[self addGroup:nil rowHeight:-1];
+		[self addGroup:nil];
 
 		// DELETE
 		UIPreferencesDeleteTableCell *cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
@@ -844,6 +903,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[[cell titleTextLabel] setColor:whiteColor];
 	
 		[self       addRow:cell
+				 rowHeight:-1
 			insertOrDelete:kNone
 		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
 		  deleteInvocation:nil];
@@ -1064,6 +1124,16 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	int i;
 	for(i = 0; i < count; ++i)
 	{
+#if USE_TEXT_VIEW
+		// get the notes cell
+		UITextView *text = [_returnVisitNotes objectAtIndex:i];
+		// make a brandnew NSMutableDictionary because the old one might not be Mutable and copy
+		// the contents of the original return visit
+		NSMutableDictionary *visit = [[NSMutableDictionary alloc] initWithDictionary:[returnVisits objectAtIndex:i]];
+		// replace the CallReturnVisitNotes object with the contents of the text cell
+		[visit setObject:[text text] forKey:CallReturnVisitNotes];
+		[returnVisits replaceObjectAtIndex:i withObject:visit];
+#else
 		// get the notes cell
 		UIPreferencesTextTableCell *text = [_returnVisitNotes objectAtIndex:i];
 		// make a brandnew NSMutableDictionary because the old one might not be Mutable and copy
@@ -1072,6 +1142,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// replace the CallReturnVisitNotes object with the contents of the text cell
 		[visit setObject:[text value] forKey:CallReturnVisitNotes];
 		[returnVisits replaceObjectAtIndex:i withObject:visit];
+#endif
 	}
 	[_call setObject:returnVisits forKey:CallReturnVisits];
 }
@@ -1111,12 +1182,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
         [[_editingReturnVisit objectForKey:CallReturnVisitPublications] addObject:_editingPublication];
     }
     VERBOSE(NSLog(@"_editingPublication was = %@", _editingPublication);)
-    [_editingPublication setObject:[publicationView publication] forKey:CallReturnVisitPublicationName];
-    [_editingPublication setObject:[publicationView publicationTitle] forKey:CallReturnVisitPublicationTitle];
-    [_editingPublication setObject:[publicationView publicationType] forKey:CallReturnVisitPublicationType];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView year]] autorelease] forKey:CallReturnVisitPublicationYear];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView month]] autorelease] forKey:CallReturnVisitPublicationMonth];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[publicationView day]] autorelease] forKey:CallReturnVisitPublicationDay];
+	PublicationPicker *picker = [publicationView publicationPicker];
+    [_editingPublication setObject:[picker publication] forKey:CallReturnVisitPublicationName];
+    [_editingPublication setObject:[picker publicationTitle] forKey:CallReturnVisitPublicationTitle];
+    [_editingPublication setObject:[picker publicationType] forKey:CallReturnVisitPublicationType];
+    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker year]] autorelease] forKey:CallReturnVisitPublicationYear];
+    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker month]] autorelease] forKey:CallReturnVisitPublicationMonth];
+    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker day]] autorelease] forKey:CallReturnVisitPublicationDay];
     VERBOSE(NSLog(@"_editingPublication is = %@", _editingPublication);)
 
     [_table setKeyboardVisible:NO animated:NO];
@@ -1284,20 +1356,27 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 - (float)preferencesTable: (UIPreferencesTable *)table heightForRow: (int)row inGroup:(int)group withProposedHeight: (float)proposed 
 {
     VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
-	if(row == 0)
-	{
-		float height = [[[_displayInformation objectAtIndex:group] objectForKey:CallViewRowHeight] floatValue];
-		
-		VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
-		if(height >= 0)
-			return(height);
-	}
-	else if (row == -1) 
+	if (row == -1) 
 	{
 		if([[_displayInformation objectAtIndex:group] objectForKey:CallViewGroupCell] != nil)
 		{
 			return 40;
 		}
+	}
+	else
+	{
+		float height;
+		if([[[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] objectAtIndex:row] respondsToSelector:@selector(height)])
+		{
+			height = [[[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] objectAtIndex:row] height];
+		}
+		else
+		{
+			height = [[[[_displayInformation objectAtIndex:group] objectForKey:CallViewRowHeight] objectAtIndex:row] floatValue];
+		}
+		VERBOSE(NSLog(@"preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
+		if(height >= 0.0)
+			return(height);
 	}
     return proposed;
 }

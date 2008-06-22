@@ -12,14 +12,13 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
-#import "TimePickerView.h"
 
 
-@interface TimeTable : UITable {
-	NSMutableArray *_timeEntries;
+@interface LiteraturePlacementTable : UITable {
+	NSMutableArray *_entries;
 	CGPoint _offset;
 }
-- (id)initWithFrame:(CGRect) rect timeEntries:(NSMutableArray*) timeEntries;
+- (id)initWithFrame:(CGRect) rect entries:(NSMutableArray*) timeEntries;
 - (int)swipe:(int)direction withEvent:(struct __GSEvent *)event;
 
 
@@ -27,12 +26,12 @@
 @end
 
 
-@interface TimeView : UIView {
+@interface LiteraturePlacementView : UIView {
     CGRect _rect;
     TimeTable *_table;
 	UINavigationBar *_navigationBar;
 	
-	NSMutableArray *_timeEntries;
+	NSMutableArray *_entries;
 }
 
 /**

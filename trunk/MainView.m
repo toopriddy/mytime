@@ -50,12 +50,20 @@ NSString const * const CallReturnVisitPublicationYear = @"year";
 NSString const * const CallReturnVisitPublicationMonth = @"month";
 NSString const * const CallReturnVisitPublicationDay = @"day";
 
+NSString const * const MagazinePlacementDate = @"date";
+NSString const * const MagazinePlacementCount = @"count";
+
+
 NSString const * const SettingsCalls = @"calls";
+NSString const * const SettingsMagazinePlacements = @"magazinePlacements";
+
 NSString const * const SettingsLastCallStreetNumber = @"lastStreetNumber";
 NSString const * const SettingsLastCallStreet = @"lastStreet";
 NSString const * const SettingsLastCallCity = @"lastCity";
 NSString const * const SettingsLastCallState = @"lastState";
 NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
+
+NSString const * const SettingsTimeAlertSheetShown = @"timeAlertShown";
 
 NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
@@ -268,7 +276,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 	[self saveData];
 }
 
-- (void)transition:(int)transition toView:(UIView *)view
+- (void)transition:(int)transition toView:(UIView *)view withAlert:(NSString *)alert
 {
 	if(_currentView != view)
 	{
@@ -276,14 +284,20 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		{
 			[view setFrame:[_currentView frame]];
 		}
-
-		[_transitionView transition:transition fromView:_currentView toView:view ];
+		
+		[_transitionView transition:transition fromView:_currentView toView:view withAlert:alert];
 		_currentView = view;
 	}
 }
 
+- (void)transition:(int)transition toView:(UIView *)view
+{
+	[self transition:transition toView:view withAlert:nil];
+}
+
 - (void)setView:(int)button transition:(int)transition
 {
+	NSString *alertText = nil;
     switch (button) 
 	{
         case VIEW_SORTED_BY_STREET:
@@ -298,7 +312,13 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
-			[self transition:transition toView:_timeView];
+			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
+			{
+				alertText = @"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.";
+				[_settings setObject:@"" forKey:SettingsTimeAlertSheetShown];
+				[self saveData];
+			}
+			[self transition:transition toView:_timeView withAlert:alertText];
 			break;
         case VIEW_STATISTICS:
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
@@ -378,7 +398,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		}
 		
 		// create the transition view to change between the time and sorted calls view
-        _transitionView = [[UITransitionView alloc] initWithFrame:rect];
+        _transitionView = [[MainTransitionView alloc] initWithFrame:rect];
 		[_transitionView setAutoresizingMask: kMainAreaResizeMask];
 		[_transitionView setAutoresizesSubviews: YES];
         VERBOSE(NSLog(@"MainView initWithFrame: %p", self);)

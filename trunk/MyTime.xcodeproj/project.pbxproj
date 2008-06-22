@@ -8,6 +8,14 @@
 
 /* Begin PBXFileReference section */
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9005B16E0E0DCF33004EED7F /* NotesTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTextView.h; sourceTree = "<group>"; };
+		9005B16F0E0DCF33004EED7F /* NotesTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTextView.m; sourceTree = "<group>"; };
+		9005B2440E0DEBDA004EED7F /* LiteraturePlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementView.h; sourceTree = "<group>"; };
+		9005B2450E0DEBDA004EED7F /* LiteraturePlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiteraturePlacementView.m; sourceTree = "<group>"; };
+		9005B2480E0EBD44004EED7F /* PublicationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicationPicker.h; sourceTree = "<group>"; };
+		9005B2490E0EBD44004EED7F /* PublicationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicationPicker.m; sourceTree = "<group>"; };
+		9005B2660E0EC3AA004EED7F /* NumberedPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberedPicker.h; sourceTree = "<group>"; };
+		9005B2670E0EC3AA004EED7F /* NumberedPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberedPicker.m; sourceTree = "<group>"; };
 		902691FF0D95A0B20077B1BF /* mytime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mytime.plist; sourceTree = "<group>"; };
 		903B6EA70DB1C39C00D2D98F /* StudiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudiesView.h; sourceTree = "<group>"; };
 		903B6EA80DB1C39C00D2D98F /* StudiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudiesView.m; sourceTree = "<group>"; };
@@ -121,6 +129,14 @@
 				9078958C0DAECB7600B6173D /* SortedByPickerView.m */,
 				903B6EA70DB1C39C00D2D98F /* StudiesView.h */,
 				903B6EA80DB1C39C00D2D98F /* StudiesView.m */,
+				9005B16E0E0DCF33004EED7F /* NotesTextView.h */,
+				9005B16F0E0DCF33004EED7F /* NotesTextView.m */,
+				9005B2440E0DEBDA004EED7F /* LiteraturePlacementView.h */,
+				9005B2450E0DEBDA004EED7F /* LiteraturePlacementView.m */,
+				9005B2480E0EBD44004EED7F /* PublicationPicker.h */,
+				9005B2490E0EBD44004EED7F /* PublicationPicker.m */,
+				9005B2660E0EC3AA004EED7F /* NumberedPicker.h */,
+				9005B2670E0EC3AA004EED7F /* NumberedPicker.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
