@@ -13,10 +13,11 @@
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPickerView.h>
 #import "PublicationPicker.h"
+#import "NumberedPicker.h"
 
 @interface PublicationView : UIView {
     PublicationPicker *_picker;
-	UIPickerView *_countPicker;
+	NumberedPicker *_countPicker;
 	
     NSObject *_saveObject;
     SEL _saveSelector;
@@ -29,6 +30,10 @@
  * get the publiction picker 
  */
 - (PublicationPicker *)publicationPicker;
+
+- (int)count;
+
+
 
 /**
  * initialize this view with a watchtower at the current month/year

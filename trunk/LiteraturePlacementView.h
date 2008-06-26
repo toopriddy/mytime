@@ -12,9 +12,9 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
+#import "PublicationView.h"
 
-
-@interface LiteraturePlacementTable : UITable {
+@interface LiteraturePlacementTable : UIPreferencesTable {
 	NSMutableArray *_entries;
 	CGPoint _offset;
 }
@@ -28,10 +28,17 @@
 
 @interface LiteraturePlacementView : UIView {
     CGRect _rect;
-    TimeTable *_table;
+    LiteraturePlacementTable *_table;
 	UINavigationBar *_navigationBar;
 	
-	NSMutableArray *_entries;
+	NSMutableDictionary *_editingPlacements;
+	int _editingPublication;
+
+    NSObject *_saveObject;
+    SEL _saveSelector;
+    
+    NSObject *_cancelObject;
+    SEL _cancelSelector;
 }
 
 /**
@@ -40,11 +47,41 @@
  * @param rect - the rect
  * @returns self
  */
+
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (void)dealloc;
 
-- (void)addTimeCancelAction: (TimePickerView *)view;
-- (void)addTimeSaveAction: (TimePickerView *)view;
+/**
+ * get the placements from this view
+ * @return placements from this view
+ */
+- (NSMutableDictionary *)placements;
+ 
+/**
+ * setup a callback for clicking on the cancel button
+ *
+ * @param aSelector - the selector on obj to callback
+ * @param obj - the object to callback using the passed in aSelector
+ * @returns self
+ */
+- (void)setCancelAction: (SEL)aSelector forObject:(NSObject *)obj;
+
+/**
+ * setup a callback for clicking on the save button
+ *
+ * @param aSelector - the selector on obj to callback
+ * @param obj - the object to callback using the passed in aSelector
+ * @returns self
+ */
+- (void)setSaveAction: (SEL)aSelector forObject:(NSObject *)obj;
+
+
+- (void)dateCancelAction: (PublicationView *)view;
+- (void)dateSaveAction: (PublicationView *)view;
+
+- (void)publicationCancelAction: (PublicationView *)view;
+- (void)publicationSaveAction: (PublicationView *)view;
 
 //datasource methods
 - (int)numberOfRowsInTable:(UITable*)table;

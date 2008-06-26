@@ -191,9 +191,9 @@
 	return(_picker);
 }
 
-- (UIPickerView *)countPicker
+- (int)count
 {
-	return(_countPicker);
+	return([_countPicker number]);
 }
 
 
