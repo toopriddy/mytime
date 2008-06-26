@@ -51,6 +51,7 @@
 {
     VERY_VERBOSE(NSLog(@"pickerViewLoaded: ");)
 	[p selectRow:_number - _min inColumn: 0 animated: NO];
+	_delegateRespondsToTitleForRow = YES;
 }
 
 - (void) dealloc
@@ -61,11 +62,11 @@
 
 - (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max
 {
-    return([self initWithFrame:rect min:min max:max number:1]);
+    return([self initWithFrame:rect min:min max:max number:1 title:nil]);
 }
 
 // initialize this view given the curent configuration
-- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)number
+- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)number title:(NSString *)title
 {
 	DEBUG(NSLog(@"NumberedPicker initWithFrame: min:(int)%d max:(int)%d number:(int)%d", min, max, number);)
     if((self = [super initWithFrame: rect])) 
@@ -76,12 +77,22 @@
 			_number = number;
 		else
 			_number = _min;
-		
+		_showsSelectionBar = YES;
         // we are managing the picker's data and display
     	[self setDelegate: self];   
     }
     
     return(self);
+}
+
+- (NSString *)pickerView:(UIPickerView *)picker titleForRow:(int)row inColumn:(int)column
+{
+	NSLog(@"NumberedPicker pickerView titleForRow:%d inColumn:", row);
+	return(@"blah");
+}
+
+- (void)pickerView:(UIPickerView *)picker createdTable:(id)row forColumn:(int)column
+{
 }
 
 // year of our common era
@@ -96,8 +107,9 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"NumberedPicker respondsToSelector: %s", selector);)
-    return [super respondsToSelector:selector];
+	BOOL ret = [super respondsToSelector:selector];
+    VERY_VERBOSE(NSLog(@"NumberedPicker respondsToSelector: %s == %@", selector, ret ? @"YES" : @"NO");)
+    return ret;
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector

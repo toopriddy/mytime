@@ -446,6 +446,7 @@ static NSString *MONTHS[] = {
     {
         int i;
         DEBUG(NSLog(@"PublicationPicker initWithFrame: publication:\"%@\" year:%d month:%d day:%d", publication, year, month, day);)
+		_showsSelectionBar = YES;
 		
         _publication = 0;
         for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
