@@ -16,6 +16,8 @@
 		9005B2490E0EBD44004EED7F /* PublicationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicationPicker.m; sourceTree = "<group>"; };
 		9005B2660E0EC3AA004EED7F /* NumberedPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberedPicker.h; sourceTree = "<group>"; };
 		9005B2670E0EC3AA004EED7F /* NumberedPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberedPicker.m; sourceTree = "<group>"; };
+		9005B6C50E136617004EED7F /* bulkPlacements.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bulkPlacements.png; sourceTree = "<group>"; };
+		9005B6C60E136617004EED7F /* bulkPlacementsSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bulkPlacementsSelected.png; sourceTree = "<group>"; };
 		902691FF0D95A0B20077B1BF /* mytime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mytime.plist; sourceTree = "<group>"; };
 		903B6EA70DB1C39C00D2D98F /* StudiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudiesView.h; sourceTree = "<group>"; };
 		903B6EA80DB1C39C00D2D98F /* StudiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudiesView.m; sourceTree = "<group>"; };
@@ -148,6 +150,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9005B6C50E136617004EED7F /* bulkPlacements.png */,
+				9005B6C60E136617004EED7F /* bulkPlacementsSelected.png */,
 				903B6F6E0DB912F600D2D98F /* studies.png */,
 				903B6F6F0DB912F600D2D98F /* studiesSelected.png */,
 				9078957E0DADD49F00B6173D /* statisticsSelected.png */,
