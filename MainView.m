@@ -167,6 +167,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 #endif
 }
 
+
 - (NSArray *)buttonBarItems 
 {
     return [ NSArray arrayWithObjects:
@@ -216,11 +217,11 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
         [ NSDictionary dictionaryWithObjectsAndKeys:
           @"buttonBarItemTapped:", kUIButtonBarButtonAction,
-          @"studies.png", kUIButtonBarButtonInfo,
-          @"studiesSelected.png", kUIButtonBarButtonSelectedInfo,
-          [ NSNumber numberWithInt: VIEW_STUDIES], kUIButtonBarButtonTag,
+          @"bulkPlacements.png", kUIButtonBarButtonInfo,
+          @"bulkPlacementsSelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_BULK_PLACEMENTS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Studies", kUIButtonBarButtonTitle,
+          @"Placements", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
           nil 
         ], 
@@ -239,6 +240,37 @@ static NSString *newDataPath = @"/var/mobile/Library/";
         nil
     ];
 }
+
+- (NSString *)buttonBarNameForId:(int)id
+{
+	NSArray *array = [self buttonBarItems];
+	int i;
+	int count = [array count];
+	for(i = 0; i < count; i++)
+	{
+		NSDictionary *entry = [array objectAtIndex:i];
+		if([[entry objectForKey:kUIButtonBarButtonTag] intValue] == id)
+		{
+			return([entry objectForKey:kUIButtonBarButtonTitle]);
+		}
+	}
+}
+
+- (NSString *)buttonBarPictureForId:(int)id
+{
+	NSArray *array = [self buttonBarItems];
+	int i;
+	int count = [array count];
+	for(i = 0; i < count; i++)
+	{
+		NSDictionary *entry = [array objectAtIndex:i];
+		if([[entry objectForKey:kUIButtonBarButtonTag] intValue] == id)
+		{
+			return([entry objectForKey:kUIButtonBarButtonSelectedInfo]);
+		}
+	}
+}
+
 
 - (UIButtonBar *)allocButtonBarWithFrame: (CGRect)rect
 {
@@ -340,11 +372,10 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 			}
 			[self transition:transition toView:_statisticsView];
 			break;
-		case VIEW_STUDIES:
-			DEBUG(NSLog(@"VIEW_STUDIES");)
+		case VIEW_BULK_PLACEMENTS:
+			DEBUG(NSLog(@"VIEW_BULK_PLACEMENTS");)
 			[_settingsView reloadData];
-			//[self transition:transition toView:_studiesView];
-			[self transition:transition toView:_statisticsView];
+			[self transition:transition toView:_bulkPlacementsView];
 			break;
         case VIEW_SETTINGS:
 			DEBUG(NSLog(@"VIEW_SETTINGS");)
@@ -464,7 +495,12 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		_statisticsView = [[StatisticsView alloc] initWithFrame:rect settings:_settings];
 		[_statisticsView setAutoresizingMask: kMainAreaResizeMask];
 		[_statisticsView setAutoresizesSubviews: YES];
-
+		
+		// create the BulkLiteraturePlacementView
+		_bulkPlacementsView = [[BulkLiteraturePlacementView alloc] initWithFrame:rect settings:_settings];
+		[_bulkPlacementsView setAutoresizingMask: kMainAreaResizeMask];
+		[_bulkPlacementsView setAutoresizesSubviews: YES];
+		
 		// set the SortedCallsView as the main view
 		[self addSubview: _transitionView];
 		[self setView:_currentButtonBarView transition:0];
@@ -535,7 +571,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		VIEW_SORTED_BY_DATE,
 		VIEW_TIME,
 		VIEW_STATISTICS,
-		VIEW_STUDIES
+		VIEW_BULK_PLACEMENTS
 	};
 	*count = ARRAY_SIZE(buttons);
 	return(buttons);

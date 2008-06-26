@@ -13,6 +13,7 @@
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
 #import "PublicationView.h"
+#import "DatePickerView.h"
 
 @interface LiteraturePlacementTable : UIPreferencesTable {
 	NSMutableArray *_entries;
@@ -47,9 +48,8 @@
  * @param rect - the rect
  * @returns self
  */
-
-- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
-- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
+- (id) initWithFrame: (CGRect)rect;
+- (id) initWithFrame: (CGRect)rect placements:(NSMutableDictionary *)placements;
 - (void)dealloc;
 
 /**
@@ -77,18 +77,12 @@
 - (void)setSaveAction: (SEL)aSelector forObject:(NSObject *)obj;
 
 
-- (void)dateCancelAction: (PublicationView *)view;
-- (void)dateSaveAction: (PublicationView *)view;
+- (void)changeDateCancelAction: (DatePickerView *)view;
+- (void)changeDateSaveAction: (DatePickerView *)view;
 
 - (void)publicationCancelAction: (PublicationView *)view;
 - (void)publicationSaveAction: (PublicationView *)view;
 
-//datasource methods
-- (int)numberOfRowsInTable:(UITable*)table;
-- (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column;
-- (BOOL)table:(UITable*)table canDeleteRow:(int)row;
--(BOOL)table:(UITable*)table showDisclosureForRow:(int)row;
--(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow;
 
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
 

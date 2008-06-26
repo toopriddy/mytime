@@ -12,9 +12,9 @@
 #import <UIKit/UITableCell.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UIPreferencesTable.h>
+#import "LiteraturePlacementView.h"
 
-
-@interface BulkPublicationPlacementTable : UITable {
+@interface BulkLiteraturePlacementTable : UITable {
 	NSMutableArray *_entries;
 	CGPoint _offset;
 }
@@ -26,13 +26,13 @@
 @end
 
 
-@interface BulkPublicationPlacementView : UIView {
+@interface BulkLiteraturePlacementView : UIView {
     CGRect _rect;
-    TimeTable *_table;
+    BulkLiteraturePlacementTable *_table;
 	UINavigationBar *_navigationBar;
 	
 	NSMutableArray *_entries;
-	NSMutableDictionary *_editingEntry;
+	int _selectedRow;
 }
 
 /**
@@ -44,15 +44,14 @@
 - (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings;
 - (void)dealloc;
 
-- (void)entryCancelAction: (TimePickerView *)view;
-- (void)entrySaveAction: (TimePickerView *)view;
+- (void)entryCancelAction: (LiteraturePlacementView *)view;
+- (void)entrySaveAction: (LiteraturePlacementView *)view;
 
 //datasource methods
 - (int)numberOfRowsInTable:(UITable*)table;
 - (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column;
 - (BOOL)table:(UITable*)table canDeleteRow:(int)row;
 -(BOOL)table:(UITable*)table showDisclosureForRow:(int)row;
--(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow;
 
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button;
 

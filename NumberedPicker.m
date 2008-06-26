@@ -84,6 +84,7 @@
 // year of our common era
 - (int)number
 {
+    VERY_VERBOSE(NSLog(@"NumberedPicker number %d", _number);)
     return(_number);
 }
 

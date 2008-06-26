@@ -44,8 +44,8 @@
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
 		9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTransitionView.m; sourceTree = "<group>"; };
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
-		90DE11F00E10A6430085C700 /* BulkPublicationPlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulkPublicationPlacementView.h; sourceTree = "<group>"; };
-		90DE11F10E10A6430085C700 /* BulkPublicationPlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkPublicationPlacementView.m; sourceTree = "<group>"; };
+		90DE11F00E10A6430085C700 /* BulkLiteraturePlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulkLiteraturePlacementView.h; sourceTree = "<group>"; };
+		90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkLiteraturePlacementView.m; sourceTree = "<group>"; };
 		ACBEE6970D2427BA007CEA24 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		ACBEE6AE0D24289B007CEA24 /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CallView.m; sourceTree = "<group>"; };
 		ACBEE6B00D2428BF007CEA24 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
@@ -105,8 +105,8 @@
 				ACBEE6B90D242A44007CEA24 /* Main.m */,
 				ACC7A7570D2706D20090157B /* AddressView.h */,
 				ACBEE6970D2427BA007CEA24 /* AddressView.m */,
-				90DE11F00E10A6430085C700 /* BulkPublicationPlacementView.h */,
-				90DE11F10E10A6430085C700 /* BulkPublicationPlacementView.m */,
+				90DE11F00E10A6430085C700 /* BulkLiteraturePlacementView.h */,
+				90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */,
 				90BC4F090D3F104500E70FB1 /* CallView.h */,
 				ACBEE6AE0D24289B007CEA24 /* CallView.m */,
 				906AC1E40D502EFB0065CC89 /* DatePickerView.h */,
