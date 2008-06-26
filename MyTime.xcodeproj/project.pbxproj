@@ -44,6 +44,8 @@
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
 		9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTransitionView.m; sourceTree = "<group>"; };
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
+		90DE11F00E10A6430085C700 /* BulkPublicationPlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulkPublicationPlacementView.h; sourceTree = "<group>"; };
+		90DE11F10E10A6430085C700 /* BulkPublicationPlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkPublicationPlacementView.m; sourceTree = "<group>"; };
 		ACBEE6970D2427BA007CEA24 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		ACBEE6AE0D24289B007CEA24 /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CallView.m; sourceTree = "<group>"; };
 		ACBEE6B00D2428BF007CEA24 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
@@ -98,45 +100,47 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9099FD5C0D7E20FD00D8CA9C /* UIOrientingApplication.h */,
-				9099FD5D0D7E20FD00D8CA9C /* UIOrientingApplication.m */,
 				ACC7A7580D2706F30090157B /* App.h */,
 				ACBEE6EE0D24350F007CEA24 /* App.m */,
 				ACBEE6B90D242A44007CEA24 /* Main.m */,
-				ACBEE71A0D2460D8007CEA24 /* PublicationView.h */,
-				ACBEE6B20D2428D1007CEA24 /* PublicationView.m */,
-				ACBEE7920D246672007CEA24 /* MainView.h */,
-				ACBEE6B00D2428BF007CEA24 /* MainView.m */,
-				90BC4F090D3F104500E70FB1 /* CallView.h */,
-				ACBEE6AE0D24289B007CEA24 /* CallView.m */,
 				ACC7A7570D2706D20090157B /* AddressView.h */,
 				ACBEE6970D2427BA007CEA24 /* AddressView.m */,
-				ACC7A7550D2706B20090157B /* SortedCallsView.h */,
-				ACC7A7560D2706B20090157B /* SortedCallsView.m */,
+				90DE11F00E10A6430085C700 /* BulkPublicationPlacementView.h */,
+				90DE11F10E10A6430085C700 /* BulkPublicationPlacementView.m */,
+				90BC4F090D3F104500E70FB1 /* CallView.h */,
+				ACBEE6AE0D24289B007CEA24 /* CallView.m */,
 				906AC1E40D502EFB0065CC89 /* DatePickerView.h */,
 				906AC1E50D502EFB0065CC89 /* DatePickerView.m */,
-				9058ABF20D668F74006AE013 /* TimeView.h */,
-				9058ABF30D668F74006AE013 /* TimeView.m */,
-				904C6E1C0D6E9CE700DEF41A /* StatisticsView.h */,
-				904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */,
-				904C6F5B0D70B17B00DEF41A /* TimePickerView.h */,
-				904C6F5C0D70B17B00DEF41A /* TimePickerView.m */,
+				9005B2440E0DEBDA004EED7F /* LiteraturePlacementView.h */,
+				9005B2450E0DEBDA004EED7F /* LiteraturePlacementView.m */,
 				9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */,
 				9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */,
+				ACBEE7920D246672007CEA24 /* MainView.h */,
+				ACBEE6B00D2428BF007CEA24 /* MainView.m */,
+				9005B16E0E0DCF33004EED7F /* NotesTextView.h */,
+				9005B16F0E0DCF33004EED7F /* NotesTextView.m */,
+				9005B2660E0EC3AA004EED7F /* NumberedPicker.h */,
+				9005B2670E0EC3AA004EED7F /* NumberedPicker.m */,
+				ACBEE71A0D2460D8007CEA24 /* PublicationView.h */,
+				ACBEE6B20D2428D1007CEA24 /* PublicationView.m */,
+				9005B2480E0EBD44004EED7F /* PublicationPicker.h */,
+				9005B2490E0EBD44004EED7F /* PublicationPicker.m */,
 				907894840DADAD8700B6173D /* SettingsView.h */,
 				907894850DADAD8700B6173D /* SettingsView.m */,
 				9078958B0DAECB7600B6173D /* SortedByPickerView.h */,
 				9078958C0DAECB7600B6173D /* SortedByPickerView.m */,
+				ACC7A7550D2706B20090157B /* SortedCallsView.h */,
+				ACC7A7560D2706B20090157B /* SortedCallsView.m */,
+				904C6E1C0D6E9CE700DEF41A /* StatisticsView.h */,
+				904C6E1D0D6E9CE700DEF41A /* StatisticsView.m */,
 				903B6EA70DB1C39C00D2D98F /* StudiesView.h */,
 				903B6EA80DB1C39C00D2D98F /* StudiesView.m */,
-				9005B16E0E0DCF33004EED7F /* NotesTextView.h */,
-				9005B16F0E0DCF33004EED7F /* NotesTextView.m */,
-				9005B2440E0DEBDA004EED7F /* LiteraturePlacementView.h */,
-				9005B2450E0DEBDA004EED7F /* LiteraturePlacementView.m */,
-				9005B2480E0EBD44004EED7F /* PublicationPicker.h */,
-				9005B2490E0EBD44004EED7F /* PublicationPicker.m */,
-				9005B2660E0EC3AA004EED7F /* NumberedPicker.h */,
-				9005B2670E0EC3AA004EED7F /* NumberedPicker.m */,
+				904C6F5B0D70B17B00DEF41A /* TimePickerView.h */,
+				904C6F5C0D70B17B00DEF41A /* TimePickerView.m */,
+				9058ABF20D668F74006AE013 /* TimeView.h */,
+				9058ABF30D668F74006AE013 /* TimeView.m */,
+				9099FD5C0D7E20FD00D8CA9C /* UIOrientingApplication.h */,
+				9099FD5D0D7E20FD00D8CA9C /* UIOrientingApplication.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

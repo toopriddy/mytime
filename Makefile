@@ -18,6 +18,8 @@ SortedByPickerView.m \
 NotesTextView.m \
 PublicationPicker.m \
 NumberedPicker.m \
+LiteraturePlacementView.m \
+BulkLiteraturePlacementView.m \
 svn_version.c \
 
 

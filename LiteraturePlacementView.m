@@ -102,46 +102,34 @@
 @end
 
 
+/* NSMutableArray bulkLiterature
+ *     NSMutableDictionary
+ *            NSCalendarDate date
+ *            NSArray literature
+ *                   NSMutableDictionary
+ *                          NSIteger count
+ *							NSString title
+ *							NSString name
+ *							NSInteger year
+ *							NSInteger month
+ *							NSInteger day
+ * these are the standard names for the elements in the Call NSMutableDictionary
+ */
+extern NSString const * const SettingsBulkLiterature;
+extern NSString const * const BulkLiteratureDate;
+extern NSString const * const BulkLiteratureArray;
+extern NSString const * const BulkLiteratureArrayCount;
+extern NSString const * const BulkLiteratureArrayTitle;
+extern NSString const * const BulkLiteratureArrayName;
+extern NSString const * const BulkLiteratureArrayYear;
+extern NSString const * const BulkLiteratureArrayMonth;
+extern NSString const * const BulkLiteratureArrayDay;
+
+
 
 
 
 @implementation LiteraturePlacementView
-
-static int sortByDate(id v1, id v2, void *context)
-{
-	// ok, we need to compare the dates of the calls since we have
-	// at least one call for each of 
-	NSDate *date1 = [v1 objectForKey:LiteraturePlacementDate];
-	NSDate *date2 = [v2 objectForKey:LiteraturePlacementDate];
-	return(-[date1 compare:date2]);
-}
-
-
-// sort the time entries and remove the 3 month old entries
-- (void)sort
-{
-	int i;
-	NSArray *sortedArray = [_entries sortedArrayUsingFunction:sortByDate context:NULL];
-	[sortedArray retain];
-	[_entries setArray:sortedArray];
-	[sortedArray release];
-	
-	// remove all entries that are older than 3 months
-	NSCalendarDate *now = [[NSCalendarDate calendarDate] dateByAddingYears:0 months:-3 days:0 hours:0 minutes:0 seconds:0];
-	int count = [_entries count];
-	for(i = 0; i < count; ++i)
-	{
-		NSLog(@"Comparing %d to %d", now, [[_entries objectAtIndex:i] objectForKey:LiteraturePlacementDate]);
-		if([now compare:[[_entries objectAtIndex:i] objectForKey:LiteraturePlacementDate]] > 0)
-		{
-			[_entries removeObjectAtIndex:i];
-			--i;
-			count = [_entries count];
-		}
-	}
-	
-	[_table reloadData];
-}
 
 - (void)dealloc
 {
@@ -151,14 +139,16 @@ static int sortByDate(id v1, id v2, void *context)
 }
 
 
-- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *) settings
+- (id) initWithFrame: (CGRect)rect placements:(NSMutableDictionary *)placements
 {
     if((self = [super initWithFrame: rect])) 
     {
         DEBUG(NSLog(@"LiteraturePlacementView initWithFrame:");)
 		
-		_entries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:SettingsLiteraturePlacements]];
-		[settings setObject:_entries forKey:SettingsLiteraturePlacements];
+		_editingPlacements = [[NSMutableDictionary alloc] initWithDictionary:placements];
+		NSMutableArray *entries = [[NSMutableArray alloc] initWithArray:[placements objectForKey:BulkLiteratureArray]];
+		[placements setObject:entries forKey:BulkLiteratureArray];
+		[entries release];
 		
         _rect = rect;   
         // make the navigation bar 
@@ -174,9 +164,9 @@ static int sortByDate(id v1, id v2, void *context)
 		// 2 = left arrow
 		// 3 = blue
 		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Anonymous Placements"] autorelease] ];
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:"+" withStyle:3];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:@"+" withStyle:3];
 		_table = [[LiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
-		                                           entries:_entries];
+		                                           entries:entries];
 		
 		[_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Times" identifier:nil width: rect.size.width] autorelease]];
         [_table setDelegate: self];
@@ -189,59 +179,76 @@ static int sortByDate(id v1, id v2, void *context)
     
     return(self);
 }
+
+- (void)unselectRow
+{
+	DEBUG(NSLog(@"unselectRow");)
+	// unselect the row
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+}
+
+
 /******************************************************************
  *
  *   PUBLICATION VIEW CALLBACKS
  *
  ******************************************************************/
 
-- (void)addNewPublicationCancelAction: (PublicationView *)publicationView
+- (void)publicationCancelAction: (PublicationView *)publicationView
 {
-    DEBUG(NSLog(@"CallView addNewPublicationCancelAction:");)
-    [[App getInstance] transition:2 fromView:publicationView toView:self];
-    [_table setKeyboardVisible:NO animated:NO];
+    DEBUG(NSLog(@"LiteraturePlacementView addNewPublicationCancelAction:");)
+	int transition = _editingPublication ? 2 : 2;
+    [[App getInstance] transition:transition fromView:publicationView toView:self];
 
-	if(_selectedRow)
-	// have the row unselect after the transition back to the CallView so that the user
+	// have the row unselect after the transition back to the LiteraturePlacementView so that the user
 	// knows where they were and what they clicked on 
 	[self performSelector: @selector(unselectRow) 
-			   withObject:_name
+			   withObject:self
 			   afterDelay:.2];
 	
     // release the refcount on ourselves since we are now the main UIView
     [self release];
 }
 
-- (void)addNewPublicationSaveAction: (PublicationView *)publicationView
+- (void)publicationSaveAction: (PublicationView *)publicationView
 {
-    DEBUG(NSLog(@"CallView addNewPublicationSaveAction:");)
-    
-    if(_editingPublication == nil)
+    DEBUG(NSLog(@"LiteraturePlacementView addNewPublicationSaveAction:");)
+    NSMutableDictionary *publication;
+	
+    if(_editingPublication == -1)
     {
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
         // if we are adding a publication then create the NSDictionary and add it to the end
         // of the publications array
-        _editingPublication = [[[NSMutableDictionary alloc] init] autorelease];
-        [[_editingReturnVisit objectForKey:CallReturnVisitPublications] addObject:_editingPublication];
+        publication = [[[NSMutableDictionary alloc] init] autorelease];
+        [[_editingPlacements objectForKey:BulkLiteratureArray] addObject:publication];
     }
-    VERBOSE(NSLog(@"_editingPublication was = %@", _editingPublication);)
+	else
+	{
+        publication = [[[NSMutableDictionary alloc] init] autorelease];
+        [[_editingPlacements objectForKey:BulkLiteratureArray] replaceObjectAtIndex:_editingPublication withObject:publication ];
+	}
+    VERBOSE(NSLog(@"_editingPublication was = %@", publication);)
 	PublicationPicker *picker = [publicationView publicationPicker];
-    [_editingPublication setObject:[picker publication] forKey:CallReturnVisitPublicationName];
-    [_editingPublication setObject:[picker publicationTitle] forKey:CallReturnVisitPublicationTitle];
-    [_editingPublication setObject:[picker publicationType] forKey:CallReturnVisitPublicationType];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker year]] autorelease] forKey:CallReturnVisitPublicationYear];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker month]] autorelease] forKey:CallReturnVisitPublicationMonth];
-    [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker day]] autorelease] forKey:CallReturnVisitPublicationDay];
+	
+    [publication setObject:[picker publication] forKey:BulkLiteratureArrayName];
+    [publication setObject:[picker publicationTitle] forKey:BulkLiteratureArrayTitle];
+    [publication setObject:[picker publicationType] forKey:BulkLiteratureArrayType];
+    [publication setObject:[[[NSNumber alloc] initWithInt:[picker year]] autorelease] forKey:BulkLiteratureArrayYear];
+    [publication setObject:[[[NSNumber alloc] initWithInt:[picker month]] autorelease] forKey:BulkLiteratureArrayMonth];
+    [publication setObject:[[[NSNumber alloc] initWithInt:[picker day]] autorelease] forKey:BulkLiteratureArrayDay];
+    [publication setObject:[[[NSNumber alloc] initWithInt:[publicationView count]] autorelease] forKey:BulkLiteratureArrayCount];
+
     VERBOSE(NSLog(@"_editingPublication is = %@", _editingPublication);)
 	
     [_table setKeyboardVisible:NO animated:NO];
-	[self reloadData];
+	[_table reloadData];
     [[App getInstance] transition:2 fromView:publicationView toView:self];
 	
-	// have the row unselect after the transition back to the CallView so that the user
+	// have the row unselect after the transition back to the LiteraturePlacementView so that the user
 	// knows where they were and what they clicked on 
 	[self performSelector: @selector(unselectRow) 
-			   withObject:_name
+			   withObject:self
 			   afterDelay:.2];
 	
     // release the refcount on ourselves since we are now the main UIView
@@ -261,25 +268,20 @@ static int sortByDate(id v1, id v2, void *context)
  ******************************************************************/
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button
 {
-	DEBUG(NSLog(@"navigationBar: buttonClicked:%s", button == 0? "Start/Stop time" : "Add Time");)
-	
-	switch(button)
+    VERBOSE(NSLog(@"navigationBar: buttonClicked:%s", button ? "cancel" : "save");)
+	if(button == 1)
 	{
-		case 0: // Add literature
-		{
-			[self retain];
-			BulkLiteraturePlacementView *p = [[[BulkLiteraturePlacementView alloc] initWithFrame:_rect] autorelease];
-			
-			// setup the callbacks for save or cancel
-			[p setCancelAction: @selector(addPlacementCancelAction:) forObject:self];
-			[p setSaveAction: @selector(addPlacementSaveAction:) forObject:self];
-			[p setAutoresizingMask: kMainAreaResizeMask];
-			[p setAutoresizesSubviews: YES];
-			
-			// transition from bottom up sliding ontop of the old view
-			[[App getInstance] transition:8 fromView:[[App getInstance] mainView] toView:p];
-			break;
-		}
+        if(_cancelObject != nil)
+        {
+            [_cancelObject performSelector:_cancelSelector withObject:self];
+        }
+	}
+	else
+	{
+        if(_saveObject != nil)
+        {
+            [_saveObject performSelector:_saveSelector withObject:self];
+        }
 	}
 }
 
@@ -310,26 +312,108 @@ static int sortByDate(id v1, id v2, void *context)
 	
 	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
 	[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d"]];
-	
+
+	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray;
+	int i;
+	int count = [publications count];
+	int number  0;
+	for(i = 0; i < count; ++i)
+	{
+		number += [[[publications objectAtIndex:i] objectForKey:BulkLiteratureArrayCount] intValue];
+	}
 	CGSize s = CGSizeMake( [column width], [table rowHeight] );
 	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(150,0,s.width,s.height)] autorelease];
 	float bgColor[] = { 0,0,0,0 };
 	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 	
-	int minutes = [time intValue];
-	int hours = minutes / 60;
-	minutes %= 60;
-	if(hours && minutes)
-		[label setText:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
-	else if(hours)
-		[label setText:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
-	else if(minutes)
-		[label setText:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+	[label setText:[NSString stringWithFormat:@"%d publications", number]];
 	
 	[cell addSubview: label];
 	
 	return cell;
 }
+
+
+- (void)tableRowSelected:(NSNotification*)notification
+{
+    int row = [[notification object] selectedRow];
+    DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d editing%d", notification, row, _editing);)
+	_selectedRow = row;
+
+	// there is nothing to select in row 1
+	if(row == 0)
+		return;
+	int groupCount = [_displayInformation count];
+	int group;
+	int i;
+	int rowCount;
+	for(group = 0; group < groupCount; ++group)
+	{
+		NSMutableDictionary *info = [_displayInformation objectAtIndex:group];
+		// sutract off the group's row
+		--row;
+		rowCount = [[info objectForKey:LiteraturePlacementViewSelectedInvocations] count];
+		for(i = 0; i < rowCount; ++i)
+		{
+			if(row == 0)
+			{
+				DEBUG(NSLog(@"calling invoking handler");)
+				[[[info objectForKey:LiteraturePlacementViewSelectedInvocations] objectAtIndex:i] invoke];
+				return;
+			}
+			--row;
+		}
+	}
+	
+}
+
+-(BOOL)table:(UITable*)table canDeleteRow:(int)row
+{
+    VERBOSE(NSLog(@"table: canInsertAtRow: %d", row);)
+	//row 0 space
+	// row 1 set date
+	//row 2 space
+	
+	// cant insert/delete the group title
+	if(row < 3)
+		return(NO);
+	row -= 2;
+	
+	return(row < [_entries count]);
+}
+
+-(BOOL)table:(UITable*)table canInsertAtRow:(int)row
+{
+    VERBOSE(NSLog(@"table: canInsertAtRow: %d", row);)
+	//row 0 space
+	// row 1 set date
+	//row 2 space
+	
+	// cant insert/delete the group title
+	if(row < 3)
+		return(NO);
+	row -= 2;
+	
+	return(row >= [_entries count]);
+}
+
+-(void)table:(UITable*)table deleteRow:(int)row
+{
+    DEBUG(NSLog(@"table: deleteRow:%d", row);)
+	//row 0 space
+	// row 1 set date
+	//row 2 space
+	
+	// cant insert/delete the group title
+	if(row < 3)
+		return(NO);
+	row -= 2;
+	
+	return(row >= [_entries count]);
+}
+
+
+
 
 -(BOOL)table:(UITable*)table deleteRow:(int)row
 {

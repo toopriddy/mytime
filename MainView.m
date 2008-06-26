@@ -50,8 +50,16 @@ NSString const * const CallReturnVisitPublicationYear = @"year";
 NSString const * const CallReturnVisitPublicationMonth = @"month";
 NSString const * const CallReturnVisitPublicationDay = @"day";
 
-NSString const * const MagazinePlacementDate = @"date";
-NSString const * const MagazinePlacementCount = @"count";
+NSString const * const SettingsBulkLiterature = @"bulkLiterature";
+NSString const * const BulkLiteratureDate = @"date";
+NSString const * const BulkLiteratureArray = @"literature";
+NSString const * const BulkLiteratureArrayCount = @"count";
+NSString const * const BulkLiteratureArrayTitle = @"title";
+NSString const * const BulkLiteratureArrayType = @"type";
+NSString const * const BulkLiteratureArrayName = @"name";
+NSString const * const BulkLiteratureArrayYear = @"year";
+NSString const * const BulkLiteratureArrayMonth = @"month";
+NSString const * const BulkLiteratureArrayDay = @"day";
 
 
 NSString const * const SettingsCalls = @"calls";
@@ -64,6 +72,7 @@ NSString const * const SettingsLastCallState = @"lastState";
 NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
 
 NSString const * const SettingsTimeAlertSheetShown = @"timeAlertShown";
+NSString const * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown";
 
 NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
@@ -323,6 +332,12 @@ static NSString *newDataPath = @"/var/mobile/Library/";
         case VIEW_STATISTICS:
 			DEBUG(NSLog(@"VIEW_STATISTICS");)
 			[_statisticsView reloadData];
+			if([_settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
+			{
+				alertText = @"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.";
+				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
+				[self saveData];
+			}
 			[self transition:transition toView:_statisticsView];
 			break;
 		case VIEW_STUDIES:

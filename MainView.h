@@ -89,6 +89,17 @@ typedef enum {
  *                   NSInteger month
  *                   NSInteger day
  *
+ * NSMutableArray bulkLiterature
+ *     NSMutableDictionary
+ *            NSCalendarDate date
+ *            NSArray literature
+ *                   NSMutableDictionary
+ *                          NSIteger count
+ *							NSString title
+ *							NSString name
+ *							NSInteger year
+ *							NSInteger month
+ *							NSInteger day
  * these are the standard names for the elements in the Call NSMutableDictionary
  */
 extern NSString const * const CallName;
@@ -110,6 +121,18 @@ extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
 
+extern NSString const * const SettingsBulkLiterature;
+extern NSString const * const BulkLiteratureDate;
+extern NSString const * const BulkLiteratureArray;
+extern NSString const * const BulkLiteratureArrayCount;
+extern NSString const * const BulkLiteratureArrayTitle;
+extern NSString const * const BulkLiteratureArrayType;
+extern NSString const * const BulkLiteratureArrayName;
+extern NSString const * const BulkLiteratureArrayYear;
+extern NSString const * const BulkLiteratureArrayMonth;
+extern NSString const * const BulkLiteratureArrayDay;
+
+
 #define PublicationTypeBook @"Book"
 #define PublicationTypeBrochure @"Brochure"
 #define PublicationTypeMagazine @"Magazine"
@@ -130,6 +153,7 @@ extern NSString const * const SettingsCurrentButtonBarView;
 
 
 extern NSString const * const SettingsTimeAlertSheetShown;
+extern NSString const * const SettingsStatisticsAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
