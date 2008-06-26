@@ -127,40 +127,28 @@
     	[self addSubview: _picker];
         pickerSize = [_picker bounds].size;
 
-        // make a rectangle to show the user what is currently selected across the Picker
-        CGRect pickerBarRect = [_picker selectionBarRect];
-        pickerBarRect.origin.y += [_picker origin].y;
-        UIView *bar = [[[UIView alloc] initWithFrame: pickerBarRect] autorelease];
-        // let them see through it
-        [bar setAlpha: 0.2];
-        [bar setEnabled: NO];
-        float bgColor[] = { 0.2, 0.2, 0.2, 1 };
-        [bar setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-        [self addSubview: bar];    
-
 		if(showCount)
 		{
+#if 1			
+#define LABEL_HEIGHT 20.0			
+			UITextLabel *label = [[[UITextLabel alloc] initWithFrame:CGRectMake(0.0, navSize.height + pickerSize.height, rect.size.width, LABEL_HEIGHT)] autorelease];
+			[self addSubview:label];
+			[label setText:@"Number Placed:"];
+			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f",                  0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT);)
+			_countPicker = [[NumberedPicker alloc] initWithFrame: CGRectMake(0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT)
+			
+#else		
 			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f",                  0.0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height);)
 			_countPicker = [[NumberedPicker alloc] initWithFrame: CGRectMake(0.0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height)
+#endif
 															 min:1
 															 max:200
-														  number:number];
+														  number:number
+														   title:@"Count:"];
 			[_countPicker setSoundsEnabled:NO];
 			[_countPicker setAutoresizingMask: kMainAreaResizeMask];
 			[_countPicker setAutoresizesSubviews: YES];
 			[self addSubview: _countPicker];
-
-			// make a rectangle to show the user what is currently selected across the Picker
-			pickerBarRect = [_countPicker selectionBarRect];
-			pickerBarRect.origin.y += [_countPicker origin].y;
-			bar = [[[UIView alloc] initWithFrame: pickerBarRect] autorelease];
-			// let them see through it
-			[bar setAlpha: 0.2];
-			[bar setEnabled: NO];
-			float bgColor[] = { 0.2, 0.2, 0.2, 1 };
-			[bar setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-			[self addSubview: bar];    
-			
 		}
 		else
 		{
