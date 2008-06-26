@@ -450,7 +450,7 @@ static NSString *MONTHS[] = {
         _publication = 0;
         for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
         {
-            if([publication isEqual:PUBLICATIONS[i].name])
+            if([publication isEqualToString:PUBLICATIONS[i].name])
             {
                 _publication = i;
                 break;

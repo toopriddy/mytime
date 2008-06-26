@@ -350,7 +350,7 @@ static int sortByDate(id v1, id v2, void *context)
     DEBUG(NSLog(@"table: deleteRow: %d", row);)
 	[_timeEntries removeObjectAtIndex:row];
 	[[App getInstance] saveData];
-	
+	[_table animateDeletionOfCellAtRow:row column:0 viaEdge:1];
 }
 
 -(BOOL)table:(UITable*)table showDisclosureForRow:(int)row

@@ -72,7 +72,10 @@
     {
 		_min = min;
 		_max = max;
-		_number = number;
+		if(number >= _min && number <= _max)
+			_number = number;
+		else
+			_number = _min;
 		
         // we are managing the picker's data and display
     	[self setDelegate: self];   
