@@ -173,6 +173,14 @@ static int sortByDate(id v1, id v2, void *context)
 	[[App getInstance] saveData];
 }
 
+- (void)unselectRow
+{
+	DEBUG(NSLog(@"unselectRow");)
+	// unselect the row
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+}
+
+
 - (void)dealloc
 {
 	[_table release];
@@ -262,7 +270,7 @@ static int sortByDate(id v1, id v2, void *context)
 	int transition = _selectedRow == -1 ? 9 : 2;
 	[[App getInstance] transition:transition fromView:view toView:[[App getInstance] mainView]];
 	
-	// have the row unselect after the transition back to the CallView so that the user
+	// have the row unselect after the transition back to the View so that the user
 	// knows where they were and what they clicked on 
 	[self performSelector: @selector(unselectRow) 
 			   withObject:_table
@@ -359,6 +367,8 @@ static int sortByDate(id v1, id v2, void *context)
     DEBUG(NSLog(@"BulkLiteraturePlacementView tableRowSelected: tableRowSelected row=%@ row%d", notification, row);)
 	_selectedRow = row;
 
+	if(row < 0 || row >= [_entries count])
+		return;
 	
 	[self retain];
 	LiteraturePlacementView *p = [[[LiteraturePlacementView alloc] initWithFrame:_rect placements:[_entries objectAtIndex:_selectedRow]] autorelease];
@@ -368,9 +378,9 @@ static int sortByDate(id v1, id v2, void *context)
 	[p setSaveAction: @selector(entrySaveAction:) forObject:self];
 	[p setAutoresizingMask: kMainAreaResizeMask];
 	[p setAutoresizesSubviews: YES];
-	
-	// transition from bottom up sliding ontop of the old view
-	[[App getInstance] transition:8 fromView:[[App getInstance] mainView] toView:p];
+
+	// transition to the right
+	[[App getInstance] transition:1 fromView:[[App getInstance] mainView] toView:p];
 }
 
 -(BOOL)table:(UITable*)table canDeleteRow:(int)row
@@ -389,7 +399,6 @@ static int sortByDate(id v1, id v2, void *context)
 {
     DEBUG(NSLog(@"table: deleteRow:%d", row);)
 	[_entries removeObjectAtIndex:row];
-	[_table reloadData];
 	[self save];
 }
 

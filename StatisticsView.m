@@ -103,6 +103,76 @@ static NSString *MONTHS[] = {
 		}
 	}
 
+	// go through all of the bulk publications
+	NSArray *bulkArray = [_settings objectForKey:SettingsBulkLiterature];
+	NSEnumerator *bulkArrayEnumerator = [bulkArray objectEnumerator];
+	NSDictionary *entry;
+	
+	while( (entry = [bulkArrayEnumerator nextObject]) ) // ASSIGNMENT, NOT COMPARISON 
+	{
+		NSCalendarDate *date = [entry objectForKey:BulkLiteratureDate];
+		BOOL foundThisMonth = NO;
+		BOOL foundLastMonth = NO;
+		if(date != nil)
+		{
+			date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
+			
+			int month = [date monthOfYear];
+			int year = [date yearOfCommonEra];
+			// if this is not the first visit and
+			// if there are more than 1 visit then that means that any return visits
+			// this month are counted as return visits
+			if(month == _thisMonth && year == _thisYear)
+				foundThisMonth = YES;
+			else if(month == _lastMonth && year == _thisYear)
+				foundLastMonth = YES;
+		}
+		
+		if(foundThisMonth || foundLastMonth)
+		{
+			NSEnumerator *publicationEnumerator = [[entry objectForKey:BulkLiteratureArray] objectEnumerator];
+			NSMutableDictionary *publication;
+			while( (publication = [publicationEnumerator nextObject]) )
+			{
+				int number =[[publication objectForKey:BulkLiteratureArrayCount] intValue];
+				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
+				if(type != nil)
+				{
+					if([type isEqual:PublicationTypeBook])
+					{
+						if(foundThisMonth)
+							_thisMonthBooks += number;
+						else if(foundLastMonth)
+							_lastMonthBooks += number;
+					}
+					else if([type isEqual:PublicationTypeBrochure])
+					{
+						if(foundThisMonth)
+							_thisMonthBrochures += number;
+						else if(foundLastMonth)
+							_lastMonthBrochures += number;
+					}
+					else if([type isEqual:PublicationTypeMagazine])
+					{
+						if(foundThisMonth)
+							_thisMonthMagazines += number;
+						else if(foundLastMonth)
+							_lastMonthMagazines += number;
+					}
+					else if([type isEqual:PublicationTypeSpecial])
+					{
+						if(foundThisMonth)
+							_thisMonthSpecialPublications += number;
+						else if(foundLastMonth)
+							_lastMonthSpecialPublications += number;
+					}
+				}
+				
+			}
+		}
+	}
+	
+	
 	
 	// go through all of the calls and see what the counts are for this month and last month
 	for(callIndex = 0; callIndex < callCount; ++callIndex)

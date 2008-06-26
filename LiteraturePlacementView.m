@@ -133,6 +133,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 - (void)dealloc
 {
 	[_table release];
+	[_editingPlacements release];
 	
 	[super dealloc];
 }
@@ -155,7 +156,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 		
 		_editingPlacements = [[NSMutableDictionary alloc] initWithDictionary:placements];
 		NSMutableArray *entries = [[[NSMutableArray alloc] initWithArray:[placements objectForKey:BulkLiteratureArray]] autorelease];
-		[placements setObject:entries forKey:BulkLiteratureArray];
+		[_editingPlacements setObject:entries forKey:BulkLiteratureArray];
 		
 		if([_editingPlacements objectForKey:BulkLiteratureDate] == nil)
 			[_editingPlacements setObject:[NSCalendarDate calendarDate] forKey:BulkLiteratureDate];
@@ -174,12 +175,13 @@ extern NSString const * const BulkLiteratureArrayDay;
 		// 2 = left arrow
 		// 3 = blue
 		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Placements"] autorelease] ];
-		[_navigationBar showLeftButton:@"Cancel" withStyle:2 rightButton:@"+" withStyle:3];
+		[_navigationBar showLeftButton:@"Cancel" withStyle:2 rightButton:@"Done" withStyle:3];
 		_table = [[LiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:entries];
 		
         [_table setDelegate: self];
         [_table setDataSource: self];
+		[_table enableRowDeletion: YES animated:YES];
 		[_table setAutoresizingMask: kMainAreaResizeMask];
 		[_table setAutoresizesSubviews: YES];
         [self addSubview: _table];
@@ -243,7 +245,7 @@ extern NSString const * const BulkLiteratureArrayDay;
         publication = [[[NSMutableDictionary alloc] init] autorelease];
         [[_editingPlacements objectForKey:BulkLiteratureArray] replaceObjectAtIndex:_editingPublication withObject:publication ];
 	}
-	NSLog(@"");
+	NSLog(@"EditingPlacements %@",_editingPlacements);
 	PublicationPicker *picker = [publicationView publicationPicker];
     [publication setObject:[picker publication] forKey:BulkLiteratureArrayName];
     [publication setObject:[picker publicationTitle] forKey:BulkLiteratureArrayTitle];
@@ -255,7 +257,6 @@ extern NSString const * const BulkLiteratureArrayDay;
 
     VERBOSE(NSLog(@"publication is = %@", publication);)
 	
-    [_table setKeyboardVisible:NO animated:NO];
 	[_table reloadData];
     [[App getInstance] transition:2 fromView:publicationView toView:self];
 	
@@ -367,11 +368,10 @@ extern NSString const * const BulkLiteratureArrayDay;
     VERBOSE(NSLog(@"LiteraturePlacementView preferencesTable: cellForGroup:%d", group);)
     UIPreferencesTableCell *cell = nil;
 	
-	if(group == 0)
+	if(group == 1)
 	{
 		cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
-		NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[_editingPlacements objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-		[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
+		[cell setTitle:@"Placements:"];
 	}
 
     return(cell);
@@ -380,8 +380,8 @@ extern NSString const * const BulkLiteratureArrayDay;
 - (float)preferencesTable: (UIPreferencesTable *)table heightForRow: (int)row inGroup:(int)group withProposedHeight: (float)proposed 
 {
     VERBOSE(NSLog(@"LiteraturePlacementView preferencesTable: heightForRow:%d inGroup:%d withProposedHeight:%f", row, group, proposed);)
-	if(row == -1 && group == 0)
-		return 40.0;
+	if(row == -1 && group == 1)
+		return(40.0);
     return proposed;
 }
 
@@ -397,28 +397,39 @@ extern NSString const * const BulkLiteratureArrayDay;
     VERBOSE(NSLog(@"LiteraturePlacementView preferencesTable: cellForRow:%d inGroup:%d", row, group);)
 	if(group == 0)
 	{
-		UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
+		UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 		[cell setShowDisclosure:YES];
-		[cell setValue:@"Change Date"];
+		NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[_editingPlacements objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
+		[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
 		return(cell);
 	}
 	else
 	{
-		if(row == 0)
+		if(row == [[_editingPlacements objectForKey:BulkLiteratureArray] count])
 		{
 			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 			[cell setShowDisclosure:YES];
 			[cell setShowSelection: YES];
-			[cell setTitle:@"Add a placed publications"];
+			[cell setValue:@"Add a placed publications"];
 			return(cell);
 		}
 		else
 		{
-			row--;
 			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
 			[cell setShowDisclosure: YES];
 			[cell setShowSelection: YES];
-			[cell setTitle:[[[_editingPlacements objectForKey:BulkLiteratureArray] objectAtIndex:row] objectForKey:BulkLiteratureArrayTitle]];
+			NSMutableDictionary *entry = [[_editingPlacements objectForKey:BulkLiteratureArray] objectAtIndex:row];
+			NSString *name = [entry objectForKey:BulkLiteratureArrayTitle];
+			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
+			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
+			if([type isEqualToString:@"Magazine"])
+			{
+				[cell setTitle:[NSString stringWithFormat:@"%d: %@", count, name]];
+			}
+			else
+			{
+				[cell setTitle:[NSString stringWithFormat:@"%d %@%@: %@", count, type, count == 1 ? @"" : @"s", name]];
+			}
 			return(cell);
 		}
 		
@@ -455,7 +466,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 	else
 	{
 		PublicationView *p;
-		if(row == 3)
+		if(row == 3 + [[_editingPlacements objectForKey:BulkLiteratureArray] count])
 		{
 			// they selected to add a new placement
 			_editingPublication = -1;
@@ -465,17 +476,18 @@ extern NSString const * const BulkLiteratureArrayDay;
 		else
 		{
 			// they selected to change an existing placement
-			row -= 4;
+			row -= 3;
 			_editingPublication = row;
 			// make the new call view 
 			// make the new call view 
+			NSMutableDictionary *entry = [[_editingPlacements objectForKey:BulkLiteratureArray] objectAtIndex:row];
 			p = [[[PublicationView alloc] initWithFrame:_rect 
-										    publication: [ _editingPlacements objectForKey:BulkLiteratureArrayName]
-												   year: [[_editingPlacements objectForKey:BulkLiteratureArrayYear] intValue]
-											      month: [[_editingPlacements objectForKey:BulkLiteratureArrayMonth] intValue]
-												    day: [[_editingPlacements objectForKey:BulkLiteratureArrayDay] intValue]
+										    publication: [entry objectForKey:BulkLiteratureArrayName]
+												   year: [[entry objectForKey:BulkLiteratureArrayYear] intValue]
+											      month: [[entry objectForKey:BulkLiteratureArrayMonth] intValue]
+												    day: [[entry objectForKey:BulkLiteratureArrayDay] intValue]
 											  showCount: YES
-												 number: [[_editingPlacements objectForKey:BulkLiteratureArrayCount] intValue]] autorelease];
+												 number: [[entry objectForKey:BulkLiteratureArrayCount] intValue]] autorelease];
 		}
 		
 		
@@ -498,7 +510,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 {
     VERBOSE(NSLog(@"LiteraturePlacementView table: canDeleteRow: %d", row);)
 	// can only delete placed literature
-	if(row < 4) // 3
+	if(row < 3 || row == 3 + [[_editingPlacements objectForKey:BulkLiteratureArray] count]) // 3
 		return(NO);
 	else
 		return(YES);
@@ -508,7 +520,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 {
     VERBOSE(NSLog(@"LiteraturePlacementView table: canInsertAtRow: %d", row);)
 
-	if(row == 3)
+	if(row == 3 + [[_editingPlacements objectForKey:BulkLiteratureArray] count])
 		return(YES);
 	else
 		return(NO);
@@ -519,12 +531,8 @@ extern NSString const * const BulkLiteratureArrayDay;
     DEBUG(NSLog(@"LiteraturePlacementView table: deleteRow:%d", row);)
 	
 	// cant insert/delete the group title
-	if(row < 4)
-		return;
-	row -= 4;
-	[[_editingPlacements objectForKey:BulkLiteratureArray] removeObjectAtIndex:row];
-
-	[_table reloadData];
+	[[_editingPlacements objectForKey:BulkLiteratureArray] removeObjectAtIndex:(row - 3)];
+	[_table animateDeletionOfCellAtRow:row column:0 viaEdge:1];
 }
 
 

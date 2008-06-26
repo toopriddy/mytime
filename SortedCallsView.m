@@ -29,6 +29,14 @@
 
 @implementation SortedCallsView
 
+- (void)unselectRow
+{
+	DEBUG(NSLog(@"unselectRow");)
+	// unselect the row
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+}
+
+
 - (void)setBounds:(CGRect)boundsRect
 {
 	_rect = boundsRect;
@@ -408,7 +416,11 @@ int sortByDate(id v1, id v2, void *context)
 	[self updateSections];
     [[App getInstance] transition:9 fromView:callView toView:[[App getInstance] mainView]];
 
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+	// have the row unselect after the transition back to the View so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_table
+			   afterDelay:.2];
 	[[App getInstance] saveData];
 }
 
@@ -430,7 +442,11 @@ int sortByDate(id v1, id v2, void *context)
 	[self updateSections];
     [[App getInstance] transition:2 fromView:callView toView:[[App getInstance] mainView]];
 
-	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+	// have the row unselect after the transition back to the View so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_table
+			   afterDelay:.2];
 }
 
 - (void)editCallSaveAction: (CallView *)callView
