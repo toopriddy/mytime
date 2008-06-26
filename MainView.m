@@ -167,6 +167,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 #endif
 }
 
+NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 
 - (NSArray *)buttonBarItems 
 {
@@ -179,6 +180,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"Street Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+		  @"Calls Sorted by Street", ButtonBarOfficialName,
           nil 
         ],
 
@@ -190,6 +192,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"Date Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+		  @"Calls Sorted by Date", ButtonBarOfficialName,
           nil 
         ],
 
@@ -201,6 +204,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"Time", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+		  @"Time", ButtonBarOfficialName,
           nil 
         ], 
 
@@ -212,6 +216,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"Statistics", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+		  @"End of Month Statistics", ButtonBarOfficialName,
           nil 
         ], 
 
@@ -223,6 +228,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"Placements", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+		  @"Anonymous Bulk Placements", ButtonBarOfficialName,
           nil 
         ], 
 
@@ -234,6 +240,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
             self, kUIButtonBarButtonTarget,
           @"More", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
+ 		  @"More", ButtonBarOfficialName,
           nil 
         ], 
 
@@ -251,7 +258,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 		NSDictionary *entry = [array objectAtIndex:i];
 		if([[entry objectForKey:kUIButtonBarButtonTag] intValue] == id)
 		{
-			return([entry objectForKey:kUIButtonBarButtonTitle]);
+			return([entry objectForKey:ButtonBarOfficialName]);
 		}
 	}
 }
@@ -284,10 +291,35 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 	// create the buttons to view (this should dynamically size them depending on the number
 	// of buttons that we want to show
-    _buttons[0] = ([_settings objectForKey:SettingsFirstView] == nil) ?  VIEW_SORTED_BY_STREET : [[_settings objectForKey:SettingsFirstView] intValue];
-	_buttons[1] = ([_settings objectForKey:SettingsSecondView] == nil) ? VIEW_SORTED_BY_DATE   : [[_settings objectForKey:SettingsSecondView] intValue];
-	_buttons[2] = ([_settings objectForKey:SettingsThirdView] == nil) ?  VIEW_TIME             : [[_settings objectForKey:SettingsThirdView] intValue];
-	_buttons[3] = ([_settings objectForKey:SettingsFourthView] == nil) ? VIEW_STATISTICS       : [[_settings objectForKey:SettingsFourthView] intValue];
+	if([_settings objectForKey:SettingsFirstView] == nil || 
+	   [[_settings objectForKey:SettingsFirstView] intValue] >= END_OF_VIEWS ||
+	   [[_settings objectForKey:SettingsFirstView] intValue] <= BEGINNING_OF_VIEWS)
+	{
+		[_settings setObject:[NSNumber numberWithInt:VIEW_SORTED_BY_STREET] forKey:SettingsFirstView];
+	}
+	if([_settings objectForKey:SettingsSecondView] == nil || 
+	   [[_settings objectForKey:SettingsSecondView] intValue] >= END_OF_VIEWS ||
+	   [[_settings objectForKey:SettingsSecondView] intValue] <= BEGINNING_OF_VIEWS)
+	{
+		[_settings setObject:[NSNumber numberWithInt:VIEW_SORTED_BY_DATE] forKey:SettingsSecondView];
+	}
+	if([_settings objectForKey:SettingsThirdView] == nil || 
+	   [[_settings objectForKey:SettingsThirdView] intValue] >= END_OF_VIEWS ||
+	   [[_settings objectForKey:SettingsThirdView] intValue] <= BEGINNING_OF_VIEWS)
+	{
+		[_settings setObject:[NSNumber numberWithInt:VIEW_TIME] forKey:SettingsThirdView];
+	}
+	if([_settings objectForKey:SettingsFourthView] == nil || 
+	   [[_settings objectForKey:SettingsFourthView] intValue] >= END_OF_VIEWS ||
+	   [[_settings objectForKey:SettingsFourthView] intValue] <= BEGINNING_OF_VIEWS)
+	{
+		[_settings setObject:[NSNumber numberWithInt:VIEW_STATISTICS] forKey:SettingsFourthView];
+	}
+	
+    _buttons[0] = [[_settings objectForKey:SettingsFirstView] intValue];
+	_buttons[1] = [[_settings objectForKey:SettingsSecondView] intValue];
+	_buttons[2] = [[_settings objectForKey:SettingsThirdView] intValue];
+	_buttons[3] = [[_settings objectForKey:SettingsFourthView] intValue];
 	_buttons[4] = VIEW_SETTINGS;
 
     [button registerButtonGroup:0 withButtons:_buttons withCount: ARRAY_SIZE(_buttons)];
