@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1214459689</string>
+			<string>1214523191</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>75964da6d6ce644b2d7f0f94bec0a0f1</string>
+			<string>bf287597a5e4303b0f0146da5bbd9ca2</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-96.102.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-96.104.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -110,7 +110,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Big rewrite, added anonymous bulk placements</string>
+								<string>Change Log: Fixed bad bug in button bar :(</string>
 							</array>
 						</array>
 					</array>
@@ -124,11 +124,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>136305</string>
+			<string>137047</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>96.102</string>
+			<string>96.104</string>
 		</dict>
 	</array>
 </dict>
