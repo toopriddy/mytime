@@ -42,6 +42,7 @@
  * @returns self
  */
 - (id) initWithFrame: (CGRect)rect;
+- (id) initWithFrame: (CGRect)rect showCount:(BOOL)showCount;
 
 /**
  * initialize this view given the curent configuration

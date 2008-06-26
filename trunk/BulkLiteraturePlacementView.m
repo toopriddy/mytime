@@ -21,7 +21,7 @@
 #import <UIKit/UITextFieldLabel.h>
 #import <GraphicsServices/GraphicsServices.h>
 #import <UIKit/UIKit.h>
-#import "LiteraturePlacementView.h"
+#import "BulkLiteraturePlacementView.h"
 #import "App.h"
 #import "TimePickerView.h"
 
@@ -31,7 +31,7 @@
 {
     if((self = [super initWithFrame: rect])) 
     {
-		DEBUG(NSLog(@"TimeTable: initWithFrame");)
+		DEBUG(NSLog(@"BulkLiteraturePlacementTable: initWithFrame");)
 		_entries = timeEntries;
 		_offset = rect.origin;
 		[self setSeparatorStyle: 1];
@@ -84,19 +84,19 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-	VERY_VERBOSE(NSLog(@"TimeTable respondsToSelector: %s", selector);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementTable respondsToSelector: %s", selector);)
 	return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-	VERY_VERBOSE(NSLog(@"TimeTable methodSignatureForSelector: %s", selector);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementTable methodSignatureForSelector: %s", selector);)
 	return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-	VERY_VERBOSE(NSLog(@"TimeTable forwardInvocation: %s", [invocation selector]);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementTable forwardInvocation: %s", [invocation selector]);)
 	[super forwardInvocation:invocation];
 }
 @end
@@ -167,6 +167,12 @@ static int sortByDate(id v1, id v2, void *context)
 	[_table reloadData];
 }
 
+- (void)save
+{
+	// save the data
+	[[App getInstance] saveData];
+}
+
 - (void)dealloc
 {
 	[_table release];
@@ -179,12 +185,12 @@ static int sortByDate(id v1, id v2, void *context)
 {
     if((self = [super initWithFrame: rect])) 
     {
-        DEBUG(NSLog(@"LiteraturePlacementView initWithFrame:");)
+        DEBUG(NSLog(@"BulkLiteraturePlacementView initWithFrame:");)
 		
 		_entries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:SettingsBulkLiterature]];
 		[settings setObject:_entries forKey:SettingsBulkLiterature];
-		_editingEntry = nil;
-		
+		_selectedRow = -1;
+
         _rect = rect;   
         // make the navigation bar 
         CGSize s = [UINavigationBar defaultSize];
@@ -199,7 +205,7 @@ static int sortByDate(id v1, id v2, void *context)
 		// 2 = left arrow
 		// 3 = blue
 		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Bulk Placements"] autorelease] ];
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:"+" withStyle:3];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:@"+" withStyle:3];
 		_table = [[BulkLiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:_entries];
 		
@@ -222,14 +228,14 @@ static int sortByDate(id v1, id v2, void *context)
  ******************************************************************/
 - (void)entryCancelAction:(LiteraturePlacementView *)view
 {
-    DEBUG(NSLog(@"CallView addNewPublicationCancelAction:");)
-    [[App getInstance] transition:2 fromView:view toView:self];
-    [_table setKeyboardVisible:NO animated:NO];
-
+    DEBUG(NSLog(@"BulkLiteraturePlacementView addNewPublicationCancelAction:");)
+	int transition = _selectedRow == -1 ? 9 : 2;
+	[[App getInstance] transition:transition fromView:view toView:[[App getInstance] mainView]];
+	
 	// have the row unselect after the transition back to the CallView so that the user
 	// knows where they were and what they clicked on 
 	[self performSelector: @selector(unselectRow) 
-			   withObject:_name
+			   withObject:_table
 			   afterDelay:.2];
 	
     // release the refcount on ourselves since we are now the main UIView
@@ -238,25 +244,28 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)entrySaveAction: (LiteraturePlacementView *)view
 {
-    DEBUG(NSLog(@"CallView addNewPublicationSaveAction:");)
+    DEBUG(NSLog(@"BulkLiteraturePlacementView addNewPublicationSaveAction:");)
     
-    if(_editingEntry == nil)
+    if(_selectedRow == -1)
     {
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
         // if we are adding a publication then create the NSDictionary and add it to the end
         // of the publications array
-        [[_entries objectForKey:BulkLiteratureArray] addObject:[view entry]];
+        [_entries addObject:[view placements]];
     }
-    VERBOSE(NSLog(@"_editingPublication was = %@", _editingEntry);)
+	else
+	{
+		[_entries replaceObjectAtIndex:_selectedRow withObject:[view placements]];
+	}
 
-    [_table setKeyboardVisible:NO animated:NO];
-	[self reloadData];
-    [[App getInstance] transition:2 fromView:view toView:self];
+	[_table reloadData];
+	int transition = _selectedRow == -1 ? 9 : 2;
+	[[App getInstance] transition:transition fromView:view toView:[[App getInstance] mainView]];
 	
 	// have the row unselect after the transition back to the CallView so that the user
 	// knows where they were and what they clicked on 
 	[self performSelector: @selector(unselectRow) 
-			   withObject:_name
+			   withObject:_table
 			   afterDelay:.2];
 	
     // release the refcount on ourselves since we are now the main UIView
@@ -273,14 +282,14 @@ static int sortByDate(id v1, id v2, void *context)
  ******************************************************************/
 - (void)navigationBar:(UINavigationBar*)nav buttonClicked:(int)button
 {
-	DEBUG(NSLog(@"navigationBar: buttonClicked");)
+	DEBUG(NSLog(@"BulkLiteraturePlacementView navigationBar: buttonClicked");)
 	
 	switch(button)
 	{
 		case 0: // Add literature
 		{
 			[self retain];
-			_editingEntry = nil; 
+			_selectedRow = -1;
 			LiteraturePlacementView *p = [[[LiteraturePlacementView alloc] initWithFrame:_rect] autorelease];
 			
 			// setup the callbacks for save or cancel
@@ -304,30 +313,29 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (int)numberOfRowsInTable:(UITable*)table
 {
-    DEBUG(NSLog(@"numberOfRowsInTable:");)
+    DEBUG(NSLog(@"BulkLiteraturePlacementView numberOfRowsInTable:");)
 	int count = [_entries count];
-    DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
+    DEBUG(NSLog(@"BulkLiteraturePlacementView numberOfRowsInTable: %d", count);)
 	return(count);
 }
 
 - (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column
 {
-    DEBUG(NSLog(@"table: cellForRow: %d", row);)
+    DEBUG(NSLog(@"BulkLiteraturePlacementView table: cellForRow: %d", row);)
 	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
 	
-	[cell setShowSelection:NO];
+	[cell setShowSelection:YES];
 	
 	NSMutableDictionary *entry = [_entries objectAtIndex:row];
+
 	
-	NSNumber *time = [entry objectForKey:SettingsTimeEntryMinutes];
-	
-	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
+	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
 	[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d"]];
 
-	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray;
+	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray];
 	int i;
 	int count = [publications count];
-	int number  0;
+	int number = 0;
 	for(i = 0; i < count; ++i)
 	{
 		number += [[[publications objectAtIndex:i] objectForKey:BulkLiteratureArrayCount] intValue];
@@ -348,22 +356,12 @@ static int sortByDate(id v1, id v2, void *context)
 - (void)tableRowSelected:(NSNotification*)notification
 {
     int row = [[notification object] selectedRow];
-    DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d", notification, row);)
+    DEBUG(NSLog(@"BulkLiteraturePlacementView tableRowSelected: tableRowSelected row=%@ row%d", notification, row);)
 	_selectedRow = row;
-
-	//row 0 space
-	// row 1 set date
-	//row 2 space
-	
-	// cant insert/delete the group title
-	if(row < 3)
-		return;
-	row -= 2;
 
 	
 	[self retain];
-	_editingEntry = [_entries objectAtIndex:row]; 
-	LiteraturePlacementView *p = [[[LiteraturePlacementView alloc] initWithFrame:_rect withEntry:_editingEntry] autorelease];
+	LiteraturePlacementView *p = [[[LiteraturePlacementView alloc] initWithFrame:_rect placements:[_entries objectAtIndex:_selectedRow]] autorelease];
 	
 	// setup the callbacks for save or cancel
 	[p setCancelAction: @selector(entryCancelAction:) forObject:self];
@@ -377,93 +375,46 @@ static int sortByDate(id v1, id v2, void *context)
 
 -(BOOL)table:(UITable*)table canDeleteRow:(int)row
 {
-    VERBOSE(NSLog(@"table: canInsertAtRow: %d", row);)
-	//row 0 space
-	// row 1 set date
-	//row 2 space
-	
-	// cant insert/delete the group title
-	if(row < 3)
-		return(NO);
-	row -= 2;
-	
-	return(row < [_entries count]);
+    VERBOSE(NSLog(@"BulkLiteraturePlacementView table: canInsertAtRow: %d", row);)
+	return(YES);
 }
 
 -(BOOL)table:(UITable*)table canInsertAtRow:(int)row
 {
-    VERBOSE(NSLog(@"table: canInsertAtRow: %d", row);)
-	//row 0 space
-	// row 1 set date
-	//row 2 space
-	
-	// cant insert/delete the group title
-	if(row < 3)
-		return(NO);
-	row -= 2;
-	
-	return(row >= [_entries count]);
+    VERBOSE(NSLog(@"BulkLiteraturePlacementView table: canInsertAtRow: %d", row);)
+	return(NO);
 }
 
 -(void)table:(UITable*)table deleteRow:(int)row
 {
     DEBUG(NSLog(@"table: deleteRow:%d", row);)
-	//row 0 space
-	// row 1 set date
-	//row 2 space
-	
-	// cant insert/delete the group title
-	if(row < 3)
-		return(NO);
-	row -= 2;
-	
-	return(row >= [_entries count]);
-}
-
-
-
-
--(BOOL)table:(UITable*)table deleteRow:(int)row
-{
-    DEBUG(NSLog(@"table: deleteRow: %d", row);)
 	[_entries removeObjectAtIndex:row];
-	[[App getInstance] saveData];
-	
+	[_table reloadData];
+	[self save];
 }
+
 
 -(BOOL)table:(UITable*)table showDisclosureForRow:(int)row
 {
     DEBUG(NSLog(@"table: showDisclosureForRow");)
-    return(NO);
+    return(YES);
 }
-
--(BOOL)table:(UITable*)table canDeleteRow:(int)row
-{
-    DEBUG(NSLog(@"table: canDeleteRow");)
-	return YES;
-}
-
--(void)table:(UITable*)table movedRow:(int)fromRow toRow:(int)toRow
-{
-    DEBUG(NSLog(@"table: movedRow");)
-}
-
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-	VERY_VERBOSE(NSLog(@"LiteraturePlacementView respondsToSelector: %s", selector);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementView respondsToSelector: %s", selector);)
 	return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-	VERY_VERBOSE(NSLog(@"LiteraturePlacementView methodSignatureForSelector: %s", selector);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementView methodSignatureForSelector: %s", selector);)
 	return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-	VERY_VERBOSE(NSLog(@"LiteraturePlacementView forwardInvocation: %s", [invocation selector]);)
+	VERY_VERBOSE(NSLog(@"BulkLiteraturePlacementView forwardInvocation: %s", [invocation selector]);)
 	[super forwardInvocation:invocation];
 }
 

@@ -18,6 +18,7 @@
 #import "TimeView.h"
 #import "SettingsView.h"
 #import "MainTransitionView.h"
+#import "BulkLiteraturePlacementView.h"
 
 typedef enum {
 /*
@@ -28,8 +29,7 @@ typedef enum {
 	, VIEW_TIME
 	, VIEW_STATISTICS
 	, VIEW_SETTINGS
-	, VIEW_STUDIES
-	, VIEW_PLACEMENTS
+	, VIEW_BULK_PLACEMENTS
 } SelectedButtonBarView;
 
 @interface MainView : UIView {
@@ -39,6 +39,7 @@ typedef enum {
 	TimeView *_timeView;
 	StatisticsView *_statisticsView;
 	SettingsView *_settingsView;
+	BulkLiteraturePlacementView *_bulkPlacementsView;
 	
 	UIButtonBar *_buttonBar;
 	int _buttons[5];
@@ -65,6 +66,10 @@ typedef enum {
 - (void)setCalls:(NSMutableArray *)calls;
 
 - (void)buttonBarCustomize;
+
+- (NSString *)buttonBarNameForId:(int)id;
+- (NSString *)buttonBarPictureForId:(int)id;
+
 
 /*
  * Settings Dictionary:

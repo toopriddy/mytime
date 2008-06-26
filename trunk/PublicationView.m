@@ -51,11 +51,18 @@
 {
     VERY_VERBOSE(NSLog(@"PublicationView: dealloc");)
     [_picker release];
-
+	[_countPicker release];
+	
     [super dealloc];
 }
 
 - (id) initWithFrame: (CGRect)rect
+{
+    return([self initWithFrame:rect showCount:NO]);
+}
+
+
+- (id) initWithFrame: (CGRect)rect showCount:(BOOL)showCount
 {
     // initalize the data to the current date
 	NSCalendarDate *now = [NSCalendarDate calendarDate];
@@ -65,7 +72,7 @@
     int month = [now monthOfYear];
     int day = 1;
 
-    return([self initWithFrame:rect publication:[PublicationPicker watchtower] year:year month:month day:day showCount:NO number:0]);
+    return([self initWithFrame:rect publication:[PublicationPicker watchtower] year:year month:month day:day showCount:showCount number:0]);
 }
 
 // initialize this view given the curent configuration
@@ -133,12 +140,8 @@
 
 		if(showCount)
 		{
-#define LABEL_HEIGHT 20.0			
-			UITextLabel *label = [[[UITextLabel alloc] initWithFrame:CGRectMake(0.0, navSize.height + pickerSize.height, rect.size.width, LABEL_HEIGHT)] autorelease];
-			[self addSubview:label];
-			[label setText:@"Number Placed:"];
-			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f",                  0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT);)
-			_countPicker = [[NumberedPicker alloc] initWithFrame: CGRectMake(0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT)
+			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f",                  0.0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height);)
+			_countPicker = [[NumberedPicker alloc] initWithFrame: CGRectMake(0.0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height)
 															 min:1
 															 max:200
 														  number:number];
@@ -193,7 +196,12 @@
 
 - (int)count
 {
-	return([_countPicker number]);
+    VERY_VERBOSE(NSLog(@"PublicationView count");)
+	
+	if(_countPicker)
+		return([_countPicker number]);
+	else
+		return(0);
 }
 
 

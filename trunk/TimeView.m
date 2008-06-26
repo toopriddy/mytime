@@ -176,11 +176,11 @@ static int sortByDate(id v1, id v2, void *context)
 		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Time"] autorelease] ];
 		if([settings objectForKey:SettingsTimeStartDate] == nil)
 		{
-			[_navigationBar showLeftButton:@"Add Time" withStyle:0 rightButton:@"Start Time" withStyle:3];
+			[_navigationBar showLeftButton:@"Start Time" withStyle:3 rightButton:@"+" withStyle:3];
 		}
 		else
 		{
-			[_navigationBar showLeftButton:@"Add Time" withStyle:0 rightButton:@"Stop Time" withStyle:1];
+			[_navigationBar showLeftButton:@"Stop Time" withStyle:1 rightButton:@"+" withStyle:3];
 		}
 		_table = [[TimeTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                              timeEntries:_timeEntries];
@@ -240,7 +240,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 	switch(button)
 	{
-		case 1: // Add Time
+		case 0: // Add Time
 		{
 			[self retain];
 			TimePickerView *p = [[[TimePickerView alloc] initWithFrame:_rect] autorelease];
@@ -256,7 +256,7 @@ static int sortByDate(id v1, id v2, void *context)
 			break;
 		}
 		
-		case 0: // start/stop time
+		case 1: // start/stop time
 		{
 			NSMutableDictionary *settings = [[App getInstance] getSavedData];
 			if([settings objectForKey:SettingsTimeStartDate] == nil)
@@ -267,7 +267,7 @@ static int sortByDate(id v1, id v2, void *context)
 				// 1 = red
 				// 2 = left arrow
 				// 3 = blue
-				[nav showLeftButton:@"Add Time" withStyle:0 rightButton:@"Stop Time" withStyle:1];
+				[nav showLeftButton:@"Stop Time" withStyle:1 rightButton:@"+" withStyle:3];
 				[_table reloadData];
 			}
 			else
@@ -290,7 +290,7 @@ static int sortByDate(id v1, id v2, void *context)
 				[settings removeObjectForKey:SettingsTimeStartDate];
 				[[App getInstance] saveData];
 
-				[nav showLeftButton:@"Add Time" withStyle:0 rightButton:@"Start Time" withStyle:3];
+				[nav showLeftButton:@"Start Time" withStyle:3 rightButton:@"+" withStyle:3];
 			}
 			break;
 		}
