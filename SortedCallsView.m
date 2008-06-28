@@ -27,6 +27,13 @@
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
+@implementation CustomSectionList
+- (UISectionIndex *)sectionIndex
+{
+	return(_index);
+}
+@end
+
 @implementation SortedCallsView
 
 - (void)unselectRow
@@ -125,11 +132,15 @@
 			ret = 1;
 			break;
 			
+		case CALLS_SORTED_BY_CITY:
+			ret = [_citySections count];
+			break;
+			
 		case CALLS_SORTED_BY_STREET:
 			ret = [_streetSections count];
-			VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%d", ret);)
 			break;
 	}
+	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%d", ret);)
 	return ret;
 }
 
@@ -143,11 +154,15 @@
 			name = @"Oldest Return Visits First";
 			break;
 			
+		case CALLS_SORTED_BY_CITY:
+			name = [_citySections objectAtIndex:section];
+			break;
+
 		case CALLS_SORTED_BY_STREET:
 			name = [_streetSections objectAtIndex:section];
-			VERBOSE(NSLog(@"sectionList: titleForSection:%d return = %@", section, name);)
 			break;
 	}
+	VERBOSE(NSLog(@"sectionList: titleForSection:%d return = %@", section, name);)
 	return(name);
 }       
 
@@ -160,11 +175,15 @@
 			ret = 0;
 			break;
 			
+		case CALLS_SORTED_BY_CITY:
+			ret = [[_cityOffsets objectAtIndex:section] intValue];
+			break;
+
 		case CALLS_SORTED_BY_STREET:
 			ret = [[_streetOffsets objectAtIndex:section] intValue];
-			VERBOSE(NSLog(@"sectionList: section:%d (cont=%d) return=%d", section, [_streetOffsets count], ret);)
 			break;
 	}
+	VERBOSE(NSLog(@"sectionList: section:%d (cont=%d) return=%d", section, [_streetOffsets count], ret);)
 	return(ret);
 }
 
@@ -193,11 +212,19 @@
     DEBUG(NSLog(@"SortedCallsView: dealloc");)
     
     [_navigationBar release];
+	[_savedSectionIndex release];
     [_section release];
-
+	
     [super dealloc];
 }
 
+int sortByName(id v1, id v2, void *context)
+{
+	NSString *name1 = [v1 objectForKey:CallName];
+	NSString *name2 = [v2 objectForKey:CallName];
+	
+	return([name1 localizedCaseInsensitiveCompare:name2]);
+}
 
 int sortByStreet(id v1, id v2, void *context)
 {
@@ -206,9 +233,32 @@ int sortByStreet(id v1, id v2, void *context)
 	NSNumber *house1 = [v1 objectForKey:CallStreetNumber];
 	NSNumber *house2 = [v2 objectForKey:CallStreetNumber];
 	
-	int streetName = [street1 localizedCaseInsensitiveCompare:street2];
-	return(streetName == 0 ? [house1 compare:house2] : streetName);
+	int compare = [street1 localizedCaseInsensitiveCompare:street2];
+	if(compare == 0)
+	{
+		compare = [house1 compare:house2];
+		if(compare == 0)
+		{
+			compare = sortByName(v1, v2, context);
+		}
+	}
+	return(compare);
 }
+
+int sortByCity(id v1, id v2, void *context)
+{
+	NSString *city1 = [v1 objectForKey:CallCity];
+	NSString *city2 = [v2 objectForKey:CallCity];
+	
+	int compare = [city1 localizedCaseInsensitiveCompare:city2];
+	if(compare == 0)
+	{
+		compare = sortByStreet(v1, v2, context);
+	}
+	return(compare);
+}
+
+
 
 // sort by date where the earlier dates come first
 int sortByDate(id v1, id v2, void *context)
@@ -247,13 +297,17 @@ int sortByDate(id v1, id v2, void *context)
 	// sort the data
 	// we should sort by the house number too
 	NSArray *sortedArray;
-	if(_sortBy == CALLS_SORTED_BY_STREET)
+	switch(_sortBy)
 	{
-		sortedArray = [_calls sortedArrayUsingFunction:sortByStreet context:NULL];	
-	}
-	else
-	{
-		sortedArray = [_calls sortedArrayUsingFunction:sortByDate context:NULL];
+		case CALLS_SORTED_BY_STREET:
+			sortedArray = [_calls sortedArrayUsingFunction:sortByStreet context:NULL];	
+			break;
+		case CALLS_SORTED_BY_DATE:
+			sortedArray = [_calls sortedArrayUsingFunction:sortByDate context:NULL];
+			break;
+		case CALLS_SORTED_BY_CITY:
+			sortedArray = [_calls sortedArrayUsingFunction:sortByCity context:NULL];
+			break;
 	}
 	[sortedArray retain];
 	[_calls setArray:sortedArray];
@@ -302,6 +356,48 @@ int sortByDate(id v1, id v2, void *context)
 			[_streetSections addObject:sectionTitle];
 		}
 	}
+
+	[_citySections removeAllObjects];
+	[_cityOffsets removeAllObjects];
+	VERY_VERBOSE(NSLog(@"count=%d", count);)
+	lastSectionTitle = @"";
+	for(i = 0; i < count; ++i)
+	{
+		NSString *sectionTitle;
+		NSString *city = [[_calls objectAtIndex:i] objectForKey:CallCity];
+		if([city length] == 0)
+		{
+			sectionTitle = @"Unknown";
+		}
+		else
+		{
+			sectionTitle = city;
+		}
+		VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
+		// lets see if the new section has a different letter than the previous or if
+		// this is the first entry add it to the sections
+		BOOL addSection = NO;
+		if([_citySections count] == 0) 
+		{
+			addSection = YES;
+		}
+		else 
+		{
+			if(![sectionTitle isEqual:lastSectionTitle])
+			{
+				addSection = YES;
+			}
+		}
+
+		if(addSection == YES)
+		{
+			lastSectionTitle = sectionTitle;
+			VERY_VERBOSE(NSLog(@"added");)
+			[_cityOffsets addObject:[NSNumber numberWithInt:i]];
+			[_citySections addObject:sectionTitle];
+		}
+	}
+
 	[_sectionIndex noteIndexTitlesDidChangeInSectionList:_table];
 	[_section reloadData];
 }
@@ -319,39 +415,42 @@ int sortByDate(id v1, id v2, void *context)
 
 	if(refresh)
 	{
+		[self updateSections];
 		if(_sectionIndex)
 		{
 			[_sectionIndex removeFromSuperview];
-			[_sectionIndex release];
 		}
 		if(_sortBy == CALLS_SORTED_BY_STREET)
 		{
-			_sectionIndex = [[UISectionIndex alloc] initWithSectionTable:_table];
-			[_section addSubview:_sectionIndex];
+			_sectionIndex = _savedSectionIndex;
+			[_section addSubview:_savedSectionIndex];
 		}
 		else
 		{
 			_sectionIndex = nil;
 		}
-		[self updateSections];
+
 	}
 }
 
-- (id) initWithFrame: (CGRect)rect calls:(NSMutableArray *)calls sortBy:(SortCallsType) sortBy
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings sortBy:(SortCallsType) sortBy
 {
     if((self = [super initWithFrame: rect])) 
     {
-        _calls = calls;
+		_settings = settings;
+        _calls = [settings objectForKey:SettingsCalls];
 		[_calls retain];
 
 		[self setAutoresizingMask: kMainAreaResizeMask];
 		[self setAutoresizesSubviews: YES];
 
 		_sortBy = -1;
-		
+				
         // we should read from the file the _calls
 		_streetSections = [[NSMutableArray alloc] init];
 		_streetOffsets = [[NSMutableArray alloc] init];
+		_citySections = [[NSMutableArray alloc] init];
+		_cityOffsets = [[NSMutableArray alloc] init];
 		
         
         DEBUG(NSLog(@"SortedCallsView initWithFrame: %p", self);)
@@ -370,7 +469,7 @@ int sortByDate(id v1, id v2, void *context)
         [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Calls"] autorelease] ];
 		_tableOffset.x = s.height;
 		_tableOffset.y = 0;
-		_section = [[UISectionList alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) showSectionIndex:YES]; 
+		_section = [[CustomSectionList alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) showSectionIndex:YES]; 
         [_section setDataSource:self];
 		[_section setShouldHideHeaderInShortLists:NO];
 		[_section setAllowsScrollIndicators:YES];
@@ -386,6 +485,10 @@ int sortByDate(id v1, id v2, void *context)
 		[_table setControlTint:1]; // don't know ?
 		[_table setAllowsScrollIndicators:YES];		
 
+		_sectionIndex = [_section sectionIndex];
+		_savedSectionIndex = _sectionIndex;
+		[_sectionIndex retain];
+		
 		_sortBy = -1;
 		[self setSortBy:sortBy];
 		
@@ -400,6 +503,10 @@ int sortByDate(id v1, id v2, void *context)
     DEBUG(NSLog(@"SortedCallsView editCallDeleteAction:");)
 
 	// remove the call from the array
+	NSMutableDictionary *call = [_calls objectAtIndex:_selectedCall];
+	NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[_settings objectForKey:SettingsDeletedCalls]];
+	[_settings setObject:deletedCalls forKey:SettingsDeletedCalls];
+	[deletedCalls addObject:call];
 	[_calls removeObjectAtIndex:_selectedCall];
 
     //transitions:

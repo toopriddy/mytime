@@ -87,7 +87,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)picker titleForRow:(int)row inColumn:(int)column
 {
-	NSLog(@"NumberedPicker pickerView titleForRow:%d inColumn:", row);
+	VERY_VERBOSE(NSLog(@"NumberedPicker pickerView titleForRow:%d inColumn:", row);)
 	return(@"blah");
 }
 

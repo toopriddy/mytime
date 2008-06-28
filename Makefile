@@ -26,6 +26,8 @@ svn_version.c \
 RESOURCES=\
 street.png \
 streetSelected.png \
+city.png \
+citySelected.png \
 time.png \
 timeSelected.png \
 Default.png \

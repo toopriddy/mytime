@@ -155,7 +155,7 @@ static int sortByDate(id v1, id v2, void *context)
 	int count = [_entries count];
 	for(i = 0; i < count; ++i)
 	{
-		NSLog(@"Comparing %d to %d", now, [[_entries objectAtIndex:i] objectForKey:BulkLiteratureDate]);
+		DEBUG(NSLog(@"Comparing %d to %d", now, [[_entries objectAtIndex:i] objectForKey:BulkLiteratureDate]);)
 		if([now compare:[[_entries objectAtIndex:i] objectForKey:BulkLiteratureDate]] > 0)
 		{
 			[_entries removeObjectAtIndex:i];

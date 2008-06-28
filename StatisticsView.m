@@ -49,6 +49,137 @@ static NSString *MONTHS[] = {
 	[super dealloc];
 }
 
+- (void)countCalls:(NSMutableArray *)calls removeOld:(BOOL)removeOld
+{
+	BOOL found;
+	int callIndex;
+
+	// go through all of the calls and see what the counts are for this month and last month
+	for(callIndex = 0; callIndex < [calls count]; ++callIndex)
+	{
+		NSDictionary *call = [calls objectAtIndex:callIndex];
+		found = NO;
+		if([call objectForKey:CallReturnVisits] != nil)
+		{
+			// lets check all of the ReturnVisits to make sure that everything was 
+			// initialized correctly
+			NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
+			NSMutableDictionary *visit;
+			
+			int i;
+			int returnVisitsCount = [returnVisits count];
+			for(i = returnVisitsCount; i > 0; --i)
+			{
+				visit = [returnVisits objectAtIndex:i-1];
+				NSCalendarDate *date = [visit objectForKey:CallReturnVisitDate];
+				if(date != nil)
+				{
+					date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
+				
+					int month = [date monthOfYear];
+					int year = [date yearOfCommonEra];
+					if(returnVisitsCount > 1 && i != returnVisitsCount)
+					{
+						// if this is not the first visit and
+						// if there are more than 1 visit then that means that any return visits
+						// this month are counted as return visits
+						if(month == _thisMonth && year == _thisYear)
+						{
+							_thisMonthReturnVisits++;
+							found = YES;
+						}
+						else if(month == _lastMonth && year == _thisYear)
+						{
+							_lastMonthReturnVisits++;
+							found = YES;
+						}
+					}
+
+					// we only care about counting this month's or last month's returnVisits' calls
+					if((month == _thisMonth && year == _thisYear) || 
+					   (month == _lastMonth && year == _lastYear))
+					{
+						// go through all of the calls and see if we need to count the statistics
+						if([visit objectForKey:CallReturnVisitPublications] != nil)
+						{
+							// they had an array of publications, lets check them too
+							NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
+							NSMutableDictionary *publication;
+							int j;
+							int endPublications = [publications count];
+							for(j = 0; j < endPublications; ++j)
+							{
+								publication = [publications objectAtIndex:j];
+								NSString *type;
+								if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
+								{
+									if([type isEqual:PublicationTypeBook])
+									{
+										if(month == _thisMonth && year == _thisYear)
+										{
+											_thisMonthBooks++;
+											found = YES;
+										}
+										else if(month == _lastMonth && year == _thisYear)
+										{
+											_lastMonthBooks++;
+											found = YES;
+										}
+									}
+									else if([type isEqual:PublicationTypeBrochure])
+									{
+										if(month == _thisMonth && year == _thisYear)
+										{
+											_thisMonthBrochures++;
+											found = YES;
+										}
+										else if(month == _lastMonth && year == _thisYear)
+										{
+											_lastMonthBrochures++;
+											found = YES;
+										}
+									}
+									else if([type isEqual:PublicationTypeMagazine])
+									{
+										if(month == _thisMonth && year == _thisYear)
+										{
+											_thisMonthMagazines++;
+											found = YES;
+										}
+										else if(month == _lastMonth && year == _thisYear)
+										{
+											_lastMonthMagazines++;
+											found = YES;
+										}
+									}
+									else if([type isEqual:PublicationTypeSpecial])
+									{
+										if(month == _thisMonth && year == _thisYear)
+										{
+											_thisMonthSpecialPublications++;
+											found = YES;
+										}
+										else if(month == _lastMonth && year == _thisYear)
+										{
+											_lastMonthSpecialPublications++;
+											found = YES;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!found && removeOld)
+		{
+			[calls removeObjectAtIndex:callIndex];
+			[[App getInstance] saveData];
+		}
+	}
+}
+
 - (void)reloadData
 {
 	_thisMonthBooks = 0;
@@ -67,9 +198,6 @@ static NSString *MONTHS[] = {
 	_lastMonthBibleStudies = 0;
 	_lastMonthSpecialPublications = 0;
 	
-	int callIndex;
-	NSArray *calls = [_settings objectForKey:SettingsCalls];
-	int callCount = [calls count];
 	
 	// save off this month and last month for quick compares
 	_thisMonth = [[NSCalendarDate calendarDate] monthOfYear];
@@ -171,99 +299,9 @@ static NSString *MONTHS[] = {
 			}
 		}
 	}
-	
-	
-	
-	// go through all of the calls and see what the counts are for this month and last month
-	for(callIndex = 0; callIndex < callCount; ++callIndex)
-	{
-		NSDictionary *call = [calls objectAtIndex:callIndex];
-		
-		if([call objectForKey:CallReturnVisits] != nil)
-		{
-			// lets check all of the ReturnVisits to make sure that everything was 
-			// initialized correctly
-			NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
-			NSMutableDictionary *visit;
-			
-			int i;
-			int returnVisitsCount = [returnVisits count];
-			for(i = returnVisitsCount; i > 0; --i)
-			{
-				visit = [returnVisits objectAtIndex:i-1];
-				NSCalendarDate *date = [visit objectForKey:CallReturnVisitDate];
-				if(date != nil)
-				{
-					date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
-				
-					int month = [date monthOfYear];
-					int year = [date yearOfCommonEra];
-					if(returnVisitsCount > 1 && i != returnVisitsCount)
-					{
-						// if this is not the first visit and
-						// if there are more than 1 visit then that means that any return visits
-						// this month are counted as return visits
-						if(month == _thisMonth && year == _thisYear)
-							_thisMonthReturnVisits++;
-						else if(month == _lastMonth && year == _thisYear)
-							_lastMonthReturnVisits++;
-					}
 
-					// we only care about counting this month's or last month's returnVisits' calls
-					if((month == _thisMonth && year == _thisYear) || 
-					   (month == _lastMonth && year == _lastYear))
-					{
-						// go through all of the calls and see if we need to count the statistics
-						if([visit objectForKey:CallReturnVisitPublications] != nil)
-						{
-							// they had an array of publications, lets check them too
-							NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-							NSMutableDictionary *publication;
-							int j;
-							int endPublications = [publications count];
-							for(j = 0; j < endPublications; ++j)
-							{
-								publication = [publications objectAtIndex:j];
-								NSString *type;
-								if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
-								{
-									if([type isEqual:PublicationTypeBook])
-									{
-										if(month == _thisMonth && year == _thisYear)
-											_thisMonthBooks++;
-										else if(month == _lastMonth && year == _thisYear)
-											_lastMonthBooks++;
-									}
-									else if([type isEqual:PublicationTypeBrochure])
-									{
-										if(month == _thisMonth && year == _thisYear)
-											_thisMonthBrochures++;
-										else if(month == _lastMonth && year == _thisYear)
-											_lastMonthBrochures++;
-									}
-									else if([type isEqual:PublicationTypeMagazine])
-									{
-										if(month == _thisMonth && year == _thisYear)
-											_thisMonthMagazines++;
-										else if(month == _lastMonth && year == _thisYear)
-											_lastMonthMagazines++;
-									}
-									else if([type isEqual:PublicationTypeSpecial])
-									{
-										if(month == _thisMonth && year == _thisYear)
-											_thisMonthSpecialPublications++;
-										else if(month == _lastMonth && year == _thisYear)
-											_lastMonthSpecialPublications++;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-        
+	[self countCalls:[_settings objectForKey:SettingsCalls] removeOld:NO];
+	[self countCalls:[_settings objectForKey:SettingsDeletedCalls] removeOld:YES];
 	[_table reloadData];
 }
 

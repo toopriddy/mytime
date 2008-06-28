@@ -48,6 +48,8 @@
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
 		90DE11F00E10A6430085C700 /* BulkLiteraturePlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulkLiteraturePlacementView.h; sourceTree = "<group>"; };
 		90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkLiteraturePlacementView.m; sourceTree = "<group>"; };
+		90F13EC40E161140009772BD /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
+		90F13EC50E161140009772BD /* citySelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = citySelected.png; sourceTree = "<group>"; };
 		ACBEE6970D2427BA007CEA24 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		ACBEE6AE0D24289B007CEA24 /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CallView.m; sourceTree = "<group>"; };
 		ACBEE6B00D2428BF007CEA24 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
@@ -150,6 +152,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				90F13EC40E161140009772BD /* city.png */,
+				90F13EC50E161140009772BD /* citySelected.png */,
 				9005B6C50E136617004EED7F /* bulkPlacements.png */,
 				9005B6C60E136617004EED7F /* bulkPlacementsSelected.png */,
 				903B6F6E0DB912F600D2D98F /* studies.png */,

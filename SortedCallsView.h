@@ -16,30 +16,42 @@
 
 
 typedef enum {
-	CALLS_SORTED_BY_STREET,
-	CALLS_SORTED_BY_DATE,
+	  CALLS_SORTED_BY_STREET
+	, CALLS_SORTED_BY_DATE
+	, CALLS_SORTED_BY_CITY
 } SortCallsType;
+
+@interface CustomSectionList : UISectionList {
+}
+- (UISectionIndex *)sectionIndex;
+@end
+
+
 
 @interface SortedCallsView : UIView {
     UINavigationBar *_navigationBar;
     CGRect _rect;
     UISectionTable *_table;
-	UISectionList *_section;
+	CustomSectionList *_section;
 	UISectionIndex *_sectionIndex;
+	UISectionIndex *_savedSectionIndex;
 	
 	SortCallsType _sortBy;
     int _selectedCall;
 	
 	CGPoint _tableOffset;
 
+	NSMutableDictionary *_settings;
     NSMutableArray *_savedCalls;
     NSMutableArray *_calls;
 	NSMutableArray *_streetSections;
 	NSMutableArray *_streetOffsets;
+	NSMutableArray *_citySections;
+	NSMutableArray *_cityOffsets;
 }
 
 - (void)setBounds:(CGRect)boundsRect;
-- (id) initWithFrame: (CGRect)rect calls:(NSMutableArray *)calls sortBy:(SortCallsType) sortBy;
+- (id) initWithFrame: (CGRect)rect settings:(NSMutableDictionary *)settings sortBy:(SortCallsType) sortBy;
 
 - (void)updateSections;
 

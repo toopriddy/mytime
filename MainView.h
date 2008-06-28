@@ -31,7 +31,8 @@ typedef enum {
 	, VIEW_STATISTICS
 	, VIEW_SETTINGS
 	, VIEW_BULK_PLACEMENTS
-	
+	, VIEW_SORTED_BY_CITY
+
 	, END_OF_VIEWS
 } SelectedButtonBarView;
 
@@ -152,6 +153,7 @@ extern NSString const * const MagazinePlacementCount;
 
 
 extern NSString const * const SettingsCalls;
+extern NSString const * const SettingsDeletedCalls;
 extern NSString const * const SettingsMagazinePlacements;
 extern NSString const * const SettingsLastCallStreetNumber;
 extern NSString const * const SettingsLastCallStreet;
