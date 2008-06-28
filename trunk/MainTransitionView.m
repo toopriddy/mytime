@@ -63,19 +63,19 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-	NSLog(@"MainTransitionView respondsToSelector: %s", selector);
+	VERY_VERBOSE(NSLog(@"MainTransitionView respondsToSelector: %s", selector);)
 	return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-	NSLog(@"MainTransitionView methodSignatureForSelector: %s", selector);
+	VERY_VERBOSE(NSLog(@"MainTransitionView methodSignatureForSelector: %s", selector);)
 	return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-	NSLog(@"MainTransitionView forwardInvocation: %s", [invocation selector]);
+	VERY_VERBOSE(NSLog(@"MainTransitionView forwardInvocation: %s", [invocation selector]);)
 	[super forwardInvocation:invocation];
 }
 

@@ -245,7 +245,7 @@ extern NSString const * const BulkLiteratureArrayDay;
         publication = [[[NSMutableDictionary alloc] init] autorelease];
         [[_editingPlacements objectForKey:BulkLiteratureArray] replaceObjectAtIndex:_editingPublication withObject:publication ];
 	}
-	NSLog(@"EditingPlacements %@",_editingPlacements);
+	DEBUG(NSLog(@"EditingPlacements %@",_editingPlacements);)
 	PublicationPicker *picker = [publicationView publicationPicker];
     [publication setObject:[picker publication] forKey:BulkLiteratureArrayName];
     [publication setObject:[picker publicationTitle] forKey:BulkLiteratureArrayTitle];

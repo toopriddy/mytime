@@ -388,7 +388,7 @@ typedef enum {
 	DEBUG(NSLog(@"deleteCall");)
 	UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
 	[alertSheet setTitle:@"Delete Call?"];
-	[alertSheet setBodyText:@"Are you sure you want to delete the call?"];
+	[alertSheet setBodyText:@"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?"];
 	[alertSheet addButtonWithTitle:@"Yes"];
 	[alertSheet addButtonWithTitle:@"No"];
 	[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
@@ -509,7 +509,7 @@ typedef enum {
 		[_currentGroup setObject:groupCell forKey:CallViewGroupCell];
 
 	[_displayInformation addObject:_currentGroup];
-	NSLog(@"_displayInformation count = %d", [_displayInformation count]);
+	DEBUG(NSLog(@"_displayInformation count = %d", [_displayInformation count]);)
 }
 
 - (void)     addRow:(id)cell 

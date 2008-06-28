@@ -61,8 +61,8 @@ NSString const * const BulkLiteratureArrayYear = @"year";
 NSString const * const BulkLiteratureArrayMonth = @"month";
 NSString const * const BulkLiteratureArrayDay = @"day";
 
-
 NSString const * const SettingsCalls = @"calls";
+NSString const * const SettingsDeletedCalls = @"deletedCalls";
 NSString const * const SettingsMagazinePlacements = @"magazinePlacements";
 
 NSString const * const SettingsLastCallStreetNumber = @"lastStreetNumber";
@@ -180,7 +180,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
             self, kUIButtonBarButtonTarget,
           @"Street Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  @"Calls Sorted by Street", ButtonBarOfficialName,
+          @"Calls Sorted by Street", ButtonBarOfficialName,
           nil 
         ],
 
@@ -193,6 +193,18 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"Date Sorted", kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
 		  @"Calls Sorted by Date", ButtonBarOfficialName,
+          nil 
+        ],
+
+        [ NSDictionary dictionaryWithObjectsAndKeys:
+          @"buttonBarItemTapped:", kUIButtonBarButtonAction,
+          @"city.png", kUIButtonBarButtonInfo,
+          @"citySelected.png", kUIButtonBarButtonSelectedInfo,
+          [ NSNumber numberWithInt: VIEW_SORTED_BY_CITY], kUIButtonBarButtonTag,
+            self, kUIButtonBarButtonTarget,
+          @"City Sorted", kUIButtonBarButtonTitle,
+          @"0", kUIButtonBarButtonType,
+          @"Calls Sorted by City", ButtonBarOfficialName,
           nil 
         ],
 
@@ -383,6 +395,11 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			[_sortedCallsView setSortBy:CALLS_SORTED_BY_DATE];
 			[self transition:transition toView:_sortedCallsView ];
 			break;
+        case VIEW_SORTED_BY_CITY:
+			DEBUG(NSLog(@"VIEW_SORTED_BY_CITY");)
+			[_sortedCallsView setSortBy:CALLS_SORTED_BY_CITY];
+			[self transition:transition toView:_sortedCallsView ];
+			break;
         case VIEW_TIME:
 			DEBUG(NSLog(@"VIEW_TIME");)
 			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
@@ -508,7 +525,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 
         // create the calls view
 		_sortedCallsView = [[SortedCallsView alloc] initWithFrame:rect 
-		                                                    calls:[_settings objectForKey:SettingsCalls]
+		                                                 settings:_settings
 													       sortBy:CALLS_SORTED_BY_STREET];
 		[_sortedCallsView setAutoresizingMask: kMainAreaResizeMask];
 		[_sortedCallsView setAutoresizesSubviews: YES];
@@ -556,7 +573,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 	// take away the height of the button bar
 	rect.size.height -= 49.0f;
 
-	NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
+	VERY_VERBOSE(NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);)
 
 	oldSize = [_sortedCallsView bounds].size;
 	[_sortedCallsView setBounds:rect];
@@ -571,7 +588,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 	// create the buttonbar and add it at the lat 49pix of the screen
 	rect.origin.y = rect.size.height;
 	rect.size.height = 49.0f; 
-	NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
+	VERY_VERBOSE(NSLog(@"MainView (%f, %f) height=%f width=%f", rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);)
 //	[_buttonBar setBounds:rect];
 
 	_rect = rect;
@@ -601,6 +618,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 	static int buttons[] = {
 		VIEW_SORTED_BY_STREET,
 		VIEW_SORTED_BY_DATE,
+		VIEW_SORTED_BY_CITY,
 		VIEW_TIME,
 		VIEW_STATISTICS,
 		VIEW_BULK_PLACEMENTS
@@ -618,7 +636,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 	int j;
 	int unusedCount = 0;
 	BOOL found;
-	NSLog(@" allbuttons = %d", allButtonsCount);
+	VERY_VERBOSE(NSLog(@" allbuttons = %d", allButtonsCount);)
 	if(unused == NULL)
 	{
 		unused = (int *)malloc(sizeof(int) * (allButtonsCount - 4));
@@ -631,7 +649,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 		{
 			if(allButtons[i] == _buttons[j])
 			{
-			NSLog(@"found %d", _buttons[j]);
+				VERY_VERBOSE(NSLog(@"found %d", _buttons[j]);)
 				found = YES;
 			}
 		}
@@ -647,7 +665,6 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 - (BOOL)respondsToSelector:(SEL)selector
 {
     VERY_VERBOSE(NSLog(@"MainView respondsToSelector: %s", selector);)
-    NSLog(@"MainView respondsToSelector: %s", selector);
     return [super respondsToSelector:selector];
 }
 
