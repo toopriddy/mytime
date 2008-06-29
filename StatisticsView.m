@@ -25,18 +25,18 @@
 const char* svn_version(void);
 
 static NSString *MONTHS[] = {
-	@"January",
-	@"February",
-	@"March",
-	@"April",
-	@"May",
-	@"June",
-	@"July",
-	@"August",
-	@"September",
-	@"October",
-	@"November",
-	@"December"
+	NSLocalizedString(@"January", @"January"),
+	NSLocalizedString(@"February", @"February"),
+	NSLocalizedString(@"March", @"March"),
+	NSLocalizedString(@"April", @"April"),
+	NSLocalizedString(@"May", @"May"),
+	NSLocalizedString(@"June", @"June"),
+	NSLocalizedString(@"July", @"July"),
+	NSLocalizedString(@"August", @"August"),
+	NSLocalizedString(@"September", @"September"),
+	NSLocalizedString(@"October", @"October"),
+	NSLocalizedString(@"November", @"November"),
+	NSLocalizedString(@"December", @"December")
 };
 
 
@@ -398,11 +398,11 @@ static NSString *MONTHS[] = {
 	{
 		case 0:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:@"Time for %@", MONTHS[_thisMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), MONTHS[_thisMonth - 1]]];
 			break;
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:@"Time for %@", MONTHS[_lastMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), MONTHS[_lastMonth - 1]]];
 			break;
     }
     return(cell);
@@ -443,15 +443,15 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Time"];
+				[cell setTitle:NSLocalizedString(@"Time", @"Time")];
 				int hours = _thisMonthMinutes / 60;
 				int minutes = _thisMonthMinutes % 60;
 				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"%d %@ %d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours")]];
 				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 				else
 					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
@@ -460,7 +460,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Books"];
+				[cell setTitle:NSLocalizedString(@"Books", @"Books")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
 				[cell setShowSelection:NO];
 			}
@@ -468,7 +468,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Brochures"];
+				[cell setTitle:NSLocalizedString(@"Brochures", @"Brochures")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
@@ -476,7 +476,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Magazines"];
+				[cell setTitle:NSLocalizedString(@"Magazines", @"Magazines")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthMagazines]];
 				[cell setShowSelection:NO];
 			}
@@ -484,7 +484,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Return Visits"];
+				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthReturnVisits]];
 				[cell setShowSelection:NO];
 			}
@@ -492,7 +492,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Bible Studies"];
+				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBibleStudies]];
 				[cell setShowSelection:NO];
 			}
@@ -504,15 +504,15 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Time"];
+				[cell setTitle:NSLocalizedString(@"Time", @"Time")];
 				int hours = _lastMonthMinutes / 60;
 				int minutes = _lastMonthMinutes % 60;
 				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"%d %@ %d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours")]];
 				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 				else
 					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
@@ -521,7 +521,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Books"];
+				[cell setTitle:NSLocalizedString(@"Books", @"Books")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
 				[cell setShowSelection:NO];
 			}
@@ -529,7 +529,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Brochures"];
+				[cell setTitle:NSLocalizedString(@"Brochures", @"Brochures")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
@@ -537,7 +537,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Magazines"];
+				[cell setTitle:NSLocalizedString(@"Magazines", @"Magazines")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthMagazines]];
 				[cell setShowSelection:NO];
 			}
@@ -545,7 +545,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Return Visits"];
+				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthReturnVisits]];
 				[cell setShowSelection:NO];
 			}
@@ -553,7 +553,7 @@ static NSString *MONTHS[] = {
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:@"Bible Studies"];
+				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBibleStudies]];
 				[cell setShowSelection:NO];
 			}

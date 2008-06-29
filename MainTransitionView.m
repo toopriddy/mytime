@@ -44,9 +44,9 @@
 	if(_alertSheetText)
 	{
 		UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
-		[alertSheet setTitle:@"Did you know?"];
+		[alertSheet setTitle:NSLocalizedString(@"Did you know?", @"Did you know?")];
 		[alertSheet setBodyText:_alertSheetText];
-		[alertSheet addButtonWithTitle:@"OK"];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK")];
 		[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 0]];
 		[alertSheet setDelegate:self];
 		// 0: grey with grey and black buttons

@@ -105,26 +105,26 @@
         // 1 = red
         // 2 = left arrow
         // 3 = blue
-        [_navigationBar showLeftButton:@"Cancel" withStyle:2 rightButton:@"Done" withStyle:3];
-        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"New Call"] autorelease] ];
+        [_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
+        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"New Call", @"New Call")] autorelease] ];
 		
         _streetNumber = [[UIPreferencesTextTableCell alloc] init];
         [_streetNumber setValue:streetNumber];
-        [[_streetNumber textField] setPlaceholder:@"House Number"];
+        [[_streetNumber textField] setPlaceholder:NSLocalizedString(@"House Number", @"House Number")];
 		[[_streetNumber textField] setPreferredKeyboardType: 1]; // numbers
         [[_streetNumber textField] setAutoCorrectionType:1]; //no correction
 
         _street = [[UIPreferencesTextTableCell alloc] init];
         [_street setValue:street];
-        [[_street textField] setPlaceholder:@"Street"];
+        [[_street textField] setPlaceholder:NSLocalizedString(@"Street", @"Street")];
 		
         _city = [[UIPreferencesTextTableCell alloc] init];
         [_city setValue:city];
-        [[_city textField] setPlaceholder:@"City"];
+        [[_city textField] setPlaceholder:NSLocalizedString(@"City", @"City")];
         
 		_state = [[UIPreferencesTextTableCell alloc] init];
         [_state setValue:state];
-        [[_state textField] setPlaceholder:@"State"];
+        [[_state textField] setPlaceholder:NSLocalizedString(@"State", @"State")];
         [[_state textField] setAutoCapsType:3]; //caps lock
         [[_state textField] setAutoCorrectionType:1]; //no correction
 		

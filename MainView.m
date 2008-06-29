@@ -178,9 +178,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"streetSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_STREET], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Street Sorted", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Street Sorted", @"Street Sorted"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-          @"Calls Sorted by Street", ButtonBarOfficialName,
+          NSLocalizedString(@"Calls Sorted by Street", @"Calls Sorted by Street"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -190,9 +190,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_DATE], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Date Sorted", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Date Sorted", @"Date Sorted"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  @"Calls Sorted by Date", ButtonBarOfficialName,
+		  NSLocalizedString(@"Calls Sorted by Date", @"Calls Sorted by Date"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -202,9 +202,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"citySelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_CITY], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"City Sorted", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"City Sorted", @"City Sorted"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-          @"Calls Sorted by City", ButtonBarOfficialName,
+          NSLocalizedString(@"Calls Sorted by City", @"Calls Sorted by City"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -214,9 +214,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"timerSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_TIME], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Time", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Time", @"Time"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  @"Time", ButtonBarOfficialName,
+		  NSLocalizedString(@"Time", @"Time"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -226,9 +226,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"statisticsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_STATISTICS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Statistics", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Statistics", @"Statistics"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  @"End of Month Statistics", ButtonBarOfficialName,
+		  NSLocalizedString(@"End of Month Statistics", @"End of Month Statistics"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -238,9 +238,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"bulkPlacementsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_BULK_PLACEMENTS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"Placements", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Placements", @"Placements"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  @"Anonymous Bulk Placements", ButtonBarOfficialName,
+		  NSLocalizedString(@"Anonymous Bulk Placements", @"Anonymous Bulk Placements"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -250,9 +250,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"settingsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SETTINGS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          @"More", kUIButtonBarButtonTitle,
+          NSLocalizedString(@"More", @"More"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
- 		  @"More", ButtonBarOfficialName,
+ 		  NSLocalizedString(@"More", @"More"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -404,7 +404,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			DEBUG(NSLog(@"VIEW_TIME");)
 			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
 			{
-				alertText = @"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.";
+				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.");
 				[_settings setObject:@"" forKey:SettingsTimeAlertSheetShown];
 				[self saveData];
 			}
@@ -415,7 +415,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			[_statisticsView reloadData];
 			if([_settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
 			{
-				alertText = @"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.";
+				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.");
 				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
 				[self saveData];
 			}

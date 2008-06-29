@@ -149,25 +149,25 @@ const char* svn_version(void);
         // Other Views
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:@"Other Views"];
+			[cell setTitle:NSLocalizedString(@"Other Views", @"Other Views")];
 			break;
 		
         // First/Second
 		case 2:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:@"Settings"];
+			[cell setTitle:NSLocalizedString(@"Settings", @"Settings")];
 			break;
 		
         // Website
         case 3:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:@"Contact Information"];
+			[cell setTitle:NSLocalizedString(@"Contact Information", @"Contact Information")];
 			break;
 		
 		// version 
 		case 4:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:@"Version"];
+			[cell setTitle:NSLocalizedString(@"Version", @"Version")];
 			break;
     }
     return(cell);
@@ -214,7 +214,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setValue:@"Please Donate, help me help you"];
+				[cell setValue:NSLocalizedString(@"Please Donate, help me help you", @"Please Donate, help me help you")];
 				[cell setShowDisclosure: YES];
 			}
             break;
@@ -240,7 +240,7 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:@"Edit Button Bar"];
+					[cell setTitle:NSLocalizedString(@"Edit Button Bar", @"Edit Button Bar")];
                     [cell setShowDisclosure: YES];
 					break;
 					
@@ -253,13 +253,13 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:@"MyTime Website"];
+					[cell setTitle:NSLocalizedString(@"MyTime Website", @"MyTime Website")];
                     [cell setShowDisclosure: YES];
 					break;
 					
 				case 1:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:@"Questions, Comments? Email me"];
+					[cell setTitle:NSLocalizedString(@"Questions, Comments? Email me", @"Questions, Comments? Email me")];
                     [cell setShowDisclosure: YES];
 					break;
 			}
@@ -271,13 +271,13 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-					[cell setTitle:@"MyTime Version"];
+					[cell setTitle:NSLocalizedString(@"MyTime Version", @"MyTime Version")];
 					[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
 					[cell setShowSelection:NO];
 					break;
 				case 1:
 					cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-					[cell setTitle:@"Build Date"];
+					[cell setTitle:NSLocalizedString(@"Build Date", @"Build Date")];
 					[cell setValue:[NSString stringWithFormat:@"%s", __DATE__]];
 					[cell setShowSelection:NO];
 					break;
