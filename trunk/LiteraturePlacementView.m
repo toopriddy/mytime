@@ -174,8 +174,8 @@ extern NSString const * const BulkLiteratureArrayDay;
 		// 1 = red
 		// 2 = left arrow
 		// 3 = blue
-		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Placements"] autorelease] ];
-		[_navigationBar showLeftButton:@"Cancel" withStyle:2 rightButton:@"Done" withStyle:3];
+		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Placements", @"Placements")] autorelease] ];
+		[_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
 		_table = [[LiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:entries];
 		
@@ -371,7 +371,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 	if(group == 1)
 	{
 		cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
-		[cell setTitle:@"Placements:"];
+		[cell setTitle:NSLocalizedString(@"Placements:", @"Placements:")];
 	}
 
     return(cell);
@@ -400,7 +400,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 		UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 		[cell setShowDisclosure:YES];
 		NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[_editingPlacements objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-		[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d, %Y"]];
+		[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d, %Y", @"%a %b %d, %Y")]];
 		return(cell);
 	}
 	else
@@ -410,7 +410,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 			[cell setShowDisclosure:YES];
 			[cell setShowSelection: YES];
-			[cell setValue:@"Add a placed publications"];
+			[cell setValue:NSLocalizedString(@"Add a placed publications", @"Add a placed publications")];
 			return(cell);
 		}
 		else
@@ -422,13 +422,20 @@ extern NSString const * const BulkLiteratureArrayDay;
 			NSString *name = [entry objectForKey:BulkLiteratureArrayTitle];
 			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
 			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
-			if([type isEqualToString:@"Magazine"])
+			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Magazine")])
 			{
-				[cell setTitle:[NSString stringWithFormat:@"%d: %@", count, name]];
+				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"%d: %@"), count, name]];
 			}
 			else
 			{
-				[cell setTitle:[NSString stringWithFormat:@"%d %@%@: %@", count, type, count == 1 ? @"" : @"s", name]];
+				if(count == 1)
+				{
+					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"%d %@: %@"), count, type, name]];
+				}
+				else
+				{	
+					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"%d %@s: %@"), count, type, name]];
+				}
 			}
 			return(cell);
 		}

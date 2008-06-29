@@ -50,6 +50,7 @@
 		90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkLiteraturePlacementView.m; sourceTree = "<group>"; };
 		90F13EC40E161140009772BD /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
 		90F13EC50E161140009772BD /* citySelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = citySelected.png; sourceTree = "<group>"; };
+		90F13EED0E16A196009772BD /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ACBEE6970D2427BA007CEA24 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		ACBEE6AE0D24289B007CEA24 /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CallView.m; sourceTree = "<group>"; };
 		ACBEE6B00D2428BF007CEA24 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
@@ -145,6 +146,7 @@
 				9058ABF30D668F74006AE013 /* TimeView.m */,
 				9099FD5C0D7E20FD00D8CA9C /* UIOrientingApplication.h */,
 				9099FD5D0D7E20FD00D8CA9C /* UIOrientingApplication.m */,
+				90F13EEC0E16A196009772BD /* Localizable.strings */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -217,6 +219,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXVariantGroup section */
+		90F13EEC0E16A196009772BD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90F13EED0E16A196009772BD /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4F08A954540054247B /* Debug */ = {

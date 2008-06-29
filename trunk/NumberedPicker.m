@@ -88,7 +88,7 @@
 - (NSString *)pickerView:(UIPickerView *)picker titleForRow:(int)row inColumn:(int)column
 {
 	VERY_VERBOSE(NSLog(@"NumberedPicker pickerView titleForRow:%d inColumn:", row);)
-	return(@"blah");
+	return(NSLocalizedString(@"Count", @"Count"));
 }
 
 - (void)pickerView:(UIPickerView *)picker createdTable:(id)row forColumn:(int)column

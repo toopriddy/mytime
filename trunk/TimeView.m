@@ -173,19 +173,19 @@ static int sortByDate(id v1, id v2, void *context)
 		// 1 = red
 		// 2 = left arrow
 		// 3 = blue
-		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Time"] autorelease] ];
+		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Time", @"Time")] autorelease] ];
 		if([settings objectForKey:SettingsTimeStartDate] == nil)
 		{
-			[_navigationBar showLeftButton:@"Start Time" withStyle:3 rightButton:@"+" withStyle:3];
+			[_navigationBar showLeftButton:NSLocalizedString(@"Start Time", @"Start Time") withStyle:3 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
 		}
 		else
 		{
-			[_navigationBar showLeftButton:@"Stop Time" withStyle:1 rightButton:@"+" withStyle:3];
+			[_navigationBar showLeftButton:NSLocalizedString(@"Stop Time", @"Stop Time") withStyle:1 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
 		}
 		_table = [[TimeTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                              timeEntries:_timeEntries];
 
-		[_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Times" identifier:nil width: rect.size.width] autorelease]];
+		[_table addTableColumn: [[[UITableColumn alloc] initWithTitle:NSLocalizedString(@"Times", @"Times") identifier:nil width: rect.size.width] autorelease]];
         [_table setDelegate: self];
         [_table setDataSource: self];
 		[_table setAutoresizingMask: kMainAreaResizeMask];
@@ -267,7 +267,7 @@ static int sortByDate(id v1, id v2, void *context)
 				// 1 = red
 				// 2 = left arrow
 				// 3 = blue
-				[nav showLeftButton:@"Stop Time" withStyle:1 rightButton:@"+" withStyle:3];
+				[nav showLeftButton:NSLocalizedString(@"Stop Time", @"Stop Time") withStyle:1 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
 				[_table reloadData];
 			}
 			else
@@ -290,7 +290,7 @@ static int sortByDate(id v1, id v2, void *context)
 				[settings removeObjectForKey:SettingsTimeStartDate];
 				[[App getInstance] saveData];
 
-				[nav showLeftButton:@"Start Time" withStyle:3 rightButton:@"+" withStyle:3];
+				[nav showLeftButton:NSLocalizedString(@"Start Time", @"Start Time") withStyle:3 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
 			}
 			break;
 		}
@@ -323,7 +323,7 @@ static int sortByDate(id v1, id v2, void *context)
 	NSNumber *time = [entry objectForKey:SettingsTimeEntryMinutes];
 
 	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
-	[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d"]];
+	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"%a %b %d")]];
 
 	CGSize s = CGSizeMake( [column width], [table rowHeight] );
 	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(150,0,s.width,s.height)] autorelease];
@@ -334,11 +334,11 @@ static int sortByDate(id v1, id v2, void *context)
 	int hours = minutes / 60;
 	minutes %= 60;
 	if(hours && minutes)
-		[label setText:[NSString stringWithFormat:@"%d %s %d %s", hours, hours == 1 ? "hour" : "hours", minutes, minutes == 1 ? "minute" : "minutes"]];
+		[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"%d %@ %d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 	else if(hours)
-		[label setText:[NSString stringWithFormat:@"%d %s", hours, hours == 1 ? "hour" : "hours"]];
+		[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours")]];
 	else if(minutes)
-		[label setText:[NSString stringWithFormat:@"%d %s", minutes, minutes == 1 ? "minute" : "minutes"]];
+		[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
 	
 	[cell addSubview: label];
 

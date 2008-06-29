@@ -76,7 +76,7 @@
         CGSize navSize = [UINavigationBar defaultSize];
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
-        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Select Time"] autorelease] ];
+        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Time", @"Select Time")] autorelease] ];
 		[nav setAutoresizingMask: kTopBarResizeMask];
 		[nav setAutoresizesSubviews: YES];
         [self addSubview: nav]; 
@@ -84,7 +84,7 @@
         // 1 = red
         // 2 = left arrow
         // 3 = blue
-        [nav showLeftButton:@"Cancel" withStyle:2 rightButton:@"Done" withStyle:3];
+        [nav showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
         navSize = [nav bounds].size;
         
         // make a picker for the publications

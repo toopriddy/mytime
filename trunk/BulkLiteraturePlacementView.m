@@ -212,8 +212,8 @@ static int sortByDate(id v1, id v2, void *context)
 		// 1 = red
 		// 2 = left arrow
 		// 3 = blue
-		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Bulk Placements"] autorelease] ];
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:@"+" withStyle:3];
+		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Bulk Placements", @"Bulk Placements")] autorelease] ];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
 		_table = [[BulkLiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:_entries];
 		
@@ -338,7 +338,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 	
 	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-	[cell setTitle:[date descriptionWithCalendarFormat:@"%a %b %d"]];
+	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"%a %b %d")]];
 
 	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray];
 	int i;
@@ -353,7 +353,7 @@ static int sortByDate(id v1, id v2, void *context)
 	float bgColor[] = { 0,0,0,0 };
 	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 	
-	[label setText:[NSString stringWithFormat:@"%d publications", number]];
+	[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d publications", @"%d publications"), number]];
 	
 	[cell addSubview: label];
 	

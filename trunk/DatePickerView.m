@@ -75,7 +75,7 @@
         CGSize navSize = [UINavigationBar defaultSize];
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
-        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Select Date"] autorelease] ];
+        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Date", @"Select Date")] autorelease] ];
 		[nav setAutoresizingMask: kTopBarResizeMask];
 		[nav setAutoresizesSubviews: YES];
         [self addSubview: nav]; 
@@ -83,7 +83,7 @@
         // 1 = red
         // 2 = left arrow
         // 3 = blue
-        [nav showLeftButton:@"Cancel" withStyle:2 rightButton:@"Done" withStyle:3];
+        [nav showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
         navSize = [nav bounds].size;
         
         // make a picker for the publications
@@ -110,7 +110,7 @@
 
         VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f", 0.0, navSize.height + pickerSize.height, rect.size.height - navSize.height - pickerSize.height, rect.size.width);)
         UITable *table = [[UITable alloc] initWithFrame: CGRectMake(0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height)];
-        [table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Placed Publications" identifier:nil width:rect.size.width] autorelease]];
+        [table addTableColumn: [[[UITableColumn alloc] initWithTitle:NSLocalizedString(@"Placed Publications", @"Placed Publications") identifier:nil width:rect.size.width] autorelease]];
 		[table setAutoresizingMask: kMainAreaResizeMask];
 		[table setAutoresizesSubviews: YES];
         [self addSubview: table];
