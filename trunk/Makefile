@@ -46,7 +46,6 @@ bulkPlacementsSelected.png \
 LANGUAGES = \
 English.lproj \
 
-
 HEAVENLY=/usr/local/share/iphone-filesystem/
 CC=/usr/local/bin/arm-apple-darwin-gcc
 CFLAGS=-g -Wall -Wp,-MMD -Wp,-MP
@@ -70,6 +69,7 @@ EXECUTABLE_NAME=$(PRODUCT_NAME)
 SOURCES_ABS=$(addprefix $(SRCROOT)/,$(SOURCES))
 RESOURCES_ABS=$(addprefix $(SRCROOT)/,$(RESOURCES))
 LANGUAGES_ABS=$(addprefix $(SRCROOT)/,$(LANGUAGES))
+LANGUAGES_DEST_ABS=$(addprefix $(CONFIGURATION_BUILD_DIR)/$(WRAPPER_NAME)/$(SRCROOT)/,$(LANGUAGES))
 INFOPLIST_ABS=$(addprefix $(SRCROOT)/,$(INFOPLIST_FILE))
 OBJECTS=\
 	$(patsubst %.c,%.o,$(filter %.c,$(SOURCES))) \
@@ -96,7 +96,7 @@ copy-resources:
 	scp $(RESOURCES) root@$(IPHONE):/Applications/MyTime.app/
 
 copy-languages:
-	scp -r $(LANGUAGES) root@$(IPHONE):/Applications/MyTime.app/
+	scp -r English.lproj/Localizable.strings root@$(IPHONE):/Applications/MyTime.app/English.lproj/
 
 backup:
 	scp root@$(IPHONE):/var/mobile/Library/MyTime/record.plist ./
@@ -120,8 +120,14 @@ endif
 	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -P `cat ~/.googlecodepassword` -p mytime MyTime-$(VERSION).zip
 	svn commit mytime.plist --force-log  -m "updating to version $(VERSION)"
 
-genstrings:
+fixgenstrings: fixgenstrings.c
+	gcc fixgenstrings.c -o fixgenstrings
+	
+genstrings: fixgenstrings
 	genstrings $(SOURCES) -o English.lproj/
+	./fixgenstrings English.lproj/Localizable.strings > English.lproj/temp.strings
+	mv English.lproj/temp.strings English.lproj/Localizable.strings
+	
 
 ##
 ## on every build, record the working copy revision string
@@ -140,7 +146,7 @@ $(APP_ABS):
 	chmod 775 $(APP_ABS)
 	cp $(INFOPLIST_ABS) $(APP_ABS)/
 	cp $(RESOURCES_ABS) $(APP_ABS)/
-	cp -r $(LANGUAGES_ABS) $(APP_ABS)/
+	$(shell for x in $(LANGUAGES_ABS); do mkdir -p $(APP_ABS)/$$x && cp $$x/Localizable.strings $(APP_ABS)/$$x; done)
 	
 $(CONFIGURATION_BUILD_DIR)/%.o: $(SRCROOT)/%.m
 	mkdir -p $(dir $@)

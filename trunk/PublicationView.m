@@ -105,7 +105,7 @@
         // 1 = red
         // 2 = left arrow
         // 3 = blue
-        [nav showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
+        [nav showLeftButton:NSLocalizedString(@"Cancel", @"Cancel NavigationBar Button") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done/Save NavigationBar Button") withStyle:3];
         navSize = [nav bounds].size;
         
         // make a picker for the publications

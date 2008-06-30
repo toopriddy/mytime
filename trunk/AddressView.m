@@ -105,8 +105,8 @@
         // 1 = red
         // 2 = left arrow
         // 3 = blue
-        [_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
-        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"New Call", @"New Call")] autorelease] ];
+        [_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel NavigationBar Button") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done/Save NavigationBar Button") withStyle:3];
+        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Call Address", @"Address title for address form")] autorelease] ];
 		
         _streetNumber = [[UIPreferencesTextTableCell alloc] init];
         [_streetNumber setValue:streetNumber];
