@@ -40,104 +40,89 @@ typedef struct {
 } PublicationInformation;
 
 static PublicationInformation PUBLICATIONS[] = {
-	{NSLocalizedString(@"Watchtower", @"Watchtower"),                      PublicationTypeMagazine}
-,   {NSLocalizedString(@"Awake", @"Awake"),                           PublicationTypeMagazine}
+	{@"Watchtower",                      PublicationTypeMagazine}
+,   {@"Awake",                           PublicationTypeMagazine}
 
-,   {NSLocalizedString(@"   BOOKS", @"   BOOKS"),    @""}
-,   {NSLocalizedString(@"Bible", @"Bible"),    PublicationTypeBook}
+,   {@"   BOOKS",    PublicationTypeHeading}
+,   {@"Bible",    PublicationTypeBook}
 
-,   {NSLocalizedString(@"All Scripture", @"All Scripture"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Bible Stories", @"Bible Stories"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Bible Teach", @"Bible Teach"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Close to Jehovah", @"Close to Jehovah"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Concordance", @"Concordance"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Creation", @"Creation"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Creator", @"Creator"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Daniel's Prophecy", @"Daniel's Prophecy"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Family Happiness", @"Family Happiness"),    PublicationTypeBook}
-,   {NSLocalizedString(@"God's Word", @"God's Word"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Greatest Man", @"Greatest Man"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Insight", @"Insight"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Isaiah's Prophecy I", @"Isaiah's Prophecy I"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Isaiah's Prophecy II", @"Isaiah's Prophecy II"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Jehovah's Day", @"Jehovah's Day"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Knowledge", @"Knowledge"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Mankind's Search for God", @"Mankind's Search for God"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Ministry School", @"Ministry School"),    PublicationTypeBook}
-,   {NSLocalizedString(@"My Book of Bible Stories", @"My Book of Bible Stories"),        PublicationTypeBook}
-,   {NSLocalizedString(@"Organized", @"Organized"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Proclaimers", @"Proclaimers"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Revelation Climax", @"Revelation Climax"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Sing Praises", @"Sing Praises"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Teacher", @"Teacher"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Worship God", @"Worship God"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Young People Ask", @"Young People Ask"),    PublicationTypeBook}
-,   {NSLocalizedString(@"Reasoning", @"Reasoning"),    PublicationTypeBook}
+,   {@"All Scripture",    PublicationTypeBook}
+,   {@"Bible Stories",    PublicationTypeBook}
+,   {@"Bible Teach",    PublicationTypeBook}
+,   {@"Close to Jehovah",    PublicationTypeBook}
+,   {@"Concordance",    PublicationTypeBook}
+,   {@"Creation",    PublicationTypeBook}
+,   {@"Creator",    PublicationTypeBook}
+,   {@"Daniel's Prophecy",    PublicationTypeBook}
+,   {@"Family Happiness",    PublicationTypeBook}
+,   {@"God's Word",    PublicationTypeBook}
+,   {@"Greatest Man",    PublicationTypeBook}
+,   {@"Insight",    PublicationTypeBook}
+,   {@"Isaiah's Prophecy I",    PublicationTypeBook}
+,   {@"Isaiah's Prophecy II",    PublicationTypeBook}
+,   {@"Jehovah's Day",    PublicationTypeBook}
+,   {@"Knowledge",    PublicationTypeBook}
+,   {@"Mankind's Search for God",    PublicationTypeBook}
+,   {@"Ministry School",    PublicationTypeBook}
+,   {@"My Book of Bible Stories",        PublicationTypeBook}
+,   {@"Organized",    PublicationTypeBook}
+,   {@"Proclaimers",    PublicationTypeBook}
+,   {@"Revelation Climax",    PublicationTypeBook}
+,   {@"Sing Praises",    PublicationTypeBook}
+,   {@"Teacher",    PublicationTypeBook}
+,   {@"Worship God",    PublicationTypeBook}
+,   {@"Young People Ask",    PublicationTypeBook}
+,   {@"Reasoning",    PublicationTypeBook}
 
-,   {NSLocalizedString(@"   BROCHURES", @"   BROCHURES"),    @""}
-,   {NSLocalizedString(@"Blood", @"Blood"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Book for All", @"Book for All"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Divine Name", @"Divine Name"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Does God Care", @"Does God Care"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Education", @"Education"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"God's Friend", @"God's Friend"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Good Land", @"Good Land"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Government", @"Government"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Guidance of God", @"Guidance of God"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Jehovah's Witnesses", @"Jehovah's Witnesses"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Lasting Peace", @"Lasting Peace"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Life on Earth", @"Life on Earth"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Look!", @"Look!"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Nations", @"Nations"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Our Problems", @"Our Problems"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Purpose of Life", @"Purpose of Life"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Require", @"Require"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Satisfying Life", @"Satisfying Life"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Spirits of the Dead", @"Spirits of the Dead"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Trinity", @"Trinity"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Watch!", @"Watch!"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"When Someone Dies", @"When Someone Dies"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"When We Die", @"When We Die"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"Why Worship God", @"Why Worship God"),    PublicationTypeBrochure}
-,   {NSLocalizedString(@"World Without War", @"World Without War"),    PublicationTypeBrochure}
+,   {@"   BROCHURES",    PublicationTypeHeading}
+,   {@"Blood",    PublicationTypeBrochure}
+,   {@"Book for All",    PublicationTypeBrochure}
+,   {@"Divine Name",    PublicationTypeBrochure}
+,   {@"Does God Care",    PublicationTypeBrochure}
+,   {@"Education",    PublicationTypeBrochure}
+,   {@"God's Friend",    PublicationTypeBrochure}
+,   {@"Good Land",    PublicationTypeBrochure}
+,   {@"Government",    PublicationTypeBrochure}
+,   {@"Guidance of God",    PublicationTypeBrochure}
+,   {@"Jehovah's Witnesses",    PublicationTypeBrochure}
+,   {@"Lasting Peace",    PublicationTypeBrochure}
+,   {@"Life on Earth",    PublicationTypeBrochure}
+,   {@"Look!",    PublicationTypeBrochure}
+,   {@"Nations",    PublicationTypeBrochure}
+,   {@"Our Problems",    PublicationTypeBrochure}
+,   {@"Purpose of Life",    PublicationTypeBrochure}
+,   {@"Require",    PublicationTypeBrochure}
+,   {@"Satisfying Life",    PublicationTypeBrochure}
+,   {@"Spirits of the Dead",    PublicationTypeBrochure}
+,   {@"Trinity",    PublicationTypeBrochure}
+,   {@"Watch!",    PublicationTypeBrochure}
+,   {@"When Someone Dies",    PublicationTypeBrochure}
+,   {@"When We Die",    PublicationTypeBrochure}
+,   {@"Why Worship God",    PublicationTypeBrochure}
+,   {@"World Without War",    PublicationTypeBrochure}
 
 
-,   {NSLocalizedString(@"   TRACTS", @"   TRACTS"),    @""}
-,   {NSLocalizedString(@"A Peaceful New World-Will It Come?", @"A Peaceful New World-Will It Come?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Does Fate Rule Our Lives", @"Does Fate Rule Our Lives"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Hellfire-Is It Part of Divine Justice?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"How to Find the Road to Paradise", @"How to Find the Road to Paradise"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Immortal Spirit", @"Immortal Spirit"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Jehovah's Witnesses-What Do They Believe?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"The Greatest Name", @"The Greatest Name"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Who Are Jehovah's Witnesses?", @"Who Are Jehovah's Witnesses?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Comfort for the Depressed", @"Comfort for the Depressed"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Enjoy Family Life", @"Enjoy Family Life"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Jehovah-Who Is He?", @"Jehovah-Who Is He?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Jesus Christ-Who Is He?", @"Jesus Christ-Who Is He?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Know the Bible", @"Know the Bible"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Peaceful New World", @"Peaceful New World"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Suffering to End", @"Suffering to End"),    PublicationTypeTract}
-,   {NSLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"What Do Jehovah's Witnesses Believe?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"What Hope for Dead Loved Ones?", @"What Hope for Dead Loved Ones?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Who Really Rules the World?", @"Who Really Rules the World?"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Why You Can Trust the Bible", @"Why You Can Trust the Bible"),    PublicationTypeTract}
-,   {NSLocalizedString(@"Will This World Survive?", @"Will This World Survive?"),    PublicationTypeTract}
-};
-
-static NSString *MONTHS[] = {
-NSLocalizedString(@"Jan", @"Jan"),
-NSLocalizedString(@"Feb", @"Feb"),
-NSLocalizedString(@"Mar", @"Mar"),
-NSLocalizedString(@"Apr", @"Apr"),
-NSLocalizedString(@"May", @"May"),
-NSLocalizedString(@"Jun", @"Jun"),
-NSLocalizedString(@"Jul", @"Jul"),
-NSLocalizedString(@"Aug", @"Aug"),
-NSLocalizedString(@"Sep", @"Sep"),
-NSLocalizedString(@"Oct", @"Oct"),
-NSLocalizedString(@"Nov", @"Nov"),
-NSLocalizedString(@"Dec", @"Dec")
+,   {@"   TRACTS",    PublicationTypeHeading}
+,   {@"A Peaceful New World-Will It Come?",    PublicationTypeTract}
+,   {@"Does Fate Rule Our Lives",    PublicationTypeTract}
+,   {@"Hellfire-Is It Part of Divine Justice?",    PublicationTypeTract}
+,   {@"How to Find the Road to Paradise",    PublicationTypeTract}
+,   {@"Immortal Spirit",    PublicationTypeTract}
+,   {@"Jehovah's Witnesses-What Do They Believe?",    PublicationTypeTract}
+,   {@"The Greatest Name",    PublicationTypeTract}
+,   {@"Who Are Jehovah's Witnesses?",    PublicationTypeTract}
+,   {@"Comfort for the Depressed",    PublicationTypeTract}
+,   {@"Enjoy Family Life",    PublicationTypeTract}
+,   {@"Jehovah-Who Is He?",    PublicationTypeTract}
+,   {@"Jesus Christ-Who Is He?",    PublicationTypeTract}
+,   {@"Know the Bible",    PublicationTypeTract}
+,   {@"Peaceful New World",    PublicationTypeTract}
+,   {@"Suffering to End",    PublicationTypeTract}
+,   {@"What Do Jehovah's Witnesses Believe?",    PublicationTypeTract}
+,   {@"What Hope for Dead Loved Ones?",    PublicationTypeTract}
+,   {@"Who Really Rules the World?",    PublicationTypeTract}
+,   {@"Why You Can Trust the Bible",    PublicationTypeTract}
+,   {@"Will This World Survive?",    PublicationTypeTract}
 };
 
 + (NSString *)watchtower
@@ -163,8 +148,9 @@ NSLocalizedString(@"Dec", @"Dec")
     int previousYear = _year;
     int previousMonth = _month;
     int previousDay = _day;
+	NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
 	
-    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
+    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], [months objectAtIndex:_month], _year + YEAR_OFFSET, _day);)
 	
 	
     // what is the new publication?
@@ -197,7 +183,9 @@ NSLocalizedString(@"Dec", @"Dec")
        previousDay != _day ||
        previousPublication != _publication)
     {
-        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
+		NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
+
+        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], [months objectAtIndex:_month], _year + YEAR_OFFSET, _day);)
         [p reloadData];
     }
 }
@@ -261,7 +249,7 @@ NSLocalizedString(@"Dec", @"Dec")
                 switch(col)
                 {
                     case 1: // Month
-                        return(ARRAY_SIZE(MONTHS));
+                        return(12);
                     case 2: // Year
                         return(200);
                     case 3: // day
@@ -302,10 +290,13 @@ NSLocalizedString(@"Dec", @"Dec")
                 switch(col)
 			{
 				case 1: // Month
+				{
+					NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
+
 					[cell setAlignment: 2];
-					[cell setTitle: MONTHS[row]];
+					[cell setTitle: [months objectAtIndex:row]];
 					break;
-					
+				}	
 				case 2: // Year
 					[cell setAlignment: 0];
 					// we offset the _year from 1900
@@ -324,10 +315,12 @@ NSLocalizedString(@"Dec", @"Dec")
                 switch(col)
 			{
 				case 1: // Month
+				{
+					NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
 					[cell setAlignment: 2];
-					[cell setTitle: MONTHS[row]];
+					[cell setTitle: [months objectAtIndex:row]];
 					break;
-					
+				}	
 				case 2: // Year
 					[cell setAlignment: 0];
 					// we offset the year from 1900
@@ -517,10 +510,12 @@ NSLocalizedString(@"Dec", @"Dec")
 	
     if(_publication == 0 || _publication == 1)
     {
+		NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
+
         if(day)
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"%@ %@ %d, %d"),PUBLICATIONS[_publication].name, MONTHS[month-1], day, year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"%@ %@ %d, %d"),PUBLICATIONS[_publication].name, [months objectAtIndex:(month-1)], day, year ]);
         else
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"%@ %@ %d"),PUBLICATIONS[_publication].name, MONTHS[month-1], year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"%@ %@ %d"),PUBLICATIONS[_publication].name, [months objectAtIndex:(month-1)], year ]);
     }
     else
     {

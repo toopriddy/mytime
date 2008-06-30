@@ -131,7 +131,7 @@ typedef enum {
 				[self save];
 
 				// remove the editing navigation bar entry
-				[_navigationBar showLeftButton:NSLocalizedString(@"All Calls", @"All Calls") withStyle:2 rightButton:NSLocalizedString(@"Edit", @"Edit") withStyle:0];
+				[_navigationBar showLeftButton:NSLocalizedString(@"All Calls", @"Cancel button for view-mode Calls") withStyle:2 rightButton:NSLocalizedString(@"Edit", @"Edit NavigationBar Button") withStyle:0];
 				
 				// we need to reload data now, so we need to hide:
 				//   the name field if it does not have a value
@@ -174,7 +174,7 @@ typedef enum {
 				// 1 = red
 				// 2 = left arrow
 				// 3 = blue
-				[_navigationBar showLeftButton:nil withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
+				[_navigationBar showLeftButton:nil withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done/Save NavigationBar Button") withStyle:3];
 
 				// we need to reload data now, so we need to show:
 				//   the name field if it is not there already
@@ -337,10 +337,11 @@ typedef enum {
 				city = @"";
 			if(state == nil)
 				state = @"";
-#warning need to add the language string here
+			
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
-										 stringWithFormat:@"http://maps.google.com/?lh=en&q=%@+%@+%@,+%@", 
+										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@,+%@", 
+										                  NSLocalizedString(@"en", @"Google Localized Language Name"),
 														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
 														  [street stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
 														  [city stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
@@ -387,10 +388,10 @@ typedef enum {
 {
 	DEBUG(NSLog(@"deleteCall");)
 	UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
-	[alertSheet setTitle:NSLocalizedString(@"Delete Call?", @"Delete Call?")];
-	[alertSheet setBodyText:NSLocalizedString(@"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?", @"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?")];
-	[alertSheet addButtonWithTitle:NSLocalizedString(@"Yes", @"Yes")];
-	[alertSheet addButtonWithTitle:NSLocalizedString(@"No", @"No")];
+	[alertSheet setTitle:NSLocalizedString(@"Delete Call?", @"Delete Call question title")];
+	[alertSheet setBodyText:NSLocalizedString(@"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")];
+	[alertSheet addButtonWithTitle:NSLocalizedString(@"Yes", @"Yes delete the call")];
+	[alertSheet addButtonWithTitle:NSLocalizedString(@"No", @"No dont delete the call")];
 	[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
 	[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 1]];
 	[alertSheet setDelegate:self];
@@ -631,7 +632,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		if(found || _editing)
 		{
 			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc ] initWithFrame:CGRectZero ];
-			[ cell setTitle:NSLocalizedString(@"Address", @"Address") ];
+			[ cell setTitle:NSLocalizedString(@"Address", @"Address label for call") ];
 
 			UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
 			UITextLabel *label = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
@@ -685,11 +686,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[ cell setShowDisclosure: NO ];
 		if([[_call objectForKey:CallReturnVisits] count])
 		{
-			[ cell setValue:NSLocalizedString(@"Add a return visit", @"Add a return visit")];
+			[ cell setValue:NSLocalizedString(@"Add a return visit", @"Add a return visit action button")];
 		}
 		else
 		{
-			[ cell setValue:NSLocalizedString(@"Add a initial visit", @"Add a initial visit")];
+			[ cell setValue:NSLocalizedString(@"Add a initial visit", @"Add a initial visit action buton")];
 		}
 		[self       addRow:cell
 				 rowHeight:-1
@@ -719,7 +720,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// GROUP TITLE
 			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 			NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[visit objectForKey:CallReturnVisitDate] timeIntervalSinceReferenceDate]] autorelease];	
-			[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d, %Y", @"%a %b %d, %Y")]];
+			[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d,  %Y", @"Date format for Visit title in Call view")]];
 
 			// create dictionary entry for This Return Visit
 			[self addGroup:cell];
@@ -752,7 +753,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				}
 #else
 				UIPreferencesTextTableCell *text = [[ [ UIPreferencesTextTableCell alloc ] initWithFrame:CGRectZero ] autorelease];
-				[[text textField] setPlaceholder:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes") ];
+				[[text textField] setPlaceholder:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text") ];
 				[text setValue:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]];
 				[_returnVisitNotes addObject:text];
 
@@ -777,7 +778,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				NSString *string;
 				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 				if([notes length] == 0)
-					string = NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes");
+					string = NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view");
 				else
 					string = notes;
 				NotesTextView *cell = [[[NotesTextView alloc] initWithString:string editing:NO] autorelease];
@@ -791,7 +792,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 				if([notes length] == 0)
-					[cell setValue:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes")];
+					[cell setValue:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
 				else
 					[cell setValue:notes];
 				[cell setShowSelection:NO];
@@ -812,7 +813,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				[cell setShowDisclosure:YES];
-				[cell setValue:NSLocalizedString(@"Change Date", @"Change Date")];
+				[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
 //				[cell setShowSelection:NO];
 				
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
@@ -873,7 +874,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 				[cell setShowDisclosure: YES];
-				[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication")];
+				[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication action button in call view")];
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[self       addRow:cell
@@ -893,7 +894,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// DELETE
 		UIPreferencesDeleteTableCell *cell = [[[UIPreferencesDeleteTableCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
 		[cell setShowDisclosure: NO ];
-		[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call")];
+		[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view")];
 		[cell setAlignment:2 ];
 		float wcolorComponents[4] = {1.0, 1.0, 1.0, 1.0};
 		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
@@ -978,7 +979,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
         _name = [[UIPreferencesTextTableCell alloc] initWithFrame:CGRectZero];
         // _name (make sure that it is initalized)
-        [_name setTitle:NSLocalizedString(@"Name", @"Name")];
+        [_name setTitle:NSLocalizedString(@"Name", @"Name label for Call in editing mode")];
         if((temp = [_call objectForKey:CallName]) != nil)
             [_name setValue:temp];
         else
@@ -1092,13 +1093,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		if(_newCall)
 		{
 			_setFirstResponderGroup = 0;
-			[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"New Call", @"New Call")] autorelease] ];
-			[_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done") withStyle:3];
+			[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"New Call", @"Call main title when you are adding a new call")] autorelease] ];
+			[_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel NavigationBar Button") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done/Save NavigationBar Button") withStyle:3];
 		}
 		else
 		{
-			[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Call", @"Call")] autorelease] ];
-			[_navigationBar showLeftButton:NSLocalizedString(@"All Calls", @"All Calls") withStyle:2 rightButton:NSLocalizedString(@"Edit", @"Edit") withStyle:0];
+			[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Call", @"Call main title when editing an existing call")] autorelease] ];
+			[_navigationBar showLeftButton:NSLocalizedString(@"All Calls", @"Cancel button for view-mode Calls") withStyle:2 rightButton:NSLocalizedString(@"Edit", @"Edit NavigationBar Button") withStyle:0];
 		}
         
         _table = [[UIPreferencesTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height)];

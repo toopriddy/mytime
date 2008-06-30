@@ -24,20 +24,6 @@
 
 const char* svn_version(void);
 
-static NSString *MONTHS[] = {
-	NSLocalizedString(@"January", @"January"),
-	NSLocalizedString(@"February", @"February"),
-	NSLocalizedString(@"March", @"March"),
-	NSLocalizedString(@"April", @"April"),
-	NSLocalizedString(@"May", @"May"),
-	NSLocalizedString(@"June", @"June"),
-	NSLocalizedString(@"July", @"July"),
-	NSLocalizedString(@"August", @"August"),
-	NSLocalizedString(@"September", @"September"),
-	NSLocalizedString(@"October", @"October"),
-	NSLocalizedString(@"November", @"November"),
-	NSLocalizedString(@"December", @"December")
-};
 
 
 @implementation StatisticsView
@@ -394,15 +380,16 @@ static NSString *MONTHS[] = {
 {
     VERBOSE(NSLog(@"preferencesTable: cellForGroup:%d", group);)
 	UIPreferencesTableCell *cell = nil;
+	NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSMonthNameArray];
 	switch(group)
 	{
 		case 0:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), MONTHS[_thisMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), [months objectAtIndex:(_thisMonth - 1)]]];
 			break;
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), MONTHS[_lastMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), [months objectAtIndex:(_lastMonth - 1)]]];
 			break;
     }
     return(cell);

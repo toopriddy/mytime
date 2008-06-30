@@ -142,6 +142,7 @@ extern NSString const * const BulkLiteratureArrayMonth;
 extern NSString const * const BulkLiteratureArrayDay;
 
 
+#define PublicationTypeHeading @""
 #define PublicationTypeBook @"Book"
 #define PublicationTypeBrochure @"Brochure"
 #define PublicationTypeMagazine @"Magazine"
