@@ -50,13 +50,14 @@
 								<array>
 									<string>1.1.3</string>
 									<string>1.1.4</string>
+									<string>1.1.2</string>
 								</array>
 							</array>
 						</array>
 						<array>
 							<array>
 								<string>AbortOperation</string>
-								<string>MyTime only supports iPhone 1.1.3 and 1.1.4, sorry :(</string>
+								<string>MyTime only supports iPhone 1.1.2, 1.1.3 and 1.1.4, sorry :(</string>
 							</array>
 						</array>
 					</array>
@@ -107,6 +108,29 @@
 							<array>
 								<string>Exec</string>
 								<string>/bin/chmod 777 /var/mobile/Library/MyTime/record.plist</string>
+							</array>
+IFCHANGES							<array>
+IFCHANGES								<string>Notice</string>
+IFCHANGES								<string>Change Log: CHANGESSTRING</string>
+IFCHANGES							</array>
+						</array>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
+								<string>/var/root/Library/MyTime/record.plist</string>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/root/Library/MyTime/</string>
+							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/root/Library/MyTime/record.plist</string>
 							</array>
 IFCHANGES							<array>
 IFCHANGES								<string>Notice</string>
