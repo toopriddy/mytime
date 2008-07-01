@@ -149,25 +149,25 @@ const char* svn_version(void);
         // Other Views
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:NSLocalizedString(@"Other Views", @"Other Views")];
+			[cell setTitle:NSLocalizedString(@"Other Views", @"More View Table Group Title")];
 			break;
 		
         // First/Second
 		case 2:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:NSLocalizedString(@"Settings", @"Settings")];
+			[cell setTitle:NSLocalizedString(@"Settings", @"More View Table Group Title")];
 			break;
 		
         // Website
         case 3:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:NSLocalizedString(@"Contact Information", @"Contact Information")];
+			[cell setTitle:NSLocalizedString(@"Contact Information", @"More View Table Group Title")];
 			break;
 		
 		// version 
 		case 4:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:NSLocalizedString(@"Version", @"Version")];
+			[cell setTitle:NSLocalizedString(@"Version", @"More View Table Group Title")];
 			break;
     }
     return(cell);
@@ -214,7 +214,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setValue:NSLocalizedString(@"Please Donate, help me help you", @"Please Donate, help me help you")];
+				[cell setValue:NSLocalizedString(@"Please Donate, help me help you", @"More View Table Donation request")];
 				[cell setShowDisclosure: YES];
 			}
             break;
@@ -240,7 +240,7 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:NSLocalizedString(@"Edit Button Bar", @"Edit Button Bar")];
+					[cell setTitle:NSLocalizedString(@"Edit Button Bar", @"More View Table Edit Button Bar")];
                     [cell setShowDisclosure: YES];
 					break;
 					
@@ -253,13 +253,13 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:NSLocalizedString(@"MyTime Website", @"MyTime Website")];
+					[cell setTitle:NSLocalizedString(@"MyTime Website", @"More View Table MyTime Website")];
                     [cell setShowDisclosure: YES];
 					break;
 					
 				case 1:
 					cell = [[UIPreferencesTableCell alloc] init];
-					[cell setTitle:NSLocalizedString(@"Questions, Comments? Email me", @"Questions, Comments? Email me")];
+					[cell setTitle:NSLocalizedString(@"Questions, Comments? Email me", @"More View Table Questions, Comments? Email me")];
                     [cell setShowDisclosure: YES];
 					break;
 			}
@@ -271,13 +271,13 @@ const char* svn_version(void);
 			{
 				case 0:
 					cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-					[cell setTitle:NSLocalizedString(@"MyTime Version", @"MyTime Version")];
+					[cell setTitle:NSLocalizedString(@"MyTime Version", @"More View Table MyTime Version")];
 					[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
 					[cell setShowSelection:NO];
 					break;
 				case 1:
 					cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-					[cell setTitle:NSLocalizedString(@"Build Date", @"Build Date")];
+					[cell setTitle:NSLocalizedString(@"Build Date", @"More View Table Build Date")];
 					[cell setValue:[NSString stringWithFormat:@"%s", __DATE__]];
 					[cell setShowSelection:NO];
 					break;
@@ -325,7 +325,7 @@ const char* svn_version(void);
 		if(--row == 0)
 		{
 			[self retain];
-			[[[App getInstance] mainView] setViewFromMore:buttons[row]];
+			[[[App getInstance] mainView] setViewFromMore:buttons[i]];
 		}
 	}
 	

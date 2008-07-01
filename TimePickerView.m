@@ -76,7 +76,7 @@
         CGSize navSize = [UINavigationBar defaultSize];
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
-        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Time", @"Select Time")] autorelease] ];
+        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Time", @"Select Time Title for adding hours of field service to a particular day")] autorelease] ];
 		[nav setAutoresizingMask: kTopBarResizeMask];
 		[nav setAutoresizesSubviews: YES];
         [self addSubview: nav]; 

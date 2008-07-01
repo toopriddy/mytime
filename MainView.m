@@ -178,9 +178,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"streetSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_STREET], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"Street Sorted", @"Street Sorted"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Street Sorted", @"'Street Sorted' ButtonBar View text"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-          NSLocalizedString(@"Calls Sorted by Street", @"Calls Sorted by Street"), ButtonBarOfficialName,
+          NSLocalizedString(@"Calls Sorted by Street", @"Expanded name for 'Street Sorted' ButtonBar view text when on the More view"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -190,9 +190,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"timeSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_DATE], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"Date Sorted", @"Date Sorted"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Date Sorted", @"'Date Sorted' ButtonBar View text"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  NSLocalizedString(@"Calls Sorted by Date", @"Calls Sorted by Date"), ButtonBarOfficialName,
+		  NSLocalizedString(@"Calls Sorted by Date", @"Expanded name for 'Date Sorted' ButtonBar view text when on the More view"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -202,9 +202,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"citySelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SORTED_BY_CITY], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"City Sorted", @"City Sorted"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"City Sorted", @"'City Sorted' ButtonBar View text"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-          NSLocalizedString(@"Calls Sorted by City", @"Calls Sorted by City"), ButtonBarOfficialName,
+          NSLocalizedString(@"Calls Sorted by City", @"Expanded name for 'City Sorted' ButtonBar view text when on the More view"), ButtonBarOfficialName,
           nil 
         ],
 
@@ -214,9 +214,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"timerSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_TIME], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"Time", @"Time"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  NSLocalizedString(@"Time", @"Time"), ButtonBarOfficialName,
+		  NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -226,9 +226,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"statisticsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_STATISTICS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"Statistics", @"Statistics"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Statistics", @"'Statistics' ButtonBar View text and Statistics View Title"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  NSLocalizedString(@"End of Month Statistics", @"End of Month Statistics"), ButtonBarOfficialName,
+		  NSLocalizedString(@"End of Month Statistics", @"Expanded name for 'Statistics' ButtonBar view text when on the More view"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -238,9 +238,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"bulkPlacementsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_BULK_PLACEMENTS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"Placements", @"Placements"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"Placements", @"View Title and ButtonBar Title for the Day's Bulk Placed Publications"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
-		  NSLocalizedString(@"Anonymous Bulk Placements", @"Anonymous Bulk Placements"), ButtonBarOfficialName,
+		  NSLocalizedString(@"Anonymous Bulk Placements", @"Expanded name for 'Placements' ButtonBar view text when on the More view"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -250,9 +250,9 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
           @"settingsSelected.png", kUIButtonBarButtonSelectedInfo,
           [ NSNumber numberWithInt: VIEW_SETTINGS], kUIButtonBarButtonTag,
             self, kUIButtonBarButtonTarget,
-          NSLocalizedString(@"More", @"More"), kUIButtonBarButtonTitle,
+          NSLocalizedString(@"More", @"'More' ButtonBar View text"), kUIButtonBarButtonTitle,
           @"0", kUIButtonBarButtonType,
- 		  NSLocalizedString(@"More", @"More"), ButtonBarOfficialName,
+ 		  NSLocalizedString(@"More", @"'More' ButtonBar View text"), ButtonBarOfficialName,
           nil 
         ], 
 
@@ -404,7 +404,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			DEBUG(NSLog(@"VIEW_TIME");)
 			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
 			{
-				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.");
+				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 				[_settings setObject:@"" forKey:SettingsTimeAlertSheetShown];
 				[self saveData];
 			}
@@ -415,7 +415,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			[_statisticsView reloadData];
 			if([_settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
 			{
-				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.");
+				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
 				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
 				[self saveData];
 			}

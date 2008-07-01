@@ -174,7 +174,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 		// 1 = red
 		// 2 = left arrow
 		// 3 = blue
-		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Placements", @"Placements")] autorelease] ];
+		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Placements", @"View Title and ButtonBar Title for the Day's Bulk Placed Publications")] autorelease] ];
 		[_navigationBar showLeftButton:NSLocalizedString(@"Cancel", @"Cancel NavigationBar Button") withStyle:2 rightButton:NSLocalizedString(@"Done", @"Done/Save NavigationBar Button") withStyle:3];
 		_table = [[LiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:entries];
@@ -371,7 +371,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 	if(group == 1)
 	{
 		cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
-		[cell setTitle:NSLocalizedString(@"Placements:", @"Placements:")];
+		[cell setTitle:NSLocalizedString(@"Placements:", @"Placements Group title for the Day's Bulk Literature Placements")];
 	}
 
     return(cell);
@@ -400,7 +400,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 		UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 		[cell setShowDisclosure:YES];
 		NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[_editingPlacements objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-		[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d, %Y", @"%a %b %d, %Y")]];
+		[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d, %Y", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year")]];
 		return(cell);
 	}
 	else
@@ -410,7 +410,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 			UIPreferencesTableCell *cell = [[[UIPreferencesTableCell alloc] initWithFrame:CGRectZero] autorelease];
 			[cell setShowDisclosure:YES];
 			[cell setShowSelection: YES];
-			[cell setValue:NSLocalizedString(@"Add a placed publications", @"Add a placed publications")];
+			[cell setValue:NSLocalizedString(@"Add a placed publications", @"Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications'")];
 			return(cell);
 		}
 		else
@@ -422,19 +422,19 @@ extern NSString const * const BulkLiteratureArrayDay;
 			NSString *name = [entry objectForKey:BulkLiteratureArrayTitle];
 			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
 			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
-			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Magazine")])
+			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")])
 			{
-				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"%d: %@"), count, name]];
+				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
 			}
 			else
 			{
 				if(count == 1)
 				{
-					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"%d %@: %@"), count, type, name]];
+					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Broshure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications"), count, type, name]];
 				}
 				else
 				{	
-					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"%d %@s: %@"), count, type, name]];
+					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Broshures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications"), count, type, name]];
 				}
 			}
 			return(cell);

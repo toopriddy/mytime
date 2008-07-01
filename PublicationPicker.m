@@ -25,6 +25,24 @@
 #define YEAR_OFFSET 1900
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
+#define AlternateLocalizedString(a, b) (a)
+
+static NSString *MONTHS[] = {
+	AlternateLocalizedString(@"Jan", @"Short month name"),
+	AlternateLocalizedString(@"Feb", @"Short month name"),
+	AlternateLocalizedString(@"Mar", @"Short month name"),
+	AlternateLocalizedString(@"Apr", @"Short month name"),
+	AlternateLocalizedString(@"May", @"Short month name"),
+	AlternateLocalizedString(@"Jun", @"Short month name"),
+	AlternateLocalizedString(@"Jul", @"Short month name"),
+	AlternateLocalizedString(@"Aug", @"Short month name"),
+	AlternateLocalizedString(@"Sep", @"Short month name"),
+	AlternateLocalizedString(@"Oct", @"Short month name"),
+	AlternateLocalizedString(@"Nov", @"Short month name"),
+	AlternateLocalizedString(@"Dec", @"Short month name")
+};
+
+
 @implementation PublicationPicker
 
 
@@ -39,100 +57,113 @@ typedef struct {
 	NSString * type;
 } PublicationInformation;
 
-static PublicationInformation PUBLICATIONS[] = {
-	{@"Watchtower",                      PublicationTypeMagazine}
-,   {@"Awake",                           PublicationTypeMagazine}
+/*
+Just a way that the genstrings program can pickup the publication types
+ 
+NSLocalizedString(@"Book", @"Publication Type name")
+NSLocalizedString(@"Brochure", @"Publication Type name")
+NSLocalizedString(@"Magazine", @"Publication Type name")
+NSLocalizedString(@"Tract", @"Publication Type name")
+NSLocalizedString(@"Special", @"Publication Type name")
+ 
+*/
 
-,   {@"   BOOKS",    PublicationTypeHeading}
-,   {@"Bible",    PublicationTypeBook}
+#define AlternateLocalizedString(a, b) (a)
 
-,   {@"All Scripture",    PublicationTypeBook}
-,   {@"Bible Stories",    PublicationTypeBook}
-,   {@"Bible Teach",    PublicationTypeBook}
-,   {@"Close to Jehovah",    PublicationTypeBook}
-,   {@"Concordance",    PublicationTypeBook}
-,   {@"Creation",    PublicationTypeBook}
-,   {@"Creator",    PublicationTypeBook}
-,   {@"Daniel's Prophecy",    PublicationTypeBook}
-,   {@"Family Happiness",    PublicationTypeBook}
-,   {@"God's Word",    PublicationTypeBook}
-,   {@"Greatest Man",    PublicationTypeBook}
-,   {@"Insight",    PublicationTypeBook}
-,   {@"Isaiah's Prophecy I",    PublicationTypeBook}
-,   {@"Isaiah's Prophecy II",    PublicationTypeBook}
-,   {@"Jehovah's Day",    PublicationTypeBook}
-,   {@"Knowledge",    PublicationTypeBook}
-,   {@"Mankind's Search for God",    PublicationTypeBook}
-,   {@"Ministry School",    PublicationTypeBook}
-,   {@"My Book of Bible Stories",        PublicationTypeBook}
-,   {@"Organized",    PublicationTypeBook}
-,   {@"Proclaimers",    PublicationTypeBook}
-,   {@"Revelation Climax",    PublicationTypeBook}
-,   {@"Sing Praises",    PublicationTypeBook}
-,   {@"Teacher",    PublicationTypeBook}
-,   {@"Worship God",    PublicationTypeBook}
-,   {@"Young People Ask",    PublicationTypeBook}
-,   {@"Reasoning",    PublicationTypeBook}
+static const PublicationInformation PUBLICATIONS[] = {
+{AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
+,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name"),       PublicationTypeMagazine}
 
-,   {@"   BROCHURES",    PublicationTypeHeading}
-,   {@"Blood",    PublicationTypeBrochure}
-,   {@"Book for All",    PublicationTypeBrochure}
-,   {@"Divine Name",    PublicationTypeBrochure}
-,   {@"Does God Care",    PublicationTypeBrochure}
-,   {@"Education",    PublicationTypeBrochure}
-,   {@"God's Friend",    PublicationTypeBrochure}
-,   {@"Good Land",    PublicationTypeBrochure}
-,   {@"Government",    PublicationTypeBrochure}
-,   {@"Guidance of God",    PublicationTypeBrochure}
-,   {@"Jehovah's Witnesses",    PublicationTypeBrochure}
-,   {@"Lasting Peace",    PublicationTypeBrochure}
-,   {@"Life on Earth",    PublicationTypeBrochure}
-,   {@"Look!",    PublicationTypeBrochure}
-,   {@"Nations",    PublicationTypeBrochure}
-,   {@"Our Problems",    PublicationTypeBrochure}
-,   {@"Purpose of Life",    PublicationTypeBrochure}
-,   {@"Require",    PublicationTypeBrochure}
-,   {@"Satisfying Life",    PublicationTypeBrochure}
-,   {@"Spirits of the Dead",    PublicationTypeBrochure}
-,   {@"Trinity",    PublicationTypeBrochure}
-,   {@"Watch!",    PublicationTypeBrochure}
-,   {@"When Someone Dies",    PublicationTypeBrochure}
-,   {@"When We Die",    PublicationTypeBrochure}
-,   {@"Why Worship God",    PublicationTypeBrochure}
-,   {@"World Without War",    PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
+,   {AlternateLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
+
+,   {AlternateLocalizedString(@"All Scripture", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Bible Stories", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Bible Teach", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Close to Jehovah", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Concordance", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Creation", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Creator", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Daniel's Prophecy", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Family Happiness", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"God's Word", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Greatest Man", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Insight", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Jehovah's Day", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Knowledge", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Mankind's Search for God", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Ministry School", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"My Book of Bible Stories", @"Book Publication Name"),       PublicationTypeBook}
+,   {AlternateLocalizedString(@"Organized", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Proclaimers", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Revelation Climax", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Sing Praises", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Teacher", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Worship God", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Young People Ask", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Reasoning", @"Book Publication Name"),   PublicationTypeBook}
+
+,   {AlternateLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+,   {AlternateLocalizedString(@"Blood", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Book for All", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Divine Name", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Does God Care", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Education", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"God's Friend", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Good Land", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Government", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Guidance of God", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Lasting Peace", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Life on Earth", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Look!", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Nations", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Our Problems", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Purpose of Life", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Require", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Satisfying Life", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Trinity", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Watch!", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"When Someone Dies", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"When We Die", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Why Worship God", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"World Without War", @"Brochures Publication Name"),   PublicationTypeBrochure}
 
 
-,   {@"   TRACTS",    PublicationTypeHeading}
-,   {@"A Peaceful New World-Will It Come?",    PublicationTypeTract}
-,   {@"Does Fate Rule Our Lives",    PublicationTypeTract}
-,   {@"Hellfire-Is It Part of Divine Justice?",    PublicationTypeTract}
-,   {@"How to Find the Road to Paradise",    PublicationTypeTract}
-,   {@"Immortal Spirit",    PublicationTypeTract}
-,   {@"Jehovah's Witnesses-What Do They Believe?",    PublicationTypeTract}
-,   {@"The Greatest Name",    PublicationTypeTract}
-,   {@"Who Are Jehovah's Witnesses?",    PublicationTypeTract}
-,   {@"Comfort for the Depressed",    PublicationTypeTract}
-,   {@"Enjoy Family Life",    PublicationTypeTract}
-,   {@"Jehovah-Who Is He?",    PublicationTypeTract}
-,   {@"Jesus Christ-Who Is He?",    PublicationTypeTract}
-,   {@"Know the Bible",    PublicationTypeTract}
-,   {@"Peaceful New World",    PublicationTypeTract}
-,   {@"Suffering to End",    PublicationTypeTract}
-,   {@"What Do Jehovah's Witnesses Believe?",    PublicationTypeTract}
-,   {@"What Hope for Dead Loved Ones?",    PublicationTypeTract}
-,   {@"Who Really Rules the World?",    PublicationTypeTract}
-,   {@"Why You Can Trust the Bible",    PublicationTypeTract}
-,   {@"Will This World Survive?",    PublicationTypeTract}
+,   {AlternateLocalizedString(@"   TRACTS", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+,   {AlternateLocalizedString(@"A Peaceful New World-Will It Come?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Does Fate Rule Our Lives", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"How to Find the Road to Paradise", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Immortal Spirit", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"The Greatest Name", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Who Are Jehovah's Witnesses?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Comfort for the Depressed", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Enjoy Family Life", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jehovah-Who Is He?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jesus Christ-Who Is He?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Know the Bible", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Peaceful New World", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Suffering to End", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"What Hope for Dead Loved Ones?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Who Really Rules the World?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Why You Can Trust the Bible", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Will This World Survive?", @"Tracts Publication Name"),   PublicationTypeTract}
 };
 
 + (NSString *)watchtower
 {
-	return(PUBLICATIONS[0].name);
+	return([[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[0].name table:@""]);
 }
 
 + (NSString *)awake
 {
-	return(PUBLICATIONS[1].name);
+	return([[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[1].name table:@""]);
 }
 
 // when the user selects something in the picker or moves the picker
@@ -148,9 +179,8 @@ static PublicationInformation PUBLICATIONS[] = {
     int previousYear = _year;
     int previousMonth = _month;
     int previousDay = _day;
-	NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
 	
-    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], [months objectAtIndex:_month], _year + YEAR_OFFSET, _day);)
+    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
 	
 	
     // what is the new publication?
@@ -183,9 +213,7 @@ static PublicationInformation PUBLICATIONS[] = {
        previousDay != _day ||
        previousPublication != _publication)
     {
-		NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
-
-        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], [months objectAtIndex:_month], _year + YEAR_OFFSET, _day);)
+        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
         [p reloadData];
     }
 }
@@ -277,7 +305,7 @@ static PublicationInformation PUBLICATIONS[] = {
     if(col == 0)
     {
 		[cell setAlignment: 0];
-		[cell setTitle: PUBLICATIONS[row].name];
+		[cell setTitle: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row].name value:PUBLICATIONS[row].name table:@""]];
     }
     else
     {
@@ -291,10 +319,8 @@ static PublicationInformation PUBLICATIONS[] = {
 			{
 				case 1: // Month
 				{
-					NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
-
 					[cell setAlignment: 2];
-					[cell setTitle: [months objectAtIndex:row]];
+					[cell setTitle: MONTHS[row]];
 					break;
 				}	
 				case 2: // Year
@@ -316,9 +342,8 @@ static PublicationInformation PUBLICATIONS[] = {
 			{
 				case 1: // Month
 				{
-					NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
 					[cell setAlignment: 2];
-					[cell setTitle: [months objectAtIndex:row]];
+					[cell setTitle: MONTHS[row]];
 					break;
 				}	
 				case 2: // Year
@@ -424,12 +449,11 @@ static PublicationInformation PUBLICATIONS[] = {
 	NSCalendarDate *now = [NSCalendarDate calendarDate];
 	
     // set the default publication to be the watchtower this month and year
-    int publication = 0;
     int year = [now yearOfCommonEra];
     int month = [now monthOfYear];
     int day = 1;
 	
-    return([self initWithFrame:rect publication:PUBLICATIONS[publication].name year:year month:month day:day]);
+    return([self initWithFrame:rect publication:[PublicationPicker watchtower] year:year month:month day:day]);
 }
 
 // initialize this view given the curent configuration
@@ -444,7 +468,7 @@ static PublicationInformation PUBLICATIONS[] = {
         _publication = 0;
         for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
         {
-            if([publication isEqualToString:PUBLICATIONS[i].name])
+            if([publication isEqualToString:[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""]])
             {
                 _publication = i;
                 break;
@@ -498,7 +522,7 @@ static PublicationInformation PUBLICATIONS[] = {
 // string of the publication name
 - (NSString *)publication
 {
-    return([NSString stringWithString: PUBLICATIONS[_publication].name]);
+    return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""]]);
 }
 
 // string of the publication title
@@ -510,23 +534,21 @@ static PublicationInformation PUBLICATIONS[] = {
 	
     if(_publication == 0 || _publication == 1)
     {
-		NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSShortMonthNameArray];
-
         if(day)
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"%@ %@ %d, %d"),PUBLICATIONS[_publication].name, [months objectAtIndex:(month-1)], day, year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], MONTHS[month-1], day, year ]);
         else
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"%@ %@ %d"),PUBLICATIONS[_publication].name, [months objectAtIndex:(month-1)], year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], MONTHS[month-1], year ]);
     }
     else
     {
-        return([NSString stringWithString: PUBLICATIONS[_publication].name]);
+        return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""]] );
     }
 }
 
 // string of the publication name
 - (NSString *)publicationType
 {
-    return([NSString stringWithString: PUBLICATIONS[_publication].type]);
+    return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].type value:PUBLICATIONS[_publication].type table:@""]]);
 }
 
 

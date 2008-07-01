@@ -44,9 +44,9 @@
 	if(_alertSheetText)
 	{
 		UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
-		[alertSheet setTitle:NSLocalizedString(@"Did you know?", @"Did you know?")];
+		[alertSheet setTitle:NSLocalizedString(@"Did you know?", @"'Did you know?' Allert sheet title that informs people of things that they might not know when they are presented with one of the Button Bar Views")];
 		[alertSheet setBodyText:_alertSheetText];
-		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK")];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK/Acknowledgement Button")];
 		[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 0]];
 		[alertSheet setDelegate:self];
 		// 0: grey with grey and black buttons

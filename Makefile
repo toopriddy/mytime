@@ -127,7 +127,9 @@ fixgenstrings: fixgenstrings.c
 	gcc fixgenstrings.c -o fixgenstrings
 	
 genstrings: fixgenstrings
-	genstrings $(SOURCES) -o English.lproj/
+#	rm -f English.lproj/Localizable.strings
+#	for x in $(SOURCES); do genstrings $$x -a -s AlternateLocalizedString -o English.lproj/; done
+	genstrings $(SOURCES) -s AlternateLocalizedString -o English.lproj/
 	./fixgenstrings English.lproj/Localizable.strings > English.lproj/temp.strings
 	mv English.lproj/temp.strings English.lproj/Localizable.strings
 	
