@@ -96,7 +96,7 @@
         CGSize navSize = [UINavigationBar defaultSize];
         UINavigationBar *nav = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0,0,rect.size.width, navSize.height)] autorelease];
         [nav setDelegate: self];
-        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Publication", @"Select Publication")] autorelease] ];
+        [nav pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Select Publication", @"'Select Publication' Publication Picker title")] autorelease] ];
 		[nav setAutoresizingMask: kTopBarResizeMask];
 		[nav setAutoresizesSubviews: YES];
 //        [nav setBarStyle: 1];
@@ -133,7 +133,7 @@
 #define LABEL_HEIGHT 20.0			
 			UITextLabel *label = [[[UITextLabel alloc] initWithFrame:CGRectMake(0.0, navSize.height + pickerSize.height, rect.size.width, LABEL_HEIGHT)] autorelease];
 			[self addSubview:label];
-			[label setText:NSLocalizedString(@"Number Placed:", @"Number Placed:")];
+			[label setText:NSLocalizedString(@"Number Placed:", @"Number Placed label for the Number Picker for the number of publications placed")];
 			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f",                  0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT);)
 			_countPicker = [[NumberedPicker alloc] initWithFrame: CGRectMake(0.0, navSize.height + pickerSize.height + LABEL_HEIGHT, rect.size.width, rect.size.height - navSize.height - pickerSize.height - LABEL_HEIGHT)
 			
@@ -144,7 +144,7 @@
 															 min:1
 															 max:200
 														  number:number
-														   title:NSLocalizedString(@"Count:", @"Count:")];
+														   title:NSLocalizedString(@"Count:", @"'Count' label for Number Picker; this is the label that is beside the number in the picker")];
 			[_countPicker setSoundsEnabled:NO];
 			[_countPicker setAutoresizingMask: kMainAreaResizeMask];
 			[_countPicker setAutoresizesSubviews: YES];
@@ -155,7 +155,7 @@
 			_countPicker = nil;
 			VERY_VERBOSE(NSLog(@"CGRectMake: %f,%f  %f,%f", 0.0, navSize.height + pickerSize.height, rect.size.height - navSize.height - pickerSize.height, rect.size.width);)
 			UITable *table = [[UITable alloc] initWithFrame: CGRectMake(0, navSize.height + pickerSize.height, rect.size.width, rect.size.height - navSize.height - pickerSize.height)];
-			[table addTableColumn: [[[UITableColumn alloc] initWithTitle:NSLocalizedString(@"Placed Publications", @"Placed Publications") identifier:nil width:rect.size.width] autorelease]];
+				[table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Placed Publications" identifier:nil width:rect.size.width] autorelease]];
 			[table setAutoresizingMask: kMainAreaResizeMask];
 			[table setAutoresizesSubviews: YES];
 			[self addSubview: table];

@@ -68,7 +68,7 @@
 	if(street && [street length])
 		title = [title stringByAppendingString:street];
 	if([title length] == 0)
-		title = NSLocalizedString(@"(unknown street)", @"(unknown street)");
+		title = NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");
 
 	[cell setTitle: title];
 
@@ -151,7 +151,7 @@
 	switch(_sortBy)
 	{
 		case CALLS_SORTED_BY_DATE:
-			name = NSLocalizedString(@"Oldest Return Visits First", @"Oldest Return Visits First");
+			name = NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'");
 			break;
 			
 		case CALLS_SORTED_BY_CITY:
@@ -367,7 +367,7 @@ int sortByDate(id v1, id v2, void *context)
 		NSString *city = [[_calls objectAtIndex:i] objectForKey:CallCity];
 		if([city length] == 0)
 		{
-			sectionTitle = NSLocalizedString(@"Unknown", @"Unknown");
+			sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
 		}
 		else
 		{
@@ -465,8 +465,8 @@ int sortByDate(id v1, id v2, void *context)
 		
         [self addSubview: _navigationBar]; 
 
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
-        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Calls", @"Calls")] autorelease] ];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"Add Button") withStyle:3];
+        [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Calls", @"Single Call Edit/View table title")] autorelease] ];
 		_tableOffset.x = s.height;
 		_tableOffset.y = 0;
 		_section = [[CustomSectionList alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) showSectionIndex:YES]; 
@@ -477,7 +477,7 @@ int sortByDate(id v1, id v2, void *context)
 		[_section setAutoresizesSubviews: YES];
 		
         _table = [_section table];
-        [_table addTableColumn: [[[UITableColumn alloc] initWithTitle:NSLocalizedString(@"Calls", @"Calls") identifier:nil width:rect.size.width] autorelease]];
+        [_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Calls" identifier:nil width:rect.size.width] autorelease]];
         [_table setSeparatorStyle:1];
         [_table setRowHeight:48.0f];
         [_table setDelegate:self];

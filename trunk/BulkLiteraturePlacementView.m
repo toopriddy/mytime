@@ -212,8 +212,8 @@ static int sortByDate(id v1, id v2, void *context)
 		// 1 = red
 		// 2 = left arrow
 		// 3 = blue
-		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Bulk Placements", @"Bulk Placements")] autorelease] ];
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"+") withStyle:3];
+		[_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Bulk Placements", @"Title for Bulk Placements view")] autorelease] ];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"Add Button") withStyle:3];
 		_table = [[BulkLiteraturePlacementTable alloc] initWithFrame: CGRectMake(0, s.height, rect.size.width, rect.size.height - s.height) 
 		                                           entries:_entries];
 		
@@ -338,7 +338,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 	
 	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"%a %b %d")]];
+	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number")]];
 
 	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray];
 	int i;
@@ -353,8 +353,14 @@ static int sortByDate(id v1, id v2, void *context)
 	float bgColor[] = { 0,0,0,0 };
 	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 	
-	[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d publications", @"%d publications"), number]];
-	
+	if(number == 1)
+	{
+		[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d publication", @"1, singular publication, shown as '%d publication'"), number]];
+	}
+	else
+	{
+		[label setText:[NSString stringWithFormat:NSLocalizedString(@"%d publications", @"more than one publications, shown as '%d publications'"), number]];
+	}
 	[cell addSubview: label];
 	
 	return cell;

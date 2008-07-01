@@ -24,7 +24,22 @@
 
 const char* svn_version(void);
 
+#define AlternateLocalizedString(a, b) (a)
 
+static NSString *MONTHS[] = {
+	AlternateLocalizedString(@"January", @"Long month name"),
+	AlternateLocalizedString(@"February", @"Long month name"),
+	AlternateLocalizedString(@"March", @"Long month name"),
+	AlternateLocalizedString(@"April", @"Long month name"),
+	AlternateLocalizedString(@"May", @"Long month name"),
+	AlternateLocalizedString(@"June", @"Long month name"),
+	AlternateLocalizedString(@"July", @"Long month name"),
+	AlternateLocalizedString(@"August", @"Long month name"),
+	AlternateLocalizedString(@"September", @"Long month name"),
+	AlternateLocalizedString(@"October", @"Long month name"),
+	AlternateLocalizedString(@"November", @"Long month name"),
+	AlternateLocalizedString(@"December", @"Long month name")
+};
 
 @implementation StatisticsView
 
@@ -380,16 +395,15 @@ const char* svn_version(void);
 {
     VERBOSE(NSLog(@"preferencesTable: cellForGroup:%d", group);)
 	UIPreferencesTableCell *cell = nil;
-	NSArray *months = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:NSMonthNameArray];
 	switch(group)
 	{
 		case 0:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), [months objectAtIndex:(_thisMonth - 1)]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), MONTHS[_thisMonth - 1]]];
 			break;
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@"), [months objectAtIndex:(_lastMonth - 1)]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), MONTHS[_lastMonth - 1]]];
 			break;
     }
     return(cell);
@@ -430,15 +444,15 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Time", @"Time")];
+				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
 				int hours = _thisMonthMinutes / 60;
 				int minutes = _thisMonthMinutes % 60;
 				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"%d %@ %d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 				else if(hours)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours")]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
 				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 				else
 					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
@@ -447,7 +461,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Books", @"Books")];
+				[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
 				[cell setShowSelection:NO];
 			}
@@ -455,7 +469,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Brochures", @"Brochures")];
+				[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
@@ -463,7 +477,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Magazines", @"Magazines")];
+				[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthMagazines]];
 				[cell setShowSelection:NO];
 			}
@@ -471,7 +485,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits")];
+				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthReturnVisits]];
 				[cell setShowSelection:NO];
 			}
@@ -479,7 +493,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies")];
+				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBibleStudies]];
 				[cell setShowSelection:NO];
 			}
@@ -491,15 +505,15 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Time", @"Time")];
+				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
 				int hours = _lastMonthMinutes / 60;
 				int minutes = _lastMonthMinutes % 60;
 				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"%d %@ %d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 				else if(hours)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), hours, hours == 1 ? NSLocalizedString(@"hour", @"hour") : NSLocalizedString(@"hours", @"hours")]];
+					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
 				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@", @"%d %@"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"minute") : NSLocalizedString(@"minutes", @"minutes")]];
+					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 				else
 					[cell setValue:@"0"];
 				[cell setShowSelection:NO];
@@ -508,7 +522,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Books", @"Books")];
+				[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
 				[cell setShowSelection:NO];
 			}
@@ -516,7 +530,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Brochures", @"Brochures")];
+				[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBrochures]];
 				[cell setShowSelection:NO];
 			}
@@ -524,7 +538,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Magazines", @"Magazines")];
+				[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthMagazines]];
 				[cell setShowSelection:NO];
 			}
@@ -532,7 +546,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits")];
+				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthReturnVisits]];
 				[cell setShowSelection:NO];
 			}
@@ -540,7 +554,7 @@ const char* svn_version(void);
 			{
 				// if we are not editing, then 
 				cell = [[[UIPreferencesTableCell alloc] init] autorelease];
-				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies")];
+				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
 				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBibleStudies]];
 				[cell setShowSelection:NO];
 			}

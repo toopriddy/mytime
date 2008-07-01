@@ -358,7 +358,7 @@ int sortByDate(id v1, id v2, void *context)
 		
         [self addSubview: _navigationBar]; 
 
-		[_navigationBar showLeftButton:nil withStyle:0 rightButton:@"+" withStyle:3];
+		[_navigationBar showLeftButton:nil withStyle:0 rightButton:NSLocalizedString(@"+", @"Add Button") withStyle:3];
         [_navigationBar pushNavigationItem: [[[UINavigationItem alloc] initWithTitle:@"Calls"] autorelease] ];
 		_tableOffset.x = s.height;
 		_tableOffset.y = 0;
