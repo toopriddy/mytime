@@ -32,7 +32,7 @@ static NSString *MONTHS[] = {
 	AlternateLocalizedString(@"Feb", @"Short month name"),
 	AlternateLocalizedString(@"Mar", @"Short month name"),
 	AlternateLocalizedString(@"Apr", @"Short month name"),
-	AlternateLocalizedString(@"May", @"Short month name"),
+	AlternateLocalizedString(@"May", @"Short/Long month name"),
 	AlternateLocalizedString(@"Jun", @"Short month name"),
 	AlternateLocalizedString(@"Jul", @"Short month name"),
 	AlternateLocalizedString(@"Aug", @"Short month name"),
@@ -67,8 +67,6 @@ NSLocalizedString(@"Tract", @"Publication Type name")
 NSLocalizedString(@"Special", @"Publication Type name")
  
 */
-
-#define AlternateLocalizedString(a, b) (a)
 
 static const PublicationInformation PUBLICATIONS[] = {
 {AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
