@@ -101,7 +101,7 @@ copy-languages:
 backup:
 	scp root@$(IPHONE):/var/mobile/Library/MyTime/record.plist ./
 
-test-zip: all
+zip: all
 	for x in $(LANGUAGES); do mkdir -p $(APP_ABS)/$$x; cp -f $$x/Localizable.strings $(APP_ABS)/$$x; done
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip -r MyTime.zip $(WRAPPER_NAME)/*
 	cat temp.mytime.plist | sed -e "s/DATESTRING/`date +"%s"`/g" | \
@@ -116,8 +116,6 @@ else
 endif
 	rm -f temp1.mytime.plist
 	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-$(VERSION).zip
-
-zip: test-zip
 	@echo "Using version = $(VERSION)"
 	@echo "You need to visit this to get your password: http://code.google.com/hosting/settings"
 	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -P `cat ~/.googlecodepassword` -p mytime MyTime-$(VERSION).zip
