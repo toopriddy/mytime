@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1214867394</string>
+			<string>1214889409</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>10d6d8bfd400bc10d7ebbba8811bce8b</string>
+			<string>2ceabb410f17fddf79ba6440a1a28ad0</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-111M.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-111.115.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -109,6 +109,10 @@
 								<string>Exec</string>
 								<string>/bin/chmod 777 /var/mobile/Library/MyTime/record.plist</string>
 							</array>
+							<array>
+								<string>Notice</string>
+								<string>Change Log: Added localization support, I just need people to translate now. Fixed bugs in More view. Added support for 1.1.2 iPhones</string>
+							</array>
 						</array>
 					</array>
 					<array>
@@ -128,6 +132,10 @@
 								<string>Exec</string>
 								<string>/bin/chmod 777 /var/root/Library/MyTime/record.plist</string>
 							</array>
+							<array>
+								<string>Notice</string>
+								<string>Change Log: Added localization support, I just need people to translate now. Fixed bugs in More view. Added support for 1.1.2 iPhones</string>
+							</array>
 						</array>
 					</array>
 				</array>
@@ -140,11 +148,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>152031</string>
+			<string>159511</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>111M</string>
+			<string>111.115</string>
 		</dict>
 	</array>
 </dict>
