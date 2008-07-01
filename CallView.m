@@ -720,7 +720,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// GROUP TITLE
 			UIPreferencesTableCell *cell = [[UIPreferencesTableCell alloc] initWithFrame:CGRectZero];
 			NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[visit objectForKey:CallReturnVisitDate] timeIntervalSinceReferenceDate]] autorelease];	
-			[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d,  %Y", @"Date format for Visit title in Call view")]];
+			[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d, %Y", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year")]];
 
 			// create dictionary entry for This Return Visit
 			[self addGroup:cell];

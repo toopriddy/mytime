@@ -13,17 +13,11 @@
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
 "%@ %@ %d, %d" = "%1$@ %2$@ %3$d, %4$d";
 
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number */
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
 "%a %b %d" = "%a %b %d";
-
-/* Date format for Visit title in Call view */
-"%a %b %d,  %Y" = "%a %b %d,  %Y";
 
 /* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
 "%a %b %d, %Y" = "%a %b %d, %Y";
-
-/* %d %@ */
-"%d %@" = "%1$d %2$@";
 
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
@@ -79,8 +73,20 @@
 /* Expanded name for 'Placements' ButtonBar view text when on the More view */
 "Anonymous Bulk Placements" = "Anonymous Bulk Placements";
 
+/* Short month name */
+"Apr" = "Apr";
+
+/* Long month name */
+"April" = "April";
+
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?";
+
+/* Short month name */
+"Aug" = "Aug";
+
+/* Long month name */
+"August" = "August";
 
 /* Magizine Publication Name */
 "Awake" = "Awake";
@@ -164,9 +170,6 @@
 "Contact Information" = "Contact Information";
 
 /* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
-"Count" = "Count";
-
-/* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
 "Count:" = "Count:";
 
 /* Book Publication Name */
@@ -180,6 +183,12 @@
 
 /* 'Date Sorted' ButtonBar View text */
 "Date Sorted" = "Date Sorted";
+
+/* Short month name */
+"Dec" = "Dec";
+
+/* Long month name */
+"December" = "December";
 
 /* Delete Call button in editing mode of call view */
 "Delete Call" = "Delete Call";
@@ -223,6 +232,12 @@
 /* Book Publication Name */
 "Family Happiness" = "Family Happiness";
 
+/* Short month name */
+"Feb" = "Feb";
+
+/* Long month name */
+"February" = "February";
+
 /* Brochures Publication Name */
 "God's Friend" = "God's Friend";
 
@@ -247,11 +262,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -271,6 +286,12 @@
 /* Book Publication Name */
 "Isaiah's Prophecy II" = "Isaiah's Prophecy II";
 
+/* Short month name */
+"Jan" = "Jan";
+
+/* Long month name */
+"January" = "January";
+
 /* Book Publication Name */
 "Jehovah's Day" = "Jehovah's Day";
 
@@ -285,6 +306,18 @@
 
 /* Tracts Publication Name */
 "Jesus Christ-Who Is He?" = "Jesus Christ-Who Is He?";
+
+/* Short month name */
+"Jul" = "Jul";
+
+/* Long month name */
+"July" = "July";
+
+/* Short month name */
+"Jun" = "Jun";
+
+/* Long month name */
+"June" = "June";
 
 /* Tracts Publication Name */
 "Know the Bible" = "Know the Bible";
@@ -309,6 +342,15 @@
 
 /* Book Publication Name */
 "Mankind's Search for God" = "Mankind's Search for God";
+
+/* Short month name */
+"Mar" = "Mar";
+
+/* Long month name */
+"March" = "March";
+
+/* Short/Long month name */
+"May" = "May";
 
 /* Book Publication Name */
 "Ministry School" = "Ministry School";
@@ -343,8 +385,20 @@
 /* No dont delete the call */
 "No" = "No";
 
+/* Short month name */
+"Nov" = "Nov";
+
+/* Long month name */
+"November" = "November";
+
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Number Placed:";
+
+/* Short month name */
+"Oct" = "Oct";
+
+/* Long month name */
+"October" = "October";
 
 /* OK/Acknowledgement Button */
 "OK" = "OK";
@@ -408,6 +462,12 @@
 
 /* Select Time Title for adding hours of field service to a particular day */
 "Select Time" = "Select Time";
+
+/* Short month name */
+"Sep" = "Sep";
+
+/* Long month name */
+"September" = "September";
 
 /* More View Table Group Title */
 "Settings" = "Settings";

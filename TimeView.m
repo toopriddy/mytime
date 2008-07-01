@@ -323,7 +323,7 @@ static int sortByDate(id v1, id v2, void *context)
 	NSNumber *time = [entry objectForKey:SettingsTimeEntryMinutes];
 
 	NSCalendarDate *date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
-	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number")]];
+	[cell setTitle:[date descriptionWithCalendarFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number")]];
 
 	CGSize s = CGSizeMake( [column width], [table rowHeight] );
 	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(150,0,s.width,s.height)] autorelease];
