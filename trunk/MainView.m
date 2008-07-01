@@ -419,7 +419,7 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
 				[self saveData];
 			}
-			[self transition:transition toView:_statisticsView];
+			[self transition:transition toView:_statisticsView withAlert:alertText];
 			break;
 		case VIEW_BULK_PLACEMENTS:
 			DEBUG(NSLog(@"VIEW_BULK_PLACEMENTS");)
