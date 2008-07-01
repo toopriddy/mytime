@@ -63,9 +63,11 @@
 	NSString *houseNumber = [[_calls objectAtIndex:row] objectForKey:CallStreetNumber ];
 	NSString *street = [[_calls objectAtIndex:row] objectForKey:CallStreet];
 
-	if(houseNumber && [houseNumber length])
-		title = [title stringByAppendingFormat:@"%@ ", houseNumber];
-	if(street && [street length])
+	if(houseNumber && [houseNumber length] && street && [street length])
+		title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber];
+	else if(houseNumber && [houseNumber length])
+		title = [title stringByAppendingString:houseNumber];
+	else if(street && [street length])
 		title = [title stringByAppendingString:street];
 	if([title length] == 0)
 		title = NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");

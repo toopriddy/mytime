@@ -603,14 +603,18 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[top setString:@""];
 		NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
 		[bottom setString:@""];
-#warning what about localizing addresses?
 		BOOL found = NO;
-		if(streetNumber != nil &&[streetNumber length])
+		if(streetNumber && [streetNumber length] && street && [street length])
 		{
-			[top appendFormat:@"%@ ", streetNumber];
+			[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), streetNumber, street];
 			found = YES;
 		}
-		if(street != nil && [street length])
+		else if(streetNumber && [streetNumber length])
+		{
+			[top appendFormat:@"%@", streetNumber];
+			found = YES;
+		}
+		else if(street && [street length])
 		{
 			[top appendFormat:@"%@", street];
 			found = YES;
