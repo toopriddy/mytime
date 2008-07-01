@@ -7,6 +7,9 @@
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRACTS";
 
+/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
+"%@ %@" = "%1$@ %2$@";
+
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
 "%@ %@ %d" = "%1$@ %2$@ %3$d";
 
