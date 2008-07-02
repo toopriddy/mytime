@@ -82,7 +82,8 @@ APP_ABS=$(CONFIGURATION_BUILD_DIR)/$(WRAPPER_NAME)
 PRODUCT_ABS=$(APP_ABS)/$(EXECUTABLE_NAME)
 
 VERSION=$(shell svnversion -n . | tr ":" ".")
-IPHONE=10.10.10.239
+#IPHONE=10.10.10.239
+IPHONE=192.168.0.101
 
 all: $(PRODUCT_ABS)
 
@@ -101,6 +102,7 @@ copy-languages:
 backup:
 	scp root@$(IPHONE):/var/mobile/Library/MyTime/record.plist ./
 
+# this builds the release file
 zip: all
 	for x in $(LANGUAGES); do mkdir -p $(APP_ABS)/$$x; cp -f $$x/Localizable.strings $(APP_ABS)/$$x; done
 	cd $(CONFIGURATION_BUILD_DIR)/ && zip -r MyTime.zip $(WRAPPER_NAME)/*

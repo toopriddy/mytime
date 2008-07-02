@@ -72,7 +72,10 @@ NSString const * const SettingsLastCallState = @"lastState";
 NSString const * const SettingsCurrentButtonBarView = @"currentButtonBarView";
 
 NSString const * const SettingsTimeAlertSheetShown = @"timeAlertShown";
-NSString const * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown";
+NSString const * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown2";
+
+NSString const * const SettingsMainAlertSheetShown = @"mainAlertShown1";
+
 
 NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
@@ -95,17 +98,7 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 
 #define PROPERTY_LIST 0
 
-#if 0
-- (void)setBounds:(CGRect)boundsRect
-{
-	boundsRect.origin.x = 0;
-	boundsRect.origin.y = 0;
-	_rect = boundsRect;
-	[super setBounds:boundsRect];
-	//[_sortedCallsView setBounds:boundsRect];
-}
-#endif
--(void)loadData
+- (NSString *)fileName
 {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	BOOL isDir = NO;
@@ -118,7 +111,22 @@ static NSString *newDataPath = @"/var/mobile/Library/";
 	{
 		theDataFile = oldDataFile;
 	}
+	return(theDataFile);
+}
 
+#if 0
+- (void)setBounds:(CGRect)boundsRect
+{
+	boundsRect.origin.x = 0;
+	boundsRect.origin.y = 0;
+	_rect = boundsRect;
+	[super setBounds:boundsRect];
+	//[_sortedCallsView setBounds:boundsRect];
+}
+#endif
+-(void)loadData
+{
+	NSString *theDataFile = [self fileName];
 #if PROPERTY_LIST
 	NSString *errorString = nil;
 	NSData *data = [[NSData alloc] initWithContentsOfFile: theDataFile];
@@ -404,8 +412,8 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			DEBUG(NSLog(@"VIEW_TIME");)
 			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
 			{
-				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 				[_settings setObject:@"" forKey:SettingsTimeAlertSheetShown];
+				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 				[self saveData];
 			}
 			[self transition:transition toView:_timeView withAlert:alertText];
@@ -415,8 +423,8 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			[_statisticsView reloadData];
 			if([_settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
 			{
-				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
 				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
+				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
 				[self saveData];
 			}
 			[self transition:transition toView:_statisticsView withAlert:alertText];
@@ -556,7 +564,6 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 
 		[self addSubview: _buttonBar];
 		[_buttonBar showSelectionForButton: _currentButtonBarView];
-
     }
     
     return(self);

@@ -63,6 +63,8 @@ typedef enum {
 - (int *)allViewsWithCount:(int *)count;
 - (int *)unusedViewsWithCount:(int *)count;
 
+- (NSString *)fileName;
+
 - (void)setBounds:(CGRect)rect;
 
 - (NSMutableDictionary *)getSavedData;
@@ -165,6 +167,7 @@ extern NSString const * const SettingsCurrentButtonBarView;
 
 extern NSString const * const SettingsTimeAlertSheetShown;
 extern NSString const * const SettingsStatisticsAlertSheetShown;
+extern NSString const * const SettingsMainAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;

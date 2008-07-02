@@ -64,7 +64,7 @@
 	NSString *street = [[_calls objectAtIndex:row] objectForKey:CallStreet];
 
 	if(houseNumber && [houseNumber length] && street && [street length])
-		title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber];
+		title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
 	else if(houseNumber && [houseNumber length])
 		title = [title stringByAppendingString:houseNumber];
 	else if(street && [street length])
