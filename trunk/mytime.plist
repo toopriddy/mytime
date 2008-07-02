@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1214889588</string>
+			<string>1214977151</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>f5e211b6a4152385c11e18c9657b6ffe</string>
+			<string>c677f541ea0123d0a2f30c6ba56623c4</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-115.118.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-121M.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -111,7 +111,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Added localization support, I just need people to translate now. Fixed bugs in More view. Added support for 1.1.2 iPhones</string>
+								<string>Change Log: Finalized localization support, added backup to email, added informative alerts, fixed bugs</string>
 							</array>
 						</array>
 					</array>
@@ -134,7 +134,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Added localization support, I just need people to translate now. Fixed bugs in More view. Added support for 1.1.2 iPhones</string>
+								<string>Change Log: Finalized localization support, added backup to email, added informative alerts, fixed bugs</string>
 							</array>
 						</array>
 					</array>
@@ -148,11 +148,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>159508</string>
+			<string>156551</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>115.118</string>
+			<string>121M</string>
 		</dict>
 	</array>
 </dict>
