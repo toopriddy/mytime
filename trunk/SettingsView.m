@@ -92,6 +92,9 @@ const char* svn_version(void);
 
 	// mytime website
 	count++;
+
+	// backup
+	count++;
 	
 	// version
 	count++;
@@ -130,7 +133,13 @@ const char* svn_version(void);
 		// version 
 		case 4:
 			count++; //version
+			break;
+			
+		// version 
+		case 5:
+			count++; //version
 			count++; //build date
+			break;
     }
     VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d count:%d", group, count);)
 	return(count);
@@ -164,8 +173,14 @@ const char* svn_version(void);
 			[cell setTitle:NSLocalizedString(@"Contact Information", @"More View Table Group Title")];
 			break;
 		
+        // Backup
+        case 4:
+			cell = [[UIPreferencesTableCell alloc] init];
+			[cell setTitle:NSLocalizedString(@"Backup", @"More View Table Group Title")];
+			break;
+		
 		// version 
-		case 4:
+		case 5:
 			cell = [[UIPreferencesTableCell alloc] init];
 			[cell setTitle:NSLocalizedString(@"Version", @"More View Table Group Title")];
 			break;
@@ -265,8 +280,20 @@ const char* svn_version(void);
 			}
 			break;
 		
+        // Website
+        case 4:
+			switch(row)
+			{
+				case 0:
+					cell = [[UIPreferencesTableCell alloc] init];
+					[cell setTitle:NSLocalizedString(@"Backup your data", @"More View Table backup your data")];
+                    [cell setShowDisclosure: YES];
+					break;
+			}
+			break;
+		
 		// version 
-		case 4:
+		case 5:
 			switch(row)
 			{
 				case 0:
@@ -358,6 +385,19 @@ const char* svn_version(void);
 		[[App getInstance] openURL:url];
 		return;
 	}
+	--row; // gap
+
+	// Backup your data
+	if(--row == 0)
+	{
+		// open up a url to mytime.googlecode.com
+		NSString *string = @"mailto:?subject=MyTime%20Application%20Data&body=Send%20this%20to%20yourself%20and%20use%20information%20on%20the%20mytime.googlecode.com%20website%20to%20restore%20this%20data&attachment=";
+		string = [string stringByAppendingString:[[[App getInstance] mainView] fileName]];
+		NSURL *url = [NSURL URLWithString:string];
+		[[App getInstance] openURL:url];
+		return;
+	}
+
 }
 
 /******************************************************************

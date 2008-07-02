@@ -105,6 +105,22 @@ App *me;
     [_transitionView transition:0 toView:_mainView]; 
 	[_mainView setAutoresizingMask: kMainAreaResizeMask];
 	[_mainView setAutoresizesSubviews: YES];
+
+	if([[self getSavedData] objectForKey:SettingsMainAlertSheetShown] == nil)
+	{
+		[[self getSavedData] setObject:@"" forKey:SettingsMainAlertSheetShown];
+
+		UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
+		[alertSheet setTitle:NSLocalizedString(@"MyTime Info", @"Main allert sheet for new news, this might be presented as different information everytime that you upgrade")];
+		[alertSheet setBodyText:NSLocalizedString(@"Thanks for using MyTime! Unfortunately you will not be able to run MyTime if you upgrade to iPhone/iTouch 2.0 software, you need to visit the application website on the 'More' View for backup instructions.  If you work for apple or know someone who does, then bug them to accept my Developer Program Application :P\nI am also looking for translators, MyTime has been used by many people in other countries. Interested in helping? Email me.", @"Information for the user to know what is going on with this and new releases")];
+		[alertSheet setDelegate:self];
+		// 0: grey with grey and black buttons
+		// 1: black background with grey and black buttons
+		// 2: transparent black background with grey and black buttons
+		// 3: grey transparent background
+		[alertSheet setAlertSheetStyle: 0];
+		[alertSheet popupAlertAnimated:YES];		
+	}
 }
 
 
