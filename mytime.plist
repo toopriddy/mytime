@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1214977666</string>
+			<string>1215064090</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>555899917ef3fd8eb3796c4802f76354</string>
+			<string>08adfce8de6850e9be82b303a9516046</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-121.123.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-130.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -111,7 +111,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Finalized localization support, added backup to email, added informative alerts, fixed bugs</string>
+								<string>Change Log: Fixed main popup annoyance, sorry :(  Added the ability to re-enable popups</string>
 							</array>
 						</array>
 					</array>
@@ -134,7 +134,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Finalized localization support, added backup to email, added informative alerts, fixed bugs</string>
+								<string>Change Log: Fixed main popup annoyance, sorry :(  Added the ability to re-enable popups</string>
 							</array>
 						</array>
 					</array>
@@ -148,11 +148,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>156553</string>
+			<string>161915</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>121.123</string>
+			<string>130</string>
 		</dict>
 	</array>
 </dict>
