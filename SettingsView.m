@@ -121,7 +121,8 @@ const char* svn_version(void);
 		
         // Settings
         case 2:
-			count++; 
+			count++; // edit button bar
+			count++; // enable popups
 			break;
 		
         // Website
@@ -161,7 +162,7 @@ const char* svn_version(void);
 			[cell setTitle:NSLocalizedString(@"Other Views", @"More View Table Group Title")];
 			break;
 		
-        // First/Second
+        // Settings
 		case 2:
 			cell = [[UIPreferencesTableCell alloc] init];
 			[cell setTitle:NSLocalizedString(@"Settings", @"More View Table Group Title")];
@@ -249,7 +250,7 @@ const char* svn_version(void);
 			}
 			break;
 		}
-        // First/Second
+        // Settings
 		case 2:
 			switch(row)
 			{
@@ -259,6 +260,11 @@ const char* svn_version(void);
                     [cell setShowDisclosure: YES];
 					break;
 					
+				case 1:
+					cell = [[UIPreferencesTableCell alloc] init];
+					[cell setTitle:NSLocalizedString(@"Enable shown popups", @"More View Table Enable shown popups")];
+                    [cell setShowDisclosure: YES];
+					break;
 			}
 			break;
 		
@@ -363,6 +369,17 @@ const char* svn_version(void);
 	if(--row == 0)
 	{
 		[[[App getInstance] mainView] buttonBarCustomize];
+		return;
+	}
+	// Re-enable popups
+	if(--row == 0)
+	{
+		[_settings removeObjectForKey:SettingsMainAlertSheetShown];
+		[_settings removeObjectForKey:SettingsTimeAlertSheetShown];
+		[_settings removeObjectForKey:SettingsStatisticsAlertSheetShown];
+		[[App getInstance] saveData];
+		[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+
 		return;
 	}
 
