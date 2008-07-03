@@ -413,8 +413,8 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			if([_settings objectForKey:SettingsTimeAlertSheetShown] == nil)
 			{
 				[_settings setObject:@"" forKey:SettingsTimeAlertSheetShown];
-				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 				[self saveData];
+				alertText = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 			}
 			[self transition:transition toView:_timeView withAlert:alertText];
 			break;
@@ -424,8 +424,8 @@ NSString const *ButtonBarOfficialName = @"buttonBarOfficialName";
 			if([_settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
 			{
 				[_settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
-				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
 				[self saveData];
+				alertText = NSLocalizedString(@"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
 			}
 			[self transition:transition toView:_statisticsView withAlert:alertText];
 			break;
