@@ -97,14 +97,29 @@
 						<array>
 							<array>
 								<string>ExistsPath</string>
-								<string>/var/mobile/Library/MyTime/record.plist</string>
+								<string>/var/mobile/Library/</string>
 							</array>
 						</array>
 						<array>
 							<array>
 								<string>Exec</string>
-								<string>/bin/chmod 777 /var/mobile/Library/MyTime/</string>
+								<string>/bin/mkdir -p /var/mobile/Library/MyTime</string>
 							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/mobile/Library/MyTime</string>
+							</array>
+						</array>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
+								<string>/var/mobile/Library/MyTime/record.plist</string>
+							</array>
+						</array>
+						<array>
 							<array>
 								<string>Exec</string>
 								<string>/bin/chmod 777 /var/mobile/Library/MyTime/record.plist</string>
@@ -120,14 +135,29 @@ IFCHANGES							</array>
 						<array>
 							<array>
 								<string>ExistsPath</string>
-								<string>/var/root/Library/MyTime/record.plist</string>
+								<string>/var/root/Library/</string>
 							</array>
 						</array>
 						<array>
 							<array>
 								<string>Exec</string>
-								<string>/bin/chmod 777 /var/root/Library/MyTime/</string>
+								<string>/bin/mkdir -p /var/root/Library/MyTime</string>
 							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/root/Library/MyTime</string>
+							</array>
+						</array>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
+								<string>/var/root/Library/MyTime/record.plist</string>
+							</array>
+						</array>
+						<array>
 							<array>
 								<string>Exec</string>
 								<string>/bin/chmod 777 /var/root/Library/MyTime/record.plist</string>

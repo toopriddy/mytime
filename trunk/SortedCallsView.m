@@ -117,6 +117,7 @@
         [p setCancelAction: @selector(editCallCancelAction:) forObject:self];
         [p setSaveAction: @selector(editCallSaveAction:) forObject:self];
         [p setDeleteAction: @selector(editCallDeleteAction:) forObject:self];
+        [p setDeleteForeverAction: @selector(editCallDeleteForeverAction:) forObject:self];
 		[p setAutoresizingMask: kMainAreaResizeMask];
 		[p setAutoresizesSubviews: YES];
 
@@ -509,6 +510,35 @@ int sortByDate(id v1, id v2, void *context)
 	NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[_settings objectForKey:SettingsDeletedCalls]];
 	[_settings setObject:deletedCalls forKey:SettingsDeletedCalls];
 	[deletedCalls addObject:call];
+	[_calls removeObjectAtIndex:_selectedCall];
+
+    //transitions:
+    // 0 nothing
+    // 1 slide left with the to view to the right
+    // 2 slide right with the to view to the left
+    // 3 from bottom up with the to view right below the from view
+    // 4 from bottom up, but background seems to be invisible
+    // 5 from top down, but background seems to be invisible
+    // 6 fade away to the to view
+    // 7 down with the to view above the from view
+    // 8 from bottom up sliding ontop of
+    // 9 from top down sliding ontop of
+	[self updateSections];
+    [[App getInstance] transition:9 fromView:callView toView:[[App getInstance] mainView]];
+
+	// have the row unselect after the transition back to the View so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:_table
+			   afterDelay:.2];
+	[[App getInstance] saveData];
+}
+
+- (void)editCallDeleteForeverAction: (CallView *)callView
+{
+    DEBUG(NSLog(@"SortedCallsView editCallDeleteAction:");)
+
+	// remove the call from the array
 	[_calls removeObjectAtIndex:_selectedCall];
 
     //transitions:
