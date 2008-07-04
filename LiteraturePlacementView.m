@@ -539,7 +539,6 @@ extern NSString const * const BulkLiteratureArrayDay;
 	
 	// cant insert/delete the group title
 	[[_editingPlacements objectForKey:BulkLiteratureArray] removeObjectAtIndex:(row - 3)];
-	[_table animateDeletionOfCellAtRow:row column:0 viaEdge:1];
 }
 
 

@@ -125,7 +125,16 @@ typedef enum {
 				_editing = NO;
 				_showAddCall = YES;
 				_showDeleteButton = YES;
-				
+				_shouldReloadAll = YES;
+
+				// go through the notes and make them resign the first responder
+				int count = [_returnVisitNotes count];
+				int i;
+				for(i = 0; i < count; ++i)
+				{
+					UIPreferencesTextTableCell *cell = [_returnVisitNotes objectAtIndex:i];
+					[cell resignFirstResponder];
+				}				
 				// we dont save a new call untill they hit "Done"
 				_newCall = NO;
 				[self save];
@@ -140,6 +149,7 @@ typedef enum {
 				[_table setKeyboardVisible:NO animated:NO];
 				[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 				[self reloadData];
+				[_table reloadData];
 				
 				break;
 
@@ -197,6 +207,12 @@ typedef enum {
 {
     _deleteObject = obj;
     _deleteSelector = aSelector;
+}
+
+- (void)setDeleteForeverAction: (SEL)aSelector forObject:(NSObject *)obj
+{
+    _deleteForeverObject = obj;
+    _deleteForeverSelector = aSelector;
 }
 
 - (void)setSaveAction: (SEL)aSelector forObject:(NSObject *)obj
@@ -391,9 +407,11 @@ typedef enum {
 	[alertSheet setTitle:NSLocalizedString(@"Delete Call?", @"Delete Call question title")];
 	[alertSheet setBodyText:NSLocalizedString(@"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")];
 	[alertSheet addButtonWithTitle:NSLocalizedString(@"Yes", @"Yes delete the call")];
+	[alertSheet addButtonWithTitle:NSLocalizedString(@"Delete and don't keep info", @"Yes delete the call and the data")];
 	[alertSheet addButtonWithTitle:NSLocalizedString(@"No", @"No dont delete the call")];
 	[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 0]];
-	[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 1]];
+	[alertSheet setDestructiveButton: [[alertSheet buttons] objectAtIndex: 1]];
+	[alertSheet setDefaultButton: [[alertSheet buttons] objectAtIndex: 2]];
 	[alertSheet setDelegate:self];
 	// 0: grey with grey and black buttons
 	// 1: black background with grey and black buttons
@@ -961,6 +979,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
         _saveObject = nil;
         _cancelObject = nil;
 		_deleteObject = nil;
+		_deleteForeverObject = nil;
 		_setFirstResponderGroup = -1;
 		_shouldReloadAll = YES;
 		
@@ -1402,6 +1421,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 - (void)alertSheet:(UIAlertSheet*)sheet buttonClicked:(int)button
 {
+	NSLog(@"alertSheet: button:%d", button);
 	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 	[sheet dismissAnimated:YES];
 	if(button == 1)
@@ -1409,6 +1429,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		if(_deleteObject != nil)
 		{
 			[_deleteObject performSelector:_deleteSelector withObject:self];
+		}
+	}
+	if(button == 2)
+	{
+		if(_deleteForeverObject != nil)
+		{
+			[_deleteForeverObject performSelector:_deleteForeverSelector withObject:self];
 		}
 	}
 }

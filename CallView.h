@@ -23,6 +23,9 @@
     NSObject *_deleteObject;
     SEL _deleteSelector;
     
+    NSObject *_deleteForeverObject;
+    SEL _deleteForeverSelector;
+    
     NSObject *_saveObject;
     SEL _saveSelector;
     
@@ -98,6 +101,15 @@
  * @returns self
  */
 - (void)setDeleteAction: (SEL)aSelector forObject:(NSObject *)obj;
+
+/**
+ * setup a callback for clicking on the delete button
+ *
+ * @param aSelector - the selector on obj to callback
+ * @param obj - the object to callback using the passed in aSelector
+ * @returns self
+ */
+- (void)setDeleteForeverAction: (SEL)aSelector forObject:(NSObject *)obj;
 
 /**
  * setup a callback for clicking on the cancel button
