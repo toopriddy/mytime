@@ -199,6 +199,9 @@
 /* Long month name */
 "December" = "December";
 
+/* Yes delete the call and the data */
+"Delete and don't keep info" = "Delete and don't keep info";
+
 /* Delete Call button in editing mode of call view */
 "Delete Call" = "Delete Call";
 
@@ -274,11 +277,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* Plural form of the word hours */
-"hours" = "hours";
-
 /* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
 "Hours" = "Hours";
+
+/* Plural form of the word hours */
+"hours" = "hours";
 
 /* House Number */
 "House Number" = "House Number";
