@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1215064090</string>
+			<string>1215145307</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>08adfce8de6850e9be82b303a9516046</string>
+			<string>be7f7b11bcc3614b9aa6800e0b255c23</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-130.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-130.133.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -97,21 +97,55 @@
 						<array>
 							<array>
 								<string>ExistsPath</string>
+								<string>/var/mobile/Library/</string>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/mkdir -p /var/mobile/Library/MyTime</string>
+							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/mobile/Library/MyTime</string>
+							</array>
+						</array>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
 								<string>/var/mobile/Library/MyTime/record.plist</string>
 							</array>
 						</array>
 						<array>
 							<array>
 								<string>Exec</string>
-								<string>/bin/chmod 777 /var/mobile/Library/MyTime/</string>
-							</array>
-							<array>
-								<string>Exec</string>
 								<string>/bin/chmod 777 /var/mobile/Library/MyTime/record.plist</string>
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Fixed main popup annoyance, sorry :(  Added the ability to re-enable popups</string>
+								<string>Change Log: Fixed time delete bug, call notes bug, fixed installer bug, added ability to delete a call and not save statistics</string>
+							</array>
+						</array>
+					</array>
+					<array>
+						<string>If</string>
+						<array>
+							<array>
+								<string>ExistsPath</string>
+								<string>/var/root/Library/</string>
+							</array>
+						</array>
+						<array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/mkdir -p /var/root/Library/MyTime</string>
+							</array>
+							<array>
+								<string>Exec</string>
+								<string>/bin/chmod 777 /var/root/Library/MyTime</string>
 							</array>
 						</array>
 					</array>
@@ -126,15 +160,11 @@
 						<array>
 							<array>
 								<string>Exec</string>
-								<string>/bin/chmod 777 /var/root/Library/MyTime/</string>
-							</array>
-							<array>
-								<string>Exec</string>
 								<string>/bin/chmod 777 /var/root/Library/MyTime/record.plist</string>
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Fixed main popup annoyance, sorry :(  Added the ability to re-enable popups</string>
+								<string>Change Log: Fixed time delete bug, call notes bug, fixed installer bug, added ability to delete a call and not save statistics</string>
 							</array>
 						</array>
 					</array>
@@ -148,11 +178,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>161915</string>
+			<string>161483</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>130</string>
+			<string>130.133</string>
 		</dict>
 	</array>
 </dict>
