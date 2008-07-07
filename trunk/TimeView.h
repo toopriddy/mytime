@@ -31,6 +31,7 @@
     CGRect _rect;
     TimeTable *_table;
 	UINavigationBar *_navigationBar;
+	int _selectedRow;
 	
 	NSMutableArray *_timeEntries;
 }

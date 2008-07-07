@@ -380,6 +380,17 @@ const char* svn_version(void);
 		[[App getInstance] saveData];
 		[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
 
+		UIAlertSheet *alertSheet = [[UIAlertSheet alloc] initWithFrame:CGRectMake(0, 240, 320, 240)];
+		[alertSheet setTitle:NSLocalizedString(@"Enable shown popups", @"Enable popups confirmation popup")];
+		[alertSheet setBodyText:NSLocalizedString(@"Popup messages like this are now enabled all throughout MyTime", @"Confirmation message about enabling popup messages")];
+		[alertSheet setDelegate:self];
+		// 0: grey with grey and black buttons
+		// 1: black background with grey and black buttons
+		// 2: transparent black background with grey and black buttons
+		// 3: grey transparent background
+		[alertSheet setAlertSheetStyle: 0];
+		[alertSheet popupAlertAnimated:YES];		
+
 		return;
 	}
 

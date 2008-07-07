@@ -128,13 +128,9 @@ typedef enum {
 				_shouldReloadAll = YES;
 
 				// go through the notes and make them resign the first responder
-				int count = [_returnVisitNotes count];
-				int i;
-				for(i = 0; i < count; ++i)
-				{
-					UIPreferencesTextTableCell *cell = [_returnVisitNotes objectAtIndex:i];
-					[cell resignFirstResponder];
-				}				
+				UIPreferencesTextTableCell *cell = [[[App getInstance] window] firstResponder];
+				[cell resignFirstResponder];
+
 				// we dont save a new call untill they hit "Done"
 				_newCall = NO;
 				[self save];

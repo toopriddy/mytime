@@ -26,7 +26,7 @@
 
 - (id) initWithFrame: (CGRect)rect;
 // initialize this view given the curent configuration
-- (id) initWithFrame: (CGRect)rect date: (NSCalendarDate *)date;
+- (id) initWithFrame: (CGRect)rect date: (NSCalendarDate *)date minutes:(int)minutes;
 
 /**
  * setup a callback for clicking on the cancel button
