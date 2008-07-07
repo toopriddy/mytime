@@ -21,6 +21,7 @@ NumberedPicker.m \
 LiteraturePlacementView.m \
 BulkLiteraturePlacementView.m \
 svn_version.c \
+CallTableCell.m \
 
 
 RESOURCES=\
@@ -82,8 +83,8 @@ APP_ABS=$(CONFIGURATION_BUILD_DIR)/$(WRAPPER_NAME)
 PRODUCT_ABS=$(APP_ABS)/$(EXECUTABLE_NAME)
 
 VERSION=$(shell svnversion -n . | tr ":" ".")
-#IPHONE=10.10.10.239
-IPHONE=192.168.0.101
+IPHONE=10.10.10.212
+#IPHONE=192.168.0.101
 
 all: $(PRODUCT_ABS)
 

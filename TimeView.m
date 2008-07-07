@@ -27,6 +27,7 @@
 
 @implementation TimeTable
 
+
 - (id)initWithFrame:(CGRect) rect timeEntries:(NSMutableArray*) timeEntries;
 {
     if((self = [super initWithFrame: rect])) 
@@ -106,6 +107,14 @@
 
 
 @implementation TimeView
+
+- (void)unselectRow
+{
+	DEBUG(NSLog(@"unselectRow");)
+	// unselect the row
+	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
+}
+
 
 static int sortByDate(id v1, id v2, void *context)
 {
@@ -227,6 +236,43 @@ static int sortByDate(id v1, id v2, void *context)
 	[[App getInstance] saveData];
 }
 
+- (void)editTimeCancelAction: (TimePickerView *)view
+{
+    DEBUG(NSLog(@"TimeView addTimeCancelAction:");)
+ 
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:self
+			   afterDelay:.2];
+
+	[[App getInstance] transition:2 fromView:view toView:[[App getInstance] mainView]];
+}
+
+- (void)editTimeSaveAction: (TimePickerView *)view
+{
+    DEBUG(NSLog(@"TimeView addTimeSaveAction:");)
+    VERBOSE(NSLog(@"date is = %@, minutes %d", [view date], [view minutes]);)
+	
+	NSMutableDictionary *entry = [_timeEntries objectAtIndex:_selectedRow];
+
+	[entry setObject:[view date] forKey:SettingsTimeEntryDate];
+	[entry setObject:[[[NSNumber alloc] initWithInt:[view minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
+    
+    [[App getInstance] transition:2 fromView:view toView:[[App getInstance] mainView]];
+
+	[self sort];
+
+	// have the row unselect after the transition back to the CallView so that the user
+	// knows where they were and what they clicked on 
+	[self performSelector: @selector(unselectRow) 
+			   withObject:self
+			   afterDelay:.2];
+
+	// save the data
+	[[App getInstance] saveData];
+}
+
 
 
 /******************************************************************
@@ -315,8 +361,8 @@ static int sortByDate(id v1, id v2, void *context)
 {
     DEBUG(NSLog(@"table: cellForRow: %d", row);)
 	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
-	
-	[cell setShowSelection:NO];
+
+	[cell setShowSelection:YES];
 	if(row >= [_timeEntries count])
 		return(NULL);
 	NSMutableDictionary *entry = [_timeEntries objectAtIndex:row];
@@ -344,6 +390,29 @@ static int sortByDate(id v1, id v2, void *context)
 	[cell addSubview: label];
 
 	return cell;
+}
+
+- (void)tableRowSelected:(NSNotification*)notification
+{
+    int row = [[notification object] selectedRow];
+    DEBUG(NSLog(@"tableRowSelected: tableRowSelected row=%@ row%d editing%d", notification, row);)
+	_selectedRow = row;
+	NSMutableDictionary *entry = [_timeEntries objectAtIndex:row];
+
+	NSNumber *minutes = [entry objectForKey:SettingsTimeEntryMinutes];
+	NSCalendarDate *date = [entry objectForKey:SettingsTimeEntryDate];
+
+	[self retain];
+	TimePickerView *p = [[[TimePickerView alloc] initWithFrame:_rect date:date minutes:[minutes intValue]] autorelease];
+
+	// setup the callbacks for save or cancel
+	[p setCancelAction: @selector(editTimeCancelAction:) forObject:self];
+	[p setSaveAction: @selector(editTimeSaveAction:) forObject:self];
+	[p setAutoresizingMask: kMainAreaResizeMask];
+	[p setAutoresizesSubviews: YES];
+
+	// transition from LEFT TO RIGHT
+	[[App getInstance] transition:1 fromView:[[App getInstance] mainView] toView:p];
 }
 
 -(BOOL)table:(UITable*)table deleteRow:(int)row

@@ -8,6 +8,7 @@
 
 
 #import "UIOrientingApplication.h"
+#import "App.h"
 
 @implementation UIOrientingApplication
 
@@ -80,6 +81,8 @@ static const int defaultOrientations[7] = {-1, 0, -1, 90, -90, -1, -1};
 	FullContentBounds.size.width  = landscape ? size.height: size.width; 
 
 NSLog(@"UI (%f, %f) height=%f width=%f", FullContentBounds.origin.x, FullContentBounds.origin.y, FullContentBounds.size.height, FullContentBounds.size.width);
+
+
 	
 	/* Now that our member variable is set, we try to apply these changes to the key view, if present.
 		If this routine is called before there is a key view, it will still set the rects and move the statusbar. */

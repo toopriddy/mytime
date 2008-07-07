@@ -53,11 +53,11 @@
 
 - (id) initWithFrame: (CGRect)rect
 {
-    return([self initWithFrame:rect date:nil]);
+    return([self initWithFrame:rect date:nil minutes:0]);
 }
 
 // initialize this view given the curent configuration
-- (id) initWithFrame: (CGRect)rect date: (NSCalendarDate *)date
+- (id) initWithFrame: (CGRect)rect date: (NSCalendarDate *)date minutes:(int)minutes
 {
     if((self = [super initWithFrame: rect])) 
     {
@@ -118,6 +118,8 @@
 		// 3: hours, mins
 		[_timePicker setDatePickerMode:3];
 		[_timePicker setSoundsEnabled:NO];
+		NSCalendarDate *date = [NSCalendarDate dateWithYear:2000 month:1 day:1 hour:(minutes/60) minute:(minutes%60) second:0 timeZone:nil];
+		[_timePicker setDate:date];
     	[self addSubview: _timePicker];
     }
     

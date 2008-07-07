@@ -46,6 +46,8 @@
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
 		9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTransitionView.m; sourceTree = "<group>"; };
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
+		90D53AA20E21D6CB006F0E2F /* CallTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableCell.h; sourceTree = "<group>"; };
+		90D53AA30E21D6CB006F0E2F /* CallTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableCell.m; sourceTree = "<group>"; };
 		90DE11F00E10A6430085C700 /* BulkLiteraturePlacementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulkLiteraturePlacementView.h; sourceTree = "<group>"; };
 		90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkLiteraturePlacementView.m; sourceTree = "<group>"; };
 		90F13EC40E161140009772BD /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
@@ -112,6 +114,8 @@
 				ACBEE6970D2427BA007CEA24 /* AddressView.m */,
 				90DE11F00E10A6430085C700 /* BulkLiteraturePlacementView.h */,
 				90DE11F10E10A6430085C700 /* BulkLiteraturePlacementView.m */,
+				90D53AA20E21D6CB006F0E2F /* CallTableCell.h */,
+				90D53AA30E21D6CB006F0E2F /* CallTableCell.m */,
 				90BC4F090D3F104500E70FB1 /* CallView.h */,
 				ACBEE6AE0D24289B007CEA24 /* CallView.m */,
 				906AC1E40D502EFB0065CC89 /* DatePickerView.h */,
