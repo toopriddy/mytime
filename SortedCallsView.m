@@ -23,6 +23,7 @@
 #import "MainView.h"
 #import "CallView.h"
 #import "SortedCallsView.h"
+#import "CallTableCell.h"
 
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
@@ -58,6 +59,7 @@
 
 - (UITableCell*)table:(UITable*)table cellForRow:(int)row column:(UITableColumn *)column
 {
+#if 0
 	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
 	NSString *title = [[[NSString alloc] init] autorelease];
 	NSString *houseNumber = [[_calls objectAtIndex:row] objectForKey:CallStreetNumber ];
@@ -80,7 +82,9 @@
 	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
 	[label setText:[[_calls objectAtIndex:row] objectForKey:CallName]];
 	[cell addSubview: label];
-
+#else
+	CallTableCell *cell = [[CallTableCell alloc] initWithCall:[_calls objectAtIndex:row]];
+#endif
 	return cell;
 }
 
@@ -482,7 +486,7 @@ int sortByDate(id v1, id v2, void *context)
         _table = [_section table];
         [_table addTableColumn: [[[UITableColumn alloc] initWithTitle:@"Calls" identifier:nil width:rect.size.width] autorelease]];
         [_table setSeparatorStyle:1];
-        [_table setRowHeight:48.0f];
+        [_table setRowHeight:[CallTableCell height]];
         [_table setDelegate:self];
         [_table setDataSource:self];
 		[_table setControlTint:1]; // don't know ?
