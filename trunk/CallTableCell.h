@@ -16,8 +16,13 @@
 
 @interface CallTableCell : UITableCell {
 	NSMutableDictionary *_call;
+	UITextLabel *streetLabel;
+	UITextLabel *nameLabel;
+	UITextLabel *infoLabel;
 }
 
+
 - (CallTableCell *)initWithCall:(NSMutableDictionary *)call;
++ (float)height;
 
 @end

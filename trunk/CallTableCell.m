@@ -7,79 +7,119 @@
 //
 
 #import "CallTableCell.h"
+#import "App.h"
+#import <WebCore/WebFontCache.h>
 
 
 @implementation CallTableCell
+#define LEFT_OFFSET 10
+	
+#define STREET_TOP_OFFSET 2
+#define STREET_HEIGHT 22
+#define NAME_TOP_OFFSET (STREET_TOP_OFFSET + STREET_HEIGHT + 2)
+#define NAME_HEIGHT 14
+#define INFO_TOP_OFFSET (NAME_TOP_OFFSET + NAME_HEIGHT + 1)
+#define INFO_HEIGHT 28
+
+#define TOTAL_HEIGHT (INFO_TOP_OFFSET + INFO_HEIGHT + STREET_TOP_OFFSET)
+
++ (float)height
+{
+	return(TOTAL_HEIGHT);
+}
 
 - (CallTableCell *)initWithCall:(NSMutableDictionary *)call
 {
-	id cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
-	NSString *title = [[[NSString alloc] init] autorelease];
-	NSString *houseNumber = [[_calls objectAtIndex:row] objectForKey:CallStreetNumber ];
-	NSString *street = [[_calls objectAtIndex:row] objectForKey:CallStreet];
+	if( (self = [super initWithFrame:CGRectZero]) )
+	{
+		NSString *title = [[[NSString alloc] init] autorelease];
+		NSString *houseNumber = [call objectForKey:CallStreetNumber ];
+		NSString *street = [call objectForKey:CallStreet];
 
-	if(houseNumber && [houseNumber length] && street && [street length])
-		title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
-	else if(houseNumber && [houseNumber length])
-		title = [title stringByAppendingString:houseNumber];
-	else if(street && [street length])
-		title = [title stringByAppendingString:street];
-	if([title length] == 0)
-		title = NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");
+		if(houseNumber && [houseNumber length] && street && [street length])
+			title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
+		else if(houseNumber && [houseNumber length])
+			title = [title stringByAppendingString:houseNumber];
+		else if(street && [street length])
+			title = [title stringByAppendingString:street];
+		if([title length] == 0)
+			title = NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");
 
-	[cell setTitle: title];
+		float darkGreyColor[] = { 0.0/3.3, 1.0};
+		float lightGreyColor[] = { 2.0/3.3, 1.0};
+		float whiteColor[] = { 1.0, 1.0};
+		float clearColor[] = { 0,0,0,0 };
+		CGColorRef streetColor = CGColorCreate(CGColorSpaceCreateDeviceGray(), darkGreyColor);
+		CGColorRef nameColor = CGColorCreate(CGColorSpaceCreateDeviceGray(), darkGreyColor);
+		CGColorRef infoColor = CGColorCreate(CGColorSpaceCreateDeviceGray(), lightGreyColor);
+		CGColorRef highlightColor = CGColorCreate(CGColorSpaceCreateDeviceGray(),whiteColor);
+		CGColorRef bgColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), clearColor);
+		
+		streetLabel = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
+		[streetLabel setBackgroundColor:bgColor];
+		[streetLabel setHighlightedColor:highlightColor];
+		[streetLabel setColor:streetColor];
+		[streetLabel setFont:[NSClassFromString(@"WebFontCache") createFontWithFamily:@"Helvetica" traits:2 size:18]];
+		[streetLabel setText:title];
+		[self addSubview: streetLabel];
 
-	CGSize s = CGSizeMake( [column width], [table rowHeight] );
-	UITextLabel* label = [[[UITextLabel alloc] initWithFrame: CGRectMake(200,0,s.width,s.height)] autorelease];
-	float bgColor[] = { 0,0,0,0 };
-	[label setBackgroundColor: CGColorCreate(CGColorSpaceCreateDeviceRGB(), bgColor)];
-	[label setText:[[_calls objectAtIndex:row] objectForKey:CallName]];
-	[cell addSubview: label];
+		nameLabel = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
+		[nameLabel setBackgroundColor:bgColor];
+		[nameLabel setHighlightedColor:highlightColor];
+		[nameLabel setColor:nameColor];
+		[nameLabel setFont:[NSClassFromString(@"WebFontCache") createFontWithFamily:@"Helvetica" traits:2 size:12]];
+		[nameLabel setText:[call objectForKey:CallName]];
+		[self addSubview: nameLabel];
 
-	return cell;
+		NSString *info = @"";
+		infoLabel = [[[UITextLabel alloc] initWithFrame:CGRectZero] autorelease];
+		[infoLabel setBackgroundColor:bgColor];
+		[infoLabel setHighlightedColor:highlightColor];
+		[infoLabel setColor:infoColor];
+		[infoLabel setWrapsText:YES];
+		if([[call objectForKey:CallReturnVisits] count] > 0)
+		{
+			NSMutableDictionary *returnVisit = [[call objectForKey:CallReturnVisits] objectAtIndex:0];
+			info = [returnVisit objectForKey:CallReturnVisitNotes];
+		}
+		[infoLabel setFont:[NSClassFromString(@"WebFontCache") createFontWithFamily:@"Helvetica" traits:2 size:10]];
+		[infoLabel setText:info];
+		[self addSubview: infoLabel];
+	}
+	return self;
+}
+
+
+- (void)setSelected:(BOOL)selected withFade:(BOOL)animated {
+	/*
+	 Views are drawn most efficiently when they are opaque and do not have a clear background, so in newLabelForMainText: the labels are made opaque and given a white background.  To show selection properly, however, the views need to be transparent (so that the selection color shows through).  
+    */
+	[super setSelected:selected withFade:animated];
+	
+	[streetLabel setHighlighted:selected];
+	[nameLabel setHighlighted:selected];
+	[infoLabel setHighlighted:selected];
+	
 }
 
 - (void)layoutSubviews 
 {
 
-#define LEFT_COLUMN_OFFSET 10
-#define LEFT_COLUMN_WIDTH 130
-	
-#define MIDDLE_COLUMN_OFFSET 140
-#define MIDDLE_COLUMN_WIDTH 110
-	
-#define RIGHT_COLUMN_OFFSET 270
-	
-#define UPPER_ROW_TOP 8
-#define LOWER_ROW_TOP 32
-
     [super layoutSubviews];
-    CGRect contentRect = [[self contentView] bounds];
+    CGRect contentRect = [self bounds];
 	
-	// In this example we will never be editing, but this illustrates the appropriate pattern
-    if (!self.editing) 
-	{
-		
-		CGFloat boundsX = contentRect.origin.x;
-		CGRect frame;
+	float boundsX = contentRect.origin.x;
+	float width = contentRect.size.width;
+	CGRect frame;
 
-		frame = CGRectMake(boundsX + LEFT_COLUMN_OFFSET, UPPER_ROW_TOP, LEFT_COLUMN_WIDTH, 20);
-		timeZoneNameLabel.frame = frame;
+	frame = CGRectMake(boundsX + LEFT_OFFSET, STREET_TOP_OFFSET, width, STREET_HEIGHT);
+	[streetLabel setFrame:frame];
 
-		frame = CGRectMake(boundsX + LEFT_COLUMN_OFFSET, LOWER_ROW_TOP, LEFT_COLUMN_WIDTH, 14);
-		abbreviationLabel.frame = frame;
+	frame = CGRectMake(boundsX + LEFT_OFFSET, NAME_TOP_OFFSET, width, NAME_HEIGHT);
+	[nameLabel setFrame:frame];
 
-		frame = CGRectMake(boundsX + MIDDLE_COLUMN_OFFSET, UPPER_ROW_TOP, MIDDLE_COLUMN_WIDTH, 20);
-		timeLabel.frame = frame;
-		
-		frame = CGRectMake(boundsX + MIDDLE_COLUMN_OFFSET, LOWER_ROW_TOP, MIDDLE_COLUMN_WIDTH, 14);
-		dayLabel.frame = frame;
-		
-		frame = [imageView frame];
-		frame.origin.x = boundsX + RIGHT_COLUMN_OFFSET;
-		frame.origin.y = UPPER_ROW_TOP;
- 		imageView.frame = frame;
-   }
+	frame = CGRectMake(boundsX + LEFT_OFFSET, INFO_TOP_OFFSET, width, INFO_HEIGHT);
+	[infoLabel setFrame:frame];
 }
 
 
