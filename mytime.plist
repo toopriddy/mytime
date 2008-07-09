@@ -27,13 +27,13 @@
 			<key>contact</key>
 			<string>toopriddy@gmail.com</string>
 			<key>date</key>
-			<string>1215145307</string>
+			<string>1215581279</string>
 			<key>description</key>
 			<string>Application to keep up with Field Service Information</string>
 			<key>hash</key>
-			<string>be7f7b11bcc3614b9aa6800e0b255c23</string>
+			<string>ddb58e622bd8e99cf1755bab3922ef30</string>
 			<key>location</key>
-			<string>http://mytime.googlecode.com/files/MyTime-130.133.zip</string>
+			<string>http://mytime.googlecode.com/files/MyTime-137.zip</string>
 			<key>maintainer</key>
 			<string>Brent</string>
 			<key>name</key>
@@ -126,7 +126,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Fixed time delete bug, call notes bug, fixed installer bug, added ability to delete a call and not save statistics</string>
+								<string>Change Log: MyTime now has a real icon, added Dutch translation, fixed call view table, fixed other bugs in website issues log</string>
 							</array>
 						</array>
 					</array>
@@ -164,7 +164,7 @@
 							</array>
 							<array>
 								<string>Notice</string>
-								<string>Change Log: Fixed time delete bug, call notes bug, fixed installer bug, added ability to delete a call and not save statistics</string>
+								<string>Change Log: MyTime now has a real icon, added Dutch translation, fixed call view table, fixed other bugs in website issues log</string>
 							</array>
 						</array>
 					</array>
@@ -178,11 +178,11 @@
 				</array>
 			</dict>
 			<key>size</key>
-			<string>161483</string>
+			<string>169600</string>
 			<key>url</key>
 			<string>http://mytime.googlecode.com/</string>
 			<key>version</key>
-			<string>130.133</string>
+			<string>137</string>
 		</dict>
 	</array>
 </dict>
