@@ -46,6 +46,7 @@ bulkPlacementsSelected.png \
 
 LANGUAGES = \
 English.lproj \
+Dutch.lproj \
 
 HEAVENLY=/usr/local/share/iphone-filesystem/
 CC=/usr/local/bin/arm-apple-darwin-gcc
@@ -113,15 +114,16 @@ zip: all
 	                            sed -e "s/MD5STRING/`md5 $(CONFIGURATION_BUILD_DIR)/MyTime.zip  | cut -d "=" -f 2 | sed -e "s/ //g"`/g" > temp1.mytime.plist
 ifdef CHANGES
 	cat temp1.mytime.plist |sed -e "s/IFCHANGES//g" | \
-	                            sed -e "s%CHANGESSTRING%$(CHANGES)%g" > mytime.plist
+	                            sed -e "s%CHANGESSTRING%$(CHANGES)%g" > temp2.mytime.plist
 else
-	cat temp1.mytime.plist |grep -v IFCHANGES > mytime.plist
+	cat temp1.mytime.plist |grep -v IFCHANGES > temp2.mytime.plist
 endif
 	rm -f temp1.mytime.plist
 	mv $(CONFIGURATION_BUILD_DIR)/MyTime.zip ./MyTime-$(VERSION).zip
 	@echo "Using version = $(VERSION)"
 	@echo "You need to visit this to get your password: http://code.google.com/hosting/settings"
 	python googlecode_upload.py -s "Version $(VERSION)" -u toopriddy -P `cat ~/.googlecodepassword` -p mytime MyTime-$(VERSION).zip
+	mv -f  temp2.mytime.plist mytime.plist
 	svn commit mytime.plist --force-log  -m "updating to version $(VERSION)"
 
 fixgenstrings: fixgenstrings.c
@@ -140,8 +142,9 @@ genstrings: fixgenstrings
 ## on every build, record the working copy revision string
 ##
 .PHONY:svn_version.c
-svn_version.c: 
-	echo 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c
+svn_version.c:
+	echo 'const char* svn_version(void) {return "$(VERSION)"; }' > svn_version.c.tmp
+	if [ -e svn_version.c ]; then if [  "x`diff -q svn_version.c svn_version.c.tmp`" == "x" ]; then rm svn_version.c.tmp; echo "Not upating svn_version.c"; else mv -f svn_version.c.tmp svn_version.c; echo "Updating svn_version.c"; fi; else mv svn_version.c.tmp svn_version.c; fi
 
 
 $(PRODUCT_ABS): svn_version.c $(APP_ABS) $(OBJECTS_ABS)

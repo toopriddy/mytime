@@ -235,7 +235,8 @@
 /* Google Localized Language Name */
 "en" = "en";
 
-/* More View Table Enable shown popups */
+/* More View Table Enable shown popups
+   Enable popups confirmation popup */
 "Enable shown popups" = "Enable shown popups";
 
 /* Expanded name for 'Statistics' ButtonBar view text when on the More view */
@@ -277,11 +278,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -444,6 +445,9 @@
 
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Please Donate, help me help you";
+
+/* Confirmation message about enabling popup messages */
+"Popup messages like this are now enabled all throughout MyTime" = "Popup messages like this are now enabled all throughout MyTime";
 
 /* Book Publication Name */
 "Proclaimers" = "Proclaimers";
