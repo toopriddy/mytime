@@ -145,6 +145,9 @@ extern NSString const * const BulkLiteratureArrayDay;
 
 
 #define PublicationTypeHeading @""
+#define PublicationTypeDVDBible @"Bible DVD"
+#define PublicationTypeDVDBook @"DVD"
+#define PublicationTypeDVDNotCount @"DVD Not Counted"
 #define PublicationTypeBook @"Book"
 #define PublicationTypeBrochure @"Brochure"
 #define PublicationTypeMagazine @"Magazine"

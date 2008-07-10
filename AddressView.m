@@ -125,7 +125,11 @@
 		_state = [[UIPreferencesTextTableCell alloc] init];
         [_state setValue:state];
         [[_state textField] setPlaceholder:NSLocalizedString(@"State", @"State")];
-        [[_state textField] setAutoCapsType:3]; //caps lock
+		// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
+		if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
+		{
+			[[_state textField] setAutoCapsType:3]; //caps lock
+		}
         [[_state textField] setAutoCorrectionType:1]; //no correction
 		
         

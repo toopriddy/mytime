@@ -1,8 +1,14 @@
 /* Publication Type and Seperator in the Publication Picker */
+"   BIBLE DVD" = "   BIBLE DVD";
+
+/* Publication Type and Seperator in the Publication Picker */
 "   BOOKS" = "   BOOKS";
 
 /* Publication Type and Seperator in the Publication Picker */
 "   BROCHURES" = "   BROCHURES";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   DVD" = "   DVD";
 
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRACTS";
@@ -102,6 +108,21 @@
 
 /* Book Publication Name */
 "Bible" = "Bible";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Acts" = "Bible DVD: Acts";
+
+/* Bible DVD Publication Name */
+"Bible DVD: John" = "Bible DVD: John";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Luke" = "Bible DVD: Luke";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Mark" = "Bible DVD: Mark";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Matthew" = "Bible DVD: Matthew";
 
 /* Book Publication Name */
 "Bible Stories" = "Bible Stories";
@@ -223,6 +244,63 @@
 /* Done/Save NavigationBar Button */
 "Done" = "Done";
 
+/* DVD Publication Name */
+"DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
+
+/* DVD Publication Name */
+"DVD Drama: Pursue Goals" = "DVD Drama: Pursue Goals";
+
+/* DVD Publication Name */
+"DVD Drama: Respect Authority" = "DVD Drama: Respect Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Submit to Authority" = "DVD Drama: Submit to Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Troublesome Times/Boldly Witnessing";
+
+/* DVD Publication Name */
+"DVD: Bible Stories" = "DVD: Bible Stories";
+
+/* DVD Publication Name */
+"DVD: Bible Teach" = "DVD: Bible Teach";
+
+/* DVD Publication Name */
+"DVD: Family Happiness" = "DVD: Family Happiness";
+
+/* DVD Publication Name */
+"DVD: God's Friend" = "DVD: God's Friend";
+
+/* DVD Publication Name */
+"DVD: Greatest Man" = "DVD: Greatest Man";
+
+/* DVD Publication Name */
+"DVD: Keep on the Watch" = "DVD: Keep on the Watch";
+
+/* DVD Publication Name */
+"DVD: Knowledge" = "DVD: Knowledge";
+
+/* DVD Publication Name */
+"DVD: Noah/David" = "DVD: Noah/David";
+
+/* DVD Publication Name */
+"DVD: Require" = "DVD: Require";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 1&2" = "DVD: Sing Praises Vol 1&2";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 3" = "DVD: Sing Praises Vol 3";
+
+/* DVD Publication Name */
+"DVD: Spirits of the dead" = "DVD: Spirits of the dead";
+
+/* DVD Publication Name */
+"DVD: When someone you love dies" = "DVD: When someone you love dies";
+
+/* DVD Publication Name */
+"DVD: Worship God" = "DVD: Worship God";
+
 /* Edit NavigationBar Button */
 "Edit" = "Edit";
 
@@ -235,8 +313,7 @@
 /* Google Localized Language Name */
 "en" = "en";
 
-/* More View Table Enable shown popups
-   Enable popups confirmation popup */
+/* More View Table Enable shown popups */
 "Enable shown popups" = "Enable shown popups";
 
 /* Expanded name for 'Statistics' ButtonBar view text when on the More view */
@@ -508,6 +585,9 @@
 
 /* State */
 "State" = "State";
+
+/* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
+"State in all caps" = "1";
 
 /* 'Statistics' ButtonBar View text and Statistics View Title */
 "Statistics" = "Statistics";

@@ -46,6 +46,7 @@
 		9099FD6A0D7E2FF000D8CA9C /* MainTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTransitionView.h; sourceTree = "<group>"; };
 		9099FD6B0D7E2FF000D8CA9C /* MainTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTransitionView.m; sourceTree = "<group>"; };
 		90BC4F090D3F104500E70FB1 /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallView.h; sourceTree = "<group>"; };
+		90BFAEBF0E25A9AB00971D33 /* German */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90D53AA20E21D6CB006F0E2F /* CallTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableCell.h; sourceTree = "<group>"; };
 		90D53AA30E21D6CB006F0E2F /* CallTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallTableCell.m; sourceTree = "<group>"; };
 		90D53BC50E247CA4006F0E2F /* Dutch */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -238,6 +239,7 @@
 			children = (
 				90F13EED0E16A196009772BD /* English */,
 				90D53BC50E247CA4006F0E2F /* Dutch */,
+				90BFAEBF0E25A9AB00971D33 /* German */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

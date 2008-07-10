@@ -73,6 +73,8 @@ static NSString *MONTHS[] = {
 			{
 				visit = [returnVisits objectAtIndex:i-1];
 				NSCalendarDate *date = [visit objectForKey:CallReturnVisitDate];
+				BOOL foundBibleDVD = NO;
+				
 				if(date != nil)
 				{
 					date = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
@@ -114,7 +116,7 @@ static NSString *MONTHS[] = {
 								NSString *type;
 								if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
 								{
-									if([type isEqual:PublicationTypeBook])
+									if([type isEqualToString:PublicationTypeBook])
 									{
 										if(month == _thisMonth && year == _thisYear)
 										{
@@ -127,7 +129,7 @@ static NSString *MONTHS[] = {
 											found = YES;
 										}
 									}
-									else if([type isEqual:PublicationTypeBrochure])
+									else if([type isEqualToString:PublicationTypeBrochure])
 									{
 										if(month == _thisMonth && year == _thisYear)
 										{
@@ -140,7 +142,7 @@ static NSString *MONTHS[] = {
 											found = YES;
 										}
 									}
-									else if([type isEqual:PublicationTypeMagazine])
+									else if([type isEqualToString:PublicationTypeMagazine])
 									{
 										if(month == _thisMonth && year == _thisYear)
 										{
@@ -153,7 +155,37 @@ static NSString *MONTHS[] = {
 											found = YES;
 										}
 									}
-									else if([type isEqual:PublicationTypeSpecial])
+									else if([type isEqualToString:PublicationTypeDVDBible])
+									{
+										if(!foundBibleDVD)
+										{
+											foundBibleDVD = TRUE;
+											if(month == _thisMonth && year == _thisYear)
+											{
+												_thisMonthBooks++;
+												found = YES;
+											}
+											else if(month == _lastMonth && year == _thisYear)
+											{
+												_lastMonthBooks++;
+												found = YES;
+											}
+										}
+									}
+									else if([type isEqualToString:PublicationTypeDVDBook])
+									{
+										if(month == _thisMonth && year == _thisYear)
+										{
+											_thisMonthBooks++;
+											found = YES;
+										}
+										else if(month == _lastMonth && year == _thisYear)
+										{
+											_lastMonthBooks++;
+											found = YES;
+										}
+									}
+									else if([type isEqualToString:PublicationTypeSpecial])
 									{
 										if(month == _thisMonth && year == _thisYear)
 										{
@@ -267,28 +299,28 @@ static NSString *MONTHS[] = {
 				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
 				if(type != nil)
 				{
-					if([type isEqual:PublicationTypeBook])
+					if([type isEqualToString:PublicationTypeBook])
 					{
 						if(foundThisMonth)
 							_thisMonthBooks += number;
 						else if(foundLastMonth)
 							_lastMonthBooks += number;
 					}
-					else if([type isEqual:PublicationTypeBrochure])
+					else if([type isEqualToString:PublicationTypeBrochure])
 					{
 						if(foundThisMonth)
 							_thisMonthBrochures += number;
 						else if(foundLastMonth)
 							_lastMonthBrochures += number;
 					}
-					else if([type isEqual:PublicationTypeMagazine])
+					else if([type isEqualToString:PublicationTypeMagazine])
 					{
 						if(foundThisMonth)
 							_thisMonthMagazines += number;
 						else if(foundLastMonth)
 							_lastMonthMagazines += number;
 					}
-					else if([type isEqual:PublicationTypeSpecial])
+					else if([type isEqualToString:PublicationTypeSpecial])
 					{
 						if(foundThisMonth)
 							_thisMonthSpecialPublications += number;
@@ -399,11 +431,13 @@ static NSString *MONTHS[] = {
 	{
 		case 0:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), MONTHS[_thisMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
+																        [[NSBundle mainBundle] localizedStringForKey:MONTHS[_thisMonth-1] value:MONTHS[_thisMonth-1] table:@""]]];
 			break;
 		case 1:
 			cell = [[UIPreferencesTableCell alloc] init];
-			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), MONTHS[_lastMonth - 1]]];
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
+																        [[NSBundle mainBundle] localizedStringForKey:MONTHS[_lastMonth-1] value:MONTHS[_lastMonth-1] table:@""]]];
 			break;
     }
     return(cell);

@@ -280,7 +280,7 @@ int sortByDate(id v1, id v2, void *context)
 		}
 		else 
 		{
-			if(![sectionTitle isEqual:lastSectionTitle])
+			if(![sectionTitle isEqualToString:lastSectionTitle])
 			{
 				addSection = YES;
 			}
