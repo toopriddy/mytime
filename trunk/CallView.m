@@ -239,6 +239,10 @@ typedef enum {
 	int i = [index intValue];
 	[index release];
 
+	UIPreferencesTextTableCell *cell = [[[App getInstance] window] firstResponder];
+	[cell resignFirstResponder];
+	[_table setKeyboardVisible:NO animated:YES];
+
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
 	NSMutableArray *array = [[[NSMutableArray alloc] initWithArray:returnVisits] autorelease];
 	[_call setObject:array forKey:CallReturnVisits];
@@ -1360,6 +1364,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 - (int) preferencesTable: (UIPreferencesTable *)table numberOfRowsInGroup: (int) group 
 {
     VERBOSE(NSLog(@"preferencesTable: numberOfRowsInGroup:%d", group);)
+	if(group >= [_displayInformation count])
+		return(0);
     int count = [[[_displayInformation objectAtIndex:group] objectForKey:CallViewRows] count];
 	VERBOSE(NSLog(@"count=%d", count);)
 	return(count);

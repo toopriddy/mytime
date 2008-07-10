@@ -107,7 +107,7 @@ ViewEntry VIEWS[] = {
 		int i;
 		for(i = 0; i < ARRAY_SIZE(VIEWS); ++i)
 		{
-			if([value isEqual:VIEWS[i].name])
+			if([value isEqualToString:VIEWS[i].name])
 			{
 				_entry = i;
 			}

@@ -103,6 +103,38 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"Young People Ask", @"Book Publication Name"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Reasoning", @"Book Publication Name"),   PublicationTypeBook}
 
+
+
+,   {AlternateLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+,   {AlternateLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Acts", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+
+
+,   {AlternateLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+,   {AlternateLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Worship God", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: God's Friend", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Require", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Keep on the Watch", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Spirits of the dead", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Knowledge", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name"),   PublicationTypeDVDBook}
+
+,   {AlternateLocalizedString(@"DVD: Noah/David", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Pursue Goals", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Bore Witness", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Troublesome Times/Boldly Witnessing", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Submit to Authority", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Respect Authority", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+
 ,   {AlternateLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"Blood", @"Brochures Publication Name"),   PublicationTypeBrochure}
 ,   {AlternateLocalizedString(@"Book for All", @"Brochures Publication Name"),   PublicationTypeBrochure}
@@ -318,7 +350,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 				case 1: // Month
 				{
 					[cell setAlignment: 2];
-					[cell setTitle: MONTHS[row]];
+					[cell setTitle: [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""]];
 					break;
 				}	
 				case 2: // Year
@@ -341,7 +373,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 				case 1: // Month
 				{
 					[cell setAlignment: 2];
-					[cell setTitle: MONTHS[row]];
+					[cell setTitle: [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""]];
 					break;
 				}	
 				case 2: // Year
@@ -533,9 +565,16 @@ static const PublicationInformation PUBLICATIONS[] = {
     if(_publication == 0 || _publication == 1)
     {
         if(day)
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], MONTHS[month-1], day, year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),
+							                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], 
+																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
+																day, 
+																year ]);
         else
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], MONTHS[month-1], year ]);
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),
+			                                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], 
+																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
+																year ]);
     }
     else
     {
