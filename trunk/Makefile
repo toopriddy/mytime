@@ -47,6 +47,7 @@ bulkPlacementsSelected.png \
 LANGUAGES = \
 English.lproj \
 Dutch.lproj \
+German.lproj \
 
 HEAVENLY=/usr/local/share/iphone-filesystem/
 CC=/usr/local/bin/arm-apple-darwin-gcc
