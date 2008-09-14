@@ -18,7 +18,7 @@ The First line is called a "comment" it is just used to help you know where this
 
 The Next line has two quoted sentences, do not change the first one, the first one is used by the program to lookup the translation.  The second quoted sentence is what you change.  You change this second quoted string to what is natural in your language.
 
-I am trying to stay with the style of the iPhone, so if there are any buttons that it uses normally like "Edit" and "Done" in whatever other language is on your iPhone, please use those words.  Also pick words that show the meaning and do not take a lot of space. Just a warning, I am a picky person and capitalization, being formal with the text (no slang) and conveying the correct thought are very high priorities.  This program is to be used by many people, I would not like to offend anyone or stumble anyone because of this program.  I usually have a firm grasp on what is displayed on programs that I write, but unfortunately I can not translate the text into another language so I have to depend on and trust others to translate the text just like I would if I could.
+I am trying to stay with the style of the iPhone, so if there are any buttons that it uses normally like "Edit" and "Done" in whatever other language is on your iPhone, please use those words.  Also pick words that show the meaning and do not take a lot of space. Just a warning, I am a picky person and capitalization, being formal with the text (no slang) and conveying the correct thought are very high priorities.  This program is to be used by many people, I would not like to offend anyone or stumble anyone because of this program.  I usually have a firm grasp on what is displayed on programs that I write, but since I can not translate the text into another language, I have to depend on and trust others to translate the text just like I would if I could.
 
 *Variable wording:*
 
@@ -68,7 +68,7 @@ Email me, I will add the answers to this page
 
 = Transfer Localizable.strings =
 
-Install "OpenSSH" using the Installer Application, and reboot your iPhone/iTouch (Hold down the power button and slide to power off and then turn it back on).
+If you have jailbroken your iPhone. Install "OpenSSH" using the Installer Application, and reboot your iPhone/iTouch (Hold down the power button and slide to power off and then turn it back on).
 
 Connect your iPhone/iTouch to your home WiFi network (or a friend's WiFi network) and figure out what your IP address is, on the iPhone:
   # Click on Settings -> Wi-Fi
@@ -87,9 +87,9 @@ Windows:
   # Do Start->Run and type in "notepad.exe" to edit the Localizable.strings (yes you MUST use notepad to edit these files on windows)
   ## edit your Localizable.strings change the values and save 
   # Make sure that MyTime is "Quitted" on your iPhone/iTouch
-  # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english version of your language is)  
+  # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english word of your language is)  
 {{{
-pscp -r German.lproj root@X.X.X.X:/Applications/MyTime.app/
+pscp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
 }}}
   # enter "alpine" as the password
   # after the file has been pushed, run MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
@@ -106,7 +106,7 @@ OSX:
   # Make sure that MyTime is "Quitted" on your iPhone/iTouch
   # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english version of your language is)  
 {{{
-scp -r German.lproj root@X.X.X.X:/Applications/MyTime.app/
+scp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
 }}}
   # enter "alpine" as the password
   # after the file has been pushed, run MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
