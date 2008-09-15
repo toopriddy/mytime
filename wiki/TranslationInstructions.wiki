@@ -7,7 +7,7 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-Download/save the "[http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings]" file that has many lines in the form of:
+Use the Localizable.strings file that I emailed you, open this file with "TextEdit" in OSX and you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
@@ -62,7 +62,8 @@ There are simple words that are included as translations purely for singular/plu
 
 *File format:*
 
-When you can define the format that the file is saved in, make sure it is UTF8
+When you can define the format that the file is saved in, make sure it is UTF8.  If you are using TextEdit on OSX you have to do a "Save As" and then in the "Plain Text Encoding" select Unicode (utf-8)" and save the file's name as Localizable.strings
+
 
 *Questions*
 
