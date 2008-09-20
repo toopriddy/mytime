@@ -139,6 +139,9 @@ genstrings: fixgenstrings
 	rm -f English.lproj/temp.strings
 	
 
+testtest:
+	python googlecode_upload.py -s "googlemap test" -u toopriddy -P `cat ~/.googlecodepassword` -p mytime maptest8.html
+
 ##
 ## on every build, record the working copy revision string
 ##
