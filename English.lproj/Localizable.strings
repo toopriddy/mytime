@@ -355,6 +355,9 @@
 /* Tracts Publication Name */
 "Immortal Spirit" = "Immortal Spirit";
 
+/* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Initial Visit Notes" = "Initial Visit Notes";
+
 /* Book Publication Name */
 "Insight" = "Insight";
 
@@ -618,6 +621,9 @@
 
 /* More View Table Group Title */
 "Version" = "Version";
+
+/* Title for the view where you write notes for a call */
+"Visit Notes" = "Visit Notes";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect..." = "Waiting for the Backup Application to connect...";

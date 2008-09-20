@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/11/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -22,7 +22,7 @@
 @property (nonatomic, retain) UIDatePicker *datePicker;
 @property (nonatomic, retain) UIDatePicker *timePicker;
 @property (nonatomic, retain) UIView *containerView;
-@property (nonatomic, retain) id<TimePickerViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<TimePickerViewControllerDelegate> delegate;
 
 
 - (id) init;

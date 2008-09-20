@@ -41,7 +41,7 @@ typedef enum
 //Pass "nil" for the default local domain - Pass only the application protocol for "protocol" e.g. "myApp"
 - (void) disableBonjour;
 
-@property(nonatomic, retain) id<TCPServerDelegate> delegate;
+@property(nonatomic, assign) id<TCPServerDelegate> delegate;
 
 + (NSString*) bonjourTypeFromIdentifier:(NSString*)identifier;
 

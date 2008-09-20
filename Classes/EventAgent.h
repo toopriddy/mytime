@@ -3,7 +3,7 @@
 //  BonjourTest
 //
 //  Created by Brent Priddy on 9/14/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -102,7 +102,7 @@ enum {
 }
 
 @property (nonatomic) uint32_t flags;
-@property (nonatomic, retain) id<EventAgentDelegate> delegate;
+@property (nonatomic, assign) id<EventAgentDelegate> delegate;
 @property (nonatomic, retain) id userData;
 
 - (id)initWithInputStream:(NSInputStream *)inStream outputStream:(NSOutputStream *)outStream;

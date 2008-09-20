@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/27/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,7 +24,7 @@
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
 @property (nonatomic, retain) NSIndexPath *indexPath;
 @property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) id<UITableViewTextFieldCellDelegate> delegate;
+@property (nonatomic, assign) id<UITableViewTextFieldCellDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 

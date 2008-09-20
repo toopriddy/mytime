@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/26/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -14,6 +14,7 @@
 #import "CallViewControllerDelegate.h"
 #import "DatePickerViewControllerDelegate.h"
 #import "UITableViewTextFieldCellDelegate.h"
+#import "NotesViewControllerDelegate.h"
 
 @interface CallViewController : UIViewController <UITableViewDelegate, 
                                                   UITableViewDataSource, 
@@ -21,7 +22,8 @@
 												  PublicationViewControllerDelegate,
 												  AddressViewControllerDelegate,
 												  DatePickerViewControllerDelegate,
-												  UITableViewTextFieldCellDelegate> 
+												  UITableViewTextFieldCellDelegate,
+												  NotesViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	NSIndexPath *addressIndexPath;
@@ -57,7 +59,7 @@
 	id<CallViewControllerDelegate> delegate;
 }
 @property (nonatomic,retain) UITableView *theTableView;
-@property (nonatomic, retain) id<CallViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) UIResponder *currentFirstResponder;
 
 
@@ -95,9 +97,6 @@
 - (id) initWithCall:(NSMutableDictionary *)call;
 - (id) init;
 - (void)dealloc;
-
-// used to build and save the notes fields
-- (void)saveReturnVisitsNotes;
 
 // dont use this
 - (void)reloadData;

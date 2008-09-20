@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/30/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import "MapViewController.h"
@@ -22,7 +22,7 @@
 		self.title = theTitle;
 		self.call = theCall;
 
-		self.tabBarItem.image = [UIImage imageNamed:@"timer.png"];
+		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
 	}
 	return self;
 }
@@ -36,7 +36,7 @@
 		self.title = theTitle;
 		self.call = nil;
 
-		self.tabBarItem.image = [UIImage imageNamed:@"timer.png"];
+		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
 	}
 	return self;
 }
