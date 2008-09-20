@@ -1,0 +1,594 @@
+﻿/* Publication Type and Seperator in the Publication Picker */
+"   BOOKS" = "   BÜCHER";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BROCHURES" = "   BROSCHÜREN";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   TRACTS" = "   TRAKTATE";
+
+/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
+"%@ %@" = "%2$@ %1$@";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
+"%@ %@ %d" = "%1$@ %2$@ %3$d";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
+"%@ %@ %d, %d" = "%1$d %3$@. %2$@ %4$d";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
+"%a %b %d" = "%a, %d. %b";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
+"%a %b %d, %Y" = "%a, %d. %b %Y";
+
+/* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
+"%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
+
+/* Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@: %@" = "%1$d %2$@: %3$@";
+
+/* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@s: %@" = "%1$d %2$@n: %3$@";
+
+/* 1, singular publication, shown as '%d publication' */
+"%d publication" = "%d Veröffentlichung";
+
+/* more than one publications, shown as '%d publications' */
+"%d publications" = "%d Veröffentlichungen";
+
+/* Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@' */
+"%d: %@" = "%1$d: %2$@";
+
+/* (unknown street) Placeholder Section title in the Sorted By Calls view */
+"(unknown street)" = "(unbekannte Straße)";
+
+/* Add Button */
+"+" = "+";
+
+/* Tracts Publication Name */
+"A Peaceful New World-Will It Come?" = "Eine friedliche neue Welt - Wird sie kommen?";
+
+/* Add a initial visit action buton */
+"Add a initial visit" = "Erster Besuch";
+
+/* Add a placed publication action button in call view */
+"Add a placed publication" = "Abgegebene Veröffentlichung";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
+"Add a placed publications" = "Abgegebene Veröffentlichungen";
+
+/* Add a return visit action button */
+"Add a return visit" = "Rückbesuch hinzufügen";
+
+/* Return Visit Notes Placeholder text */
+"Add Notes" = "Notiz hinzufügen";
+
+/* Address label for call */
+"Address" = "Adresse";
+
+/* Cancel button for view-mode Calls */
+"All Calls" = "Alle";
+
+/* Book Publication Name */
+"All Scripture" = "Alle Veröffentlichungen";
+
+/* Expanded name for 'Placements' ButtonBar view text when on the More view */
+"Anonymous Bulk Placements" = "Straßendienst";
+
+/* Short month name */
+"Apr" = "Apr";
+
+/* Long month name */
+"April" = "April";
+
+/* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
+"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Willst Du wirklich den Besuch löschen (Die Rückbesuche und die Veröffentlichungen werden trotzdem gezählt)?";
+
+/* Short month name */
+"Aug" = "Aug";
+
+/* Long month name */
+"August" = "August";
+
+/* Magizine Publication Name */
+"Awake" = "Erwachet!";
+
+/* More View Table Group Title */
+"Backup" = "Backup";
+
+/* More View Table backup your data */
+"Backup your data" = "Daten sichern";
+
+/* Book Publication Name */
+"Bible" = "Bibel";
+
+/* Book Publication Name */
+"Bible Stories" = "Geschichtenbuch";
+
+/* Bible Studies label on the Statistics View */
+"Bible Studies" = "Bibel Studien";
+
+/* Book Publication Name */
+"Bible Teach" = "Lehrer-Buch";
+
+/* Brochures Publication Name */
+"Blood" = "Blut";
+
+/* Publication Type name */
+"Book" = "Buch";
+
+/* Brochures Publication Name */
+"Book for All" = "Ein Buch für alle";
+
+/* Publication Type name */
+"Books" = "Bücher";
+
+/* Publication Type name */
+"Brochure" = "Broschüre";
+
+/* Publication Type name */
+"Brochures" = "Broschüren";
+
+/* More View Table Build Date */
+"Build Date" = "Erstellt am";
+
+/* Title for Bulk Placements view */
+"Bulk Placements" = "Straßendienst";
+
+/* Call main title when editing an existing call */
+"Call" = "Rückbesuch";
+
+/* Address title for address form */
+"Call Address" = "Rückbesuch Adresse";
+
+/* Single Call Edit/View table title */
+"Calls" = "Angetroffen";
+
+/* Expanded name for 'City Sorted' ButtonBar view text when on the More view */
+"Calls Sorted by City" = "Rückbesuche nach Ort";
+
+/* Expanded name for 'Date Sorted' ButtonBar view text when on the More view */
+"Calls Sorted by Date" = "Rückbesuche nach Datum";
+
+/* Expanded name for 'Street Sorted' ButtonBar view text when on the More view */
+"Calls Sorted by Street" = "Rückbesuche nach Straße";
+
+/* Cancel NavigationBar Button */
+"Cancel" = "Abbrechen";
+
+/* Change Date action button for visit in call view */
+"Change Date" = "Datum ändern";
+
+/* City */
+"City" = "Stadt";
+
+/* 'City Sorted' ButtonBar View text */
+"City Sorted" = "nach Ort";
+
+/* Book Publication Name */
+"Close to Jehovah" = "Komm Jehova doch näher";
+
+/* Tracts Publication Name */
+"Comfort for the Depressed" = "Trost für Menschen mit Depressionen";
+
+/* Book Publication Name */
+"Concordance" = "Konkordanz";
+
+/* More View Table Group Title */
+"Contact Information" = "Kontakt Informationen";
+
+/* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
+"Count:" = "Anzahl:";
+
+/* Book Publication Name */
+"Creation" = "Schöpfungs-Buch";
+
+/* Book Publication Name */
+"Creator" = "Schöpfer";
+
+/* Book Publication Name */
+"Daniel's Prophecy" = "Daniel-Buch";
+
+/* 'Date Sorted' ButtonBar View text */
+"Date Sorted" = "nach Datum";
+
+/* Short month name */
+"Dec" = "Dez";
+
+/* Long month name */
+"December" = "Dezember";
+
+/* Delete Call button in editing mode of call view */
+"Delete Call" = "Löschen";
+
+/* Delete Call question title */
+"Delete Call?" = "Rückbesuch löschen?";
+
+/* 'Did you know?' Allert sheet title that informs people of things that they might not know when they are presented with one of the Button Bar Views */
+"Did you know?" = "Wußten Sie schon?";
+
+/* Brochures Publication Name */
+"Divine Name" = "Göttlicher Name";
+
+/* Tracts Publication Name */
+"Does Fate Rule Our Lives" = "Schicksal";
+
+/* Brochures Publication Name */
+"Does God Care" = "Kümmert sich";
+
+/* Done/Save NavigationBar Button */
+"Done" = "Fertig";
+
+/* Edit NavigationBar Button */
+"Edit" = "Bearbeiten";
+
+/* More View Table Edit Button Bar */
+"Edit Button Bar" = "Werkzeugleiste bearbeiten";
+
+/* Brochures Publication Name */
+"Education" = "Schulbildung";
+
+/* Google Localized Language Name */
+"en" = "de";
+
+/* Expanded name for 'Statistics' ButtonBar view text when on the More view */
+"End of Month Statistics" = "Monats-Statistik";
+
+/* Tracts Publication Name */
+"Enjoy Family Life" = "Familien-Leben";
+
+/* Book Publication Name */
+"Family Happiness" = "Familien-Buch";
+
+/* Short month name */
+"Feb" = "Feb";
+
+/* Long month name */
+"February" = "Februar";
+
+/* Brochures Publication Name */
+"God's Friend" = "Freund Gottes";
+
+/* Book Publication Name */
+"God's Word" = "Gottes Wort";
+
+/* Brochures Publication Name */
+"Good Land" = "Das gute Land";
+
+/* Brochures Publication Name */
+"Government" = "Regierung";
+
+/* Book Publication Name */
+"Greatest Man" = "Größte Mensch";
+
+/* Brochures Publication Name */
+"Guidance of God" = "Gottes Anleitung";
+
+/* Tracts Publication Name */
+"Hellfire-Is It Part of Divine Justice?" = "Höllenfeuer - Ist es ein Teil von Gottes Gericht?";
+
+/* Singular form of the word hour */
+"hour" = "Stunde";
+
+/* Plural form of the word hours */
+"hours" = "Stunden";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Stunden";
+
+/* House Number */
+"House Number" = "Hausnummer";
+
+/* Tracts Publication Name */
+"How to Find the Road to Paradise" = "Weg ins Paradies";
+
+/* Tracts Publication Name */
+"Immortal Spirit" = "Unsterbliche Geist";
+
+/* Book Publication Name */
+"Insight" = "Einsichten";
+
+/* Book Publication Name */
+"Isaiah's Prophecy I" = "Jesaja-Buch I";
+
+/* Book Publication Name */
+"Isaiah's Prophecy II" = "Jesaja-Buch II";
+
+/* Short month name */
+"Jan" = "Jan";
+
+/* Long month name */
+"January" = "Januar";
+
+/* Book Publication Name */
+"Jehovah's Day" = "Tag Jehovas";
+
+/* Brochures Publication Name */
+"Jehovah's Witnesses" = "Jehovas Zeugen";
+
+/* Tracts Publication Name */
+"Jehovah's Witnesses-What Do They Believe?" = "Jehovas Zeugen - Was glauben Sie?";
+
+/* Tracts Publication Name */
+"Jehovah-Who Is He?" = "Wer ist Jehova?";
+
+/* Tracts Publication Name */
+"Jesus Christ-Who Is He?" = "Wer ist Jesus Christ?";
+
+/* Short month name */
+"Jul" = "Jul";
+
+/* Long month name */
+"July" = "Juli";
+
+/* Short month name */
+"Jun" = "Jun";
+
+/* Long month name */
+"June" = "Juni";
+
+/* Tracts Publication Name */
+"Know the Bible" = "Die Bibel besser kennen lernen";
+
+/* Book Publication Name */
+"Knowledge" = "Erkenntnis";
+
+/* Brochures Publication Name */
+"Lasting Peace" = "Eine Welt ohne Krieg?";
+
+/* Brochures Publication Name */
+"Life on Earth" = "Für immer auf der Erde leben";
+
+/* Brochures Publication Name */
+"Look!" = "Siehe!";
+
+/* Publication Type name */
+"Magazine" = "Zeitschrift";
+
+/* Publication Type name */
+"Magazines" = "Zeitschriften";
+
+/* Book Publication Name */
+"Mankind's Search for God" = "Die Suche der Menschheit nach Gott";
+
+/* Short month name */
+"Mar" = "Mär";
+
+/* Long month name */
+"March" = "März";
+
+/* Short/Long month name */
+"May" = "Mai";
+
+/* Book Publication Name */
+"Ministry School" = "Predigtdienstschul-Buch";
+
+/* Singular form of the word minute */
+"minute" = "Minute";
+
+/* Plural form of the word minutes */
+"minutes" = "Minuten";
+
+/* 'More' ButtonBar View text */
+"More" = "Mehr";
+
+/* Book Publication Name */
+"My Book of Bible Stories" = "Mein Buch mit biblischen Geschichten";
+
+/* Main allert sheet for new news, this might be presented as different information everytime that you upgrade */
+"MyTime Info" = "MyTime Info";
+
+/* More View Table MyTime Version */
+"MyTime Version" = "MyTime Version";
+
+/* More View Table MyTime Website */
+"MyTime Website" = "MyTime Webseite";
+
+/* Name label for Call in editing mode */
+"Name" = "Name";
+
+/* Brochures Publication Name */
+"Nations" = "Nationen";
+
+/* Call main title when you are adding a new call */
+"New Call" = "Angetroffen";
+
+/* No dont delete the call */
+"No" = "Nein";
+
+/* Short month name */
+"Nov" = "Nov";
+
+/* Long month name */
+"November" = "November";
+
+/* Number Placed label for the Number Picker for the number of publications placed */
+"Number Placed:" = "Anzahl Abgegeben:";
+
+/* Short month name */
+"Oct" = "Okt";
+
+/* Long month name */
+"October" = "Oktober";
+
+/* OK/Acknowledgement Button */
+"OK" = "OK";
+
+/* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
+"Oldest Return Visits First" = "Älteste zuerst";
+
+/* Book Publication Name */
+"Organized" = "Organisiert";
+
+/* More View Table Group Title */
+"Other Views" = "Andere Ansichten";
+
+/* Brochures Publication Name */
+"Our Problems" = "Unsere Probleme";
+
+/* Tracts Publication Name */
+"Peaceful New World" = "Eine friedlichen neue Welt";
+
+/* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
+"Placements" = "Straßendienst";
+
+/* Placements Group title for the Day's Bulk Literature Placements */
+"Placements:" = "Straßendienst:";
+
+/* More View Table Donation request */
+"Please Donate, help me help you" = "Bitte spenden Sie, helfen Sie mir Ihnen zu helfen";
+
+/* Book Publication Name */
+"Proclaimers" = "Verkündiger";
+
+/* Brochures Publication Name */
+"Purpose of Life" = "Sinn des Lebens";
+
+/* More View Table Questions, Comments? Email me */
+"Questions, Comments? Email me" = "Fragen, Anregungen? Schicken Sie mir eine Email";
+
+/* Book Publication Name */
+"Reasoning" = "Unterredungsbuch";
+
+/* Brochures Publication Name */
+"Require" = "Erwartet";
+
+/* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Return Visit Notes" = "Rückbesuchs-Notizen";
+
+/* Return Visits label on the Statistics View */
+"Return Visits" = "Rückbesuche";
+
+/* Book Publication Name */
+"Revelation Climax" = "Offenbarungs-Buch";
+
+/* Brochures Publication Name */
+"Satisfying Life" = "Ein befriedigendes Leben";
+
+/* Title for the view where you Pick A Date */
+"Select Date" = "Datum wählen";
+
+/* 'Select Publication' Publication Picker title */
+"Select Publication" = "Literatur auswählen";
+
+/* Select Time Title for adding hours of field service to a particular day */
+"Select Time" = "Zeit eingeben";
+
+/* Short month name */
+"Sep" = "Sep";
+
+/* Long month name */
+"September" = "September";
+
+/* More View Table Group Title */
+"Settings" = "Einstellungen";
+
+/* Book Publication Name */
+"Sing Praises" = "Liederbuch";
+
+/* Publication Type name */
+"Special" = "Spezielle";
+
+/* Brochures Publication Name */
+"Spirits of the Dead" = "Unsichtbare Geister";
+
+/* 'Start Time' navigation bar action button */
+"Start Time" = "Starte Zeitmessung";
+
+/* State */
+"State" = "Staat";
+
+/* 'Statistics' ButtonBar View text and Statistics View Title */
+"Statistics" = "Statistik";
+
+/* 'Stop Time' navigation bar action button */
+"Stop Time" = "Stoppe Zeitmessung";
+
+/* Street */
+"Street" = "Straße";
+
+/* 'Street Sorted' ButtonBar View text */
+"Street Sorted" = "nach Straßen";
+
+/* Tracts Publication Name */
+"Suffering to End" = "Leid wird enden";
+
+/* Book Publication Name */
+"Teacher" = "Lehrer-Buch";
+
+/* Information for the user to know what is going on with this and new releases */
+"Thanks for using MyTime! Unfortunately you will not be able to run MyTime if you upgrade to iPhone/iTouch 2.0 software, you need to visit the application website on the 'More' View for backup instructions.  If you work for apple or know someone who does, then bug them to accept my Developer Program Application :P\nI am also looking for translators, MyTime has been used by many people in other countries. Interested in helping? Email me." = "Danke, dass Du MyTime! benutzt! Leider kannst MyTime nicht mehr starten, wenn das iPhone/iTouch mit Version 2.0 der Firmware läuft. Du musst die Webseite des Programmes besuchen. Unter der 'Mehr'-Ansicht findest Du die Beschreibung, um Backups zu erstellen. Wenn Du für Apple arbeitest oder jemand kennst der es tut, dann bringe Sie bitte dazu mein Anwedung als Developer Program aktzeptieren :P\nDes weiteren Suche ich Übersetzer. MyTime wird bereits von vielen Brüdern in anderen Ländern benutzt. Willst Du helfen? Dann schreibe mir eine Email.";
+
+/* Tracts Publication Name */
+"The Greatest Name" = "Der Größte Name";
+
+/* Time for %@ Group title on the Statistics View where %@ is the month of the year */
+"Time for %@" = "Zeiten für %@";
+
+/* Publication Type name */
+"Tract" = "Traktate";
+
+/* Brochures Publication Name */
+"Trinity" = "Dreieinigkeit";
+
+/* Sorted by Street Calls view section title for an unknown street */
+"Unknown" = "Unbekannt";
+
+/* More View Table Group Title */
+"Version" = "Version";
+
+/* Brochures Publication Name */
+"Watch!" = "Wachsamkeit!";
+
+/* Magizine Publication Name */
+"Watchtower" = "Wachtturm";
+
+/* Tracts Publication Name */
+"What Do Jehovah's Witnesses Believe?" = "Jehovas Zeugen - Was glauben Sie?";
+
+/* Tracts Publication Name */
+"What Hope for Dead Loved Ones?" = "Hoffnung für geliebte Verstorbene";
+
+/* Brochures Publication Name */
+"When Someone Dies" = "Wenn ein geliebter Mensch verstorben ist";
+
+/* Brochures Publication Name */
+"When We Die" = "Was geschiet mit uns, wenn wir sterben";
+
+/* Tracts Publication Name */
+"Who Are Jehovah's Witnesses?" = "Jehovas Zeugen - Was glauben sie?";
+
+/* Tracts Publication Name */
+"Who Really Rules the World?" = "Wer beherrscht die Welt wirklich?";
+
+/* Brochures Publication Name */
+"Why Worship God" = "Warum wir Gott dienen sollten";
+
+/* Tracts Publication Name */
+"Why You Can Trust the Bible" = "Warum wir der Bibel vertrauen können";
+
+/* Tracts Publication Name */
+"Will This World Survive?" = "Wird die heutige Welt überleben?";
+
+/* Brochures Publication Name */
+"World Without War" = "Eine Welt ohne Krieg";
+
+/* Book Publication Name */
+"Worship God" = "Anbetungsbuch";
+
+/* Yes delete the call */
+"Yes" = "Ja";
+
+/* This is a note displayed when they first see the Time view */
+"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Du kannst Zeit-Einträge wie Emails, Podcasts oder andere Dinge in 'Tabellen' auf dem iPhone/iTouch löschen: Streiche mit dem Finger von Links nach Rechts über die Zeile in der Tabelle. Anschließen erscheint ein Lösch-Knopf.";
+
+/* This is a note displayed when they first see the Statistics View */
+"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "Du kannst die Monats-Statistik des Predigtdienstes wie Bücher, Broschüren, Zeitschriften, Rückbesuche und eingesetzte Stunden sehen. Aber Du siehst nur das, was Du wirklich gemacht hast.";
+
+/* Book Publication Name */
+"Young People Ask" = "Junge Leute Fragen";
+
+/* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
+"State in all caps" = "0";
+
