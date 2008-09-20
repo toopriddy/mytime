@@ -114,7 +114,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					753,
+					692,
 					20,
 					48,
 					43,
@@ -538,6 +538,12 @@
 			90C4D7690E859E1400E202E2 /* PBXTextBookmark */ = 90C4D7690E859E1400E202E2 /* PBXTextBookmark */;
 			90C4D76D0E859E8500E202E2 /* PBXTextBookmark */ = 90C4D76D0E859E8500E202E2 /* PBXTextBookmark */;
 			90C4D7710E859F9B00E202E2 /* PBXTextBookmark */ = 90C4D7710E859F9B00E202E2 /* PBXTextBookmark */;
+			90C4D7740E859FDB00E202E2 /* PBXTextBookmark */ = 90C4D7740E859FDB00E202E2 /* PBXTextBookmark */;
+			90C4D7750E859FDB00E202E2 /* PBXBookmark */ = 90C4D7750E859FDB00E202E2 /* PBXBookmark */;
+			90C4D7760E859FDB00E202E2 /* PlistBookmark */ = 90C4D7760E859FDB00E202E2 /* PlistBookmark */;
+			90C4D7770E859FDB00E202E2 /* PBXTextBookmark */ = 90C4D7770E859FDB00E202E2 /* PBXTextBookmark */;
+			90C4D7780E859FDB00E202E2 /* PBXBookmark */ = 90C4D7780E859FDB00E202E2 /* PBXBookmark */;
+			90C4D7790E859FDB00E202E2 /* PlistBookmark */ = 90C4D7790E859FDB00E202E2 /* PlistBookmark */;
 		};
 		sourceControlManager = 90FBE8370E36D02300FD8014 /* Source Control */;
 		userBuildSettings = {
@@ -1645,7 +1651,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {894, 1694}}";
 			sepNavSelRange = "{1785, 0}";
-			sepNavVisRange = "{1054, 1390}";
+			sepNavVisRange = "{1054, 917}";
 		};
 	};
 	90C4D5620E857DE000E202E2 /* NotesViewControllerDelegate.h */ = {
@@ -4480,6 +4486,56 @@
 		rType = 0;
 		vrLen = 1390;
 		vrLoc = 1054;
+	};
+	90C4D7740E859FDB00E202E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C4D55C0E857C4100E202E2 /* NotesViewController.m */;
+		name = "NotesViewController.m: 74";
+		rLen = 0;
+		rLoc = 1785;
+		rType = 0;
+		vrLen = 917;
+		vrLoc = 1054;
+	};
+	90C4D7750E859FDB00E202E2 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 90C148EE0E3B937300C6EDAF /* Default.png */;
+	};
+	90C4D7760E859FDB00E202E2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	90C4D7770E859FDB00E202E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C4D55C0E857C4100E202E2 /* NotesViewController.m */;
+		name = "NotesViewController.m: 74";
+		rLen = 0;
+		rLoc = 1785;
+		rType = 0;
+		vrLen = 917;
+		vrLoc = 1054;
+	};
+	90C4D7780E859FDB00E202E2 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 90C148EE0E3B937300C6EDAF /* Default.png */;
+	};
+	90C4D7790E859FDB00E202E2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
 	};
 	90CB88B30E7E293900E31098 /* BackupView.m:225 */ = {
 		isa = PBXFileBreakpoint;
