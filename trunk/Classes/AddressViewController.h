@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/26/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -26,7 +26,7 @@
     NSString *state;
 }
 
-@property (nonatomic,retain) id<AddressViewControllerDelegate> delegate;
+@property (nonatomic,assign) id<AddressViewControllerDelegate> delegate;
 @property (nonatomic,retain) UITableView *theTableView;
 
 @property (nonatomic,retain) NSString *streetNumber;

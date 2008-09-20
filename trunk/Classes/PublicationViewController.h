@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/9/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -25,7 +25,7 @@
 @property (nonatomic, retain) PublicationPickerView *publicationPicker;
 @property (nonatomic, retain) NumberedPickerView *countPicker;
 @property (nonatomic, retain) UIView *containerView;
-@property (nonatomic, retain) id<PublicationViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<PublicationViewControllerDelegate> delegate;
 
 /**
  * initialize this view 

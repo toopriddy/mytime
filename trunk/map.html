@@ -122,11 +122,7 @@ function findAddress(information, address)
 		geocoder.getLatLng(address, 
 			function (point) 
 			{
-				if (!point) 
-				{
-					alert(address + " not found");
-				} 
-				else 
+				if (point) 
 				{
 					results[iter] = "" + point.lat() + ", " + point.lng();
 					
@@ -170,10 +166,6 @@ function getAddress(i)
 {
 	return(addresses[i]);
 }
-
-//showAddress("203 Glen meadows Ln. Harvest AL", 34.858022, -86.763196);
-//showAddress("12318 Chicamauga Huntsville AL", 34.616414, -86.562634);
-//setTimeout("generateClickEvent(10,10)", 8000);
 
     //]]>
   </script>

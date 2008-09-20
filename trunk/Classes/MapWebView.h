@@ -80,7 +80,7 @@ typedef struct {
 @interface MapWebView : UIWebView <UIWebViewDelegate> {
     id <MapWebViewDelegate> mDelegate;
 }
-@property (retain, nonatomic) id <MapWebViewDelegate> mDelegate;
+@property (nonatomic, assign) id <MapWebViewDelegate> mDelegate;
 
 - (void)      didMoveToSuperview;
 - (NSString*) evalJS:(NSString*)script;

@@ -38,6 +38,9 @@
 		90C148F40E3B937300C6EDAF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C148EF0E3B937300C6EDAF /* Icon.png */; };
 		90C1496D0E3BA27400C6EDAF /* StatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */; };
 		90C1497F0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C1497E0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m */; };
+		90C4D4F40E8564DD00E202E2 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C4D4F30E8564DD00E202E2 /* map.png */; };
+		90C4D55D0E857C4100E202E2 /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C4D55C0E857C4100E202E2 /* NotesViewController.m */; };
+		90C4D5B40E8581E500E202E2 /* UITableViewMultilineTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */; };
 		90D02CEC0E527965001CEF0D /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02CEB0E527965001CEF0D /* WebViewController.m */; };
 		90D02D800E538553001CEF0D /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 90D02D7F0E538552001CEF0D /* map.html */; };
 		90D02E290E539CD0001CEF0D /* MapWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E280E539CD0001CEF0D /* MapWebView.m */; };
@@ -111,6 +114,12 @@
 		90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsViewController.m; sourceTree = "<group>"; };
 		90C1497D0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTitleAndValueCell.h; sourceTree = "<group>"; };
 		90C1497E0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewTitleAndValueCell.m; sourceTree = "<group>"; };
+		90C4D4F30E8564DD00E202E2 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		90C4D55B0E857C4100E202E2 /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesViewController.h; sourceTree = "<group>"; };
+		90C4D55C0E857C4100E202E2 /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesViewController.m; sourceTree = "<group>"; };
+		90C4D5620E857DE000E202E2 /* NotesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesViewControllerDelegate.h; sourceTree = "<group>"; };
+		90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultilineTextCell.h; sourceTree = "<group>"; };
+		90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultilineTextCell.m; sourceTree = "<group>"; };
 		90D02CEA0E527965001CEF0D /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		90D02CEB0E527965001CEF0D /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		90D02D7F0E538552001CEF0D /* map.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
@@ -180,6 +189,8 @@
 				905C37170E3D52DB00C8DB27 /* UITableViewTextFieldCell.h */,
 				905C37180E3D52DB00C8DB27 /* UITableViewTextFieldCell.m */,
 				90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */,
+				90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */,
+				90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
 				906140390E4ABBBC0072BA7B /* PublicationPickerView.m */,
 				9061409A0E4D6EC80072BA7B /* PublicationViewController.h */,
@@ -233,6 +244,7 @@
 				90D02D7F0E538552001CEF0D /* map.html */,
 				90C148EB0E3B937300C6EDAF /* bulkPlacements.png */,
 				90C148EC0E3B937300C6EDAF /* city.png */,
+				90C4D4F30E8564DD00E202E2 /* map.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
 				90C148EF0E3B937300C6EDAF /* Icon.png */,
 				90D031070E554C47001CEF0D /* settings.png */,
@@ -341,6 +353,9 @@
 				90D031330E567B20001CEF0D /* DatePickerViewController.h */,
 				90D031340E567B20001CEF0D /* DatePickerViewController.m */,
 				90D031360E567D4B001CEF0D /* DatePickerViewControllerDelegate.h */,
+				90C4D55B0E857C4100E202E2 /* NotesViewController.h */,
+				90C4D55C0E857C4100E202E2 /* NotesViewController.m */,
+				90C4D5620E857DE000E202E2 /* NotesViewControllerDelegate.h */,
 			);
 			name = CallViews;
 			sourceTree = "<group>";
@@ -401,6 +416,7 @@
 				90D02D800E538553001CEF0D /* map.html in Resources */,
 				90D031080E554C47001CEF0D /* settings.png in Resources */,
 				9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */,
+				90C4D4F40E8564DD00E202E2 /* map.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +474,8 @@
 				9045A7260E7C1423001B439C /* TCPServer.m in Sources */,
 				9045A7290E7C1590001B439C /* BackupView.m in Sources */,
 				9045AA000E7D99A4001B439C /* EventAgent.m in Sources */,
+				90C4D55D0E857C4100E202E2 /* NotesViewController.m in Sources */,
+				90C4D5B40E8581E500E202E2 /* UITableViewMultilineTextCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

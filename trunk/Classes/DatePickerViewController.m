@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/15/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import "DatePickerViewController.h"
@@ -40,6 +40,9 @@
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		datePicker.datePickerMode = UIDatePickerModeDate;
 		datePicker.date = date;
+		NSArray *views = datePicker.subviews;
+		UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
+		[picker setSoundsEnabled:NO];
 	}
 	return self;
 }

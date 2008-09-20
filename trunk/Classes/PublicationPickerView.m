@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/7/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import "PublicationPickerView.h"
@@ -382,8 +382,9 @@ static const PublicationInformation PUBLICATIONS[] = {
 	
 	// what is the new publication?
 	if(component == 0)
+	{
 		_publication = row;
-    
+    }
     // if the previous publication was a watchtower or awake, then 
     // lets get at the month year and possibly date of the magazine
     if(previousPublication == 0 || previousPublication == 1)
@@ -414,6 +415,12 @@ static const PublicationInformation PUBLICATIONS[] = {
     {
         DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
         [pickerView reloadAllComponents];
+
+		if([PUBLICATIONS[row].type isEqualToString:PublicationTypeHeading])
+		{
+			_publication = row + 1;
+			[self selectRow: _publication inComponent: 0 animated: YES];
+		}
 
 		// the watchtower and awake are the only ones that have a subscription
 		// type of placement, all others are just books that do not have a release

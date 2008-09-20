@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 8/15/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -26,7 +26,7 @@
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableDictionary *placements;
 @property (nonatomic,retain) NSIndexPath *selectedIndexPath;
-@property (nonatomic,retain) id<LiteraturePlacementViewControllerDelegate> delegate;
+@property (nonatomic,assign) id<LiteraturePlacementViewControllerDelegate> delegate;
 
 /**
  * initialize this view with a watchtower at the current month/year
