@@ -1,5 +1,5 @@
 = Introduction =
-Use the Transfer Localizable.strings below to send the file to your iPhone/iTouch and test
+Use the Transfer Localizable.strings section below to send the file to your iPhone/iTouch and test
 
 Use the General Translation Information to help you understand how to translate the file
 
@@ -7,7 +7,7 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-Use the Localizable.strings file that I emailed you, open this file with "TextEdit" in OSX and you will see that this file has many lines in the form of:
+Use the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file, open this file with "TextEdit" in OSX (or notepad in XP, yes I do mean notepad, StartMenu->Run->notepad.exe) and you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
