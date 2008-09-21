@@ -94,6 +94,13 @@ NSString const * const SettingsFourthView = @"fourthView";
     return instance;
 }
 
+- (void)dealloc
+{
+	[super dealloc];
+}
+
+
+
 + (id)initWithZone:(NSZone *)zone
 {
     @synchronized(self) 
@@ -124,7 +131,7 @@ NSString const * const SettingsFourthView = @"fourthView";
 	}
 	else
 	{
-		NSLog(@"restored data from file:\n%@", settings);
+		VERBOSE(NSLog(@"restored data from file:\n%@", settings);)
 	}
 }
 

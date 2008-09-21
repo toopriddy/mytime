@@ -24,7 +24,10 @@
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
-		textView = [[UILabel alloc] initWithFrame:CGRectZero];
+		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
+		textView = nil;
+		
+		self.textView = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		textView.backgroundColor = [UIColor clearColor];
 		textView.font = [UIFont systemFontOfSize:16];
 		textView.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
@@ -42,7 +45,8 @@
 
 - (void)dealloc
 {
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
+	self.textView = nil;
+    VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 	[super dealloc];
 }
 
@@ -78,7 +82,7 @@
 	constraints.width = width;
 	constraints.height = 10000000000.0;
 	CGSize size = [textView.text sizeWithFont:textView.font constrainedToSize:constraints];
-	return(size.height > 44 ? size.height : 44);
+	return(size.height > 44 ? size.height + 10.0 : 44);
 }
 
 - (void)layoutSubviews 
@@ -106,7 +110,7 @@
 	}
 	else
 	{
-		contentRect.size.height = size.height;
+		contentRect.size.height = size.height + 10.0;
 	}
 	frame = CGRectMake(boundsX, (contentRect.size.height - size.height)/2, width, size.height);
 	[textView setFrame:frame];
@@ -121,19 +125,19 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s self=%p", __FILE__, selector, self);)
     return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s self=%p", __FILE__, selector, self);)
     return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
+    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s self=%p", __FILE__, [invocation selector], self);)
     [super forwardInvocation:invocation];
 }
 

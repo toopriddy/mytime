@@ -262,7 +262,7 @@
     int row = [indexPath row];
     int section = [indexPath section];
 
-    DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=@d row%d ", section, row);)
+    DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row%d ", section, row);)
 
 	switch(section)
 	{

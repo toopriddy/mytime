@@ -26,14 +26,12 @@
 												  NotesViewControllerDelegate> 
 {
 	UITableView *theTableView;
-	NSIndexPath *addressIndexPath;
 	
 	BOOL _initialView;
 	
     UITableViewTextFieldCell *_name;
 
     NSMutableDictionary *_call;
-	NSMutableArray *_returnVisitNotes;
 	
 	NSMutableArray *_displayInformation;
 	NSMutableArray *_lastDisplayInformation;

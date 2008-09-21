@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 		}
 	}
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    return UIApplicationMain(argc, argv, nil, @"MyTimeAppDelegate");
+    int ret = UIApplicationMain(argc, argv, nil, @"MyTimeAppDelegate");
 	[pool release];
+	return ret;
 }

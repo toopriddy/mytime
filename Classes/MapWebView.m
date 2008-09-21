@@ -42,6 +42,13 @@
 
 //-- Public Methods ------------------------------------------------------------
 @synthesize mDelegate;
+
+//------------------------------------------------------------------------------
+- (void)dealloc
+{
+	[super dealloc];
+}
+
 //------------------------------------------------------------------------------
 - (void) didMoveToSuperview {
     // this hook method is used to initialize the view; we don't want 

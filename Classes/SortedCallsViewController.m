@@ -76,8 +76,8 @@
 	
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
-	UITableView *tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:[dataSource tableViewStyle]];
+	UITableView *tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
+														  style:[dataSource tableViewStyle]] autorelease];
 	
 	// set the autoresizing mask so that the table will always fill the view
 	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);

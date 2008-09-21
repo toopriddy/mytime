@@ -26,7 +26,10 @@
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
-		titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		VERBOSE(NSLog(@"%s: %s %p %p %p", __FILE__, __FUNCTION__, self, titleLabel, valueLabel);)
+		titleLabel = nil;
+		valueLabel = nil;
+		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		titleLabel.textColor = [UIColor blackColor];
@@ -34,7 +37,7 @@
 		titleLabel.text = @"";
 		[self.contentView addSubview: titleLabel];
 
-		valueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		valueLabel.backgroundColor = [UIColor clearColor];
 		valueLabel.font = [UIFont systemFontOfSize:16];
 		valueLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
@@ -47,7 +50,9 @@
 
 - (void)dealloc
 {
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
+	self.titleLabel = nil;
+	self.valueLabel = nil;
+    VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 	[super dealloc];
 }
 
@@ -161,19 +166,19 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s self=%p", __FILE__, selector, self);)
     return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s self=%p", __FILE__, selector, self);)
     return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
+    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s self=%p", __FILE__, [invocation selector], self);)
     [super forwardInvocation:invocation];
 }
 
