@@ -78,41 +78,41 @@
 	// setup the 4 view controllers for the different data representations
 
 	// CALLS SORTED BY STREET
-	CallsSortedByStreetViewDataSource *streetSortedDataSource = [[CallsSortedByStreetViewDataSource alloc] init];
-	SortedCallsViewController *streetViewController = [[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:streetViewController]];
+	CallsSortedByStreetViewDataSource *streetSortedDataSource = [[[CallsSortedByStreetViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:streetViewController] autorelease]];
 
 	// CALLS SORTED BY DATE
-	CallsSortedByDateViewDataSource *dateSortedDataSource = [[CallsSortedByDateViewDataSource alloc] init];
-	SortedCallsViewController *dateViewController = [[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:dateViewController]];
+	CallsSortedByDateViewDataSource *dateSortedDataSource = [[[CallsSortedByDateViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *dateViewController = [[[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
 
 	// HOURS
-	HourViewController *hourViewController = [[HourViewController alloc] init];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:hourViewController]];
+	HourViewController *hourViewController = [[[HourViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:hourViewController] autorelease]];
 
 	// STATISTICS
-	StatisticsViewController *statisticsViewController = [[StatisticsViewController alloc] init];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:statisticsViewController]];
+	StatisticsViewController *statisticsViewController = [[[StatisticsViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:statisticsViewController] autorelease]];
 
 	// CALLS SORTED BY CITY
-	CallsSortedByCityViewDataSource *citySortedDataSource = [[CallsSortedByCityViewDataSource alloc] init];
-	SortedCallsViewController *cityViewController = [[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:cityViewController]];
+	CallsSortedByCityViewDataSource *citySortedDataSource = [[[CallsSortedByCityViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *cityViewController = [[[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:cityViewController] autorelease]];
 
 	// SETTINGS
-	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[BulkLiteraturePlacementViewContoller alloc] init];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller]];
+	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[[BulkLiteraturePlacementViewContoller alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
 
 #if 1
 	// ALL CALLS WEB VIEW
-	MapViewController *mapViewController = [[MapViewController alloc] initWithTitle:@"Mapped Calls"];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:mapViewController]];
+	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:@"Mapped Calls"] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
 #endif
 
 	// SETTINGS
-	SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
-	[localViewControllersArray addObject:[[UINavigationController alloc] initWithRootViewController:settingsViewController]];
+	SettingsViewController *settingsViewController = [[[SettingsViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:settingsViewController] autorelease]];
 
 	// get the buttons that we should show in the button bar
 	NSMutableArray *array = [NSMutableArray array];

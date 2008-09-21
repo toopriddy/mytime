@@ -25,6 +25,12 @@
 
 @synthesize viewController;
 
+- (void)dealloc
+{
+	self.viewController = nil;
+	[super dealloc];
+}
+
 - (id)initWithAddressViewController:(AddressViewController *)theViewController;
 {
 	[super init];
@@ -86,6 +92,11 @@
 
 	self.theTableView = nil;
 
+    self.streetNumberCell = nil;
+    self.streetCell = nil;
+    self.cityCell = nil;
+    self.stateCell = nil;
+
     self.streetNumber = nil;
     self.street = nil;
     self.city = nil;
@@ -102,7 +113,7 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-	NSLog(@"navigationControlDone:");
+	VERBOSE(NSLog(@"navigationControlDone:");)
 	// go through the notes and make them resign the first responder
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	self.streetNumber = streetNumberCell.textField.text;
@@ -129,21 +140,20 @@
 {
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
-	UITableView *tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:UITableViewStyleGrouped];
+	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
+														  style:UITableViewStyleGrouped] autorelease];
 	
 	// set the autoresizing mask so that the table will always fill the view
-	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
 	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	tableView.delegate = self;
-	tableView.dataSource = self;
+	theTableView.delegate = self;
+	theTableView.dataSource = self;
 	
 	// set the tableview as the controller view
-    self.theTableView = tableView;
-	self.view = tableView;
+	self.view = self.theTableView;
 
-	streetNumberCell = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"];
+	self.streetNumberCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetNumberCell.textField.text = streetNumber;
 	streetNumberCell.textField.placeholder = NSLocalizedString(@"House Number", @"House Number");
 	streetNumberCell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -151,14 +161,14 @@
 	streetNumberCell.textField.returnKeyType = UIReturnKeyNext;
 	streetNumberCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	
-	streetCell = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"];
+	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetCell.textField.text = street;
 	streetCell.textField.placeholder = NSLocalizedString(@"Street", @"Street");
 	streetCell.textField.returnKeyType = UIReturnKeyNext;
 	streetCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	streetCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	
-	cityCell = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"];
+	self.cityCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	cityCell.textField.text = city;
 	cityCell.textField.placeholder = NSLocalizedString(@"City", @"City");
 	cityCell.textField.returnKeyType = UIReturnKeyNext;
@@ -166,7 +176,7 @@
 	cityCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 
 
-	stateCell = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"];
+	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	stateCell.textField.text = state;
 	stateCell.textField.placeholder = NSLocalizedString(@"State", @"State");
 	stateCell.textField.returnKeyType = UIReturnKeyDone;
@@ -192,8 +202,6 @@
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
 
 	[self.theTableView reloadData];
-
-	[tableView release];
 }
 
 

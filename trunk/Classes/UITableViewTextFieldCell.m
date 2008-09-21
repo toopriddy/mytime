@@ -21,6 +21,7 @@
 @synthesize textField;
 @synthesize nextKeyboardResponder;
 @synthesize indexPath;
+@synthesize titleLabel;
 @synthesize tableView;
 @synthesize delegate;
 
@@ -28,14 +29,17 @@
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
-		delegate = nil;
-		self.nextKeyboardResponder = nil;
+		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
 		
-		self.tableView = nil;
-		self.indexPath = nil;
+		delegate = nil;
+		nextKeyboardResponder = nil;
+		tableView = nil;
+		indexPath = nil;
+		titleLabel = nil;
+		textField = nil;
 		
-		titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor blackColor];
 		[self.contentView addSubview:titleLabel];
@@ -51,10 +55,11 @@
 
 - (void)dealloc
 {
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
+    VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 	
 	self.nextKeyboardResponder = nil;
 	self.textField = nil;
+	self.titleLabel = nil;
 	self.tableView = nil;
 	self.indexPath = nil;
 	self.delegate = nil;
@@ -170,19 +175,19 @@
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s self=%p", __FILE__, selector, self);)
     return [super respondsToSelector:selector];
 }
 
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
+    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s self=%p", __FILE__, selector, self);)
     return [super methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation*)invocation
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
+    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s self=%p", __FILE__, [invocation selector], self);)
     [super forwardInvocation:invocation];
 }
 

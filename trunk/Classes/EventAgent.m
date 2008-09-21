@@ -48,7 +48,7 @@ NSMutableSet *_agents = nil;
 
 void PrintPacket(char *banner, uint16_t type, uint32_t flags, NSArray *payload)
 {
-	int i;
+	int i = 0;
 	uint32_t offset = 0;
 	NSEnumerator *enumerator = [payload objectEnumerator];
 	NSData *data;
@@ -283,14 +283,14 @@ void PrintPacket(char *banner, uint16_t type, uint32_t flags, NSArray *payload)
     if(store)
     {
 		// store the payload and the header
-		[_writeList addObject:[[EventAgentWriteBuffer alloc] initWithBuffer:(headerBuffer + offset) length:(kMessageHeaderLength - offset)]];
+		[_writeList addObject:[[[EventAgentWriteBuffer alloc] initWithBuffer:(headerBuffer + offset) length:(kMessageHeaderLength - offset)] autorelease]];
 
 		// store all of the payload pieces
 		NSEnumerator *enumerator = [payload objectEnumerator];
 		NSData *data;
 		while( (data = [enumerator nextObject]) )
 		{
-			[_writeList addObject:[[EventAgentWriteBuffer alloc] initWithData:data]];
+			[_writeList addObject:[[[EventAgentWriteBuffer alloc] initWithData:data] autorelease]];
 		}
     }
 	else
@@ -322,7 +322,7 @@ void PrintPacket(char *banner, uint16_t type, uint32_t flags, NSArray *payload)
 
 			if(store)
 			{
-				[_writeList addObject:[[EventAgentWriteBuffer alloc] initWithData:data offset:offset]];
+				[_writeList addObject:[[[EventAgentWriteBuffer alloc] initWithData:data offset:offset] autorelease]];
 			}
 		}
 	}

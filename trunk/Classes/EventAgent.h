@@ -91,7 +91,7 @@ enum {
 	uint32_t  _len;
 	uint32_t  _type;
 	uint32_t  _flags;
-	NSObject *_userData;
+	id _userData;
 	uint32_t  _eventId;
 
 	NSInputStream*		_inStream;

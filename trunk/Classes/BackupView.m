@@ -18,7 +18,7 @@
 	_server = [TCPServer new];
 	_server.delegate = self;
 	
-	NSError* error;
+	NSError* error = nil;
 	if(_server == nil || ![_server start:&error]) {
 		NSLog(@"Failed creating server: %@", error);
 			self.title = @"Failed creating server";
@@ -227,7 +227,7 @@
 			NSString *filename = [dictionary objectForKey:@"name"];
 			NSData *contents = [dictionary objectForKey:@"file"];
 			NSMutableString *path = [NSMutableString stringWithString:[[NSBundle mainBundle] pathForResource:@"map" ofType:@"html"]];
-			NSFileManager *fileManager = [[NSFileManager alloc] init];
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 			[path replaceOccurrencesOfString:@"map.html" withString:[NSString stringWithFormat:@"%@", directory] options:NSCaseInsensitiveSearch range:NSMakeRange(0, [path length])];
 			if(![fileManager createDirectoryAtPath:path attributes:nil])
 			{

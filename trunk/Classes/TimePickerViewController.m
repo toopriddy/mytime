@@ -66,7 +66,7 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-	NSLog(@"navigationControlDone:");
+	VERBOSE(NSLog(@"navigationControlDone:");)
 	if(delegate)
 	{
 		[delegate timePickerViewControllerDone:self];

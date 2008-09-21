@@ -58,9 +58,16 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 @synthesize tableView;
 @synthesize indexPath;
+- (void)dealloc
+{
+	self.tableView = nil;
+	self.indexPath = nil;
+	[super dealloc];
+}
 
 - (id)initWithTable:(UITableView *)theTableView indexPath:(NSIndexPath *)theIndexPath
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[super init];
 	self.tableView = theTableView;
 	self.indexPath = theIndexPath;
@@ -69,6 +76,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (BOOL)becomeFirstResponder 
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[tableView deselectRowAtIndexPath:nil animated:NO];
 	[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
 	[tableView.delegate tableView:tableView didSelectRowAtIndexPath:indexPath];
@@ -90,12 +98,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (id) init
 {
-    DEBUG(NSLog(@"CallView 1initWithFrame: %p", self);)
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     return([self initWithCall:nil]);
 }
 
 - (id) initWithCall:(NSMutableDictionary *)call
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     if([super init]) 
     {
 		theTableView = nil;
@@ -110,7 +119,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 		_setFirstResponderGroup = -1;
 		
-		_displayInformation = nil;
+		_displayInformation = [[NSMutableArray alloc] init];
 		_lastDisplayInformation = nil;
 
 		_newCall = (call == nil);
@@ -120,12 +129,25 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		{
 			_call = [[NSMutableDictionary alloc] init];
 			_setFirstResponderGroup = 0;
+			_showAddCall = NO;
+
+			NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
+			[_call setObject:returnVisits forKey:CallReturnVisits];
+			
+			NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
+
+			[visit setObject:[NSDate date] forKey:CallReturnVisitDate];
+			[visit setObject:@"" forKey:CallReturnVisitNotes];
+			[visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
+			
+			[returnVisits insertObject:visit atIndex:0];
 		}
 		else
 		{
+			_showAddCall = YES;
+
 			_call = [[NSMutableDictionary alloc] initWithDictionary:call copyItems:YES];
 		}
-		_showAddCall = YES;
 
         _name = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCellForCall"];
 		_name.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -232,8 +254,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
             }
         }
 		
-		_returnVisitNotes = [[NSMutableArray alloc] init];
-        
 
 		// 0 = greay
 		// 1 = red
@@ -261,7 +281,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)dealloc 
 {
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	theTableView.delegate = nil;
 	theTableView.dataSource = nil;
 	[theTableView release];
@@ -275,12 +295,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	return(YES);
 }
 
 - (void)save
 {
-	DEBUG(NSLog(@"save");)
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 
 	[_call setObject:[self name] forKey:CallName];
 	
@@ -296,19 +317,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)navigationControlDone:(id)sender 
 {
-	NSLog(@"navigationControlDone:");
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// go through the notes and make them resign the first responder
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	[_name resignFirstResponder];
-
-	int count = [_returnVisitNotes count];
-	int i;
-	for(i = 0; i < count; ++i)
-	{
-		// get the notes cell
-		UITableViewTextFieldCell *text = [_returnVisitNotes objectAtIndex:i];
-		[text.textField resignFirstResponder];
-	}
 
 	BOOL isNewCall = _newCall;
 	// we dont save a new call untill they hit "Done"
@@ -344,6 +356,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)navigationControlCancel:(id)sender 
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[_call release];
 	_call = nil;
 	[self.navigationController popViewControllerAnimated:YES];
@@ -351,11 +364,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)navigationControlEdit:(id)sender 
 {
-	NSLog(@"navigationControlEdit:");
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	_editing = YES;
 	_showDeleteButton = YES;
 	_showAddCall = YES;
-
+	
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:NO];
+	
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
@@ -373,6 +388,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(selected)
 	{
 		if(cell.tableView && cell.indexPath)
@@ -396,63 +412,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 }
 - (void)scrollToSelected:(id)unused
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[theTableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionTop animated:YES];
-}
-
-- (void)keyboardWillShow:(NSNotification *)notif
-{
-//	NSLog(@"keyboardWillShow");
-	// only modify if this view controller is on top
-	if(self.navigationController.topViewController == self)
-	{
-		[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationDuration:0.3];
-			
-			CGRect rect = self.view.frame;
-			if(self.interfaceOrientation == UIInterfaceOrientationPortrait ||
-			   self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-			{
-				rect.size.height -= 215;
-			}
-			else
-			{
-				rect.size.height -= 160;
-			}
-			self.view.frame = rect;
-		[UIView commitAnimations];
-	}
-	// when in landscape mode make sure that the text box shows up on the screen
-	[self performSelector: @selector(scrollToSelected:) 
-			   withObject:nil
-			   afterDelay:.4];
-}
- 
--(void)keyboardWillHide:(NSNotification *)notif
-{
-//	NSLog(@"keyboardWillHide");
-	// only modify if this view controller is on top
-	if(self.navigationController.topViewController == self)
-	{
-//		[UIView beginAnimations:nil context:NULL];
-//			[UIView setAnimationDuration:0.3];
-			
-			CGRect rect = theTableView.frame;
-			if(self.interfaceOrientation == UIInterfaceOrientationPortrait ||
-			   self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-			{
-				rect.size.height += 215;
-			}
-			else
-			{
-				rect.size.height += 160;
-			}
-			self.view.frame = rect;
-//		[UIView commitAnimations];
-	}
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// force the tableview to load
 	[self reloadData];
 	
@@ -462,42 +428,34 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)viewDidAppear:(BOOL)animated 
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
-
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(!_initialView)
 	{
 		[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	}
 	_initialView = NO;
 
-	DEBUG(NSLog(@"%s: viewDidAppear", __FILE__);)
-	
 	[super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(currentFirstResponder)
 	{
 		[currentFirstResponder resignFirstResponder];
 		self.currentFirstResponder = nil;
 	}
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:self.view.window];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:self.view.window];
 }
 
 - (void)loadView 
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	CGRect rect = [[UIScreen mainScreen] applicationFrame];
 	UIView *contentView = [[[UIView alloc] initWithFrame:rect] autorelease];
 	contentView.backgroundColor = [UIColor blackColor];
 	contentView.autoresizesSubviews = YES;
 	self.view = contentView;
-
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
-
 
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
@@ -548,7 +506,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-    VERBOSE(NSLog(@"numberOfSectionsInTableView:");)
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     int count = [_displayInformation count];
 	VERBOSE(NSLog(@"count=%d", count);)
     return(count);
@@ -578,7 +536,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	int row = [indexPath row];
 	int section = [indexPath section];
     VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
-	return([[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row]);
+	return([[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] retain] autorelease]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -628,6 +586,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (NSInvocation *)invocationForSelector:(SEL)selector
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[[self class] instanceMethodSignatureForSelector:selector]];
 	[invocation setTarget:self];
 	[invocation setSelector:selector];
@@ -637,6 +596,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSInvocation *invocation = [self invocationForSelector:selector];
 	[invocation setArgument:&argument atIndex:2];
 	
@@ -645,6 +605,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (NSInvocation *)invocationForSelector:(SEL)selector withArgument:(void *)argument andArgument:(void *)anotherArgument
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSInvocation *invocation = [self invocationForSelector:selector withArgument:argument];
 	[invocation setArgument:&anotherArgument atIndex:3];
 	
@@ -664,7 +625,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)unselectRow
 {
-	DEBUG(NSLog(@"unselectRow");)
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// unselect the row
 // TODO:
 //	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
@@ -675,10 +636,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", index);)
 	int i = [index intValue];
 	[index release];
-
-	// make sure that the keyboard is not focused on this textfield
-	UITableViewTextFieldCell *text = [_returnVisitNotes objectAtIndex:i];
-	[text.textField resignFirstResponder];
 
 
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
@@ -691,9 +648,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	DEBUG(NSLog(@"trying to remove row %d", i);)
 	[returnVisits removeObjectAtIndex:[index intValue]];
 	DEBUG(NSLog(@"got %@", returnVisits);)
-
-	// remove notes for that call
-	[_returnVisitNotes removeObjectAtIndex:[index intValue]];
 
 	// save the data
 	[self save];
@@ -825,8 +779,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	                    withRowAnimation:UITableViewRowAnimationLeft];
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 
-	_setFirstResponderGroup = 2;
-
 	// unselect this row 
 	[self reloadData];
 }
@@ -923,12 +875,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (NSIndexPath *)lastIndexPath
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	return([NSIndexPath indexPathForRow:([[_currentGroup objectForKey:CallViewRows] count] - 1) inSection:([_displayInformation count] - 1)]);
 }
 
 - (void)addGroup:(NSString *)groupCell
 {
-	DEBUG(NSLog(@"addGroup: ");)
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	_currentGroup = [[[NSMutableDictionary alloc] init] autorelease];
 	
 	// initialize the arrays
@@ -954,6 +907,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
    selectInvocation:(NSInvocation *)selectInvocation 
    deleteInvocation:(NSInvocation *)deleteInvocation
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
 //	NSInvocation *unselectInvocation = [self invocationForSelector:@selector(unselectRow)];
 
@@ -965,17 +919,23 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[[_currentGroup objectForKey:CallViewRowHeight] addObject:[NSNumber numberWithInt:rowHeight]];
 }
 
+- (void)deleteObject:(NSObject *)object
+{
+	[object release];
+}
+
 - (void)reloadData
 {
 	DEBUG(NSLog(@"CallView reloadData");)
 
 	// get rid of the last display information, we double buffer this to get around a douple reloadData call
 	[_lastDisplayInformation release];
-	
+//	[_displayInformation release];
+//	[self performSelector:@selector(deleteObject:) withObject:_displayInformation afterDelay:3];
 	// lets store the information till later so that if the iPhone is still using some of this data
 	// in current displays, it does not disappear while still using it.  This is kind of a kludge but
 	// I do not know of a way to find and fix this problem (I spent hours in the simulator trying to find the memory issue)
-	_lastDisplayInformation = _displayInformation;
+//	_lastDisplayInformation = _displayInformation;
 	_displayInformation = [[NSMutableArray alloc] init];
 	
 	// Name
@@ -1154,11 +1114,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
 		NSMutableDictionary *visit;
 
-		// release old return visits notes
-		[_returnVisitNotes removeAllObjects];
-
-
-		
 		int i;
 		int end = [returnVisits count];
 		for(i = 0; i < end; ++i)
@@ -1192,7 +1147,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				else
 					[cell setText:notes];
 				[self       addRow:cell
-						 rowHeight:[cell heightForWidth:280]
+						 rowHeight:[cell heightForWidth:250]
 					insertOrDelete:(end == 1 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete)
 				 indentWhenEditing:YES
 				  selectInvocation:[self invocationForSelector:@selector(changeNotesForReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
@@ -1253,7 +1208,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
-					NSMutableDictionary *publication = [publications objectAtIndex:j];
 					UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero ] autorelease];
 					cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 					cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
@@ -1296,7 +1250,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleInsert
 				 indentWhenEditing:YES
-				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber numberWithInt:i] retain]]
+				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:[[NSNumber alloc] initWithInt:i]]
 				  deleteInvocation:nil];
 			}
 		}
@@ -1326,12 +1280,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 
-	if([_displayInformation count] == 0)
-	{
-		[self navigationControlEdit:nil];
-		return;
-	}
-
 	[theTableView reloadData];
 
 	theTableView.editing = _editing;		
@@ -1347,8 +1295,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  ******************************************************************/
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [_editingReturnVisit setObject:[notesViewController notes] forKey:CallReturnVisitNotes];
-
+	_editingReturnVisit = nil;
 	[self save];
 }
 
@@ -1359,6 +1308,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  ******************************************************************/
 - (void)addressViewControllerDone:(AddressViewController *)addressViewController
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[_call setObject:(addressViewController.streetNumber ? addressViewController.streetNumber : @"") forKey:CallStreetNumber];
 	[_call setObject:(addressViewController.street ? addressViewController.street : @"") forKey:CallStreet];
 	[_call setObject:(addressViewController.city ? addressViewController.city : @"") forKey:CallCity];
@@ -1374,6 +1324,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  ******************************************************************/
 - (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController
 {
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     if(_editingPublication == nil)
     {
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
@@ -1391,7 +1342,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker month]] autorelease] forKey:CallReturnVisitPublicationMonth];
     [_editingPublication setObject:[[[NSNumber alloc] initWithInt:[picker day]] autorelease] forKey:CallReturnVisitPublicationDay];
     VERBOSE(NSLog(@"_editingPublication is = %@", _editingPublication);)
-
+	_editingPublication = nil;
+	_editingReturnVisit = nil;
+	
 	// save the data
 	[self save];
 }
@@ -1400,7 +1353,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 - (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
 {
-    DEBUG(NSLog(@"CallView datePickerViewControllerDone:");)
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     VERBOSE(NSLog(@"date is now = %@", [datePickerViewController date]);)
 
     [_editingReturnVisit setObject:[datePickerViewController date] forKey:CallReturnVisitDate];
@@ -1421,7 +1374,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
 {
-	NSLog(@"alertSheet: button:%d", button);
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 //	[sheet dismissAnimated:YES];
 
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
@@ -1466,13 +1419,16 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row=%d editing%d", section, row, _editing);)
 
 	_selectedRow = row;
-	[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewSelectedInvocations] objectAtIndex:row] invoke];
+	assert([_displayInformation count] > section);
+	NSInvocation *invocation = [[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewSelectedInvocations] objectAtIndex:row] retain] autorelease];
+	[invocation invoke];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
     int section = [indexPath section];
+	assert([_displayInformation count] > section);
 	BOOL ret = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewIndentWhenEditing] objectAtIndex:row] boolValue];
     DEBUG(NSLog(@"tableView: shouldIndentWhileEditingRowAtIndexPath section=%d row=%d editing=%d return=%d", section, row, _editing, ret);)
 	return(ret);
@@ -1491,6 +1447,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     int row = [indexPath row];
     int section = [indexPath section];
     DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d editing%d", section, row, _editing);)
+	assert([_displayInformation count] > section);
 	return [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewInsertDelete] objectAtIndex:row] intValue];
 }
 
@@ -1500,15 +1457,19 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     int row = [indexPath row];
     int section = [indexPath section];
     DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d editing%d", section, row, _editing);)
+	assert([_displayInformation count] > section);
 	switch(editingStyle)
 	{
 		case UITableViewCellEditingStyleInsert:
-			[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+			[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 			[self tableView:tableView didSelectRowAtIndexPath:indexPath];
 			break;
 		case UITableViewCellEditingStyleDelete:
-			[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewDeleteInvocations] objectAtIndex:row] invoke];
+		{
+			NSInvocation *invocation = [[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewDeleteInvocations] objectAtIndex:row] retain] autorelease];
+			[invocation invoke];
 			break;
+		}
 	}
 }
 

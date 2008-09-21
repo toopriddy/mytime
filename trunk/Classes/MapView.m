@@ -171,9 +171,9 @@
 #if 1
 					CGPoint pixel = [touch locationInView:self];
 					NSString *script = [NSString stringWithFormat:@"generateClickEvent(%d, %d);",(int)pixel.x, (int)pixel.y];
-					NSLog(@"%@", script);
+					VERBOSE(NSLog(@"%@", script);)
 					NSString *result = [mMapWebView evalJS:script];
-					NSLog(@"%@", result);
+					VERBOSE(NSLog(@"%@", result);)
 					if(result == nil)
 					{
 						NSLog(@"error running script");

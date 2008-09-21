@@ -53,7 +53,7 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-	NSLog(@"navigationControlDone:");
+	VERBOSE(NSLog(@"navigationControlDone:");)
 	if(delegate)
 	{
 		[delegate notesViewControllerDone:self];
@@ -77,9 +77,10 @@
 	}
 	else
 	{
-		textViewRect.size.height -= 215;
+		textViewRect.size.height = 200;
 	}
 	textView.frame = textViewRect;
+	[containerView setBackgroundColor:[UIColor whiteColor]];
 	[containerView addSubview:textView];
 	self.view = containerView;
 	
@@ -88,6 +89,18 @@
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated 
+{
+	[textView becomeFirstResponder];
+	
 }
 
 // date

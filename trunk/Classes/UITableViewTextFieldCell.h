@@ -24,6 +24,7 @@
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
 @property (nonatomic, retain) NSIndexPath *indexPath;
 @property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, assign) id<UITableViewTextFieldCellDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;

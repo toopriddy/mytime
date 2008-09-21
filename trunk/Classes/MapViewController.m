@@ -200,7 +200,7 @@
 			if(latLong)
 			{
 				NSString *script = [NSString stringWithFormat:@"showAddress(\"%@\", %@)", info, latLong];
-				NSLog(@"%@", script);
+				VERBOSE(NSLog(@"%@", script);)
 				if([theWebView evalJS:script] == nil)
 				{
 					NSLog(@"script failure");
@@ -209,7 +209,7 @@
 			else
 			{
 				NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
-				NSLog(@"%@", script);
+				VERBOSE(NSLog(@"%@", script);)
 				
 				if([theWebView evalJS:script] == nil)
 				{
@@ -234,7 +234,7 @@
 				if(latLong)
 				{
 					NSString *script = [NSString stringWithFormat:@"showAddress(\"%@\", %@);", info, latLong];
-					NSLog(@"%@", script);
+					VERBOSE(NSLog(@"%@", script);)
 					if([theWebView evalJS:script] == nil)
 					{
 						NSLog(@"script failure");
@@ -243,7 +243,7 @@
 				else
 				{
 					NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
-					NSLog(@"%@", script);
+					VERBOSE(NSLog(@"%@", script);)
 					
 					if([theWebView evalJS:script] == nil)
 					{

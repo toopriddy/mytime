@@ -36,14 +36,14 @@ static int sortByDate(id v1, id v2, void *context)
 	[sortedArray release];
 
 	// remove all entries that are older than 3 months
-	NSDateComponents *comps = [[NSDateComponents alloc] init];
+	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
 	[comps setMonth:-3];
 	NSDate *now = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
 	int count = [timeEntries count];
 	int i;
 	for(i = 0; i < count; ++i)
 	{
-		NSLog(@"Comparing %d to %d", now, [[timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]);
+		VERBOSE(NSLog(@"Comparing %d to %d", now, [[timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]);)
 		if([now compare:[[timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]] > 0)
 		{
 			[timeEntries removeObjectAtIndex:i];
@@ -200,8 +200,8 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)viewDidAppear:(BOOL)animated 
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 #if 0
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	if([settings objectForKey:SettingsTimeAlertSheetShown] == nil)
 	{
 		[settings setObject:@"" forKey:SettingsTimeAlertSheetShown];

@@ -133,7 +133,7 @@
 		city = city ? city : @"";
 		state = state ? state : @"";
 		NSString *script = [NSString stringWithFormat:@"showAddress(\"%@ %@ %@ %@\");", streetNumber, street, city, state];
-		NSLog(@"%@", script);
+		VERBOSE(NSLog(@"%@", script);)
 		if([theWebView stringByEvaluatingJavaScriptFromString:script] == nil)
 		{
 			NSLog(@"script failure");

@@ -90,7 +90,7 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-	NSLog(@"navigationControlDone:");
+	VERBOSE(NSLog(@"navigationControlDone:");)
 	if(delegate)
 	{
 		[delegate publicationViewControllerDone:self];
@@ -144,7 +144,7 @@
 	}
 	else
 	{
-		UIImageView *v = [[UIImageView alloc] initWithFrame:pickerRect];
+		UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
 		v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
 		v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 		[containerView addSubview: v];
