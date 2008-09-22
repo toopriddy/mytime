@@ -149,7 +149,11 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			_call = [[NSMutableDictionary alloc] initWithDictionary:call copyItems:YES];
 		}
 
-        _name = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCellForCall"];
+		_name = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCellForCall"];
+		if (_name == nil) 
+		{
+			_name = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCellForCall"];
+		}
 		_name.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 		_name.delegate = self;
 		_name.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -966,8 +970,12 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		}
 		else
 		{
+			UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"nameTitleAndValueCell"];
+			if (cell == nil) 
+			{
+				cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"nameTitleAndValueCell"] autorelease];
+			}
 			// if we are not editing, then just display the name
-			UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"nameTitleAndValueCell"] autorelease];
 			[cell setTitle:[_call objectForKey:CallName]];
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			[self       addRow:cell
@@ -1024,7 +1032,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// the address (unless we are editing
 		if(found || _editing)
 		{
-			UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"addressCallCell"] autorelease];
+			UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"addressCallCell"];
+			if (cell == nil) 
+			{
+				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"addressCallCell"] autorelease];
+			}
+
+
 			[cell setText:NSLocalizedString(@"Address", @"Address label for call") ];
 			cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
@@ -1078,7 +1092,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// we need a larger row height
 		[self addGroup:nil];
 		
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallsAddCall"] autorelease];
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallsAddCall"];
+		if (cell == nil) 
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallsAddCall"] autorelease];
+		}
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		if([[_call objectForKey:CallReturnVisits] count])
 		{
@@ -1124,7 +1142,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
-			UITableViewMultilineTextCell *cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesMultiline"] autorelease];
+			UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"NotesMultiline"];
+			if (cell == nil) 
+			{
+				cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesMultiline"] autorelease];
+			}
 			NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 
 			if(_editing)
@@ -1151,7 +1173,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						[cell setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
 				}
 				else
+				{
 					[cell setText:notes];
+				}
 				[self       addRow:cell
 						 rowHeight:[cell heightForWidth:280]
 					insertOrDelete:UITableViewCellEditingStyleNone
@@ -1164,7 +1188,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// CHANGE DATE
 			if(_editing)
 			{
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallChangeDate"] autorelease];
+				UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallChangeDate"];
+				if (cell == nil) 
+				{
+					cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallChangeDate"] autorelease];
+				}
 				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 				[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
 				
@@ -1193,7 +1221,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
-					UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:@"CallPublication"] autorelease];
+					UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallPublication"];
+					if (cell == nil) 
+					{
+						cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:@"CallPublication"] autorelease];
+					}
 					cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 					cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 					[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
@@ -1221,11 +1253,15 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				}
 			}
 			
-	
 			// add publication
 			if(_editing)
 			{
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallAddPublication"] autorelease];
+				UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallAddPublication"];
+				if (cell == nil) 
+				{
+					cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallAddPublication"] autorelease];
+				}
+				cell.hidden = NO;
 				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 				[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication action button in call view")];
@@ -1247,7 +1283,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[self addGroup:nil];
 
 		// DELETE
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) reuseIdentifier:@"CallDelete"] autorelease];
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallDelete"];
+		if (cell == nil) 
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) reuseIdentifier:@"CallDelete"] autorelease];
+		}
 		[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view")];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.backgroundColor = [UIColor redColor];
