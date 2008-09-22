@@ -105,16 +105,19 @@ int sortByDate(id v1, id v2, void *context)
 	[super dealloc];
 }
 
-- (id)initWithCalls:(NSMutableArray *)theCalls sortedBy:(SortCallsType)theSortedBy
+- (id)initSortedBy:(SortCallsType)theSortedBy
 {
 	[super init];
 	sortedBy = theSortedBy;
-	if(theCalls == nil)
+#if 0
+	self.calls = [[Settings sharedInstance] settings];
+	if(![calls respondsToSelector:@selector(sortedArrayUsingFunction:context:)])
 	{
-		theCalls = [[[NSMutableArray alloc] init] autorelease];
-		[[[Settings sharedInstance] settings] setObject:theCalls forKey:SettingsCalls];
+		theCalls = [[[NSMutableArray alloc] initWithArray:calls] autorelease];
+		[[Settings sharedInstance] settings
 	}
-	self.calls = [theCalls retain];
+#endif	
+	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
 	self.citySections = [[NSMutableArray alloc] init];
 	self.streetSections = [[NSMutableArray alloc] init];
 	self.cityRowCount = [[NSMutableArray alloc] init];
@@ -128,6 +131,7 @@ int sortByDate(id v1, id v2, void *context)
 - (void)refreshData
 {
 	VERY_VERBOSE(NSLog(@"refreshData:");)
+	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
 
 	// sort the data
 	// we should sort by the house number too

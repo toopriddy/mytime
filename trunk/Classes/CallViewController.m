@@ -272,8 +272,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		{
 			self.title = NSLocalizedString(@"Call", @"Call main title when editing an existing call");
 		}
-        
-        [self reloadData];
     }
     
     return(self);
@@ -476,8 +474,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
     self.theTableView = tableView;
 	[self.view addSubview:tableView];
 
-	[self reloadData];
-
 	if(_newCall || _editing)
 	{
 		// add DONE button
@@ -535,8 +531,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 {
 	int row = [indexPath row];
 	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
-	return([[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] retain] autorelease]);
+	NSMutableArray *array = [[_displayInformation objectAtIndex:section] objectForKey:CallViewRows];
+	UITableViewCell *cell = [[[array objectAtIndex:row] retain] autorelease];
+    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d cell=%p", row, section, cell);)
+	return(cell);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -623,14 +621,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 {
 }
 
-- (void)unselectRow
-{
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	// unselect the row
-// TODO:
-//	[_table selectRow:-1 byExtendingSelection:NO withFade:YES];
-}
-
 - (void)deleteReturnVisitAtIndex:(NSNumber *)index
 {
 	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", index);)
@@ -646,7 +636,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// if they click on the notes, then it is like they are deleting
 	// the whole return visit
 	DEBUG(NSLog(@"trying to remove row %d", i);)
-	[returnVisits removeObjectAtIndex:[index intValue]];
+	[returnVisits removeObjectAtIndex:i];
 	DEBUG(NSLog(@"got %@", returnVisits);)
 
 	// save the data
@@ -909,7 +899,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
-//	NSInvocation *unselectInvocation = [self invocationForSelector:@selector(unselectRow)];
 
 	[[_currentGroup objectForKey:CallViewRows] addObject:cell];
 	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
@@ -929,15 +918,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	DEBUG(NSLog(@"CallView reloadData");)
 
 	// get rid of the last display information, we double buffer this to get around a douple reloadData call
-	[_lastDisplayInformation release];
-//	[_displayInformation release];
+//	[_lastDisplayInformation release];
+	[_displayInformation release];
 //	[self performSelector:@selector(deleteObject:) withObject:_displayInformation afterDelay:3];
 	// lets store the information till later so that if the iPhone is still using some of this data
 	// in current displays, it does not disappear while still using it.  This is kind of a kludge but
 	// I do not know of a way to find and fix this problem (I spent hours in the simulator trying to find the memory issue)
-//	_lastDisplayInformation = _displayInformation;
+	_lastDisplayInformation = _displayInformation;
 	_displayInformation = [[NSMutableArray alloc] init];
-	
+
 	// Name
 	if(_editing || [[_call objectForKey:CallName] length])
 	{
@@ -978,7 +967,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		else
 		{
 			// if we are not editing, then just display the name
-			UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
+			UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"nameTitleAndValueCell"] autorelease];
 			[cell setTitle:[_call objectForKey:CallName]];
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			[self       addRow:cell
@@ -1035,7 +1024,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// the address (unless we are editing
 		if(found || _editing)
 		{
-			UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
+			UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"addressCallCell"] autorelease];
 			[cell setText:NSLocalizedString(@"Address", @"Address label for call") ];
 			cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
@@ -1089,7 +1078,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// we need a larger row height
 		[self addGroup:nil];
 		
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
+		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallsAddCall"] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		if([[_call objectForKey:CallReturnVisits] count])
 		{
@@ -1106,7 +1095,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
 		  deleteInvocation:nil];
 	}
-
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// RETURN VISITS
@@ -1123,21 +1111,20 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			visit = [returnVisits objectAtIndex:i];
 
 			// GROUP TITLE
-			
 			NSDate *date = [visit objectForKey:CallReturnVisitDate];	
 			// create dictionary entry for This Return Visit
 			[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-#warning fix me
 //			[dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d, %Y", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year")];
 			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
 			NSString *formattedDateString = [dateFormatter stringFromDate:date];			
 			[self addGroup:formattedDateString];
 
+
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
-			UITableViewMultilineTextCell *cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
+			UITableViewMultilineTextCell *cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesMultiline"] autorelease];
 			NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
 
 			if(_editing)
@@ -1172,13 +1159,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				  selectInvocation:nil
 				  deleteInvocation:nil];
 			}
-
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 			// CHANGE DATE
 			if(_editing)
 			{
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
+				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallChangeDate"] autorelease];
 				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 				[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
 				
@@ -1193,7 +1179,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 		
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-	
 			// Publications
 			if([visit objectForKey:CallReturnVisitPublications] != nil)
 			{
@@ -1208,7 +1193,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
-					UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero ] autorelease];
+					UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:@"CallPublication"] autorelease];
 					cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 					cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 					[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
@@ -1240,7 +1225,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// add publication
 			if(_editing)
 			{
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero] autorelease];
+				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallAddPublication"] autorelease];
 				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 				[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication action button in call view")];
@@ -1262,7 +1247,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[self addGroup:nil];
 
 		// DELETE
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) ] autorelease];
+		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) reuseIdentifier:@"CallDelete"] autorelease];
 		[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view")];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.backgroundColor = [UIColor redColor];
@@ -1277,12 +1262,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
 		  deleteInvocation:nil];
 	}
-	
+
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 
 	[theTableView reloadData];
-
-	theTableView.editing = _editing;		
+	
+	if(theTableView.editing != _editing)
+		theTableView.editing = _editing;		
 
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 }
@@ -1358,7 +1344,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
     [_editingReturnVisit setObject:[datePickerViewController date] forKey:CallReturnVisitDate];
     
-	[self reloadData];
+//	[self reloadData];
 
 	// save the data
 	[self save];

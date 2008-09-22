@@ -36,7 +36,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *streetOffsets;
 @property (nonatomic, retain) NSMutableArray *cityOffsets;
 
-- (id)initWithCalls:(NSMutableArray *)theCalls sortedBy:(SortCallsType)theSortedBy;
+- (id)initSortedBy:(SortCallsType)theSortedBy;
 - (NSInteger)numberOfSections;
 - (NSArray *)sectionIndexTitles;
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index;

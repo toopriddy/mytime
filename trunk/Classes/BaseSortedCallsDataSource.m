@@ -69,7 +69,7 @@
 - (id)initSortedBy:(SortCallsType)sortedBy
 {
 	[super init];
-	callsSorter = [[CallsSorter alloc] initWithCalls:[[[Settings sharedInstance] settings] objectForKey:SettingsCalls] sortedBy:sortedBy];
+	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy];
 	return(self);
 }
 
