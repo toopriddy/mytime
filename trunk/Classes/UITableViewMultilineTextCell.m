@@ -76,12 +76,12 @@
 	}
 }
 
-- (CGFloat)heightForWidth:(CGFloat)width
++ (CGFloat)heightForWidth:(CGFloat)width withText:(NSString *)text
 {
 	CGSize constraints;
 	constraints.width = width;
 	constraints.height = 10000000000.0;
-	CGSize size = [textView.text sizeWithFont:textView.font constrainedToSize:constraints];
+	CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraints];
 	return(size.height > 44 ? size.height + 10.0 : 44);
 }
 

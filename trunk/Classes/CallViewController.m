@@ -91,6 +91,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 @synthesize theTableView;
 @synthesize delegate;
 @synthesize currentFirstResponder;
+@synthesize currentIndexPath;
 
 /******************************************************************
  *
@@ -113,6 +114,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		_initialView = YES;
 		delegate = nil;
 		currentFirstResponder = nil;
+		currentIndexPath = nil;
 		
 		self.hidesBottomBarWhenPushed = YES;
 		
@@ -122,7 +124,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		_setFirstResponderGroup = -1;
 		
 		_displayInformation = [[NSMutableArray alloc] init];
-		_lastDisplayInformation = nil;
 
 		_newCall = (call == nil);
 		_editing = _newCall;
@@ -351,6 +352,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	else
 	{
 		[self reloadData];
+		[theTableView reloadData];
+		
+		if(theTableView.editing != _editing)
+			theTableView.editing = _editing;		
 	}
 }
 
@@ -384,6 +389,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	//   the insert new call
 	//   the per call insert a new publication
 	[self reloadData];
+	[theTableView reloadData];
+	
+	if(theTableView.editing != _editing)
+		theTableView.editing = _editing;		
 }
 
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
@@ -421,7 +430,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// force the tableview to load
 	[self reloadData];
-	
+	[theTableView reloadData];
 	[super viewWillAppear:animated];
 }
 
@@ -499,91 +508,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 
 
-// UITableViewDataSource methods
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    int count = [_displayInformation count];
-	VERBOSE(NSLog(@"count=%d", count);)
-    return(count);
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
-{
-	VERBOSE(NSLog(@"tableView numberOfRowsInSection:%d", section);)
-	if(section >= [_displayInformation count])
-		return(0);
-    int count = [[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] count];
-	VERBOSE(NSLog(@"count=%d", count);)
-	return(count);
-}
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
-{
-    VERBOSE(NSLog(@"tableView: titleForHeaderInSection:%d", section);)
-	NSString *title = [[_displayInformation objectAtIndex:section] objectForKey:CallViewGroupText];
-	int retCount = [title retainCount];
-	if(title)
-		assert(retCount);
-    return(title);
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-	int section = [indexPath section];
-	NSMutableArray *array = [[_displayInformation objectAtIndex:section] objectForKey:CallViewRows];
-#if CREATE_CELL_LATER()	
-	NSInvocation *invocation = [array objectAtIndex:row];
-	[invocation invoke];
-	UITableViewCell *cell;
-	[invocation getReturnValue:&cell];
-#else
-	UITableViewCell *cell = [[[array objectAtIndex:row] retain] autorelease];
-	int retCount = [cell retainCount];
-	assert(retCount >= 2);
-#endif
-    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d cell=%p", row, section, cell);)
-	return(cell);
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d", row, section);)
-	if (row == -1) 
-	{
-		if([[_displayInformation objectAtIndex:section] objectForKey:CallViewGroupText] != nil)
-		{
-			return 40;
-		}
-	}
-	else
-	{
-		float height;
-#if 0
-		if([[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] respondsToSelector:@selector(height)])
-		{
-			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] height];
-		}
-		else
-#endif
-		{
-			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRowHeight] objectAtIndex:row] floatValue];
-		}
-		VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d height=%f", row, section, height);)
-		if(height >= 0.0)
-			return(height);
-	}
-	return theTableView.rowHeight;
-}
-
-
 //
 //
 // UITableViewDelegate methods
@@ -631,6 +555,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
  *   Callback functions
  *   
  ******************************************************************/
+#pragma mark Callback Functions
 - (void)dummyFunction
 {
 }
@@ -651,28 +576,28 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[returnVisits removeObjectAtIndex:index];
 	DEBUG(NSLog(@"got %@", returnVisits);)
 
+	[self reloadData];
+
 	// save the data
 	[self save];
 
 	[theTableView deleteSections:[NSIndexSet indexSetWithIndex:[currentIndexPath section]] withRowAnimation:UITableViewRowAnimationLeft];
 
-	// animate the removal of the next rows (change date publications and insert publication cells)
-//	[_table deleteRows:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(_selectedRow-1, num+1)] viaEdge:1];
-	[self reloadData];
 }
 
 - (void)deleteReturnVisitAtIndex:(int)index publicationAtIndex:(int)publicationIndex
 {
-	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@ publicationAtIndex:%@", index, publicationIndex);)
+	DEBUG(NSLog(@"deleteReturnVisitAtIndex: %d publicationAtIndex:%d %@", index, publicationIndex, currentIndexPath);)
 	// this is the entry that we need to delete
 	[[[[_call objectForKey:CallReturnVisits] objectAtIndex:index] 
 	                                                  objectForKey:CallReturnVisitPublications] 
 													      removeObjectAtIndex:publicationIndex];
-	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-	// save the data
-	[self save];
 	
 	[self reloadData];
+	// save the data
+	[self save];
+
+	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
 - (void)addressSelected
@@ -778,6 +703,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	
 	[returnVisits insertObject:visit atIndex:0];
 
+	// unselect this row 
+	[self reloadData];
 
     [theTableView beginUpdates];
 		[theTableView deselectRowAtIndexPath:currentIndexPath animated:YES];
@@ -785,8 +712,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		[theTableView insertSections:[NSIndexSet indexSetWithIndex:[currentIndexPath section]] withRowAnimation:UITableViewRowAnimationRight];
     [theTableView endUpdates];
 
-	// unselect this row 
-	[self reloadData];
 }
 
 - (void)deleteCall
@@ -808,7 +733,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)changeNotesForReturnVisitAtIndex:(int)index
 {
-	DEBUG(NSLog(@"changeNotesForReturnVisitAtIndex: %@", index);)
+	DEBUG(NSLog(@"changeNotesForReturnVisitAtIndex: %d", index);)
 
 	// they clicked on the Change Date
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:index];
@@ -823,7 +748,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)changeDateOfReturnVisitAtIndex:(int)index
 {
-	DEBUG(NSLog(@"changeDateOfReturnVisitAtIndex: %@", index);)
+	DEBUG(NSLog(@"changeDateOfReturnVisitAtIndex: %d", index);)
 
 	// they clicked on the Change Date
 	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:index];
@@ -868,11 +793,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 	p.delegate = self;
 	[[self navigationController] pushViewController:p animated:YES];
-
 }
 
 
-
+#pragma mark Display Data functions
 
 - (NSIndexPath *)lastIndexPath
 {
@@ -941,10 +865,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 }
 #endif
 
-- (void)deleteObject:(NSObject *)object
-{
-	[object release];
-}
+#pragma mark Cell Getters
 
 - (UITableViewCell *)getEditableNameCell
 {
@@ -1005,7 +926,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[cell setText:NSLocalizedString(@"Address", @"Address label for call") ];
 	cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
-	UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+	UIView *view = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
 	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	
 	label.highlightedTextColor = cell.selectedTextColor;
@@ -1147,25 +1068,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 - (void)reloadData
 {
 	DEBUG(NSLog(@"CallView reloadData");)
-	NSEnumerator *outer = [_displayInformation objectEnumerator];
-	NSMutableArray *array;
-	while( (array = [outer nextObject]) )
-	{
-		NSEnumerator *enumerator = [array objectEnumerator];
-		NSObject *obj;
-		while( (obj = [enumerator nextObject]) )
-		{
-			assert([obj retainCount] > 0);
-		}
-	}
 	// get rid of the last display information, we double buffer this to get around a douple reloadData call
-//	[_lastDisplayInformation release];
 	[_displayInformation release];
-//	[self performSelector:@selector(deleteObject:) withObject:_displayInformation afterDelay:3];
-	// lets store the information till later so that if the iPhone is still using some of this data
-	// in current displays, it does not disappear while still using it.  This is kind of a kludge but
-	// I do not know of a way to find and fix this problem (I spent hours in the simulator trying to find the memory issue)
-	_lastDisplayInformation = _displayInformation;
 	_displayInformation = [[NSMutableArray alloc] init];
 
 	// Name
@@ -1383,7 +1287,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 //			[dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d, %Y", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year")];
 			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
-			NSString *formattedDateString = [dateFormatter stringFromDate:date];			
+			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 			[self addGroup:formattedDateString];
 
 
@@ -1601,13 +1505,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	}
 
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
-
-	[theTableView reloadData];
-	
-	if(theTableView.editing != _editing)
-		theTableView.editing = _editing;		
-
-	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 }
 
 
@@ -1616,12 +1513,15 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *   NOTES VIEW CALLBACKS
  *
  ******************************************************************/
+#pragma mark NotesView Delegate
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [_editingReturnVisit setObject:[notesViewController notes] forKey:CallReturnVisitNotes];
 	_editingReturnVisit = nil;
+	[self reloadData];
 	[self save];
+	[theTableView reloadData];
 }
 
 /******************************************************************
@@ -1629,6 +1529,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *   ADDRESS VIEW CALLBACKS
  *
  ******************************************************************/
+#pragma mark AddressView Delegate
 - (void)addressViewControllerDone:(AddressViewController *)addressViewController
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -1637,7 +1538,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_call setObject:(addressViewController.city ? addressViewController.city : @"") forKey:CallCity];
 	[_call setObject:(addressViewController.state ? addressViewController.state : @"") forKey:CallState];
 
+	[self reloadData];
 	[self save];
+	[theTableView reloadData];
 }
 
 /******************************************************************
@@ -1645,10 +1548,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *   PUBLICATION VIEW CALLBACKS
  *
  ******************************************************************/
+#pragma mark PublicationView Delegate
+
 - (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    if(_editingPublication == nil)
+	bool newPublication = (_editingPublication == nil);
+    if(newPublication)
     {
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
         // if we are adding a publication then create the NSDictionary and add it to the end
@@ -1669,7 +1575,17 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	_editingReturnVisit = nil;
 	
 	// save the data
+	[self reloadData];
 	[self save];
+	
+	if(newPublication)
+	{
+		[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+	}
+	else
+	{
+		[theTableView reloadData];
+	}
 }
 
 
@@ -1681,18 +1597,18 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
     [_editingReturnVisit setObject:[datePickerViewController date] forKey:CallReturnVisitDate];
     
-//	[self reloadData];
-
-	// save the data
+	[self reloadData];
 	[self save];
+	[theTableView reloadData];
 }
 
 
 /******************************************************************
  *
- *   PREFERENCES TABLE DELEGATE FUNCTIONS
+ *   DELETE ACTION SHEET DELEGATE FUNCTIONS
  *
  ******************************************************************/
+#pragma mark Delete ActionSheet Delegate
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
@@ -1720,20 +1636,88 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	}
 }
 
-- (void)animateInsertRows: (NSNumber *)start
+#pragma mark Table DataSource/Delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-//	NSNumber *start = [timer userInfo];
-	VERBOSE(NSLog(@"animateInsertRows for %d", [start intValue]);)
-#if 0
-	// reload the group title
-	[the reloadCellAtRow: [start intValue] - 1 column:0 animated:YES];
-	// reload the inserted rows
-	[_table reloadDataForInsertionOfRows:NSMakeRange([start intValue], 3) animated:YES];
-	[self reloadData];
-	[start release];
-#endif
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+    int count = [_displayInformation count];
+	VERBOSE(NSLog(@"count=%d", count);)
+    return(count);
 }
 
+
+- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
+{
+	VERBOSE(NSLog(@"tableView numberOfRowsInSection:%d", section);)
+	if(section >= [_displayInformation count])
+		return(0);
+    int count = [[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] count];
+	VERBOSE(NSLog(@"count=%d", count);)
+	return(count);
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
+{
+    VERBOSE(NSLog(@"tableView: titleForHeaderInSection:%d", section);)
+	NSString *title = [[_displayInformation objectAtIndex:section] objectForKey:CallViewGroupText];
+	int retCount = [title retainCount];
+	if(title)
+		assert(retCount);
+    return(title);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int row = [indexPath row];
+	int section = [indexPath section];
+	NSMutableArray *array = [[_displayInformation objectAtIndex:section] objectForKey:CallViewRows];
+#if CREATE_CELL_LATER()	
+	NSInvocation *invocation = [array objectAtIndex:row];
+	[invocation invoke];
+	UITableViewCell *cell;
+	[invocation getReturnValue:&cell];
+#else
+	UITableViewCell *cell = [[[array objectAtIndex:row] retain] autorelease];
+	int retCount = [cell retainCount];
+	assert(retCount >= 2);
+#endif
+    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d cell=%p", row, section, cell);)
+	return(cell);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int row = [indexPath row];
+	int section = [indexPath section];
+    VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d", row, section);)
+	if (row == -1) 
+	{
+		if([[_displayInformation objectAtIndex:section] objectForKey:CallViewGroupText] != nil)
+		{
+			return 40;
+		}
+	}
+	else
+	{
+		float height;
+#if 0
+		if([[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] respondsToSelector:@selector(height)])
+		{
+			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] height];
+		}
+		else
+#endif
+		{
+			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRowHeight] objectAtIndex:row] floatValue];
+		}
+		VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d height=%f", row, section, height);)
+		if(height >= 0.0)
+			return(height);
+	}
+	return theTableView.rowHeight;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1742,7 +1726,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row=%d editing%d", section, row, _editing);)
 
 	_selectedRow = row;
-	currentIndexPath = indexPath;
+	self.currentIndexPath = indexPath;
 	assert([_displayInformation count] > section);
 	NSInvocation *invocation = [[[[[_displayInformation objectAtIndex:section] objectForKey:CallViewSelectedInvocations] objectAtIndex:row] retain] autorelease];
 	[invocation invoke];
@@ -1770,7 +1754,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 {
     int row = [indexPath row];
     int section = [indexPath section];
-	currentIndexPath = indexPath;
+	self.currentIndexPath = indexPath;
     DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d editing%d", section, row, _editing);)
 	assert([_displayInformation count] > section);
 	return [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewInsertDelete] objectAtIndex:row] intValue];
@@ -1783,7 +1767,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
     int section = [indexPath section];
     DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d editing%d", section, row, _editing);)
 	assert([_displayInformation count] > section);
-	currentIndexPath = indexPath;
+	self.currentIndexPath = indexPath;
 	switch(editingStyle)
 	{
 		case UITableViewCellEditingStyleInsert:
@@ -1804,6 +1788,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *   ACCESSOR METHODS
  *
  ******************************************************************/
+#pragma mark Accessors
 
 - (NSString *)name
 {

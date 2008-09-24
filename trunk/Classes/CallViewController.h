@@ -34,10 +34,10 @@
     NSMutableDictionary *_call;
 	
 	NSMutableArray *_displayInformation;
-	NSMutableArray *_lastDisplayInformation;
 	NSMutableDictionary *_currentGroup;
 	
 	UIResponder *currentFirstResponder;
+	NSIndexPath *currentIndexPath;
 	
 	BOOL _showAddCall;
 	BOOL _showDeleteButton;
@@ -59,6 +59,7 @@
 @property (nonatomic,retain) UITableView *theTableView;
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) UIResponder *currentFirstResponder;
+@property (nonatomic, retain) NSIndexPath *currentIndexPath;
 
 
 /**
