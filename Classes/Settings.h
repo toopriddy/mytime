@@ -67,6 +67,7 @@ extern NSString const * const SettingsTimeAlertSheetShown;
 extern NSString const * const SettingsStatisticsAlertSheetShown;
 extern NSString const * const SettingsMainAlertSheetShown;
 extern NSString const * const SettingsBulkLiteratureAlertSheetShown;
+extern NSString const * const SettingsExistingCallAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
