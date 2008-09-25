@@ -601,7 +601,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 			if(_publication == 1 && _year + YEAR_OFFSET < 2007)
 				[self selectRow: _day inComponent: 3 animated: NO];
 		}
-		
+		[self setSoundsEnabled:NO];
     }
     
     return(self);

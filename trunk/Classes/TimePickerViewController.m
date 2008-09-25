@@ -42,9 +42,19 @@
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		datePicker.datePickerMode = UIDatePickerModeDate;
 		datePicker.date = date;
+		{
+			NSArray *views = datePicker.subviews;
+			UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
+			[picker setSoundsEnabled:NO];
+		}
 		self.timePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		timePicker.datePickerMode = UIDatePickerModeCountDownTimer;
 		timePicker.countDownDuration = minutes*60;
+		{
+			NSArray *views = timePicker.subviews;
+			UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
+			[picker setSoundsEnabled:NO];
+		}
 	}
 	return self;
 }
