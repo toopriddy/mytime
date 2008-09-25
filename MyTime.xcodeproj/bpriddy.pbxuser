@@ -21,9 +21,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Distribution;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator2.1;
+		activeSDKPreference = iphoneos2.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -33,14 +33,18 @@
 			90C4D6F90E85990600E202E2 /* UITableViewMultilineTextCell.m:107 */,
 			90C4D8120E85C73900E202E2 /* HourViewController.m:82 */,
 			90C4D8230E85C78E00E202E2 /* BulkLiteraturePlacementViewContoller.m:107 */,
-			90C4D8A40E85D7FA00E202E2 /* CallViewController.m:298 */,
+			90C4D8A40E85D7FA00E202E2 /* CallViewController.m:299 */,
 			90C4D9FD0E861B3C00E202E2 /* UITableViewMultilineTextCell.m:49 */,
-			906610DE0E86B2D100A30E0F /* CallViewController.m:1045 */,
-			9022EC280E8AE507007DCD2D /* CallViewController.m:707 */,
+			906610DE0E86B2D100A30E0F /* CallViewController.m:1205 */,
+			9022EC280E8AE507007DCD2D /* CallViewController.m:855 */,
 			9022EC990E8AF207007DCD2D /* malloc_error_break */,
-			9022ECA90E8AF35B007DCD2D /* CallViewController.m:588 */,
+			9022ECA90E8AF35B007DCD2D /* CallViewController.m:736 */,
 			9022ECC40E8AF501007DCD2D /* malloc_error_break */,
 			9022ED360E8B0BE6007DCD2D /* BaseSortedCallsDataSource.m:97 */,
+			9022EDB90E8B19CD007DCD2D /* CallViewController.m:470 */,
+			9022EDBD0E8B1A08007DCD2D /* CallViewController.m:502 */,
+			9022EDE70E8B1E6E007DCD2D /* CallViewController.m:363 */,
+			9022EE080E8B215F007DCD2D /* LiteraturePlacementViewController.m:294 */,
 		);
 		codeSenseManager = 90FBE8380E36D02300FD8014 /* Code sense */;
 		executables = (
@@ -504,6 +508,94 @@
 			9022ED7B0E8B0C77007DCD2D /* PBXTextBookmark */ = 9022ED7B0E8B0C77007DCD2D /* PBXTextBookmark */;
 			9022ED7C0E8B0C77007DCD2D /* PBXTextBookmark */ = 9022ED7C0E8B0C77007DCD2D /* PBXTextBookmark */;
 			9022ED7D0E8B0C77007DCD2D /* PBXTextBookmark */ = 9022ED7D0E8B0C77007DCD2D /* PBXTextBookmark */;
+			9022ED840E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED840E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED850E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED850E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED860E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED860E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED870E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED870E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED880E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED880E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED890E8B0E8D007DCD2D /* PBXTextBookmark */ = 9022ED890E8B0E8D007DCD2D /* PBXTextBookmark */;
+			9022ED8E0E8B0F34007DCD2D /* PBXTextBookmark */ = 9022ED8E0E8B0F34007DCD2D /* PBXTextBookmark */;
+			9022ED8F0E8B0F34007DCD2D /* PBXTextBookmark */ = 9022ED8F0E8B0F34007DCD2D /* PBXTextBookmark */;
+			9022ED900E8B0F34007DCD2D /* PBXTextBookmark */ = 9022ED900E8B0F34007DCD2D /* PBXTextBookmark */;
+			9022ED910E8B0F34007DCD2D /* PBXTextBookmark */ = 9022ED910E8B0F34007DCD2D /* PBXTextBookmark */;
+			9022ED920E8B0F34007DCD2D /* PBXTextBookmark */ = 9022ED920E8B0F34007DCD2D /* PBXTextBookmark */;
+			9022ED960E8B0FBB007DCD2D /* PBXTextBookmark */ = 9022ED960E8B0FBB007DCD2D /* PBXTextBookmark */;
+			9022ED970E8B0FBB007DCD2D /* PBXTextBookmark */ = 9022ED970E8B0FBB007DCD2D /* PBXTextBookmark */;
+			9022ED9B0E8B0FD8007DCD2D /* PBXTextBookmark */ = 9022ED9B0E8B0FD8007DCD2D /* PBXTextBookmark */;
+			9022ED9E0E8B0FF7007DCD2D /* PBXTextBookmark */ = 9022ED9E0E8B0FF7007DCD2D /* PBXTextBookmark */;
+			9022EDA00E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA00E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA10E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA10E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA20E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA20E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA30E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA30E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA40E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA40E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA50E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA50E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA60E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA60E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA70E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA70E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA80E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA80E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDA90E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDA90E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDAA0E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDAA0E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDAB0E8B120D007DCD2D /* PBXTextBookmark */ = 9022EDAB0E8B120D007DCD2D /* PBXTextBookmark */;
+			9022EDB30E8B19B9007DCD2D /* PBXTextBookmark */ = 9022EDB30E8B19B9007DCD2D /* PBXTextBookmark */;
+			9022EDB40E8B19B9007DCD2D /* PBXTextBookmark */ = 9022EDB40E8B19B9007DCD2D /* PBXTextBookmark */;
+			9022EDB50E8B19B9007DCD2D /* PBXTextBookmark */ = 9022EDB50E8B19B9007DCD2D /* PBXTextBookmark */;
+			9022EDB60E8B19B9007DCD2D /* PBXTextBookmark */ = 9022EDB60E8B19B9007DCD2D /* PBXTextBookmark */;
+			9022EDBA0E8B19CE007DCD2D /* PBXTextBookmark */ = 9022EDBA0E8B19CE007DCD2D /* PBXTextBookmark */;
+			9022EDBF0E8B1A0E007DCD2D /* PBXTextBookmark */ = 9022EDBF0E8B1A0E007DCD2D /* PBXTextBookmark */;
+			9022EDC30E8B1A46007DCD2D /* PBXTextBookmark */ = 9022EDC30E8B1A46007DCD2D /* PBXTextBookmark */;
+			9022EDC80E8B1B10007DCD2D /* PBXTextBookmark */ = 9022EDC80E8B1B10007DCD2D /* PBXTextBookmark */;
+			9022EDCB0E8B1B5B007DCD2D /* PBXTextBookmark */ = 9022EDCB0E8B1B5B007DCD2D /* PBXTextBookmark */;
+			9022EDCF0E8B1C4E007DCD2D /* PBXTextBookmark */ = 9022EDCF0E8B1C4E007DCD2D /* PBXTextBookmark */;
+			9022EDD10E8B1CDE007DCD2D /* PBXTextBookmark */ = 9022EDD10E8B1CDE007DCD2D /* PBXTextBookmark */;
+			9022EDD30E8B1CF0007DCD2D /* PBXTextBookmark */ = 9022EDD30E8B1CF0007DCD2D /* PBXTextBookmark */;
+			9022EDD40E8B1CF8007DCD2D /* PBXTextBookmark */ = 9022EDD40E8B1CF8007DCD2D /* PBXTextBookmark */;
+			9022EDD70E8B1D1C007DCD2D /* PBXTextBookmark */ = 9022EDD70E8B1D1C007DCD2D /* PBXTextBookmark */;
+			9022EDDA0E8B1D53007DCD2D /* PBXTextBookmark */ = 9022EDDA0E8B1D53007DCD2D /* PBXTextBookmark */;
+			9022EDDF0E8B1DF0007DCD2D /* PBXTextBookmark */ = 9022EDDF0E8B1DF0007DCD2D /* PBXTextBookmark */;
+			9022EDE30E8B1E56007DCD2D /* PBXTextBookmark */ = 9022EDE30E8B1E56007DCD2D /* PBXTextBookmark */;
+			9022EDE90E8B1E73007DCD2D /* PBXTextBookmark */ = 9022EDE90E8B1E73007DCD2D /* PBXTextBookmark */;
+			9022EDEC0E8B1EA0007DCD2D /* PBXTextBookmark */ = 9022EDEC0E8B1EA0007DCD2D /* PBXTextBookmark */;
+			9022EDEF0E8B1F3B007DCD2D /* PBXTextBookmark */ = 9022EDEF0E8B1F3B007DCD2D /* PBXTextBookmark */;
+			9022EDF00E8B1F61007DCD2D /* PBXTextBookmark */ = 9022EDF00E8B1F61007DCD2D /* PBXTextBookmark */;
+			9022EDF20E8B1F61007DCD2D /* PBXTextBookmark */ = 9022EDF20E8B1F61007DCD2D /* PBXTextBookmark */;
+			9022EDF30E8B1F61007DCD2D /* PBXTextBookmark */ = 9022EDF30E8B1F61007DCD2D /* PBXTextBookmark */;
+			9022EDF50E8B1F7E007DCD2D /* PBXTextBookmark */ = 9022EDF50E8B1F7E007DCD2D /* PBXTextBookmark */;
+			9022EDF70E8B1F86007DCD2D /* PBXTextBookmark */ = 9022EDF70E8B1F86007DCD2D /* PBXTextBookmark */;
+			9022EDFE0E8B1F99007DCD2D /* PBXTextBookmark */ = 9022EDFE0E8B1F99007DCD2D /* PBXTextBookmark */;
+			9022EDFF0E8B1FB0007DCD2D /* PBXTextBookmark */ = 9022EDFF0E8B1FB0007DCD2D /* PBXTextBookmark */;
+			9022EE010E8B1FB0007DCD2D /* PBXTextBookmark */ = 9022EE010E8B1FB0007DCD2D /* PBXTextBookmark */;
+			9022EE020E8B1FB0007DCD2D /* PBXTextBookmark */ = 9022EE020E8B1FB0007DCD2D /* PBXTextBookmark */;
+			9022EE050E8B1FDE007DCD2D /* PBXTextBookmark */ = 9022EE050E8B1FDE007DCD2D /* PBXTextBookmark */;
+			9022EE0A0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0A0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE0B0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0B0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE0C0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0C0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE0D0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0D0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE0E0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0E0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE0F0E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE0F0E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE100E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE100E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE110E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE110E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE120E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE120E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE130E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE130E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE140E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE140E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE150E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE150E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE160E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE160E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE170E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE170E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE180E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE180E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE190E8B2175007DCD2D /* PBXTextBookmark */ = 9022EE190E8B2175007DCD2D /* PBXTextBookmark */;
+			9022EE1D0E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE1D0E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE1E0E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE1E0E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE1F0E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE1F0E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE200E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE200E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE210E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE210E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE220E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE220E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE230E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE230E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE240E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE240E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE250E8B2249007DCD2D /* PBXTextBookmark */ = 9022EE250E8B2249007DCD2D /* PBXTextBookmark */;
+			9022EE280E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE280E8B2330007DCD2D /* PBXTextBookmark */;
+			9022EE290E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE290E8B2330007DCD2D /* PBXTextBookmark */;
+			9022EE2A0E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE2A0E8B2330007DCD2D /* PBXTextBookmark */;
+			9022EE2B0E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE2B0E8B2330007DCD2D /* PBXTextBookmark */;
+			9022EE2C0E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE2C0E8B2330007DCD2D /* PBXTextBookmark */;
+			9022EE2D0E8B2330007DCD2D /* PBXTextBookmark */ = 9022EE2D0E8B2330007DCD2D /* PBXTextBookmark */;
 			906610B90E86AF1900A30E0F = 906610B90E86AF1900A30E0F /* PBXTextBookmark */;
 			906610F60E86B58200A30E0F = 906610F60E86B58200A30E0F /* PBXTextBookmark */;
 			906610F70E86B58200A30E0F = 906610F70E86B58200A30E0F /* PBXTextBookmark */;
@@ -678,7 +770,7 @@
 		isa = PBXTextBookmark;
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 0;
-		rLoc = 562;
+		rLoc = 710;
 		rType = 1;
 	};
 	9022EAB60E876D9B007DCD2D /* PBXTextBookmark */ = {
@@ -686,7 +778,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 534";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 735;
 		vrLoc = 17270;
@@ -696,7 +788,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1166";
 		rLen = 0;
-		rLoc = 43235;
+		rLoc = 47482;
 		rType = 0;
 		vrLen = 2141;
 		vrLoc = 40168;
@@ -706,7 +798,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1126";
 		rLen = 0;
-		rLoc = 42095;
+		rLoc = 46342;
 		rType = 0;
 		vrLen = 2375;
 		vrLoc = 38543;
@@ -716,7 +808,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1247";
 		rLen = 0;
-		rLoc = 45623;
+		rLoc = 49870;
 		rType = 0;
 		vrLen = 1432;
 		vrLoc = 37155;
@@ -726,7 +818,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1247";
 		rLen = 0;
-		rLoc = 45623;
+		rLoc = 49870;
 		rType = 0;
 		vrLen = 1509;
 		vrLoc = 35198;
@@ -736,7 +828,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1022";
 		rLen = 0;
-		rLoc = 39852;
+		rLoc = 44053;
 		rType = 0;
 		vrLen = 486;
 		vrLoc = 35198;
@@ -746,7 +838,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1254";
 		rLen = 0;
-		rLoc = 45969;
+		rLoc = 50231;
 		rType = 0;
 		vrLen = 1739;
 		vrLoc = 43338;
@@ -756,7 +848,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 930";
 		rLen = 0;
-		rLoc = 37768;
+		rLoc = 42457;
 		rType = 0;
 		vrLen = 1565;
 		vrLoc = 32115;
@@ -776,7 +868,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 930";
 		rLen = 0;
-		rLoc = 37768;
+		rLoc = 42457;
 		rType = 0;
 		vrLen = 1565;
 		vrLoc = 32115;
@@ -806,7 +898,7 @@
 		comments = "error: 'tableView' undeclared (first use in this function)";
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 0;
-		rLoc = 1083;
+		rLoc = 1221;
 		rType = 1;
 	};
 	9022EADE0E87E761007DCD2D /* PBXTextBookmark */ = {
@@ -824,7 +916,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1284";
 		rLen = 0;
-		rLoc = 45969;
+		rLoc = 50231;
 		rType = 0;
 		vrLen = 1147;
 		vrLoc = 45408;
@@ -834,7 +926,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1263";
 		rLen = 0;
-		rLoc = 45611;
+		rLoc = 49858;
 		rType = 0;
 		vrLen = 1082;
 		vrLoc = 44718;
@@ -844,7 +936,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1276";
 		rLen = 0;
-		rLoc = 45616;
+		rLoc = 49863;
 		rType = 0;
 		vrLen = 1779;
 		vrLoc = 44076;
@@ -894,7 +986,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1257";
 		rLen = 0;
-		rLoc = 45611;
+		rLoc = 49858;
 		rType = 0;
 		vrLen = 1642;
 		vrLoc = 44532;
@@ -904,7 +996,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1257";
 		rLen = 0;
-		rLoc = 45611;
+		rLoc = 49858;
 		rType = 0;
 		vrLen = 1642;
 		vrLoc = 44532;
@@ -944,7 +1036,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1257";
 		rLen = 0;
-		rLoc = 45611;
+		rLoc = 49858;
 		rType = 0;
 		vrLen = 1982;
 		vrLoc = 43808;
@@ -954,7 +1046,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1250";
 		rLen = 0;
-		rLoc = 45167;
+		rLoc = 49414;
 		rType = 0;
 		vrLen = 2255;
 		vrLoc = 39461;
@@ -964,7 +1056,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1151";
 		rLen = 0;
-		rLoc = 42161;
+		rLoc = 46408;
 		rType = 0;
 		vrLen = 2269;
 		vrLoc = 39461;
@@ -974,7 +1066,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1178";
 		rLen = 0;
-		rLoc = 43230;
+		rLoc = 47477;
 		rType = 0;
 		vrLen = 2123;
 		vrLoc = 39023;
@@ -984,7 +1076,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 152";
 		rLen = 0;
-		rLoc = 4131;
+		rLoc = 4171;
 		rType = 0;
 		vrLen = 1787;
 		vrLoc = 3321;
@@ -994,7 +1086,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1254";
 		rLen = 0;
-		rLoc = 45969;
+		rLoc = 50231;
 		rType = 0;
 		vrLen = 1786;
 		vrLoc = 43757;
@@ -1004,7 +1096,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1254";
 		rLen = 0;
-		rLoc = 45969;
+		rLoc = 50231;
 		rType = 0;
 		vrLen = 2174;
 		vrLoc = 38398;
@@ -1014,7 +1106,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1254";
 		rLen = 0;
-		rLoc = 45969;
+		rLoc = 50231;
 		rType = 0;
 		vrLen = 2174;
 		vrLoc = 38398;
@@ -1024,7 +1116,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1124";
 		rLen = 0;
-		rLoc = 42094;
+		rLoc = 46341;
 		rType = 0;
 		vrLen = 861;
 		vrLoc = 43919;
@@ -1034,7 +1126,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 538";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1610;
 		vrLoc = 16491;
@@ -1044,7 +1136,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 538";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1610;
 		vrLoc = 16491;
@@ -1054,7 +1146,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 538";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1569;
 		vrLoc = 16694;
@@ -1064,7 +1156,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 539";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1444;
 		vrLoc = 16694;
@@ -1074,7 +1166,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 539";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1444;
 		vrLoc = 16694;
@@ -1084,7 +1176,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 529";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 667;
 		vrLoc = 17213;
@@ -1121,7 +1213,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 529";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 667;
 		vrLoc = 17213;
@@ -1161,7 +1253,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 529";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1568;
 		vrLoc = 16707;
@@ -1191,7 +1283,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 529";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1568;
 		vrLoc = 16707;
@@ -1326,7 +1418,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 529";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1568;
 		vrLoc = 16707;
@@ -1346,7 +1438,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 934";
 		rLen = 0;
-		rLoc = 37575;
+		rLoc = 42264;
 		rType = 0;
 		vrLen = 1985;
 		vrLoc = 31402;
@@ -1356,7 +1448,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 934";
 		rLen = 0;
-		rLoc = 37575;
+		rLoc = 42264;
 		rType = 0;
 		vrLen = 1985;
 		vrLoc = 31402;
@@ -1366,7 +1458,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 934";
 		rLen = 0;
-		rLoc = 37575;
+		rLoc = 42264;
 		rType = 0;
 		vrLen = 1565;
 		vrLoc = 31963;
@@ -1386,7 +1478,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 930";
 		rLen = 0;
-		rLoc = 37575;
+		rLoc = 42264;
 		rType = 0;
 		vrLen = 878;
 		vrLoc = 32299;
@@ -1395,7 +1487,7 @@
 		isa = PBXTextBookmark;
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 1;
-		rLoc = 530;
+		rLoc = 678;
 		rType = 1;
 	};
 	9022EB600E8890B3007DCD2D /* PBXTextBookmark */ = {
@@ -1403,7 +1495,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 629";
 		rLen = 43;
-		rLoc = 17992;
+		rLoc = 22402;
 		rType = 0;
 		vrLen = 1342;
 		vrLoc = 19627;
@@ -1413,7 +1505,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 612";
 		rLen = 21;
-		rLoc = 17626;
+		rLoc = 22036;
 		rType = 0;
 		vrLen = 1336;
 		vrLoc = 19034;
@@ -1423,7 +1515,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 612";
 		rLen = 21;
-		rLoc = 17626;
+		rLoc = 22036;
 		rType = 0;
 		vrLen = 1460;
 		vrLoc = 19828;
@@ -1433,7 +1525,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 612";
 		rLen = 21;
-		rLoc = 17626;
+		rLoc = 22036;
 		rType = 0;
 		vrLen = 1460;
 		vrLoc = 19828;
@@ -1443,7 +1535,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 652";
 		rLen = 0;
-		rLoc = 18783;
+		rLoc = 23193;
 		rType = 0;
 		vrLen = 633;
 		vrLoc = 21559;
@@ -1453,7 +1545,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 533";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1121;
 		vrLoc = 16490;
@@ -1478,7 +1570,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 652";
 		rLen = 0;
-		rLoc = 18783;
+		rLoc = 23193;
 		rType = 0;
 		vrLen = 581;
 		vrLoc = 21559;
@@ -1488,7 +1580,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 533";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 731;
 		vrLoc = 16861;
@@ -1508,7 +1600,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 929";
 		rLen = 19;
-		rLoc = 37683;
+		rLoc = 42372;
 		rType = 0;
 		vrLen = 1440;
 		vrLoc = 31885;
@@ -1518,7 +1610,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 929";
 		rLen = 19;
-		rLoc = 37683;
+		rLoc = 42372;
 		rType = 0;
 		vrLen = 1440;
 		vrLoc = 31885;
@@ -1538,7 +1630,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 928";
 		rLen = 0;
-		rLoc = 37681;
+		rLoc = 42370;
 		rType = 0;
 		vrLen = 1440;
 		vrLoc = 31885;
@@ -1548,7 +1640,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 928";
 		rLen = 0;
-		rLoc = 37681;
+		rLoc = 42370;
 		rType = 0;
 		vrLen = 411;
 		vrLoc = 45309;
@@ -1571,7 +1663,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 928";
 		rLen = 0;
-		rLoc = 37681;
+		rLoc = 42370;
 		rType = 0;
 		vrLen = 411;
 		vrLoc = 45309;
@@ -1596,7 +1688,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 540";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 16650;
@@ -1606,7 +1698,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 540";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 16650;
@@ -1616,7 +1708,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 540";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1480;
 		vrLoc = 16804;
@@ -1626,7 +1718,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 540";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 678;
 		vrLoc = 17319;
@@ -1636,7 +1728,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 541";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 678;
 		vrLoc = 17319;
@@ -1646,7 +1738,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1336";
 		rLen = 0;
-		rLoc = 44803;
+		rLoc = 49050;
 		rType = 0;
 		vrLen = 2283;
 		vrLoc = 46054;
@@ -1676,7 +1768,7 @@
 		comments = "warning: unused variable 'lastEntry'";
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 1;
-		rLoc = 1172;
+		rLoc = 1309;
 		rType = 1;
 	};
 	9022EBA50E8AD377007DCD2D /* PBXTextBookmark */ = {
@@ -1684,7 +1776,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1352";
 		rLen = 28;
-		rLoc = 42324;
+		rLoc = 46571;
 		rType = 0;
 		vrLen = 2394;
 		vrLoc = 46759;
@@ -1864,7 +1956,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1330";
 		rLen = 0;
-		rLoc = 41269;
+		rLoc = 45502;
 		rType = 0;
 		vrLen = 1193;
 		vrLoc = 46327;
@@ -1874,7 +1966,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1330";
 		rLen = 0;
-		rLoc = 41269;
+		rLoc = 45502;
 		rType = 0;
 		vrLen = 1193;
 		vrLoc = 46327;
@@ -1899,7 +1991,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 543";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 763;
 		vrLoc = 17245;
@@ -1909,7 +2001,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 535";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 696;
 		vrLoc = 17058;
@@ -1919,7 +2011,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 542";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1436;
 		vrLoc = 16888;
@@ -1929,7 +2021,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 542";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1436;
 		vrLoc = 16888;
@@ -1939,7 +2031,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1082";
 		rLen = 0;
-		rLoc = 36064;
+		rLoc = 40753;
 		rType = 0;
 		vrLen = 2410;
 		vrLoc = 37246;
@@ -1949,7 +2041,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1077";
 		rLen = 16;
-		rLoc = 35383;
+		rLoc = 40072;
 		rType = 0;
 		vrLen = 2426;
 		vrLoc = 37067;
@@ -1959,7 +2051,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1075";
 		rLen = 0;
-		rLoc = 35278;
+		rLoc = 39967;
 		rType = 0;
 		vrLen = 1117;
 		vrLoc = 37699;
@@ -1969,7 +2061,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1469";
 		rLen = 0;
-		rLoc = 44803;
+		rLoc = 49050;
 		rType = 0;
 		vrLen = 2391;
 		vrLoc = 52744;
@@ -1979,7 +2071,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1469";
 		rLen = 0;
-		rLoc = 44803;
+		rLoc = 49050;
 		rType = 0;
 		vrLen = 1501;
 		vrLoc = 16985;
@@ -1989,7 +2081,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1469";
 		rLen = 0;
-		rLoc = 44803;
+		rLoc = 49050;
 		rType = 0;
 		vrLen = 1501;
 		vrLoc = 16985;
@@ -1999,7 +2091,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1078";
 		rLen = 0;
-		rLoc = 35401;
+		rLoc = 40090;
 		rType = 0;
 		vrLen = 1117;
 		vrLoc = 37562;
@@ -2009,7 +2101,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1081";
 		rLen = 0;
-		rLoc = 35826;
+		rLoc = 40515;
 		rType = 0;
 		vrLen = 2426;
 		vrLoc = 37067;
@@ -2019,7 +2111,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 543";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1480;
 		vrLoc = 16835;
@@ -2029,7 +2121,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1436;
 		vrLoc = 16888;
@@ -2039,7 +2131,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1904;
 		vrLoc = 32663;
@@ -2049,7 +2141,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1947;
 		vrLoc = 38835;
@@ -2059,7 +2151,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1489;
 		vrLoc = 33238;
@@ -2069,7 +2161,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1489;
 		vrLoc = 33238;
@@ -2079,7 +2171,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1078";
 		rLen = 0;
-		rLoc = 35401;
+		rLoc = 40090;
 		rType = 0;
 		vrLen = 1031;
 		vrLoc = 37871;
@@ -2089,7 +2181,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 473;
 		vrLoc = 33238;
@@ -2099,7 +2191,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1126";
 		rLen = 0;
-		rLoc = 36903;
+		rLoc = 41592;
 		rType = 0;
 		vrLen = 1605;
 		vrLoc = 47291;
@@ -2109,7 +2201,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1126";
 		rLen = 0;
-		rLoc = 36903;
+		rLoc = 41592;
 		rType = 0;
 		vrLen = 1686;
 		vrLoc = 47291;
@@ -2119,7 +2211,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1126";
 		rLen = 0;
-		rLoc = 36903;
+		rLoc = 41592;
 		rType = 0;
 		vrLen = 569;
 		vrLoc = 47291;
@@ -2129,7 +2221,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 549";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 432;
 		vrLoc = 33238;
@@ -2139,7 +2231,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1348";
 		rLen = 0;
-		rLoc = 41014;
+		rLoc = 45247;
 		rType = 0;
 		vrLen = 569;
 		vrLoc = 47291;
@@ -2149,7 +2241,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1358";
 		rLen = 0;
-		rLoc = 41041;
+		rLoc = 45274;
 		rType = 0;
 		vrLen = 1670;
 		vrLoc = 47291;
@@ -2159,7 +2251,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1365";
 		rLen = 0;
-		rLoc = 41203;
+		rLoc = 45436;
 		rType = 0;
 		vrLen = 1429;
 		vrLoc = 46664;
@@ -2169,7 +2261,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1365";
 		rLen = 0;
-		rLoc = 41203;
+		rLoc = 45436;
 		rType = 0;
 		vrLen = 1606;
 		vrLoc = 47343;
@@ -2179,12 +2271,12 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1365";
 		rLen = 0;
-		rLoc = 41203;
+		rLoc = 45436;
 		rType = 0;
 		vrLen = 704;
 		vrLoc = 47100;
 	};
-	9022EC280E8AE507007DCD2D /* CallViewController.m:707 */ = {
+	9022EC280E8AE507007DCD2D /* CallViewController.m:855 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -2196,9 +2288,9 @@
 		functionName = "-addReturnVisitSelected";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 707;
+		lineNumber = 855;
 		location = MyTime;
-		modificationTime = 243993665.739146;
+		modificationTime = 243999307.635964;
 		state = 2;
 	};
 	9022EC2A0E8AE50B007DCD2D /* PBXTextBookmark */ = {
@@ -2216,7 +2308,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1767";
 		rLen = 0;
-		rLoc = 54869;
+		rLoc = 59131;
 		rType = 0;
 		vrLen = 2222;
 		vrLoc = 63913;
@@ -2226,7 +2318,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1739";
 		rLen = 0;
-		rLoc = 53525;
+		rLoc = 57787;
 		rType = 0;
 		vrLen = 2214;
 		vrLoc = 63913;
@@ -2246,7 +2338,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1767";
 		rLen = 0;
-		rLoc = 54869;
+		rLoc = 59131;
 		rType = 0;
 		vrLen = 2222;
 		vrLoc = 63913;
@@ -2266,7 +2358,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1767";
 		rLen = 0;
-		rLoc = 54869;
+		rLoc = 59131;
 		rType = 0;
 		vrLen = 2222;
 		vrLoc = 63913;
@@ -2286,7 +2378,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 784";
 		rLen = 0;
-		rLoc = 23986;
+		rLoc = 28396;
 		rType = 0;
 		vrLen = 2112;
 		vrLoc = 25377;
@@ -2296,7 +2388,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 656";
 		rLen = 0;
-		rLoc = 18644;
+		rLoc = 23054;
 		rType = 0;
 		vrLen = 1682;
 		vrLoc = 20380;
@@ -2306,7 +2398,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 540";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1595;
 		vrLoc = 16891;
@@ -2316,7 +2408,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 786";
 		rLen = 0;
-		rLoc = 23986;
+		rLoc = 28396;
 		rType = 0;
 		vrLen = 2196;
 		vrLoc = 25547;
@@ -2326,7 +2418,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 787";
 		rLen = 0;
-		rLoc = 23986;
+		rLoc = 28396;
 		rType = 0;
 		vrLen = 1780;
 		vrLoc = 25328;
@@ -2336,7 +2428,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 789";
 		rLen = 0;
-		rLoc = 24018;
+		rLoc = 28428;
 		rType = 0;
 		vrLen = 1778;
 		vrLoc = 25328;
@@ -2346,7 +2438,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 784";
 		rLen = 0;
-		rLoc = 23749;
+		rLoc = 28159;
 		rType = 0;
 		vrLen = 1778;
 		vrLoc = 25328;
@@ -2356,7 +2448,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 784";
 		rLen = 0;
-		rLoc = 23749;
+		rLoc = 28159;
 		rType = 0;
 		vrLen = 938;
 		vrLoc = 26168;
@@ -2366,7 +2458,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 763";
 		rLen = 0;
-		rLoc = 22912;
+		rLoc = 27322;
 		rType = 0;
 		vrLen = 2112;
 		vrLoc = 25510;
@@ -2376,7 +2468,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 763";
 		rLen = 0;
-		rLoc = 22912;
+		rLoc = 27322;
 		rType = 0;
 		vrLen = 2112;
 		vrLoc = 25510;
@@ -2386,7 +2478,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 763";
 		rLen = 0;
-		rLoc = 22912;
+		rLoc = 27322;
 		rType = 0;
 		vrLen = 2082;
 		vrLoc = 24463;
@@ -2396,7 +2488,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 763";
 		rLen = 0;
-		rLoc = 22912;
+		rLoc = 27322;
 		rType = 0;
 		vrLen = 2082;
 		vrLoc = 24463;
@@ -2406,7 +2498,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 675;
 		vrLoc = 27866;
@@ -2416,7 +2508,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 27425;
@@ -2426,7 +2518,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 27425;
@@ -2436,7 +2528,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 27425;
@@ -2446,7 +2538,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 27425;
@@ -2456,7 +2548,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 825";
 		rLen = 10;
-		rLoc = 25564;
+		rLoc = 29974;
 		rType = 0;
 		vrLen = 675;
 		vrLoc = 27866;
@@ -2466,7 +2558,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 822";
 		rLen = 0;
-		rLoc = 25477;
+		rLoc = 29887;
 		rType = 0;
 		vrLen = 570;
 		vrLoc = 28392;
@@ -2476,7 +2568,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 837";
 		rLen = 0;
-		rLoc = 25988;
+		rLoc = 30398;
 		rType = 0;
 		vrLen = 1819;
 		vrLoc = 28362;
@@ -2496,7 +2588,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1065";
 		rLen = 0;
-		rLoc = 37713;
+		rLoc = 42402;
 		rType = 0;
 		vrLen = 1263;
 		vrLoc = 38312;
@@ -2506,7 +2598,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1065";
 		rLen = 0;
-		rLoc = 37713;
+		rLoc = 42402;
 		rType = 0;
 		vrLen = 1263;
 		vrLoc = 38312;
@@ -2526,7 +2618,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 774";
 		rLen = 0;
-		rLoc = 26467;
+		rLoc = 30877;
 		rType = 0;
 		vrLen = 1708;
 		vrLoc = 25425;
@@ -2536,7 +2628,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1578";
 		rLen = 0;
-		rLoc = 49479;
+		rLoc = 53741;
 		rType = 0;
 		vrLen = 1980;
 		vrLoc = 57669;
@@ -2546,7 +2638,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1578";
 		rLen = 0;
-		rLoc = 49479;
+		rLoc = 53741;
 		rType = 0;
 		vrLen = 1980;
 		vrLoc = 57669;
@@ -2556,7 +2648,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1578";
 		rLen = 0;
-		rLoc = 49479;
+		rLoc = 53741;
 		rType = 0;
 		vrLen = 826;
 		vrLoc = 58341;
@@ -2566,7 +2658,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 744";
 		rLen = 0;
-		rLoc = 25477;
+		rLoc = 29887;
 		rType = 0;
 		vrLen = 930;
 		vrLoc = 29377;
@@ -2576,7 +2668,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1578";
 		rLen = 0;
-		rLoc = 49479;
+		rLoc = 53741;
 		rType = 0;
 		vrLen = 928;
 		vrLoc = 58239;
@@ -2586,7 +2678,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1714";
 		rLen = 91;
-		rLoc = 53251;
+		rLoc = 57513;
 		rType = 0;
 		vrLen = 1890;
 		vrLoc = 64043;
@@ -2596,7 +2688,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1714";
 		rLen = 91;
-		rLoc = 53251;
+		rLoc = 57513;
 		rType = 0;
 		vrLen = 694;
 		vrLoc = 64043;
@@ -2616,7 +2708,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 60";
 		rLen = 0;
-		rLoc = 1667;
+		rLoc = 1707;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 1300;
@@ -2626,7 +2718,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1558";
 		rLen = 0;
-		rLoc = 48151;
+		rLoc = 52413;
 		rType = 0;
 		vrLen = 2174;
 		vrLoc = 57218;
@@ -2646,7 +2738,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 60";
 		rLen = 0;
-		rLoc = 1667;
+		rLoc = 1707;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 1300;
@@ -2666,7 +2758,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 116";
 		rLen = 16;
-		rLoc = 3011;
+		rLoc = 3051;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 2524;
@@ -2676,7 +2768,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 116";
 		rLen = 16;
-		rLoc = 3011;
+		rLoc = 3051;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 2524;
@@ -2686,7 +2778,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 116";
 		rLen = 16;
-		rLoc = 3011;
+		rLoc = 3051;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 2524;
@@ -2711,7 +2803,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1715";
 		rLen = 91;
-		rLoc = 53251;
+		rLoc = 57513;
 		rType = 0;
 		vrLen = 793;
 		vrLoc = 63946;
@@ -2721,7 +2813,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 114";
 		rLen = 0;
-		rLoc = 2977;
+		rLoc = 3017;
 		rType = 0;
 		vrLen = 426;
 		vrLoc = 2834;
@@ -2731,7 +2823,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 95";
 		rLen = 0;
-		rLoc = 2523;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1095;
 		vrLoc = 1971;
@@ -2741,7 +2833,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 95";
 		rLen = 0;
-		rLoc = 2523;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1095;
 		vrLoc = 1971;
@@ -2757,7 +2849,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 243993665.741022;
+		modificationTime = 243999307.638571;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -2766,7 +2858,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 95";
 		rLen = 0;
-		rLoc = 2523;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1095;
 		vrLoc = 1971;
@@ -2786,7 +2878,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1579";
 		rLen = 0;
-		rLoc = 49306;
+		rLoc = 53568;
 		rType = 0;
 		vrLen = 594;
 		vrLoc = 58633;
@@ -2796,7 +2888,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 115";
 		rLen = 0;
-		rLoc = 2977;
+		rLoc = 3017;
 		rType = 0;
 		vrLen = 385;
 		vrLoc = 2815;
@@ -2806,7 +2898,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 95";
 		rLen = 0;
-		rLoc = 2523;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 454;
 		vrLoc = 55688;
@@ -2826,12 +2918,12 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1579";
 		rLen = 0;
-		rLoc = 49306;
+		rLoc = 53568;
 		rType = 0;
 		vrLen = 728;
 		vrLoc = 58499;
 	};
-	9022ECA90E8AF35B007DCD2D /* CallViewController.m:588 */ = {
+	9022ECA90E8AF35B007DCD2D /* CallViewController.m:736 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -2843,9 +2935,9 @@
 		functionName = "-deleteReturnVisitAtIndex:publicationAtIndex:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 588;
+		lineNumber = 736;
 		location = MyTime;
-		modificationTime = 243993665.739453;
+		modificationTime = 243999307.636242;
 		state = 2;
 	};
 	9022ECAA0E8AF35C007DCD2D /* PBXTextBookmark */ = {
@@ -2863,7 +2955,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 92";
 		rLen = 0;
-		rLoc = 2457;
+		rLoc = 2497;
 		rType = 0;
 		vrLen = 1150;
 		vrLoc = 1916;
@@ -2893,7 +2985,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 92";
 		rLen = 0;
-		rLoc = 2457;
+		rLoc = 2497;
 		rType = 0;
 		vrLen = 1150;
 		vrLoc = 1916;
@@ -2913,7 +3005,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 589";
 		rLen = 84;
-		rLoc = 18784;
+		rLoc = 23194;
 		rType = 0;
 		vrLen = 1925;
 		vrLoc = 18197;
@@ -2923,7 +3015,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 591";
 		rLen = 0;
-		rLoc = 18983;
+		rLoc = 23393;
 		rType = 0;
 		vrLen = 1848;
 		vrLoc = 18197;
@@ -2933,7 +3025,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 591";
 		rLen = 0;
-		rLoc = 18983;
+		rLoc = 23393;
 		rType = 0;
 		vrLen = 1848;
 		vrLoc = 18197;
@@ -2943,7 +3035,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 591";
 		rLen = 0;
-		rLoc = 18983;
+		rLoc = 23393;
 		rType = 0;
 		vrLen = 1848;
 		vrLoc = 18197;
@@ -2953,7 +3045,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 432";
 		rLen = 10;
-		rLoc = 14053;
+		rLoc = 18463;
 		rType = 0;
 		vrLen = 444;
 		vrLoc = 13757;
@@ -2963,7 +3055,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 582";
 		rLen = 0;
-		rLoc = 18645;
+		rLoc = 23055;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 17996;
@@ -2973,7 +3065,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 582";
 		rLen = 0;
-		rLoc = 18645;
+		rLoc = 23055;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 17996;
@@ -2983,7 +3075,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 582";
 		rLen = 0;
-		rLoc = 18645;
+		rLoc = 23055;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 17996;
@@ -2999,7 +3091,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 243993665.741292;
+		modificationTime = 243999307.638815;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -3008,7 +3100,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 582";
 		rLen = 0;
-		rLoc = 18645;
+		rLoc = 23055;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 17996;
@@ -3032,7 +3124,7 @@
 		isa = PBXTextBookmark;
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 1;
-		rLoc = 1042;
+		rLoc = 1202;
 		rType = 1;
 	};
 	9022ECCD0E8AF581007DCD2D /* PBXTextBookmark */ = {
@@ -3040,7 +3132,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 573";
 		rLen = 0;
-		rLoc = 18429;
+		rLoc = 22839;
 		rType = 0;
 		vrLen = 542;
 		vrLoc = 17996;
@@ -3065,7 +3157,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1069";
 		rLen = 19;
-		rLoc = 37515;
+		rLoc = 42204;
 		rType = 0;
 		vrLen = 392;
 		vrLoc = 41185;
@@ -3075,7 +3167,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 597";
 		rLen = 0;
-		rLoc = 19270;
+		rLoc = 23680;
 		rType = 0;
 		vrLen = 1754;
 		vrLoc = 18655;
@@ -3085,7 +3177,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 597";
 		rLen = 0;
-		rLoc = 19270;
+		rLoc = 23680;
 		rType = 0;
 		vrLen = 1754;
 		vrLoc = 18655;
@@ -3094,7 +3186,7 @@
 		isa = PBXTextBookmark;
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 1;
-		rLoc = 300;
+		rLoc = 301;
 		rType = 1;
 	};
 	9022ECDA0E8AF90F007DCD2D /* PBXTextBookmark */ = {
@@ -3102,7 +3194,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1603";
 		rLen = 0;
-		rLoc = 49870;
+		rLoc = 54132;
 		rType = 0;
 		vrLen = 1160;
 		vrLoc = 58938;
@@ -3112,7 +3204,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1603";
 		rLen = 0;
-		rLoc = 49870;
+		rLoc = 54132;
 		rType = 0;
 		vrLen = 1160;
 		vrLoc = 58938;
@@ -3122,7 +3214,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1068";
 		rLen = 19;
-		rLoc = 37515;
+		rLoc = 42204;
 		rType = 0;
 		vrLen = 414;
 		vrLoc = 41188;
@@ -3132,7 +3224,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1601";
 		rLen = 0;
-		rLoc = 49841;
+		rLoc = 54103;
 		rType = 0;
 		vrLen = 525;
 		vrLoc = 59288;
@@ -3142,7 +3234,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1601";
 		rLen = 0;
-		rLoc = 49841;
+		rLoc = 54103;
 		rType = 0;
 		vrLen = 1267;
 		vrLoc = 58992;
@@ -3152,7 +3244,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1601";
 		rLen = 0;
-		rLoc = 49841;
+		rLoc = 54103;
 		rType = 0;
 		vrLen = 1267;
 		vrLoc = 58992;
@@ -3162,7 +3254,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 929";
 		rLen = 0;
-		rLoc = 32051;
+		rLoc = 36740;
 		rType = 0;
 		vrLen = 1610;
 		vrLoc = 32057;
@@ -3172,7 +3264,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 828";
 		rLen = 0;
-		rLoc = 28887;
+		rLoc = 33379;
 		rType = 0;
 		vrLen = 2300;
 		vrLoc = 28836;
@@ -3182,7 +3274,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 828";
 		rLen = 0;
-		rLoc = 28887;
+		rLoc = 33379;
 		rType = 0;
 		vrLen = 1787;
 		vrLoc = 29931;
@@ -3207,7 +3299,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1601";
 		rLen = 0;
-		rLoc = 49841;
+		rLoc = 54103;
 		rType = 0;
 		vrLen = 507;
 		vrLoc = 59210;
@@ -3217,7 +3309,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 847";
 		rLen = 0;
-		rLoc = 29974;
+		rLoc = 34466;
 		rType = 0;
 		vrLen = 730;
 		vrLoc = 29931;
@@ -3227,7 +3319,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1285";
 		rLen = 15;
-		rLoc = 41492;
+		rLoc = 45725;
 		rType = 0;
 		vrLen = 2677;
 		vrLoc = 45200;
@@ -3237,7 +3329,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1285";
 		rLen = 15;
-		rLoc = 41492;
+		rLoc = 45725;
 		rType = 0;
 		vrLen = 2677;
 		vrLoc = 45200;
@@ -3247,7 +3339,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1285";
 		rLen = 15;
-		rLoc = 41492;
+		rLoc = 45725;
 		rType = 0;
 		vrLen = 870;
 		vrLoc = 45200;
@@ -3257,7 +3349,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1285";
 		rLen = 15;
-		rLoc = 41492;
+		rLoc = 45725;
 		rType = 0;
 		vrLen = 870;
 		vrLoc = 45200;
@@ -3267,7 +3359,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1030";
 		rLen = 0;
-		rLoc = 35688;
+		rLoc = 40377;
 		rType = 0;
 		vrLen = 2152;
 		vrLoc = 36696;
@@ -3277,7 +3369,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1062";
 		rLen = 0;
-		rLoc = 37494;
+		rLoc = 42183;
 		rType = 0;
 		vrLen = 584;
 		vrLoc = 38264;
@@ -3287,7 +3379,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1065";
 		rLen = 0;
-		rLoc = 37512;
+		rLoc = 42201;
 		rType = 0;
 		vrLen = 842;
 		vrLoc = 37788;
@@ -3297,7 +3389,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1780";
 		rLen = 0;
-		rLoc = 56050;
+		rLoc = 60312;
 		rType = 0;
 		vrLen = 2114;
 		vrLoc = 63880;
@@ -3317,7 +3409,7 @@
 		comments = "warning: unused variable 'lastEntry'";
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		rLen = 1;
-		rLoc = 1172;
+		rLoc = 1309;
 		rType = 1;
 	};
 	9022ED0B0E8B0269007DCD2D /* PBXTextBookmark */ = {
@@ -3325,7 +3417,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1228";
 		rLen = 0;
-		rLoc = 44009;
+		rLoc = 48256;
 		rType = 0;
 		vrLen = 1443;
 		vrLoc = 42578;
@@ -3335,7 +3427,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1228";
 		rLen = 0;
-		rLoc = 44009;
+		rLoc = 48256;
 		rType = 0;
 		vrLen = 2069;
 		vrLoc = 42578;
@@ -3345,7 +3437,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 959";
 		rLen = 28;
-		rLoc = 33726;
+		rLoc = 38415;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 33484;
@@ -3362,7 +3454,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 959";
 		rLen = 28;
-		rLoc = 33726;
+		rLoc = 38415;
 		rType = 0;
 		vrLen = 1760;
 		vrLoc = 33484;
@@ -3379,7 +3471,7 @@
 	};
 	9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {811, 419}}";
+			sepNavIntBoundsRect = "{{0, 0}, {811, 622}}";
 			sepNavSelRange = "{152, 0}";
 			sepNavVisRange = "{0, 329}";
 		};
@@ -3401,11 +3493,11 @@
 		delayBeforeContinue = 0;
 		fileReference = 90D02E9B0E53C638001CEF0D /* BaseSortedCallsDataSource.m */;
 		functionName = "-tableView:cellForRowAtIndexPath:";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 97;
 		location = MyTime;
-		modificationTime = 243993671.261016;
+		modificationTime = 243999307.636626;
 		state = 2;
 	};
 	9022ED370E8B0BE7007DCD2D /* PBXTextBookmark */ = {
@@ -3423,7 +3515,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 961";
 		rLen = 0;
-		rLoc = 33968;
+		rLoc = 38657;
 		rType = 0;
 		vrLen = 1703;
 		vrLoc = 33019;
@@ -3563,7 +3655,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 961";
 		rLen = 0;
-		rLoc = 33968;
+		rLoc = 38657;
 		rType = 0;
 		vrLen = 1703;
 		vrLoc = 33019;
@@ -4032,6 +4124,949 @@
 		vrLen = 1756;
 		vrLoc = 2263;
 	};
+	9022ED840E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C38380E3D971700C8DB27 /* CallTableCell.m */;
+		name = "CallTableCell.m: 114";
+		rLen = 0;
+		rLoc = 3442;
+		rType = 0;
+		vrLen = 1756;
+		vrLoc = 2263;
+	};
+	9022ED850E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */;
+		name = "CallsSortedByNameViewDataSource.h: 9";
+		rLen = 0;
+		rLoc = 152;
+		rType = 0;
+		vrLen = 329;
+		vrLoc = 0;
+	};
+	9022ED860E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		rLen = 0;
+		rLoc = 298;
+		rType = 1;
+	};
+	9022ED870E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C38380E3D971700C8DB27 /* CallTableCell.m */;
+		name = "CallTableCell.m: 114";
+		rLen = 0;
+		rLoc = 3442;
+		rType = 0;
+		vrLen = 1756;
+		vrLoc = 2263;
+	};
+	9022ED880E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */;
+		name = "CallsSortedByNameViewDataSource.h: 9";
+		rLen = 0;
+		rLoc = 152;
+		rType = 0;
+		vrLen = 329;
+		vrLoc = 0;
+	};
+	9022ED890E8B0E8D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 298";
+		rLen = 0;
+		rLoc = 10426;
+		rType = 0;
+		vrLen = 1067;
+		vrLoc = 9546;
+	};
+	9022ED8E0E8B0F34007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36D90E3BBD4600C8DB27 /* CallViewController.h */;
+		name = "CallViewController.h: 49";
+		rLen = 23;
+		rLoc = 1311;
+		rType = 0;
+		vrLen = 1281;
+		vrLoc = 676;
+	};
+	9022ED8F0E8B0F34007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 349";
+		rLen = 0;
+		rLoc = 11793;
+		rType = 0;
+		vrLen = 1198;
+		vrLoc = 11058;
+	};
+	9022ED900E8B0F34007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 349";
+		rLen = 0;
+		rLoc = 11793;
+		rType = 0;
+		vrLen = 1198;
+		vrLoc = 11058;
+	};
+	9022ED910E8B0F34007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36D90E3BBD4600C8DB27 /* CallViewController.h */;
+		name = "CallViewController.h: 49";
+		rLen = 23;
+		rLoc = 1311;
+		rType = 0;
+		vrLen = 1281;
+		vrLoc = 676;
+	};
+	9022ED920E8B0F34007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 855";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1674;
+		vrLoc = 29247;
+	};
+	9022ED960E8B0FBB007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		rLen = 1;
+		rLoc = 661;
+		rType = 1;
+	};
+	9022ED970E8B0FBB007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 852";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1806;
+		vrLoc = 28884;
+	};
+	9022ED9B0E8B0FD8007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 851";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1841;
+		vrLoc = 28884;
+	};
+	9022ED9E0E8B0FF7007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 852";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1588;
+		vrLoc = 30239;
+	};
+	9022EDA00E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 852";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1588;
+		vrLoc = 30239;
+	};
+	9022EDA10E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 67";
+		rLen = 22;
+		rLoc = 2148;
+		rType = 0;
+		vrLen = 959;
+		vrLoc = 1611;
+	};
+	9022EDA20E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 265";
+		rLen = 0;
+		rLoc = 5830;
+		rType = 0;
+		vrLen = 1177;
+		vrLoc = 5194;
+	};
+	9022EDA30E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 313";
+		rLen = 0;
+		rLoc = 9571;
+		rType = 0;
+		vrLen = 1645;
+		vrLoc = 8764;
+	};
+	9022EDA40E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 38";
+		rLen = 0;
+		rLoc = 974;
+		rType = 0;
+		vrLen = 1337;
+		vrLoc = 439;
+	};
+	9022EDA50E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 852";
+		rLen = 0;
+		rLoc = 34494;
+		rType = 0;
+		vrLen = 1588;
+		vrLoc = 30239;
+	};
+	9022EDA60E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 41";
+		rLen = 22;
+		rLoc = 1140;
+		rType = 0;
+		vrLen = 945;
+		vrLoc = 654;
+	};
+	9022EDA70E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 67";
+		rLen = 22;
+		rLoc = 2148;
+		rType = 0;
+		vrLen = 959;
+		vrLoc = 1611;
+	};
+	9022EDA80E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 38";
+		rLen = 0;
+		rLoc = 974;
+		rType = 0;
+		vrLen = 923;
+		vrLoc = 690;
+	};
+	9022EDA90E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 265";
+		rLen = 0;
+		rLoc = 5830;
+		rType = 0;
+		vrLen = 1177;
+		vrLoc = 5194;
+	};
+	9022EDAA0E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 313";
+		rLen = 0;
+		rLoc = 9571;
+		rType = 0;
+		vrLen = 1645;
+		vrLoc = 8764;
+	};
+	9022EDAB0E8B120D007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 38";
+		rLen = 0;
+		rLoc = 974;
+		rType = 0;
+		vrLen = 1337;
+		vrLoc = 439;
+	};
+	9022EDB30E8B19B9007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 38";
+		rLen = 0;
+		rLoc = 974;
+		rType = 0;
+		vrLen = 1337;
+		vrLoc = 439;
+	};
+	9022EDB40E8B19B9007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		rLen = 1;
+		rLoc = 23;
+		rType = 1;
+	};
+	9022EDB50E8B19B9007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 38";
+		rLen = 0;
+		rLoc = 974;
+		rType = 0;
+		vrLen = 1337;
+		vrLoc = 439;
+	};
+	9022EDB60E8B19B9007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 867";
+		rLen = 8;
+		rLoc = 32261;
+		rType = 0;
+		vrLen = 1933;
+		vrLoc = 29810;
+	};
+	9022EDB90E8B19CD007DCD2D /* CallViewController.m:470 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		functionName = "-navigationControlEdit:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 470;
+		location = MyTime;
+		modificationTime = 243999307.636847;
+		state = 2;
+	};
+	9022EDBA0E8B19CE007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 369";
+		rLen = 40;
+		rLoc = 14424;
+		rType = 0;
+		vrLen = 1911;
+		vrLoc = 12884;
+	};
+	9022EDBD0E8B1A08007DCD2D /* CallViewController.m:502 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		functionName = "-navigationControlEdit:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 502;
+		location = MyTime;
+		modificationTime = 243999307.637182;
+		state = 2;
+	};
+	9022EDBF0E8B1A0E007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 369";
+		rLen = 40;
+		rLoc = 14424;
+		rType = 0;
+		vrLen = 1477;
+		vrLoc = 13596;
+	};
+	9022EDC30E8B1A46007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 428";
+		rLen = 0;
+		rLoc = 16448;
+		rType = 0;
+		vrLen = 1515;
+		vrLoc = 13596;
+	};
+	9022EDC80E8B1B10007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1137";
+		rLen = 0;
+		rLoc = 42807;
+		rType = 0;
+		vrLen = 1455;
+		vrLoc = 39814;
+	};
+	9022EDCB0E8B1B5B007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 449";
+		rLen = 0;
+		rLoc = 17047;
+		rType = 0;
+		vrLen = 1371;
+		vrLoc = 14208;
+	};
+	9022EDCF0E8B1C4E007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 460";
+		rLen = 0;
+		rLoc = 17168;
+		rType = 0;
+		vrLen = 1194;
+		vrLoc = 14984;
+	};
+	9022EDD10E8B1CDE007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 409";
+		rLen = 0;
+		rLoc = 15552;
+		rType = 0;
+		vrLen = 1295;
+		vrLoc = 14673;
+	};
+	9022EDD30E8B1CF0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 409";
+		rLen = 0;
+		rLoc = 15552;
+		rType = 0;
+		vrLen = 1394;
+		vrLoc = 13795;
+	};
+	9022EDD40E8B1CF8007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 409";
+		rLen = 0;
+		rLoc = 15552;
+		rType = 0;
+		vrLen = 1394;
+		vrLoc = 13795;
+	};
+	9022EDD70E8B1D1C007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 469";
+		rLen = 0;
+		rLoc = 17360;
+		rType = 0;
+		vrLen = 1214;
+		vrLoc = 14916;
+	};
+	9022EDDA0E8B1D53007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 474";
+		rLen = 0;
+		rLoc = 17467;
+		rType = 0;
+		vrLen = 1212;
+		vrLoc = 14916;
+	};
+	9022EDDF0E8B1DF0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 353";
+		rLen = 0;
+		rLoc = 11808;
+		rType = 0;
+		vrLen = 1132;
+		vrLoc = 11603;
+	};
+	9022EDE30E8B1E56007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 428";
+		rLen = 0;
+		rLoc = 14006;
+		rType = 0;
+		vrLen = 1286;
+		vrLoc = 12535;
+	};
+	9022EDE70E8B1E6E007DCD2D /* CallViewController.m:363 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		functionName = "-navigationControlDone:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 363;
+		location = MyTime;
+		modificationTime = 243999307.637469;
+		state = 2;
+	};
+	9022EDE90E8B1E73007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 388";
+		rLen = 0;
+		rLoc = 12834;
+		rType = 0;
+		vrLen = 1419;
+		vrLoc = 11803;
+	};
+	9022EDEC0E8B1EA0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 467";
+		rLen = 0;
+		rLoc = 15366;
+		rType = 0;
+		vrLen = 1502;
+		vrLoc = 11859;
+	};
+	9022EDEF0E8B1F3B007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 467";
+		rLen = 0;
+		rLoc = 15366;
+		rType = 0;
+		vrLen = 1123;
+		vrLoc = 13300;
+	};
+	9022EDF00E8B1F61007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9022EDF10E8B1F61007DCD2D /* asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0 */;
+		name = "asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 206;
+		vrLoc = 0;
+	};
+	9022EDF10E8B1F61007DCD2D /* asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0 */ = {
+		isa = PBXFileReference;
+		path = "asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0";
+		sourceTree = "<group>";
+	};
+	9022EDF20E8B1F61007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1200";
+		rLen = 0;
+		rLoc = 42201;
+		rType = 0;
+		vrLen = 702;
+		vrLoc = 40820;
+	};
+	9022EDF30E8B1F61007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 434";
+		rLen = 0;
+		rLoc = 14223;
+		rType = 0;
+		vrLen = 449;
+		vrLoc = 13781;
+	};
+	9022EDF50E8B1F7E007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 433";
+		rLen = 0;
+		rLoc = 14188;
+		rType = 0;
+		vrLen = 1065;
+		vrLoc = 13361;
+	};
+	9022EDF70E8B1F86007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 433";
+		rLen = 0;
+		rLoc = 14188;
+		rType = 0;
+		vrLen = 1296;
+		vrLoc = 11727;
+	};
+	9022EDFE0E8B1F99007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 357";
+		rLen = 0;
+		rLoc = 11874;
+		rType = 0;
+		vrLen = 1296;
+		vrLoc = 11727;
+	};
+	9022EDFF0E8B1FB0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9022EE000E8B1FB0007DCD2D /* asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0 */;
+		name = "asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 206;
+		vrLoc = 0;
+	};
+	9022EE000E8B1FB0007DCD2D /* asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0 */ = {
+		isa = PBXFileReference;
+		path = "asm ___TERMINATING_DUE_TO_UNCAUGHT_EXCEPTION___  0x91db1ff0";
+		sourceTree = "<group>";
+	};
+	9022EE010E8B1FB0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 434";
+		rLen = 0;
+		rLoc = 14223;
+		rType = 0;
+		vrLen = 476;
+		vrLoc = 13887;
+	};
+	9022EE020E8B1FB0007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 357";
+		rLen = 0;
+		rLoc = 11874;
+		rType = 0;
+		vrLen = 447;
+		vrLoc = 13831;
+	};
+	9022EE050E8B1FDE007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 353";
+		rLen = 0;
+		rLoc = 11808;
+		rType = 0;
+		vrLen = 1183;
+		vrLoc = 11647;
+	};
+	9022EE080E8B215F007DCD2D /* LiteraturePlacementViewController.m:294 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		functionName = "-tableView:commitEditingStyle:forRowAtIndexPath:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 294;
+		location = MyTime;
+		modificationTime = 243999307.637759;
+		state = 1;
+	};
+	9022EE0A0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1513";
+		rLen = 10;
+		rLoc = 54119;
+		rType = 0;
+		vrLen = 360;
+		vrLoc = 53894;
+	};
+	9022EE0B0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */;
+		name = "SortedCallsViewController.m: 110";
+		rLen = 10;
+		rLoc = 3178;
+		rType = 0;
+		vrLen = 231;
+		vrLoc = 3039;
+	};
+	9022EE0C0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C37040E3C303400C8DB27 /* AddressViewController.m */;
+		name = "AddressViewController.m: 213";
+		rLen = 10;
+		rLoc = 7086;
+		rType = 0;
+		vrLen = 212;
+		vrLoc = 6890;
+	};
+	9022EE0D0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 398";
+		rLen = 10;
+		rLoc = 12410;
+		rType = 0;
+		vrLen = 261;
+		vrLoc = 12166;
+	};
+	9022EE0E0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 246";
+		rLen = 0;
+		rLoc = 8843;
+		rType = 0;
+		vrLen = 656;
+		vrLoc = 8378;
+	};
+	9022EE0F0E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 293";
+		rLen = 0;
+		rLoc = 10192;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 10243;
+	};
+	9022EE100E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 194";
+		rLen = 10;
+		rLoc = 6209;
+		rType = 0;
+		vrLen = 530;
+		vrLoc = 5854;
+	};
+	9022EE110E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		rLen = 10;
+		rLoc = 1729;
+		rType = 0;
+	};
+	9022EE120E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1513";
+		rLen = 10;
+		rLoc = 54119;
+		rType = 0;
+		vrLen = 360;
+		vrLoc = 53894;
+	};
+	9022EE130E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */;
+		name = "SortedCallsViewController.m: 110";
+		rLen = 10;
+		rLoc = 3178;
+		rType = 0;
+		vrLen = 231;
+		vrLoc = 3039;
+	};
+	9022EE140E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C37040E3C303400C8DB27 /* AddressViewController.m */;
+		name = "AddressViewController.m: 213";
+		rLen = 10;
+		rLoc = 7086;
+		rType = 0;
+		vrLen = 212;
+		vrLoc = 6890;
+	};
+	9022EE150E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 398";
+		rLen = 10;
+		rLoc = 12410;
+		rType = 0;
+		vrLen = 261;
+		vrLoc = 12166;
+	};
+	9022EE160E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 246";
+		rLen = 0;
+		rLoc = 8843;
+		rType = 0;
+		vrLen = 656;
+		vrLoc = 8378;
+	};
+	9022EE170E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 293";
+		rLen = 0;
+		rLoc = 10192;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 10243;
+	};
+	9022EE180E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 194";
+		rLen = 10;
+		rLoc = 6209;
+		rType = 0;
+		vrLen = 530;
+		vrLoc = 5854;
+	};
+	9022EE190E8B2175007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 70";
+		rLen = 10;
+		rLoc = 1729;
+		rType = 0;
+		vrLen = 781;
+		vrLoc = 1439;
+	};
+	9022EE1D0E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 70";
+		rLen = 10;
+		rLoc = 1729;
+		rType = 0;
+		vrLen = 781;
+		vrLoc = 1439;
+	};
+	9022EE1E0E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1494";
+		rLen = 28;
+		rLoc = 53667;
+		rType = 0;
+		vrLen = 534;
+		vrLoc = 53360;
+	};
+	9022EE1F0E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		rLen = 0;
+		rLoc = 14054;
+		rType = 0;
+	};
+	9022EE200E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 70";
+		rLen = 10;
+		rLoc = 1729;
+		rType = 0;
+		vrLen = 781;
+		vrLoc = 1439;
+	};
+	9022EE210E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 390";
+		rLen = 0;
+		rLoc = 14054;
+		rType = 0;
+		vrLen = 1283;
+		vrLoc = 12847;
+	};
+	9022EE220E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 855";
+		rLen = 408;
+		rLoc = 28019;
+		rType = 0;
+		vrLen = 1254;
+		vrLoc = 27926;
+	};
+	9022EE230E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 390";
+		rLen = 0;
+		rLoc = 14054;
+		rType = 0;
+		vrLen = 1378;
+		vrLoc = 12645;
+	};
+	9022EE240E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1494";
+		rLen = 28;
+		rLoc = 53667;
+		rType = 0;
+		vrLen = 534;
+		vrLoc = 53360;
+	};
+	9022EE250E8B2249007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 391";
+		rLen = 0;
+		rLoc = 13804;
+		rType = 0;
+		vrLen = 1042;
+		vrLoc = 13146;
+	};
+	9022EE280E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 396";
+		rLen = 0;
+		rLoc = 14054;
+		rType = 0;
+		vrLen = 2190;
+		vrLoc = 11707;
+	};
+	9022EE290E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 275";
+		rLen = 149;
+		rLoc = 9176;
+		rType = 0;
+		vrLen = 1628;
+		vrLoc = 8477;
+	};
+	9022EE2A0E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 392";
+		rLen = 0;
+		rLoc = 13873;
+		rType = 0;
+		vrLen = 1042;
+		vrLoc = 13146;
+	};
+	9022EE2B0E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 275";
+		rLen = 149;
+		rLoc = 9176;
+		rType = 0;
+		vrLen = 943;
+		vrLoc = 8888;
+	};
+	9022EE2C0E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */;
+		name = "LiteraturePlacementViewController.m: 396";
+		rLen = 0;
+		rLoc = 14054;
+		rType = 0;
+		vrLen = 2190;
+		vrLoc = 11707;
+	};
+	9022EE2D0E8B2330007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */;
+		name = "BulkLiteraturePlacementViewContoller.m: 275";
+		rLen = 149;
+		rLoc = 9176;
+		rType = 0;
+		vrLen = 1585;
+		vrLoc = 4960;
+	};
 	9045A7240E7C1423001B439C /* TCPServer.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {894, 686}}";
@@ -4091,16 +5126,16 @@
 	};
 	905C36D90E3BBD4600C8DB27 /* CallViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 1484}}";
-			sepNavSelRange = "{1884, 0}";
-			sepNavVisRange = "{564, 1393}";
+			sepNavIntBoundsRect = "{{0, 0}, {811, 1484}}";
+			sepNavSelRange = "{1311, 23}";
+			sepNavVisRange = "{676, 1281}";
 		};
 	};
 	905C36DA0E3BBD4600C8DB27 /* CallViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1179, 22596}}";
-			sepNavSelRange = "{37512, 0}";
-			sepNavVisRange = "{38063, 308}";
+			sepNavIntBoundsRect = "{{0, 0}, {1908, 24290}}";
+			sepNavSelRange = "{53667, 28}";
+			sepNavVisRange = "{53360, 534}";
 		};
 	};
 	905C37030E3C303400C8DB27 /* AddressViewController.h */ = {
@@ -4112,9 +5147,9 @@
 	};
 	905C37040E3C303400C8DB27 /* AddressViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 4354}}";
-			sepNavSelRange = "{2372, 8}";
-			sepNavVisRange = "{2076, 742}";
+			sepNavIntBoundsRect = "{{0, 0}, {1356, 4074}}";
+			sepNavSelRange = "{7086, 10}";
+			sepNavVisRange = "{6890, 212}";
 		};
 	};
 	905C37170E3D52DB00C8DB27 /* UITableViewTextFieldCell.h */ = {
@@ -4204,9 +5239,9 @@
 	};
 	906143AC0E51312E0072BA7B /* HourViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 5432}}";
-			sepNavSelRange = "{1386, 0}";
-			sepNavVisRange = "{860, 749}";
+			sepNavIntBoundsRect = "{{0, 0}, {1884, 5362}}";
+			sepNavSelRange = "{8843, 0}";
+			sepNavVisRange = "{8378, 656}";
 		};
 	};
 	906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {
@@ -4240,7 +5275,7 @@
 		vrLen = 828;
 		vrLoc = 0;
 	};
-	906610DE0E86B2D100A30E0F /* CallViewController.m:1045 */ = {
+	906610DE0E86B2D100A30E0F /* CallViewController.m:1205 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -4252,9 +5287,9 @@
 		functionName = "-reloadData";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 1045;
+		lineNumber = 1205;
 		location = MyTime;
-		modificationTime = 243993665.738825;
+		modificationTime = 243999307.635684;
 		state = 2;
 	};
 	906610F60E86B58200A30E0F /* PBXTextBookmark */ = {
@@ -4452,7 +5487,7 @@
 		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
 		name = "HourViewController.m: 211";
 		rLen = 0;
-		rLoc = 7388;
+		rLoc = 7390;
 		rType = 0;
 		vrLen = 518;
 		vrLoc = 7187;
@@ -4552,7 +5587,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 915";
 		rLen = 0;
-		rLoc = 37535;
+		rLoc = 42224;
 		rType = 0;
 		vrLen = 1576;
 		vrLoc = 33750;
@@ -4582,7 +5617,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1404";
 		rLen = 91;
-		rLoc = 53251;
+		rLoc = 57513;
 		rType = 0;
 		vrLen = 1876;
 		vrLoc = 40894;
@@ -4602,7 +5637,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 521";
 		rLen = 0;
-		rLoc = 16492;
+		rLoc = 20902;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 16195;
@@ -4622,7 +5657,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 928";
 		rLen = 0;
-		rLoc = 37768;
+		rLoc = 42457;
 		rType = 0;
 		vrLen = 2016;
 		vrLoc = 30946;
@@ -4652,7 +5687,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1174";
 		rLen = 0;
-		rLoc = 43235;
+		rLoc = 47482;
 		rType = 0;
 		vrLen = 803;
 		vrLoc = 42329;
@@ -4662,7 +5697,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 628";
 		rLen = 0;
-		rLoc = 18094;
+		rLoc = 22504;
 		rType = 0;
 		vrLen = 1504;
 		vrLoc = 19738;
@@ -4757,9 +5792,9 @@
 	};
 	90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1686, 8862}}";
-			sepNavSelRange = "{3000, 0}";
-			sepNavVisRange = "{2816, 485}";
+			sepNavIntBoundsRect = "{{0, 0}, {882, 9002}}";
+			sepNavSelRange = "{12410, 10}";
+			sepNavVisRange = "{12166, 261}";
 		};
 	};
 	90C1497D0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.h */ = {
@@ -4875,7 +5910,7 @@
 		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
 		name = "CallViewController.m: 1203";
 		rLen = 0;
-		rLoc = 42161;
+		rLoc = 46408;
 		rType = 0;
 		vrLen = 1992;
 		vrLoc = 40397;
@@ -5253,7 +6288,7 @@
 		ignoreCount = 0;
 		lineNumber = 107;
 		location = MyTime;
-		modificationTime = 243993665.737377;
+		modificationTime = 243999307.634256;
 		state = 2;
 	};
 	90C4D7180E859ABF00E202E2 /* PBXTextBookmark */ = {
@@ -5340,7 +6375,7 @@
 		ignoreCount = 0;
 		lineNumber = 82;
 		location = MyTime;
-		modificationTime = 243993665.737648;
+		modificationTime = 243999307.634535;
 		state = 1;
 	};
 	90C4D8230E85C78E00E202E2 /* BulkLiteraturePlacementViewContoller.m:107 */ = {
@@ -5357,7 +6392,7 @@
 		ignoreCount = 0;
 		lineNumber = 107;
 		location = MyTime;
-		modificationTime = 243993665.737917;
+		modificationTime = 243999307.634774;
 		state = 1;
 	};
 	90C4D8280E85C86F00E202E2 /* PBXTextBookmark */ = {
@@ -5420,7 +6455,7 @@
 		vrLen = 1176;
 		vrLoc = 0;
 	};
-	90C4D8A40E85D7FA00E202E2 /* CallViewController.m:298 */ = {
+	90C4D8A40E85D7FA00E202E2 /* CallViewController.m:299 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -5432,10 +6467,10 @@
 		functionName = "-shouldAutorotateToInterfaceOrientation:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 298;
+		lineNumber = 299;
 		location = MyTime;
-		modificationTime = 243993665.73818;
-		state = 1;
+		modificationTime = 243999307.635056;
+		state = 2;
 	};
 	90C4D8E50E85E5CF00E202E2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -5611,7 +6646,7 @@
 		ignoreCount = 0;
 		lineNumber = 49;
 		location = MyTime;
-		modificationTime = 243993665.738556;
+		modificationTime = 243999307.635409;
 		state = 2;
 	};
 	90C4DA040E861C0E00E202E2 /* PBXTextBookmark */ = {
@@ -5838,7 +6873,7 @@
 		ignoreCount = 0;
 		lineNumber = 225;
 		location = MyTime;
-		modificationTime = 243993665.736859;
+		modificationTime = 243999307.633857;
 		state = 1;
 	};
 	90D02CEA0E527965001CEF0D /* WebViewController.h */ = {
@@ -5921,9 +6956,9 @@
 	};
 	90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1560, 5166}}";
-			sepNavSelRange = "{5830, 0}";
-			sepNavVisRange = "{5552, 1483}";
+			sepNavIntBoundsRect = "{{0, 0}, {1560, 5320}}";
+			sepNavSelRange = "{1729, 10}";
+			sepNavVisRange = "{1607, 652}";
 			sepNavWindowFrame = "{{67, -2}, {1185, 775}}";
 		};
 	};
@@ -5957,9 +6992,9 @@
 	};
 	90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2106, 4578}}";
-			sepNavSelRange = "{5064, 0}";
-			sepNavVisRange = "{4085, 1769}";
+			sepNavIntBoundsRect = "{{0, 0}, {2106, 4410}}";
+			sepNavSelRange = "{9176, 149}";
+			sepNavVisRange = "{4960, 1585}";
 		};
 	};
 	90D031F50E56944C001CEF0D /* LiteraturePlacementViewController.h */ = {
@@ -5971,9 +7006,9 @@
 	};
 	90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 6048}}";
-			sepNavSelRange = "{1805, 0}";
-			sepNavVisRange = "{1523, 1153}";
+			sepNavIntBoundsRect = "{{0, 0}, {912, 5852}}";
+			sepNavSelRange = "{14054, 0}";
+			sepNavVisRange = "{11707, 2190}";
 			sepNavWindowFrame = "{{67, -2}, {1185, 775}}";
 		};
 	};
@@ -6019,7 +7054,7 @@
 		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
 		name = "HourViewController.m: 46";
 		rLen = 0;
-		rLoc = 1386;
+		rLoc = 1388;
 		rType = 0;
 		vrLen = 749;
 		vrLoc = 860;
@@ -6197,8 +7232,8 @@
 	90FBE8770E39887300FD8014 /* SortedCallsViewController.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {876, 2828}}";
-			sepNavSelRange = "{554, 0}";
-			sepNavVisRange = "{233, 989}";
+			sepNavSelRange = "{3178, 10}";
+			sepNavVisRange = "{3039, 231}";
 		};
 	};
 	90FBE87F0E398CAE00FD8014 /* SortedCallsViewDataSourceProtocol.h */ = {

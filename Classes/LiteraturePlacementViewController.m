@@ -387,7 +387,12 @@
     [publication setObject:[[[NSNumber alloc] initWithInt:publicationViewController.countPicker.number] autorelease] forKey:BulkLiteratureArrayCount];
 
     VERBOSE(NSLog(@"publication is = %@", publication);)
-	
+
+    [tableView beginUpdates];
+		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+		[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+    [tableView endUpdates];
+
 	[tableView reloadData];
 }
 

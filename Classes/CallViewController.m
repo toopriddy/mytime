@@ -22,6 +22,7 @@
 
 const NSString *CallViewRowHeight = @"rowHeight";
 const NSString *CallViewGroupText = @"group";
+const NSString *CallViewType = @"type";
 const NSString *CallViewRows = @"rows";
 const NSString *CallViewSelectedInvocations = @"select";
 const NSString *CallViewDeleteInvocations = @"delete";
@@ -349,11 +350,88 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	else
 	{
+#if 1
 		[self reloadData];
 		[theTableView reloadData];
 		
 		if(theTableView.editing != _editing)
+			theTableView.editing = _editing;	
+#else			
+		NSMutableArray *cachedItems = [[_displayInformation retain] autorelease];
+		[self reloadData];
+
+		NSEnumerator *oldDisplayInformation = [_displayInformation objectEnumerator];
+		NSMutableDictionary *items;
+		[theTableView beginUpdates];
+		int section = 0;
+		int row = 0;
+		NSEnumerator *newDisplayInformation = [cachedItems objectEnumerator];
+		NSMutableDictionary *newItems;
+		
+		NSMutableIndexSet *insertSections = [NSMutableIndexSet indexSet];
+		NSMutableArray *insertRows = [NSMutableArray array];
+
+		while( YES )
+		{
+			items = [oldDisplayInformation nextObject];
+			if(items == nil)
+				break;
+			// advance to the next section
+			newItems = [newDisplayInformation nextObject];
+
+
+			int start = section;
+			while(![[newItems objectForKey:CallViewType] isEqualToString:[items objectForKey:CallViewType]])
+			{
+				section++;
+				newItems = [newDisplayInformation nextObject];
+			}
+			if(start != section)
+			{
+				[insertSections addIndexesInRange:NSMakeRange(start, section - start)];
+			}
+			NSEnumerator *rows = [[items objectForKey:CallViewRows] objectEnumerator];
+			NSInvocation *invocation;
+			NSEnumerator *newRows = [[newItems objectForKey:CallViewRows] objectEnumerator];
+			NSInvocation *newInvocation = [newRows nextObject];
+			while( (invocation = [rows nextObject]) )
+			{
+				NSMutableArray *array = [[NSMutableArray alloc] init];
+				while([invocation selector] != [newInvocation selector])
+				{
+					[array addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+					row++;
+					newInvocation = [newRows nextObject];
+				}
+				if([array count])
+				{
+					[insertRows addObjectsFromArray:array];
+				}
+				[array release];
+				row++;
+			}
+			while( [newRows nextObject] )
+			{
+				[insertRows addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+				row++;
+			}
+
+			section++;
+			row = 0;
+		}
+		while( [newDisplayInformation nextObject] )
+		{
+			[insertSections addIndex:section];
+			section++;
+		}
+		[theTableView deleteSections:insertSections withRowAnimation:UITableViewRowAnimationFade];
+		[theTableView deleteRowsAtIndexPaths:insertRows withRowAnimation:UITableViewRowAnimationFade];
+
+		if(theTableView.editing != _editing)
 			theTableView.editing = _editing;		
+		[theTableView endUpdates];
+		[theTableView reloadData];
+#endif
 	}
 }
 
@@ -386,11 +464,81 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	//   the name field if it is not there already
 	//   the insert new call
 	//   the per call insert a new publication
+	NSMutableArray *cachedItems = [[_displayInformation retain] autorelease];
 	[self reloadData];
-	[theTableView reloadData];
+
+	NSEnumerator *oldDisplayInformation = [cachedItems objectEnumerator];
+	NSMutableDictionary *items;
+	[theTableView beginUpdates];
+	int section = 0;
+	int row = 0;
+	NSEnumerator *newDisplayInformation = [_displayInformation objectEnumerator];
+	NSMutableDictionary *newItems;
 	
+	NSMutableIndexSet *insertSections = [NSMutableIndexSet indexSet];
+	NSMutableArray *insertRows = [NSMutableArray array];
+
+	while( YES )
+	{
+		items = [oldDisplayInformation nextObject];
+		if(items == nil)
+			break;
+		// advance to the next section
+		newItems = [newDisplayInformation nextObject];
+
+
+		int start = section;
+		while(![[newItems objectForKey:CallViewType] isEqualToString:[items objectForKey:CallViewType]])
+		{
+			section++;
+			newItems = [newDisplayInformation nextObject];
+		}
+		if(start != section)
+		{
+			[insertSections addIndexesInRange:NSMakeRange(start, section - start)];
+		}
+		NSEnumerator *rows = [[items objectForKey:CallViewRows] objectEnumerator];
+		NSInvocation *invocation;
+		NSEnumerator *newRows = [[newItems objectForKey:CallViewRows] objectEnumerator];
+		NSInvocation *newInvocation = [newRows nextObject];
+		while( (invocation = [rows nextObject]) )
+		{
+			NSMutableArray *array = [[NSMutableArray alloc] init];
+			while([invocation selector] != [newInvocation selector])
+			{
+				[array addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+				row++;
+				newInvocation = [newRows nextObject];
+			}
+			if([array count])
+			{
+				[insertRows addObjectsFromArray:array];
+			}
+			[array release];
+			row++;
+		}
+		while( [newRows nextObject] )
+		{
+			[insertRows addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+			row++;
+		}
+
+		section++;
+		row = 0;
+	}
+	while( [newDisplayInformation nextObject] )
+	{
+		[insertSections addIndex:section];
+		section++;
+	}
+	[theTableView insertSections:insertSections withRowAnimation:UITableViewRowAnimationFade];
+	[theTableView insertRowsAtIndexPaths:insertRows withRowAnimation:UITableViewRowAnimationFade];
+
 	if(theTableView.editing != _editing)
 		theTableView.editing = _editing;		
+	[theTableView endUpdates];
+	[theTableView reloadData];
+	
 }
 
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
@@ -802,7 +950,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return([NSIndexPath indexPathForRow:([[_currentGroup objectForKey:CallViewRows] count] - 1) inSection:([_displayInformation count] - 1)]);
 }
 
-- (void)addGroup:(NSString *)groupCell
+- (void)addGroup:(NSString *)groupCell type:(const NSString *)type
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	_currentGroup = [[[NSMutableDictionary alloc] init] autorelease];
@@ -818,6 +966,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// set the group's settings
 	if(groupCell != nil)
 		[_currentGroup setObject:groupCell forKey:CallViewGroupText];
+
+	[_currentGroup setObject:type forKey:CallViewType];
 
 	[_displayInformation addObject:_currentGroup];
 	DEBUG(NSLog(@"_displayInformation count = %d", [_displayInformation count]);)
@@ -843,22 +993,32 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 #pragma mark Cell Getters
 
-- (UITableViewCell *)getEditableNameCell
-{
-	return(_name);
-}
-
 - (UITableViewCell *)getNameCell
 {
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCell"];
-	if(cell == nil)
+	if(_editing)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCell"] autorelease];
+		if(_setFirstResponderGroup == 0)
+		{
+			[self performSelector: @selector(selectRow:) 
+					   withObject:[[NSIndexPath indexPathForRow:0 inSection:0] retain]];
+
+			_setFirstResponderGroup = -1;
+		}
+
+		return(_name);
 	}
-	// if we are not editing, then just display the name
-	[cell setTitle:[_call objectForKey:CallName]];
-	cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	return(cell);
+	else
+	{
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCell"] autorelease];
+		}
+		// if we are not editing, then just display the name
+		[cell setTitle:[_call objectForKey:CallName]];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		return(cell);
+	}
 }
 
 - (UITableViewCell *)getAddressCell
@@ -1050,38 +1210,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// Name
 	if(_editing || [[_call objectForKey:CallName] length])
 	{
-		[self addGroup:nil];
+		[self addGroup:nil type:@"Name"];
 
-		if(_editing)
-		{
-			// use the textfield
-			[self  addRowInvocation:[self invocationForSelector:@selector(getEditableNameCell)]
-					 rowHeight:50
-			    insertOrDelete:UITableViewCellEditingStyleNone
-			 indentWhenEditing:NO
-			  selectInvocation:nil
-			  deleteInvocation:nil];
-
- 			if(_setFirstResponderGroup == 0)
-			{
-				
-				[self performSelector: @selector(selectRow:) 
-						   withObject:[[self lastIndexPath] retain]
-						   afterDelay:.5];
-
-				_setFirstResponderGroup = -1;
-			}
-
-		}
-		else
-		{
-			[self  addRowInvocation:[self invocationForSelector:@selector(getNameCell)]
-					 rowHeight:50
-			    insertOrDelete:UITableViewCellEditingStyleNone
-			 indentWhenEditing:NO
-			  selectInvocation:nil
-			  deleteInvocation:nil];
-		}
+		// use the textfield
+		[self  addRowInvocation:[self invocationForSelector:@selector(getNameCell)]
+				 rowHeight:50
+			insertOrDelete:UITableViewCellEditingStyleNone
+		 indentWhenEditing:NO
+		  selectInvocation:nil
+		  deleteInvocation:nil];
 	}
 	
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
@@ -1130,7 +1267,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		if(found || _editing)
 		{
 			// add a group for the name
-			[self addGroup:nil];
+			[self addGroup:nil type:@"Address"];
 			
 			[self  addRowInvocation:[self invocationForSelector:@selector(getAddressCell)]
 					 rowHeight:70
@@ -1150,7 +1287,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	if(_showAddCall && _editing)
 	{
 		// we need a larger row height
-		[self addGroup:nil];
+		[self addGroup:nil type:@"AddCall"];
 
 		[self  addRowInvocation:[self invocationForSelector:@selector(getAddReturnVisitCell)]
 				 rowHeight:-1
@@ -1181,7 +1318,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
 			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
-			[self addGroup:formattedDateString];
+			[self addGroup:formattedDateString type:@"Visit"];
 
 
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
@@ -1268,7 +1405,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	// DELETE call
 	if(_editing && !_newCall)
 	{
-		[self addGroup:nil];
+		[self addGroup:nil type:@"Delete"];
 
 		[self  addRowInvocation:[self invocationForSelector:@selector(getDeleteCallCell)]
 				 rowHeight:-1
