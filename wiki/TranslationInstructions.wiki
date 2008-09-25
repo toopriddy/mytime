@@ -125,3 +125,18 @@ scp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyT
   # enter "alpine" as the password
   # after the file has been pushed, run MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
   # you can go back to the "Edit your Localizable.strings file
+
+= Updating the Localizable.strings with the latest version =
+If you have already submitted a translation or are in the process of translating a file and I update the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file, this section will tell you what to do.
+
+OSX:
+If you dont already have it, you can download [http://www.apple.com/downloads/macosx/development_tools/changes.html Changes] which is a program that lets you see file differences.  Download the file, unzip it, and drag it into your /Applications directory in the finder.
+
+  # Save off the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings latest Localizable.strings] somewhere (dont overwrite the one that you have already translated.
+  # Open Changes
+  # From the Finder, drag The newly downloaded Localizable.strings into the Changes program in the little box  that is titled "Original"
+  # From the Finder, drag the translation file that you have been working on into the Changes program in the little box that is titled "Modified"
+  # Now click "Compare"
+
+You should see something like:
+[http://mytime.googlecode.com/
