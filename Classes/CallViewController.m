@@ -20,8 +20,6 @@
 
 #define USE_TEXT_VIEW 0
 
-#define CREATE_CELL_LATER() 1
-
 const NSString *CallViewRowHeight = @"rowHeight";
 const NSString *CallViewGroupText = @"group";
 const NSString *CallViewRows = @"rows";
@@ -825,7 +823,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	DEBUG(NSLog(@"_displayInformation count = %d", [_displayInformation count]);)
 }
 
-#if CREATE_CELL_LATER()
 - (void) addRowInvocation:(NSInvocation *)cellInvocation 
 			 rowHeight:(int)rowHeight
      insertOrDelete:(UITableViewCellEditingStyle)insertOrDelete
@@ -843,27 +840,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[[_currentGroup objectForKey:CallViewIndentWhenEditing] addObject:[NSNumber numberWithBool:indentWhenEditing]];
 	[[_currentGroup objectForKey:CallViewRowHeight] addObject:[NSNumber numberWithInt:rowHeight]];
 }
-
-#else
-
-- (void)     addRow:(UITableViewCell *)cell 
-			 rowHeight:(int)rowHeight
-     insertOrDelete:(UITableViewCellEditingStyle)insertOrDelete
-  indentWhenEditing:(BOOL)indentWhenEditing 
-   selectInvocation:(NSInvocation *)selectInvocation 
-   deleteInvocation:(NSInvocation *)deleteInvocation
-{
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
-
-	[[_currentGroup objectForKey:CallViewRows] addObject:cell];
-	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
-	[[_currentGroup objectForKey:CallViewDeleteInvocations] addObject:(deleteInvocation ? deleteInvocation : dummyInvocation)];
-	[[_currentGroup objectForKey:CallViewInsertDelete] addObject:[NSNumber numberWithInt:insertOrDelete]];
-	[[_currentGroup objectForKey:CallViewIndentWhenEditing] addObject:[NSNumber numberWithBool:indentWhenEditing]];
-	[[_currentGroup objectForKey:CallViewRowHeight] addObject:[NSNumber numberWithInt:rowHeight]];
-}
-#endif
 
 #pragma mark Cell Getters
 
@@ -982,7 +958,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
 	}
 	NSMutableString *notes = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitNotes];
-
 	if(_editing)
 	{
 		if([notes length] == 0)
@@ -1080,21 +1055,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		if(_editing)
 		{
 			// use the textfield
-#if CREATE_CELL_LATER()
 			[self  addRowInvocation:[self invocationForSelector:@selector(getEditableNameCell)]
 					 rowHeight:50
 			    insertOrDelete:UITableViewCellEditingStyleNone
 			 indentWhenEditing:NO
 			  selectInvocation:nil
 			  deleteInvocation:nil];
-#else			
-			[self       addRow:[self getEditableNameCell]
-					 rowHeight:50
-			    insertOrDelete:UITableViewCellEditingStyleNone
-			 indentWhenEditing:NO
-			  selectInvocation:nil
-			  deleteInvocation:nil];
-#endif
+
  			if(_setFirstResponderGroup == 0)
 			{
 				
@@ -1108,21 +1075,12 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		}
 		else
 		{
-#if CREATE_CELL_LATER()
 			[self  addRowInvocation:[self invocationForSelector:@selector(getNameCell)]
 					 rowHeight:50
 			    insertOrDelete:UITableViewCellEditingStyleNone
 			 indentWhenEditing:NO
 			  selectInvocation:nil
 			  deleteInvocation:nil];
-#else
-			[self       addRow:[self getNameCell]
-					 rowHeight:50
-			    insertOrDelete:UITableViewCellEditingStyleNone
-			 indentWhenEditing:NO
-			  selectInvocation:nil
-			  deleteInvocation:nil];
-#endif
 		}
 	}
 	
@@ -1171,7 +1129,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// the address (unless we are editing
 		if(found || _editing)
 		{
-#if CREATE_CELL_LATER()  
 			// add a group for the name
 			[self addGroup:nil];
 			
@@ -1181,49 +1138,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			 indentWhenEditing:NO
 			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
 			  deleteInvocation:nil];
-#else
-			UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-
-			[cell setText:NSLocalizedString(@"Address", @"Address label for call") ];
-			cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-
-			UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-			UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-			
-			label.highlightedTextColor = cell.selectedTextColor;
-			label.backgroundColor = [UIColor clearColor];
-			[label setText:top];
-			[label sizeToFit];
-			CGRect lrect = [label bounds];
-			lrect.origin.x += 100.0f;
-			lrect.origin.y += 15.0f;
-			[label setFrame: lrect];
-			[view addSubview:label];
-
-			label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-			label.highlightedTextColor = cell.selectedTextColor;
-			label.backgroundColor = [UIColor clearColor];
-			[label setText:bottom];
-			[label sizeToFit];
-			lrect = [label bounds];
-			lrect.origin.x += 100.0f;
-			lrect.origin.y += 35.0f;
-			[label setFrame: lrect];
-			[view addSubview:label];
-
-			[cell.contentView addSubview:view];
-
-			// add a group for the name
-			[self addGroup:nil];
-			
-			// add the name to the group
-			[self       addRow:cell
-					 rowHeight:70
-				insertOrDelete:UITableViewCellEditingStyleNone
-			 indentWhenEditing:NO
-			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
-			  deleteInvocation:nil];
-#endif
 		}
 		
 		//  make it where they can hit hext and go into the address view to setup the address
@@ -1238,31 +1152,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// we need a larger row height
 		[self addGroup:nil];
 
-#if CREATE_CELL_LATER()  
 		[self  addRowInvocation:[self invocationForSelector:@selector(getAddReturnVisitCell)]
 				 rowHeight:-1
 			insertOrDelete:UITableViewCellEditingStyleInsert
 		 indentWhenEditing:YES
 		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
 		  deleteInvocation:nil];
-#else		
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		if([[_call objectForKey:CallReturnVisits] count])
-		{
-			[ cell setValue:NSLocalizedString(@"Add a return visit", @"Add a return visit action button")];
-		}
-		else
-		{
-			[ cell setValue:NSLocalizedString(@"Add a initial visit", @"Add a initial visit action buton")];
-		}
-		[self       addRow:cell
-				 rowHeight:-1
-			insertOrDelete:UITableViewCellEditingStyleInsert
-		 indentWhenEditing:YES
-		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
-		  deleteInvocation:nil];
-#endif
 	}
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
@@ -1275,8 +1170,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		int end = [returnVisits count];
 		for(i = 0; i < end; ++i)
 		{
-			BOOL lastEntry = i == end - 1;
-			
 			visit = [returnVisits objectAtIndex:i];
 
 			// GROUP TITLE
@@ -1295,87 +1188,33 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// NOTES
 			if(_editing)
 			{
-#if CREATE_CELL_LATER()  
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
 						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:(end == 1 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete)
 				 indentWhenEditing:YES
 				  selectInvocation:[self invocationForSelector:@selector(changeNotesForReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:(void *)i]];
-#else
-				UITableViewMultilineTextCell *cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
-
-				if([notes length] == 0)
-					[cell setText:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")];
-				else
-					[cell setText:notes];
-				[self       addRow:cell
-						 rowHeight:[cell heightForWidth:250]
-					insertOrDelete:(end == 1 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete)
-				 indentWhenEditing:YES
-				  selectInvocation:[self invocationForSelector:@selector(changeNotesForReturnVisitAtIndex:) withArgument:(void *)i]
-				  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:) withArgument:(void *)i]];
-#endif
 			}
 			else
 			{
-#if CREATE_CELL_LATER()  
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
 						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:NO
 				  selectInvocation:nil
 				  deleteInvocation:nil];
-#else
-				UITableViewMultilineTextCell *cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-				NSMutableString *notes = [[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes];
-
-				cell.selectionStyle = UITableViewCellSelectionStyleNone;
-				if([notes length] == 0)
-				{
-					if(lastEntry)
-						[cell setText:NSLocalizedString(@"Initial Visit Notes", @"Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
-					else
-						[cell setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
-				}
-				else
-				{
-					[cell setText:notes];
-				}
-				[self       addRow:cell
-						 rowHeight:[cell heightForWidth:280]
-					insertOrDelete:UITableViewCellEditingStyleNone
-				 indentWhenEditing:NO
-				  selectInvocation:nil
-				  deleteInvocation:nil];
-#endif
 			}
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 			// CHANGE DATE
 			if(_editing)
 			{
-#if CREATE_CELL_LATER()  
 				[self  addRowInvocation:[self invocationForSelector:@selector(getChangeDateCellForReturnVisitIndex:) withArgument:(void *)i]
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
            		 indentWhenEditing:YES
 				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:nil];
-#else
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-				[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
-				
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-				[self       addRow:cell
-						 rowHeight:-1
-					insertOrDelete:UITableViewCellEditingStyleNone
-           		 indentWhenEditing:YES
-				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:(void *)i]
-				  deleteInvocation:nil];
-#endif
 			}
 
 		
@@ -1385,61 +1224,30 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				// they had an array of publications, lets check them too
 				NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-				NSMutableDictionary *publication;
 				int j;
 				int endPublications = [publications count];
 				for(j = 0; j < endPublications; ++j)
 				{
-					publication = [publications objectAtIndex:j];
-
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					// PUBLICATION
 
 					if(_editing)
 					{
-#if CREATE_CELL_LATER()  
 						[self  addRowInvocation:[self invocationForSelector:@selector(getPublicationCellForReturnVisitIndex:publicationIndex:) withArgument:(void *)i andArgument:(void *)j]
 								 rowHeight:-1
 							insertOrDelete:UITableViewCellEditingStyleDelete
 						indentWhenEditing:YES
 						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:(void *)i andArgument:(void *)j]
 						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:(void *)i andArgument:(void *)j]];
-#else
-						UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-						cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-						cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
-						[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
-
-						[self       addRow:cell
-								 rowHeight:-1
-							insertOrDelete:UITableViewCellEditingStyleDelete
-						indentWhenEditing:YES
-						  selectInvocation:[self invocationForSelector:@selector(changeReturnVisitAtIndex:publicationAtIndex:) withArgument:(void *)i andArgument:(void *)j]
-						  deleteInvocation:[self invocationForSelector:@selector(deleteReturnVisitAtIndex:publicationAtIndex:) withArgument:(void *)i andArgument:(void *)j]];
-#endif
 					}
 					else
 					{
-#if CREATE_CELL_LATER()  
 						[self  addRowInvocation:[self invocationForSelector:@selector(getPublicationCellForReturnVisitIndex:publicationIndex:) withArgument:(void *)i andArgument:(void *)j]
 								 rowHeight:-1
 							insertOrDelete:UITableViewCellEditingStyleNone
 						indentWhenEditing:NO
 						  selectInvocation:nil
 						  deleteInvocation:nil];
-#else
-						UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-						cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-						cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
-						[cell setTitle:[publication objectForKey:CallReturnVisitPublicationTitle]];
-
-						[self       addRow:cell
-								 rowHeight:-1
-							insertOrDelete:UITableViewCellEditingStyleNone
-						indentWhenEditing:NO
-						  selectInvocation:nil
-						  deleteInvocation:nil];
-#endif
 					}
 				}
 			}
@@ -1447,28 +1255,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// add publication
 			if(_editing)
 			{
-#if CREATE_CELL_LATER()  
 				[self  addRowInvocation:[self invocationForSelector:@selector(getAddPublicationCellForReturnVisitIndex:) withArgument:(void *)i]
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleInsert
 				 indentWhenEditing:YES
 				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:nil];
-#else				
-				UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil] autorelease];
-				cell.hidden = NO;
-				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-				[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication action button in call view")];
-
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-				[self       addRow:cell
-						 rowHeight:-1
-					insertOrDelete:UITableViewCellEditingStyleInsert
-				 indentWhenEditing:YES
-				  selectInvocation:[self invocationForSelector:@selector(addPublicationToReturnVisitAtIndex:) withArgument:(void *)i]
-				  deleteInvocation:nil];
-#endif
 			}
 		}
 	}
@@ -1478,30 +1270,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	{
 		[self addGroup:nil];
 
-#if CREATE_CELL_LATER()  
 		[self  addRowInvocation:[self invocationForSelector:@selector(getDeleteCallCell)]
 				 rowHeight:-1
 			insertOrDelete:UITableViewCellEditingStyleNone
 		 indentWhenEditing:NO
 		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
 		  deleteInvocation:nil];
-#else
-		// DELETE
-		UITableViewTitleAndValueCell *cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) reuseIdentifier:nil] autorelease];
-		[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view")];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.backgroundColor = [UIColor redColor];
-		cell.titleLabel.textColor = [UIColor redColor];
-		cell.titleLabel.textAlignment  = UITextAlignmentCenter;
-		cell.titleLabel.backgroundColor = [UIColor clearColor];
-	
-		[self       addRow:cell
-				 rowHeight:-1
-			insertOrDelete:UITableViewCellEditingStyleNone
-		 indentWhenEditing:NO
-		  selectInvocation:[self invocationForSelector:@selector(deleteCall)]
-		  deleteInvocation:nil];
-#endif
 	}
 
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
@@ -1673,16 +1447,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	int row = [indexPath row];
 	int section = [indexPath section];
 	NSMutableArray *array = [[_displayInformation objectAtIndex:section] objectForKey:CallViewRows];
-#if CREATE_CELL_LATER()	
 	NSInvocation *invocation = [array objectAtIndex:row];
 	[invocation invoke];
 	UITableViewCell *cell;
 	[invocation getReturnValue:&cell];
-#else
-	UITableViewCell *cell = [[[array objectAtIndex:row] retain] autorelease];
-	int retCount = [cell retainCount];
-	assert(retCount >= 2);
-#endif
     VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d cell=%p", row, section, cell);)
 	return(cell);
 }

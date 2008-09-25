@@ -163,6 +163,9 @@
 /* view title */
 "Calls Sorted by Date" = "Calls Sorted by Date";
 
+/* View title */
+"Calls Sorted by Name" = "Calls Sorted by Name";
+
 /* view title */
 "Calls Sorted by Street" = "Calls Sorted by Street";
 
@@ -340,11 +343,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -453,6 +456,9 @@
 
 /* Name label for Call in editing mode */
 "Name" = "Name";
+
+/* button bar title */
+"Name Sorted" = "Name Sorted";
 
 /* Brochures Publication Name */
 "Nations" = "Nations";

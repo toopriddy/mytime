@@ -11,6 +11,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
+		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9045A7260E7C1423001B439C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7250E7C1423001B439C /* TCPServer.m */; };
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
@@ -67,6 +69,9 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByNameViewDataSource.h; sourceTree = "<group>"; };
+		9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByNameViewDataSource.m; sourceTree = "<group>"; };
+		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		9045A7250E7C1423001B439C /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
@@ -242,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				90D02D7F0E538552001CEF0D /* map.html */,
+				9022ED200E8B0858007DCD2D /* people.png */,
 				90C148EB0E3B937300C6EDAF /* bulkPlacements.png */,
 				90C148EC0E3B937300C6EDAF /* city.png */,
 				90C4D4F30E8564DD00E202E2 /* map.png */,
@@ -344,6 +350,8 @@
 				90C148D40E3B926E00C6EDAF /* CallsSortedByDateViewDataSource.m */,
 				90C148810E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.h */,
 				90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */,
+				9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */,
+				9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */,
 				90FBE8760E39887300FD8014 /* SortedCallsViewController.h */,
 				90FBE8770E39887300FD8014 /* SortedCallsViewController.m */,
 				90FBE87F0E398CAE00FD8014 /* SortedCallsViewDataSourceProtocol.h */,
@@ -417,6 +425,7 @@
 				90D031080E554C47001CEF0D /* settings.png in Resources */,
 				9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */,
 				90C4D4F40E8564DD00E202E2 /* map.png in Resources */,
+				9022ED210E8B0858007DCD2D /* people.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +485,7 @@
 				9045AA000E7D99A4001B439C /* EventAgent.m in Sources */,
 				90C4D55D0E857C4100E202E2 /* NotesViewController.m in Sources */,
 				90C4D5B40E8581E500E202E2 /* UITableViewMultilineTextCell.m in Sources */,
+				9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

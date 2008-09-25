@@ -13,8 +13,8 @@
 @implementation CallTableCell
 
 @synthesize call;
-@synthesize streetLabel;
-@synthesize nameLabel;
+@synthesize mainLabel;
+@synthesize secondaryLabel;
 @synthesize infoLabel;
 
 #define LEFT_OFFSET 10
@@ -37,19 +37,21 @@
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
-		self.streetLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		streetLabel.backgroundColor = [UIColor clearColor];
-		streetLabel.font = [UIFont boldSystemFontOfSize:18];
-		streetLabel.textColor = [UIColor blackColor];
-		streetLabel.highlightedTextColor = [UIColor whiteColor];
-		[self.contentView addSubview: streetLabel];
+		_nameAsMainLabel = false;
+		
+		self.mainLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+		mainLabel.backgroundColor = [UIColor clearColor];
+		mainLabel.font = [UIFont boldSystemFontOfSize:18];
+		mainLabel.textColor = [UIColor blackColor];
+		mainLabel.highlightedTextColor = [UIColor whiteColor];
+		[self.contentView addSubview: mainLabel];
 
-		self.nameLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		nameLabel.backgroundColor = [UIColor clearColor];
-		nameLabel.font = [UIFont boldSystemFontOfSize:12];
-		nameLabel.textColor = [UIColor darkGrayColor];
-		nameLabel.highlightedTextColor = [UIColor whiteColor];
-		[self.contentView addSubview: nameLabel];
+		self.secondaryLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+		secondaryLabel.backgroundColor = [UIColor clearColor];
+		secondaryLabel.font = [UIFont boldSystemFontOfSize:12];
+		secondaryLabel.textColor = [UIColor darkGrayColor];
+		secondaryLabel.highlightedTextColor = [UIColor whiteColor];
+		[self.contentView addSubview: secondaryLabel];
 
 		self.infoLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		infoLabel.backgroundColor = [UIColor clearColor];
@@ -66,12 +68,21 @@
 - (void)dealloc
 {
 	DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	self.streetLabel = nil;
-	self.nameLabel = nil;
+	self.mainLabel = nil;
+	self.secondaryLabel = nil;
 	self.infoLabel = nil;
 	[super dealloc];
 }
 
+- (void)useNameAsMainLabel
+{
+	_nameAsMainLabel = true;
+}
+
+- (void)useStreetAsMainLabel
+{
+	_nameAsMainLabel = false;
+}
 
 - (void)setCall:(NSMutableDictionary *)theCall
 {
@@ -96,9 +107,16 @@
 		NSMutableDictionary *returnVisit = [[call objectForKey:CallReturnVisits] objectAtIndex:0];
 		info = [returnVisit objectForKey:CallReturnVisitNotes];
 	}
-
-	streetLabel.text = title;
-	nameLabel.text = [call objectForKey:CallName];
+	if(_nameAsMainLabel)
+	{
+		mainLabel.text = [call objectForKey:CallName];
+		secondaryLabel.text = title;
+	}
+	else
+	{
+		mainLabel.text = title;
+		secondaryLabel.text = [call objectForKey:CallName];
+	}
 	infoLabel.text = info;
 }
 
@@ -109,8 +127,8 @@
     */
 	[super setSelected:selected animated:animated];
 
-	[streetLabel setHighlighted:selected];
-	[nameLabel setHighlighted:selected];
+	[mainLabel setHighlighted:selected];
+	[secondaryLabel setHighlighted:selected];
 	[infoLabel setHighlighted:selected];
 }
 
@@ -124,10 +142,10 @@
 	CGRect frame;
 
 	frame = CGRectMake(boundsX + LEFT_OFFSET, STREET_TOP_OFFSET, width, STREET_HEIGHT);
-	[streetLabel setFrame:frame];
+	[mainLabel setFrame:frame];
 
 	frame = CGRectMake(boundsX + LEFT_OFFSET, NAME_TOP_OFFSET, width, NAME_HEIGHT);
-	[nameLabel setFrame:frame];
+	[secondaryLabel setFrame:frame];
 
 	frame = CGRectMake(boundsX + LEFT_OFFSET, INFO_TOP_OFFSET, width, INFO_HEIGHT);
 	[infoLabel setFrame:frame];

@@ -11,14 +11,15 @@
 
 @interface CallTableCell : UITableViewCell {
 	NSMutableDictionary *call;
-	UILabel *streetLabel;
-	UILabel *nameLabel;
+	UILabel *mainLabel;
+	UILabel *secondaryLabel;
 	UILabel *infoLabel;
+	BOOL _nameAsMainLabel;
 }
 
 @property (nonatomic,retain) NSMutableDictionary *call;
-@property (nonatomic,retain) UILabel *streetLabel;
-@property (nonatomic,retain) UILabel *nameLabel;
+@property (nonatomic,retain) UILabel *mainLabel;
+@property (nonatomic,retain) UILabel *secondaryLabel;
 @property (nonatomic,retain) UILabel *infoLabel;
 
 + (float)height;
@@ -26,5 +27,8 @@
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)setCall:(NSMutableDictionary *)call;
+
+- (void)useNameAsMainLabel;
+- (void)useStreetAsMainLabel;
 
 @end
