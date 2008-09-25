@@ -159,8 +159,11 @@ Just go through the file and you will see where some words have had their spelli
 So here is a picture of where I copied the text from right to left fixing the above situation:
 http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.png
 
-Here is another example situation.  The left hand side's left quoted text ("Thanks for using MyTime! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using MyTime! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
+Here is another example situation.  The left hand side's left quoted text ("Thanks for using !MyTime! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using !MyTime! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
 
 http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.png
 
+When you are done modifying your translation file then just go to *file->Save Modified As...* and save it to where you want (possibly even overwriting the original file).
+
+Email me with questions or if you think that the instructions above are misleading, not accurate or could be better (make a recommendation as to how it could be better).
  
