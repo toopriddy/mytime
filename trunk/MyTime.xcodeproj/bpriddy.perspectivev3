@@ -292,7 +292,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>10</integer>
+									<integer>8</integer>
 									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -318,7 +318,7 @@
 							<real>324</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>43 55 1240 723 0 0 1280 778 </string>
+						<string>44 55 1240 723 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -336,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>BackupView.m</string>
+								<string>SettingsViewController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>BackupView.m</string>
+										<string>SettingsViewController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9022EE6E0E8B2B94007DCD2D</string>
+										<string>9022EE830E8B3DEA007DCD2D</string>
 										<key>history</key>
 										<array>
 											<string>90696BE70E7E3D370077F54C</string>
@@ -372,7 +372,6 @@
 											<string>90C4D57D0E8580E600E202E2</string>
 											<string>90C4D5CE0E85862400E202E2</string>
 											<string>90C4D7750E859FDB00E202E2</string>
-											<string>90C4D77E0E85A01200E202E2</string>
 											<string>90C4D77F0E85A01200E202E2</string>
 											<string>90C4D79A0E85B1A200E202E2</string>
 											<string>90C4D8280E85C86F00E202E2</string>
@@ -420,16 +419,17 @@
 											<string>9022EE0B0E8B2175007DCD2D</string>
 											<string>9022EE0C0E8B2175007DCD2D</string>
 											<string>9022EE0D0E8B2175007DCD2D</string>
-											<string>9022EE1D0E8B2249007DCD2D</string>
 											<string>9022EE280E8B2330007DCD2D</string>
 											<string>9022EE360E8B2588007DCD2D</string>
 											<string>9022EE370E8B2588007DCD2D</string>
 											<string>9022EE460E8B29BC007DCD2D</string>
-											<string>9022EE470E8B29BC007DCD2D</string>
 											<string>9022EE480E8B29BC007DCD2D</string>
 											<string>9022EE490E8B29BC007DCD2D</string>
 											<string>9022EE4A0E8B29BC007DCD2D</string>
-											<string>9022EE4B0E8B29BC007DCD2D</string>
+											<string>9022EE7C0E8B3DEA007DCD2D</string>
+											<string>9022EE7D0E8B3DEA007DCD2D</string>
+											<string>9022EE7E0E8B3DEA007DCD2D</string>
+											<string>9022EE7F0E8B3DEA007DCD2D</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -606,6 +606,9 @@
 											<string>9022EE4F0E8B29BC007DCD2D</string>
 											<string>9022EE500E8B29BC007DCD2D</string>
 											<string>9022EE510E8B29BC007DCD2D</string>
+											<string>9022EE800E8B3DEA007DCD2D</string>
+											<string>9022EE810E8B3DEA007DCD2D</string>
+											<string>9022EE820E8B3DEA007DCD2D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -621,7 +624,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {872, 677}}</string>
 								<key>RubberWindowFrame</key>
-								<string>43 55 1240 723 0 0 1280 778 </string>
+								<string>44 55 1240 723 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -721,7 +724,7 @@
 										<key>Frame</key>
 										<string>{{10, 27}, {872, -27}}</string>
 										<key>RubberWindowFrame</key>
-										<string>43 55 1240 723 0 0 1280 778 </string>
+										<string>44 55 1240 723 0 0 1280 778 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -944,7 +947,7 @@
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>43 55 1240 723 0 0 1280 778 </string>
+	<string>44 55 1240 723 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

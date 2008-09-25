@@ -627,6 +627,14 @@
 			9022EE670E8B2B23007DCD2D /* PBXTextBookmark */ = 9022EE670E8B2B23007DCD2D /* PBXTextBookmark */;
 			9022EE6B0E8B2B53007DCD2D /* PBXTextBookmark */ = 9022EE6B0E8B2B53007DCD2D /* PBXTextBookmark */;
 			9022EE6E0E8B2B94007DCD2D /* PBXTextBookmark */ = 9022EE6E0E8B2B94007DCD2D /* PBXTextBookmark */;
+			9022EE7C0E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE7C0E8B3DEA007DCD2D /* PBXTextBookmark */;
+			9022EE7D0E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE7D0E8B3DEA007DCD2D /* PBXTextBookmark */;
+			9022EE7E0E8B3DEA007DCD2D /* PlistBookmark */ = 9022EE7E0E8B3DEA007DCD2D /* PlistBookmark */;
+			9022EE7F0E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE7F0E8B3DEA007DCD2D /* PBXTextBookmark */;
+			9022EE800E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE800E8B3DEA007DCD2D /* PBXTextBookmark */;
+			9022EE810E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE810E8B3DEA007DCD2D /* PBXTextBookmark */;
+			9022EE820E8B3DEA007DCD2D /* PlistBookmark */ = 9022EE820E8B3DEA007DCD2D /* PlistBookmark */;
+			9022EE830E8B3DEA007DCD2D /* PBXTextBookmark */ = 9022EE830E8B3DEA007DCD2D /* PBXTextBookmark */;
 			906610B90E86AF1900A30E0F = 906610B90E86AF1900A30E0F /* PBXTextBookmark */;
 			906610F60E86B58200A30E0F = 906610F60E86B58200A30E0F /* PBXTextBookmark */;
 			906610F70E86B58200A30E0F = 906610F70E86B58200A30E0F /* PBXTextBookmark */;
@@ -5396,6 +5404,90 @@
 		vrLen = 1036;
 		vrLoc = 0;
 	};
+	9022EE7C0E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9045A7280E7C1590001B439C /* BackupView.m */;
+		name = "BackupView.m: 129";
+		rLen = 0;
+		rLoc = 2994;
+		rType = 0;
+		vrLen = 1036;
+		vrLoc = 0;
+	};
+	9022EE7D0E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 199";
+		rLen = 0;
+		rLoc = 6957;
+		rType = 0;
+		vrLen = 1546;
+		vrLoc = 12434;
+	};
+	9022EE7E0E8B3DEA007DCD2D /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleName,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	9022EE7F0E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 70";
+		rLen = 10;
+		rLoc = 1729;
+		rType = 0;
+		vrLen = 785;
+		vrLoc = 1437;
+	};
+	9022EE800E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9045A7280E7C1590001B439C /* BackupView.m */;
+		name = "BackupView.m: 129";
+		rLen = 0;
+		rLoc = 2994;
+		rType = 0;
+		vrLen = 1036;
+		vrLoc = 0;
+	};
+	9022EE810E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906143AC0E51312E0072BA7B /* HourViewController.m */;
+		name = "HourViewController.m: 199";
+		rLen = 0;
+		rLoc = 6957;
+		rType = 0;
+		vrLen = 1546;
+		vrLoc = 12434;
+	};
+	9022EE820E8B3DEA007DCD2D /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleName,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	9022EE830E8B3DEA007DCD2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
+		name = "SettingsViewController.m: 19";
+		rLen = 0;
+		rLoc = 373;
+		rType = 0;
+		vrLen = 926;
+		vrLoc = 0;
+	};
 	9045A7240E7C1423001B439C /* TCPServer.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {894, 686}}";
@@ -5568,9 +5660,9 @@
 	};
 	906143AC0E51312E0072BA7B /* HourViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1884, 5208}}";
-			sepNavSelRange = "{7005, 722}";
-			sepNavVisRange = "{6295, 1861}";
+			sepNavIntBoundsRect = "{{0, 0}, {3834, 4942}}";
+			sepNavSelRange = "{6957, 0}";
+			sepNavVisRange = "{12434, 1546}";
 		};
 	};
 	906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {
@@ -7285,9 +7377,9 @@
 	};
 	90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1560, 5320}}";
-			sepNavSelRange = "{1729, 10}";
-			sepNavVisRange = "{1607, 652}";
+			sepNavIntBoundsRect = "{{0, 0}, {811, 5586}}";
+			sepNavSelRange = "{373, 0}";
+			sepNavVisRange = "{0, 926}";
 			sepNavWindowFrame = "{{67, -2}, {1185, 775}}";
 		};
 	};
