@@ -460,10 +460,12 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// hide the back button so that they cant cancel the edit without hitting done
 	self.navigationItem.hidesBackButton = YES;
 
-	// we need to reload data now, so we need to show:
-	//   the name field if it is not there already
-	//   the insert new call
-	//   the per call insert a new publication
+#if 1
+	[self reloadData];
+	[theTableView reloadData];
+	if(theTableView.editing != _editing)
+		theTableView.editing = _editing;		
+#else
 	NSMutableArray *cachedItems = [[_displayInformation retain] autorelease];
 	[self reloadData];
 
@@ -538,7 +540,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		theTableView.editing = _editing;		
 	[theTableView endUpdates];
 	[theTableView reloadData];
-	
+#endif	
 }
 
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
@@ -589,6 +591,20 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	}
 	_initialView = NO;
+
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	if([settings objectForKey:SettingsExistingCallAlertSheetShown] == nil)
+	{
+		[settings setObject:@"" forKey:SettingsExistingCallAlertSheetShown];
+		[[Settings sharedInstance] saveData];
+		
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = NSLocalizedString(@"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call", @"This is a note displayed when they first see the non editable call view");
+		[alertSheet show];
+		
+	}
+
 
 	[super viewDidAppear:animated];
 }
@@ -1120,6 +1136,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSMutableString *notes = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitNotes];
 	if(_editing)
 	{
+		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 		if([notes length] == 0)
 			[cell setText:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")];
 		else

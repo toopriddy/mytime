@@ -46,7 +46,7 @@
 		[self autoresizesSubviews];
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		[self addButtonWithTitle:NSLocalizedString(@"Cancel", @"cancel button")];
-		self.title = NSLocalizedString(@"Please wait for the Backup Service to initalize... Go to mytime.googlecode.com for more information about the Backup Application", @"initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown)");
+		self.title = NSLocalizedString(@"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application", @"initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown)");
 		self.delegate = self;
 	}
 	return self;
@@ -126,7 +126,7 @@
 			if (_inReady && _outReady) 
 			{
 				_state = kConnected;
-				self.title = NSLocalizedString(@"Connected to the Backup Application.  Use it to create a backup or to restore a backup", @"backup connected message");
+				self.title = NSLocalizedString(@"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup", @"backup connected message");
 
 				_agent = [[EventAgent alloc] initWithInputStream:_inStream outputStream:_outStream];
 				_agent.delegate = self;
@@ -158,7 +158,7 @@
 			else
 			{
 				// need to free up the streams
-				self.title = NSLocalizedString(@"Connected to the Backup Application.  Use it to create a backup or to restore a backup", @"backup connected message");
+				self.title = NSLocalizedString(@"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup", @"backup connected message");
 				_state = kDisconnected;
 			}
 			break;
@@ -170,7 +170,7 @@
 
 - (void) serverDidEnableBonjour:(TCPServer*)server withName:(NSString*)string
 {
-	self.title = NSLocalizedString(@"Waiting for the Backup Application to connect...", @"initial message when trying to transfer backup files");
+	self.title = NSLocalizedString(@"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application", @"initial message when trying to transfer backup files");
 	[self layoutSubviews];
 }
 
