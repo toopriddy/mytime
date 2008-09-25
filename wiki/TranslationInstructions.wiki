@@ -139,7 +139,7 @@ If you dont already have it, you can download [http://www.apple.com/downloads/ma
   # Now click "Compare"
 
 You should see something like:
-http://mytime.googlecode.com/svn/trunk/screenshots/website/changes1.PNG
+http://mytime.googlecode.com/svn/trunk/screenshots/website/changes1.png
 
 Notice how the following is new:
 {{{
@@ -153,10 +153,10 @@ I would reccomend that you highlight the Left hand additions, copy the highlight
 Just go through the file and you will see where some words have had their spelling or grammar corrected, you MUST make sure that the left hand quoted text (as described at the top of this document) in the Left hand file is the same as the left hand quoted text in the right hand file.  Hopefully I have not confused you.
 
 So here is a picture of where I copied the text from right to left fixing the above situation:
-http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.PNG
+http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.png
 
 Here is another example situation.  The left hand side's left quoted text ("Thanks for using MyTime! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using MyTime! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
 
-http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.PNG
+http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.png
 
  
