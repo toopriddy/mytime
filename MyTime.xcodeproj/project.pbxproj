@@ -550,7 +550,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EBEE424B-0C5D-4687-B473-B6BDAA67EC09";
+				PROVISIONING_PROFILE = DefaultProfileUuid;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "30D2C030-60BA-4C71-87AF-0986FD146C16";
 				SDKROOT = iphonesimulator2.1;
 			};
 			name = Distribution;

@@ -82,6 +82,8 @@
 			
 			[self addSubview:label];
 		}
+		[self setSoundsEnabled:NO];
+		
     }
     
     return(self);
