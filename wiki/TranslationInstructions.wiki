@@ -14,7 +14,7 @@ Use the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.string
 "Add a return visit" = "Add a return visit";
 }}}
 
-The First line is called a "comment" it is just used to help you know where this text is used within the MyTime program.  Do not change this.
+The First line is called a "comment" it is just used to help you know where this text is used within the !MyTime program.  Do not change this.
 
 The Next line has two quoted sentences, do not change the first one, the first one is used by the program to lookup the translation.  The second quoted sentence is what you change.  You change this second quoted string to what is natural in your language. Like so:
 {{{
@@ -76,9 +76,9 @@ Email me, I will add the answers to this page
 = Transfer Localizable.strings using iTunes =
 
 On OSX:
-  # Right-click (or CTRL+Click for those of you without a mighty mouse, or even two finger click on a macbook) the unzipped MyTime application that I emailed you and select Show Package Contents.
+  # Right-click (or CTRL+Click for those of you without a mighty mouse, or even two finger click on a macbook) the unzipped !MyTime application that I emailed you and select Show Package Contents.
   # save the translated Localizable.strings file that I emailed you to a German.lproj directory or Romanian.lproj directory or <Insert Language Here>.lproj; You need to create this directory in the window that pops up from the "Show Package Contents" and save the Localizable.strings file there.
-  # drag the unzipped MyTime application into iTunes and say yes to add/replace this application
+  # drag the unzipped !MyTime application into iTunes and say yes to add/replace this application
   # sync your iPhone/iTouch to download the new version and test your translation
 
 
@@ -104,13 +104,13 @@ Windows:
   ## Now do a "cd .." on the command line, to move to the parent directory
   # Do Start->Run and type in "notepad.exe" to edit the Localizable.strings (yes you MUST use notepad to edit these files on windows)
   ## edit your Localizable.strings change the values and save 
-  # Make sure that MyTime is "Quitted" on your iPhone/iTouch
+  # Make sure that !MyTime is "Quitted" on your iPhone/iTouch
   # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english word of your language is)  
 {{{
 pscp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
 }}}
   # enter "alpine" as the password
-  # after the file has been pushed, run MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
+  # after the file has been pushed, run !MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
   # you can go back to the "Edit your Localizable.strings file" step and repeat over and over
 
 
@@ -121,13 +121,13 @@ OSX:
   ## Now do a "cd .." on the command line, to move to the parent directory
   # Do Start->Run and run "TextEdit" to edit the Localizable.strings (yes you MUST use textedit to edit these files on windows)
   ## edit your Localizable.strings change the values and save 
-  # Make sure that MyTime is "Quitted" on your iPhone/iTouch
+  # Make sure that !MyTime is "Quitted" on your iPhone/iTouch
   # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english version of your language is)  
 {{{
 scp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
 }}}
   # enter "alpine" as the password
-  # after the file has been pushed, run MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
+  # after the file has been pushed, run !MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
   # you can go back to the "Edit your Localizable.strings file
 
 = Updating the Localizable.strings with the latest version =
