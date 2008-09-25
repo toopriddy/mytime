@@ -13,6 +13,7 @@ typedef enum {
 	  CALLS_SORTED_BY_STREET
 	, CALLS_SORTED_BY_DATE
 	, CALLS_SORTED_BY_CITY
+	, CALLS_SORTED_BY_NAME
 } SortCallsType;
 
 
@@ -35,6 +36,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *cityRowCount;
 @property (nonatomic, retain) NSMutableArray *streetOffsets;
 @property (nonatomic, retain) NSMutableArray *cityOffsets;
+@property (nonatomic, assign) SortCallsType sortedBy;
 
 - (id)initSortedBy:(SortCallsType)theSortedBy;
 - (NSInteger)numberOfSections;

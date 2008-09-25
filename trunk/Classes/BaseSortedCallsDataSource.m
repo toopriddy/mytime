@@ -94,10 +94,15 @@
 	if ([self showDisclosureIcon])
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
-	// set the element for this cell as specified by the callsSortersource. The atomicElementForIndexPath: is declared
-	// as part of the ElementsDataSource Protocol and will return the appropriate element for the index row
+	if(callsSorter.sortedBy == CALLS_SORTED_BY_NAME)
+	{
+		[cell useNameAsMainLabel];
+	}
+	else
+	{
+		[cell useStreetAsMainLabel];
+	}
 	cell.call = [self callForIndexPath:indexPath];
-	
 	return cell;
 }
 

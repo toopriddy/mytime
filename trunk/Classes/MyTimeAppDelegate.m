@@ -11,6 +11,7 @@
 #import "CallsSortedByStreetViewDataSource.h"
 #import "CallsSortedByCityViewDataSource.h"
 #import "CallsSortedByDateViewDataSource.h"
+#import "CallsSortedByNameViewDataSource.h"
 #import "SortedCallsViewController.h"
 #import "StatisticsViewController.h"
 #import "HourViewController.h"
@@ -100,15 +101,18 @@
 	SortedCallsViewController *cityViewController = [[[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:cityViewController] autorelease]];
 
+	// CALLS SORTED BY NAME
+	CallsSortedByNameViewDataSource *nameSortedDataSource = [[[CallsSortedByNameViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *nameViewController = [[[SortedCallsViewController alloc] initWithDataSource:nameSortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:nameViewController] autorelease]];
+
 	// SETTINGS
 	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[[BulkLiteraturePlacementViewContoller alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
 
-#if 1
 	// ALL CALLS WEB VIEW
 	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:@"Mapped Calls"] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
-#endif
 
 	// SETTINGS
 	SettingsViewController *settingsViewController = [[[SettingsViewController alloc] init] autorelease];
