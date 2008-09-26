@@ -42,15 +42,15 @@ Franz Marc St. 12318
 
 The following is the block that you would have to modify for the address:
 {{{
-/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
-"%@ %@" = "%1$@ %2$@";
+/* House number and Street represented by %1$d as the house number and %2$@ as the street name */
+"%d %@" = "%1$d %2$@";
 }}}
-As the comment sayd the %1$@ is the house number and the %2$@ is represented as the address. The above block is for English and the below text is in German.
+As the comment said the %1$d is the house number and the %2$@ is represented as the address. The above block is for English and the below text is in German.
 {{{
-/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
-"%@ %@" = "%2$@ %1$@";
+/* House number and Street represented by %1$d as the house number and %2$@ as the street name */
+"%@ %@" = "%2$@ %1$d";
 }}}
-You will see that this is common throughout some of the translations. As you experiment with these you will see what needs to be put where (you will also see if you made a mistake)
+You will see that this is common throughout some of the translations. As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because !MyTime will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others).  Without getting into programming, just move the phone word don't just change the number.
 
 *Singular/Plural:*
 
