@@ -593,7 +593,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	_initialView = NO;
 
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	if([settings objectForKey:SettingsExistingCallAlertSheetShown] == nil)
+	if(!_newCall && [settings objectForKey:SettingsExistingCallAlertSheetShown] == nil)
 	{
 		[settings setObject:@"" forKey:SettingsExistingCallAlertSheetShown];
 		[[Settings sharedInstance] saveData];

@@ -21,7 +21,7 @@
 	NSError* error = nil;
 	if(_server == nil || ![_server start:&error]) {
 		NSLog(@"Failed creating server: %@", error);
-			self.title = @"Failed creating server";
+			self.title = NSLocalizedString(@"Failed creating server", @"failure message for starting the backup service");
 		return;
 	}
 	

@@ -73,6 +73,7 @@
 		9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByNameViewDataSource.m; sourceTree = "<group>"; };
 		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		9045A7250E7C1423001B439C /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		9045A7270E7C1590001B439C /* BackupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupView.h; sourceTree = "<group>"; };
@@ -397,6 +398,13 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MyTime" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Swedish,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -497,6 +505,7 @@
 			children = (
 				9045A8F90E7D6F86001B439C /* English */,
 				90B8F4170E7ECD300022A01F /* German */,
+				903477630E8CAA0100BB6F2D /* Swedish */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

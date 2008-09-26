@@ -111,7 +111,7 @@
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
 
 	// ALL CALLS WEB VIEW
-	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:@"Mapped Calls"] autorelease];
+	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
 
 	// SETTINGS

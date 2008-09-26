@@ -294,7 +294,7 @@
 					[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-					[alertSheet addButtonWithTitle:@"OK"];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 					alertSheet.title = NSLocalizedString(@"Popup messages like this are now enabled all throughout MyTime", @"Confirmation message about enabling popup messages");
 					[alertSheet show];
 					return;
