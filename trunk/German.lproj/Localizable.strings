@@ -14,7 +14,7 @@
 "%@ %@ %d" = "%1$@ %2$@ %3$d";
 
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
-"%@ %@ %d, %d" = "%1$d %3$@. %2$@ %4$d";
+"%@ %@ %d, %d" = "%1$@ %3$d. %2$@ %4$d";
 
 /* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
 "%a %b %d" = "%a, %d. %b";

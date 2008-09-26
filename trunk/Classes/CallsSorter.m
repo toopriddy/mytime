@@ -110,15 +110,13 @@ int sortByDate(id v1, id v2, void *context)
 {
 	[super init];
 	sortedBy = theSortedBy;
-#if 0
-	self.calls = [[Settings sharedInstance] settings];
-	if(![calls respondsToSelector:@selector(sortedArrayUsingFunction:context:)])
-	{
-		theCalls = [[[NSMutableArray alloc] initWithArray:calls] autorelease];
-		[[Settings sharedInstance] settings
-	}
-#endif	
+	
 	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	if(calls == nil)
+	{
+		self.calls = [NSMutableArray array];
+		[[[Settings sharedInstance] settings] setObject:self.calls forKey:SettingsCalls];
+	}
 	self.citySections = [[NSMutableArray alloc] init];
 	self.streetSections = [[NSMutableArray alloc] init];
 	self.cityRowCount = [[NSMutableArray alloc] init];

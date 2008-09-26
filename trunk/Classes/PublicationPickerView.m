@@ -658,7 +658,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 // string of the publication name
 - (NSString *)publicationType
 {
-    return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].type value:PUBLICATIONS[_publication].type table:@""]]);
+    return([NSString stringWithString:PUBLICATIONS[_publication].type]);
 }
 
 
