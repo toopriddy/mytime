@@ -1,0 +1,678 @@
+/* Publication Type and Seperator in the Publication Picker */
+"   BIBLE DVD" = "   BIBEL DVD";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BOOKS" = "   BÖCKER";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BROCHURES" = "   BROSCHYRER";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   DVD" = "   DVD";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   TRACTS" = "   TRAKTAT";
+
+/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
+"%@ %@" = "%1$@ %2$@";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
+"%@ %@ %d" = "%1$@ %2$@ %3$d";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
+"%@ %@ %d, %d" = "%1$@ %2$@ %3$d, %4$d";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
+"%a %b %d" = "%a %b %d";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
+"%a %b %d, %Y" = "%a %b %d, %Y";
+
+/* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
+"%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
+
+/* Singular form of '1 Broshure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications */
+"%d %@: %@" = "%1$d %2$@: %3$@";
+
+/* Plural form of '2 Broshures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications */
+"%d %@s: %@" = "%1$d %2$@s: %3$@";
+
+/* 1, singular publication, shown as '%d publication' */
+"%d publication" = "%d publikation";
+
+/* more than one publications, shown as '%d publications' */
+"%d publications" = "%d publikationer";
+
+/* Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@' */
+"%d: %@" = "%1$d: %2$@";
+
+/* (unknown street) Placeholder Section title in the Sorted By Calls view */
+"(unknown street)" = "(Ingen adress)";
+
+/* Tracts Publication Name */
+"A Peaceful New World-Will It Come?" = "Liv i en fridfull ny värld";
+
+/* Add a initial visit action buton */
+"Add a initial visit" = "Lägg till ett första besök";
+
+/* Add a placed publication action button in call view */
+"Add a placed publication" = "Placerad litteratur";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
+"Add a placed publications" = "Addera ett antal publ.";
+
+/* Add a return visit action button */
+"Add a return visit" = "Lägg till ett återbesök";
+
+/* Return Visit Notes Placeholder text */
+"Add Notes" = "Anteckningar";
+
+/* Address label for call */
+"Address" = "Adress";
+
+/* cancel button */
+"All Calls" = "Alla namn";
+
+/* Book Publication Name */
+"All Scripture" = "Hela skriften";
+
+/* Short month name */
+"Apr" = "Apr";
+
+/* Long month name */
+"April" = "April";
+
+/* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
+"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Är du säker på att du vill radera denna post (återbesöken och placerad litteratur kommer fortfarande att räknas)?";
+
+/* Short month name */
+"Aug" = "Aug";
+
+/* Long month name */
+"August" = "Augusti";
+
+/* Magizine Publication Name */
+"Awake" = "Vakna";
+
+/* More View Table Group Title */
+"Backup" = "Säkerhetskopia";
+
+/* More View Table backup your data */
+"Backup your data" = "Säkerhetskopiera ditt data";
+
+/* Book Publication Name */
+"Bible" = "Bibeln";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Acts" = "Bibel DVD: Apg";
+
+/* Bible DVD Publication Name */
+"Bible DVD: John" = "Bibel DVD: Johannes";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Luke" = "Bibel DVD: Lukas";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Mark" = "Bibel DVD: Markus";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Matthew" = "Bibel DVD: Matteus";
+
+/* Book Publication Name */
+"Bible Stories" = "Min bok med bibliska";
+
+/* Bible Studies label on the Statistics View */
+"Bible Studies" = "Bibelstudier";
+
+/* Book Publication Name */
+"Bible Teach" = "Vad bibeln lär";
+
+/* Brochures Publication Name */
+"Blood" = "Blod";
+
+/* Publication Type name */
+"Book" = "Bok";
+
+/* Brochures Publication Name */
+"Book for All" = "En bok för alla människor";
+
+/* Publication Type name */
+"Books" = "Böcker";
+
+/* Publication Type name */
+"Brochure" = "Broschyr";
+
+/* Publication Type name */
+"Brochures" = "Broschyrer";
+
+/* More View Table Build Date */
+"Build Date" = "Skapad datum";
+
+/* Title for Bulk Placements view */
+"Bulk Placements" = "Större beställningar";
+
+/* Call main title when editing an existing call */
+"Call" = "Besök";
+
+/* Address title for address form */
+"Call Address" = "Besöktes adress";
+
+/* View title */
+"Calls Sorted by City" = "Stad";
+
+/* view title */
+"Calls Sorted by Date" = "Datum";
+
+/* view title */
+"Calls Sorted by Street" = "Gata";
+
+/* cancel button */
+"Cancel" = "Avbryt";
+
+/* Change Date action button for visit in call view */
+"Change Date" = "Byt datum";
+
+/* City */
+"City" = "Postadress";
+
+/* button bar title */
+"City Sorted" = "PA sortering";
+
+/* Book Publication Name */
+"Close to Jehovah" = "Närma dig Jehova";
+
+/* Tracts Publication Name */
+"Comfort for the Depressed" = "Tröst för de deprimerade";
+
+/* Book Publication Name */
+"Concordance" = "konkordans";
+
+/* backup connected message */
+"Connected to the Backup Application.  Use it to create a backup or to restore a backup" = "Ansluten till programvara för säkerhetskopering.  Använd den för att skapa eller återskapa en säkerhetskopia";
+
+/* More View Table Group Title */
+"Contact Information" = "Kontaktinformation";
+
+/* initial message when trying to transfer backup files */
+"Could not create %@ directory" = "Kan inte skapa %@ katalog";
+
+/* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
+"Count:" = "Count:";
+
+/* Book Publication Name */
+"Creation" = "Skapelseboken";
+
+/* Book Publication Name */
+"Creator" = "Liv-ett resultat";
+
+/* Book Publication Name */
+"Daniel's Prophecy" = "Daniels profetia";
+
+/* button bar title */
+"Date Sorted" = "Datum";
+
+/* Short month name */
+"Dec" = "Dec";
+
+/* Long month name */
+"December" = "December";
+
+/* Yes delete the call and the data */
+"Delete and don't keep info" = "Radera utan att behålla information";
+
+/* Delete Call button in editing mode of call view */
+"Delete Call" = "Radera besök";
+
+/* backup connected message */
+"Disconnected from the Backup Application" = "Kontakten med backupprogrammet är brutet";
+
+/* Brochures Publication Name */
+"Divine Name" = "Guds namn";
+
+/* Tracts Publication Name */
+"Does Fate Rule Our Lives" = "Styr ödet vårt liv?";
+
+/* Brochures Publication Name */
+"Does God Care" = "Bryr sig Gud om oss?";
+
+/* DVD Publication Name */
+"DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
+
+/* DVD Publication Name */
+"DVD Drama: Pursue Goals" = "DVD Drama: Pursue Goals";
+
+/* DVD Publication Name */
+"DVD Drama: Respect Authority" = "DVD Drama: Respect Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Submit to Authority" = "DVD Drama: Submit to Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Troublesome Times/Boldly Witnessing";
+
+/* DVD Publication Name */
+"DVD: Bible Stories" = "DVD: Bible Stories";
+
+/* DVD Publication Name */
+"DVD: Bible Teach" = "DVD: Bible Teach";
+
+/* DVD Publication Name */
+"DVD: Family Happiness" = "DVD: Family Happiness";
+
+/* DVD Publication Name */
+"DVD: God's Friend" = "DVD: God's Friend";
+
+/* DVD Publication Name */
+"DVD: Greatest Man" = "DVD: Greatest Man";
+
+/* DVD Publication Name */
+"DVD: Keep on the Watch" = "DVD: Keep on the Watch";
+
+/* DVD Publication Name */
+"DVD: Knowledge" = "DVD: Knowledge";
+
+/* DVD Publication Name */
+"DVD: Noah/David" = "DVD: Noah/David";
+
+/* DVD Publication Name */
+"DVD: Require" = "DVD: Require";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 1&2" = "DVD: Sing Praises Vol 1&2";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 3" = "DVD: Sing Praises Vol 3";
+
+/* DVD Publication Name */
+"DVD: Spirits of the dead" = "DVD: Spirits of the dead";
+
+/* DVD Publication Name */
+"DVD: When someone you love dies" = "DVD: When someone you love dies";
+
+/* DVD Publication Name */
+"DVD: Worship God" = "DVD: Worship God";
+
+/* Brochures Publication Name */
+"Education" = "Skolan och Jehovas vittnen";
+
+/* Google Localized Language Name */
+"en" = "en";
+
+/* More View Table Enable shown popups */
+"Enable shown popups" = "tillåt popups";
+
+/* Tracts Publication Name */
+"Enjoy Family Life" = "Ett lyckligt familjeliv";
+
+/* backup failed string */
+"Failed advertising server" = "Failed advertising server";
+
+/* Book Publication Name */
+"Family Happiness" = "Gör ditt familjeliv lyckligt";
+
+/* Short month name */
+"Feb" = "Feb";
+
+/* Long month name */
+"February" = "Februari";
+
+/* Brochures Publication Name */
+"God's Friend" = "Guds vän...";
+
+/* Book Publication Name */
+"God's Word" = "God's Word";
+
+/* Brochures Publication Name */
+"Good Land" = "Se det goda landet";
+
+/* Brochures Publication Name */
+"Government" = "Den regering som...";
+
+/* Book Publication Name */
+"Greatest Man" = "Den största människan";
+
+/* Brochures Publication Name */
+"Guidance of God" = "Vägledning från...";
+
+/* Tracts Publication Name */
+"Hellfire-Is It Part of Divine Justice?" = "Ett brinnande helvete – Ingår det i Guds rättvisa?";
+
+/* Singular form of the word hour */
+"hour" = "timme";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Timmar";
+
+/* Plural form of the word hours */
+"hours" = "timmar";
+
+/* House Number */
+"House Number" = "Gatunummer";
+
+/* Tracts Publication Name */
+"How to Find the Road to Paradise" = "Hur man finner vägen till paradiset";
+
+/* Tracts Publication Name */
+"Immortal Spirit" = "Har vi en odödlig ande?";
+
+/* Book Publication Name */
+"Insight" = "Insikt";
+
+/* Book Publication Name */
+"Isaiah's Prophecy I" = "Jesajas profetia I";
+
+/* Book Publication Name */
+"Isaiah's Prophecy II" = "Jesajas profetia II";
+
+/* Short month name */
+"Jan" = "Jan";
+
+/* Long month name */
+"January" = "Januari";
+
+/* Book Publication Name */
+"Jehovah's Day" = "Jehovas dag";
+
+/* Brochures Publication Name */
+"Jehovah's Witnesses" = "Jehovas Vittnen";
+
+/* Tracts Publication Name */
+"Jehovah's Witnesses-What Do They Believe?" = "Vad tror Jehovas vittnen på?";
+
+/* Tracts Publication Name */
+"Jehovah-Who Is He?" = "Jehova-Vem är han?";
+
+/* Tracts Publication Name */
+"Jesus Christ-Who Is He?" = "Jesus Kristus-Vem är han?";
+
+/* Short month name */
+"Jul" = "Jul";
+
+/* Long month name */
+"July" = "Juli";
+
+/* Short month name */
+"Jun" = "Jun";
+
+/* Long month name */
+"June" = "Juni";
+
+/* Tracts Publication Name */
+"Know the Bible" = "...veta mer om bibeln?";
+
+/* Book Publication Name */
+"Knowledge" = "Kunskapen";
+
+/* Brochures Publication Name */
+"Lasting Peace" = "En värld utan krig";
+
+/* Brochures Publication Name */
+"Life on Earth" = "Leva för evigt";
+
+/* Brochures Publication Name */
+"Look!" = "Se jag gör...!";
+
+/* Publication Type name */
+"Magazine" = "Tidskrift";
+
+/* Publication Type name */
+"Magazines" = "Tidskrifter";
+
+/* Book Publication Name */
+"Mankind's Search for God" = "Människans sökande efter Gud";
+
+/* Short month name */
+"Mar" = "Mar";
+
+/* Long month name */
+"March" = "Mars";
+
+/* Short/Long month name */
+"May" = "Maj";
+
+/* Book Publication Name */
+"Ministry School" = "Skolan i teo...";
+
+/* Singular form of the word minute */
+"minute" = "minut";
+
+/* Plural form of the word minutes */
+"minutes" = "minuter";
+
+/* Book Publication Name */
+"My Book of Bible Stories" = "Min bok med bibliska berättelser";
+
+/* More View Table MyTime Version */
+"MyTime Version" = "MyTime Version";
+
+/* More View Table MyTime Website */
+"MyTime Website" = "MyTime Websida";
+
+/* Name label for Call in editing mode */
+"Name" = "Namn";
+
+/* Brochures Publication Name */
+"Nations" = "Nationerna";
+
+/* Call main title when you are adding a new call */
+"New Call" = "Nytt besök";
+
+/* No dont delete the call */
+"No" = "Nej";
+
+/* Short month name */
+"Nov" = "Nov";
+
+/* Long month name */
+"November" = "November";
+
+/* Number Placed label for the Number Picker for the number of publications placed */
+"Number Placed:" = "Nummer placerade:";
+
+/* Short month name */
+"Oct" = "Okt";
+
+/* Long month name */
+"October" = "Oktober";
+
+/* OK button */
+"OK" = "OK";
+
+/* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
+"Oldest Return Visits First" = "Äldst åb först";
+
+/* Book Publication Name */
+"Organized" = "Organiserade";
+
+/* Brochures Publication Name */
+"Our Problems" = "Våra problem";
+
+/* Tracts Publication Name */
+"Peaceful New World" = "Liv i en fridfull...";
+
+/* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
+"Placements" = "Placeringar";
+
+/* Placements Group title for the Day's Bulk Literature Placements */
+"Placements:" = "Placeringar:";
+
+/* More View Table Donation request */
+"Please Donate, help me help you" = "Hjälp mig utveckla MyTime genom att lämna en frivillig gåva";
+
+/* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
+"Please wait for the Backup Service to initalize... Go to mytime.googlecode.com for more information about the Backup Application" = "V.g vänta tills backupprogrammet startat, besök mytime.googlecode.com för mer information om säkerhetskopieringsprogrammet";
+
+/* Confirmation message about enabling popup messages */
+"Popup messages like this are now enabled all throughout MyTime" = "Popupmeddelande som detta är nu påslaget i hela MyTime";
+
+/* Book Publication Name */
+"Proclaimers" = "Proclaimers";
+
+/* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
+"Publications" = "Publikationer";
+
+/* Brochures Publication Name */
+"Purpose of Life" = "Vad är meningen med livet";
+
+/* initial message when trying to transfer backup files */
+"Pushed %@ translation file, restart MyTime to see the changes." = "Pushed %@ translation file, restart MyTime to see the changes.";
+
+/* More View Table Questions, Comments? Email me */
+"Questions, Comments? Email me" = "Frågor, kommentarer? Skicka ett email";
+
+/* Book Publication Name */
+"Reasoning" = "Resonera";
+
+/* Brochures Publication Name */
+"Require" = "Vad kräver Gud...";
+
+/* initial message when trying to transfer backup files */
+"Restored Backup, restart MyTime to see the changes" = "Återläst säkerhetskopia, starta om MyTime för att s förändringar";
+
+/* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Return Visit Notes" = "ÅB anteckningar";
+
+/* Return Visits label on the Statistics View */
+"Return Visits" = "Återbesök";
+
+/* Book Publication Name */
+"Revelation Climax" = "Uppenbarelsebokens storslagna...";
+
+/* Brochures Publication Name */
+"Satisfying Life" = "Satisfying Life";
+
+/* Title for the view where you Pick A Date */
+"Select Date" = "Välj datum";
+
+/* 'Select Publication' Publication Picker title */
+"Select Publication" = "Välj publikation";
+
+/* Select Time Title for adding hours of field service to a particular day */
+"Select Time" = "Välj tid";
+
+/* initial message when trying to transfer backup files */
+"Sending Settings to the Backup Application" = "Skickar inställningar till säkerhetskopieringsprogrammet";
+
+/* Short month name */
+"Sep" = "Sep";
+
+/* Long month name */
+"September" = "September";
+
+/* 'Settings' ButtonBar View text and Statistics View Title */
+"Settings" = "Inställningar";
+
+/* Book Publication Name */
+"Sing Praises" = "Sjung låvsånger";
+
+/* Publication Type name */
+"Special" = "Special";
+
+/* Brochures Publication Name */
+"Spirits of the Dead" = "De dödas andar";
+
+/* 'Start Time' navigation bar action button */
+"Start Time" = "Starta tid";
+
+/* State */
+"State" = "Distrikt";
+
+/* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
+"State in all caps" = "0";
+
+/* 'Statistics' ButtonBar View text and Statistics View Title */
+"Statistics" = "Statistik";
+
+/* 'Stop Time' navigation bar action button */
+"Stop Time" = "Stoppa tid";
+
+/* Street */
+"Street" = "Gata";
+
+/* Street Sorted button title */
+"Street Sorted" = "Adress sort.";
+
+/* Tracts Publication Name */
+"Suffering to End" = "Allt lidande är snart slut";
+
+/* Book Publication Name */
+"Teacher" = "Vad vi lär...store läraren";
+
+/* Information for the user to know what is going on with this and new releases */
+"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)"= "Tack för att du använder My Time. Jag har använt mer än 200 timmar för att få Appstore att fungera; om du därför finner programmet användbart får du gärna bidra med en slant även om det är en liten summa. Jag letar efter översättare av My Time. Är du intresserad av att hjälpa mig? Skicka ett mail eller donera  (Titta i Mer och inställningar)";
+
+/* Tracts Publication Name */
+"The Greatest Name" = "Det största namnet";
+
+/* Time for %@ Group title on the Statistics View where %@ is the month of the year */
+"Time for %@" = "Timar under %@";
+
+/* Publication Type name */
+"Tract" = "Traktat";
+
+/* Brochures Publication Name */
+"Trinity" = "Treeningheten";
+
+/* Sorted by Street Calls view section title for an unknown street */
+"Unknown" = "Ingen adress";
+
+/* More View Table Group Title */
+"Version" = "Version";
+
+/* initial message when trying to transfer backup files */
+"Waiting for the Backup Application to connect..." = "Väntar på att backupprgrammet ska ansluta...";
+
+/* Brochures Publication Name */
+"Watch!" = "Se! Jag gör allting...";
+
+/* Magizine Publication Name */
+"Watchtower" = "Vakttornet";
+
+/* Tracts Publication Name */
+"What Do Jehovah's Witnesses Believe?" = "Jehovas Vittnen — Vilka är de? Vad tror de på?";
+
+/* Tracts Publication Name */
+"What Hope for Dead Loved Ones?" = "Vilket hopp finns det för våra nära och kära?";
+
+/* Brochures Publication Name */
+"When Someone Dies" = "När någon du älskar dör";
+
+/* Brochures Publication Name */
+"When We Die" = "Vad händer med oss när vi dör?";
+
+/* Tracts Publication Name */
+"Who Are Jehovah's Witnesses?" = "Vilka är Jehovas vittnen?";
+
+/* Tracts Publication Name */
+"Who Really Rules the World?" = "Vem styr egentligen den här världen?";
+
+/* Brochures Publication Name */
+"Why Worship God" = "Why Worship God";
+
+/* Tracts Publication Name */
+"Why You Can Trust the Bible" = "Varför du kan lita på bibeln";
+
+/* Tracts Publication Name */
+"Will This World Survive?" = "Kommer den här världen att bestå?";
+
+/* Brochures Publication Name */
+"World Without War" = "En värld utan krig...";
+
+/* Book Publication Name */
+"Worship God" = "Tillbe den ende sanne Guden";
+
+/* Yes delete the call */
+"Yes" = "Ja";
+
+/* This is a note displayed when they first see the Bulk Literature Placement view */
+"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Du kan radera placerad litteratur på samma sätt som du kan radera email, podcasts och annat i 'listor' på din iPhone/iTouch: Svep från vänster till höger så dyker radera upp.";
+
+/* This is a note displayed when they first see the Time view */
+"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Du kan radera inmatad tid på samma sätt som du kan radera email, podcasts och annat i 'listor' på din iPhone/iTouch: Svep från vänster till höger så dyker radera upp.";
+
+/* This is a note displayed when they first see the Statistics View */
+"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "Du kan se summan av vad du gjort under månaden såsom böcker, broschyrer, återbesök och timmar.";
+
+/* Book Publication Name */
+"Young People Ask" = "Ungdomar frågar...";
+
