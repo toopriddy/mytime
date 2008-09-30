@@ -625,7 +625,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 // string of the publication name
 - (NSString *)publication
 {
-    return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""]]);
+    return([NSString stringWithString:PUBLICATIONS[_publication].name]);
 }
 
 // string of the publication title

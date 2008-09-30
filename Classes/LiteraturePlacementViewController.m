@@ -197,7 +197,7 @@
 	{
 		if(row == [[placements objectForKey:BulkLiteratureArray] count])
 		{
-			[cell setValue:NSLocalizedString(@"Add a placed publications", @"Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications'")];
+			[cell setValue:NSLocalizedString(@"Add placed publications", @"Action Button in the Day's Bulk Literature Placement View called 'Add placed publications'")];
 		}
 		else
 		{

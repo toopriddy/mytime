@@ -14,7 +14,7 @@
 "   TRACTS" = "   TRAKTAT";
 
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
-"%@ %@" = "%1$@ %2$@";
+"%@ %@" = "%2$@ %1$@";
 
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
 "%@ %@ %d" = "%1$@ %2$@ %3$d";
@@ -31,10 +31,10 @@
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
 
-/* Singular form of '1 Broshure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications */
+/* Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@: %@" = "%1$d %2$@: %3$@";
 
-/* Plural form of '2 Broshures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications */
+/* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
 /* 1, singular publication, shown as '%d publication' */
@@ -58,8 +58,8 @@
 /* Add a placed publication action button in call view */
 "Add a placed publication" = "Placerad litteratur";
 
-/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
-"Add a placed publications" = "Addera ett antal publ.";
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "Lägg till placeringar";
 
 /* Add a return visit action button */
 "Add a return visit" = "Lägg till ett återbesök";
@@ -161,10 +161,13 @@
 "Calls Sorted by City" = "Stad";
 
 /* view title */
-"Calls Sorted by Date" = "Datum";
+"Calls Sorted by Date" = "Datumsortering";
 
 /* view title */
-"Calls Sorted by Street" = "Gata";
+"Calls Sorted by Name" = "Besök sorterade i namnordning";
+
+/* view title */
+"Calls Sorted by Street" = "Besök sorterade i adressordning";
 
 /* cancel button */
 "Cancel" = "Avbryt";
@@ -188,7 +191,7 @@
 "Concordance" = "konkordans";
 
 /* backup connected message */
-"Connected to the Backup Application.  Use it to create a backup or to restore a backup" = "Ansluten till programvara för säkerhetskopering.  Använd den för att skapa eller återskapa en säkerhetskopia";
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Ansluten till programvara för säkerhetskopering.  Använd den för att skapa eller återskapa en säkerhetskopia";
 
 /* More View Table Group Title */
 "Contact Information" = "Kontaktinformation";
@@ -239,58 +242,58 @@
 "DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
 
 /* DVD Publication Name */
-"DVD Drama: Pursue Goals" = "DVD Drama: Pursue Goals";
+"DVD Drama: Pursue Goals" = "DVD Drama: Sätt upp mål...";
 
 /* DVD Publication Name */
-"DVD Drama: Respect Authority" = "DVD Drama: Respect Authority";
+"DVD Drama: Respect Authority" = "DVD Drama: respektera Jehovas...";
 
 /* DVD Publication Name */
-"DVD Drama: Submit to Authority" = "DVD Drama: Submit to Authority";
+"DVD Drama: Submit to Authority" = "CD Varför man ska respektera teokratiska anordningar";
 
 /* DVD Publication Name */
-"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Troublesome Times/Boldly Witnessing";
+"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Varnande exempel i vår tid";
 
 /* DVD Publication Name */
-"DVD: Bible Stories" = "DVD: Bible Stories";
+"DVD: Bible Stories" = "DVD: bibeln en bok som innehåller fakta och profetior";
 
 /* DVD Publication Name */
-"DVD: Bible Teach" = "DVD: Bible Teach";
+"DVD: Bible Teach" = "CD: Jehova befriar dem som anropar hans namn";
 
 /* DVD Publication Name */
-"DVD: Family Happiness" = "DVD: Family Happiness";
+"DVD: Family Happiness" = "CD: Bevara dit öga ogrumlat";
 
 /* DVD Publication Name */
-"DVD: God's Friend" = "DVD: God's Friend";
+"DVD: God's Friend" = "CD: Familjer - Låt bibelläsning bli n del av ert dagliga liv";
 
 /* DVD Publication Name */
-"DVD: Greatest Man" = "DVD: Greatest Man";
+"DVD: Greatest Man" = "DVD: Alternativ till blod";
 
 /* DVD Publication Name */
-"DVD: Keep on the Watch" = "DVD: Keep on the Watch";
+"DVD: Keep on the Watch" = "DVD: Jehovas vittnen står fasta...";
 
 /* DVD Publication Name */
-"DVD: Knowledge" = "DVD: Knowledge";
+"DVD: Knowledge" = "DVD: Ungdomar frågar- Hur...";
 
 /* DVD Publication Name */
-"DVD: Noah/David" = "DVD: Noah/David";
+"DVD: Noah/David" = "DVD: Noa/David";
 
 /* DVD Publication Name */
-"DVD: Require" = "DVD: Require";
+"DVD: Require" = "CD: Jehovas namn ska bli förkunnat...";
 
 /* DVD Publication Name */
-"DVD: Sing Praises Vol 1&2" = "DVD: Sing Praises Vol 1&2";
+"DVD: Sing Praises Vol 1&2" = "DVD: Sjung lovsånger Vol 1&2";
 
 /* DVD Publication Name */
-"DVD: Sing Praises Vol 3" = "DVD: Sing Praises Vol 3";
+"DVD: Sing Praises Vol 3" = "DVD: Sjung lovsånger Vol 3";
 
 /* DVD Publication Name */
-"DVD: Spirits of the dead" = "DVD: Spirits of the dead";
+"DVD: Spirits of the dead" = "CD: Se till så att du inte förlorar tron";
 
 /* DVD Publication Name */
-"DVD: When someone you love dies" = "DVD: When someone you love dies";
+"DVD: When someone you love dies" = "CD: När någon du älskar dör";
 
 /* DVD Publication Name */
-"DVD: Worship God" = "DVD: Worship God";
+"DVD: Worship God" = "DVD: Tillbe den ende sanne Guden";
 
 /* Brochures Publication Name */
 "Education" = "Skolan och Jehovas vittnen";
@@ -305,7 +308,10 @@
 "Enjoy Family Life" = "Ett lyckligt familjeliv";
 
 /* backup failed string */
-"Failed advertising server" = "Failed advertising server";
+"Failed advertising server" = "Kommer inte i kontakt med server";
+
+/* failure message for starting the backup service */
+"Failed creating server" = "Kunde inte skapa server";
 
 /* Book Publication Name */
 "Family Happiness" = "Gör ditt familjeliv lyckligt";
@@ -320,7 +326,7 @@
 "God's Friend" = "Guds vän...";
 
 /* Book Publication Name */
-"God's Word" = "God's Word";
+"God's Word" = "Bibeln, Guds ord...";
 
 /* Brochures Publication Name */
 "Good Land" = "Se det goda landet";
@@ -354,6 +360,9 @@
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Har vi en odödlig ande?";
+
+/* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Initial Visit Notes" = "Första besök, anteckningar";
 
 /* Book Publication Name */
 "Insight" = "Insikt";
@@ -410,7 +419,7 @@
 "Life on Earth" = "Leva för evigt";
 
 /* Brochures Publication Name */
-"Look!" = "Se jag gör...!";
+"Look!" = "Se det goda landet!";
 
 /* Publication Type name */
 "Magazine" = "Tidskrift";
@@ -420,6 +429,9 @@
 
 /* Book Publication Name */
 "Mankind's Search for God" = "Människans sökande efter Gud";
+
+/* Mapped calls view title */
+"Mapped Calls" = "Besök på karta";
 
 /* Short month name */
 "Mar" = "Mar";
@@ -450,6 +462,9 @@
 
 /* Name label for Call in editing mode */
 "Name" = "Namn";
+
+/* button bar title */
+"Name Sorted" = "Namn sort.";
 
 /* Brochures Publication Name */
 "Nations" = "Nationerna";
@@ -506,7 +521,7 @@
 "Popup messages like this are now enabled all throughout MyTime" = "Popupmeddelande som detta är nu påslaget i hela MyTime";
 
 /* Book Publication Name */
-"Proclaimers" = "Proclaimers";
+"Proclaimers" = "Jehovas vittnen- förkunnare...";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publikationer";
@@ -530,7 +545,7 @@
 "Restored Backup, restart MyTime to see the changes" = "Återläst säkerhetskopia, starta om MyTime för att s förändringar";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
-"Return Visit Notes" = "ÅB anteckningar";
+"Return Visit Notes" = "åb anteckningar";
 
 /* Return Visits label on the Statistics View */
 "Return Visits" = "Återbesök";
@@ -539,7 +554,7 @@
 "Revelation Climax" = "Uppenbarelsebokens storslagna...";
 
 /* Brochures Publication Name */
-"Satisfying Life" = "Satisfying Life";
+"Satisfying Life" = "Hur man kan få ett tillfredställande liv";
 
 /* Title for the view where you Pick A Date */
 "Select Date" = "Välj datum";
@@ -563,7 +578,7 @@
 "Settings" = "Inställningar";
 
 /* Book Publication Name */
-"Sing Praises" = "Sjung låvsånger";
+"Sing Praises" = "Sjung lovsånger";
 
 /* Publication Type name */
 "Special" = "Special";
@@ -596,7 +611,7 @@
 "Suffering to End" = "Allt lidande är snart slut";
 
 /* Book Publication Name */
-"Teacher" = "Vad vi lär...store läraren";
+"Teacher" = "Vi lär...store läraren";
 
 /* Information for the user to know what is going on with this and new releases */
 "Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)"= "Tack för att du använder My Time. Jag har använt mer än 200 timmar för att få Appstore att fungera; om du därför finner programmet användbart får du gärna bidra med en slant även om det är en liten summa. Jag letar efter översättare av My Time. Är du intresserad av att hjälpa mig? Skicka ett mail eller donera  (Titta i Mer och inställningar)";
@@ -605,7 +620,10 @@
 "The Greatest Name" = "Det största namnet";
 
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
-"Time for %@" = "Timar under %@";
+"Time for %@" = "Timmar under %@";
+
+/* This is a note displayed when they first see the non editable call view */
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Klicka på Ändra knappen för att addera ett åb, eller för att se var ett åb finns genom att klicka på adressen";
 
 /* Publication Type name */
 "Tract" = "Traktat";
@@ -619,8 +637,11 @@
 /* More View Table Group Title */
 "Version" = "Version";
 
+/* Title for the view where you write notes for a call */
+"Visit Notes" = "Anteckningar";
+
 /* initial message when trying to transfer backup files */
-"Waiting for the Backup Application to connect..." = "Väntar på att backupprgrammet ska ansluta...";
+"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Väntar på att backupprgrammet ska ansluta...";
 
 /* Brochures Publication Name */
 "Watch!" = "Se! Jag gör allting...";
@@ -647,7 +668,7 @@
 "Who Really Rules the World?" = "Vem styr egentligen den här världen?";
 
 /* Brochures Publication Name */
-"Why Worship God" = "Why Worship God";
+"Why Worship God" = "Se jag gör allting nytt";
 
 /* Tracts Publication Name */
 "Why You Can Trust the Bible" = "Varför du kan lita på bibeln";

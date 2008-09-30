@@ -149,6 +149,8 @@
 		90D031F50E56944C001CEF0D /* LiteraturePlacementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewController.h; sourceTree = "<group>"; };
 		90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiteraturePlacementViewController.m; sourceTree = "<group>"; };
 		90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewControllerDelegate.h; sourceTree = "<group>"; };
+		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90DD733D0E925C1E007B1B71 /* Dutch */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
@@ -408,6 +410,8 @@
 				Swedish,
 				Italian,
 				Spanish,
+				Croatian,
+				Dutch,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -512,6 +516,8 @@
 				903477630E8CAA0100BB6F2D /* Swedish */,
 				9053E0580E8DDD7100BA35F7 /* Italian */,
 				9053E06F0E8DDDD400BA35F7 /* Spanish */,
+				90DD73320E91B4AE007B1B71 /* Croatian */,
+				90DD733D0E925C1E007B1B71 /* Dutch */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

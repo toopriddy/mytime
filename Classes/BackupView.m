@@ -215,8 +215,9 @@
 		case kRetrieveBackup:
 		{
 			NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
-			[agent sendMessageWithType:kRetrieveBackupReply flags:0 payload:[NSArray arrayWithObject:data]];
 			self.title = NSLocalizedString(@"Sending Settings to the Backup Application", @"initial message when trying to transfer backup files");
+			[agent sendMessageWithType:kRetrieveBackupReply flags:0 payload:[NSArray arrayWithObject:data]];
+			self.title = NSLocalizedString(@"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup", @"backup connected message");
 			break;
 		}
 
