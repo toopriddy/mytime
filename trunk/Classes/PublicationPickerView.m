@@ -552,7 +552,7 @@ static const PublicationInformation PUBLICATIONS[] = {
         _publication = 0;
         for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
         {
-            if([publication isEqualToString:[[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""]])
+            if([publication isEqualToString:PUBLICATIONS[i].name])
             {
                 _publication = i;
                 break;
