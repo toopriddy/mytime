@@ -292,14 +292,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>106</integer>
-									<integer>101</integer>
-									<integer>86</integer>
+									<integer>71</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1450}, {346, 664}}</string>
+							<string>{{0, 860}, {346, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -336,7 +335,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>LiteraturePlacementViewController.m</string>
+								<string>PublicationPickerView.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,11 +343,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>LiteraturePlacementViewController.m</string>
+										<string>PublicationPickerView.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90DD73AF0E92684B007B1B71</string>
+										<string>90DD73B50E926885007B1B71</string>
 										<key>history</key>
 										<array>
 											<string>90696BE70E7E3D370077F54C</string>
@@ -436,11 +435,11 @@
 											<string>90DD73910E9265C8007B1B71</string>
 											<string>90DD73920E9265C8007B1B71</string>
 											<string>90DD73930E9265C8007B1B71</string>
-											<string>90DD73A60E92684B007B1B71</string>
 											<string>90DD73A70E92684B007B1B71</string>
 											<string>90DD73A80E92684B007B1B71</string>
 											<string>90DD73A90E92684B007B1B71</string>
-											<string>90DD73AA0E92684B007B1B71</string>
+											<string>90DD73B20E926885007B1B71</string>
+											<string>90DD73B30E926885007B1B71</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -549,6 +548,7 @@
 											<string>90DD73AC0E92684B007B1B71</string>
 											<string>90DD73AD0E92684B007B1B71</string>
 											<string>90DD73AE0E92684B007B1B71</string>
+											<string>90DD73B40E926885007B1B71</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -881,6 +881,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>90DD73B60E926885007B1B71</string>
 		<string>90DD73700E9262C7007B1B71</string>
 		<string>90DD735D0E925D5A007B1B71</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
