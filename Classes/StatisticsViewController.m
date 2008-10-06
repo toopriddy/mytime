@@ -380,6 +380,20 @@ static NSString *MONTHS[] = {
 						else if(foundLastMonth)
 							_lastMonthMagazines += number;
 					}
+					else if([type isEqualToString:PublicationTypeDVDBible])
+					{
+						if(foundThisMonth)
+							_thisMonthBooks += number;
+						else if(foundLastMonth)
+							_lastMonthBooks += number;
+					}
+					else if([type isEqualToString:PublicationTypeDVDBook])
+					{
+						if(foundThisMonth)
+							_thisMonthBooks += number;
+						else if(foundLastMonth)
+							_lastMonthBooks += number;
+					}
 					else if([type isEqualToString:PublicationTypeSpecial])
 					{
 						if(foundThisMonth)
