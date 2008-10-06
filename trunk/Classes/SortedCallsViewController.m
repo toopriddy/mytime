@@ -72,8 +72,7 @@
 
 
 - (void)loadView 
-{
-	
+{	
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	UITableView *tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
@@ -91,9 +90,8 @@
 	tableView.dataSource = dataSource;
 	
 	// set the tableview as the controller view
-    self.theTableView = tableView;
+	self.theTableView = tableView;
 	self.view = tableView;
-	[tableView release];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -58,8 +58,8 @@
 /* Add a placed publication action button in call view */
 "Add a placed publication" = "Placerad litteratur";
 
-/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
-"Add placed publications" = "Lägg till placeringar";
+/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
+"Add a placed publications" = "Lägg till placeringar";
 
 /* Add a return visit action button */
 "Add a return visit" = "Lägg till ett återbesök";
@@ -515,7 +515,7 @@
 "Please Donate, help me help you" = "Hjälp mig utveckla MyTime genom att lämna en frivillig gåva";
 
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
-"Please wait for the Backup Service to initalize... Go to mytime.googlecode.com for more information about the Backup Application" = "V.g vänta tills backupprogrammet startat, besök mytime.googlecode.com för mer information om säkerhetskopieringsprogrammet";
+"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "V.g vänta tills backupprogrammet startat, besök mytime.googlecode.com för mer information om säkerhetskopieringsprogrammet";
 
 /* Confirmation message about enabling popup messages */
 "Popup messages like this are now enabled all throughout MyTime" = "Popupmeddelande som detta är nu påslaget i hela MyTime";
@@ -590,7 +590,7 @@
 "Start Time" = "Starta tid";
 
 /* State */
-"State" = "Distrikt";
+"State" = "Portkod";
 
 /* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
 "State in all caps" = "0";

@@ -14,7 +14,6 @@
 {
 	UITableView *theTableView;
 	id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
-
 	NSIndexPath *indexPath;
 }
 
