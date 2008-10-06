@@ -1169,6 +1169,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
+//	cell.valueLabel.textAlignment = UITextAlignmentCenter;
 	return(cell);
 }
 
