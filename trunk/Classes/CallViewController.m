@@ -15,6 +15,7 @@
 #import "DatePickerViewController.h"
 #import "UITableViewMultilineTextCell.h"
 #import "NotesViewController.h"
+#import "AddressTableCell.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -1039,70 +1040,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (UITableViewCell *)getAddressCell
 {
-	UITableViewCell *cell = [theTableView dequeueReusableCellWithIdentifier:@"AddressCell"];
+	AddressTableCell *cell = (AddressTableCell *)[theTableView dequeueReusableCellWithIdentifier:@"AddressCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddressCell"] autorelease];
+		cell = [[[AddressTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddressCell"] autorelease];
 	}
-	NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-	NSString *street = [_call objectForKey:CallStreet];
-	NSString *city = [_call objectForKey:CallCity];
-	NSString *state = [_call objectForKey:CallState];
-
-	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-	[top setString:@""];
-	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
-	[bottom setString:@""];
-
-	if(streetNumber && [streetNumber length] && street && [street length])
-	{
-		[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), streetNumber, street];
-	}
-	else if(streetNumber && [streetNumber length])
-	{
-		[top appendFormat:@"%@", streetNumber];
-	}
-	else if(street && [street length])
-	{
-		[top appendFormat:@"%@", street];
-	}
-	if(city != nil && [city length])
-	{
-		[bottom appendFormat:@"%@", city];
-	}
-	if(state != nil && [state length])
-	{
-		[bottom appendFormat:@", %@", state];
-	}
-
-	[cell setText:NSLocalizedString(@"Address", @"Address label for call") ];
-	cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-
-	UIView *view = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	
-	label.highlightedTextColor = cell.selectedTextColor;
-	label.backgroundColor = [UIColor clearColor];
-	[label setText:top];
-	[label sizeToFit];
-	CGRect lrect = [label bounds];
-	lrect.origin.x += 100.0f;
-	lrect.origin.y += 15.0f;
-	[label setFrame: lrect];
-	[view addSubview:label];
-
-	label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	label.highlightedTextColor = cell.selectedTextColor;
-	label.backgroundColor = [UIColor clearColor];
-	[label setText:bottom];
-	[label sizeToFit];
-	lrect = [label bounds];
-	lrect.origin.x += 100.0f;
-	lrect.origin.y += 35.0f;
-	[label setFrame: lrect];
-	[view addSubview:label];
-
-	[cell.contentView addSubview:view];
+	[cell setStreetNumber:[_call objectForKey:CallStreetNumber] 
+	               street:[_call objectForKey:CallStreet] 
+				     city:[_call objectForKey:CallCity] 
+					state:[_call objectForKey:CallState]];
 
 	return(cell);
 }

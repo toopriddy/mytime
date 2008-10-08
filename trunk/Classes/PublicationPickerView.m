@@ -98,12 +98,14 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 ,   {AlternateLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 ,   {AlternateLocalizedString(@"Bible DVD: Acts", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Romans", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 
 
 ,   {AlternateLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: Worship God", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Great Teacher", @"DVD Publication Name"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: God's Friend", @"DVD Publication Name"),   PublicationTypeDVDBook}

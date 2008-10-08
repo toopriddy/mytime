@@ -125,11 +125,11 @@ static NSString *MONTHS[] = {
 			
 			int i;
 			int returnVisitsCount = [returnVisits count];
+			BOOL foundBibleDVD = NO;
 			for(i = returnVisitsCount; i > 0; --i)
 			{
 				visit = [returnVisits objectAtIndex:i-1];
 				NSDate *date = [visit objectForKey:CallReturnVisitDate];
-				BOOL foundBibleDVD = NO;
 				
 				if(date != nil)
 				{
