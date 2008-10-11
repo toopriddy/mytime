@@ -62,6 +62,7 @@ extern NSString const * const SettingsLastCallCity;
 extern NSString const * const SettingsLastCallState;
 extern NSString const * const SettingsCurrentButtonBarIndex;
 
+extern NSString const * const SettingsMonthDisplayCount;
 
 extern NSString const * const SettingsTimeAlertSheetShown;
 extern NSString const * const SettingsStatisticsAlertSheetShown;

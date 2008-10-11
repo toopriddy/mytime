@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kMonthsShown 12
+
 @interface StatisticsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
 {
 	UITableView *theTableView;
@@ -17,21 +19,13 @@
 	int _thisYear;
 	int _lastYear;
 	
-	int _thisMonthBooks;
-	int _thisMonthBrochures;
-	int _thisMonthMinutes;
-	int _thisMonthMagazines;
-	int _thisMonthReturnVisits;
-	int _thisMonthBibleStudies;
-	int _thisMonthSpecialPublications;
-	
-	int _lastMonthBooks;
-	int _lastMonthBrochures;
-	int _lastMonthMinutes;
-	int _lastMonthMagazines;
-	int _lastMonthReturnVisits;
-	int _lastMonthBibleStudies;
-	int _lastMonthSpecialPublications;
+	int _books[kMonthsShown];
+	int _brochures[kMonthsShown];
+	int _minutes[kMonthsShown];
+	int _magazines[kMonthsShown];
+	int _returnVisits[kMonthsShown];
+	int _bibleStudies[kMonthsShown];
+	int _specialPublications[kMonthsShown];
 
 }
 @property (nonatomic,retain) UITableView *theTableView;

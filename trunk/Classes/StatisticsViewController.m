@@ -137,123 +137,77 @@ static NSString *MONTHS[] = {
 					NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 					int month = [dateComponents month];
 					int year = [dateComponents year];
+
+					int offset = -1;
+					
+					if(year == _thisYear && 
+					   month <= _thisMonth)
+					{
+						offset = _thisMonth - month;
+					}
+					else if(month != 12 && 
+							year == _thisYear - 1 &&
+							_thisMonth > month)
+					{
+						offset = 12 - _thisMonth + month;
+					}
+					
+					// this month's information should not be counted
+					if(offset < 0)
+						continue;
+						
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
 					{
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						if(month == _thisMonth && year == _thisYear)
-						{
-							_thisMonthReturnVisits++;
-							found = YES;
-						}
-						else if(month == _lastMonth && year == _thisYear)
-						{
-							_lastMonthReturnVisits++;
-							found = YES;
-						}
+						_returnVisits[offset]++;
+						
 					}
+					found = YES;
 
 					// we only care about counting this month's or last month's returnVisits' calls
-					if((month == _thisMonth && year == _thisYear) || 
-					   (month == _lastMonth && year == _lastYear))
+					// go through all of the calls and see if we need to count the statistics
+					if([visit objectForKey:CallReturnVisitPublications] != nil)
 					{
-						// go through all of the calls and see if we need to count the statistics
-						if([visit objectForKey:CallReturnVisitPublications] != nil)
+						// they had an array of publications, lets check them too
+						NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
+						NSMutableDictionary *publication;
+						int j;
+						int endPublications = [publications count];
+						for(j = 0; j < endPublications; ++j)
 						{
-							// they had an array of publications, lets check them too
-							NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-							NSMutableDictionary *publication;
-							int j;
-							int endPublications = [publications count];
-							for(j = 0; j < endPublications; ++j)
+							publication = [publications objectAtIndex:j];
+							NSString *type;
+							if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
 							{
-								publication = [publications objectAtIndex:j];
-								NSString *type;
-								if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
+								if([type isEqualToString:PublicationTypeBook])
 								{
-									if([type isEqualToString:PublicationTypeBook])
+									_books[offset]++;
+								}
+								else if([type isEqualToString:PublicationTypeBrochure])
+								{
+									_brochures[offset]++;
+								}
+								else if([type isEqualToString:PublicationTypeMagazine])
+								{
+									_magazines[offset]++;
+								}
+								else if([type isEqualToString:PublicationTypeDVDBible])
+								{
+									if(!foundBibleDVD)
 									{
-										if(month == _thisMonth && year == _thisYear)
-										{
-											_thisMonthBooks++;
-											found = YES;
-										}
-										else if(month == _lastMonth && year == _thisYear)
-										{
-											_lastMonthBooks++;
-											found = YES;
-										}
+										_books[offset]++;
+										foundBibleDVD = TRUE;
 									}
-									else if([type isEqualToString:PublicationTypeBrochure])
-									{
-										if(month == _thisMonth && year == _thisYear)
-										{
-											_thisMonthBrochures++;
-											found = YES;
-										}
-										else if(month == _lastMonth && year == _thisYear)
-										{
-											_lastMonthBrochures++;
-											found = YES;
-										}
-									}
-									else if([type isEqualToString:PublicationTypeMagazine])
-									{
-										if(month == _thisMonth && year == _thisYear)
-										{
-											_thisMonthMagazines++;
-											found = YES;
-										}
-										else if(month == _lastMonth && year == _thisYear)
-										{
-											_lastMonthMagazines++;
-											found = YES;
-										}
-									}
-									else if([type isEqualToString:PublicationTypeDVDBible])
-									{
-										if(!foundBibleDVD)
-										{
-											foundBibleDVD = TRUE;
-											if(month == _thisMonth && year == _thisYear)
-											{
-												_thisMonthBooks++;
-												found = YES;
-											}
-											else if(month == _lastMonth && year == _thisYear)
-											{
-												_lastMonthBooks++;
-												found = YES;
-											}
-										}
-									}
-									else if([type isEqualToString:PublicationTypeDVDBook])
-									{
-										if(month == _thisMonth && year == _thisYear)
-										{
-											_thisMonthBooks++;
-											found = YES;
-										}
-										else if(month == _lastMonth && year == _thisYear)
-										{
-											_lastMonthBooks++;
-											found = YES;
-										}
-									}
-									else if([type isEqualToString:PublicationTypeSpecial])
-									{
-										if(month == _thisMonth && year == _thisYear)
-										{
-											_thisMonthSpecialPublications++;
-											found = YES;
-										}
-										else if(month == _lastMonth && year == _thisYear)
-										{
-											_lastMonthSpecialPublications++;
-											found = YES;
-										}
-									}
+								}
+								else if([type isEqualToString:PublicationTypeDVDBook])
+								{
+									_books[offset]++;
+								}
+								else if([type isEqualToString:PublicationTypeSpecial])
+								{
+									_specialPublications[offset]++;
 								}
 							}
 						}
@@ -272,33 +226,23 @@ static NSString *MONTHS[] = {
 - (void)reloadData
 {
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	_thisMonthBooks = 0;
-	_thisMonthBrochures = 0;
-	_thisMonthMinutes = 0;
-	_thisMonthMagazines = 0;
-	_thisMonthReturnVisits = 0;
-	_thisMonthBibleStudies = 0;
-	_thisMonthSpecialPublications = 0;
 	
-	_lastMonthBooks = 0;
-	_lastMonthBrochures = 0;
-	_lastMonthMinutes = 0;
-	_lastMonthMagazines = 0;
-	_lastMonthReturnVisits = 0;
-	_lastMonthBibleStudies = 0;
-	_lastMonthSpecialPublications = 0;
-	
-	
+	memset(_books, 0, sizeof(_books));
+	memset(_brochures, 0, sizeof(_books));
+	memset(_minutes, 0, sizeof(_books));
+	memset(_magazines, 0, sizeof(_books));
+	memset(_returnVisits, 0, sizeof(_books));
+	memset(_bibleStudies, 0, sizeof(_books));
+	memset(_specialPublications, 0, sizeof(_books));
+
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
 	_thisMonth = [dateComponents month];
 	_thisYear = [dateComponents year];
-	
-	
+
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
 	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
-
-
+	
 	NSArray *timeEntries = [settings objectForKey:SettingsTimeEntries];
 	int timeIndex;
 	int timeCount = [timeEntries count];
@@ -314,13 +258,22 @@ static NSString *MONTHS[] = {
 			int month = [dateComponents month];
 			int year = [dateComponents year];
 
-			if(month == _thisMonth && year == _thisYear)
+			int offset = -1;
+			
+			if(year == _thisYear && 
+			   month <= _thisMonth)
 			{
-				_thisMonthMinutes += [minutes intValue];
+				offset = _thisMonth - month;
 			}
-			else if(month == _lastMonth && year == _lastYear)
+			else if(month != 12 && 
+			        year == _thisYear - 1 &&
+			        _thisMonth > month)
 			{
-				_lastMonthMinutes += [minutes intValue];
+				offset = 12 - _thisMonth + month;
+			}
+			if(offset >= 0)
+			{
+				_minutes[offset] += [minutes intValue];
 			}
 		}
 	}
@@ -335,6 +288,8 @@ static NSString *MONTHS[] = {
 		NSDate *date = [entry objectForKey:BulkLiteratureDate];
 		BOOL foundThisMonth = NO;
 		BOOL foundLastMonth = NO;
+		int offset = -1;
+			
 		if(date != nil)
 		{
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
@@ -347,9 +302,22 @@ static NSString *MONTHS[] = {
 				foundThisMonth = YES;
 			else if(month == _lastMonth && year == _thisYear)
 				foundLastMonth = YES;
+
+			if(year == _thisYear && 
+			   month <= _thisMonth)
+			{
+				offset = _thisMonth - month;
+			}
+			else if(month != 12 && 
+			        year == _thisYear - 1 &&
+			        _thisMonth > month)
+			{
+				offset = 12 - _thisMonth + month;
+			}
+
 		}
 		
-		if(foundThisMonth || foundLastMonth)
+		if(offset >= 0)
 		{
 			NSEnumerator *publicationEnumerator = [[entry objectForKey:BulkLiteratureArray] objectEnumerator];
 			NSMutableDictionary *publication;
@@ -361,45 +329,27 @@ static NSString *MONTHS[] = {
 				{
 					if([type isEqualToString:PublicationTypeBook])
 					{
-						if(foundThisMonth)
-							_thisMonthBooks += number;
-						else if(foundLastMonth)
-							_lastMonthBooks += number;
+						_books[offset] += number;
 					}
 					else if([type isEqualToString:PublicationTypeBrochure])
 					{
-						if(foundThisMonth)
-							_thisMonthBrochures += number;
-						else if(foundLastMonth)
-							_lastMonthBrochures += number;
+						_brochures[offset] += number;
 					}
 					else if([type isEqualToString:PublicationTypeMagazine])
 					{
-						if(foundThisMonth)
-							_thisMonthMagazines += number;
-						else if(foundLastMonth)
-							_lastMonthMagazines += number;
+						_magazines[offset] += number;
 					}
 					else if([type isEqualToString:PublicationTypeDVDBible])
 					{
-						if(foundThisMonth)
-							_thisMonthBooks += number;
-						else if(foundLastMonth)
-							_lastMonthBooks += number;
+						_books[offset] += number;
 					}
 					else if([type isEqualToString:PublicationTypeDVDBook])
 					{
-						if(foundThisMonth)
-							_thisMonthBooks += number;
-						else if(foundLastMonth)
-							_lastMonthBooks += number;
+						_books[offset] += number;
 					}
 					else if([type isEqualToString:PublicationTypeSpecial])
 					{
-						if(foundThisMonth)
-							_thisMonthSpecialPublications += number;
-						else if(foundLastMonth)
-							_lastMonthSpecialPublications += number;
+						_specialPublications[offset] += number;
 					}
 				}
 				
@@ -421,6 +371,10 @@ static NSString *MONTHS[] = {
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
 	// this month and last month
+	NSNumber *settings = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+	if(settings)
+		return [settings intValue];
+
 	return 2;
 }
 
@@ -428,42 +382,21 @@ static NSString *MONTHS[] = {
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
 {
 	int count = 0;
-    switch (section)
-    { 
-        // ThisMonth
-        case 0:
-			count++; // always show hours
-			if(_thisMonthBooks)
-				count++;
-			if(_thisMonthBrochures)
-				count++;
-			if(_thisMonthMagazines)
-				count++;
-			if(_thisMonthSpecialPublications)
-				count++;
-			if(_thisMonthReturnVisits)
-				count++;
-			if(_thisMonthBibleStudies)
-				count++;
-				
-			break;
-        // LastMonth
-        case 1:
-			count++; // always show hours
-			if(_lastMonthBooks)
-				count++;
-			if(_lastMonthBrochures)
-				count++;
-			if(_lastMonthMagazines)
-				count++;
-			if(_lastMonthSpecialPublications)
-				count++;
-			if(_lastMonthReturnVisits)
-				count++;
-			if(_lastMonthBibleStudies)
-				count++;
-			break;
-    }
+	
+	count++; // always show hours
+	if(_books[section])
+		count++;
+	if(_brochures[section])
+		count++;
+	if(_magazines[section])
+		count++;
+	if(_specialPublications[section])
+		count++;
+	if(_returnVisits[section])
+		count++;
+	if(_bibleStudies[section])
+		count++;
+
 	return(count);
 }
 
@@ -472,17 +405,11 @@ static NSString *MONTHS[] = {
 {
     VERBOSE(NSLog(@"tableView: titleForHeaderInSection:%d", section);)
 	NSString *title = @"";
-	switch(section)
-	{
-		case 0:
-			title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
-																 [[NSBundle mainBundle] localizedStringForKey:MONTHS[_thisMonth-1] value:MONTHS[_thisMonth-1] table:@""]];
-			break;
-		case 1:
-			title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
-																 [[NSBundle mainBundle] localizedStringForKey:MONTHS[_lastMonth-1] value:MONTHS[_lastMonth-1] table:@""]];
-			break;
-    }
+	int month = _thisMonth + section;
+	if(month > 12)
+		month -= 12;
+	title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
+														 [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
     return(title);
 }
 
@@ -496,6 +423,7 @@ static NSString *MONTHS[] = {
 	if (cell == nil) 
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"StatisticsTableCell"] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	else
 	{
@@ -504,107 +432,52 @@ static NSString *MONTHS[] = {
 	}
 
 
-    switch (section) 
-    {
-        // Name
-        case 0:
-			if(row-- == 0)
-			{
-				// if we are not editing, then 
-				
-				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-				int hours = _thisMonthMinutes / 60;
-				int minutes = _thisMonthMinutes % 60;
-				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else
-					[cell setValue:@"0"];
-			}
-			else if(_thisMonthBooks && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBooks]];
-			}
-			else if(_thisMonthBrochures && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBrochures]];
-			}
-			else if(_thisMonthMagazines && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthMagazines]];
-			}
-			else if(_thisMonthReturnVisits && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthReturnVisits]];
-			}
-			else if(_thisMonthBibleStudies && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _thisMonthBibleStudies]];
-			}
-            break;
-
-        // Address
-        case 1:
-			if(row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-				int hours = _lastMonthMinutes / 60;
-				int minutes = _lastMonthMinutes % 60;
-				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else
-					[cell setValue:@"0"];
-			}
-			else if(_lastMonthBooks && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBooks]];
-			}
-			else if(_lastMonthBrochures && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBrochures]];
-			}
-			else if(_lastMonthMagazines && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthMagazines]];
-			}
-			else if(_lastMonthReturnVisits && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthReturnVisits]];
-			}
-			else if(_lastMonthBibleStudies && row-- == 0)
-			{
-				// if we are not editing, then 
-				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
-				[cell setValue:[NSString stringWithFormat:@"%d", _lastMonthBibleStudies]];
-			}
-			break;
-    }
+	if(row-- == 0)
+	{
+		// if we are not editing, then 
+		
+		[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
+		int hours = _minutes[section] / 60;
+		int minutes = _minutes[section] % 60;
+		if(hours && minutes)
+			[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+		else if(hours)
+			[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+		else if(minutes)
+			[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+		else
+			[cell setValue:@"0"];
+	}
+	else if(_books[section] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _books[section]]];
+	}
+	else if(_brochures[section] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _brochures[section]]];
+	}
+	else if(_magazines[section] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[section]]];
+	}
+	else if(_returnVisits[section] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _returnVisits[section]]];
+	}
+	else if(_bibleStudies[section] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _bibleStudies[section]]];
+	}
 	
 	return cell;
 }

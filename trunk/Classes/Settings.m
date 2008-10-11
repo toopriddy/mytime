@@ -61,6 +61,7 @@ NSString const * const SettingsExistingCallAlertSheetShown = @"existingCallAlert
 
 NSString const * const SettingsMainAlertSheetShown = @"mainAlertShown2";
 
+NSString const * const SettingsMonthDisplayCount = @"monthDisplaycount";
 
 NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
