@@ -16,7 +16,19 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     VERBOSE(NSLog(@"pickerView didSelectRow:%d ", row);)
+	int oldNumber = number;
 	number = row + _min;
+	if(_singularTitle && _title)
+	{
+		if(number == 1 && oldNumber != 1)
+		{
+			label.text = _singularTitle;
+		}
+		else if(number != 1 && oldNumber == 1)
+		{
+			label.text = _title;
+		}
+	}
 }
 	
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -39,16 +51,18 @@
 {
     VERY_VERBOSE(NSLog(@"NumberedPicker: dealloc");)
 	self.label = nil;
+	[_title release];
+	[_singularTitle release];
     [super dealloc];
 }
 
 - (id)initWithFrame: (CGRect)rect min:(int)min max:(int)max
 {
-    return([self initWithFrame:rect min:min max:max number:min title:nil]);
+    return([self initWithFrame:rect min:min max:max number:min singularTitle:nil title:nil]);
 }
 
 // initialize this view given the curent configuration
-- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)initNumber title:(NSString *)title;
+- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)initNumber singularTitle:(NSString *)singularTitle title:(NSString *)title;
 {
 	DEBUG(NSLog(@"NumberedPicker initWithFrame: min:(int)%d max:(int)%d number:(int)%d", min, max, initNumber);)
     if((self = [super initWithFrame: CGRectZero])) 
@@ -56,6 +70,9 @@
 		label = nil;
 		_min = min;
 		_max = max;
+		_title = nil;
+		_singularTitle = nil;
+
 		if(initNumber >= _min && initNumber <= _max)
 			number = initNumber;
 		else
@@ -67,8 +84,11 @@
 
 		[self selectRow:(number - _min) inComponent:0 animated: NO];
 
-		if(title != nil && ![title isEqualToString:@""])
+		if(title != nil && ![title isEqualToString:@""] && 
+		   singularTitle != nil && ![singularTitle isEqualToString:@""])
 		{
+			_title = [[NSString alloc] initWithString:title];
+			_singularTitle = [[NSString alloc] initWithString:singularTitle];
 			#define LABEL_OFFSET 60.0
 			CGRect contentRect = [self bounds];
 
@@ -77,7 +97,10 @@
 			label.font = [UIFont boldSystemFontOfSize:18];
 			CGSize size = [title sizeWithFont:label.font];
 			label.frame = CGRectMake(contentRect.origin.x + LABEL_OFFSET, (contentRect.size.height - size.height)/2.0, contentRect.size.width, size.height);
-			label.text = title;
+			if(number == 1)
+				label.text = _singularTitle;
+			else
+				label.text = _title;
 			
 			
 			[self addSubview:label];

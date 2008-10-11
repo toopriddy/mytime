@@ -13,6 +13,8 @@
 	int _min;
 	int _max;
 	int number;
+	NSString *_title;
+	NSString *_singularTitle;
 	
 	UILabel *label;
 }
@@ -20,7 +22,7 @@
 @property (nonatomic, retain) UILabel *label;
 
 - (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max;
-- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)initNumber title:(NSString *)title;
+- (id) initWithFrame: (CGRect)rect min:(int)min max:(int)max number:(int)initNumber singularTitle:(NSString *)singularTitle title:(NSString *)title;
 
 - (int)number;
 

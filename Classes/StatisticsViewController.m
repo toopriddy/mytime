@@ -371,9 +371,9 @@ static NSString *MONTHS[] = {
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
 	// this month and last month
-	NSNumber *settings = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
-	if(settings)
-		return [settings intValue];
+	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+	if(value)
+		return [value intValue];
 
 	return 2;
 }

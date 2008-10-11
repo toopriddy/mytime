@@ -67,6 +67,7 @@
 																	 min:1
 																	 max:200
 																  number:number
+														   singularTitle:NSLocalizedString(@"Publication", @"singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker")
 																   title:NSLocalizedString(@"Publications", @"'Publications' label for Number Picker; this is the label that is beside the number in the picker")];
 		}
 	}
