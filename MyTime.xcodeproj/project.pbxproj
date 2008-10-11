@@ -72,6 +72,7 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9001FEAD0E9B0B820091F8FD /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
+		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByNameViewDataSource.h; sourceTree = "<group>"; };
 		9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByNameViewDataSource.m; sourceTree = "<group>"; };
 		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
@@ -107,8 +108,7 @@
 		906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		906143D00E5144ED0072BA7B /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewControllerDelegate.h; sourceTree = "<group>"; };
-		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
-		90AEB4140E9C21F500943E6A /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C148810E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByCityViewDataSource.h; sourceTree = "<group>"; };
 		90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByCityViewDataSource.m; sourceTree = "<group>"; };
@@ -419,6 +419,7 @@
 				Spanish,
 				Croatian,
 				Dutch,
+				fra,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -527,7 +528,7 @@
 				90DD73320E91B4AE007B1B71 /* Croatian */,
 				90DD733D0E925C1E007B1B71 /* Dutch */,
 				90AEB40D0E9C218A00943E6A /* Japanese */,
-				90AEB4140E9C21F500943E6A /* French */,
+				901313140EA03A4B0055D890 /* French */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
