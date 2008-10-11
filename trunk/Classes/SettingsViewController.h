@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "BackupView.h"
+#import "NumberViewControllerDelegate.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
+@interface SettingsViewController : UIViewController <UITableViewDelegate, 
+                                                      UITableViewDataSource,
+													  NumberViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	BackupView *backupView;

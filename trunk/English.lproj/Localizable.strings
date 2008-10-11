@@ -37,6 +37,9 @@
 /* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publication";
 
@@ -457,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "minutes";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "My Book of Bible Stories";
 
@@ -528,6 +540,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "Proclaimers";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publications";

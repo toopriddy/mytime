@@ -10,13 +10,14 @@
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "BackupView.h"
+#import "NumberViewController.h"
 
 @implementation SettingsViewController
 
 @synthesize theTableView;
 
 #warning fix me
-#define svn_version() "1.1"
+#define svn_version() "1.3"
 
 - (id)init
 {
@@ -116,6 +117,7 @@
         // Settings
         case 1:
 			count++; // enable popups
+			count++; // number of months shown
 			break;
 		
         // Website
@@ -211,6 +213,16 @@
 				case 0:
 					[cell setTitle:NSLocalizedString(@"Enable shown popups", @"More View Table Enable shown popups")];
 					break;
+				case 1:
+				{
+					int number = 2;
+					NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+					if(value)
+						number = [value intValue];
+					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Months Displayed", @"Number of months shown in the statistics view, setting title"), number]];
+					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+					break;
+				}
 			}
 			break;
 		
@@ -299,6 +311,24 @@
 					[alertSheet show];
 					return;
 				}
+				// Number of months shown in statistics view
+				case 1:
+				{
+					int number = 2;
+					NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+					if(value)
+						number = [value intValue];
+					// open up the edit address view 
+					NumberViewController *viewController = [[[NumberViewController alloc] initWithTitle:NSLocalizedString(@"Month Count", @"Title for selecting the number of months shown in the statistics view")
+																						  singularLabel:NSLocalizedString(@"Month", @"Month singular") 
+					                                                                              label:NSLocalizedString(@"Months", @"Months plural") 
+																								 number:number
+																								    min:1 
+																									max:12] autorelease];
+					viewController.delegate = self;
+					[[self navigationController] pushViewController:viewController animated:YES];
+					return;
+				}
 			}
 			break;
 
@@ -348,6 +378,14 @@
 		[backupView release];
 	}
 }
+
+- (void)numberViewControllerDone:(NumberViewController *)numberViewController
+{
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+	[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsMonthDisplayCount];
+	[[Settings sharedInstance] saveData];
+}
+
 
 //
 //
