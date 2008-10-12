@@ -13,6 +13,8 @@
 @interface StatisticsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
 {
 	UITableView *theTableView;
+
+	int _serviceYearMinutes;
 	
 	int _thisMonth;
 	int _lastMonth;
