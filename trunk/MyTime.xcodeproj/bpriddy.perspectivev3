@@ -289,14 +289,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>39</integer>
-									<integer>17</integer>
-									<integer>1</integer>
+									<integer>103</integer>
+									<integer>95</integer>
+									<integer>79</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 214}, {322, 664}}</string>
+							<string>{{0, 1348}, {322, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -333,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>CallViewController.m</string>
+								<string>Localizable.strings</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -341,11 +341,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>CallViewController.m</string>
+										<string>Localizable.strings</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90D6A3940EA1B7A600FA0252</string>
+										<string>90D6A3A00EA24A9B00FA0252</string>
 										<key>history</key>
 										<array>
 											<string>90696BE70E7E3D370077F54C</string>
@@ -448,7 +448,6 @@
 											<string>90D6A27B0EA1966B00FA0252</string>
 											<string>90D6A2960EA19E7700FA0252</string>
 											<string>90D6A2980EA19E7700FA0252</string>
-											<string>90D6A2990EA19E7700FA0252</string>
 											<string>90D6A2C20EA1AABE00FA0252</string>
 											<string>90D6A2C30EA1AABE00FA0252</string>
 											<string>90D6A3400EA1B22000FA0252</string>
@@ -459,7 +458,9 @@
 											<string>90D6A38C0EA1B7A600FA0252</string>
 											<string>90D6A38D0EA1B7A600FA0252</string>
 											<string>90D6A38E0EA1B7A600FA0252</string>
-											<string>90D6A38F0EA1B7A600FA0252</string>
+											<string>90D6A3990EA24A9B00FA0252</string>
+											<string>90D6A39A0EA24A9B00FA0252</string>
+											<string>90D6A39C0EA24A9B00FA0252</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -634,6 +635,8 @@
 											<string>90D6A3910EA1B7A600FA0252</string>
 											<string>90D6A3920EA1B7A600FA0252</string>
 											<string>90D6A3930EA1B7A600FA0252</string>
+											<string>90D6A39D0EA24A9B00FA0252</string>
+											<string>90D6A39E0EA24A9B00FA0252</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -966,7 +969,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>90D6A3950EA1B7A600FA0252</string>
 		<string>90D6A28F0EA1966B00FA0252</string>
 		<string>90D6A2900EA1966B00FA0252</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
