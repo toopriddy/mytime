@@ -16,6 +16,7 @@
 #import "UITableViewMultilineTextCell.h"
 #import "NotesViewController.h"
 #import "AddressTableCell.h"
+#import "SwitchTableCell.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -224,6 +225,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
                 
                 if([visit objectForKey:CallReturnVisitNotes] == nil)
                     [visit setObject:@"" forKey:CallReturnVisitNotes];
+
+                if([visit objectForKey:CallReturnVisitIsStudy] == nil)
+                    [visit setObject:[NSNumber numberWithBool:NO] forKey:CallReturnVisitIsStudy];
+                
                 
                 if([visit objectForKey:CallReturnVisitPublications] == nil)
                     [visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
@@ -1119,6 +1124,43 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return(cell);
 }
 
+- (void)isStudyCellChanged:(id)sender
+{
+	[self save];
+}
+
+- (UITableViewCell *)getIsStudyCellForReturnVisitIndex:(int)returnVisitIndex
+{
+	UITableViewCell *cell;
+	NSNumber *isStudyObject = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitIsStudy];
+	BOOL isStudy = [isStudyObject boolValue];
+	if(_editing)
+	{
+		SwitchTableCell *switchCell = (SwitchTableCell *)[theTableView dequeueReusableCellWithIdentifier:@"isStudyCell"];
+		if(switchCell == nil)
+		{
+			switchCell = [[[SwitchTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"isStudyCell"] autorelease];
+		}
+		[switchCell setText:NSLocalizedString(@"Study Conducted", @"Study Conducted cell in return visit for a call")];
+		[switchCell.uiSwitch removeTarget:self action:@selector(isStudyCellChanged) forControlEvents:UIControlEventValueChanged];
+		[switchCell.uiSwitch addTarget:self action:@selector(isStudyCellChanged) forControlEvents:UIControlEventValueChanged];
+		switchCell.value = isStudyObject;
+		cell = switchCell;
+	}
+	else
+	{
+		assert(isStudy);
+		cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"isStudyStaticCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"isStudyStaticCell"] autorelease];
+		}
+		[cell setText:NSLocalizedString(@"Study Conducted", @"Study Conducted cell in return visit for a call")];
+	}
+	cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+	return(cell);
+}
+
 - (UITableViewCell *)getPublicationCellForReturnVisitIndex:(int)returnVisitIndex publicationIndex:(int)publicationIndex
 {
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"PublicationCell"];
@@ -1318,6 +1360,17 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				  deleteInvocation:nil];
 			}
 
+			// STUDY (only show if you are editing or this is a study)
+			BOOL isStudy = [[visit objectForKey:CallReturnVisitIsStudy] boolValue];
+			if(_editing || isStudy)
+			{
+				[self  addRowInvocation:[self invocationForSelector:@selector(getIsStudyCellForReturnVisitIndex:) withArgument:(void *)i]
+						 rowHeight:-1
+					insertOrDelete:UITableViewCellEditingStyleNone
+				 indentWhenEditing:YES
+				  selectInvocation:nil
+				  deleteInvocation:nil];
+			}
 		
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// Publications
