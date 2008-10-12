@@ -1,1 +1,698 @@
-﻿
+﻿/* Publication Type and Separator in the Publication Picker */
+"   BIBLE DVD" = "＊聖書 DVD＊";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BOOKS" = "＊書籍＊";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BROCHURES" = "＊ブロシュアー＊";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   DVD" = "＊DVD＊";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   TRACTS" = "＊パンフレット＊";
+
+/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
+"%@ %@" = "%1$@ %2$@";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
+"%@ %@ %d" = "%1$@ %3$d %2$@";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
+"%@ %@ %d, %d" = "%1$@ %4$d %2$@ %3$d";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
+"%a %b %d" = "%a %b %d";
+
+/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
+"%a %b %d, %Y" = "%a %b %d, %Y";
+
+/* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
+"%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
+
+/* Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@: %@" = "%1$d %2$@: %3$@";
+
+/* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@s: %@" = "%1$d %2$@s: %3$@";
+
+/* 1, singular publication, shown as '%d publication' */
+"%d publication" = "出版物 %d";
+
+/* more than one publications, shown as '%d publications' */
+"%d publications" = "出版物 %d";
+
+/* Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@' */
+"%d: %@" = "%1$d: %2$@";
+
+/* (unknown street) Placeholder Section title in the Sorted By Calls view */
+"(unknown street)" = "（住所不明）";
+
+/* Tracts Publication Name */
+"A Peaceful New World-Will It Come?" = "平和な新しい世での生活";
+
+/* Add a initial visit action buton */
+"Add a initial visit" = "初訪問の追加";
+
+/* Add a placed publication action button in call view */
+"Add a placed publication" = "配布した出版物の追加";
+
+/* Add a return visit action button */
+"Add a return visit" = "再訪問の追加";
+
+/* Return Visit Notes Placeholder text */
+"Add Notes" = "メモの追加";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "配布した出版物の追加";
+
+/* Address label for call */
+"Address" = "住所";
+
+/* cancel button */
+"All Calls" = "全訪問先";
+
+/* Book Publication Name */
+"All Scripture" = "「聖書全体」";
+
+/* Short month name */
+"Apr" = "4月";
+
+/* Long month name */
+"April" = "4月";
+
+/* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
+"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "訪問先を本当に削除してよろしいですか。（再訪問や配布した出版物の数はそのまま計算されます。）";
+
+/* Short month name */
+"Aug" = "8月";
+
+/* Long month name */
+"August" = "8月";
+
+/* Magizine Publication Name */
+"Awake" = "目ざめよ！";
+
+/* More View Table Group Title */
+"Backup" = "バックアップ";
+
+/* More View Table backup your data */
+"Backup your data" = "データーのバックアップ";
+
+/* Book Publication Name */
+"Bible" = "聖書";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Acts" = "聖書 DVD: 使徒";
+
+/* Bible DVD Publication Name */
+"Bible DVD: John" = "聖書 DVD: ヨハネ";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Luke" = "聖書 DVD: ルカ";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Mark" = "聖書 DVD: マルコ";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Matthew" = "聖書 DVD: マタイ";
+
+/* Book Publication Name */
+"Bible Stories" = "聖書物語";
+
+/* Bible Studies label on the Statistics View */
+"Bible Studies" = "聖書研究";
+
+/* Book Publication Name */
+"Bible Teach" = "聖書の教え";
+
+/* Brochures Publication Name */
+"Blood" = "血";
+
+/* Publication Type name */
+"Book" = "書籍";
+
+/* Brochures Publication Name */
+"Book for All" = "すべての人のための書物";
+
+/* Publication Type name */
+"Books" = "書籍";
+
+/* Publication Type name */
+"Brochure" = "ブロシュアー";
+
+/* Publication Type name */
+"Brochures" = "ブロシュアー";
+
+/* More View Table Build Date */
+"Build Date" = "ビルド日時";
+
+/* Title for Bulk Placements view */
+"Bulk Placements" = "大量配布数";
+
+/* Call main title when editing an existing call */
+"Call" = "訪問先";
+
+/* Address title for address form */
+"Call Address" = "訪問先住所";
+
+/* View title */
+"Calls Sorted by City" = "訪問先市名でソート";
+
+/* view title */
+"Calls Sorted by Date" = "訪問先日付でソート";
+
+/* View title */
+"Calls Sorted by Name" = "訪問先名前でソート";
+
+/* view title */
+"Calls Sorted by Street" = "訪問先番地でソート";
+
+/* cancel button */
+"Cancel" = "キャンセル";
+
+/* Change Date action button for visit in call view */
+"Change Date" = "更新日時";
+
+/* City */
+"City" = "市名";
+
+/* button bar title */
+"City Sorted" = "市名ソート";
+
+/* Book Publication Name */
+"Close to Jehovah" = "エホバに近づきなさい";
+
+/* Tracts Publication Name */
+"Comfort for the Depressed" = "憂いに沈んだ人々への慰め";
+
+/* Book Publication Name */
+"Concordance" = "コンコルダンス";
+
+/* backup connected message */
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "バックアップソフトに接続されました。\n\nバックアップの作成またはリストアのために用いてください。";
+
+/* More View Table Group Title */
+"Contact Information" = "お問い合わせ先";
+
+/* initial message when trying to transfer backup files */
+"Could not create %@ directory" = "%@ ディレクトリーを作成できませんでした";
+
+/* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
+"Count:" = "数:";
+
+/* Book Publication Name */
+"Creation" = "創造";
+
+/* Book Publication Name */
+"Creator" = "創造者";
+
+/* Book Publication Name */
+"Daniel's Prophecy" = "ダニエルの預言";
+
+/* button bar title */
+"Date Sorted" = "日付ソート";
+
+/* Short month name */
+"Dec" = "12月";
+
+/* Long month name */
+"December" = "12月";
+
+/* Yes delete the call and the data */
+"Delete and don't keep info" = "情報を保存せずに削除";
+
+/* Delete Call button in editing mode of call view */
+"Delete Call" = "訪問先削除";
+
+/* backup connected message */
+"Disconnected from the Backup Application" = "バックアップソフトと切断されました。";
+
+/* Brochures Publication Name */
+"Divine Name" = "神のみ名";
+
+/* Tracts Publication Name */
+"Does Fate Rule Our Lives" = "Does Fate Rule Our Lives";
+
+/* Brochures Publication Name */
+"Does God Care" = "神は気遣っておられますか";
+
+/* DVD Publication Name */
+"DVD Drama: Bore Witness" = "DVD: Bore Witness";
+
+/* DVD Publication Name */
+"DVD Drama: Pursue Goals" = "DVD演劇: Pursue Goals";
+
+/* DVD Publication Name */
+"DVD Drama: Respect Authority" = "DVD演劇: Respect Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Submit to Authority" = "DVD演劇: Submit to Authority";
+
+/* DVD Publication Name */
+"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD演劇: Troublesome Times/Boldly Witnessing";
+
+/* DVD Publication Name */
+"DVD: Bible Stories" = "DVD: 聖書物語";
+
+/* DVD Publication Name */
+"DVD: Bible Teach" = "DVD: 聖書の教え";
+
+/* DVD Publication Name */
+"DVD: Family Happiness" = "DVD: 幸せな家庭";
+
+/* DVD Publication Name */
+"DVD: God's Friend" = "DVD: 神の友";
+
+/* DVD Publication Name */
+"DVD: Greatest Man" = "DVD: もっとも偉大な人";
+
+/* DVD Publication Name */
+"DVD: Keep on the Watch" = "DVD: Keep on the Watch";
+
+/* DVD Publication Name */
+"DVD: Knowledge" = "DVD: 知識";
+
+/* DVD Publication Name */
+"DVD: Noah/David" = "DVD: ノア/ダビデ";
+
+/* DVD Publication Name */
+"DVD: Require" = "DVD: 求め";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 1&2" = "DVD: Sing Praises Vol 1&2";
+
+/* DVD Publication Name */
+"DVD: Sing Praises Vol 3" = "DVD: Sing Praises Vol 3";
+
+/* DVD Publication Name */
+"DVD: Spirits of the dead" = "DVD: 死者の霊";
+
+/* DVD Publication Name */
+"DVD: When someone you love dies" = "DVD: 愛する家族を亡くしたとき";
+
+/* DVD Publication Name */
+"DVD: Worship God" = "DVD: 神を崇拝";
+
+/* Brochures Publication Name */
+"Education" = "学校";
+
+/* Google Localized Language Name */
+"en" = "ja";
+
+/* More View Table Enable shown popups */
+"Enable shown popups" = "ポップアップメッセージの有効化";
+
+/* Tracts Publication Name */
+"Enjoy Family Life" = "家族として生活を楽しむ";
+
+/* backup failed string */
+"Failed advertising server" = "サーバーの知らせは失敗しました";
+
+/* failure message for starting the backup service */
+"Failed creating server" = "サーバーの作成は失敗しました";
+
+/* Book Publication Name */
+"Family Happiness" = "幸せな家庭";
+
+/* Short month name */
+"Feb" = "2月";
+
+/* Long month name */
+"February" = "2月";
+
+/* Brochures Publication Name */
+"God's Friend" = "神の友";
+
+/* Book Publication Name */
+"God's Word" = "神の言葉";
+
+/* Brochures Publication Name */
+"Good Land" = "「良い地」";
+
+/* Brochures Publication Name */
+"Government" = "政府";
+
+/* Book Publication Name */
+"Greatest Man" = "最も偉大な人";
+
+/* Brochures Publication Name */
+"Guidance of God" = "Guidance of God";
+
+/* Tracts Publication Name */
+"Hellfire-Is It Part of Divine Justice?" = "Hellfire-Is It Part of Divine Justice?";
+
+/* Singular form of the word hour */
+"hour" = "時間";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "時間";
+
+/* Plural form of the word hours */
+"hours" = "時間";
+
+/* House Number */
+"House Number" = "番地";
+
+/* Tracts Publication Name */
+"How to Find the Road to Paradise" = "How to Find the Road to Paradise";
+
+/* Tracts Publication Name */
+"Immortal Spirit" = "不滅な霊";
+
+/* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Initial Visit Notes" = "初訪問メモ";
+
+/* Book Publication Name */
+"Insight" = "洞察";
+
+/* Book Publication Name */
+"Isaiah's Prophecy I" = "イザヤの預言Ⅰ";
+
+/* Book Publication Name */
+"Isaiah's Prophecy II" = "イザヤの預言Ⅱ";
+
+/* Short month name */
+"Jan" = "1月";
+
+/* Long month name */
+"January" = "1月";
+
+/* Book Publication Name */
+"Jehovah's Day" = "エホバの日";
+
+/* Brochures Publication Name */
+"Jehovah's Witnesses" = "エホバの証人";
+
+/* Tracts Publication Name */
+"Jehovah's Witnesses-What Do They Believe?" = "エホバの証人ーどんな人たちですか";
+
+/* Tracts Publication Name */
+"Jehovah-Who Is He?" = "エホバーどのような方ですか";
+
+/* Tracts Publication Name */
+"Jesus Christ-Who Is He?" = "イエス・キリストどのような方ですか";
+
+/* Short month name */
+"Jul" = "7月";
+
+/* Long month name */
+"July" = "7月";
+
+/* Short month name */
+"Jun" = "6月";
+
+/* Long month name */
+"June" = "6月";
+
+/* Tracts Publication Name */
+"Know the Bible" = "聖書を知る";
+
+/* Book Publication Name */
+"Knowledge" = "知識";
+
+/* Brochures Publication Name */
+"Lasting Peace" = "Lasting Peace";
+
+/* Brochures Publication Name */
+"Life on Earth" = "地上での生活";
+
+/* Brochures Publication Name */
+"Look!" = "見よ！";
+
+/* Publication Type name */
+"Magazine" = "雑誌";
+
+/* Publication Type name */
+"Magazines" = "雑誌";
+
+/* Book Publication Name */
+"Mankind's Search for God" = "探求";
+
+/* Mapped calls view title */
+"Mapped Calls" = "地図のある訪問先";
+
+/* Short month name */
+"Mar" = "3月";
+
+/* Long month name */
+"March" = "3月";
+
+/* Short/Long month name */
+"May" = "5月";
+
+/* Book Publication Name */
+"Ministry School" = "宣教学校";
+
+/* Singular form of the word minute */
+"minute" = "分";
+
+/* Plural form of the word minutes */
+"minutes" = "分";
+
+/* Book Publication Name */
+"My Book of Bible Stories" = "聖書物語";
+
+/* More View Table MyTime Version */
+"MyTime Version" = "MyTimeバージョン";
+
+/* More View Table MyTime Website */
+"MyTime Website" = "MyTimeウェブサイト";
+
+/* Name label for Call in editing mode */
+"Name" = "氏名";
+
+/* button bar title */
+"Name Sorted" = "氏名ソート";
+
+/* Brochures Publication Name */
+"Nations" = "Nations";
+
+/* Call main title when you are adding a new call */
+"New Call" = "新規訪問先";
+
+/* No dont delete the call */
+"No" = "いいえ";
+
+/* Short month name */
+"Nov" = "11月";
+
+/* Long month name */
+"November" = "11月";
+
+/* Number Placed label for the Number Picker for the number of publications placed */
+"Number Placed:" = "配布した数:";
+
+/* Short month name */
+"Oct" = "10月";
+
+/* Long month name */
+"October" = "10月";
+
+/* OK button */
+"OK" = "OK";
+
+/* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
+"Oldest Return Visits First" = "古い再訪問順";
+
+/* Book Publication Name */
+"Organized" = "組織";
+
+/* Brochures Publication Name */
+"Our Problems" = "Our Problems";
+
+/* Tracts Publication Name */
+"Peaceful New World" = "平和な新しい世での生活";
+
+/* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
+"Placements" = "配布数";
+
+/* Placements Group title for the Day's Bulk Literature Placements */
+"Placements:" = "配布数:";
+
+/* More View Table Donation request */
+"Please Donate, help me help you" = "本プログラムのためにも，是非ご寄付を。";
+
+/* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
+"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "バックアップサービスを初期化されるまでお待ちください...\n\nバックアップアプリケーションの詳細情報はmytime.googlecode.comへどうぞ";
+
+/* Confirmation message about enabling popup messages */
+"Popup messages like this are now enabled all throughout MyTime" = "このようなポップアップはデフォルトで有効になっています。";
+
+/* Book Publication Name */
+"Proclaimers" = "ふれ告げる人々";
+
+/* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
+"Publications" = "部／冊";
+
+/* Brochures Publication Name */
+"Purpose of Life" = "人生の目的";
+
+/* initial message when trying to transfer backup files */
+"Pushed %@ translation file, restart MyTime to see the changes." = "%@ 翻訳ファイルを転送されました。MyTimeを再起動してください。";
+
+/* More View Table Questions, Comments? Email me */
+"Questions, Comments? Email me" = "質問やコメント？ Eメールしてください";
+
+/* Book Publication Name */
+"Reasoning" = "論じる";
+
+/* Brochures Publication Name */
+"Require" = "求め";
+
+/* initial message when trying to transfer backup files */
+"Restored Backup, restart MyTime to see the changes" = "リストア完了。MyTimeを再起動してください。";
+
+/* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Return Visit Notes" = "再訪問メモ";
+
+/* Return Visits label on the Statistics View */
+"Return Visits" = "再訪問";
+
+/* Book Publication Name */
+"Revelation Climax" = "啓示の書の最高潮";
+
+/* Brochures Publication Name */
+"Satisfying Life" = "満足のいく生活";
+
+/* Title for the view where you Pick A Date */
+"Select Date" = "日付の選択";
+
+/* 'Select Publication' Publication Picker title */
+"Select Publication" = "出版物の選択";
+
+/* Select Time Title for adding hours of field service to a particular day */
+"Select Time" = "時間の選択";
+
+/* initial message when trying to transfer backup files */
+"Sending Settings to the Backup Application" = "設定をバックアップアプリに転送しています";
+
+/* Short month name */
+"Sep" = "9月";
+
+/* Long month name */
+"September" = "9月";
+
+/* 'Settings' ButtonBar View text and Statistics View Title */
+"Settings" = "設定";
+
+/* Book Publication Name */
+"Sing Praises" = "賛美を歌う";
+
+/* Publication Type name */
+"Special" = "特別";
+
+/* Brochures Publication Name */
+"Spirits of the Dead" = "死者の霊";
+
+/* 'Start Time' navigation bar action button */
+"Start Time" = "時間開始";
+
+/* State */
+"State" = "県名";
+
+/* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
+"State in all caps" = "0";
+
+/* 'Statistics' ButtonBar View text and Statistics View Title */
+"Statistics" = "統計";
+
+/* 'Stop Time' navigation bar action button */
+"Stop Time" = "時間を止める";
+
+/* Street */
+"Street" = "町名";
+
+/* Street Sorted button title */
+"Street Sorted" = "番地ソート";
+
+/* Tracts Publication Name */
+"Suffering to End" = "苦しみは終わる";
+
+/* Book Publication Name */
+"Teacher" = "教えて";
+
+/* Information for the user to know what is going on with this and new releases */
+"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)" = "MyTimeのご利用ありがとうございます！AppStoreへ公開されるまで200時間以上使って睡眠不足の日もしばしばありまた。役に立つと思いましたら是非どんなに少額でもご寄付ください。MyTimeは世界中に使われていると思います。そのため，翻訳者を探しています。ご興味ありますか。Eメールまた寄付を送ってください。「その他」で「設定」のところご覧ください。";
+
+/* Tracts Publication Name */
+"The Greatest Name" = "The Greatest Name";
+
+/* Time for %@ Group title on the Statistics View where %@ is the month of the year */
+"Time for %@" = "%@の時間";
+
+/* This is a note displayed when they first see the non editable call view */
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "編集ボタンをタッチすると再訪問が追加できます。または，住所をタッチすると訪問場所が表示されます。";
+
+/* Publication Type name */
+"Tract" = "パンフレット";
+
+/* Brochures Publication Name */
+"Trinity" = "三位一体";
+
+/* Sorted by Street Calls view section title for an unknown street */
+"Unknown" = "不明";
+
+/* More View Table Group Title */
+"Version" = "バージョン";
+
+/* Title for the view where you write notes for a call */
+"Visit Notes" = "訪問メモ";
+
+/* initial message when trying to transfer backup files */
+"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "バックアップアプリケーションが接続するまで待っています...\n\nバックアップアプリケーションの詳細情報はmytime.googlecode.comへどうぞ";
+
+/* Brochures Publication Name */
+"Watch!" = "見張っていなさい！";
+
+/* Magizine Publication Name */
+"Watchtower" = "ものみの塔";
+
+/* Tracts Publication Name */
+"What Do Jehovah's Witnesses Believe?" = "エホバの証人はどのようなことを信じていますか";
+
+/* Tracts Publication Name */
+"What Hope for Dead Loved Ones?" = "亡くなった家族のための希望";
+
+/* Brochures Publication Name */
+"When Someone Dies" = "愛する家族を亡くしたとき";
+
+/* Brochures Publication Name */
+"When We Die" = "人は死ぬと";
+
+/* Tracts Publication Name */
+"Who Are Jehovah's Witnesses?" = "Who Are Jehovah's Witnesses?";
+
+/* Tracts Publication Name */
+"Who Really Rules the World?" = "実際に世界を支配しているのはだれですか";
+
+/* Brochures Publication Name */
+"Why Worship God" = "Why Worship God";
+
+/* Tracts Publication Name */
+"Why You Can Trust the Bible" = "聖書が信頼できる理由";
+
+/* Tracts Publication Name */
+"Will This World Survive?" = "この世界は存続しますか";
+
+/* Brochures Publication Name */
+"World Without War" = "戦争のない世界";
+
+/* Book Publication Name */
+"Worship God" = "神を崇拝する";
+
+/* Yes delete the call */
+"Yes" = "はい";
+
+/* This is a note displayed when they first see the Bulk Literature Placement view */
+"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Eメールやポッドキャストと同様な方法で配布した出版物のエントリーを削除することができます。行をスワイプしたら削除ボタンが表示されます。";
+
+/* This is a note displayed when they first see the Time view */
+"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Eメールやポッドキャストと同様な方法で時間のエントリーを削除することができます。行をスワイプしたら削除ボタンが表示されます。";
+
+/* This is a note displayed when they first see the Statistics View */
+"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "月末における野外奉仕活動状況の一覧。ここで配布した出版物の数と再訪問件数や奉仕時間が表示されます。";
+
+/* Book Publication Name */
+"Young People Ask" = "若い人が尋ねる";
