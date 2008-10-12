@@ -929,6 +929,25 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[[self navigationController] pushViewController:p animated:YES];		
 }
 
+- (void)isStudyOnForReturnVisitAtIndex:(int)index
+{
+	DEBUG(NSLog(@"isStudyOnForReturnVisitAtIndex: %d", index);)
+
+	// they clicked on the Change Date
+	[[[_call objectForKey:CallReturnVisits] objectAtIndex:index] setObject:[NSNumber numberWithBool:YES] forKey:CallReturnVisitIsStudy];
+	[self save];
+}
+
+- (void)isStudyOffForReturnVisitAtIndex:(int)index
+{
+	DEBUG(NSLog(@"isStudyOffForReturnVisitAtIndex: %d", index);)
+
+	// they clicked on the Change Date
+	[[[_call objectForKey:CallReturnVisits] objectAtIndex:index] setObject:[NSNumber numberWithBool:YES] forKey:CallReturnVisitIsStudy];
+	[self save];
+}
+
+
 - (void)addPublicationToReturnVisitAtIndex:(int)index
 {
 	DEBUG(NSLog(@"addPublicationToReturnVisitAtIndex: %d", index);)
@@ -1124,10 +1143,17 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return(cell);
 }
 
-- (void)isStudyCellChanged:(id)sender
+- (void)switchTableCellChanged:(SwitchTableCell *)switchTableCell
 {
-	[self save];
+	NSIndexPath *indexPath = [theTableView indexPathForCell:switchTableCell];
+	NSInvocation *invocation;
+	if(switchTableCell.uiSwitch.on)
+		invocation = [[[[[_displayInformation objectAtIndex:[indexPath section]] objectForKey:CallViewSelectedInvocations] objectAtIndex:[indexPath section]] retain] autorelease];
+	else
+		invocation = [[[[[_displayInformation objectAtIndex:[indexPath section]] objectForKey:CallViewDeleteInvocations] objectAtIndex:[indexPath section]] retain] autorelease];
+	[invocation invoke];
 }
+
 
 - (UITableViewCell *)getIsStudyCellForReturnVisitIndex:(int)returnVisitIndex
 {
@@ -1142,9 +1168,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			switchCell = [[[SwitchTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"isStudyCell"] autorelease];
 		}
 		[switchCell setText:NSLocalizedString(@"Study Conducted", @"Study Conducted cell in return visit for a call")];
-		[switchCell.uiSwitch removeTarget:self action:@selector(isStudyCellChanged) forControlEvents:UIControlEventValueChanged];
-		[switchCell.uiSwitch addTarget:self action:@selector(isStudyCellChanged) forControlEvents:UIControlEventValueChanged];
-		switchCell.value = isStudyObject;
+		switchCell.delegate = self;
+		switchCell.uiSwitch.on = isStudy;
 		cell = switchCell;
 	}
 	else
@@ -1368,8 +1393,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:YES
-				  selectInvocation:nil
-				  deleteInvocation:nil];
+				  selectInvocation:[self invocationForSelector:@selector(isStudyOnForReturnVisitAtIndex:) withArgument:(void *)i]
+				  deleteInvocation:[self invocationForSelector:@selector(isStudyOffForReturnVisitAtIndex:) withArgument:(void *)i]];
 			}
 		
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)

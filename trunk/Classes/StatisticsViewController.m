@@ -123,6 +123,9 @@ static NSString *MONTHS[] = {
 			NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
 			NSMutableDictionary *visit;
 			
+			BOOL studyAlreadyConducted[12];
+			memset(studyAlreadyConducted, 0, sizeof(studyAlreadyConducted));
+			
 			int i;
 			int returnVisitsCount = [returnVisits count];
 			BOOL foundBibleDVD = NO;
@@ -165,6 +168,14 @@ static NSString *MONTHS[] = {
 						
 					}
 					found = YES;
+
+					NSNumber *isStudy = [visit objectForKey:CallReturnVisitIsStudy];
+					if(!studyAlreadyConducted[offset] &&
+					   isStudy && [isStudy boolValue])
+					{
+						studyAlreadyConducted[offset] = YES;
+						_bibleStudies[offset]++;
+					}
 
 					// we only care about counting this month's or last month's returnVisits' calls
 					// go through all of the calls and see if we need to count the statistics
