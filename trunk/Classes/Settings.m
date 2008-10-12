@@ -25,6 +25,7 @@ NSString const * const CallPhoneNumber = @"number";
 NSString const * const CallReturnVisits = @"returnVisits";
 NSString const * const CallReturnVisitNotes = @"notes";
 NSString const * const CallReturnVisitDate = @"date";
+NSString const * const CallReturnVisitIsStudy = @"isStudy";
 NSString const * const CallReturnVisitPublications = @"publications";
 NSString const * const CallReturnVisitPublicationTitle = @"title";
 NSString const * const CallReturnVisitPublicationType = @"type";

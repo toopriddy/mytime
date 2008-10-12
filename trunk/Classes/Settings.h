@@ -20,6 +20,7 @@ extern NSString const * const CallPhoneNumber;
 extern NSString const * const CallReturnVisits;
 extern NSString const * const CallReturnVisitNotes;
 extern NSString const * const CallReturnVisitDate;
+extern NSString const * const CallReturnVisitIsStudy;
 extern NSString const * const CallReturnVisitPublications;
 extern NSString const * const CallReturnVisitPublicationTitle;
 extern NSString const * const CallReturnVisitPublicationType;
