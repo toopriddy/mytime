@@ -1384,7 +1384,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:nil];
 			}
-
+#if 0
 			// STUDY (only show if you are editing or this is a study)
 			BOOL isStudy = [[visit objectForKey:CallReturnVisitIsStudy] boolValue];
 			if(_editing || isStudy)
@@ -1396,7 +1396,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				  selectInvocation:[self invocationForSelector:@selector(isStudyOnForReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:[self invocationForSelector:@selector(isStudyOffForReturnVisitAtIndex:) withArgument:(void *)i]];
 			}
-		
+#endif		
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// Publications
 			if([visit objectForKey:CallReturnVisitPublications] != nil)
