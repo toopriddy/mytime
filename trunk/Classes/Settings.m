@@ -11,6 +11,7 @@
 
 static Settings *instance = nil;
 
+#define AlternateLocalizedString(a, b) (a)
 
 
 NSString const * const CallName = @"name";
@@ -25,7 +26,7 @@ NSString const * const CallPhoneNumber = @"number";
 NSString const * const CallReturnVisits = @"returnVisits";
 NSString const * const CallReturnVisitNotes = @"notes";
 NSString const * const CallReturnVisitDate = @"date";
-NSString const * const CallReturnVisitIsStudy = @"isStudy";
+NSString const * const CallReturnVisitType = @"type";
 NSString const * const CallReturnVisitPublications = @"publications";
 NSString const * const CallReturnVisitPublicationTitle = @"title";
 NSString const * const CallReturnVisitPublicationType = @"type";
@@ -33,6 +34,10 @@ NSString const * const CallReturnVisitPublicationName = @"name";
 NSString const * const CallReturnVisitPublicationYear = @"year";
 NSString const * const CallReturnVisitPublicationMonth = @"month";
 NSString const * const CallReturnVisitPublicationDay = @"day";
+
+NSString const * const CallReturnVisitTypeReturnVisit = AlternateLocalizedString(@"Return Visit", @"return visit type name");
+NSString const * const CallReturnVisitTypeStudy = AlternateLocalizedString(@"Study", @"return visit type name");
+NSString const * const CallReturnVisitTypeNotAtHome = AlternateLocalizedString(@"Not At Home", @"return visit type name");
 
 NSString const * const SettingsBulkLiterature = @"bulkLiterature";
 NSString const * const BulkLiteratureDate = @"date";

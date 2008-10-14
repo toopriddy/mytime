@@ -20,7 +20,7 @@ extern NSString const * const CallPhoneNumber;
 extern NSString const * const CallReturnVisits;
 extern NSString const * const CallReturnVisitNotes;
 extern NSString const * const CallReturnVisitDate;
-extern NSString const * const CallReturnVisitIsStudy;
+extern NSString const * const CallReturnVisitType;
 extern NSString const * const CallReturnVisitPublications;
 extern NSString const * const CallReturnVisitPublicationTitle;
 extern NSString const * const CallReturnVisitPublicationType;
@@ -28,6 +28,10 @@ extern NSString const * const CallReturnVisitPublicationName;
 extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
+
+extern NSString const * const CallReturnVisitTypeReturnVisit;
+extern NSString const * const CallReturnVisitTypeStudy;
+extern NSString const * const CallReturnVisitTypeNotAtHome;
 
 extern NSString const * const SettingsBulkLiterature;
 extern NSString const * const BulkLiteratureDate;

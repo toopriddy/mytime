@@ -226,9 +226,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
                 if([visit objectForKey:CallReturnVisitNotes] == nil)
                     [visit setObject:@"" forKey:CallReturnVisitNotes];
 
-                if([visit objectForKey:CallReturnVisitIsStudy] == nil)
-                    [visit setObject:[NSNumber numberWithBool:NO] forKey:CallReturnVisitIsStudy];
-                
+                if([visit objectForKey:CallReturnVisitType] == nil)
+                    [visit setObject:CallReturnVisitTypeReturnVisit forKey:CallReturnVisitType];
                 
                 if([visit objectForKey:CallReturnVisitPublications] == nil)
                     [visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
@@ -929,24 +928,23 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	[[self navigationController] pushViewController:p animated:YES];		
 }
 
-- (void)isStudyOnForReturnVisitAtIndex:(int)index
+- (void)changeTypeForReturnVisitAtIndex:(int)index
 {
 	DEBUG(NSLog(@"isStudyOnForReturnVisitAtIndex: %d", index);)
 
-	// they clicked on the Change Date
-	[[[_call objectForKey:CallReturnVisits] objectAtIndex:index] setObject:[NSNumber numberWithBool:YES] forKey:CallReturnVisitIsStudy];
-	[self save];
+	// they clicked on the Change Type
+	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:index];
+	NSString *type = [_editingReturnVisit objectForKey:CallReturnVisitType];
+	if(type == nil)
+		type = (NSString *)CallReturnVisitTypeReturnVisit;
+		
+	// make the new call view 
+	ReturnVisitTypeViewController *p = [[[ReturnVisitTypeViewController alloc] initWithType:type] autorelease];
+
+	p.delegate = self;
+
+	[[self navigationController] pushViewController:p animated:YES];		
 }
-
-- (void)isStudyOffForReturnVisitAtIndex:(int)index
-{
-	DEBUG(NSLog(@"isStudyOffForReturnVisitAtIndex: %d", index);)
-
-	// they clicked on the Change Date
-	[[[_call objectForKey:CallReturnVisits] objectAtIndex:index] setObject:[NSNumber numberWithBool:YES] forKey:CallReturnVisitIsStudy];
-	[self save];
-}
-
 
 - (void)addPublicationToReturnVisitAtIndex:(int)index
 {
@@ -1143,46 +1141,25 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return(cell);
 }
 
-- (void)switchTableCellChanged:(SwitchTableCell *)switchTableCell
+- (UITableViewCell *)getTypeCellForReturnVisitIndex:(int)returnVisitIndex
 {
-	NSIndexPath *indexPath = [theTableView indexPathForCell:switchTableCell];
-	NSInvocation *invocation;
-	if(switchTableCell.uiSwitch.on)
-		invocation = [[[[[_displayInformation objectAtIndex:[indexPath section]] objectForKey:CallViewSelectedInvocations] objectAtIndex:[indexPath section]] retain] autorelease];
-	else
-		invocation = [[[[[_displayInformation objectAtIndex:[indexPath section]] objectForKey:CallViewDeleteInvocations] objectAtIndex:[indexPath section]] retain] autorelease];
-	[invocation invoke];
-}
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"returnVisitTypeCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitTypeCell"] autorelease];
+	}
+
+	NSString *type = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitType];
+	if(type == nil)
+		type = (NSString *)CallReturnVisitTypeReturnVisit;
 
 
-- (UITableViewCell *)getIsStudyCellForReturnVisitIndex:(int)returnVisitIndex
-{
-	UITableViewCell *cell;
-	NSNumber *isStudyObject = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitIsStudy];
-	BOOL isStudy = [isStudyObject boolValue];
-	if(_editing)
-	{
-		SwitchTableCell *switchCell = (SwitchTableCell *)[theTableView dequeueReusableCellWithIdentifier:@"isStudyCell"];
-		if(switchCell == nil)
-		{
-			switchCell = [[[SwitchTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"isStudyCell"] autorelease];
-		}
-		[switchCell setText:NSLocalizedString(@"Study Conducted", @"Study Conducted cell in return visit for a call")];
-		switchCell.delegate = self;
-		switchCell.uiSwitch.on = isStudy;
-		cell = switchCell;
-	}
-	else
-	{
-		assert(isStudy);
-		cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"isStudyStaticCell"];
-		if(cell == nil)
-		{
-			cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"isStudyStaticCell"] autorelease];
-		}
-		[cell setText:NSLocalizedString(@"Study Conducted", @"Study Conducted cell in return visit for a call")];
-	}
+	[cell setTitle:NSLocalizedString(@"Type", @"Return visit type label")];
+	[cell setValue:[[NSBundle mainBundle] localizedStringForKey:type value:type table:@""]];
+
+	cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 	cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+
 	return(cell);
 }
 
@@ -1384,19 +1361,22 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				  selectInvocation:[self invocationForSelector:@selector(changeDateOfReturnVisitAtIndex:) withArgument:(void *)i]
 				  deleteInvocation:nil];
 			}
-#if 0
+ 
 			// STUDY (only show if you are editing or this is a study)
-			BOOL isStudy = [[visit objectForKey:CallReturnVisitIsStudy] boolValue];
-			if(_editing || isStudy)
+			NSString *type = [visit objectForKey:CallReturnVisitType];
+			if(type == nil)
+				type = (NSString *)CallReturnVisitTypeReturnVisit;
+				
+			if(_editing || ![type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit])
 			{
-				[self  addRowInvocation:[self invocationForSelector:@selector(getIsStudyCellForReturnVisitIndex:) withArgument:(void *)i]
+				[self  addRowInvocation:[self invocationForSelector:@selector(getTypeCellForReturnVisitIndex:) withArgument:(void *)i]
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:YES
-				  selectInvocation:[self invocationForSelector:@selector(isStudyOnForReturnVisitAtIndex:) withArgument:(void *)i]
-				  deleteInvocation:[self invocationForSelector:@selector(isStudyOffForReturnVisitAtIndex:) withArgument:(void *)i]];
+				  selectInvocation:(_editing ? [self invocationForSelector:@selector(changeTypeForReturnVisitAtIndex:) withArgument:(void *)i] : nil)
+				  deleteInvocation:nil];
 			}
-#endif		
+
 DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// Publications
 			if([visit objectForKey:CallReturnVisitPublications] != nil)
@@ -1471,6 +1451,22 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [_editingReturnVisit setObject:[notesViewController notes] forKey:CallReturnVisitNotes];
+	_editingReturnVisit = nil;
+	[self reloadData];
+	[self save];
+	[theTableView reloadData];
+}
+
+/******************************************************************
+ *
+ *   TYPE VIEW CALLBACKS
+ *
+ ******************************************************************/
+#pragma mark ReturnVisitTypeView Delegate
+- (void)returnVisitTypeViewControllerDone:(ReturnVisitTypeViewController *)returnVisitTypeViewController
+{
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+    [_editingReturnVisit setObject:[returnVisitTypeViewController type] forKey:CallReturnVisitType];
 	_editingReturnVisit = nil;
 	[self reloadData];
 	[self save];

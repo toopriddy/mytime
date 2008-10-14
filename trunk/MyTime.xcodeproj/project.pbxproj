@@ -29,6 +29,7 @@
 		906140CA0E4FC42B0072BA7B /* NumberedPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */; };
 		906143AD0E51312E0072BA7B /* HourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143AC0E51312E0072BA7B /* HourViewController.m */; };
 		906143D10E5144ED0072BA7B /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143D00E5144ED0072BA7B /* TimePickerViewController.m */; };
+		90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */; };
 		90C148830E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */; };
 		90C148CE0E3B923C00C6EDAF /* statistics.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C148C90E3B923C00C6EDAF /* statistics.png */; };
 		90C148CF0E3B923C00C6EDAF /* street.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C148CA0E3B923C00C6EDAF /* street.png */; };
@@ -115,6 +116,8 @@
 		906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewControllerDelegate.h; sourceTree = "<group>"; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
+		90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnVisitTypeViewController.m; sourceTree = "<group>"; };
 		90C148810E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByCityViewDataSource.h; sourceTree = "<group>"; };
 		90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByCityViewDataSource.m; sourceTree = "<group>"; };
 		90C148C90E3B923C00C6EDAF /* statistics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statistics.png; sourceTree = "<group>"; };
@@ -388,6 +391,8 @@
 				90C4D5620E857DE000E202E2 /* NotesViewControllerDelegate.h */,
 				90D6A2AA0EA1A13400FA0252 /* SwitchTableCell.h */,
 				90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */,
+				90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */,
+				90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */,
 			);
 			name = CallViews;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				9001FEAF0E9B0B820091F8FD /* AddressTableCell.m in Sources */,
 				901313800EA0773A0055D890 /* NumberViewController.m in Sources */,
 				90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */,
+				90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +658,42 @@
 			};
 			name = Distribution;
 		};
+		90C0DAE30EA43DF700C47183 /* Simulator */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy";
+				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = DefaultProfileUuid;
+				SDKROOT = iphonesimulator2.1;
+			};
+			name = Simulator;
+		};
+		90C0DAE40EA43DF700C47183 /* Simulator */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = MyTime;
+			};
+			name = Simulator;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -694,6 +736,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
+				90C0DAE40EA43DF700C47183 /* Simulator */,
 				1D6058950D05DD3E006BFB54 /* Release */,
 				9052DB320E44462A00E191AB /* Distribution */,
 				904B20BE0E9B234B0020816E /* AdHoc Distribution */,
@@ -705,6 +748,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
+				90C0DAE30EA43DF700C47183 /* Simulator */,
 				C01FCF5008A954540054247B /* Release */,
 				9052DB310E44462A00E191AB /* Distribution */,
 				904B20BD0E9B234B0020816E /* AdHoc Distribution */,

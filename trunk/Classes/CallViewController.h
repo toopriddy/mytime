@@ -15,7 +15,7 @@
 #import "DatePickerViewControllerDelegate.h"
 #import "UITableViewTextFieldCellDelegate.h"
 #import "NotesViewControllerDelegate.h"
-#import "SwitchTableCell.h"
+#import "ReturnVisitTypeViewController.h"
 
 @interface CallViewController : UIViewController <UITableViewDelegate, 
                                                   UITableViewDataSource, 
@@ -25,7 +25,7 @@
 												  DatePickerViewControllerDelegate,
 												  UITableViewTextFieldCellDelegate,
 												  NotesViewControllerDelegate,
-												  SwitchTableCellDelegate> 
+												  ReturnVisitTypeViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	
