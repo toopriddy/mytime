@@ -1323,8 +1323,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 //			[dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d, %Y", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year")];
-			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-			[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
+			[dateFormatter setDateStyle:NSDateFormatterFullStyle];
+			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];			 
 			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 			[self addGroup:formattedDateString type:@"Visit"];
 
