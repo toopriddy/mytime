@@ -355,11 +355,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -493,6 +493,9 @@
 /* No dont delete the call */
 "No" = "No";
 
+/* return visit type name */
+"Not At Home" = "Not At Home";
+
 /* Short month name */
 "Nov" = "Nov";
 
@@ -565,6 +568,9 @@
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "Restored Backup, restart MyTime to see the changes";
 
+/* return visit type name */
+"Return Visit" = "Return Visit";
+
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Return Visit Notes";
 
@@ -631,8 +637,8 @@
 /* Street Sorted button title */
 "Street Sorted" = "Street Sorted";
 
-/* Study Conducted cell in return visit for a call */
-"Study Conducted" = "Study Conducted";
+/* return visit type name */
+"Study" = "Study";
 
 /* Tracts Publication Name */
 "Suffering to End" = "Suffering to End";
@@ -658,6 +664,9 @@
 /* Brochures Publication Name */
 "Trinity" = "Trinity";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Unknown";
 
@@ -666,6 +675,9 @@
 
 /* Title for the view where you write notes for a call */
 "Visit Notes" = "Visit Notes";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application";

@@ -159,19 +159,23 @@ static NSString *MONTHS[] = {
 					if(offset < 0)
 						continue;
 						
+					NSString *type = [visit objectForKey:CallReturnVisitType];
+					BOOL isStudy = [type isEqualToString:(NSString *)CallReturnVisitTypeStudy];
+					BOOL isNotAtHome = [type isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome];
+					
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
 					{
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						_returnVisits[offset]++;
+						if(!isNotAtHome)
+							_returnVisits[offset]++;
 						
 					}
 					found = YES;
 
-					NSNumber *isStudy = [visit objectForKey:CallReturnVisitIsStudy];
-					if(!studyAlreadyConducted[offset] &&
-					   isStudy && [isStudy boolValue])
+					if(!studyAlreadyConducted[offset] && 
+					   isStudy)
 					{
 						studyAlreadyConducted[offset] = YES;
 						_bibleStudies[offset]++;
