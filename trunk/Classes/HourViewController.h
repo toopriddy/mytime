@@ -13,6 +13,7 @@
 {
 	UITableView *tableView;
 	NSMutableArray *timeEntries;
+	BOOL _quickBuild;
 	
 	NSIndexPath *selectedIndexPath;
 }
@@ -26,7 +27,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id)init;
+- (id)initForQuickBuild:(BOOL)quickBuild;
 - (void)dealloc;
 - (void)reloadData;
 @end

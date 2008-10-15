@@ -71,6 +71,7 @@ NSString const * const SettingsMonthDisplayCount = @"monthDisplaycount";
 
 NSString const * const SettingsTimeStartDate = @"timeStartDate";
 NSString const * const SettingsTimeEntries = @"timeEntries";
+NSString const * const SettingsQuickBuildTimeEntries = @"quickBuildEntries";
 NSString const * const SettingsTimeEntryDate = @"date";
 NSString const * const SettingsTimeEntryMinutes = @"minutes";
 

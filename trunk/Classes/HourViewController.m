@@ -55,7 +55,7 @@ static int sortByDate(id v1, id v2, void *context)
 }
 
 
-- (id)init
+- (id)initForQuickBuild:(BOOL)quickBuild
 {
 	if ([super init]) 
 	{
@@ -63,15 +63,26 @@ static int sortByDate(id v1, id v2, void *context)
 		timeEntries = nil;
 		selectedIndexPath = nil;
 
+		_quickBuild = quickBuild;
+		NSString *timeEntriesName = (NSString *)(quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+
 		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-		self.timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:SettingsTimeEntries]];
-		[settings setObject:timeEntries forKey:SettingsTimeEntries];
+		self.timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]];
+		[settings setObject:timeEntries forKey:timeEntriesName];
 		
 		
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view");
-		self.tabBarItem.image = [UIImage imageNamed:@"timer.png"];
+		if(quickBuild)
+		{
+			self.title = NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
+			self.tabBarItem.image = [UIImage imageNamed:@"build.png"];
+		}
+		else
+		{
+			self.title = NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view");
+			self.tabBarItem.image = [UIImage imageNamed:@"timer.png"];
+		}
 	}
 	return self;
 }
@@ -133,7 +144,6 @@ static int sortByDate(id v1, id v2, void *context)
 	[[Settings sharedInstance] saveData];
 
 
-
 	// add Start Time button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
 																style:UIBarButtonItemStylePlain
@@ -167,23 +177,26 @@ static int sortByDate(id v1, id v2, void *context)
 																			 action:@selector(navigationControlAdd:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
 
-	if([[[Settings sharedInstance] settings] objectForKey:SettingsTimeStartDate] == nil)
+	if(!_quickBuild)
 	{
-		// add Start Time button
-		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
-		                                                            style:UIBarButtonItemStylePlain
-																   target:self
-																   action:@selector(navigationControlStartTime:)] autorelease];
-		[self.navigationItem setLeftBarButtonItem:button animated:NO];
-	}
-	else
-	{
-		// add Stop Time button
-		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
-		                                                            style:UIBarButtonItemStyleDone
-																   target:self
-																   action:@selector(navigationControlStopTime:)] autorelease];
-		[self.navigationItem setLeftBarButtonItem:button animated:NO];
+		if([[[Settings sharedInstance] settings] objectForKey:SettingsTimeStartDate] == nil)
+		{
+			// add Start Time button
+			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
+																		style:UIBarButtonItemStylePlain
+																	   target:self
+																	   action:@selector(navigationControlStartTime:)] autorelease];
+			[self.navigationItem setLeftBarButtonItem:button animated:NO];
+		}
+		else
+		{
+			// add Stop Time button
+			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
+																		style:UIBarButtonItemStyleDone
+																	   target:self
+																	   action:@selector(navigationControlStopTime:)] autorelease];
+			[self.navigationItem setLeftBarButtonItem:button animated:NO];
+		}
 	}
 }
 

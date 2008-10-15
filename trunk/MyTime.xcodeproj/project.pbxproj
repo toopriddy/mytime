@@ -29,6 +29,7 @@
 		906140CA0E4FC42B0072BA7B /* NumberedPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */; };
 		906143AD0E51312E0072BA7B /* HourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143AC0E51312E0072BA7B /* HourViewController.m */; };
 		906143D10E5144ED0072BA7B /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143D00E5144ED0072BA7B /* TimePickerViewController.m */; };
+		90A7AE830EA5A62200EBEF2D /* build.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A7AE820EA5A62100EBEF2D /* build.png */; };
 		90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */; };
 		90C148830E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */; };
 		90C148CE0E3B923C00C6EDAF /* statistics.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C148C90E3B923C00C6EDAF /* statistics.png */; };
@@ -114,6 +115,7 @@
 		906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		906143D00E5144ED0072BA7B /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewControllerDelegate.h; sourceTree = "<group>"; };
+		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				90C4D4F30E8564DD00E202E2 /* map.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
 				90C148EF0E3B937300C6EDAF /* Icon.png */,
+				90A7AE820EA5A62100EBEF2D /* build.png */,
 				90D031070E554C47001CEF0D /* settings.png */,
 				90C148C90E3B923C00C6EDAF /* statistics.png */,
 				90C148CA0E3B923C00C6EDAF /* street.png */,
@@ -467,6 +470,7 @@
 				9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */,
 				90C4D4F40E8564DD00E202E2 /* map.png in Resources */,
 				9022ED210E8B0858007DCD2D /* people.png in Resources */,
+				90A7AE830EA5A62200EBEF2D /* build.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,8 +606,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "6B03BFEC-D2FE-418D-94D9-3F1268B2A5AB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6B03BFEC-D2FE-418D-94D9-3F1268B2A5AB";
+				PROVISIONING_PROFILE = "5B44D63C-8192-45DA-8299-F1DB832BFBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5B44D63C-8192-45DA-8299-F1DB832BFBEF";
 				SDKROOT = iphoneos2.1;
 			};
 			name = "AdHoc Distribution";
