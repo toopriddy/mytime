@@ -77,6 +77,7 @@ extern NSString const * const SettingsExistingCallAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
+extern NSString const * const SettingsQuickBuildTimeEntries;
 extern NSString const * const SettingsTimeEntryDate;
 extern NSString const * const SettingsTimeEntryMinutes;
 

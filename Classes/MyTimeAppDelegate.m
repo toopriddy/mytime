@@ -89,7 +89,7 @@
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
 
 	// HOURS
-	HourViewController *hourViewController = [[[HourViewController alloc] init] autorelease];
+	HourViewController *hourViewController = [[[HourViewController alloc] initForQuickBuild:NO] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:hourViewController] autorelease]];
 
 	// STATISTICS
@@ -113,6 +113,11 @@
 	// ALL CALLS WEB VIEW
 	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
+
+	// QUICK BUILD HOURS
+	HourViewController *quickBuildHourViewController = [[[HourViewController alloc] initForQuickBuild:YES] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:quickBuildHourViewController] autorelease]];
+
 
 	// SETTINGS
 	SettingsViewController *settingsViewController = [[[SettingsViewController alloc] init] autorelease];

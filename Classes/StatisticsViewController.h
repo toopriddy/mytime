@@ -15,6 +15,7 @@
 	UITableView *theTableView;
 
 	int _serviceYearMinutes;
+	int _serviceYearQuickBuildMinutes;
 	
 	int _thisMonth;
 	int _lastMonth;
@@ -24,6 +25,7 @@
 	int _books[kMonthsShown];
 	int _brochures[kMonthsShown];
 	int _minutes[kMonthsShown];
+	int _quickBuildMinutes[kMonthsShown];
 	int _magazines[kMonthsShown];
 	int _returnVisits[kMonthsShown];
 	int _bibleStudies[kMonthsShown];
