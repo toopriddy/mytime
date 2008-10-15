@@ -9,6 +9,11 @@
 #import "TimePickerViewController.h"
 #import "Settings.h"
 
+@interface UIPickerView (soundsEnabled)
+- (void)setSoundsEnabled:(BOOL)fp8;
+@end
+
+
 @implementation TimePickerViewController
 @synthesize datePicker;
 @synthesize timePicker;
@@ -40,7 +45,7 @@
 		self.title = NSLocalizedString(@"Select Time", @"Select Time Title for adding hours of field service to a particular day");
 
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
-		datePicker.datePickerMode = UIDatePickerModeDate;
+		datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 		datePicker.date = date;
 		{
 			NSArray *views = datePicker.subviews;

@@ -302,6 +302,8 @@
 					[settings removeObjectForKey:SettingsMainAlertSheetShown];
 					[settings removeObjectForKey:SettingsTimeAlertSheetShown];
 					[settings removeObjectForKey:SettingsStatisticsAlertSheetShown];
+					[settings removeObjectForKey:SettingsExistingCallAlertSheetShown];
+					
 					[[Settings sharedInstance] saveData];
 					[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	

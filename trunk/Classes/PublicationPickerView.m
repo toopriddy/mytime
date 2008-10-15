@@ -9,6 +9,10 @@
 #import "PublicationPickerView.h"
 #import "Settings.h"
 
+@interface UIPickerView (soundsEnabled)
+- (void)setSoundsEnabled:(BOOL)fp8;
+@end
+
 #define YEAR_OFFSET 1900
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 

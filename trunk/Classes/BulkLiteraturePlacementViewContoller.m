@@ -172,7 +172,7 @@ static int sortByDate(id v1, id v2, void *context)
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Bulk Literature Placement view");
+//		alertSheet.title = SLocalizedString(@"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Bulk Literature Placement view");
 		[alertSheet show];
 		
 	}

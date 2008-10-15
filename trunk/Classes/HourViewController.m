@@ -75,7 +75,7 @@ static int sortByDate(id v1, id v2, void *context)
 		// object. 
 		if(quickBuild)
 		{
-			self.title = NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
+			self.title = NSLocalizedString(@"Quick Build", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
 			self.tabBarItem.image = [UIImage imageNamed:@"build.png"];
 		}
 		else
@@ -110,6 +110,29 @@ static int sortByDate(id v1, id v2, void *context)
 	[[self navigationController] pushViewController:viewController animated:YES];
 }
 
+- (void)updatePrompt
+{
+	if(!_quickBuild)
+	{
+		NSDate *date = [[[Settings sharedInstance] settings] objectForKey:SettingsTimeStartDate];
+		if(date)
+		{
+			[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
+			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		#warning fix me
+		//	  [dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number")]];
+			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];			 
+
+			[self.navigationItem setPrompt:[NSString stringWithFormat:NSLocalizedString(@"Time started at: %@", @"Hours view prompt when you press the start time button"), [dateFormatter stringFromDate:date]]];
+		}
+		else
+		{	
+			[self.navigationItem setPrompt:nil];
+		}
+	}
+}
+
 - (void)navigationControlStartTime:(id)sender 
 {
 	[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsTimeStartDate];
@@ -120,6 +143,7 @@ static int sortByDate(id v1, id v2, void *context)
 															   target:self
 															   action:@selector(navigationControlStopTime:)] autorelease];
 	[self.navigationItem setLeftBarButtonItem:button animated:YES];
+	[self updatePrompt];
 }
 
 - (void)navigationControlStopTime:(id)sender 
@@ -150,6 +174,7 @@ static int sortByDate(id v1, id v2, void *context)
 															   target:self
 															   action:@selector(navigationControlStartTime:)] autorelease];
 	[self.navigationItem setLeftBarButtonItem:button animated:YES];
+	[self updatePrompt];
 }
 
 - (void)loadView 
@@ -198,6 +223,7 @@ static int sortByDate(id v1, id v2, void *context)
 			[self.navigationItem setLeftBarButtonItem:button animated:NO];
 		}
 	}
+	[self updatePrompt];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -222,7 +248,7 @@ static int sortByDate(id v1, id v2, void *context)
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
+//		alertSheet.title = SLocalizedString(@"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Time view");
 		[alertSheet show];
 		
 	}
@@ -305,7 +331,7 @@ static int sortByDate(id v1, id v2, void *context)
 #warning fix me
 //	  [dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number")]];
 	[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
+	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];			 
 
 	[cell setTitle:[dateFormatter stringFromDate:date]];
 

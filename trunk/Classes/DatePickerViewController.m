@@ -9,6 +9,10 @@
 #import "DatePickerViewController.h"
 #import "Settings.h"
 
+@interface UIPickerView (soundsEnabled)
+- (void)setSoundsEnabled:(BOOL)fp8;
+@end
+
 @implementation DatePickerViewController
 @synthesize datePicker;
 @synthesize containerView;

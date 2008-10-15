@@ -174,7 +174,7 @@
 
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
+		alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
 		[alertSheet show];
 	}
 }
