@@ -37,6 +37,9 @@
 /* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publikation";
 
@@ -58,14 +61,14 @@
 /* Add a placed publication action button in call view */
 "Add a placed publication" = "Placerad litteratur";
 
-/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
-"Add a placed publications" = "Lägg till placeringar";
-
 /* Add a return visit action button */
 "Add a return visit" = "Lägg till ett återbesök";
 
 /* Return Visit Notes Placeholder text */
 "Add Notes" = "Anteckningar";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "Lägg till placeringar";
 
 /* Address label for call */
 "Address" = "Adress";
@@ -118,6 +121,9 @@
 /* Bible DVD Publication Name */
 "Bible DVD: Matthew" = "Bibel DVD: Matteus";
 
+/* Bible DVD Publication Name */
+"Bible DVD: Romans" = "Bible DVD: Romans";
+
 /* Book Publication Name */
 "Bible Stories" = "Min bok med bibliska";
 
@@ -163,7 +169,7 @@
 /* view title */
 "Calls Sorted by Date" = "Datumsortering";
 
-/* view title */
+/* View title */
 "Calls Sorted by Name" = "Besök sorterade i namnordning";
 
 /* view title */
@@ -266,6 +272,9 @@
 "DVD: God's Friend" = "CD: Familjer - Låt bibelläsning bli n del av ert dagliga liv";
 
 /* DVD Publication Name */
+"DVD: Great Teacher" = "DVD: Great Teacher";
+
+/* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Alternativ till blod";
 
 /* DVD Publication Name */
@@ -346,11 +355,11 @@
 /* Singular form of the word hour */
 "hour" = "timme";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Timmar";
-
 /* Plural form of the word hours */
 "hours" = "timmar";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Timmar";
 
 /* House Number */
 "House Number" = "Gatunummer";
@@ -451,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "minuter";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Min bok med bibliska berättelser";
 
@@ -474,6 +492,9 @@
 
 /* No dont delete the call */
 "No" = "Nej";
+
+/* return visit type name */
+"Not At Home" = "Not At Home";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -514,6 +535,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Hjälp mig utveckla MyTime genom att lämna en frivillig gåva";
 
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "V.g vänta tills backupprogrammet startat, besök mytime.googlecode.com för mer information om säkerhetskopieringsprogrammet";
 
@@ -522,6 +546,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "Jehovas vittnen- förkunnare...";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publikationer";
@@ -535,14 +562,26 @@
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "Frågor, kommentarer? Skicka ett email";
 
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build" = "Quick Build";
+
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build Hours" = "Quick Build Hours";
+
 /* Book Publication Name */
 "Reasoning" = "Resonera";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Reload";
 
 /* Brochures Publication Name */
 "Require" = "Vad kräver Gud...";
 
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "Återläst säkerhetskopia, starta om MyTime för att s förändringar";
+
+/* return visit type name */
+"Return Visit" = "Return Visit";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "åb anteckningar";
@@ -573,6 +612,12 @@
 
 /* Long month name */
 "September" = "September";
+
+/* Service year total quick build hours label */
+"Service Year Quick Build Total" = "Service Year Quick Build Total";
+
+/* Service year total hours label */
+"Service Year Total" = "Service Year Total";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Inställningar";
@@ -607,20 +652,26 @@
 /* Street Sorted button title */
 "Street Sorted" = "Adress sort.";
 
+/* return visit type name */
+"Study" = "Study";
+
 /* Tracts Publication Name */
 "Suffering to End" = "Allt lidande är snart slut";
 
 /* Book Publication Name */
 "Teacher" = "Vi lär...store läraren";
 
-/* Information for the user to know what is going on with this and new releases */
-"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)"= "Tack för att du använder My Time. Jag har använt mer än 200 timmar för att få Appstore att fungera; om du därför finner programmet användbart får du gärna bidra med en slant även om det är en liten summa. Jag letar efter översättare av My Time. Är du intresserad av att hjälpa mig? Skicka ett mail eller donera  (Titta i Mer och inställningar)";
-
 /* Tracts Publication Name */
 "The Greatest Name" = "Det största namnet";
 
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Timmar under %@";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Time started at: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Klicka på Ändra knappen för att addera ett åb, eller för att se var ett åb finns genom att klicka på adressen";
@@ -631,6 +682,9 @@
 /* Brochures Publication Name */
 "Trinity" = "Treeningheten";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Ingen adress";
 
@@ -639,6 +693,9 @@
 
 /* Title for the view where you write notes for a call */
 "Visit Notes" = "Anteckningar";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Väntar på att backupprgrammet ska ansluta...";
@@ -684,15 +741,6 @@
 
 /* Yes delete the call */
 "Yes" = "Ja";
-
-/* This is a note displayed when they first see the Bulk Literature Placement view */
-"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Du kan radera placerad litteratur på samma sätt som du kan radera email, podcasts och annat i 'listor' på din iPhone/iTouch: Svep från vänster till höger så dyker radera upp.";
-
-/* This is a note displayed when they first see the Time view */
-"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Du kan radera inmatad tid på samma sätt som du kan radera email, podcasts och annat i 'listor' på din iPhone/iTouch: Svep från vänster till höger så dyker radera upp.";
-
-/* This is a note displayed when they first see the Statistics View */
-"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "Du kan se summan av vad du gjort under månaden såsom böcker, broschyrer, återbesök och timmar.";
 
 /* Book Publication Name */
 "Young People Ask" = "Ungdomar frågar...";

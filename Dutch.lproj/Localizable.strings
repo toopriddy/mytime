@@ -37,6 +37,9 @@
 /* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publicatie";
 
@@ -58,14 +61,14 @@
 /* Add a placed publication action button in call view */
 "Add a placed publication" = "Voeg publicatie toe";
 
-/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
-"Add placed publications" = "Voeg losse publicaties toe";
-
 /* Add a return visit action button */
 "Add a return visit" = "Voeg nabezoek toe";
 
 /* Return Visit Notes Placeholder text */
 "Add Notes" = "Voeg Notitie toe";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "Voeg losse publicaties toe";
 
 /* Address label for call */
 "Address" = "Adres";
@@ -117,6 +120,9 @@
 
 /* Bible DVD Publication Name */
 "Bible DVD: Matthew" = "Bijbel DVD: Mattheus";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Romans" = "Bible DVD: Romans";
 
 /* Book Publication Name */
 "Bible Stories" = "Bijbelverhalen";
@@ -266,6 +272,9 @@
 "DVD: God's Friend" = "DVD: God's Vriend";
 
 /* DVD Publication Name */
+"DVD: Great Teacher" = "DVD: Great Teacher";
+
+/* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Grootste Mens";
 
 /* DVD Publication Name */
@@ -346,11 +355,11 @@
 /* Singular form of the word hour */
 "hour" = "uur";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Uren";
-
 /* Plural form of the word hours */
 "hours" = "uren";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Uren";
 
 /* House Number */
 "House Number" = "Huisnummer";
@@ -451,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "minuten";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mijn Boek Met Bijbelverhalen";
 
@@ -474,6 +492,9 @@
 
 /* No dont delete the call */
 "No" = "Nee";
+
+/* return visit type name */
+"Not At Home" = "Not At Home";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -514,6 +535,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Doneren";
 
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application";
 
@@ -522,6 +546,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "Verkondigers";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publicaties";
@@ -535,14 +562,26 @@
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "Vragen, Commentaar? Email me";
 
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build" = "Quick Build";
+
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build Hours" = "Quick Build Hours";
+
 /* Book Publication Name */
 "Reasoning" = "Redeneren";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Reload";
 
 /* Brochures Publication Name */
 "Require" = "Require";
 
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "Backup teruggezet, herstart MyTime om de veranderingen te zien";
+
+/* return visit type name */
+"Return Visit" = "Return Visit";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Nabezoek Notities";
@@ -573,6 +612,12 @@
 
 /* Long month name */
 "September" = "September";
+
+/* Service year total quick build hours label */
+"Service Year Quick Build Total" = "Service Year Quick Build Total";
+
+/* Service year total hours label */
+"Service Year Total" = "Service Year Total";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Instellingen";
@@ -607,20 +652,26 @@
 /* Street Sorted button title */
 "Street Sorted" = "Straat Gesorteerd";
 
+/* return visit type name */
+"Study" = "Study";
+
 /* Tracts Publication Name */
 "Suffering to End" = "Eind Aan Lijden";
 
 /* Book Publication Name */
 "Teacher" = "Leraar";
 
-/* Information for the user to know what is going on with this and new releases */
-"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)" = "Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)";
-
 /* Tracts Publication Name */
 "The Greatest Name" = "De Grootste Naam";
 
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Tijd voor %@";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Time started at: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Tik op de Bewerk knop om een nabezoek toe te voegen of bekijk waar je nabezoek is door op het adres te tikken.";
@@ -631,6 +682,9 @@
 /* Brochures Publication Name */
 "Trinity" = "Drieâenheid";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Onbekend";
 
@@ -639,6 +693,9 @@
 
 /* Title for the view where you write notes for a call */
 "Visit Notes" = "Bezoek Notities";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Wachten op de Backup Applicatie...\n\nGa naar mytime.googlecode.com voor meer info over de Backup Applicatie";
@@ -684,15 +741,6 @@
 
 /* Yes delete the call */
 "Yes" = "Ja";
-
-/* This is a note displayed when they first see the Bulk Literature Placement view */
-"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Je kunt lectuurverspreidingen verwijderen net als een email e.d. Ga met je vinger van links naar rechts op een item en een Verwijder knop verschijnt.";
-
-/* This is a note displayed when they first see the Time view */
-"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Je kunt tijden verwijderen net als een email e.d. Ga met je vinger van links naar rechts op een item en een Verwijder knop verschijnt.";
-
-/* This is a note displayed when they first see the Statistics View */
-"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "Je kunt hier een totaaloverzicht zien wat je uren, verspreidingen en nabezoeken zijn geweest gedurende de maand.";
 
 /* Book Publication Name */
 "Young People Ask" = "Jonge Mensen Vragen";

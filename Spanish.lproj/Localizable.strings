@@ -37,6 +37,9 @@
 /* Plural form of '2 Broshures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Broshure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publicación";
 
@@ -58,14 +61,14 @@
 /* Add a placed publication action button in call view */
 "Add a placed publication" = "Añadir publicación entregada";
 
-/* Action Button in the Day's Bulk Literature Placement View called 'Add a placed publications' */
-"Add a placed publications" = "Añadir publicaciones entregadas";
-
 /* Add a return visit action button */
 "Add a return visit" = "Anotar revisita";
 
 /* Return Visit Notes Placeholder text */
 "Add Notes" = "Notas";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "Añadir publicaciones entregadas";
 
 /* Address label for call */
 "Address" = "Dirección";
@@ -118,6 +121,9 @@
 /* Bible DVD Publication Name */
 "Bible DVD: Matthew" = "Biblia en DVD: Mateo";
 
+/* Bible DVD Publication Name */
+"Bible DVD: Romans" = "Bible DVD: Romans";
+
 /* Book Publication Name */
 "Bible Stories" = "Historias bíblicas";
 
@@ -157,16 +163,19 @@
 /* Address title for address form */
 "Call Address" = "Dirección";
 
-/* Expanded name for 'City Sorted' ButtonBar view text when on the More view */
+/* View title */
 "Calls Sorted by City" = "Contactos ordenados por Ciudad";
 
-/* Expanded name for 'Date Sorted' ButtonBar view text when on the More view */
+/* view title */
 "Calls Sorted by Date" = "Contactos ordenados por Fecha";
 
-/* Expanded name for 'Street Sorted' ButtonBar view text when on the More view */
+/* View title */
+"Calls Sorted by Name" = "Calls Sorted by Name";
+
+/* view title */
 "Calls Sorted by Street" = "Contactos ordenadas por Calle";
 
-/* Cancel NavigationBar Button */
+/* cancel button */
 "Cancel" = "Cancelar";
 
 /* Change Date action button for visit in call view */
@@ -175,7 +184,7 @@
 /* City */
 "City" = "Ciudad";
 
-/* 'City Sorted' ButtonBar View text */
+/* button bar title */
 "City Sorted" = "Por ciudad";
 
 /* Book Publication Name */
@@ -208,7 +217,7 @@
 /* Book Publication Name */
 "Daniel's Prophecy" = "Las profecías de Daniel";
 
-/* 'Date Sorted' ButtonBar View text */
+/* button bar title */
 "Date Sorted" = "Por fecha";
 
 /* Short month name */
@@ -263,6 +272,9 @@
 "DVD: God's Friend" = "DVD: Amigos de Dios";
 
 /* DVD Publication Name */
+"DVD: Great Teacher" = "DVD: Great Teacher";
+
+/* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: El hombre más grande";
 
 /* DVD Publication Name */
@@ -306,6 +318,9 @@
 
 /* backup failed string */
 "Failed advertising server" = "Error en el servidor";
+
+/* failure message for starting the backup service */
+"Failed creating server" = "Failed creating server";
 
 /* Book Publication Name */
 "Family Happiness" = "Felicidad familiar";
@@ -354,6 +369,9 @@
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Espíritu inmortal";
+
+/* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Initial Visit Notes" = "Initial Visit Notes";
 
 /* Book Publication Name */
 "Insight" = "Perspicacia";
@@ -421,6 +439,9 @@
 /* Book Publication Name */
 "Mankind's Search for God" = "El hombre en busca de Dios";
 
+/* Mapped calls view title */
+"Mapped Calls" = "Mapped Calls";
+
 /* Short month name */
 "Mar" = "Mar";
 
@@ -439,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "minutos";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mi libro de historias bíblicas";
 
@@ -451,6 +481,9 @@
 /* Name label for Call in editing mode */
 "Name" = "Nombre";
 
+/* button bar title */
+"Name Sorted" = "Name Sorted";
+
 /* Brochures Publication Name */
 "Nations" = "Naciones";
 
@@ -459,6 +492,9 @@
 
 /* No dont delete the call */
 "No" = "No";
+
+/* return visit type name */
+"Not At Home" = "Not At Home";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -475,7 +511,7 @@
 /* Long month name */
 "October" = "Octubre";
 
-/* OK/Acknowledgement Button */
+/* OK button */
 "OK" = "OK";
 
 /* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
@@ -499,6 +535,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Por favor haga una donación, ayúdeme a ayudarlo";
 
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize... Go to mytime.googlecode.com for more information about the Backup Application" = "Por favor espere a que se inicie la aplicación de copia de seguridad... Vaya a mytime.googlecode.com para más información acerca de la aplicación de copia de seguridad";
 
@@ -507,6 +546,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "Proclamadores";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publicaciones";
@@ -520,14 +562,26 @@
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "¿Preguntas, comentarios? Mándeme un email";
 
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build" = "Quick Build";
+
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build Hours" = "Quick Build Hours";
+
 /* Book Publication Name */
 "Reasoning" = "Razonamiento";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Reload";
 
 /* Brochures Publication Name */
 "Require" = "Exige";
 
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "Restaurada la copia de seguridad, reinicie MyTime para ver los cambios";
+
+/* return visit type name */
+"Return Visit" = "Return Visit";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Notas de la revisita";
@@ -559,7 +613,13 @@
 /* Long month name */
 "September" = "Septiembre";
 
+/* Service year total quick build hours label */
+"Service Year Quick Build Total" = "Service Year Quick Build Total";
+
 /* More View Table Group Title */
+"Service Year Total" = "Service Year Total";
+
+/* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Ajustes";
 
 /* Book Publication Name */
@@ -592,20 +652,29 @@
 /* 'Street Sorted' ButtonBar View text */
 "Street Sorted" = "Por Calle";
 
+/* return visit type name */
+"Study" = "Study";
+
 /* Tracts Publication Name */
 "Suffering to End" = "El sufrimiento";
 
 /* Book Publication Name */
 "Teacher" = "Gran Maestro";
 
-/* Information for the user to know what is going on with this and new releases */
-"Thanks for using MyTime! Unfortunately you will not be able to run MyTime if you upgrade to iPhone/iTouch 2.0 software, you need to visit the application website on the 'More' View for backup instructions.  If you work for apple or know someone who does, then bug them to accept my Developer Program Application :P\nI am also looking for translators, MyTime has been used by many people in other countries. Interested in helping? Email me." = "Gracias por usar MyTime! Desafortunadamente no podrá usar MyTime si usa la versión 2.0 de iPhone/iTouch, y necesitará visitar la página web de la aplicación desde el menú Ajustes para las instrucciones de copia.  Si trabaja para Apple o conoce a alguien que lo haga, anímele a aceptar mi Developer Program Application :P\nTambién estoy buscando traductores, MyTime ha sido usado en distintos países. Interesado en ayudarme? Envíeme un email.";
-
 /* Tracts Publication Name */
 "The Greatest Name" = "El nombre más grande";
 
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Informe de %@";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Time started at: %@";
+
+/* This is a note displayed when they first see the non editable call view */
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call";
 
 /* Publication Type name */
 "Tract" = "Tratado";
@@ -613,11 +682,20 @@
 /* Brochures Publication Name */
 "Trinity" = "Trinidad";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Desconocida";
 
 /* More View Table Group Title */
 "Version" = "Versión";
+
+/* Title for the view where you write notes for a call */
+"Visit Notes" = "Visit Notes";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect..." = "Esperando a conectar con la aplicación de copia de seguridad...";
@@ -663,15 +741,6 @@
 
 /* Yes delete the call */
 "Yes" = "Sí";
-
-/* This is a note displayed when they first see the Bulk Literature Placement view */
-"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Puede eliminar pubicaciones entregadas de la misma forma que elimina correos, podcasts y otras cosas colcadas en tablas en el iPhone/iTouch: Pase el dedo por la fila deseada de izquierda a derecha y aparecerá el botón Eliminar.";
-
-/* This is a note displayed when they first see the Time view */
-"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Puede eliminar entradas de la lista de horas de la misma forma que elimina correos, podcasts y otras cosas colcadas en tablas en el iPhone/iTouch: Pase el dedo por la fila deseada de izquierda a derecha y aparecerá el botón Eliminar.";
-
-/* This is a note displayed when they first see the Statistics View */
-"You can see your end of the month field service activity like books, broshures, magazines, return visits and hours, but you will only see what you actually did." = "A final de mes podrá ver su informe de actividad con los libros, folletos y revistas entregados, mientras tanto podrá ver su informe a día de hoy.";
 
 /* Book Publication Name */
 "Young People Ask" = "Los jóvenes preguntan";

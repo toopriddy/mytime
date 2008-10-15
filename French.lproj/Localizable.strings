@@ -37,6 +37,9 @@
 /* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publication";
 
@@ -103,20 +106,23 @@
 /* Book Publication Name */
 "Bible" = "Bible";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Acts" = "DVD Bible: Actes";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: John" = "DVD Bible: Jean";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Luke" = "DVD Bible: Luc";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Mark" = "DVD Bible: Marc";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Matthew" = "DVD Bible: Matthieu";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Romans" = "Bible DVD: Romans";
 
 /* Book Publication Name */
 "Bible Stories" = "Recueil d'histoires bibliques";
@@ -266,6 +272,9 @@
 "DVD: God's Friend" = "DVD: Ami de Dieu";
 
 /* DVD Publication Name */
+"DVD: Great Teacher" = "DVD: Great Teacher";
+
+/* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Le plus Grand Homme";
 
 /* DVD Publication Name */
@@ -346,11 +355,11 @@
 /* Singular form of the word hour */
 "hour" = "heure";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Heures";
-
 /* Plural form of the word hours */
 "hours" = "heures";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Heures";
 
 /* House Number */
 "House Number" = "Numéro d'habitation";
@@ -451,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "minutes";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Recueil d'Histoires Bibliques";
 
@@ -474,6 +492,9 @@
 
 /* No dont delete the call */
 "No" = "Non";
+
+/* return visit type name */
+"Not At Home" = "Not At Home";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -514,6 +535,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "S'il vous plaît Contribuer, Aidez-moi à vous aider";
 
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Merci de patienter que le service de sauvegarde s'initialise...\n\nAller sur mytime.googlecode.com pour plus de renseignement concernant le module sauvegarde";
 
@@ -522,6 +546,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "Prédicateurs";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publications";
@@ -535,14 +562,26 @@
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "Des Questions? E-maillez-moi";
 
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build" = "Quick Build";
+
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build Hours" = "Quick Build Hours";
+
 /* Book Publication Name */
 "Reasoning" = "Raisonner";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Reload";
 
 /* Brochures Publication Name */
 "Require" = "Attend";
 
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "Sauvegarde restaurée, redémarrez MyTime pour voir les changements.";
+
+/* return visit type name */
+"Return Visit" = "Return Visit";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Notes sur la Nouvelle Visite";
@@ -573,6 +612,12 @@
 
 /* Long month name */
 "September" = "Septembre";
+
+/* Service year total quick build hours label */
+"Service Year Quick Build Total" = "Service Year Quick Build Total";
+
+/* Service year total hours label */
+"Service Year Total" = "Service Year Total";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Préférences";
@@ -607,20 +652,26 @@
 /* Street Sorted button title */
 "Street Sorted" = "Tri par Rue";
 
+/* return visit type name */
+"Study" = "Study";
+
 /* Tracts Publication Name */
 "Suffering to End" = "Bientôt la fin des souffrances ! (T27)";
 
 /* Book Publication Name */
 "Teacher" = "Grand Enseignant";
 
-/* Information for the user to know what is going on with this and new releases */
-"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)" = "Merci d'utiliser MyTime! J'ai consacré plus de 200 heures et beaucoup de nuit sans sommeil à ce projet; si vous trouvez que cela en vaut la peine merci de soutenir par une modique contribution. Je recherche des traducteurs car MyTime est utilisé dans le monde entier. E-Maillez moi dans ce cas ou Contribuer (Plus de détail dans l'onglet 'Autre puis préférences')";
-
 /* Tracts Publication Name */
 "The Greatest Name" = "Le Plus Grand des Noms (T72)";
 
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Rapport d'activité : %@";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Time started at: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Pressez le bouton Edition pour ajouter une nouvelle visite ou vous pouvez voir où habite votre nouvelle visite en pressant le champ adresse concerné";
@@ -631,6 +682,9 @@
 /* Brochures Publication Name */
 "Trinity" = "Trinité";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Inconnu";
 
@@ -639,6 +693,9 @@
 
 /* Title for the view where you write notes for a call */
 "Visit Notes" = "Notes de la Visite";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Veuillez patienter - Connection au serveur en cours...\n\nAller sur mytime.googlecode.com pour plus de détail sur l'application de sauvegarde";
@@ -684,15 +741,6 @@
 
 /* Yes delete the call */
 "Yes" = "Oui";
-
-/* This is a note displayed when they first see the Bulk Literature Placement view */
-"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Vous pouvez supprimer un placement de la même manière que vous supprimer un email sur l'iphone: Déplacer la ligne de la gauche vers droite et un bouton Supprimer va apparaître.";
-
-/* This is a note displayed when they first see the Time view */
-"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Vous pouvez supprimer une entrée Temps de prédication de la même manière que vous supprimer un email sur l'iphone: Déplacer la ligne de la gauche vers droite et un bouton Supprimer va apparaître.";
-
-/* This is a note displayed when they first see the Statistics View */
-"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "Vous pouvez visualiser ici votre activité du mois, toutefois les Totaux Livres, Brochures, Heures, Périodiques et autres n'apparaissent que s'ils sont effectifs.";
 
 /* Book Publication Name */
 "Young People Ask" = "Les jeunes s'intérrogent";
