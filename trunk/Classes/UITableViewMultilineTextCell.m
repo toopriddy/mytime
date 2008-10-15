@@ -30,8 +30,13 @@
 		self.textView = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		textView.backgroundColor = [UIColor clearColor];
 		textView.font = [UIFont systemFontOfSize:16];
+#if 1
 		textView.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		textView.highlightedTextColor = [UIColor whiteColor];
+#else
+		textView.font = [UIFont boldSystemFontOfSize:16];
+		textView.textColor = [UIColor blackColor];
+#endif
 		textView.text = @"";
 		textView.textAlignment = UITextAlignmentLeft;
 		textView.lineBreakMode = UILineBreakModeWordWrap;
@@ -71,7 +76,11 @@
 		}
 		else
 		{
+#if 1
 			textView.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
+#else
+			textView.textColor = [UIColor blackColor];
+#endif
 		}
 	}
 }
