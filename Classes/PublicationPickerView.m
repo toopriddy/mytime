@@ -418,9 +418,11 @@ static const PublicationInformation PUBLICATIONS[] = {
         DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
         [pickerView reloadAllComponents];
 
-		if([PUBLICATIONS[row].type isEqualToString:PublicationTypeHeading])
+        if(component == 0 &&
+		   [PUBLICATIONS[_publication].type isEqualToString:PublicationTypeHeading])
 		{
-			_publication = row + 1;
+			// skip past the heading
+			_publication++;
 			[self selectRow: _publication inComponent: 0 animated: YES];
 		}
 
