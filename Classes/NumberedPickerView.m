@@ -9,6 +9,10 @@
 #import "NumberedPickerView.h"
 #import "Settings.h"
 
+@interface UIPickerView (soundsEnabled)
+- (void)setSoundsEnabled:(BOOL)fp8;
+@end
+
 @implementation NumberedPickerView
 @synthesize number;
 @synthesize label;

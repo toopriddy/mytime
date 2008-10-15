@@ -101,7 +101,7 @@ static NSString *MONTHS[] = {
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did.", @"This is a note displayed when they first see the Statistics View");
+		alertSheet.title = NSLocalizedString(@"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.", @"This is a note displayed when they first see the Statistics View");
 		[alertSheet show];
 	}
 }
