@@ -13,6 +13,7 @@
 {
 	MapView *webView;
 	NSMutableDictionary *call;
+	UIActivityIndicatorView *progView;
 }
 
 @property (nonatomic, retain) MapView *webView;

@@ -1486,6 +1486,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_call setObject:(addressViewController.street ? addressViewController.street : @"") forKey:CallStreet];
 	[_call setObject:(addressViewController.city ? addressViewController.city : @"") forKey:CallCity];
 	[_call setObject:(addressViewController.state ? addressViewController.state : @"") forKey:CallState];
+	// remove the gps location so that they will look it up again
+	[_call removeObjectForKey:CallLattitudeLongitude];
 
 	[self reloadData];
 	[self save];
