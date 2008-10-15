@@ -37,6 +37,9 @@
 /* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d Months Displayed";
+
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "出版物 %d";
 
@@ -352,11 +355,11 @@
 /* Singular form of the word hour */
 "hour" = "時間";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "時間";
-
 /* Plural form of the word hours */
 "hours" = "時間";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "時間";
 
 /* House Number */
 "House Number" = "番地";
@@ -457,6 +460,15 @@
 /* Plural form of the word minutes */
 "minutes" = "分";
 
+/* Month singular */
+"Month" = "Month";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Month Count";
+
+/* Months plural */
+"Months" = "Months";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "　聖書物語";
 
@@ -480,6 +492,9 @@
 
 /* No dont delete the call */
 "No" = "いいえ";
+
+/* return visit type name */
+"Not At Home" = "Not At Home";
 
 /* Short month name */
 "Nov" = "11月";
@@ -520,6 +535,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "本プログラムのためにも，是非ご寄付を。";
 
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "バックアップサービスが初期化されるまでお待ちください...\n\nバックアップアプリケーションの詳細情報はmytime.googlecode.comへどうぞ";
 
@@ -528,6 +546,9 @@
 
 /* Book Publication Name */
 "Proclaimers" = "　ふれ告げる人々";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "枚／部／冊";
@@ -541,14 +562,26 @@
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "質問やコメント？ Eメールしてください";
 
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build" = "Quick Build";
+
+/* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"Quick Build Hours" = "Quick Build Hours";
+
 /* Book Publication Name */
 "Reasoning" = "　論じる";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Reload";
 
 /* Brochures Publication Name */
 "Require" = "　求め";
 
 /* initial message when trying to transfer backup files */
 "Restored Backup, restart MyTime to see the changes" = "リストア完了。MyTimeを再起動してください。";
+
+/* return visit type name */
+"Return Visit" = "Return Visit";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "再訪問メモ";
@@ -579,6 +612,12 @@
 
 /* Long month name */
 "September" = "9月";
+
+/* Service year total quick build hours label */
+"Service Year Quick Build Total" = "Service Year Quick Build Total";
+
+/* Service year total hours label */
+"Service Year Total" = "Service Year Total";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "設定";
@@ -619,14 +658,17 @@
 /* Book Publication Name */
 "Teacher" = "　教えて";
 
-/* Information for the user to know what is going on with this and new releases */
-"Thanks for using MyTime! I have spent over 200 hours and lost a lot of sleep getting the AppStore version working; if you find it useful please donate even if it is a small coin of little value.  I am looking for translators since MyTime is used all over the world. Interested in helping? Email me or donate (look in the More view and Settings)" = "MyTimeのご利用ありがとうございます！AppStoreへ公開されるまで200時間以上使って睡眠不足の日もしばしばありまた。役に立つと思いましたら是非どんなに少額でもご寄付ください。MyTimeは世界中に使われていると思います。そのため，翻訳者を探しています。ご興味ありますか。Eメールまた寄付を送ってください。「その他」で「設定」のところご覧ください。";
-
 /* Tracts Publication Name */
 "The Greatest Name" = "　The Greatest Name";
 
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "%@の時間";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Time started at: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "編集ボタンをタッチすると再訪問が追加できます。または，住所をタッチすると訪問場所が表示されます。";
@@ -637,6 +679,9 @@
 /* Brochures Publication Name */
 "Trinity" = "　三位一体";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "不明";
 
@@ -645,6 +690,9 @@
 
 /* Title for the view where you write notes for a call */
 "Visit Notes" = "訪問メモ";
+
+/* Return Visit Type title */
+"Visit Type" = "Visit Type";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "バックアップアプリケーションの接続待ちです...\n\nバックアップアプリケーションの詳細情報はmytime.googlecode.comへどうぞ";
@@ -690,15 +738,6 @@
 
 /* Yes delete the call */
 "Yes" = "はい";
-
-/* This is a note displayed when they first see the Bulk Literature Placement view */
-"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Eメールやポッドキャストと同様な方法で配布した出版物のエントリーを削除することができます。行を左から右方向にスワイプしたら削除ボタンが表示されます。";
-
-/* This is a note displayed when they first see the Time view */
-"You can delete time entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up." = "Eメールやポッドキャストと同様な方法で時間のエントリーを削除することができます。行を左から右方向にスワイプしたら削除ボタンが表示されます。";
-
-/* This is a note displayed when they first see the Statistics View */
-"You can see your end of the month field service activity like books, brochures, magazines, return visits and hours, but you will only see what you actually did." = "月末における野外奉仕活動状況の一覧。ここで配布した出版物の数と再訪問件数や奉仕時間が表示されます。";
 
 /* Book Publication Name */
 "Young People Ask" = "　若い人が尋ねる";
