@@ -74,6 +74,11 @@
 	[super dealloc];
 }
 
+- (void)reload
+{
+	[mMapWebView reload];
+}
+
 //-- Touch Events Handling Methods ---------------------------------------------
 - (void) touchesCanceled {
     [self resetTouches];

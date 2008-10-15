@@ -66,21 +66,20 @@
 	// make it our custom right view in the navigation bar
 	//
 	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
-	UIActivityIndicatorView *progressView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
-	progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-	progressView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+	progView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+	progView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+	progView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
 									UIViewAutoresizingFlexibleRightMargin |
 									UIViewAutoresizingFlexibleTopMargin |
 									UIViewAutoresizingFlexibleBottomMargin);
 	
 	UINavigationItem *navItem = self.navigationItem;
-	UIBarButtonItem *buttonItem = [[[UIBarButtonItem alloc] initWithCustomView:progressView] autorelease];
+	UIBarButtonItem *buttonItem = [[[UIBarButtonItem alloc] initWithCustomView:progView] autorelease];
 	navItem.rightBarButtonItem = buttonItem;
 	// we are done with these since the nav bar retains them:
-	[progressView release];
 	
 	// start fetching the default web page
-	[(UIActivityIndicatorView *)navItem.rightBarButtonItem.customView startAnimating];							
+	[progView startAnimating];							
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -93,19 +92,21 @@
 
 - (void)stopProgressIndicator
 {
-	UINavigationItem *navItem = self.navigationItem;
-	UIActivityIndicatorView *progView = (UIActivityIndicatorView *)navItem.rightBarButtonItem.customView;
 	[progView stopAnimating];
-	progView.hidden = YES;
+
+	// add Start Time button
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reload", @"'Reload' navigation bar action button for the Mapped Calls view")
+																style:UIBarButtonItemStylePlain
+															   target:webView.mMapWebView
+															   action:@selector(reload)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:YES];
 }
 
 - (void)mapViewDidStartLoad:(MapWebView *)webView
-{
-	UINavigationItem *navItem = self.navigationItem;
-	
-	UIActivityIndicatorView *progView = (UIActivityIndicatorView *)navItem.rightBarButtonItem.customView;
+{	
+	UIBarButtonItem *buttonItem = [[[UIBarButtonItem alloc] initWithCustomView:progView] autorelease];
+	[self.navigationItem setRightBarButtonItem:buttonItem animated:YES];
 	[progView startAnimating];
-	progView.hidden = NO;
 }
 #define EMPTY_NSSTRING_IF_NULL(str) ((str) ? (str) : @"")
 

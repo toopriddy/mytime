@@ -43,4 +43,5 @@
 }
 @property (readonly, getter = map) MapWebView* mMapWebView;
 @property (readwrite, getter = onClickHandler, setter = onClickHandler:) SEL mOnClickHandler;
+- (void)reload;
 @end
