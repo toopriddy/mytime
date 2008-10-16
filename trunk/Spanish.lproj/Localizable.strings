@@ -122,7 +122,7 @@
 "Bible DVD: Matthew" = "Biblia en DVD: Mateo";
 
 /* Bible DVD Publication Name */
-"Bible DVD: Romans" = "Bible DVD: Romans";
+"Bible DVD: Romans" = "Biblia en DVD: Romanos";
 
 /* Book Publication Name */
 "Bible Stories" = "Historias bíblicas";
@@ -170,10 +170,10 @@
 "Calls Sorted by Date" = "Contactos ordenados por Fecha";
 
 /* View title */
-"Calls Sorted by Name" = "Calls Sorted by Name";
+"Calls Sorted by Name" = "Contactos ordenados por Nombre";
 
 /* view title */
-"Calls Sorted by Street" = "Contactos ordenadas por Calle";
+"Calls Sorted by Street" = "Contactos ordenados por Calle";
 
 /* cancel button */
 "Cancel" = "Cancelar";
@@ -272,7 +272,7 @@
 "DVD: God's Friend" = "DVD: Amigos de Dios";
 
 /* DVD Publication Name */
-"DVD: Great Teacher" = "DVD: Great Teacher";
+"DVD: Great Teacher" = "DVD: Gran Maestro";
 
 /* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: El hombre más grande";
@@ -320,7 +320,7 @@
 "Failed advertising server" = "Error en el servidor";
 
 /* failure message for starting the backup service */
-"Failed creating server" = "Failed creating server";
+"Failed creating server" = "Error al crear el servidor";
 
 /* Book Publication Name */
 "Family Happiness" = "Felicidad familiar";
@@ -371,7 +371,7 @@
 "Immortal Spirit" = "Espíritu inmortal";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
-"Initial Visit Notes" = "Initial Visit Notes";
+"Initial Visit Notes" = "Notas de la visita inicial";
 
 /* Book Publication Name */
 "Insight" = "Perspicacia";
@@ -440,7 +440,7 @@
 "Mankind's Search for God" = "El hombre en busca de Dios";
 
 /* Mapped calls view title */
-"Mapped Calls" = "Mapped Calls";
+"Mapped Calls" = "Contactos en el mapa";
 
 /* Short month name */
 "Mar" = "Mar";
@@ -461,13 +461,13 @@
 "minutes" = "minutos";
 
 /* Month singular */
-"Month" = "Month";
+"Month" = "Mes";
 
 /* Title for selecting the number of months shown in the statistics view */
-"Month Count" = "Month Count";
+"Month Count" = "Cantidad de meses";
 
 /* Months plural */
-"Months" = "Months";
+"Months" = "Meses";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mi libro de historias bíblicas";
@@ -482,7 +482,7 @@
 "Name" = "Nombre";
 
 /* button bar title */
-"Name Sorted" = "Name Sorted";
+"Name Sorted" = "Por Nombre";
 
 /* Brochures Publication Name */
 "Nations" = "Naciones";
@@ -494,7 +494,7 @@
 "No" = "No";
 
 /* return visit type name */
-"Not At Home" = "Not At Home";
+"Not At Home" = "No en casa";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -536,7 +536,7 @@
 "Please Donate, help me help you" = "Por favor haga una donación, ayúdeme a ayudarlo";
 
 /* Information for the user to know what is going on with this and new releases */
-"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Por favor, visite mytime.googlecode.com para ver preguntas frecuentes y peticiones.\nSe ha invertido mucho tiempo en MyTime, si encuentra útil esta aplicación le animamos a hacer un donativo.  El inglés no es su idioma nativo y quiere ayudarnos a traducir? Mándeme un email (mire en Más y en Ajustes)";
 
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize... Go to mytime.googlecode.com for more information about the Backup Application" = "Por favor espere a que se inicie la aplicación de copia de seguridad... Vaya a mytime.googlecode.com para más información acerca de la aplicación de copia de seguridad";
@@ -563,16 +563,16 @@
 "Questions, Comments? Email me" = "¿Preguntas, comentarios? Mándeme un email";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build" = "Quick Build";
+"Quick Build" = "Construcción rápida";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build Hours" = "Quick Build Hours";
+"Quick Build Hours" = "Horas de la contrucción rápida";
 
 /* Book Publication Name */
 "Reasoning" = "Razonamiento";
 
 /* 'Reload' navigation bar action button for the Mapped Calls view */
-"Reload" = "Reload";
+"Reload" = "Actualizar";
 
 /* Brochures Publication Name */
 "Require" = "Exige";
@@ -581,7 +581,7 @@
 "Restored Backup, restart MyTime to see the changes" = "Restaurada la copia de seguridad, reinicie MyTime para ver los cambios";
 
 /* return visit type name */
-"Return Visit" = "Return Visit";
+"Return Visit" = "Revisita";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Notas de la revisita";
@@ -614,10 +614,10 @@
 "September" = "Septiembre";
 
 /* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Service Year Quick Build Total";
+"Service Year Quick Build Total" = "Total de construcción rápida en el año de servicio";
 
 /* More View Table Group Title */
-"Service Year Total" = "Service Year Total";
+"Service Year Total" = "Total del año de servicio";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Ajustes";
@@ -653,7 +653,7 @@
 "Street Sorted" = "Por Calle";
 
 /* return visit type name */
-"Study" = "Study";
+"Study" = "Estudio";
 
 /* Tracts Publication Name */
 "Suffering to End" = "El sufrimiento";
@@ -665,16 +665,16 @@
 "The Greatest Name" = "El nombre más grande";
 
 /* This is a note displayed when they first see the Statistics View */
-"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "Aquí verá el informe de servicio del campo de final de mes incluyendo:\nHoras\nLibros\nFolletos\nRevistas\nEstudios\n Por favor, note que sólo verá aquello que haya anotado antes.";
 
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Informe de %@";
 
 /* Hours view prompt when you press the start time button */
-"Time started at: %@" = "Time started at: %@";
+"Time started at: %@" = "Tiempo iniciado a las: %@";
 
 /* This is a note displayed when they first see the non editable call view */
-"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call";
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Pulse el botón Editar para añadir una revisita o puede ver dónde se localiza la visita pulsando en la dirección de su contacto";
 
 /* Publication Type name */
 "Tract" = "Tratado";
@@ -683,7 +683,7 @@
 "Trinity" = "Trinidad";
 
 /* Return visit type label */
-"Type" = "Type";
+"Type" = "Tipo";
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Desconocida";
@@ -692,10 +692,10 @@
 "Version" = "Versión";
 
 /* Title for the view where you write notes for a call */
-"Visit Notes" = "Visit Notes";
+"Visit Notes" = "Notas de la visita";
 
 /* Return Visit Type title */
-"Visit Type" = "Visit Type";
+"Visit Type" = "Tipo de revisita";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect..." = "Esperando a conectar con la aplicación de copia de seguridad...";

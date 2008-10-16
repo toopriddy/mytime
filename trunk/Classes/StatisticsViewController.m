@@ -243,14 +243,16 @@ static NSString *MONTHS[] = {
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	
 	memset(_books, 0, sizeof(_books));
-	memset(_brochures, 0, sizeof(_books));
-	memset(_minutes, 0, sizeof(_books));
-	memset(_magazines, 0, sizeof(_books));
-	memset(_returnVisits, 0, sizeof(_books));
-	memset(_bibleStudies, 0, sizeof(_books));
-	memset(_specialPublications, 0, sizeof(_books));
+	memset(_brochures, 0, sizeof(_brochures));
+	memset(_minutes, 0, sizeof(_minutes));
+	memset(_magazines, 0, sizeof(_magazines));
+	memset(_returnVisits, 0, sizeof(_returnVisits));
+	memset(_bibleStudies, 0, sizeof(_bibleStudies));
+	memset(_specialPublications, 0, sizeof(_specialPublications));
+	memset(_quickBuildMinutes, 0, sizeof(_quickBuildMinutes));
 
 	_serviceYearMinutes = 0;
+	_serviceYearQuickBuildMinutes = 0;
 
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
@@ -547,8 +549,8 @@ static NSString *MONTHS[] = {
 	if(_serviceYearQuickBuildMinutes && --section == 0)
 	{
 		[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
-		int hours = _serviceYearMinutes / 60;
-		int minutes = _serviceYearMinutes % 60;
+		int hours = _serviceYearQuickBuildMinutes / 60;
+		int minutes = _serviceYearQuickBuildMinutes % 60;
 		if(hours && minutes)
 			[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 		else if(hours)
