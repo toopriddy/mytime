@@ -834,10 +834,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			NSURL *url = [NSURL URLWithString:[NSString 
 										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@,+%@", 
 										                  NSLocalizedString(@"en", @"Google Localized Language Name"),
-														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [street stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [city stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], 
-														  [state stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
+														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
+														  [street stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
+														  [city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
+														  [state stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 			DEBUG(NSLog(@"Trying to open url %@", url);)
 			// open up the google map page for this call
 			[[UIApplication sharedApplication] openURL:url];
