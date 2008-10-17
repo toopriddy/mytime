@@ -284,11 +284,10 @@ static NSString *MONTHS[] = {
 			{
 				offset = _thisMonth - month;
 			}
-			else if(month != 12 && 
-			        year == _thisYear - 1 &&
-			        _thisMonth > month)
+			else if(year == _thisYear - 1 &&
+			        month > _thisMonth)
 			{
-				offset = 12 - _thisMonth + month;
+				offset = 12 + _thisMonth - month;
 			}
 			if(offset >= 0)
 			{
@@ -505,7 +504,7 @@ static NSString *MONTHS[] = {
 	NSString *title = @"";
 	int month = _thisMonth - (section - 1);
 	if(month < 1)
-		month = 12;
+		month = 12 + month;
 	title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
 														 [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
     return(title);

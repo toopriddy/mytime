@@ -27,7 +27,7 @@ static int sortByDate(id v1, id v2, void *context)
 }
 
 
-// sort the time entries and remove the 3 month old entries
+// sort the time entries and remove the 13 month old entries
 - (void)reloadData
 {
 	NSArray *sortedArray = [timeEntries sortedArrayUsingFunction:sortByDate context:NULL];
@@ -35,9 +35,9 @@ static int sortByDate(id v1, id v2, void *context)
 	[timeEntries setArray:sortedArray];
 	[sortedArray release];
 
-	// remove all entries that are older than 12 months
+	// remove all entries that are older than 13 months
 	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	[comps setMonth:-12];
+	[comps setMonth:-13];
 	NSDate *now = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
 	int count = [timeEntries count];
 	int i;
