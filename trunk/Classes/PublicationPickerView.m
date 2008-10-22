@@ -63,6 +63,9 @@ static const PublicationInformation PUBLICATIONS[] = {
 {AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
 ,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name"),       PublicationTypeMagazine}
 
+,   {AlternateLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
+,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Book Publication Name"),   PublicationTypeSpecial}
+
 ,   {AlternateLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
 
@@ -93,8 +96,6 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"Worship God", @"Book Publication Name"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Young People Ask", @"Book Publication Name"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Reasoning", @"Book Publication Name"),   PublicationTypeBook}
-
-
 
 ,   {AlternateLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
