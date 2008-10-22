@@ -599,6 +599,12 @@ static NSString *MONTHS[] = {
 		[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
 		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[index]]];
 	}
+	else if(_specialPublications[index] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _specialPublications[index]]];
+	}
 	else if(_returnVisits[index] && row-- == 0)
 	{
 		// if we are not editing, then 
