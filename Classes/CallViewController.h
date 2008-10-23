@@ -11,6 +11,7 @@
 #import "AddressViewController.h"
 #import "AddressViewControllerDelegate.h"
 #import "PublicationViewControllerDelegate.h"
+#import "PublicationTypeViewController.h"
 #import "CallViewControllerDelegate.h"
 #import "DatePickerViewControllerDelegate.h"
 #import "UITableViewTextFieldCellDelegate.h"
@@ -21,6 +22,7 @@
                                                   UITableViewDataSource, 
 												  UIActionSheetDelegate, 
 												  PublicationViewControllerDelegate,
+												  PublicationTypeViewControllerDelegate,
 												  AddressViewControllerDelegate,
 												  DatePickerViewControllerDelegate,
 												  UITableViewTextFieldCellDelegate,

@@ -11,6 +11,7 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "AddressViewController.h"
 #import "PublicationViewController.h"
+#import "PublicationTypeViewController.h"
 #import "WebViewController.h"
 #import "DatePickerViewController.h"
 #import "UITableViewMultilineTextCell.h"
@@ -43,7 +44,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 
 */
-#define AlternateLocalizedString(a, b) (a)
+
 
 
 @interface SelectAddressView : UIResponder <UITextFieldDelegate>
@@ -956,7 +957,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	_editingPublication = nil; // we are making a new one
 	
 	// make the new call view 
-	PublicationViewController *p = [[[PublicationViewController alloc] init] autorelease];
+	PublicationTypeViewController *p = [[[PublicationTypeViewController alloc] init] autorelease];
 	p.delegate = self;
 
 	[[self navigationController] pushViewController:p animated:YES];		

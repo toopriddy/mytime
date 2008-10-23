@@ -10,7 +10,7 @@
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 static NSString *MONTHS[] = {
 	AlternateLocalizedString(@"January", @"Long month name"),
@@ -220,9 +220,9 @@ static NSString *MONTHS[] = {
 								{
 									_books[offset]++;
 								}
-								else if([type isEqualToString:PublicationTypeSpecial])
+								else if([type isEqualToString:PublicationTypeCampaignTract])
 								{
-									_specialPublications[offset]++;
+									_campaignTracts[offset]++;
 								}
 							}
 						}
@@ -248,7 +248,7 @@ static NSString *MONTHS[] = {
 	memset(_magazines, 0, sizeof(_magazines));
 	memset(_returnVisits, 0, sizeof(_returnVisits));
 	memset(_bibleStudies, 0, sizeof(_bibleStudies));
-	memset(_specialPublications, 0, sizeof(_specialPublications));
+	memset(_campaignTracts, 0, sizeof(_campaignTracts));
 	memset(_quickBuildMinutes, 0, sizeof(_quickBuildMinutes));
 
 	_serviceYearMinutes = 0;
@@ -419,9 +419,9 @@ static NSString *MONTHS[] = {
 					{
 						_books[offset] += number;
 					}
-					else if([type isEqualToString:PublicationTypeSpecial])
+					else if([type isEqualToString:PublicationTypeCampaignTract])
 					{
-						_specialPublications[offset] += number;
+						_campaignTracts[offset] += number;
 					}
 				}
 				
@@ -476,7 +476,7 @@ static NSString *MONTHS[] = {
 		count++;
 	if(_magazines[index])
 		count++;
-	if(_specialPublications[index])
+	if(_campaignTracts[index])
 		count++;
 	if(_returnVisits[index])
 		count++;
@@ -599,11 +599,11 @@ static NSString *MONTHS[] = {
 		[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
 		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[index]]];
 	}
-	else if(_specialPublications[index] && row-- == 0)
+	else if(_campaignTracts[index] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _specialPublications[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _campaignTracts[index]]];
 	}
 	else if(_returnVisits[index] && row-- == 0)
 	{

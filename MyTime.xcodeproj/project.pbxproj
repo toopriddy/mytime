@@ -64,6 +64,7 @@
 		90FBE8900E39938F00FD8014 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE88F0E39938F00FD8014 /* Settings.m */; };
 		90FBE8F90E39AD7100FD8014 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90FBE8F80E39AD7100FD8014 /* CoreGraphics.framework */; };
 		90FBEA510E3AA8A100FD8014 /* CallsSorter.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBEA500E3AA8A100FD8014 /* CallsSorter.m */; };
+		90FF15590EB029F6001CE434 /* PublicationTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +183,8 @@
 		90FBE8F80E39AD7100FD8014 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSorter.h; sourceTree = "<group>"; };
 		90FBEA500E3AA8A100FD8014 /* CallsSorter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSorter.m; sourceTree = "<group>"; };
+		90FF15570EB029F6001CE434 /* PublicationTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicationTypeViewController.h; sourceTree = "<group>"; };
+		90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicationTypeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,6 +399,8 @@
 				90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */,
 				90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */,
 				90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */,
+				90FF15570EB029F6001CE434 /* PublicationTypeViewController.h */,
+				90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */,
 			);
 			name = CallViews;
 			sourceTree = "<group>";
@@ -535,6 +540,7 @@
 				901313800EA0773A0055D890 /* NumberViewController.m in Sources */,
 				90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */,
 				90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */,
+				90FF15590EB029F6001CE434 /* PublicationTypeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,8 +612,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "5B44D63C-8192-45DA-8299-F1DB832BFBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5B44D63C-8192-45DA-8299-F1DB832BFBEF";
+				PROVISIONING_PROFILE = "AB0F0833-2366-4978-BAE0-449D5D2E2AD2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB0F0833-2366-4978-BAE0-449D5D2E2AD2";
 				SDKROOT = iphoneos2.1;
 			};
 			name = "AdHoc Distribution";

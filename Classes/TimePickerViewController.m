@@ -20,7 +20,7 @@
 @synthesize containerView;
 @synthesize delegate;
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 - (id) init
 {

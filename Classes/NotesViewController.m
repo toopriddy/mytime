@@ -14,7 +14,7 @@
 @synthesize containerView;
 @synthesize delegate;
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 - (id) initWithNotes:(NSString *)notes
 {

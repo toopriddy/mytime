@@ -29,7 +29,7 @@
 	int _magazines[kMonthsShown];
 	int _returnVisits[kMonthsShown];
 	int _bibleStudies[kMonthsShown];
-	int _specialPublications[kMonthsShown];
+	int _campaignTracts[kMonthsShown];
 
 }
 @property (nonatomic,retain) UITableView *theTableView;
