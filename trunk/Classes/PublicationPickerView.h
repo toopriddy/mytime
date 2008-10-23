@@ -15,6 +15,9 @@
     int _month;
     int _publication;
     int _day;
+	
+	int _offset;
+	int _count;
 }
 #if 0
 // Delegate Methods
@@ -83,6 +86,14 @@
 - (id) initWithFrame: (CGRect)rect;
 
 /**
+ * initalize filtered to a specific type
+ *
+ * @param rect - the rect
+ * @returns self
+ */
+- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter;
+
+/**
  * initialize this view given the curent configuration
  *
  * @param rect - the rect
@@ -92,7 +103,10 @@
  * @param day - the day of the month for a watchtower or awake
  * @returns self
  */
+- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter;
 - (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day;
+- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day filter:(const NSString *)filter;
+
 
 
 @end

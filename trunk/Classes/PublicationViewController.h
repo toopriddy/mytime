@@ -35,8 +35,10 @@
  */
 - (id) init;
 - (id) initShowingCount:(BOOL)showCount;
+- (id) initShowingCount:(BOOL)doShowCount filteredToType:(const NSString *)filter;
 - (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day;
 - (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)showCount number:(int)number;
+- (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number filter:(const NSString *)filter;
 
 - (void)navigationControlDone:(id)sender;
 

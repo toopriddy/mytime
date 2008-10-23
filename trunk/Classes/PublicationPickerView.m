@@ -16,7 +16,7 @@
 #define YEAR_OFFSET 1900
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 static NSString *MONTHS[] = {
 	AlternateLocalizedString(@"Jan", @"Short month name"),
@@ -48,27 +48,15 @@ typedef struct {
 	NSString * type;
 } PublicationInformation;
 
-/*
-Just a way that the genstrings program can pickup the publication types
- 
-NSLocalizedString(@"Book", @"Publication Type name")
-NSLocalizedString(@"Brochure", @"Publication Type name")
-NSLocalizedString(@"Magazine", @"Publication Type name")
-NSLocalizedString(@"Tract", @"Publication Type name")
-NSLocalizedString(@"Special", @"Publication Type name")
- 
-*/
-
 static const PublicationInformation PUBLICATIONS[] = {
-{AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
+	{AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
 ,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name"),       PublicationTypeMagazine}
 
 ,   {AlternateLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
-,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Book Publication Name"),   PublicationTypeSpecial}
+,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Book Publication Name"),   PublicationTypeCampaignTract}
 
 ,   {AlternateLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
-
 ,   {AlternateLocalizedString(@"All Scripture", @"Book Publication Name"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Bible Stories", @"Book Publication Name"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Bible Teach", @"Book Publication Name"),   PublicationTypeBook}
@@ -256,7 +244,7 @@ static const PublicationInformation PUBLICATIONS[] = {
     {
 		
 		cell.textAlignment = UITextAlignmentLeft;
-		cell.text = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row].name value:PUBLICATIONS[row].name table:@""];
+		cell.text = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row + _offset].name value:PUBLICATIONS[row + _offset].name table:@""];
     }
     else
     {
@@ -324,7 +312,7 @@ static const PublicationInformation PUBLICATIONS[] = {
     // publication name
     if(component == 0)
     {
-		ret = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row].name value:PUBLICATIONS[row].name table:@""];
+		ret = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row + _offset].name value:PUBLICATIONS[row + _offset].name table:@""];
     }
     else
     {
@@ -390,7 +378,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	// what is the new publication?
 	if(component == 0)
 	{
-		_publication = row;
+		_publication = row + _offset;
     }
     // if the previous publication was a watchtower or awake, then 
     // lets get at the month year and possibly date of the magazine
@@ -494,7 +482,7 @@ static const PublicationInformation PUBLICATIONS[] = {
     // col 0 is the publications column
     if(component == 0)
     {
-        return(ARRAY_SIZE(PUBLICATIONS));
+        return(_count);
     }
     else
     {
@@ -545,8 +533,26 @@ static const PublicationInformation PUBLICATIONS[] = {
     return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day]);
 }
 
+- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter
+{
+    // initalize the data to the current date
+	NSDate *date = [NSDate date];
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+    // set the default publication to be the watchtower this month and year
+	int month = [dateComponents month];
+	int year = [dateComponents year];
+    int day = 1;
+
+	return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day filter:filter]);
+}
+
+- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day
+{
+	return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day filter:nil]);
+}
+
 // initialize this view given the curent configuration
-- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day;
+- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day filter:(NSString *)filter
 {
     if((self = [super initWithFrame: rect])) 
     {
@@ -557,9 +563,27 @@ static const PublicationInformation PUBLICATIONS[] = {
         // we are managing the picker's data and display
 		self.delegate = self;
 		self.dataSource = self;
+
+		int offset = -1;
+		for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); i++)
+		{
+			if(offset >= 0)
+			{
+				if([PUBLICATIONS[i].type isEqualToString:PublicationTypeHeading])
+				{
+					break;
+				}
+			}
+			else if([filter isEqualToString:PUBLICATIONS[i].type])
+			{
+				offset = i;
+			}
+		}
+		_offset = offset >= 0 ? offset : 0;
+		_count = offset >= 0 ? i - offset : ARRAY_SIZE(PUBLICATIONS);
 		
-        _publication = 0;
-        for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); ++i)
+        _publication = _offset;
+        for(i = _offset; i < _count + _offset; ++i)
         {
             if([publication isEqualToString:PUBLICATIONS[i].name])
             {
@@ -592,7 +616,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 		
 		[self reloadAllComponents];
 		// select the publication
-		[self selectRow: _publication inComponent: 0 animated: NO];
+		[self selectRow: _publication - _offset inComponent: 0 animated: NO];
 		
 		// the watchtower and awake are the only ones that have a subscription
 		// type of placement, all others are just books that do not have a release

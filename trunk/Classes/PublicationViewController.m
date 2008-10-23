@@ -15,7 +15,7 @@
 @synthesize containerView;
 @synthesize delegate;
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 - (id) init
 {
@@ -25,6 +25,11 @@
 
 - (id) initShowingCount:(BOOL)doShowCount
 {
+	return [self initShowingCount:doShowCount filteredToType:nil];
+}
+
+- (id) initShowingCount:(BOOL)doShowCount filteredToType:(const NSString *)filter
+{
     // initalize the data to the current date
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
     // set the default publication to be the watchtower this month and year
@@ -32,7 +37,7 @@
 	int year = [dateComponents year];
     int day = 1;
 
-    return([self initWithPublication:[PublicationPickerView watchtower] year:year month:month day:day showCount:doShowCount number:0]);
+    return([self initWithPublication:[PublicationPickerView watchtower] year:year month:month day:day showCount:doShowCount number:0 filter:filter]);
 }
 
 // initialize this view given the curent configuration
@@ -44,6 +49,11 @@
 
 - (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number
 {
+	return [self initWithPublication:publication year:year month:month day:day showCount:doShowCount number:number filter:nil];
+}
+
+- (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number filter:(const NSString *)filter
+{
 	if ([super init]) 
 	{
 		showCount = doShowCount;
@@ -54,12 +64,21 @@
 		
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Select Publication", @"'Select Publication' Publication Picker title");
 		self.tabBarItem.image = [UIImage imageNamed:@"statistics.png"];
+		// dont set the hidesBottomBarWhenPushed because it causes the bar to appear when you go away
 //		self.hidesBottomBarWhenPushed = YES;
-		 
+		
+		if(filter == nil || [filter isEqualToString:@""])
+		{
+			self.title = NSLocalizedString(@"Select Publication", @"'Select Publication' Publication Picker title");
+			filter = nil;
+		}
+		else
+		{
+			self.title = [NSString stringWithFormat:@"Select %@", [[NSBundle mainBundle] localizedStringForKey:(NSString *)filter value:(NSString *)filter table:@""]];
+		}
 
-		self.publicationPicker = [[[PublicationPickerView alloc] initWithFrame:CGRectZero publication:publication year:year month:month day:day] autorelease];
+		self.publicationPicker = [[[PublicationPickerView alloc] initWithFrame:CGRectZero publication:publication year:year month:month day:day filter:filter] autorelease];
 		
 		if(showCount)
 		{

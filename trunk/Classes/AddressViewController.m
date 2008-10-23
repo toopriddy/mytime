@@ -10,7 +10,7 @@
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 @interface SaveAndDone : UIResponder <UITextFieldDelegate>
 {

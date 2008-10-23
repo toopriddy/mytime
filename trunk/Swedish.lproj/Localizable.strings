@@ -38,7 +38,7 @@
 "%d %@s: %@" = "%1$d %2$@s: %3$@";
 
 /* Number of months shown in the statistics view, setting title */
-"%d Months Displayed" = "%d Months Displayed";
+"%d Months Displayed" = "%d Visade månader";
 
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publikation";
@@ -122,7 +122,7 @@
 "Bible DVD: Matthew" = "Bibel DVD: Matteus";
 
 /* Bible DVD Publication Name */
-"Bible DVD: Romans" = "Bible DVD: Romans";
+"Bible DVD: Romans" = "Bibel DVD: Romarna";
 
 /* Book Publication Name */
 "Bible Stories" = "Min bok med bibliska";
@@ -272,7 +272,7 @@
 "DVD: God's Friend" = "CD: Familjer - Låt bibelläsning bli n del av ert dagliga liv";
 
 /* DVD Publication Name */
-"DVD: Great Teacher" = "DVD: Great Teacher";
+"DVD: Great Teacher" = "DVD: Den Store Läraren";
 
 /* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Alternativ till blod";
@@ -461,13 +461,13 @@
 "minutes" = "minuter";
 
 /* Month singular */
-"Month" = "Month";
+"Month" = "Månad";
 
 /* Title for selecting the number of months shown in the statistics view */
-"Month Count" = "Month Count";
+"Month Count" = "Antal månader";
 
 /* Months plural */
-"Months" = "Months";
+"Months" = "Månader";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Min bok med bibliska berättelser";
@@ -494,7 +494,7 @@
 "No" = "Nej";
 
 /* return visit type name */
-"Not At Home" = "Not At Home";
+"Not At Home" = "Ej hemma";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -536,7 +536,7 @@
 "Please Donate, help me help you" = "Hjälp mig utveckla MyTime genom att lämna en frivillig gåva";
 
 /* Information for the user to know what is going on with this and new releases */
-"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Besök mytime.googlecode.com för att läsa FAQ och önskade funktioner.\n Om du uppskattar den här programvaran är du välkommen att bidra med en slant. Om du talar ett annat språk än engelska är du välkommen att hjälpa till med översättning. maila mig gärna (titta i Mer och inställningar)";
 
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
 "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "V.g vänta tills backupprogrammet startat, besök mytime.googlecode.com för mer information om säkerhetskopieringsprogrammet";
@@ -548,7 +548,7 @@
 "Proclaimers" = "Jehovas vittnen- förkunnare...";
 
 /* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
-"Publication" = "Publication";
+"Publication" = "Publikation";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publikationer";
@@ -563,16 +563,16 @@
 "Questions, Comments? Email me" = "Frågor, kommentarer? Skicka ett email";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build" = "Quick Build";
+"Quick Build" = "Snabb beräkning";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build Hours" = "Quick Build Hours";
+"Quick Build Hours" = "Snabb beräkning av timmar";
 
 /* Book Publication Name */
 "Reasoning" = "Resonera";
 
 /* 'Reload' navigation bar action button for the Mapped Calls view */
-"Reload" = "Reload";
+"Reload" = "Uppdatera";
 
 /* Brochures Publication Name */
 "Require" = "Vad kräver Gud...";
@@ -581,7 +581,7 @@
 "Restored Backup, restart MyTime to see the changes" = "Återläst säkerhetskopia, starta om MyTime för att s förändringar";
 
 /* return visit type name */
-"Return Visit" = "Return Visit";
+"Return Visit" = "Återbesök";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "åb anteckningar";
@@ -614,10 +614,10 @@
 "September" = "September";
 
 /* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Service Year Quick Build Total";
+"Service Year Quick Build Total" = "Snabb sammanräkning av tjänsteåret";
 
 /* Service year total hours label */
-"Service Year Total" = "Service Year Total";
+"Service Year Total" = "Tjänsteår totalt";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Inställningar";
@@ -653,7 +653,7 @@
 "Street Sorted" = "Adress sort.";
 
 /* return visit type name */
-"Study" = "Study";
+"Study" = "Studium";
 
 /* Tracts Publication Name */
 "Suffering to End" = "Allt lidande är snart slut";
@@ -665,13 +665,13 @@
 "The Greatest Name" = "Det största namnet";
 
 /* This is a note displayed when they first see the Statistics View */
-"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "Detta ger dig en sammanställning över tjänsten för månaden inkl. timmar\nböcker\nbroschyrer\ntidskrifter\nstudier. Observera att du bara ser de placeringar som du har fört upp.";
 
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Timmar under %@";
 
 /* Hours view prompt when you press the start time button */
-"Time started at: %@" = "Time started at: %@";
+"Time started at: %@" = "Tjänsten började: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Klicka på Ändra knappen för att addera ett åb, eller för att se var ett åb finns genom att klicka på adressen";
@@ -683,7 +683,7 @@
 "Trinity" = "Treeningheten";
 
 /* Return visit type label */
-"Type" = "Type";
+"Type" = "Typ";
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Ingen adress";

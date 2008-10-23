@@ -11,9 +11,6 @@
 
 static Settings *instance = nil;
 
-#define AlternateLocalizedString(a, b) (a)
-
-
 NSString const * const CallName = @"name";
 NSString const * const CallStreetNumber = @"streetNumber";
 NSString const * const CallStreet = @"street";

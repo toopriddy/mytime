@@ -14,7 +14,7 @@
 @synthesize containerView;
 @synthesize delegate;
 
-#define AlternateLocalizedString(a, b) (a)
+
 
 - (id) initWithTitle:(NSString *)title singularLabel:(NSString *)singularLabel label:(NSString *)label number:(int)number min:(int)min max:(int)max;
 {
