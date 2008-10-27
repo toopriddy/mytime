@@ -42,7 +42,7 @@
 		self.title = NSLocalizedString(@"Select Date", @"Title for the view where you Pick A Date");
 
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
-		datePicker.datePickerMode = UIDatePickerModeDate;
+		datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 		datePicker.date = date;
 		NSArray *views = datePicker.subviews;
 		UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
