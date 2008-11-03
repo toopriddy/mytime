@@ -1,5 +1,5 @@
 ﻿/* Publication Type and Seperator in the Publication Picker */
-"   BIBLE DVD" = "   BIBLE DVD";
+"   BIBLE DVD" = "   BIBEL DVD";
 
 "   BOOKS" = "   BÜCHER";
 
@@ -37,7 +37,7 @@
 "%d %@s: %@" = "%1$d %2$@n: %3$@";
 
 /* Number of months shown in the statistics view, setting title */
-"%d Months Displayed" = "%d Months Displayed";
+"%d Months Displayed" = "%d Monate anzeigen";
 
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d Veröffentlichung";
@@ -97,10 +97,10 @@
 "Awake" = "Erwachet!";
 
 /* More View Table Group Title */
-"Backup" = "Backup";
+"Backup" = "Datensicherung";
 
 /* More View Table backup your data */
-"Backup your data" = "Daten sichern";
+"Backup your data" = "Daten sichern oder wiederherstellen";
 
 /* Book Publication Name */
 "Bible" = "Bibel";
@@ -127,19 +127,19 @@
 "Bible Stories" = "Geschichtenbuch";
 
 /* Bible Studies label on the Statistics View */
-"Bible Studies" = "Bibel Studien";
+"Bible Studies" = "Studien";
 
 /* Book Publication Name */
-"Bible Teach" = "Was lehrt die Bibel";
+"Bible Teach" = "Was lehrt die Bibel wirklich";
 
 /* Brochures Publication Name */
-"Blood" = "Blut";
+"Blood" = "Blut-Broschüre";
 
 /* Publication Type name */
 "Book" = "Buch";
 
 /* Brochures Publication Name */
-"Book for All" = "Ein Buch für alle";
+"Book for All" = "Ein Buch für alle Menschen";
 
 /* Publication Type name */
 "Books" = "Bücher";
@@ -196,13 +196,13 @@
 "Concordance" = "Konkordanz";
 
 /* backup connected message */
-"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup";
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Verbindung zum Computer hergestellt\n\nDu kannst jetzt die Daten sichern oder wiederherstellen";
 
 /* More View Table Group Title */
 "Contact Information" = "Kontakt Informationen";
 
 /* initial message when trying to transfer backup files */
-"Could not create %@ directory" = "Could not create %@ directory";
+"Could not create %@ directory" = "Verzeichnis %@ kann nicht erstellt werden";
 
 /* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
 "Count:" = "Anzahl:";
@@ -226,7 +226,7 @@
 "December" = "Dezember";
 
 /* Yes delete the call and the data */
-"Delete and don't keep info" = "Delete and don't keep info";
+"Delete and don't keep info" = "Rückbesuch und abgegebene Veröffentlichung werden gelöscht";
 
 /* Delete Call button in editing mode of call view */
 "Delete Call" = "Löschen";
@@ -316,10 +316,10 @@
 "Enjoy Family Life" = "Familien-Leben";
 
 /* backup failed string */
-"Failed advertising server" = "Failed advertising server";
+"Failed advertising server" = "Verbindung zum Server fehlgeschlagen";
 
 /* failure message for starting the backup service */
-"Failed creating server" = "Failed creating server";
+"Failed creating server" = "Sichern fehlgeschlagen";
 
 /* Book Publication Name */
 "Family Happiness" = "Familien-Buch";
@@ -337,13 +337,13 @@
 "God's Word" = "Gottes Wort";
 
 /* Brochures Publication Name */
-"Good Land" = "Das gute Land";
+"Good Land" = "Das gute Land sehen";
 
 /* Brochures Publication Name */
 "Government" = "Regierung";
 
 /* Book Publication Name */
-"Greatest Man" = "Größte Mensch";
+"Greatest Man" = "Größter Mensch";
 
 /* Brochures Publication Name */
 "Guidance of God" = "Gottes Anleitung";
@@ -370,7 +370,7 @@
 "Immortal Spirit" = "Unsterbliche Geist";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
-"Initial Visit Notes" = "Initial Visit Notes";
+"Initial Visit Notes" = "Rückbesuchsnotizen anzeigen";
 
 /* Book Publication Name */
 "Insight" = "Einsichten";
@@ -418,7 +418,7 @@
 "Know the Bible" = "Die Bibel besser kennen lernen";
 
 /* Book Publication Name */
-"Knowledge" = "Erkenntnis";
+"Knowledge" = "Erkenntnis-Buch";
 
 /* Brochures Publication Name */
 "Lasting Peace" = "Eine Welt ohne Krieg?";
@@ -463,10 +463,10 @@
 "More" = "Mehr";
 
 /* Title for selecting the number of months shown in the statistics view */
-"Month Count" = "Month Count";
+"Month Count" = "Anzahl der Monate";
 
 /* Months plural */
-"Months" = "Months";
+"Months" = "Monate";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mein Buch mit biblischen Geschichten";
@@ -493,7 +493,7 @@
 "No" = "Nein";
 
 /* return visit type name */
-"Not At Home" = "Not At Home";
+"Not At Home" = "nicht zu Hause";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -502,7 +502,7 @@
 "November" = "November";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
-"Number Placed:" = "Anzahl Abgegeben:";
+"Number Placed:" = "Anzahl abgegeben:";
 
 /* Short month name */
 "Oct" = "Okt";
@@ -514,7 +514,7 @@
 "OK" = "OK";
 
 /* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
-"Oldest Return Visits First" = "Älteste zuerst";
+"Oldest Return Visits First" = "älteste zuerst";
 
 /* Book Publication Name */
 "Organized" = "Organisiert";
@@ -535,52 +535,52 @@
 "Please Donate, help me help you" = "Bitte spenden Sie, helfen Sie mir Ihnen zu helfen";
 
 /* Information for the user to know what is going on with this and new releases */
-"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Bitte besuche mytime.googlecode.com um die Antworten für FAQ und geplante neue Funktionen zu erhalten. Es war viel Arbeit MyTime zu programmieren, falls das Programm für dich hilfreich ist würde ich mich über eine Spende freuen. Möchtest du gerne bei der Übersetzung von MyTime mithelfen, dann sende mir bitte eine Email.";
 
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
-"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application";
+"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Bitte auf die Backup-Software warten...\n\nFür mehr Informationen besuche bitte mytime.googlecode.com";
 
 /* Confirmation message about enabling popup messages */
-"Popup messages like this are now enabled all throughout MyTime" = "Popup messages like this are now enabled all throughout MyTime";
+"Popup messages like this are now enabled all throughout MyTime" = "Popup-Fenster wie dieses werden ab sofort angezeigt";
 
 /* Book Publication Name */
 "Proclaimers" = "Verkündiger";
 
 /* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
-"Publication" = "Publication";
+"Publication" = "Veröffentlichung";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
-"Publications" = "Publications";
+"Publications" = "Veröffentlichungen";
 
 /* Brochures Publication Name */
 "Purpose of Life" = "Sinn des Lebens";
 
 /* initial message when trying to transfer backup files */
-"Pushed %@ translation file, restart MyTime to see the changes." = "Pushed %@ translation file, restart MyTime to see the changes.";
+"Pushed %@ translation file, restart MyTime to see the changes." = "File %@ wurde wiederhergestellt, Starte MyTime neu um die Änderungen anzuzeigen";
 
 /* More View Table Questions, Comments? Email me */
-"Questions, Comments? Email me" = "Fragen, Anregungen? Schicken Sie mir eine Email";
+"Questions, Comments? Email me" = "Fragen, Anregungen? bitte Mail mir";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build" = "Quick Build";
+"Quick Build" = "Saalbau";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build Hours" = "Quick Build Hours";
+"Quick Build Hours" = "Saalbau Stunden";
 
 /* Book Publication Name */
 "Reasoning" = "Unterredungsbuch";
 
 /* 'Reload' navigation bar action button for the Mapped Calls view */
-"Reload" = "Reload";
+"Reload" = "neu laden";
 
 /* Brochures Publication Name */
 "Require" = "Erwartet";
 
 /* initial message when trying to transfer backup files */
-"Restored Backup, restart MyTime to see the changes" = "Restored Backup, restart MyTime to see the changes";
+"Restored Backup, restart MyTime to see the changes" = "Backup File gespeichert.\n Bitte starte MyTime neu um die Änderungen anzuzeigen";
 
 /* return visit type name */
-"Return Visit" = "Return Visit";
+"Return Visit" = "Rückbesuch";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Rückbesuchs-Notizen";
@@ -598,13 +598,13 @@
 "Select Date" = "Datum wählen";
 
 /* 'Select Publication' Publication Picker title */
-"Select Publication" = "Literatur auswählen";
+"Select Publication" = "wähle Literatur";
 
 /* Select Time Title for adding hours of field service to a particular day */
 "Select Time" = "Zeit eingeben";
 
 /* initial message when trying to transfer backup files */
-"Sending Settings to the Backup Application" = "Sending Settings to the Backup Application";
+"Sending Settings to the Backup Application" = "Datenaustausch zum Computer gestartet";
 
 /* Short month name */
 "Sep" = "Sep";
@@ -613,10 +613,10 @@
 "September" = "September";
 
 /* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Service Year Quick Build Total";
+"Service Year Quick Build Total" = "gesamte Stunden des Jahres";
 
 /* Service year total hours label */
-"Service Year Total" = "Service Year Total";
+"Service Year Total" = "Jahres-Gesamtzeit";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Einstellungen";
@@ -652,28 +652,28 @@
 "Street Sorted" = "nach Straßen";
 
 /* return visit type name */
-"Study" = "Study";
+"Study" = "Studium";
 
 /* Tracts Publication Name */
-"Suffering to End" = "Leid wird enden";
+"Suffering to End" = "Alles Leid wird bald enden";
 
 /* Book Publication Name */
 "Teacher" = "Lehrer-Buch";
 
 /* Tracts Publication Name */
-"The Greatest Name" = "Der Größte Name";
+"The Greatest Name" = "Der größte Name";
 
 /* This is a note displayed when they first see the Statistics View */
-"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "Hier siehst du die Auflistung von deinem monatlichen Predigtdienst bestehend aus:\nStunden\nBücher\nBroschüren\nZeitschriften\nStudien\n Bitte beachte: es werden nur ausgewählte Publikationen gezählt";
 
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
-"Time for %@" = "Zeiten für %@";
+"Time for %@" = "Bericht für %@";
 
 /* Hours view prompt when you press the start time button */
-"Time started at: %@" = "Time started at: %@";
+"Time started at: %@" = "Zeitzähler gestartet um %@";
 
 /* This is a note displayed when they first see the non editable call view */
-"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call";
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Drücke Bearbeiten um einen Rückbesuch zu ergänzen, wenn du sehen willst wo dein Rückbesuch wohnt, dann drücke auf das Adressfeld";
 
 /* Publication Type name */
 "Tract" = "Traktate";
@@ -682,7 +682,7 @@
 "Trinity" = "Dreieinigkeit";
 
 /* Return visit type label */
-"Type" = "Type";
+"Type" = "Besuchsart";
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Unbekannt";
@@ -691,13 +691,13 @@
 "Version" = "Version";
 
 /* Title for the view where you write notes for a call */
-"Visit Notes" = "Visit Notes";
+"Visit Notes" = "Rückbesuche";
 
 /* Return Visit Type title */
-"Visit Type" = "Visit Type";
+"Visit Type" = "Art des Besuches";
 
 /* initial message when trying to transfer backup files */
-"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application";
+"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Auf die Backup-Software warten...\n\nFür mehr Informationen besuche bitte mytime.googlecode.com";
 
 /* Brochures Publication Name */
 "Watch!" = "Wachsamkeit!";
@@ -742,5 +742,5 @@
 "Yes" = "Ja";
 
 /* Book Publication Name */
-"Young People Ask" = "Junge Leute Fragen";
+"Young People Ask" = "Fragen Junger Leute";
 
