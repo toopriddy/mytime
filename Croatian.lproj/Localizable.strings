@@ -38,7 +38,7 @@
 "%d %@s: %@" = "%1$d %2$@: %3$@";
 
 /* Number of months shown in the statistics view, setting title */
-"%d Months Displayed" = "%d Months Displayed";
+"%d Months Displayed" = "%d prikazani(h) mjeseci";
 
 /* 1, singular publication, shown as '%d publication' */
 "%d publication" = "%d publikacija";
@@ -65,7 +65,7 @@
 "Add a return visit" = "Dodaj ponovni posjet";
 
 /* Return Visit Notes Placeholder text */
-"Add Notes" = "Dodaj pojedinosti";
+"Add Notes" = "Dodaj bilješke";
 
 /* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
 "Add placed publications" = "Dodaj ostavljene publikacije";
@@ -86,7 +86,7 @@
 "April" = "Travanj";
 
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
-"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Jesi li siguran da želiš izbrisati sve bilješke (ponovni posjeti i ostavljene publikacije ipak će biti izbrojene)?";
+"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Jeste li sigurni da želite izbrisati sve bilješke (ponovni posjeti i ostavljene publikacije ipak će biti izbrojene)?";
 
 /* Short month name */
 "Aug" = "Kol";
@@ -152,7 +152,7 @@
 "Brochures" = "Brošure";
 
 /* More View Table Build Date */
-"Build Date" = "Datum programa";
+"Build Date" = "Datum izrade";
 
 /* Title for Bulk Placements view */
 "Bulk Placements" = "Dodatna literatura";
@@ -179,7 +179,7 @@
 "Cancel" = "Odustani";
 
 /* Change Date action button for visit in call view */
-"Change Date" = "Mijenjaj datum";
+"Change Date" = "Promjeni datum";
 
 /* City */
 "City" = "Grad";
@@ -197,10 +197,10 @@
 "Concordance" = "Konkordancija";
 
 /* backup connected message */
-"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Stvorena veza sa programom za backup.\n\nKoristi je da bi spremao novi backup ili vratio stari backup";
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Uspostavljena veza sa programom za backup.\n\nKoristite je kako bi spremili novi backup ili vratili stari backup";
 
 /* More View Table Group Title */
-"Contact Information" = "Kontaktiraj programera";
+"Contact Information" = "Informacije o programu";
 
 /* initial message when trying to transfer backup files */
 "Could not create %@ directory" = "Nije moguće stvoriti mapu %@";
@@ -227,13 +227,13 @@
 "December" = "Prosinac";
 
 /* Yes delete the call and the data */
-"Delete and don't keep info" = "Briši i podatke za izvještaj";
+"Delete and don't keep info" = "izbriši i podatke za izvještaj";
 
 /* Delete Call button in editing mode of call view */
 "Delete Call" = "Briši bilješku";
 
 /* backup connected message */
-"Disconnected from the Backup Application" = "Poništena je veza sa programom za backup";
+"Disconnected from the Backup Application" = "Poništena veza sa backup programom";
 
 /* Brochures Publication Name */
 "Divine Name" = "Božansko ime";
@@ -272,7 +272,7 @@
 "DVD: God's Friend" = "DVD: Božji prijatelj";
 
 /* DVD Publication Name */
-"DVD: Great Teacher" = "DVD: Great Teacher";
+"DVD: Great Teacher" = "DVD: Vekiki Učitelj";
 
 /* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Najveći čovjek";
@@ -311,16 +311,16 @@
 "en" = "hr";
 
 /* More View Table Enable shown popups */
-"Enable shown popups" = "Pokaži već prikazane poruke popup";
+"Enable shown popups" = "Ponovno prikaži popup poruke";
 
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Raduj se obiteljskom životu";
 
 /* backup failed string */
-"Failed advertising server" = "Nemoguće komuniciranje sa serverom";
+"Failed advertising server" = "Nemoguće uspostaviti vezu sa serverom";
 
 /* failure message for starting the backup service */
-"Failed creating server" = "Nemoguće uspostaviti vezu sa serverom";
+"Failed creating server" = "Nemoguće stvoriti vezu sa serverom";
 
 /* Book Publication Name */
 "Family Happiness" = "Obiteljska sreća";
@@ -371,7 +371,7 @@
 "Immortal Spirit" = "Posjeduješ li besmertan duh?";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
-"Initial Visit Notes" = "Pojedinosti o prvom posjetu";
+"Initial Visit Notes" = "Bilješke o prvom posjetu";
 
 /* Book Publication Name */
 "Insight" = "Insight";
@@ -398,7 +398,7 @@
 "Jehovah's Witnesses-What Do They Believe?" = "Što vjeruju Jehovini Svjedoci";
 
 /* Tracts Publication Name */
-"Jehovah-Who Is He?" = "Jehova- Tko je on?";
+"Jehovah-Who Is He?" = "Jehova-Tko je on?";
 
 /* Tracts Publication Name */
 "Jesus Christ-Who Is He?" = "Isus Krist-Tko je on?";
@@ -455,19 +455,19 @@
 "Ministry School" = "Teokratska Škola";
 
 /* Singular form of the word minute */
-"minute" = "minut";
+"minute" = "minuta";
 
 /* Plural form of the word minutes */
-"minutes" = "minuti";
+"minutes" = "minute";
 
 /* Month singular */
-"Month" = "Month";
+"Month" = "Mjesec";
 
 /* Title for selecting the number of months shown in the statistics view */
-"Month Count" = "Month Count";
+"Month Count" = "Količina mjeseci";
 
 /* Months plural */
-"Months" = "Months";
+"Months" = "Mjeseci";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Moja knjiga biblijskih priča";
@@ -494,7 +494,7 @@
 "No" = "Ne";
 
 /* return visit type name */
-"Not At Home" = "Not At Home";
+"Not At Home" = "Nije kod kuće";
 
 /* Short month name */
 "Nov" = "Stu";
@@ -515,7 +515,7 @@
 "OK" = "OK";
 
 /* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
-"Oldest Return Visits First" = "Najstariji ponovni posjeti prvi";
+"Oldest Return Visits First" = "Najstariji ponovni posjeti prikazani kao prvi";
 
 /* Book Publication Name */
 "Organized" = "Organizirano";
@@ -536,19 +536,19 @@
 "Please Donate, help me help you" = "Daj prilog, pomoći ćeš i sebi";
 
 /* Information for the user to know what is going on with this and new releases */
-"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Molim posjetite mytime.googlecode.com za FAQ i zahtjevi novih opcija.\nVeliki trud je uložen u MyTime, ako ovaj program vam koristi, onda umete u obzir da dajete prilog.  Da li Hrvatski nije vaš matični jezik i hoćete pomoći u prevođenje? Pišite mi mail (Vidi Dodatno - Svojstva)";
 
 /* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
-"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Pričekati da Backup se podesi ...\n\nPosječuj mytime.googlecode.com za dodatne informacije o programu za Backup";
+"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Pričekati da Backup se podesi ...\n\nPosječuj mytime.googlecode.com za dodatne informacije o backup programu";
 
 /* Confirmation message about enabling popup messages */
-"Popup messages like this are now enabled all throughout MyTime" = "Popup poruke poput ove sad su uključene u MyTime";
+"Popup messages like this are now enabled all throughout MyTime" = "Popup poruke poput ove su sad ponovno uključene u MyTime";
 
 /* Book Publication Name */
 "Proclaimers" = "Proclaimers";
 
 /* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
-"Publication" = "Publication";
+"Publication" = "Publikacija";
 
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publikacije";
@@ -563,16 +563,16 @@
 "Questions, Comments? Email me" = "Pitanja, Komentari? Pošalji mi mail";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build" = "Quick Build";
+"Quick Build" = "Gradnja";
 
 /* 'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
-"Quick Build Hours" = "Quick Build Hours";
+"Quick Build Hours" = "Sati za Gradnju";
 
 /* Book Publication Name */
 "Reasoning" = "Raspravljanje";
 
 /* 'Reload' navigation bar action button for the Mapped Calls view */
-"Reload" = "Reload";
+"Reload" = "Učitaj Ponovno";
 
 /* Brochures Publication Name */
 "Require" = "Zahtjevi";
@@ -581,7 +581,7 @@
 "Restored Backup, restart MyTime to see the changes" = "Backup vraćen, ponovno pokreni MyTime da promjene stupe na snazi";
 
 /* return visit type name */
-"Return Visit" = "Return Visit";
+"Return Visit" = "Ponovni Posjet";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Return Visit Notes" = "Bilješke Ponovnog Posjeta";
@@ -614,10 +614,10 @@
 "September" = "Rujan";
 
 /* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Service Year Quick Build Total";
+"Service Year Quick Build Total" = "Sati za Gradnju Službene godine";
 
 /* Service year total hours label */
-"Service Year Total" = "Service Year Total";
+"Service Year Total" = "Ukupno Službene godine";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Svojstva";
@@ -641,7 +641,7 @@
 "State in all caps" = "1";
 
 /* 'Statistics' ButtonBar View text and Statistics View Title */
-"Statistics" = "Statistike";
+"Statistics" = "Izvještaji";
 
 /* 'Stop Time' navigation bar action button */
 "Stop Time" = "Kraj službe";
@@ -653,7 +653,7 @@
 "Street Sorted" = "Po Ulici";
 
 /* return visit type name */
-"Study" = "Study";
+"Study" = "Tečaj";
 
 /* Tracts Publication Name */
 "Suffering to End" = "Kraj Patnjama";
@@ -665,13 +665,13 @@
 "The Greatest Name" = "Najveće ime";
 
 /* This is a note displayed when they first see the Statistics View */
-"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for.";
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "Ovdje čete vidjeti podatke mjesečnog izvještaja službe uključujući:\Sati\nKnjige\nBrošure\nČasopisi\nTečajevi\n Imajte na umu da će se izbrojiti samo zablježene podatke.";
 
 /* Time for %@ Group title on the Statistics View where %@ is the month of the year */
 "Time for %@" = "Izvještaj za %@";
 
 /* Hours view prompt when you press the start time button */
-"Time started at: %@" = "Time started at: %@";
+"Time started at: %@" = "Početak u: %@";
 
 /* This is a note displayed when they first see the non editable call view */
 "Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Stisni Mijenjaj da bi dodao ponovni posjet; ili stisni na adresi i vidi gdje se nalazi interesent na karti";
@@ -683,7 +683,7 @@
 "Trinity" = "Trojstvo";
 
 /* Return visit type label */
-"Type" = "Type";
+"Type" = "Vrsta";
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Nepoznata";
@@ -695,7 +695,7 @@
 "Visit Notes" = "Pojedinosti o posjetu";
 
 /* Return Visit Type title */
-"Visit Type" = "Visit Type";
+"Visit Type" = "Vrsta Posjeta";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "U ćekanju za vezu iz programa za Backup...\n\nPosječuj mytime.googlecode.com za dodatne informacije o programu za Backup";
@@ -738,6 +738,9 @@
 
 /* Book Publication Name */
 "Worship God" = "Obožavaj Boga";
+
+/* Book Publication Name */
+"Would You Like To Know the Truth?" = "Želite li saznati istinu?";
 
 /* Yes delete the call */
 "Yes" = "Da";
