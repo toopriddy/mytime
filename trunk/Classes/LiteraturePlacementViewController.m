@@ -186,11 +186,10 @@
 		// create dictionary entry for This Return Visit
 		[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	#warning fix me
-	//	  [dateFormatter setDateFormat:NSLocalizedString(@"%a %b %d", @"Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number")]];
-		[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-		[dateFormatter setTimeStyle:NSDateFormatterNoStyle];			 
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		[cell setTitle:[dateFormatter stringFromDate:date]];
 	}
 	else

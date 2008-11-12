@@ -25,12 +25,6 @@
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
 "%@ %@ %d, %d" = "%1$@ %2$@ %3$d, %4$d";
 
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
-"%a %b %d" = "%a %b %d";
-
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
-"%a %b %d, %Y" = "%a %b %d, %Y";
-
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
 
@@ -333,6 +327,12 @@
 
 /* Brochures Publication Name */
 "Education" = "Education";
+
+/* localized string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy" = "EEE, M/d/yyy";
+
+/* localized string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy h:mma" = "EEE, M/d/yyy h:mma";
 
 /* Call Metadata */
 "Email" = "Email";
