@@ -17,6 +17,8 @@
 #import "UITableViewTextFieldCellDelegate.h"
 #import "NotesViewControllerDelegate.h"
 #import "ReturnVisitTypeViewController.h"
+#import "MetadataViewController.h"
+#import "MetadataEditorViewController.h"
 
 @interface CallViewController : UIViewController <UITableViewDelegate, 
                                                   UITableViewDataSource, 
@@ -27,6 +29,8 @@
 												  DatePickerViewControllerDelegate,
 												  UITableViewTextFieldCellDelegate,
 												  NotesViewControllerDelegate,
+												  MetadataViewControllerDelegate,
+												  MetadataEditorViewControllerDelegate,
 												  ReturnVisitTypeViewControllerDelegate> 
 {
 	UITableView *theTableView;
@@ -52,6 +56,7 @@
 	int _selectedRow;
 	int _setFirstResponderGroup;
 
+	NSMutableDictionary *_editingMetadata;
     // this will be set to the publication that we are changing
     // or nil when we are adding a publication
     NSMutableDictionary *_editingPublication;
