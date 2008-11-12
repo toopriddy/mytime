@@ -18,6 +18,8 @@
 #import "NotesViewController.h"
 #import "AddressTableCell.h"
 #import "SwitchTableCell.h"
+#import "MetadataViewController.h"
+#import "MetadataEditorViewController.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -179,30 +181,11 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
         if([_call objectForKey:CallState] == nil)
             [_call setObject:@"" forKey:CallState];
 
-		// phone numbers
-        if([_call objectForKey:CallPhoneNumbers] == nil)
+		// metadata
+        if([_call objectForKey:CallMetadata] == nil)
         {
-            [_call setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallPhoneNumbers];
+            [_call setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallMetadata];
         }
-        else
-        {
-           // lets check all of the ReturnVisits to make sure that everything was 
-            // initialized correctly
-            NSMutableArray *numbers = [_call objectForKey:CallPhoneNumbers];
-            NSMutableDictionary *entry;
-			
-            int i;
-            int end = [numbers count];
-            for(i = 0; i < end; ++i)
-            {
-                entry = [numbers objectAtIndex:i];
-                if([entry objectForKey:CallPhoneNumberType] == nil)
-                    [entry setObject:@"home" forKey:CallPhoneNumberType];
-                
-                if([entry objectForKey:CallPhoneNumber] == nil)
-                    [entry setObject:@"" forKey:CallReturnVisitNotes];
-			}
-		}
 		
 		// return visits
         if([_call objectForKey:CallReturnVisits] == nil)
@@ -855,6 +838,62 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 }
 
+- (void)selectMetadataAtIndex:(int)metadataIndex
+{
+	NSMutableDictionary *metadata = [[_call objectForKey:CallMetadata] objectAtIndex:metadataIndex];
+	NSNumber *type = [metadata objectForKey:CallMetadataType];
+	NSString *name = [metadata objectForKey:CallMetadataName];
+	NSString *value = [metadata objectForKey:CallMetadataValue];
+	NSObject *data = [metadata objectForKey:CallMetadataData];
+
+	if(_editing)
+	{
+		_editingMetadata = metadata; // we are making a new one
+		
+		// make the new call view 
+		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:[type intValue] data:data value:value] autorelease];
+		p.delegate = self;
+
+		[[self navigationController] pushViewController:p animated:YES];		
+	}
+	else
+	{
+		switch([type intValue])
+		{
+			case PHONE:
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+				break;
+			case EMAIL:
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto://%@", value]]];
+				break;
+		}
+	}
+}
+
+- (void)deleteMetadataAtIndex:(int)metadataIndex
+{
+	NSMutableArray *array = [NSMutableArray arrayWithArray:[_call objectForKey:CallMetadata]];
+	[array removeObjectAtIndex:metadataIndex];
+	[_call setObject:array forKey:CallMetadata];
+	
+	[self reloadData];
+	// save the data
+	[self save];
+
+	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
+
+- (void)addMetadataSelected
+{
+	_editingMetadata = nil; // we are making a new one
+	
+	// make the new call view 
+	MetadataViewController *p = [[[MetadataViewController alloc] init] autorelease];
+	p.delegate = self;
+
+	[[self navigationController] pushViewController:p animated:YES];		
+}
+
 - (void)addReturnVisitSelected
 {
 	DEBUG(NSLog(@"addReturnVisitSelected _selectedRow=%d", _selectedRow);)
@@ -1076,6 +1115,45 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return(cell);
 }
 
+- (UITableViewCell *)getAddMetadataCell
+{
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"addMetadataCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"addMetadataCell"] autorelease];
+	}
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	[cell setValue:NSLocalizedString(@"Add Additional Information", @"Button to click to add more information like phone number and email address")];
+
+	return cell;
+}
+
+- (UITableViewCell *)getMetadataCellAtIndex:(int)metadataIndex
+{
+	NSMutableDictionary *metadata = [[_call objectForKey:CallMetadata] objectAtIndex:metadataIndex];
+	NSNumber *type = [metadata objectForKey:CallMetadataType];
+	NSString *name = [metadata objectForKey:CallMetadataName];
+	NSString *value = [metadata objectForKey:CallMetadataValue];
+
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"MetadataCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataCell"] autorelease];
+	}
+	cell.accessoryType = UITableViewCellAccessoryNone;
+
+	switch([type intValue])
+	{
+		case PHONE:
+		case EMAIL:
+			[cell setTitle:name];
+			[cell setValue:value];
+			break;
+	}
+	
+	return cell;
+}
+
 - (UITableViewCell *)getAddReturnVisitCell
 {
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"AddReturnVisitCell"];
@@ -1230,8 +1308,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		  deleteInvocation:nil];
 	}
 	
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
-	
 	// Address
 	{
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
@@ -1290,7 +1366,41 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
 	}
 
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
+	// Add Metadata
+	{
+		// they had an array of publications, lets check them too
+		NSMutableArray *metadata = [_call objectForKey:CallMetadata];
+		if(_editing || metadata)
+		{
+			// we need a larger row height
+			[self addGroup:nil type:@"Metadata"];
+		}
+		if(metadata != nil)
+		{
+			int j;
+			int endMetadata = [metadata count];
+			for(j = 0; j < endMetadata; ++j)
+			{
+				// METADATA
+				[self  addRowInvocation:[self invocationForSelector:@selector(getMetadataCellAtIndex:) withArgument:(void *)j]
+							 rowHeight:-1
+						insertOrDelete:(_editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone)
+					indentWhenEditing:YES
+					  selectInvocation:[self invocationForSelector:@selector(selectMetadataAtIndex:) withArgument:(void *)j]
+					  deleteInvocation:[self invocationForSelector:@selector(deleteMetadataAtIndex:) withArgument:(void *)j]];
+			}
+		}
+
+		if(_editing)
+		{
+			[self  addRowInvocation:[self invocationForSelector:@selector(getAddMetadataCell)]
+					 rowHeight:-1
+				insertOrDelete:UITableViewCellEditingStyleInsert
+			 indentWhenEditing:YES
+			  selectInvocation:[self invocationForSelector:@selector(addMetadataSelected)]
+			  deleteInvocation:nil];
+		}
+	}
 
 	// Add new Call
 	if(_showAddCall && _editing)
@@ -1305,7 +1415,6 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		  selectInvocation:[self invocationForSelector:@selector(addReturnVisitSelected)]
 		  deleteInvocation:nil];
 	}
-DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// RETURN VISITS
 	{
@@ -1441,6 +1550,46 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
 }
 
+/******************************************************************
+ *
+ *   METADATA
+ *
+ ******************************************************************/
+#pragma mark Metadata Delegate
+- (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadataInformation:(MetadataInformation *)metadataInformation
+{
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	NSMutableArray *metadata = [NSMutableArray arrayWithArray:[_call objectForKey:CallMetadata]];
+	[_call setObject:metadata forKey:CallMetadata];
+
+	NSMutableDictionary *newData = [[[NSMutableDictionary alloc] init] autorelease];
+	[metadata addObject:newData];
+	[newData setObject:metadataInformation->name forKey:CallMetadataName];
+	[newData setObject:[NSNumber numberWithInt:metadataInformation->type] forKey:CallMetadataType];
+	[newData setObject:@"" forKey:CallMetadataValue];
+	[newData setObject:@"" forKey:CallMetadataData];
+
+	[self reloadData];
+	[self save];
+	[theTableView reloadData];
+}
+
+- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
+{
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	int index = [[_call objectForKey:CallMetadata] indexOfObject:_editingMetadata];
+
+	NSMutableArray *metadata = [NSMutableArray arrayWithArray:[_call objectForKey:CallMetadata]];
+	[_call setObject:metadata forKey:CallMetadata];
+	
+	_editingMetadata = [metadata objectAtIndex:index];
+	[_editingMetadata setObject:[metadataEditorViewController data] forKey:CallMetadataData];
+	[_editingMetadata setObject:[metadataEditorViewController value] forKey:CallMetadataValue];
+
+	[self reloadData];
+	[self save];
+	[theTableView reloadData];
+}
 
 /******************************************************************
  *

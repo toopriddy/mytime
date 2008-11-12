@@ -14,9 +14,12 @@ extern NSString const * const CallStreet;
 extern NSString const * const CallCity;
 extern NSString const * const CallState;
 extern NSString const * const CallLattitudeLongitude;
-extern NSString const * const CallPhoneNumbers;
-extern NSString const * const CallPhoneNumberType;
-extern NSString const * const CallPhoneNumber;
+
+extern NSString const * const CallMetadata;
+extern NSString const * const CallMetadataName;
+extern NSString const * const CallMetadataType;
+extern NSString const * const CallMetadataData;
+extern NSString const * const CallMetadataValue;
 extern NSString const * const CallReturnVisits;
 extern NSString const * const CallReturnVisitNotes;
 extern NSString const * const CallReturnVisitDate;
