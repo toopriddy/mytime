@@ -17,7 +17,7 @@
 @synthesize theTableView;
 
 #warning fix me
-#define svn_version() "1.4"
+#define svn_version() "1.5"
 
 - (id)init
 {
