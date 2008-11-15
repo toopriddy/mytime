@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MonthChooserViewController.h"
 
 #define kMonthsShown 12
 
-@interface StatisticsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
+@interface StatisticsViewController : UIViewController <UITableViewDelegate, 
+                                                        UITableViewDataSource,
+														MonthChooserViewControllerDelegate> 
 {
 	UITableView *theTableView;
 
