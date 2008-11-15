@@ -60,7 +60,29 @@ static NSString *MONTHS[] = {
 	return(NO);
 }
 
+- (void)monthChooserViewControllerSendEmail:(MonthChooserViewController *)monthChooserViewController
+{
+}
 
+- (void)navigationControlEmail:(id)sender
+{
+	int month = _thisMonth;
+	NSMutableArray *months = [NSMutableArray array];
+	int i;
+	for(i = 0; i < 12; ++i)
+	{
+		if(month < 1)
+			month = 12 + month;
+		[months addObject:[[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+		
+		--month;
+	}
+
+	MonthChooserViewController *p = [[[MonthChooserViewController alloc] initWithMonths:months] autorelease];
+	p.delegate = self;
+	
+	[[self navigationController] pushViewController:p animated:YES];		
+}
 
 - (void)loadView 
 {
@@ -79,6 +101,13 @@ static NSString *MONTHS[] = {
 	// set the tableview as the controller view
     self.theTableView = tableView;
 	self.view = tableView;
+
+	// add + button
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+																			 target:self
+																			 action:@selector(navigationControlEmail:)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:NO];
+
 
 	[self reloadData];
 

@@ -15,6 +15,7 @@
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
 		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
 		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
+		902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902866600ECF757A0076BCBD /* MonthChooserViewController.m */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9045A7260E7C1423001B439C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7250E7C1423001B439C /* TCPServer.m */; };
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
@@ -86,6 +87,8 @@
 		9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByNameViewDataSource.h; sourceTree = "<group>"; };
 		9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByNameViewDataSource.m; sourceTree = "<group>"; };
 		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
+		9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthChooserViewController.h; sourceTree = "<group>"; };
+		902866600ECF757A0076BCBD /* MonthChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthChooserViewController.m; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
@@ -342,6 +345,8 @@
 			children = (
 				90C1496B0E3BA27400C6EDAF /* StatisticsViewController.h */,
 				90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */,
+				9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */,
+				902866600ECF757A0076BCBD /* MonthChooserViewController.m */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 				90FF15590EB029F6001CE434 /* PublicationTypeViewController.m in Sources */,
 				907A23160ECA82A600BE38DD /* MetadataViewController.m in Sources */,
 				907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */,
+				902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

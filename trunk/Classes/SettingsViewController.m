@@ -16,9 +16,6 @@
 
 @synthesize theTableView;
 
-#warning fix me
-#define svn_version() "1.5"
-
 - (id)init
 {
 	if ([super init]) 
@@ -126,9 +123,10 @@
 			count++; 
 			break;
 		
-		// version 
+		// bakup
 		case 3:
-			count++; //version
+			count++; // email backup
+			count++; //Mytime backup
 			break;
 			
 		// version 
@@ -245,6 +243,10 @@
 			switch(row)
 			{
 				case 0:
+					[cell setTitle:NSLocalizedString(@"Email backup", @"More View Table backup your data by emailing the data")];
+					break;
+					
+				case 1:
 					[cell setTitle:NSLocalizedString(@"Backup your data", @"More View Table backup your data")];
 					break;
 			}
@@ -256,7 +258,7 @@
 			{
 				case 0:
 					[cell setTitle:NSLocalizedString(@"MyTime Version", @"More View Table MyTime Version")];
-					[cell setValue:[NSString stringWithFormat:@"%s", svn_version()]];
+					[cell setValue:[NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
 					break;
 				case 1:
 					[cell setTitle:NSLocalizedString(@"Build Date", @"More View Table Build Date")];
@@ -359,8 +361,18 @@
 		case 3:
 			switch(row)
 			{
-				// Backup your data
 				case 0:
+				{
+					NSMutableString *string = [[NSMutableString alloc] initWithString:@"mailto:?subject=MyTime%20Application%20Data%20Backup&body="];
+					NSMutableString *filedata = [[NSMutableString alloc] initWithContentsOfFile:[[Settings sharedInstance] filename]];
+					[string appendString:[filedata stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+					[filedata release]; // get rid of that huge buffer
+					NSURL *url = [NSURL URLWithString:string];
+					[[UIApplication sharedApplication] openURL:url];
+					return;
+				}
+				// Backup your data
+				case 1:
 				{
 					backupView = [[BackupView alloc] init];
 					[backupView setDelegate:self];
