@@ -12,7 +12,8 @@
 
 @interface SettingsViewController : UIViewController <UITableViewDelegate, 
                                                       UITableViewDataSource,
-													  NumberViewControllerDelegate> 
+													  NumberViewControllerDelegate,
+													  UIActionSheetDelegate> 
 {
 	UITableView *theTableView;
 	BackupView *backupView;

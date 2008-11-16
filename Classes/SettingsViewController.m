@@ -351,8 +351,17 @@
 				// email me
 				case 1:
 				{
-					NSURL *url = [NSURL URLWithString:@"mailto:toopriddy@gmail.com?subject=Regarding%20your%20MyTime%20application"];
-					[[UIApplication sharedApplication] openURL:url];
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"I read the webpage", @"button that the user clicks when they have let their Yes mean Yes that they have read the website")
+															        otherButtonTitles:NSLocalizedString(@"Show me the webpage", @"button that the user clicks when they have not read the FAQ or feature request list"), nil] autorelease];
+					// 0: grey with grey and black buttons
+					// 1: black background with grey and black buttons
+					// 2: transparent black background with grey and black buttons
+					// 3: grey transparent background
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:self.view];
 					return;
 				}
 			}
@@ -407,6 +416,29 @@
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsMonthDisplayCount];
 	[[Settings sharedInstance] saveData];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+//	[sheet dismissAnimated:YES];
+
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+	switch(button)
+	{
+		case 0: // Yes, email toopriddy@gmail.com
+		{
+			NSURL *url = [NSURL URLWithString:@"mailto:toopriddy@gmail.com?subject=Regarding%20your%20MyTime%20application"];
+			[[UIApplication sharedApplication] openURL:url];
+			break;
+		}
+		case 1: // No, take me to the website
+		{
+			NSURL *url = [NSURL URLWithString:@"http://mytime.googlecode.com"];
+			[[UIApplication sharedApplication] openURL:url];
+			break;
+		}
+	}
 }
 
 

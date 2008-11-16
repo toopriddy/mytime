@@ -24,7 +24,7 @@
 
 	// create a custom navigation bar button and set it to always say "back"
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
-	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"cancel button");
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	controller.delegate = self;
 	
