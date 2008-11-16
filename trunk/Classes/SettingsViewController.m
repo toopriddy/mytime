@@ -247,7 +247,7 @@
 					break;
 					
 				case 1:
-					[cell setTitle:NSLocalizedString(@"Backup your data", @"More View Table backup your data")];
+					[cell setTitle:NSLocalizedString(@"Backup using 'MyTime Backup'", @"More View Table backup your data")];
 					break;
 			}
 			break;
@@ -363,8 +363,15 @@
 			{
 				case 0:
 				{
-					NSMutableString *string = [[NSMutableString alloc] initWithString:@"mailto:?subject=MyTime%20Application%20Data%20Backup&body="];
+					NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"%@%@%@", 
+					                                                                  @"mailto:?subject=", 
+																					  [NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
+																					  @"&body="];
 					NSMutableString *filedata = [[NSMutableString alloc] initWithContentsOfFile:[[Settings sharedInstance] filename]];
+					// fix any []'s first
+					[filedata replaceOccurrencesOfString:@"[" withString:[@"[" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
+					[filedata replaceOccurrencesOfString:@"]" withString:[@"]" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
+					// now convert standard tags in XML from <>'s to []'s to force mail to allow us to send xml encoded data
 					[filedata replaceOccurrencesOfString:@"<" withString:@"[" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
 					[filedata replaceOccurrencesOfString:@">" withString:@"]" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
 					[string appendString:[filedata stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
