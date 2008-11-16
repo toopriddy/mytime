@@ -89,6 +89,7 @@
 	self.emailAddress = [[[UITableViewTextFieldCell alloc] init] autorelease];
 	_emailAddress.delegate = self;
 	_emailAddress.textField.text = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
+	_emailAddress.textField.keyboardType = UIKeyboardTypeEmailAddress;
 	_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's email address", @"email address for the congregation secretary");
 	_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	
