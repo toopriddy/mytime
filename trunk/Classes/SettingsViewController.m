@@ -365,6 +365,8 @@
 				{
 					NSMutableString *string = [[NSMutableString alloc] initWithString:@"mailto:?subject=MyTime%20Application%20Data%20Backup&body="];
 					NSMutableString *filedata = [[NSMutableString alloc] initWithContentsOfFile:[[Settings sharedInstance] filename]];
+					[filedata replaceOccurrencesOfString:@"<" withString:@"[" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
+					[filedata replaceOccurrencesOfString:@">" withString:@"]" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
 					[string appendString:[filedata stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 					[filedata release]; // get rid of that huge buffer
 					NSURL *url = [NSURL URLWithString:string];
