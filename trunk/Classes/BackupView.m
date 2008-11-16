@@ -45,7 +45,7 @@
 		[self setup];
 		[self autoresizesSubviews];
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-		[self addButtonWithTitle:NSLocalizedString(@"Cancel", @"cancel button")];
+		[self addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button")];
 		self.title = NSLocalizedString(@"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application", @"initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown)");
 		self.delegate = self;
 	}

@@ -193,8 +193,7 @@
 /* Publication Type name */
 "Campaign Tracts" = "Campaign Tracts";
 
-/* cancel button
-   Cancel Button */
+/* Cancel button */
 "Cancel" = "Cancel";
 
 /* Change Date action button for visit in call view */
@@ -395,17 +394,20 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
 
 /* Tracts Publication Name */
 "How to Find the Road to Paradise" = "How to Find the Road to Paradise";
+
+/* button that the user clicks when they have let their Yes mean Yes that they have read the website */
+"I read the webpage" = "I read the webpage";
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Immortal Spirit";
@@ -587,6 +589,9 @@
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Please Donate, help me help you";
 
+/* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
+"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.";
+
 /* Information for the user to know what is going on with this and new releases */
 "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)";
 
@@ -685,6 +690,9 @@
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Settings";
+
+/* button that the user clicks when they have not read the FAQ or feature request list */
+"Show me the webpage" = "Show me the webpage";
 
 /* Book Publication Name */
 "Sing Praises" = "Sing Praises";

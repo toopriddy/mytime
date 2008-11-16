@@ -382,16 +382,17 @@ static NSString *MONTHS[] = {
 			}
 			if(offset >= 0)
 			{
+				// we found a valid month
 				_minutes[offset] += [minutes intValue];
-			}
 
-			if(newServiceYear && offset <= (_thisMonth - 9))
-			{
-				_serviceYearMinutes += [minutes intValue];
-			}
-			else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
-			{
-				_serviceYearMinutes += [minutes intValue];
+				if(newServiceYear && offset <= (_thisMonth - 9))
+				{
+					_serviceYearMinutes += [minutes intValue];
+				}
+				else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
+				{
+					_serviceYearMinutes += [minutes intValue];
+				}
 			}
 		}
 	}
@@ -634,7 +635,7 @@ static NSString *MONTHS[] = {
 			// handle rolling over minutes
 			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)", @"If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes"), minutes, monthName, (hours+1), monthName]
 																	 delegate:self
-															cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button")
+															cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 													   destructiveButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Round Up to %d hours", @"Yes round up where %d is a placeholder for the number of hours"), hours+1]
 															otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"Move to next month", @"Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes"), minutes], nil] autorelease];
 			// 0: grey with grey and black buttons
@@ -753,6 +754,7 @@ static NSString *MONTHS[] = {
 	if (cell == nil) 
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"StatisticsTableCell"] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	else
 	{
