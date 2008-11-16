@@ -13,7 +13,8 @@
 
 @interface StatisticsViewController : UIViewController <UITableViewDelegate, 
                                                         UITableViewDataSource,
-														MonthChooserViewControllerDelegate> 
+														MonthChooserViewControllerDelegate,
+														UIActionSheetDelegate> 
 {
 	UITableView *theTableView;
 
@@ -33,7 +34,8 @@
 	int _returnVisits[kMonthsShown];
 	int _bibleStudies[kMonthsShown];
 	int _campaignTracts[kMonthsShown];
-
+	
+	int _selectedMonth;
 }
 @property (nonatomic,retain) UITableView *theTableView;
 

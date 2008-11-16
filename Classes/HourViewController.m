@@ -14,7 +14,6 @@
 @implementation HourViewController
 
 @synthesize tableView;
-@synthesize timeEntries;
 @synthesize selectedIndexPath;
 
 static int sortByDate(id v1, id v2, void *context)
@@ -30,6 +29,12 @@ static int sortByDate(id v1, id v2, void *context)
 // sort the time entries and remove the 13 month old entries
 - (void)reloadData
 {
+	// refresh the data
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	NSMutableArray *timeEntries = [settings objectForKey:timeEntriesName];
+
+
 	NSArray *sortedArray = [timeEntries sortedArrayUsingFunction:sortByDate context:NULL];
 	[sortedArray retain];
 	[timeEntries setArray:sortedArray];
@@ -60,14 +65,13 @@ static int sortByDate(id v1, id v2, void *context)
 	if ([super init]) 
 	{
 		tableView = nil;
-		timeEntries = nil;
 		selectedIndexPath = nil;
 
 		_quickBuild = quickBuild;
 		NSString *timeEntriesName = (NSString *)(quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
 
 		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-		self.timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]];
+		NSMutableArray *timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]];
 		[settings setObject:timeEntries forKey:timeEntriesName];
 		
 		
@@ -153,6 +157,9 @@ static int sortByDate(id v1, id v2, void *context)
 	int minutes = [now timeIntervalSinceDate:date]/60.0;
 	if(minutes > 0)
 	{
+		NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+		NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
+	
 		NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
 
 		[entry setObject:date forKey:SettingsTimeEntryDate];
@@ -254,11 +261,14 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)timePickerViewControllerDone:(TimePickerViewController *)timePickerController 
 {
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	if(selectedIndexPath != nil)
 	{
 		VERBOSE(NSLog(@"date is = %@, minutes %d", [timePickerController date], [timePickerController minutes]);)
+		
 		// existing entry
-		NSMutableDictionary *entry = [self.timeEntries objectAtIndex:[selectedIndexPath row]];
+		NSMutableDictionary *entry = [timeEntries objectAtIndex:[selectedIndexPath row]];
 
 		[entry setObject:[timePickerController date] forKey:SettingsTimeEntryDate];
 		[entry setObject:[[[NSNumber alloc] initWithInt:[timePickerController minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
@@ -294,6 +304,8 @@ static int sortByDate(id v1, id v2, void *context)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     DEBUG(NSLog(@"numberOfRowsInTable:");)
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	int count = [timeEntries count];
     DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
 	return(count);
@@ -314,6 +326,9 @@ static int sortByDate(id v1, id v2, void *context)
 		[cell setTitle:@""];
 	}
 
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
+	
 	if(row >= [timeEntries count])
 		return(NULL);
 	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
@@ -339,7 +354,7 @@ static int sortByDate(id v1, id v2, void *context)
 		[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 	else if(hours)
 		[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-	else if(minutes)
+	else if(minutes || minutes == 0)
 		[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 
 	return cell;
@@ -350,6 +365,8 @@ static int sortByDate(id v1, id v2, void *context)
     int row = [indexPath row];
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
 	self.selectedIndexPath = indexPath;
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
 
 	NSNumber *minutes = [entry objectForKey:SettingsTimeEntryMinutes];
@@ -365,6 +382,8 @@ static int sortByDate(id v1, id v2, void *context)
 - (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	[timeEntries removeObjectAtIndex:[indexPath row]];
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
