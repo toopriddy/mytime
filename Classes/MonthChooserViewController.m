@@ -13,8 +13,6 @@
 
 @interface MonthChooserViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
-@property (nonatomic,retain) NSArray *months;
-@property (nonatomic,retain) NSArray *selected;
 @end
 
 @implementation MonthChooserViewController
@@ -30,6 +28,7 @@
 	if ([super init]) 
 	{
 		_countSelected = 0;
+		_emailAddress = nil;
 		
 		NSString *month;
 		self.months = months;
@@ -39,7 +38,7 @@
 			[_selected addObject:[NSNumber numberWithBool:NO]];
 		}
 		// set the title, and tab bar images from the dataSource
-		self.title = NSLocalizedString(@"Months to email", @"Months to email Information title");
+		self.title = NSLocalizedString(@"Email Statistics", @"Months to email Information title");
 	}
 	return self;
 }
@@ -50,6 +49,9 @@
 	self.theTableView.dataSource = nil;
 
 	self.theTableView = nil;
+	self.months = nil;
+	self.selected = nil;
+	self.emailAddress = nil;
 
 	self.delegate = nil;
 	
@@ -85,14 +87,16 @@
 	theTableView.dataSource = self;
 
 	self.emailAddress = [[[UITableViewTextFieldCell alloc] init] autorelease];
+	_emailAddress.delegate = self;
 	_emailAddress.textField.text = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
 	_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's email address", @"email address for the congregation secretary");
 	_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	
 	// add + button
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																			 target:self
-																			 action:@selector(navigationControlEmail:)] autorelease];
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send button like the send button in the email program, to send your field service activity report to the congregation secretary") 
+	                                                            style:UIBarButtonItemStyleDone
+															   target:self
+															   action:@selector(navigationControlEmail:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
 	self.navigationItem.rightBarButtonItem.enabled = NO;
 	// set the tableview as the controller view
@@ -128,14 +132,27 @@
 		else
 			_countSelected--;
 		
-		if(_countSelected && _emailAddress.textField.text.length)
-			self.navigationItem.rightBarButtonItem.enabled = YES;
+		self.navigationItem.rightBarButtonItem.enabled = _countSelected && _emailAddress.textField.text.length;
 
 		[_selected replaceObjectAtIndex:row withObject:[NSNumber numberWithBool:!value]];
 		
-		 [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:[[_selected objectAtIndex:row] boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
-		 [tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:[[_selected objectAtIndex:row] boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
+}
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	int length = _emailAddress.textField.text.length;
+	if(string.length == 0)
+	{
+		length -= range.length;
+	}
+	else
+	{
+		length -= range.length + string.length;
+	}
+	self.navigationItem.rightBarButtonItem.enabled = _countSelected && length;
+	return YES;
 }
 
 
@@ -172,7 +189,7 @@
 	{
 		case 0:
 		{
-			return(_emailAddress);
+			return(self.emailAddress);
 		}
 		
 		case 1:

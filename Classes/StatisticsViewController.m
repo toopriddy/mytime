@@ -62,6 +62,68 @@ static NSString *MONTHS[] = {
 
 - (void)monthChooserViewControllerSendEmail:(MonthChooserViewController *)monthChooserViewController
 {
+	NSString *emailAddress = monthChooserViewController.emailAddress.textField.text;
+	[[[Settings sharedInstance] settings] setObject:emailAddress forKey:SettingsSecretaryEmailAddress];
+	[[Settings sharedInstance] saveData];
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"mailto:%@?", emailAddress];
+	[string appendString:@"subject="];
+	[string appendString:[@"Field Service Activity Report" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:@"&body="];
+	NSArray *selectedMonths = monthChooserViewController.selected;
+	NSArray *monthNames = monthChooserViewController.months;
+	int index;
+	for(index = 0; index < [selectedMonths count]; ++index)
+	{
+		if([[selectedMonths objectAtIndex:index] boolValue])
+		{
+			[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:\n", @"Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+			// HOURS
+			NSString *count = @"0";
+			int hours = _minutes[index] / 60;
+			int minutes = _minutes[index] % 60;
+			if(hours && minutes)
+				count = [NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+			else if(hours)
+				count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
+			else if(minutes)
+				count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+			// BOOKS
+			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// BROCHURES
+			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// MAGAZINES
+			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// RETURN VISITS
+			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View"), _returnVisits[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// STUDIES
+			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View"), _bibleStudies[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// CAMPAIGN TRACTS
+			if(_campaignTracts[index])
+				[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Campaign Tracts", @"Publication Type name"), _campaignTracts[index]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			// QUICKBUILD TIME
+			if(_quickBuildMinutes[index])
+			{
+				count = @"0";
+				int hours = _quickBuildMinutes[index] / 60;
+				int minutes = _quickBuildMinutes[index] % 60;
+				if(hours && minutes)
+					count = [NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+				else if(hours)
+					count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
+				else if(minutes)
+					count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+				[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			}
+			[string appendString:[@"\n\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		}
+	}
+	NSURL *url = [NSURL URLWithString:string];
+	[[UIApplication sharedApplication] openURL:url];
+	
 }
 
 - (void)navigationControlEmail:(id)sender
@@ -103,7 +165,7 @@ static NSString *MONTHS[] = {
 	self.view = tableView;
 
 	// add + button
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
 																			 target:self
 																			 action:@selector(navigationControlEmail:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
@@ -505,11 +567,11 @@ static NSString *MONTHS[] = {
 		count++;
 	if(_magazines[index])
 		count++;
-	if(_campaignTracts[index])
-		count++;
 	if(_returnVisits[index])
 		count++;
 	if(_bibleStudies[index])
+		count++;
+	if(_campaignTracts[index])
 		count++;
 	if(_quickBuildMinutes[index])
 		count++;
@@ -628,12 +690,6 @@ static NSString *MONTHS[] = {
 		[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
 		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[index]]];
 	}
-	else if(_campaignTracts[index] && row-- == 0)
-	{
-		// if we are not editing, then 
-		[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _campaignTracts[index]]];
-	}
 	else if(_returnVisits[index] && row-- == 0)
 	{
 		// if we are not editing, then 
@@ -645,6 +701,12 @@ static NSString *MONTHS[] = {
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
 		[cell setValue:[NSString stringWithFormat:@"%d", _bibleStudies[index]]];
+	}
+	else if(_campaignTracts[index] && row-- == 0)
+	{
+		// if we are not editing, then 
+		[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
+		[cell setValue:[NSString stringWithFormat:@"%d", _campaignTracts[index]]];
 	}
 	else if(_quickBuildMinutes[index] && row-- == 0)
 	{

@@ -77,7 +77,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)thetextField 
 {
 	[thetextField resignFirstResponder];
-	if(delegate)
+	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
 	{
 		[delegate tableViewTextFieldCell:self selected:NO];
 	}
@@ -88,7 +88,15 @@
 	return YES;
 }
 
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:shouldChangeCharactersInRange:replacementString:)])
+	{
+		return [delegate tableViewTextFieldCell:self shouldChangeCharactersInRange:range replacementString:string];
+	}
+	
+	return YES;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -105,7 +113,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	if(delegate)
+	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
 	{
 		[delegate tableViewTextFieldCell:self selected:YES];
 	}
@@ -113,7 +121,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	if(delegate)
+	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
 	{
 		[delegate tableViewTextFieldCell:self selected:NO];
 	}
