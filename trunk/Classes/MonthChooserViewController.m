@@ -38,7 +38,7 @@
 			[_selected addObject:[NSNumber numberWithBool:NO]];
 		}
 		// set the title, and tab bar images from the dataSource
-		self.title = NSLocalizedString(@"Email Statistics", @"Months to email Information title");
+		self.title = NSLocalizedString(@"Email Report", @"Months to email Information title");
 	}
 	return self;
 }

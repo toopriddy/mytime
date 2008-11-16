@@ -110,7 +110,7 @@
 "Backup" = "Backup";
 
 /* More View Table backup your data */
-"Backup your data" = "Backup your data";
+"Backup using 'MyTime Backup'" = "Backup using 'MyTime Backup'";
 
 /* Book Publication Name */
 "Bible" = "Bible";
@@ -193,7 +193,8 @@
 /* Publication Type name */
 "Campaign Tracts" = "Campaign Tracts";
 
-/* cancel button */
+/* cancel button
+   Cancel Button */
 "Cancel" = "Cancel";
 
 /* Change Date action button for visit in call view */
@@ -344,7 +345,7 @@
 "Email backup" = "Email backup";
 
 /* Months to email Information title */
-"Email Statistics" = "Email Statistics";
+"Email Report" = "Email Report";
 
 /* Google Localized Language Name */
 "en" = "en";
@@ -394,11 +395,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* Plural form of the word hours */
-"hours" = "hours";
-
 /* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
 "Hours" = "Hours";
+
+/* Plural form of the word hours */
+"hours" = "hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -510,6 +511,9 @@
 
 /* Months plural */
 "Months" = "Months";
+
+/* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
+"Move to next month" = "Move to next month";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "My Book of Bible Stories";
@@ -639,6 +643,9 @@
 
 /* Book Publication Name */
 "Revelation Climax" = "Revelation Climax";
+
+/* Yes round up where %d is a placeholder for the number of hours */
+"Round Up to %d hours" = "Round Up to %d hours";
 
 /* Brochures Publication Name */
 "Satisfying Life" = "Satisfying Life";
@@ -795,6 +802,9 @@
 
 /* Book Publication Name */
 "Would You Like To Know the Truth?" = "Would You Like To Know the Truth?";
+
+/* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
+"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Would you like to move %1$d minutes from the month of %2$@ to the next month? Or, round up to %3$d hours for %4$@?\n(This will change the time that you put in the Hours view so you can undo this manually)";
 
 /* Yes delete the call */
 "Yes" = "Yes";

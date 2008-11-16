@@ -601,6 +601,148 @@ static NSString *MONTHS[] = {
     return(title);
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int row = [indexPath row];
+	int section = [indexPath section];
+    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
+
+	if(section == 0)
+		return;
+
+	if(_serviceYearQuickBuildMinutes && --section == 0)
+	{
+		return;
+	}
+	
+	int index = section - 1;
+
+	if(row-- == 0)
+	{
+		// if we are not editing, then 
+		int hours = _minutes[index] / 60;
+		int minutes = _minutes[index] % 60;
+		
+		if(minutes)
+		{
+			_selectedMonth = index;
+			int month = _thisMonth - index;
+			if(month < 1)
+				month = 12 + month;
+			NSString *monthName = [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""];
+
+			// handle rolling over minutes
+			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)", @"If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes"), minutes, monthName, (hours+1), monthName]
+																	 delegate:self
+															cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button")
+													   destructiveButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Round Up to %d hours", @"Yes round up where %d is a placeholder for the number of hours"), hours+1]
+															otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"Move to next month", @"Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes"), minutes], nil] autorelease];
+			// 0: grey with grey and black buttons
+			// 1: black background with grey and black buttons
+			// 2: transparent black background with grey and black buttons
+			// 3: grey transparent background
+			alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+			[alertSheet showInView:self.view];
+		}
+	}
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+//	[sheet dismissAnimated:YES];
+
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+	switch(button)
+	{
+		case 0: // ROUND UP
+		{
+			int minutes = _minutes[_selectedMonth] % 60;
+			
+			NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+			[comps setMonth:-_selectedMonth];
+			NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
+	
+			// now go and add the entry
+			NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
+			[timeEntry setObject:date forKey:SettingsTimeEntryDate];
+			[timeEntry setObject:[NSNumber numberWithInt:(60 - minutes)] forKey:SettingsTimeEntryMinutes];
+			[[[[Settings sharedInstance] settings] objectForKey:SettingsTimeEntries] addObject:timeEntry];
+			[[Settings sharedInstance] saveData];
+			[self reloadData];
+			break;
+		}
+		
+		case 1: // MOVE TO NEXT MONTH
+		{
+			int minutes = _minutes[_selectedMonth] % 60;
+			
+			NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+			[comps setMonth:(1 - _selectedMonth)];
+			NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
+
+			//make the time entries editable
+			NSMutableArray *timeEntries = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsTimeEntries]];
+			[[[Settings sharedInstance] settings] setObject:timeEntries forKey:SettingsTimeEntries];
+
+			// now go and add the entry
+			NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
+			[timeEntry setObject:date forKey:SettingsTimeEntryDate];
+			[timeEntry setObject:[NSNumber numberWithInt:minutes] forKey:SettingsTimeEntryMinutes];
+			[timeEntries addObject:timeEntry];
+			[[Settings sharedInstance] saveData];
+			
+			
+			int month = _thisMonth - _selectedMonth;
+			int year = _thisYear;
+			if(month < 1)
+			{
+				--year;
+				month += 12;
+			}
+			
+			// now remove time from an entry in this month
+			int timeCount = [timeEntries count];
+			int timeIndex;
+			for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
+			{
+				timeEntry = [timeEntries objectAtIndex:timeIndex];
+
+				NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
+				NSNumber *minutesEntry = [timeEntry objectForKey:SettingsTimeEntryMinutes];
+				if(date && minutesEntry)
+				{
+					NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+					if(month == [dateComponents month] && year == [dateComponents year])
+					{
+						// get the minimum of the two
+						int leftover = [minutesEntry intValue] < minutes ? [minutesEntry intValue] : minutes;
+						
+						NSMutableDictionary *newTimeEntry = [NSMutableDictionary dictionary];
+						[newTimeEntry setObject:date forKey:SettingsTimeEntryDate];
+						[newTimeEntry setObject:[NSNumber numberWithInt:([minutesEntry intValue] - leftover)] forKey:SettingsTimeEntryMinutes];
+						[timeEntries replaceObjectAtIndex:timeIndex withObject:newTimeEntry];
+						// subtract off what we were able to take off of this time entry
+						// if it turns out that it was not enough, then we will try another entry
+						minutes -= leftover;
+						if(minutes == 0)
+						{
+							[[Settings sharedInstance] saveData];
+							// we have finished subtracting minutes off of time entries
+							break;
+						}
+					}
+				}
+			}
+			
+			
+			[self reloadData];
+			break;
+		}
+	}
+}
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -611,12 +753,13 @@ static NSString *MONTHS[] = {
 	if (cell == nil) 
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"StatisticsTableCell"] autorelease];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	else
 	{
 		[cell setValue:@""];
 		[cell setTitle:@""];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 
 	if(section == 0)
@@ -671,6 +814,12 @@ static NSString *MONTHS[] = {
 			[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 		else
 			[cell setValue:@"0"];
+			
+		if(minutes)
+		{
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		}
 	}
 	else if(_books[index] && row-- == 0)
 	{

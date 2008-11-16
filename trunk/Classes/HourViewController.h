@@ -12,13 +12,11 @@
 @interface HourViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, TimePickerViewControllerDelegate> 
 {
 	UITableView *tableView;
-	NSMutableArray *timeEntries;
 	BOOL _quickBuild;
 	
 	NSIndexPath *selectedIndexPath;
 }
 @property (nonatomic,retain) UITableView *tableView;
-@property (nonatomic,retain) NSMutableArray *timeEntries;
 @property (nonatomic,retain) NSIndexPath *selectedIndexPath;
 
 /**
