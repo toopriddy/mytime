@@ -9,10 +9,8 @@
 @class UITableViewTextFieldCell;
 
 @protocol UITableViewTextFieldCellDelegate<NSObject>
-
-@required
-
+@optional
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
-
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 @end
 

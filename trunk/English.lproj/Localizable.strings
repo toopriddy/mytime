@@ -25,6 +25,9 @@
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
 "%@ %@ %d, %d" = "%1$@ %2$@ %3$d, %4$d";
 
+/* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
+"%@ Field Service Activity Report:\n" = "%@ Field Service Activity Report:\n";
+
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
 
@@ -340,6 +343,9 @@
 /* More View Table backup your data by emailing the data */
 "Email backup" = "Email backup";
 
+/* Months to email Information title */
+"Email Statistics" = "Email Statistics";
+
 /* Google Localized Language Name */
 "en" = "en";
 
@@ -388,11 +394,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -504,9 +510,6 @@
 
 /* Months plural */
 "Months" = "Months";
-
-/* Months to email Information title */
-"Months to email" = "Months to email";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "My Book of Bible Stories";
@@ -651,6 +654,9 @@
 
 /* Publication Type title */
 "Select Type" = "Select Type";
+
+/* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
+"Send" = "Send";
 
 /* initial message when trying to transfer backup files */
 "Sending Settings to the Backup Application" = "Sending Settings to the Backup Application";

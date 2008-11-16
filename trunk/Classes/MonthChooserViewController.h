@@ -17,7 +17,8 @@
 @end
 
 @interface MonthChooserViewController : UIViewController <UITableViewDelegate, 
-													      UITableViewDataSource> 
+													      UITableViewDataSource,
+														  UITableViewTextFieldCellDelegate> 
 {
 	id<MonthChooserViewControllerDelegate> delegate;
 @private
@@ -30,6 +31,8 @@
 
 @property (nonatomic, assign) id<MonthChooserViewControllerDelegate> delegate;
 @property (nonatomic, retain) UITableViewTextFieldCell *emailAddress;
+@property (nonatomic,retain) NSArray *months;
+@property (nonatomic,retain) NSArray *selected;
 
 
 /**
