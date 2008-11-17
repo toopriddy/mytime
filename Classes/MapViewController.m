@@ -118,8 +118,7 @@
 	NSString *state = [theCall objectForKey:CallState];
 	NSString *seperator = useHtml ? @"<br>" : @"";
 	
-	if(streetNumber && [streetNumber length] && 
-	   street && [street length] && 
+	if(street && [street length] && 
 	   city && [city length] && 
 	   state && [state length])
 	{
