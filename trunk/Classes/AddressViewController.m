@@ -143,6 +143,8 @@
 	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:UITableViewStyleGrouped] autorelease];
 	
+	// alow the loupe to work within text fields
+	theTableView.scrollEnabled = NO;
 	// set the autoresizing mask so that the table will always fill the view
 	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	

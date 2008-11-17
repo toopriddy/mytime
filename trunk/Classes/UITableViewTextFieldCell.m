@@ -48,6 +48,7 @@
 		textField.backgroundColor = [UIColor clearColor];
 		textField.textColor = [UIColor darkGrayColor];
 		textField.delegate = self;
+
 		[self.contentView addSubview:self.textField];
 	}
 	return self;
