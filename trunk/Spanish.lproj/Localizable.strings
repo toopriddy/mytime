@@ -8,6 +8,9 @@
 "   BROCHURES" = "   FOLLETOS";
 
 /* Publication Type and Seperator in the Publication Picker */
+"   CAMPAIGN TRACTS" = "   CAMPAIGN TRACTS";
+
+/* Publication Type and Seperator in the Publication Picker */
 "   DVD" = "   DVD";
 
 /* Publication Type and Seperator in the Publication Picker */
@@ -22,11 +25,8 @@
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
 "%@ %@ %d, %d" = "%1$@ %3$d %2$@, %4$d";
 
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
-"%a %b %d" = "%a %b %d";
-
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
-"%a %b %d, %Y" = "%a %b %d, %Y";
+/* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
+"%@ Field Service Activity Report:\n" = "%@ Field Service Activity Report:\n";
 
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
@@ -64,6 +64,12 @@
 /* Add a return visit action button */
 "Add a return visit" = "Anotar revisita";
 
+/* Button to click to add more information like phone number and email address */
+"Add Additional Information" = "Add Additional Information";
+
+/* Add Information title */
+"Add Info" = "Add Info";
+
 /* Return Visit Notes Placeholder text */
 "Add Notes" = "Notas";
 
@@ -73,8 +79,11 @@
 /* Address label for call */
 "Address" = "Dirección";
 
-/* Cancel button for view-mode Calls */
+/* cancel button */
 "All Calls" = "Todos";
+
+/* all publicaitons label for publication type */
+"All Publications" = "All Publications";
 
 /* Book Publication Name */
 "All Scripture" = "Toda Escritura";
@@ -105,6 +114,9 @@
 
 /* Book Publication Name */
 "Bible" = "Biblia";
+
+/* Publication Type name */
+"Bible DVD" = "Bible DVD";
 
 /* Bible DVD Publication Name */
 "Bible DVD: Acts" = "Biblia en DVD: Hechos";
@@ -175,7 +187,13 @@
 /* view title */
 "Calls Sorted by Street" = "Contactos ordenados por Calle";
 
-/* cancel button */
+/* Publication Type name */
+"Campaign Tract" = "Campaign Tract";
+
+/* Publication Type name */
+"Campaign Tracts" = "Campaign Tracts";
+
+/* Cancel button */
 "Cancel" = "Cancelar";
 
 /* Change Date action button for visit in call view */
@@ -244,6 +262,12 @@
 /* Brochures Publication Name */
 "Does God Care" = "¿Se interesa Dios por nosotros?";
 
+/* Publication Type name */
+"DVD" = "DVD";
+
+/* Publication Type name */
+"DVD (not counted)" = "DVD (not counted)";
+
 /* DVD Publication Name */
 "DVD Drama: Bore Witness" = "DVD Drama: Testimonio cabal";
 
@@ -307,6 +331,21 @@
 /* Brochures Publication Name */
 "Education" = "Educación";
 
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy" = "EEE, M/d/yyy";
+
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy h:mma" = "EEE, M/d/yyy h:mma";
+
+/* Call Metadata */
+"Email" = "Email";
+
+/* More View Table backup your data by emailing the data */
+"Email backup" = "Email backup";
+
+/* Months to email Information title */
+"Email Report" = "Email Report";
+
 /* Google Localized Language Name */
 "en" = "sp";
 
@@ -366,6 +405,9 @@
 
 /* Tracts Publication Name */
 "How to Find the Road to Paradise" = "Cómo hallar el camino al Paraíso";
+
+/* button that the user clicks when they have let their Yes mean Yes that they have read the website */
+"I read the webpage" = "I read the webpage";
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Espíritu inmortal";
@@ -460,6 +502,9 @@
 /* Plural form of the word minutes */
 "minutes" = "minutos";
 
+/* Call Metadata */
+"Mobile Phone" = "Mobile Phone";
+
 /* Month singular */
 "Month" = "Mes";
 
@@ -469,8 +514,14 @@
 /* Months plural */
 "Months" = "Meses";
 
+/* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
+"Move to next month" = "Move to next month";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mi libro de historias bíblicas";
+
+/* Email subject line for the email that has your backup data in it */
+"MyTime Application Data Backup" = "MyTime Application Data Backup";
 
 /* More View Table MyTime Version */
 "MyTime Version" = "Version de MyTime";
@@ -526,6 +577,9 @@
 /* Tracts Publication Name */
 "Peaceful New World" = "Un nuevo mundo pacífico";
 
+/* Call Metadata */
+"Phone" = "Phone";
+
 /* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
 "Placements" = "Publicaciones";
 
@@ -534,6 +588,9 @@
 
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Por favor haga una donación, ayúdeme a ayudarlo";
+
+/* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
+"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.";
 
 /* Information for the user to know what is going on with this and new releases */
 "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Por favor, visite mytime.googlecode.com para ver preguntas frecuentes y peticiones.\nSe ha invertido mucho tiempo en MyTime, si encuentra útil esta aplicación le animamos a hacer un donativo.  El inglés no es su idioma nativo y quiere ayudarnos a traducir? Mándeme un email (mire en Más y en Ajustes)";
@@ -592,8 +649,14 @@
 /* Book Publication Name */
 "Revelation Climax" = "Apocalipsis";
 
+/* Yes round up where %d is a placeholder for the number of hours */
+"Round Up to %d hours" = "Round Up to %d hours";
+
 /* Brochures Publication Name */
 "Satisfying Life" = "Vida llena";
+
+/* email address for the congregation secretary */
+"Secretary's email address" = "Secretary's email address";
 
 /* Title for the view where you Pick A Date */
 "Select Date" = "Fecha";
@@ -603,6 +666,12 @@
 
 /* Select Time Title for adding hours of field service to a particular day */
 "Select Time" = "Tiempo";
+
+/* Publication Type title */
+"Select Type" = "Select Type";
+
+/* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
+"Send" = "Send";
 
 /* initial message when trying to transfer backup files */
 "Sending Settings to the Backup Application" = "Enviando ajustes a la aplicación de copia de seguridad";
@@ -616,17 +685,17 @@
 /* Service year total quick build hours label */
 "Service Year Quick Build Total" = "Total de construcción rápida en el año de servicio";
 
-/* More View Table Group Title */
+/* Service year total hours label */
 "Service Year Total" = "Total del año de servicio";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Ajustes";
 
+/* button that the user clicks when they have not read the FAQ or feature request list */
+"Show me the webpage" = "Show me the webpage";
+
 /* Book Publication Name */
 "Sing Praises" = "Canten alabanzas";
-
-/* Publication Type name */
-"Special" = "Especial";
 
 /* Brochures Publication Name */
 "Spirits of the Dead" = "Espíritus de difuntos";
@@ -649,7 +718,7 @@
 /* Street */
 "Street" = "Calle";
 
-/* 'Street Sorted' ButtonBar View text */
+/* Street Sorted button title */
 "Street Sorted" = "Por Calle";
 
 /* return visit type name */
@@ -738,6 +807,12 @@
 
 /* Book Publication Name */
 "Worship God" = "Adoremos a Dios";
+
+/* Book Publication Name */
+"Would You Like To Know the Truth?" = "Would You Like To Know the Truth?";
+
+/* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
+"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Would you like to move %1$d minutes from the month of %2$@ to the next month? Or, round up to %3$d hours for %4$@?\n(This will change the time that you put in the Hours view so you can undo this manually)";
 
 /* Yes delete the call */
 "Yes" = "Sí";
