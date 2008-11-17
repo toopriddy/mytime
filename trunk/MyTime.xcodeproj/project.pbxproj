@@ -121,6 +121,7 @@
 		906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		906143D00E5144ED0072BA7B /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewControllerDelegate.h; sourceTree = "<group>"; };
+		9069B1160ED1137500F189DD /* Portuguese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Portuguese; path = Portuguese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataViewController.h; sourceTree = "<group>"; };
 		907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataViewController.m; sourceTree = "<group>"; };
 		907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataEditorViewController.h; sourceTree = "<group>"; };
@@ -460,6 +461,7 @@
 				Croatian,
 				Dutch,
 				fra,
+				Portuguese,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -577,6 +579,7 @@
 				90DD733D0E925C1E007B1B71 /* Dutch */,
 				90AEB40D0E9C218A00943E6A /* Japanese */,
 				901313140EA03A4B0055D890 /* French */,
+				9069B1160ED1137500F189DD /* Portuguese */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
