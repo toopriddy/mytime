@@ -370,6 +370,9 @@
 /* Long month name */
 "February" = "Veljača";
 
+/* Subject text for the email that is sent for the Field Service Activity report */
+"Field Service Activity Report" = "Field Service Activity Report";
+
 /* Brochures Publication Name */
 "God's Friend" = "Božji Prijatelj";
 
@@ -394,11 +397,11 @@
 /* Singular form of the word hour */
 "hour" = "sat";
 
-/* Plural form of the word hours */
-"hours" = "sati";
-
 /* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
 "Hours" = "Sati";
+
+/* Plural form of the word hours */
+"hours" = "sati";
 
 /* House Number */
 "House Number" = "Broj Kuće";
