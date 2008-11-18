@@ -110,7 +110,7 @@
 "Backup" = "バックアップ";
 
 /* More View Table backup your data */
-"Backup your data" = "データーのバックアップ";
+"Backup using 'MyTime Backup'" = "Backup using 'MyTime Backup'";
 
 /* Book Publication Name */
 "Bible" = "　聖書";
@@ -331,6 +331,7 @@
 /* Brochures Publication Name */
 "Education" = "　学校";
 
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
 "EEE, M/d/yyy" = "EEE, M/d/yyy";
 
 /* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
@@ -818,3 +819,4 @@
 
 /* Book Publication Name */
 "Young People Ask" = "　若い人が尋ねる";
+
