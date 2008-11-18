@@ -191,35 +191,35 @@
 			break;
 		// PublicationTypeMagazine @"Magazine"
 		case 1:
-			[cell setText:PublicationTypeMagazine];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeMagazine value:PublicationTypeMagazine table:@""]];
 			break;
 		// PublicationTypeBook @"Book"
 		case 2:
-			[cell setText:PublicationTypeBook];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeBook value:PublicationTypeBook table:@""]];
 			break;
 		// PublicationTypeCampaignTract @"Campaign Tract"
 		case 3:
-			[cell setText:PublicationTypeCampaignTract];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeCampaignTract value:PublicationTypeCampaignTract table:@""]];
 			break;
 		// PublicationTypeBrochure @"Brochure"
 		case 4:
-			[cell setText:PublicationTypeBrochure];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeBrochure value:PublicationTypeBrochure table:@""]];
 			break;
 		// PublicationTypeDVDBible @"Bible DVD"
 		case 5:
-			[cell setText:PublicationTypeDVDBible];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDBible value:PublicationTypeDVDBible table:@""]];
 			break;
 		// PublicationTypeDVDBook @"DVD"
 		case 6:
-			[cell setText:PublicationTypeDVDBook];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""]];
 			break;
 		// PublicationTypeDVDNotCount @"DVD Not Counted"
 		case 7:
-			[cell setText:PublicationTypeDVDNotCount];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""]];
 			break;
 		// PublicationTypeTract @"Tract"
 		case 8:
-			[cell setText:PublicationTypeTract];
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""]];
 			break;
     }
 	return(cell);
