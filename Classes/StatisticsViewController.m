@@ -68,7 +68,7 @@ static NSString *MONTHS[] = {
 	
 	NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"mailto:%@?", emailAddress];
 	[string appendString:@"subject="];
-	[string appendString:[@"Field Service Activity Report" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	[string appendString:@"&body="];
 	NSArray *selectedMonths = monthChooserViewController.selected;
 	NSArray *monthNames = monthChooserViewController.months;
