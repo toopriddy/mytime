@@ -370,6 +370,9 @@
 /* Long month name */
 "February" = "February";
 
+/* Subject text for the email that is sent for the Field Service Activity report */
+"Field Service Activity Report" = "Field Service Activity Report";
+
 /* Brochures Publication Name */
 "God's Friend" = "God's Friend";
 
@@ -394,11 +397,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* Plural form of the word hours */
-"hours" = "hours";
-
 /* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
 "Hours" = "Hours";
+
+/* Plural form of the word hours */
+"hours" = "hours";
 
 /* House Number */
 "House Number" = "House Number";
