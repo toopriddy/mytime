@@ -1146,7 +1146,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		case PHONE:
 		case EMAIL:
-			[cell setTitle:name];
+			[cell setTitle:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
 			[cell setValue:value];
 			break;
 	}
