@@ -8,13 +8,13 @@
 "   BROCHURES" = "   BROSCHYRER";
 
 /* Publication Type and Seperator in the Publication Picker */
-"   CAMPAIGN TRACTS" = "   CAMPAIGN TRACTS";
+"   CAMPAIGN TRACTS" = "   KAMPANJ VIKBLAD";
 
 /* Publication Type and Seperator in the Publication Picker */
 "   DVD" = "   DVD";
 
 /* Publication Type and Seperator in the Publication Picker */
-"   TRACTS" = "   TRAKTAT";
+"   TRACTS" = "   VIKBLAD";
 
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%2$@ %1$@";
@@ -26,7 +26,7 @@
 "%@ %@ %d, %d" = "%1$@ %2$@ %3$d, %4$d";
 
 /* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
-"%@ Field Service Activity Report:\n" = "%@ Field Service Activity Report:\n";
+"%@ Field Service Activity Report:\n" = "%@ Månadsrapport:\n";
 
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
@@ -65,7 +65,7 @@
 "Add a return visit" = "Lägg till ett återbesök";
 
 /* Button to click to add more information like phone number and email address */
-"Add Additional Information" = "Add Additional Information";
+"Add Additional Information" = "Lägg till annan info.";
 
 /* Add Information title */
 "Add Info" = "Add Info";
@@ -83,7 +83,7 @@
 "All Calls" = "Alla namn";
 
 /* all publicaitons label for publication type */
-"All Publications" = "All Publications";
+"All Publications" = "Alla publikationer";
 
 /* Book Publication Name */
 "All Scripture" = "Hela skriften";
@@ -110,7 +110,7 @@
 "Backup" = "Säkerhetskopia";
 
 /* More View Table backup your data */
-"Backup using 'MyTime Backup'" = "Backup using 'MyTime Backup'";
+"Backup using 'MyTime Backup'" = "Backup använder 'MyTime Backup'";
 
 /* Book Publication Name */
 "Bible" = "Bibeln";
@@ -167,7 +167,7 @@
 "Build Date" = "Skapad datum";
 
 /* Title for Bulk Placements view */
-"Bulk Placements" = "Större beställningar";
+"Bulk Placements" = "Större placering";
 
 /* Call main title when editing an existing call */
 "Call" = "Besök";
@@ -182,16 +182,16 @@
 "Calls Sorted by Date" = "Datumsortering";
 
 /* View title */
-"Calls Sorted by Name" = "Besök sorterade i namnordning";
+"Calls Sorted by Name" = "Bes√∂k sorterade i namnordning";
 
 /* view title */
-"Calls Sorted by Street" = "Besök sorterade i adressordning";
+"Calls Sorted by Street" = "Bes√∂k sorterade i adressordning";
 
 /* Publication Type name */
 "Campaign Tract" = "Campaign Tract";
 
 /* Publication Type name */
-"Campaign Tracts" = "Campaign Tracts";
+"Campaign Tracts" = "Kampanj vikblad";
 
 /* Cancel button */
 "Cancel" = "Avbryt";
@@ -206,10 +206,10 @@
 "City Sorted" = "PA sortering";
 
 /* Book Publication Name */
-"Close to Jehovah" = "Närma dig Jehova";
+"Close to Jehovah" = "N√§rma dig Jehova";
 
 /* Tracts Publication Name */
-"Comfort for the Depressed" = "Tröst för de deprimerade";
+"Comfort for the Depressed" = "Tr√∂st f√∂r de deprimerade";
 
 /* Book Publication Name */
 "Concordance" = "konkordans";
@@ -224,7 +224,7 @@
 "Could not create %@ directory" = "Kan inte skapa %@ katalog";
 
 /* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
-"Count:" = "Count:";
+"Count:" = "Räkna:";
 
 /* Book Publication Name */
 "Creation" = "Skapelseboken";
@@ -266,7 +266,7 @@
 "DVD" = "DVD";
 
 /* Publication Type name */
-"DVD (not counted)" = "DVD (not counted)";
+"DVD (not counted)" = "DVD (ej räknade)";
 
 /* DVD Publication Name */
 "DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
@@ -278,7 +278,7 @@
 "DVD Drama: Respect Authority" = "DVD Drama: respektera Jehovas...";
 
 /* DVD Publication Name */
-"DVD Drama: Submit to Authority" = "CD Varför man ska respektera teokratiska anordningar";
+"DVD Drama: Submit to Authority" = "CD Varf√∂r man ska respektera teokratiska anordningar";
 
 /* DVD Publication Name */
 "DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Varnande exempel i vår tid";
@@ -293,7 +293,7 @@
 "DVD: Family Happiness" = "CD: Bevara dit öga ogrumlat";
 
 /* DVD Publication Name */
-"DVD: God's Friend" = "CD: Familjer - Låt bibelläsning bli n del av ert dagliga liv";
+"DVD: God's Friend" = "CD: Familjer - låt bibelläsning bli en del av ert dagliga liv";
 
 /* DVD Publication Name */
 "DVD: Great Teacher" = "DVD: Den Store Läraren";
@@ -338,13 +338,13 @@
 "EEE, M/d/yyy h:mma" = "EEE, M/d/yyy h:mma";
 
 /* Call Metadata */
-"Email" = "Email";
+"Email" = "Mail";
 
 /* More View Table backup your data by emailing the data */
-"Email backup" = "Email backup";
+"Email backup" = "Maila backup";
 
 /* Months to email Information title */
-"Email Report" = "Email Report";
+"Email Report" = "Maila Reporten";
 
 /* Google Localized Language Name */
 "en" = "en";
@@ -371,7 +371,7 @@
 "February" = "Februari";
 
 /* Subject text for the email that is sent for the Field Service Activity report */
-"Field Service Activity Report" = "Field Service Activity Report";
+"Field Service Activity Report" = "Månadsrapport";
 
 /* Brochures Publication Name */
 "God's Friend" = "Guds vän...";
@@ -392,7 +392,7 @@
 "Guidance of God" = "Vägledning från...";
 
 /* Tracts Publication Name */
-"Hellfire-Is It Part of Divine Justice?" = "Ett brinnande helvete – Ingår det i Guds rättvisa?";
+"Hellfire-Is It Part of Divine Justice?" = "Ett brinnande helvete ‚Är Ingår det i Guds rättvisa?";
 
 /* Singular form of the word hour */
 "hour" = "timme";
@@ -410,7 +410,7 @@
 "How to Find the Road to Paradise" = "Hur man finner vägen till paradiset";
 
 /* button that the user clicks when they have let their Yes mean Yes that they have read the website */
-"I read the webpage" = "I read the webpage";
+"I read the webpage" = "Jag har läst websidan";
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Har vi en odödlig ande?";
@@ -518,13 +518,13 @@
 "Months" = "Månader";
 
 /* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
-"Move to next month" = "Move to next month";
+"Move to next month" = "För över till nästa månad";
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Min bok med bibliska berättelser";
 
 /* Email subject line for the email that has your backup data in it */
-"MyTime Application Data Backup" = "MyTime Application Data Backup";
+"MyTime Application Data Backup" = "MyTime applikation Data Backup";
 
 /* More View Table MyTime Version */
 "MyTime Version" = "MyTime Version";
@@ -593,7 +593,7 @@
 "Please Donate, help me help you" = "Hjälp mig utveckla MyTime genom att lämna en frivillig gåva";
 
 /* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
-"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.";
+"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Vänligen läs FAQ på MyTimes hemsida innan du mailar en fråga. Läs även listan på önskade förbättringar innan du mailar mig ett nytt önskemål.";
 
 /* Information for the user to know what is going on with this and new releases */
 "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Besök mytime.googlecode.com för att läsa FAQ och önskade funktioner.\n Om du uppskattar den här programvaran är du välkommen att bidra med en slant. Om du talar ett annat språk än engelska är du välkommen att hjälpa till med översättning. maila mig gärna (titta i Mer och inställningar)";
@@ -617,7 +617,7 @@
 "Purpose of Life" = "Vad är meningen med livet";
 
 /* initial message when trying to transfer backup files */
-"Pushed %@ translation file, restart MyTime to see the changes." = "Pushed %@ translation file, restart MyTime to see the changes.";
+"Pushed %@ translation file, restart MyTime to see the changes." = "Skickat %@ konverteringsfil, Starta om MyTime för att se förändring.";
 
 /* More View Table Questions, Comments? Email me */
 "Questions, Comments? Email me" = "Frågor, kommentarer? Skicka ett email";
@@ -644,7 +644,7 @@
 "Return Visit" = "Återbesök";
 
 /* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
-"Return Visit Notes" = "åb anteckningar";
+"Return Visit Notes" = "Åb anteckningar";
 
 /* Return Visits label on the Statistics View */
 "Return Visits" = "Återbesök";
@@ -653,13 +653,13 @@
 "Revelation Climax" = "Uppenbarelsebokens storslagna...";
 
 /* Yes round up where %d is a placeholder for the number of hours */
-"Round Up to %d hours" = "Round Up to %d hours";
+"Round Up to %d hours" = "Avrunda till %d timmar";
 
 /* Brochures Publication Name */
 "Satisfying Life" = "Hur man kan få ett tillfredställande liv";
 
 /* email address for the congregation secretary */
-"Secretary's email address" = "Secretary's email address";
+"Secretary's email address" = "Sekreterarens emailadress";
 
 /* Title for the view where you Pick A Date */
 "Select Date" = "Välj datum";
@@ -671,10 +671,10 @@
 "Select Time" = "Välj tid";
 
 /* Publication Type title */
-"Select Type" = "Select Type";
+"Select Type" = "Välj typ";
 
 /* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
-"Send" = "Send";
+"Send" = "Skicka";
 
 /* initial message when trying to transfer backup files */
 "Sending Settings to the Backup Application" = "Skickar inställningar till säkerhetskopieringsprogrammet";
@@ -689,13 +689,13 @@
 "Service Year Quick Build Total" = "Snabb sammanräkning av tjänsteåret";
 
 /* Service year total hours label */
-"Service Year Total" = "Tjänsteår totalt";
+"Service Year Total" = "Tjänsteårr totalt";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Inställningar";
 
 /* button that the user clicks when they have not read the FAQ or feature request list */
-"Show me the webpage" = "Show me the webpage";
+"Show me the webpage" = "För mig till hemsidan";
 
 /* Book Publication Name */
 "Sing Praises" = "Sjung lovsånger";
@@ -746,7 +746,7 @@
 "Time started at: %@" = "Tjänsten började: %@";
 
 /* This is a note displayed when they first see the non editable call view */
-"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Klicka på Ändra knappen för att addera ett åb, eller för att se var ett åb finns genom att klicka på adressen";
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Klicka på ändra knappen för att addera ett åb, eller för att se var ett åb finns genom att klicka på adressen";
 
 /* Publication Type name */
 "Tract" = "Traktat";
@@ -767,7 +767,7 @@
 "Visit Notes" = "Anteckningar";
 
 /* Return Visit Type title */
-"Visit Type" = "Visit Type";
+"Visit Type" = "Åb typ";
 
 /* initial message when trying to transfer backup files */
 "Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Väntar på att backupprgrammet ska ansluta...";
@@ -779,7 +779,7 @@
 "Watchtower" = "Vakttornet";
 
 /* Tracts Publication Name */
-"What Do Jehovah's Witnesses Believe?" = "Jehovas Vittnen — Vilka är de? Vad tror de på?";
+"What Do Jehovah's Witnesses Believe?" = "Jehovas Vittnen ‚Vilka är de? Vad tror de på?";
 
 /* Tracts Publication Name */
 "What Hope for Dead Loved Ones?" = "Vilket hopp finns det för våra nära och kära?";
@@ -812,14 +812,13 @@
 "Worship God" = "Tillbe den ende sanne Guden";
 
 /* Book Publication Name */
-"Would You Like To Know the Truth?" = "Would You Like To Know the Truth?";
+"Would You Like To Know the Truth?" = "Kan man få svar på livets stora...";
 
 /* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
-"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Would you like to move %1$d minutes from the month of %2$@ to the next month? Or, round up to %3$d hours for %4$@?\n(This will change the time that you put in the Hours view so you can undo this manually)";
+"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Vill du överföra %1$d minuter från %2$@ till nästa månad? Eller, avrunda uppåt %3$d timmar för %4$@?\n(Detta kommer att ändra tid i Timmarvyn så att du kan ändra det manuellt)";
 
 /* Yes delete the call */
 "Yes" = "Ja";
 
 /* Book Publication Name */
 "Young People Ask" = "Ungdomar frågar...";
-
