@@ -94,6 +94,12 @@ On OSX:
   # drag the unzipped !MyTime application into iTunes and say yes to add/replace this application
   # sync your iPhone/iTouch to download the new version and test your translation
 
+On Windows:
+  # Unzip the MyTime.zip
+  # go into the MyTime.app directory and save the translated Localizable.strings file that I emailed you to a German.lproj directory or Romanian.lproj directory or <Insert Language Here>.lproj; You need to create this directory in the window that pops up from the "Show Package Contents" and save the Localizable.strings file there.
+  # Drag the MyTime.app directory into iTunes (you should see a + on your cursor) and say yes to add/replace this application
+  # sync your iPhone/iTouch to download the new version and test your translation
+  
 
 
 
