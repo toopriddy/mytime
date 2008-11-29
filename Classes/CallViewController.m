@@ -1276,12 +1276,39 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectMake(0, 0, 320, 45) reuseIdentifier:@"DeleteCallCell"] autorelease];
 	}
+#if 0
 	[cell setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view")];
 	cell.accessoryType = UITableViewCellAccessoryNone;
 	cell.backgroundColor = [UIColor redColor];
 	cell.titleLabel.textColor = [UIColor redColor];
 	cell.titleLabel.textAlignment  = UITextAlignmentCenter;
 	cell.titleLabel.backgroundColor = [UIColor clearColor];
+	
+#else
+	CGRect frame = CGRectMake(5, 0, 310, 45);
+	
+	UIButton *button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	button.frame = frame;
+	button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	
+	[button setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view") forState:UIControlStateNormal];	
+	[button setFont:[UIFont boldSystemFontOfSize:16]];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	
+	UIImage *newImage = [[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
+	[button setBackgroundImage:newImage forState:UIControlStateNormal];
+	
+	UIImage *selectedImage = [[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
+	[button setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+	
+	[button addTarget:self action:@selector(deleteCall) forControlEvents:UIControlEventTouchUpInside];
+	
+    // in case the parent view draws with a custom color or gradient, use a transparent color
+	button.backgroundColor = [UIColor clearColor];	
+
+	[cell addSubview:button];
+#endif	
 	return(cell);
 }
 

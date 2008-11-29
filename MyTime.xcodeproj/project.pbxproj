@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		9001FEAF0E9B0B820091F8FD /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */; };
+		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
+		9007C2270EE0680F00FE19D5 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C2260EE0680F00FE19D5 /* blueButton.png */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
 		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
 		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
@@ -80,6 +82,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9001FEAD0E9B0B820091F8FD /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
+		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
+		9007C2260EE0680F00FE19D5 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueButton.png; path = ../uicatalog/images/blueButton.png; sourceTree = SOURCE_ROOT; };
 		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
 		9013137F0EA0773A0055D890 /* NumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberViewController.m; sourceTree = "<group>"; };
@@ -290,6 +294,8 @@
 				90C148EC0E3B937300C6EDAF /* city.png */,
 				90C4D4F30E8564DD00E202E2 /* map.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
+				9007C1FE0EE0657C00FE19D5 /* redButton.png */,
+				9007C2260EE0680F00FE19D5 /* blueButton.png */,
 				90C148EF0E3B937300C6EDAF /* Icon.png */,
 				90A7AE820EA5A62100EBEF2D /* build.png */,
 				90D031070E554C47001CEF0D /* settings.png */,
@@ -494,6 +500,8 @@
 				90C4D4F40E8564DD00E202E2 /* map.png in Resources */,
 				9022ED210E8B0858007DCD2D /* people.png in Resources */,
 				90A7AE830EA5A62200EBEF2D /* build.png in Resources */,
+				9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */,
+				9007C2270EE0680F00FE19D5 /* blueButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +643,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "E88B399C-C873-4E31-8756-86FE75523D3D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E88B399C-C873-4E31-8756-86FE75523D3D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "08E9D35F-FAA1-4F3C-9A86-CA3FC5EF467F";
 				SDKROOT = iphoneos2.1;
 			};
 			name = "AdHoc Distribution";
