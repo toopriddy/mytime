@@ -861,10 +861,26 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		switch([type intValue])
 		{
 			case PHONE:
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+				if(value)
+				{
+					[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+				}
 				break;
 			case EMAIL:
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto://%@", value]]];
+				if(value)
+				{
+					[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto://%@", value]]];
+				}
+			case URL:
+				if(value)
+				{
+					NSString *url;
+					if([value hasPrefix:@"http://"])
+						url = value;
+					else
+						url = [NSString stringWithFormat:@"http://%@", value];
+					[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+				}
 				break;
 		}
 	}
@@ -1135,23 +1151,40 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSString *name = [metadata objectForKey:CallMetadataName];
 	NSString *value = [metadata objectForKey:CallMetadataValue];
 
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"MetadataCell"];
-	if(cell == nil)
+	if([type intValue] == NOTES)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataCell"] autorelease];
+		UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
+		}
+		cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+		[cell setText:value.length ? value : name];
+		return(cell);
 	}
-	cell.accessoryType = UITableViewCellAccessoryNone;
+	else
+	{
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"MetadataCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataCell"] autorelease];
+		}
+		cell.accessoryType = UITableViewCellAccessoryNone;
 
-	switch([type intValue])
-	{
-		case PHONE:
-		case EMAIL:
-			[cell setTitle:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
-			[cell setValue:value];
-			break;
+		[cell setSelectionStyle:_editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone];
+		switch([type intValue])
+		{
+			case PHONE:
+			case EMAIL:
+				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+				// fallthrough
+			default:
+				[cell setTitle:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
+				[cell setValue:value];
+				break;
+		}
+		return cell;
 	}
-	
-	return cell;
 }
 
 - (UITableViewCell *)getAddReturnVisitCell
@@ -1409,8 +1442,16 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			for(j = 0; j < endMetadata; ++j)
 			{
 				// METADATA
+				int height = -1;
+				NSMutableDictionary *entry = [metadata objectAtIndex:j];
+				// if the entry is a notes entry then we need to adjust the height of the cell
+				if([[entry objectForKey:SettingsMetadataType] intValue] == NOTES &&
+				   [[entry objectForKey:SettingsMetadataValue] length])
+				{
+					height = [UITableViewMultilineTextCell heightForWidth:250 withText:[entry objectForKey:SettingsMetadataValue]];
+				}
 				[self  addRowInvocation:[self invocationForSelector:@selector(getMetadataCellAtIndex:) withArgument:(void *)j]
-							 rowHeight:-1
+							 rowHeight:height
 						insertOrDelete:(_editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone)
 					indentWhenEditing:YES
 					  selectInvocation:[self invocationForSelector:@selector(selectMetadataAtIndex:) withArgument:(void *)j]
@@ -1591,9 +1632,27 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[metadata addObject:newData];
 	[newData setObject:metadataInformation->name forKey:CallMetadataName];
 	[newData setObject:[NSNumber numberWithInt:metadataInformation->type] forKey:CallMetadataType];
-	[newData setObject:@"" forKey:CallMetadataValue];
-	[newData setObject:@"" forKey:CallMetadataData];
-
+	switch(metadataInformation->type)
+	{
+		case PHONE:
+		case EMAIL:
+		case NOTES:
+		case STRING:
+			[newData setObject:@"" forKey:CallMetadataValue];
+			[newData setObject:@"" forKey:CallMetadataData];
+			break;
+		case DATE:
+		{
+			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			NSDate *date = [NSDate date];
+			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
+			[newData setObject:formattedDateString forKey:CallMetadataValue];
+			[newData setObject:date forKey:CallMetadataData];
+			break;
+		}
+	}
 	[self reloadData];
 	[self save];
 	[theTableView reloadData];

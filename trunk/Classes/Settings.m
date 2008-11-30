@@ -65,6 +65,13 @@ NSString const * const SettingsSecretaryEmailAddress = @"secretaryEmail";
 NSString const * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
 NSString const * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
 
+NSString const * const SettingsMetadata = @"metadata";
+NSString const * const SettingsMetadataName = @"name";
+NSString const * const SettingsMetadataType = @"type";
+NSString const * const SettingsMetadataValue = @"value";
+NSString const * const SettingsMetadataData = @"data";
+
+
 NSString const * const SettingsMainAlertSheetShown = @"mainAlertShown2";
 
 NSString const * const SettingsMonthDisplayCount = @"monthDisplaycount";

@@ -232,11 +232,17 @@
 /* Book Publication Name */
 "Creator" = "Creator";
 
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Custom";
+
 /* Book Publication Name */
 "Daniel's Prophecy" = "Daniel's Prophecy";
 
 /* button bar title */
 "Date Sorted" = "Date Sorted";
+
+/* Call Metadata */
+"Date/Time" = "Date/Time";
 
 /* Short month name */
 "Dec" = "Dec";
@@ -355,6 +361,9 @@
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Enjoy Family Life";
 
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Enter Name Here";
+
 /* backup failed string */
 "Failed advertising server" = "Failed advertising server";
 
@@ -397,11 +406,11 @@
 /* Singular form of the word hour */
 "hour" = "hour";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Hours";
-
 /* Plural form of the word hours */
 "hours" = "hours";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Hours";
 
 /* House Number */
 "House Number" = "House Number";
@@ -550,11 +559,17 @@
 /* return visit type name */
 "Not At Home" = "Not At Home";
 
+/* Call Metadata */
+"Notes" = "Notes";
+
 /* Short month name */
 "Nov" = "Nov";
 
 /* Long month name */
 "November" = "November";
+
+/* Call Metadata */
+"Number" = "Number";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Number Placed:";
@@ -721,6 +736,9 @@
 /* Street Sorted button title */
 "Street Sorted" = "Street Sorted";
 
+/* Call Metadata */
+"String" = "String";
+
 /* return visit type name */
 "Study" = "Study";
 
@@ -756,6 +774,9 @@
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Unknown";
+
+/* Call Metadata */
+"URL" = "URL";
 
 /* More View Table Group Title */
 "Version" = "Version";

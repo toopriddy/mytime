@@ -7,22 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef enum {
-	EMAIL,
-	PHONE,
-	STRING,
-	NUMBER,
-	DATE,
-} MetadataType;
-
-typedef struct 
-{
-	NSString *name;
-	MetadataType type;
-} MetadataInformation;
-
-
+#import "MetadataCustomViewController.h"
 
 @class MetadataViewController;
 
@@ -32,7 +17,8 @@ typedef struct
 @end
 
 @interface MetadataViewController : UIViewController <UITableViewDelegate, 
-													  UITableViewDataSource> 
+													  UITableViewDataSource,
+													  MetadataCustomViewControllerDelegate> 
 {
 	id<MetadataViewControllerDelegate> delegate;
 @private
