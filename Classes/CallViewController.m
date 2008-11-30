@@ -1176,6 +1176,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		{
 			case PHONE:
 			case EMAIL:
+			case URL:
 				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 				// fallthrough
 			default:
@@ -1637,6 +1638,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		case PHONE:
 		case EMAIL:
 		case NOTES:
+		case URL:
 		case STRING:
 			[newData setObject:@"" forKey:CallMetadataValue];
 			[newData setObject:@"" forKey:CallMetadataData];
