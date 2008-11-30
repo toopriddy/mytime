@@ -11,10 +11,11 @@
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 
-MetadataInformation commonInformation[] = {
+static MetadataInformation commonInformation[] = {
 	{AlternateLocalizedString(@"Email", @"Call Metadata"), EMAIL}
 ,	{AlternateLocalizedString(@"Phone", @"Call Metadata"), PHONE}
 ,	{AlternateLocalizedString(@"Mobile Phone", @"Call Metadata"), PHONE}
+,	{AlternateLocalizedString(@"Notes", @"Call Metadata"), NOTES}
 };
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
@@ -65,6 +66,8 @@ MetadataInformation commonInformation[] = {
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:UITableViewStyleGrouped] autorelease];
+	theTableView.editing = YES;
+	theTableView.allowsSelectionDuringEditing = YES;
 	
 	// set the autoresizing mask so that the table will always fill the view
 	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
@@ -100,21 +103,35 @@ MetadataInformation commonInformation[] = {
 	
 	if(section == 0)
 	{
+		MetadataInformation localMetadata;
+		MetadataInformation *returnedMetadata = &localMetadata;
+		
+		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+		if(row < ARRAY_SIZE(commonInformation))
+		{
+			returnedMetadata = &commonInformation[row];
+		}
+		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
+		{
+			row -= ARRAY_SIZE(commonInformation);
+			localMetadata.name = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
+			localMetadata.type = [[[metadata objectAtIndex:row] objectForKey:SettingsMetadataType] intValue];
+		}
+		else
+		{
+			// open up the custom metadata type
+			MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] init] autorelease];
+			p.delegate = self;
+
+			[[self navigationController] pushViewController:p animated:YES];		
+			return;
+		}
+
 		if(delegate)
 		{
-			[delegate metadataViewControllerAdd:self metadataInformation:&commonInformation[row]];
+			[delegate metadataViewControllerAdd:self metadataInformation:returnedMetadata];
 		}
 		[[self navigationController] popViewControllerAnimated:YES];
-	}
-	else
-	{
-		// make the new call view 
-#if 0
-		PublicationViewController *p = [[[PublicationViewController alloc] initShowingCount:NO filteredToType:filter] autorelease];
-		p.delegate = self;
-
-		[[self navigationController] pushViewController:p animated:YES];		
-#endif
 	}
 }
 
@@ -130,7 +147,8 @@ MetadataInformation commonInformation[] = {
 
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
 {
-	return ARRAY_SIZE(commonInformation);
+	NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+	return ARRAY_SIZE(commonInformation) + metadata.count + 1; // additional 1 for custom
 }
 
 
@@ -148,12 +166,108 @@ MetadataInformation commonInformation[] = {
 	
 	if(section == 0)
 	{
-		NSString *name = (NSString *)commonInformation[row].name;
-		[cell setText:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
+		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+		if(row < ARRAY_SIZE(commonInformation))
+		{
+			NSString *name = (NSString *)commonInformation[row].name;
+			[cell setText:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
+		}
+		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
+		{
+			row -= ARRAY_SIZE(commonInformation);
+			[cell setText:[[metadata objectAtIndex:row] objectForKey:SettingsMetadataName]];
+		}
+		else
+		{
+			[cell setText:NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field")];
+		}
 	}
 	return(cell);
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return(YES);
+}
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return(0);
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    int section = [indexPath section];
+    DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", section, row);)
+
+	if(section == 0)
+	{
+		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+		if(row < ARRAY_SIZE(commonInformation))
+		{
+		}
+		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
+		{
+			return UITableViewCellEditingStyleDelete;
+		}
+		else
+		{
+			return UITableViewCellEditingStyleInsert;
+		}
+	}
+	return UITableViewCellEditingStyleNone;
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    int section = [indexPath section];
+    DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", section, row);)
+
+	if(section == 0)
+	{
+		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+		if(row < ARRAY_SIZE(commonInformation))
+		{
+		}
+		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
+		{
+			row -= ARRAY_SIZE(commonInformation);
+			NSMutableArray *array = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata]];
+			[array removeObjectAtIndex:row];
+			[[[Settings sharedInstance] settings] setObject:array forKey:SettingsMetadata];
+			[[Settings sharedInstance] saveData];
+			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+		}
+		else
+		{
+			[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+		}
+	}
+}
+
+- (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
+{
+	MetadataInformation localMetadata;
+	localMetadata.name = metadataCustomViewController.name.textField.text;
+	localMetadata.type = metadataCustomViewController.type;
+	
+	NSMutableArray *array = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata]];
+	[[[Settings sharedInstance] settings] setObject:array forKey:SettingsMetadata];
+	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:localMetadata.name, SettingsMetadataName,
+																			      [NSNumber numberWithInt:localMetadata.type], SettingsMetadataType, nil];
+	[array addObject:entry];
+
+	[[Settings sharedInstance] saveData];																	
+
+	if(delegate)
+	{
+		[delegate metadataViewControllerAdd:self metadataInformation:&localMetadata];
+	}
+	[[self navigationController] popToViewController:(UIViewController *)delegate animated:YES];
+}
 
 //
 //

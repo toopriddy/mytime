@@ -30,7 +30,9 @@
 	MetadataType _type;
 
 	UITableViewTextFieldCell *_textFieldCell;
+	UITextView *_textView;
     UIDatePicker *_datePicker;
+    NumberedPickerView *_numberPicker;
 	UIView *_containerView;
 	UIResponder *_firstResponder;
 	UITableView *_theTableView;

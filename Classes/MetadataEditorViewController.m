@@ -49,9 +49,11 @@
 
 @interface MetadataEditorViewController ()
 @property (nonatomic, retain) UITableViewTextFieldCell *textFieldCell;
-@property (nonatomic, retain) UIDatePicker *datePicker;
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, retain) UITableView *theTableView;
+@property (nonatomic, assign) UIDatePicker *datePicker;
+@property (nonatomic, assign) NumberedPickerView *numberPicker;
+@property (nonatomic, assign) UITextView *textView;
 
 @end
 
@@ -59,14 +61,17 @@
 @synthesize textFieldCell = _textFieldCell;
 @synthesize delegate = _delegate;
 @synthesize datePicker = _datePicker;
+@synthesize numberPicker = _numberPicker;
 @synthesize containerView = _containerView;
 @synthesize theTableView = _theTableView;
+@synthesize textView = _textView;
 
 - (id) initWithName:(NSString *)name type:(MetadataType)type data:(NSObject *)data value:(NSString *)value;
 {
 	if ([super init]) 
 	{
 		_type = type;
+		_firstResponder = nil;
 		
 		switch(type)
 		{
@@ -78,9 +83,9 @@
 				[_textFieldCell.textField setKeyboardType:UIKeyboardTypePhonePad];
 				_textFieldCell.textField.text = value;
 				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-				_firstResponder = _textFieldCell;
 				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
 				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = _textFieldCell.textField;
 				break;
 			}
 			
@@ -93,8 +98,71 @@
 				_textFieldCell.textField.text = value;
 				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = _textFieldCell.textField;
+				break;
+			}
+
+			case URL:
+			{
+				self.title = name;
+				
+				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				[_textFieldCell.textField setKeyboardType:UIKeyboardTypeURL];
+				_textFieldCell.textField.text = value;
+				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = _textFieldCell.textField;
+				break;
+			}
+
+			case STRING:
+			{
+				self.title = name;
+				
+				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				[_textFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
+				_textFieldCell.textField.text = value;
+				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
 				_firstResponder = _textFieldCell;
 				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = _textFieldCell.textField;
+				break;
+			}
+			case NOTES:
+			{
+				self.title = name;
+				
+				self.textView = [[[UITextView alloc] init] autorelease];
+				[_textView setKeyboardType:UIKeyboardTypeDefault];
+				_textView.text = value;
+				_firstResponder = _textView;
+				break;
+			}
+			case NUMBER:
+			{
+				self.title = name;
+				self.numberPicker = [[NumberedPickerView alloc] initWithFrame:CGRectZero
+																		  min:0
+																		  max:1000
+																	   number:[(NSNumber *)data intValue]
+																singularTitle:name
+																		title:name];
+				break;
+			}
+			case DATE:
+			{
+				self.title = name;
+				self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
+				_datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+				_datePicker.date = (NSDate *)data;
+				{
+					NSArray *views = _datePicker.subviews;
+					UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
+					[picker setSoundsEnabled:NO];
+				}
 				break;
 			}
 		}
@@ -128,34 +196,102 @@
 
 - (void)setResponder
 {
-	[_textFieldCell.textField becomeFirstResponder];
+	if(_firstResponder)
+		[_firstResponder becomeFirstResponder];
 }
 
 - (void)loadView 
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:UITableViewStyleGrouped] autorelease];
-	
-	// set the autoresizing mask so that the table will always fill the view
-	_theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	_theTableView.delegate = self;
-	_theTableView.dataSource = self;
-	
-	// set the tableview as the controller view
-	self.view = self.theTableView;
+	switch(_type)
+	{
+		case NUMBER:
+		case DATE:
+		{
+			// create a new table using the full application frame
+			// we'll ask the datasource which type of table to use (plain or grouped)
+			self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+			
+			// set the autoresizing mask so that the table will always fill the view
+			self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+			
+			// make a picker for the publications
+			CGRect pickerRect = [self.view bounds];
+			if(_type == NUMBER)
+			{
+				pickerRect.size.height = [_numberPicker sizeThatFits:CGSizeZero].height;
+				
+				_numberPicker.frame = pickerRect;
+				_numberPicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+				_numberPicker.autoresizesSubviews = YES;
+				[self.view addSubview:_numberPicker];
+			}
+			else
+			{
+				pickerRect.size.height = [_datePicker sizeThatFits:CGSizeZero].height;
+				
+				_datePicker.frame = pickerRect;
+				_datePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+				_datePicker.autoresizesSubviews = YES;
+				[self.view addSubview:_datePicker];
+			}
+			pickerRect.origin.y += pickerRect.size.height;
+			pickerRect.size.height = [self.view bounds].size.height - pickerRect.size.height;
 
-	[self.theTableView reloadData];
+			UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
+			v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
+			v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+			[self.view addSubview: v];
+			break;
+		}
+		case NOTES:
+		{
+			// create a new table using the full application frame
+			// we'll ask the datasource which type of table to use (plain or grouped)
+			self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+			// set the autoresizing mask so that the table will always fill the view
+			self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+			
+			// make a picker for the publications
+			CGRect textViewRect = [self.view bounds];
+			if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+			{
+				textViewRect.size.height -= 160;
+			}
+			else
+			{
+				textViewRect.size.height = 200;
+			}
+			_textView.frame = textViewRect;
+			[self.view setBackgroundColor:[UIColor whiteColor]];
+			[self.view addSubview:_textView];
+			break;
+		}
+		default:
+		{
+			// create a new table using the full application frame
+			// we'll ask the datasource which type of table to use (plain or grouped)
+			self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
+																  style:UITableViewStyleGrouped] autorelease];
+			
+			// set the autoresizing mask so that the table will always fill the view
+			_theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+			
+			// set the tableview delegate to this object and the datasource to the datasource which has already been set
+			_theTableView.delegate = self;
+			_theTableView.dataSource = self;
+			
+			// set the tableview as the controller view
+			self.view = self.theTableView;
 
+			[self.theTableView reloadData];
+		}
+	}
+	
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
-
 	[self performSelector:@selector(setResponder) withObject:nil afterDelay:0.1];
 }
 
@@ -202,8 +338,15 @@
 	{
 		case PHONE:
 		case EMAIL:
+		case URL:
+		case STRING:
 			return _textFieldCell.textField.text;
-			break;
+		case NOTES:
+			return _textView.text;
+		case DATE:
+			return _datePicker.date;
+		case NUMBER:
+			return [NSNumber numberWithInt:_numberPicker.number];
 	}
 	return nil;
 }
@@ -214,8 +357,21 @@
 	{
 		case PHONE:
 		case EMAIL:
+		case URL:
+		case STRING:
 			return _textFieldCell.textField.text;
-			break;
+		case NOTES:
+			return _textView.text;
+		case DATE:
+		{
+			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			NSDate *date = _datePicker.date;
+			return [NSString stringWithString:[dateFormatter stringFromDate:date]];			
+		}
+		case NUMBER:
+			return [NSString stringWithFormat:@"%d", _numberPicker.number];
 	}
 	return nil;
 }
