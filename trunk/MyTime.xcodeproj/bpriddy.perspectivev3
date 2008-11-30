@@ -234,8 +234,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -294,7 +292,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>70</integer>
+									<integer>55</integer>
 									<integer>33</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -331,12 +329,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MetadataViewController.m</string>
+								<string>CallViewController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MetadataViewController.m</string>
+										<string>CallViewController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9003EE1F0EE228590065F24D</string>
+										<string>9003EE2B0EE22B4D0065F24D</string>
 										<key>history</key>
 										<array>
 											<string>90696BE70E7E3D370077F54C</string>
@@ -476,11 +476,11 @@
 											<string>9003EDA20EE2192F0065F24D</string>
 											<string>9003EDEB0EE2210C0065F24D</string>
 											<string>9003EDED0EE2210C0065F24D</string>
-											<string>9003EE110EE228590065F24D</string>
 											<string>9003EE120EE228590065F24D</string>
 											<string>9003EE130EE228590065F24D</string>
 											<string>9003EE140EE228590065F24D</string>
-											<string>9003EE150EE228590065F24D</string>
+											<string>9003EE280EE22B4D0065F24D</string>
+											<string>9003EE290EE22B4D0065F24D</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -699,6 +699,7 @@
 											<string>9003EE1C0EE228590065F24D</string>
 											<string>9003EE1D0EE228590065F24D</string>
 											<string>9003EE1E0EE228590065F24D</string>
+											<string>9003EE2A0EE22B4D0065F24D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -1033,7 +1034,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>9003EE200EE228590065F24D</string>
 		<string>9003ECD10EE1FCE50065F24D</string>
 		<string>9003ECD20EE1FCE50065F24D</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
