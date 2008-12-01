@@ -13,6 +13,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		9001FEAF0E9B0B820091F8FD /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */; };
 		9003EC4A0EE1E9070065F24D /* MetadataCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */; };
+		9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		9007C2270EE0680F00FE19D5 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C2260EE0680F00FE19D5 /* blueButton.png */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
@@ -85,6 +86,8 @@
 		9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		9003EC480EE1E9070065F24D /* MetadataCustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataCustomViewController.h; sourceTree = "<group>"; };
 		9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataCustomViewController.m; sourceTree = "<group>"; };
+		9003EE2C0EE3119E0065F24D /* UITableViewMultiTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultiTextFieldCell.h; sourceTree = "<group>"; };
+		9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultiTextFieldCell.m; sourceTree = "<group>"; };
 		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		9007C2260EE0680F00FE19D5 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueButton.png; path = ../uicatalog/images/blueButton.png; sourceTree = SOURCE_ROOT; };
 		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 				905C37170E3D52DB00C8DB27 /* UITableViewTextFieldCell.h */,
 				905C37180E3D52DB00C8DB27 /* UITableViewTextFieldCell.m */,
 				90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */,
+				9003EE2C0EE3119E0065F24D /* UITableViewMultiTextFieldCell.h */,
+				9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */,
 				90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */,
 				90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
@@ -576,6 +581,7 @@
 				907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */,
 				902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */,
 				9003EC4A0EE1E9070065F24D /* MetadataCustomViewController.m in Sources */,
+				9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
