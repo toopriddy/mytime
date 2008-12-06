@@ -149,7 +149,7 @@
 	CGRect frame;
 
 	int count = [_textFields count];
-	float avaliableWidth = width - (TITLE_LEFT_OFFSET * count);
+	float avaliableWidth = width - (count == 0 ? 0 : (TITLE_LEFT_OFFSET * (count - 1)));
 	int i;
 	for(i = 0; i < count; ++i)
 	{

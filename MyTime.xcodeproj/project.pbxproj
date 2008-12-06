@@ -444,10 +444,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
+				904562700EE7831F00D40B40 /* Build ipa */,
+				9045A8EA0E7D6CDF001B439C /* make genstrings */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				9045A8EA0E7D6CDF001B439C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -518,13 +519,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9045A8EA0E7D6CDF001B439C /* ShellScript */ = {
+		904562700EE7831F00D40B40 /* Build ipa */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build ipa";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$BUILD_STYLE\" != \"AdHoc Distribution\" ]; then\n        exit\nfi\n\n \n/bin/rm -rf \"$CONFIGURATION_BUILD_DIR/Payload\" \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_NAME.ipa\"\n\n# compress application.\n/bin/mkdir \"$CONFIGURATION_BUILD_DIR/Payload\"\necho \"/bin/cp -R \\\"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH\\\" \\\"$CONFIGURATION_BUILD_DIR/Payload\\\"\"\n/bin/cp -R \"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH\" \"$CONFIGURATION_BUILD_DIR/Payload\"\n \necho \"/bin/cp 512x512.png \\\"$CONFIGURATION_BUILD_DIR/iTunesArtwork\\\"\"\n/bin/cp \"$PROJECT_DIR/512x512.png\" \"$CONFIGURATION_BUILD_DIR/iTunesArtwork\"\n \n# zip up the wfx directory\ncd \"$CONFIGURATION_BUILD_DIR\" && /usr/bin/zip -r \"$EXECUTABLE_NAME.ipa\" Payload iTunesArtwork\n/bin/rm -rf \"$CONFIGURATION_BUILD_DIR/Payload\"\n";
+		};
+		9045A8EA0E7D6CDF001B439C /* make genstrings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "make genstrings";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

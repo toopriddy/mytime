@@ -10,6 +10,7 @@
 
 extern NSString const * const CallName;
 extern NSString const * const CallStreetNumber;
+extern NSString const * const CallApartmentNumber;
 extern NSString const * const CallStreet;
 extern NSString const * const CallCity;
 extern NSString const * const CallState;

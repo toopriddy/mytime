@@ -757,6 +757,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	if(_editing)
 	{
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+		NSString *apartmentNumber = [_call objectForKey:CallApartmentNumber];
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
@@ -764,21 +765,24 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		// if they have not initialized the address then assume that it is
 		// the same as the last one
 		if((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
+		   (apartmentNumber == nil || [apartmentNumber isEqualToString:@""]) &&
 		   (street == nil || [street isEqualToString:@""]) &&
 		   (city == nil || [city isEqualToString:@""]) &&
 		   (state == nil || [state isEqualToString:@""]))
 		{
 			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 			streetNumber = @"";
+			apartmentNumber = @"";
 			street = [settings objectForKey:SettingsLastCallStreet];
 			city = [settings objectForKey:SettingsLastCallCity];
 			state = [settings objectForKey:SettingsLastCallState];
 		}
 		// open up the edit address view 
 		AddressViewController *viewController = [[[AddressViewController alloc] initWithStreetNumber:streetNumber
-																				street:street
-																				  city:city
-																				 state:state] autorelease];
+																			               apartment:apartmentNumber
+																							  street:street
+																							    city:city
+																							   state:state] autorelease];
 		viewController.delegate = self;
 		[[self navigationController] pushViewController:viewController animated:YES];
 		return;
