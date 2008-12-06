@@ -13,6 +13,7 @@ static Settings *instance = nil;
 
 NSString const * const CallName = @"name";
 NSString const * const CallStreetNumber = @"streetNumber";
+NSString const * const CallApartmentNumber = @"apartmentNumber";
 NSString const * const CallStreet = @"street";
 NSString const * const CallCity = @"city";
 NSString const * const CallState = @"state";

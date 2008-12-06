@@ -50,6 +50,7 @@
 
 @synthesize delegate;
 @synthesize theTableView;
+@synthesize apartmentNumber;
 @synthesize streetNumber;
 @synthesize street;
 @synthesize city;
@@ -58,14 +59,15 @@
 @synthesize streetCell;
 @synthesize cityCell;
 @synthesize stateCell;
+@synthesize streetNumberAndApartmentCell;
 
 
 - (id)init
 {
-    return([self initWithStreetNumber:@"" street:@"" city:@"" state:@""]);
+    return([self initWithStreetNumber:@"" apartment:@"" street:@"" city:@"" state:@""]);
 }
 
-- (id) initWithStreetNumber:(NSString *)theStreetNumber street:(NSString *)theStreet city:(NSString *)theCity state:(NSString *)theState;
+- (id) initWithStreetNumber:(NSString *)theStreetNumber apartment:(NSString *)apartment street:(NSString *)theStreet city:(NSString *)theCity state:(NSString *)theState;
 {
 	if ([super init]) 
 	{
@@ -116,7 +118,12 @@
 	VERBOSE(NSLog(@"navigationControlDone:");)
 	// go through the notes and make them resign the first responder
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+#if 0
 	self.streetNumber = streetNumberCell.textField.text;
+#else	
+	self.streetNumber = [streetNumberAndApartmentCell textFieldAtIndex:0].text;
+	self.apartmentNumber = [streetNumberAndApartmentCell textFieldAtIndex:1].text;
+#endif
 	self.street = streetCell.textField.text;
 	self.city = cityCell.textField.text;
 	self.state = stateCell.textField.text;
@@ -155,6 +162,7 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
+#if 0
 	self.streetNumberCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetNumberCell.textField.text = streetNumber;
 	streetNumberCell.textField.placeholder = NSLocalizedString(@"House Number", @"House Number");
@@ -162,6 +170,25 @@
 	streetNumberCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 	streetNumberCell.textField.returnKeyType = UIReturnKeyNext;
 	streetNumberCell.textField.clearButtonMode = UITextFieldViewModeAlways;
+#else
+	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
+	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5], [NSNumber numberWithFloat:.5], nil];
+	UITextField *streetTextField = [streetNumberAndApartmentCell textFieldAtIndex:0];
+	UITextField *apartmentTextField = [streetNumberAndApartmentCell textFieldAtIndex:1];
+	streetTextField.text = streetNumber;
+	streetTextField.placeholder = NSLocalizedString(@"House Number", @"House Number");
+	streetTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	streetTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+	streetTextField.returnKeyType = UIReturnKeyNext;
+	streetTextField.clearButtonMode = UITextFieldViewModeAlways;
+	
+	apartmentTextField.text = streetNumber;
+	apartmentTextField.placeholder = NSLocalizedString(@"Apt/Floor", @"Apartment/Floor Number");
+	apartmentTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	apartmentTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+	apartmentTextField.returnKeyType = UIReturnKeyNext;
+	apartmentTextField.clearButtonMode = UITextFieldViewModeAlways;
+#endif
 	
 	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetCell.textField.text = street;
@@ -247,13 +274,17 @@
         {
             // House Number
             case 0:
-				return(streetNumberCell);
+#if 0			
+				return streetNumberCell;
+#else
+				return streetNumberAndApartmentCell;
+#endif				
             case 1:
-				return(streetCell);
+				return streetCell;
             case 2:
-				return(cityCell);
+				return cityCell;
             case 3:
-				return(stateCell);
+				return stateCell;
         }
     }
 	return(nil);
