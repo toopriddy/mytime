@@ -16,6 +16,15 @@
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRACTS";
 
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
+
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%1$@ %2$@";
 

@@ -71,6 +71,7 @@ extern NSString const * const SettingsCalls;
 extern NSString const * const SettingsDeletedCalls;
 extern NSString const * const SettingsMagazinePlacements;
 extern NSString const * const SettingsLastCallStreetNumber;
+extern NSString const * const SettingsLastCallApartmentNumber;
 extern NSString const * const SettingsLastCallStreet;
 extern NSString const * const SettingsLastCallCity;
 extern NSString const * const SettingsLastCallState;

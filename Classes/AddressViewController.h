@@ -17,14 +17,12 @@
 	UITableView *theTableView;
 
 	UITableViewMultiTextFieldCell *streetNumberAndApartmentCell;
-	UITableViewTextFieldCell *streetNumberCell;
     UITableViewTextFieldCell *streetCell;
     UITableViewTextFieldCell *cityCell;
     UITableViewTextFieldCell *stateCell;
 
 	NSString *apartmentNumber;
 	NSString *streetNumber;
-	NSString *apartment;
     NSString *street;
     NSString *city;
     NSString *state;
@@ -39,7 +37,6 @@
 @property (nonatomic,retain) NSString *street;
 @property (nonatomic,retain) NSString *city;
 @property (nonatomic,retain) NSString *state;
-@property (nonatomic,retain) UITableViewTextFieldCell *streetNumberCell;
 @property (nonatomic,retain) UITableViewTextFieldCell *streetCell;
 @property (nonatomic,retain) UITableViewTextFieldCell *cityCell;
 @property (nonatomic,retain) UITableViewTextFieldCell *stateCell;

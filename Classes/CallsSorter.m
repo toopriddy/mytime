@@ -34,6 +34,8 @@ int sortByStreet(id v1, id v2, void *context)
 	NSString *street2 = [v2 objectForKey:CallStreet];
 	NSNumber *house1 = [v1 objectForKey:CallStreetNumber];
 	NSNumber *house2 = [v2 objectForKey:CallStreetNumber];
+	NSNumber *apartment1 = [v1 objectForKey:CallApartmentNumber];
+	NSNumber *apartment2 = [v2 objectForKey:CallApartmentNumber];
 	
 	int compare = [street1 localizedCaseInsensitiveCompare:street2];
 	if(compare == 0)
@@ -41,7 +43,11 @@ int sortByStreet(id v1, id v2, void *context)
 		compare = [house1 compare:house2];
 		if(compare == 0)
 		{
-			compare = sortByName(v1, v2, context);
+			compare = [apartment1 compare:apartment2];
+			if(compare == 0)
+			{
+				compare = sortByName(v1, v2, context);
+			}
 		}
 	}
 	return(compare);

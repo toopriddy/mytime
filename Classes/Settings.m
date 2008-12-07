@@ -55,6 +55,7 @@ NSString const * const SettingsDeletedCalls = @"deletedCalls";
 NSString const * const SettingsMagazinePlacements = @"magazinePlacements";
 
 NSString const * const SettingsLastCallStreetNumber = @"lastStreetNumber";
+NSString const * const SettingsLastCallApartmentNumber = @"lastApartmentNumber";
 NSString const * const SettingsLastCallStreet = @"lastStreet";
 NSString const * const SettingsLastCallCity = @"lastCity";
 NSString const * const SettingsLastCallState = @"lastState";
