@@ -12,7 +12,6 @@
 #import "AddressViewController.h"
 #import "PublicationViewController.h"
 #import "PublicationTypeViewController.h"
-#import "WebViewController.h"
 #import "DatePickerViewController.h"
 #import "UITableViewMultilineTextCell.h"
 #import "NotesViewController.h"
@@ -771,8 +770,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		   (state == nil || [state isEqualToString:@""]))
 		{
 			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-			streetNumber = @"";
-			apartmentNumber = @"";
+			// if they are in an apartment territory then just null out the apartment number
+			streetNumber = [settings objectForKey:SettingsLastCallStreetNumber];
+			apartmentNumber = [settings objectForKey:SettingsLastCallApartmentNumber];
+			if(apartmentNumber.length)
+				apartmentNumber = @"";
+			else
+				streetNumber = @"";
 			street = [settings objectForKey:SettingsLastCallStreet];
 			city = [settings objectForKey:SettingsLastCallCity];
 			state = [settings objectForKey:SettingsLastCallState];
@@ -790,26 +794,26 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	else
 	{
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+		NSString *apartmentNumber = [_call objectForKey:CallApartmentNumber];
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
 		
 		// if they have not initialized the address then dont show the map program
-		if(!((streetNumber == nil || [streetNumber isEqualToString:@""]) &&
-			 (street == nil || [street isEqualToString:@""]) &&
+		if(!((street == nil || [street isEqualToString:@""]) &&
 			 (city == nil || [city isEqualToString:@""]) &&
 			 (state == nil || [state isEqualToString:@""])))
 		{
 			// pop up a alert sheet to display buttons to show in google maps?
 			//http://maps.google.com/?hl=en&q=kansas+city
-			NSString *streetNumber = [_call objectForKey:CallStreetNumber];
-			NSString *street = [_call objectForKey:CallStreet];
-			NSString *city = [_call objectForKey:CallCity];
-			NSString *state = [_call objectForKey:CallState];
 
 			// make sure that we have default values for each of the address parts
 			if(streetNumber == nil)
 				streetNumber = @"";
+			if(apartmentNumber == nil || apartmentNumber.length == 0)
+				apartmentNumber = @"";
+			else
+				apartmentNumber = [NSString stringWithFormat:@"(%@)", apartmentNumber];
 			if(street == nil)
 				street = @"";
 			if(city == nil)
@@ -820,9 +824,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 #if 1		
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
-										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@,+%@", 
+										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@+%@,+%@", 
 										                  NSLocalizedString(@"en", @"Google Localized Language Name"),
 														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
+														  [apartmentNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [street stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [state stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -1128,6 +1133,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell = [[[AddressTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddressCell"] autorelease];
 	}
 	[cell setStreetNumber:[_call objectForKey:CallStreetNumber] 
+				apartment:[_call objectForKey:CallApartmentNumber] 
 	               street:[_call objectForKey:CallStreet] 
 				     city:[_call objectForKey:CallCity] 
 					state:[_call objectForKey:CallState]];
@@ -1376,41 +1382,20 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// Address
 	{
 		NSString *streetNumber = [_call objectForKey:CallStreetNumber];
+		NSString *apartmentNumber = [_call objectForKey:CallApartmentNumber];
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
 
-		NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-		[top setString:@""];
-		NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
-		[bottom setString:@""];
 		BOOL found = NO;
-		if(streetNumber && [streetNumber length] && street && [street length])
+		if((streetNumber && [streetNumber length]) ||
+		   (apartmentNumber && [apartmentNumber length]) || 
+		   (street && [street length]) || 
+		   (city && [city length]) || 
+		   (state && [state length]))
 		{
-			[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), streetNumber, street];
 			found = YES;
 		}
-		else if(streetNumber && [streetNumber length])
-		{
-			[top appendFormat:@"%@", streetNumber];
-			found = YES;
-		}
-		else if(street && [street length])
-		{
-			[top appendFormat:@"%@", street];
-			found = YES;
-		}
-		if(city != nil && [city length])
-		{
-			[bottom appendFormat:@"%@", city];
-			found = YES;
-		}
-		if(state != nil && [state length])
-		{
-			[bottom appendFormat:@", %@", state];
-			found = YES;
-		}
-		VERY_VERBOSE(NSLog(@"address:\n%@\n%@", top, bottom);)
 
 		// if there was no street information then just dont display
 		// the address (unless we are editing
@@ -1723,6 +1708,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	[_call setObject:(addressViewController.streetNumber ? addressViewController.streetNumber : @"") forKey:CallStreetNumber];
+	[_call setObject:(addressViewController.apartmentNumber ? addressViewController.apartmentNumber : @"") forKey:CallApartmentNumber];
 	[_call setObject:(addressViewController.street ? addressViewController.street : @"") forKey:CallStreet];
 	[_call setObject:(addressViewController.city ? addressViewController.city : @"") forKey:CallCity];
 	[_call setObject:(addressViewController.state ? addressViewController.state : @"") forKey:CallState];

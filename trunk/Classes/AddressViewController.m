@@ -55,7 +55,6 @@
 @synthesize street;
 @synthesize city;
 @synthesize state;
-@synthesize streetNumberCell;
 @synthesize streetCell;
 @synthesize cityCell;
 @synthesize stateCell;
@@ -80,6 +79,7 @@
 		self.tabBarItem.image = [UIImage imageNamed:@"statistics.png"];
 
 		self.streetNumber = theStreetNumber;
+		self.apartmentNumber = apartment;
 		self.street = theStreet;
 		self.city = theCity;
 		self.state = theState;
@@ -94,11 +94,12 @@
 
 	self.theTableView = nil;
 
-    self.streetNumberCell = nil;
+    self.streetNumberAndApartmentCell = nil;
     self.streetCell = nil;
     self.cityCell = nil;
     self.stateCell = nil;
 
+    self.apartmentNumber = nil;
     self.streetNumber = nil;
     self.street = nil;
     self.city = nil;
@@ -118,22 +119,29 @@
 	VERBOSE(NSLog(@"navigationControlDone:");)
 	// go through the notes and make them resign the first responder
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-#if 0
-	self.streetNumber = streetNumberCell.textField.text;
-#else	
 	self.streetNumber = [streetNumberAndApartmentCell textFieldAtIndex:0].text;
 	self.apartmentNumber = [streetNumberAndApartmentCell textFieldAtIndex:1].text;
-#endif
 	self.street = streetCell.textField.text;
 	self.city = cityCell.textField.text;
 	self.state = stateCell.textField.text;
+	if(self.streetNumber == nil)
+		self.streetNumber = @"";
+	if(self.apartmentNumber == nil)
+		self.apartmentNumber = @"";
+	if(self.street == nil)
+		self.street = @"";
+	if(self.city == nil)
+		self.city = @"";
+	if(self.state == nil)
+		self.state = @"";
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	if(self.street)
-		[settings setObject:self.street forKey:SettingsLastCallStreet];
-	if(self.city)
-		[settings setObject:self.city forKey:SettingsLastCallCity];
-	if(self.state)
-		[settings setObject:self.state forKey:SettingsLastCallState];
+
+	[settings setObject:self.streetNumber forKey:SettingsLastCallStreetNumber];
+	[settings setObject:self.apartmentNumber forKey:SettingsLastCallApartmentNumber];
+	[settings setObject:self.street forKey:SettingsLastCallStreet];
+	[settings setObject:self.street forKey:SettingsLastCallStreet];
+	[settings setObject:self.city forKey:SettingsLastCallCity];
+	[settings setObject:self.state forKey:SettingsLastCallState];
 
 	if(delegate)
 	{
@@ -162,17 +170,8 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
-#if 0
-	self.streetNumberCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
-	streetNumberCell.textField.text = streetNumber;
-	streetNumberCell.textField.placeholder = NSLocalizedString(@"House Number", @"House Number");
-	streetNumberCell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	streetNumberCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-	streetNumberCell.textField.returnKeyType = UIReturnKeyNext;
-	streetNumberCell.textField.clearButtonMode = UITextFieldViewModeAlways;
-#else
 	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
-	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5], [NSNumber numberWithFloat:.5], nil];
+	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.55], [NSNumber numberWithFloat:.45], nil];
 	UITextField *streetTextField = [streetNumberAndApartmentCell textFieldAtIndex:0];
 	UITextField *apartmentTextField = [streetNumberAndApartmentCell textFieldAtIndex:1];
 	streetTextField.text = streetNumber;
@@ -182,13 +181,12 @@
 	streetTextField.returnKeyType = UIReturnKeyNext;
 	streetTextField.clearButtonMode = UITextFieldViewModeAlways;
 	
-	apartmentTextField.text = streetNumber;
+	apartmentTextField.text = apartmentNumber;
 	apartmentTextField.placeholder = NSLocalizedString(@"Apt/Floor", @"Apartment/Floor Number");
 	apartmentTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 	apartmentTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 	apartmentTextField.returnKeyType = UIReturnKeyNext;
 	apartmentTextField.clearButtonMode = UITextFieldViewModeAlways;
-#endif
 	
 	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetCell.textField.text = street;
@@ -212,7 +210,7 @@
 	stateCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 
-	streetNumberCell.nextKeyboardResponder = streetCell.textField;
+	streetNumberAndApartmentCell.nextKeyboardResponder = streetCell.textField;
 	streetCell.nextKeyboardResponder = cityCell.textField;
 	cityCell.nextKeyboardResponder = stateCell.textField;
 	stateCell.nextKeyboardResponder = [[[SaveAndDone alloc] initWithAddressViewController:self] autorelease];
@@ -221,7 +219,7 @@
 	if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
 	{
 		stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-		streetNumberCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+		stateCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 	}
 
 	// add DONE button
@@ -274,11 +272,7 @@
         {
             // House Number
             case 0:
-#if 0			
-				return streetNumberCell;
-#else
 				return streetNumberAndApartmentCell;
-#endif				
             case 1:
 				return streetCell;
             case 2:

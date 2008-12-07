@@ -19,6 +19,6 @@
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 
-- (void)setStreetNumber:(NSString *)streetNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state;
+- (void)setStreetNumber:(NSString *)streetNumber apartment:(NSString *)apartment street:(NSString *)street city:(NSString *)city state:(NSString *)state;
 
 @end

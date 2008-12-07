@@ -88,18 +88,28 @@
 {
 	call = theCall;
 	
-	NSString *title = [[[NSString alloc] init] autorelease];
+	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
 	NSString *houseNumber = [call objectForKey:CallStreetNumber ];
+	NSString *apartmentNumber = [call objectForKey:CallApartmentNumber ];
 	NSString *street = [call objectForKey:CallStreet];
 
-	if(houseNumber && [houseNumber length] && street && [street length])
-		title = [title stringByAppendingFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
+	if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length] && street && [street length])
+		[top appendFormat:NSLocalizedString(@"%@ #%@ %@ ", @"House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name"), houseNumber, apartmentNumber, street];
+	else if(houseNumber && [houseNumber length] && street && [street length])
+		[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
+	else if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length])
+		[top appendFormat:NSLocalizedString(@"%@ #%@", @"House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number"), houseNumber, apartmentNumber];
 	else if(houseNumber && [houseNumber length])
-		title = [title stringByAppendingString:houseNumber];
+		[top appendFormat:houseNumber];
+	else if(street && [street length] && apartmentNumber && [apartmentNumber length])
+		[top appendFormat:NSLocalizedString(@"#%@ %@", @"Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name"), apartmentNumber, street];
 	else if(street && [street length])
-		title = [title stringByAppendingString:street];
-	if([title length] == 0)
-		title = NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");
+		[top appendFormat:street];
+	else if(apartmentNumber && [apartmentNumber length])
+		[top appendFormat:street];
+
+	if([top length] == 0)
+		[top setString:NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view")];
 
 	NSString *info = @"";
 	if([[call objectForKey:CallReturnVisits] count] > 0)
@@ -110,11 +120,11 @@
 	if(_nameAsMainLabel)
 	{
 		mainLabel.text = [call objectForKey:CallName];
-		secondaryLabel.text = title;
+		secondaryLabel.text = top;
 	}
 	else
 	{
-		mainLabel.text = title;
+		mainLabel.text = top;
 		secondaryLabel.text = [call objectForKey:CallName];
 	}
 	infoLabel.text = info;

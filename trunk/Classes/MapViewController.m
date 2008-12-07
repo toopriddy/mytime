@@ -113,6 +113,7 @@
 - (NSString *)getAddressFromCall:(NSMutableDictionary *)theCall useHtml:(BOOL)useHtml
 {
 	NSString *streetNumber = [theCall objectForKey:CallStreetNumber];
+	NSString *apartmentNumber = [theCall objectForKey:CallApartmentNumber];
 	NSString *street = [theCall objectForKey:CallStreet];
 	NSString *city = [theCall objectForKey:CallCity];
 	NSString *state = [theCall objectForKey:CallState];
@@ -122,11 +123,14 @@
 	   city && [city length] && 
 	   state && [state length])
 	{
+		apartmentNumber = EMPTY_NSSTRING_IF_NULL(apartmentNumber);
+		if(apartmentNumber.length)
+			apartmentNumber = [NSString stringWithFormat:@"(%@)", apartmentNumber];
 		streetNumber = EMPTY_NSSTRING_IF_NULL(streetNumber);
 		street = EMPTY_NSSTRING_IF_NULL(street);
 		city = EMPTY_NSSTRING_IF_NULL(city);
 		state = EMPTY_NSSTRING_IF_NULL(state);
-		return([NSString stringWithFormat:@"%@ %@ %@%@, %@", streetNumber, street, seperator, city, state]);
+		return([NSString stringWithFormat:@"%@ %@ %@ %@%@, %@", streetNumber, apartmentNumber, street, seperator, city, state]);
 	}
 	return(nil);
 }
