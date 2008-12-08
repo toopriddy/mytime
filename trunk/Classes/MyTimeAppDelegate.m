@@ -12,6 +12,7 @@
 #import "CallsSortedByCityViewDataSource.h"
 #import "CallsSortedByDateViewDataSource.h"
 #import "CallsSortedByNameViewDataSource.h"
+#import "CallsSortedByStudyViewDataSource.h"
 #import "SortedCallsViewController.h"
 #import "StatisticsViewController.h"
 #import "HourViewController.h"
@@ -106,7 +107,12 @@
 	SortedCallsViewController *nameViewController = [[[SortedCallsViewController alloc] initWithDataSource:nameSortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:nameViewController] autorelease]];
 
-	// SETTINGS
+	// CALLS SORTED BY NAME
+	CallsSortedByStudyViewDataSource *studySortedDataSource = [[[CallsSortedByStudyViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *studyViewController = [[[SortedCallsViewController alloc] initWithDataSource:studySortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:studyViewController] autorelease]];
+
+	// BULK LITERATURE
 	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[[BulkLiteraturePlacementViewContoller alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
 

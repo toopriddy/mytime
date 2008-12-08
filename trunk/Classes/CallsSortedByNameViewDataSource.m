@@ -30,12 +30,6 @@
 	return NSLocalizedString(@"Calls Sorted by Name", @"View title");
 }
 
-
-- (BOOL)showDisclosureIcon
-{
-	return NO;
-}
-
 - (UIImage *)tabBarImage 
 {
 	return [UIImage imageNamed:@"people.png"];

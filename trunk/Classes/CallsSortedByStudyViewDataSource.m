@@ -1,18 +1,18 @@
 //
-//  CallsSortedByCityViewDataSource.m
+//  CallsSortedByStudyViewDataSource.m
 //  MyTime
 //
-//  Created by Brent Priddy on 7/26/08.
+//  Created by Brent Priddy on 9/24/08.
 //  Copyright 2008 PG Software. All rights reserved.
 //
 
 #import "SortedCallsViewController.h"
-#import "CallsSortedByCityViewDataSource.h"
+#import "CallsSortedByStudyViewDataSource.h"
 #import "CallTableCell.h"
 #import "Settings.h"
 
 
-@implementation CallsSortedByCityViewDataSource
+@implementation CallsSortedByStudyViewDataSource
 
 @synthesize callsSorter;
 
@@ -22,17 +22,27 @@
 
 - (NSString *)name 
 {
-	return NSLocalizedString(@"City Sorted", @"button bar title");
+	return NSLocalizedString(@"Studies", @"View title");
 }
 
 - (NSString *)title
 {
-	return NSLocalizedString(@"Calls Sorted by City", @"View title");
+	return NSLocalizedString(@"Studies", @"View title");
+}
+
+- (BOOL) showAddNewCall
+{
+	return NO;
+}
+
+- (BOOL)showDisclosureIcon
+{
+	return NO;
 }
 
 - (UIImage *)tabBarImage 
 {
-	return [UIImage imageNamed:@"city.png"];
+	return [UIImage imageNamed:@"people.png"];
 }
 
 - (void)dealloc
@@ -43,8 +53,8 @@
 
 - (id)init
 {
-	[super initSortedBy:CALLS_SORTED_BY_CITY];
-	return(self);
+	[super initSortedBy:CALLS_SORTED_BY_STUDY];
+	return self;
 }
 
 

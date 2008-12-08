@@ -14,6 +14,7 @@ typedef enum {
 	, CALLS_SORTED_BY_DATE
 	, CALLS_SORTED_BY_CITY
 	, CALLS_SORTED_BY_NAME
+	, CALLS_SORTED_BY_STUDY
 } SortCallsType;
 
 

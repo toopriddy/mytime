@@ -35,7 +35,6 @@
 	return [UIImage imageNamed:@"street.png"];
 }
 
-
 - (void)dealloc
 {
 	DEBUG(NSLog(@"%s: dealloc", __FILE__);)

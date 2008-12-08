@@ -15,6 +15,7 @@
 @property (readonly) NSString *name;
 @property (readonly) NSString *title;
 @property (readonly) UIImage *tabBarImage;
+@property (readonly) BOOL showAddNewCall;
 
 // this property determines the style of table view displayed
 @property (readonly) UITableViewStyle tableViewStyle;
