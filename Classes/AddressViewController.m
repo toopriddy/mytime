@@ -156,7 +156,7 @@
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:UITableViewStyleGrouped] autorelease];
+													  style:UITableViewStyleGrouped] autorelease];
 	
 	// alow the loupe to work within text fields
 	theTableView.scrollEnabled = NO;

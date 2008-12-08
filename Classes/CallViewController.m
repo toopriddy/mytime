@@ -998,13 +998,14 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	DEBUG(NSLog(@"isStudyOnForReturnVisitAtIndex: %d", index);)
 
 	// they clicked on the Change Type
-	_editingReturnVisit = [[_call objectForKey:CallReturnVisits] objectAtIndex:index];
+	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
+	_editingReturnVisit = [returnVisits objectAtIndex:index];
 	NSString *type = [_editingReturnVisit objectForKey:CallReturnVisitType];
 	if(type == nil)
 		type = (NSString *)CallReturnVisitTypeReturnVisit;
 		
 	// make the new call view 
-	ReturnVisitTypeViewController *p = [[[ReturnVisitTypeViewController alloc] initWithType:type] autorelease];
+	ReturnVisitTypeViewController *p = [[[ReturnVisitTypeViewController alloc] initWithType:type isInitialVisit:(returnVisits.count == index + 1)] autorelease];
 
 	p.delegate = self;
 
@@ -1271,14 +1272,22 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitTypeCell"] autorelease];
 	}
-
-	NSString *type = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitType];
+	NSArray *returnVisits = [_call objectForKey:CallReturnVisits];
+	NSString *type = [[returnVisits objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitType];
 	if(type == nil)
 		type = (NSString *)CallReturnVisitTypeReturnVisit;
 
 
 	[cell setTitle:NSLocalizedString(@"Type", @"Return visit type label")];
-	[cell setValue:[[NSBundle mainBundle] localizedStringForKey:type value:type table:@""]];
+	// if this is the initial visit, then just say that it is the initial visit
+	if([type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit] && returnVisits.count == (returnVisitIndex + 1))
+	{
+		[cell setValue:NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type")];
+	}
+	else
+	{
+		[cell setValue:[[NSBundle mainBundle] localizedStringForKey:type value:type table:@""]];
+	}
 
 	cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 	cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;

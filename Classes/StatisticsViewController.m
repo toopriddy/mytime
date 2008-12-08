@@ -254,15 +254,28 @@ static NSString *MONTHS[] = {
 					BOOL isStudy = [type isEqualToString:(NSString *)CallReturnVisitTypeStudy];
 					BOOL isNotAtHome = [type isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome];
 					
+					bool counted = NO;
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
 					{
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
 						if(!isNotAtHome)
+						{
 							_returnVisits[offset]++;
-						
+							counted = YES;
+						}
 					}
+					else if(isStudy)
+					{
+						// go ahead and count studies as return visits
+						if(!counted)
+						{
+							_returnVisits[offset]++;
+							counted = YES;
+						}
+					}
+
 					found = YES;
 
 					if(!studyAlreadyConducted[offset] && 
