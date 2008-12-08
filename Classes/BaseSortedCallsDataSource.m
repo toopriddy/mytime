@@ -44,6 +44,11 @@
 	return NO;
 }
 
+- (BOOL) showAddNewCall
+{
+	return YES;
+}
+
 - (NSMutableDictionary *)callForIndexPath:(NSIndexPath *)indexPath 
 {
 	return [callsSorter callForRowAtIndexPath:indexPath];

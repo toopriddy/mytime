@@ -50,12 +50,14 @@
 		self.title = [dataSource name];
 		self.tabBarItem.image = [dataSource tabBarImage];
 
-
-		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-																				 target:self
-																				 action:@selector(navigationControlAdd:)] autorelease];
-		[self.navigationItem setRightBarButtonItem:button animated:NO];
-
+		// only show the add new call button if they want to
+		if([theDataSource showAddNewCall])
+		{
+			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+																					 target:self
+																					 action:@selector(navigationControlAdd:)] autorelease];
+			[self.navigationItem setRightBarButtonItem:button animated:NO];
+		}
 	}
 	return self;
 }

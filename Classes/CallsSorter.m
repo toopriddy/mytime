@@ -155,6 +155,36 @@ int sortByDate(id v1, id v2, void *context)
 		case CALLS_SORTED_BY_NAME:
 			sortedArray = [calls sortedArrayUsingFunction:sortByName context:NULL];
 			break;
+		case CALLS_SORTED_BY_STUDY:
+		{
+			sortedArray = [calls sortedArrayUsingFunction:sortByName context:NULL];
+			NSEnumerator *enumerator = [sortedArray objectEnumerator];
+			NSMutableArray *newArray = [NSMutableArray array];
+			NSDictionary *call;
+			
+			// go through all of the calls and their visits and see if they are a study
+			while( (call = [enumerator nextObject]) )
+			{
+				NSArray *visits = [call objectForKey:CallReturnVisits];
+				NSEnumerator *visitEnumerator = [visits objectEnumerator];
+				NSMutableDictionary *visit;
+				while( (visit = [visitEnumerator nextObject]) )
+				{
+					// if this is a study, then add it to the new array which will hold the sorted
+					// by name list of all studies
+					if([[visit objectForKey:CallReturnVisitType] isEqualToString:(NSString *)CallReturnVisitTypeStudy])
+					{
+						[newArray addObject:call];
+						break;
+					}
+				}
+			}
+			// assign the calls to something not the real array of calls
+			self.calls = [NSMutableArray array];
+			// and then finally assign the filtered and sorted array to sortedArray
+			sortedArray = newArray;
+			break;
+		}
 	}
 	[sortedArray retain];
 	[calls setArray:sortedArray];
@@ -167,6 +197,7 @@ int sortByDate(id v1, id v2, void *context)
 	{
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 		{
 			const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
 			[streetSections removeAllObjects];
@@ -307,6 +338,7 @@ int sortByDate(id v1, id v2, void *context)
 			
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 			ret = [streetSections count];
 			break;
 	}
@@ -329,6 +361,7 @@ int sortByDate(id v1, id v2, void *context)
 			
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 			ret = [NSArray arrayWithObjects:@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
 //			ret = streetSections;
 			break;
@@ -353,6 +386,7 @@ int sortByDate(id v1, id v2, void *context)
 			
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 		{
 			NSEnumerator *e = [streetSections objectEnumerator];
 			NSString *name;
@@ -396,6 +430,7 @@ int sortByDate(id v1, id v2, void *context)
 			
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 			if(section == ([streetOffsets count]-1))
 			{
 				ret = [calls count] - [[streetOffsets objectAtIndex:section] intValue];
@@ -428,6 +463,7 @@ int sortByDate(id v1, id v2, void *context)
 
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 			name = [streetSections objectAtIndex:section];
 			break;
 	}
@@ -451,6 +487,7 @@ int sortByDate(id v1, id v2, void *context)
 
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
 			ret = [[streetOffsets objectAtIndex:section] intValue];
 			break;
 	}
