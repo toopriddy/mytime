@@ -27,7 +27,7 @@
 	UITableViewCell *returnVisitCell;
     UITableViewCell *studyCell;
     UITableViewCell *notAtHomeCell;
-
+	BOOL isInitialVisit;
 }
 
 @property (nonatomic,assign) id<ReturnVisitTypeViewControllerDelegate> delegate;
@@ -40,7 +40,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithType:(NSString *)type;
+- (id) initWithType:(NSString *)type isInitialVisit:(BOOL)isInitialVisit;
 
 @end
 

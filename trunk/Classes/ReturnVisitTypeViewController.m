@@ -27,7 +27,7 @@
 @synthesize notAtHomeCell;
 
 
-- (id) initWithType:(NSString *)callType;
+- (id) initWithType:(NSString *)callType isInitialVisit:(BOOL)isInitialVisitVar
 {
 	if ([super init]) 
 	{
@@ -36,6 +36,7 @@
 		returnVisitCell = nil;
 		studyCell = nil;
 		notAtHomeCell = nil;
+		isInitialVisit = isInitialVisitVar;
 		
 		// set the title, and tab bar images from the dataSource
 		// object. 
@@ -118,7 +119,10 @@
 	self.view = self.theTableView;
 
 	self.returnVisitCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	returnVisitCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeReturnVisit value:(NSString *)CallReturnVisitTypeReturnVisit table:@""];
+	if(isInitialVisit)
+		returnVisitCell.text = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
+	else
+		returnVisitCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeReturnVisit value:(NSString *)CallReturnVisitTypeReturnVisit table:@""];
 	returnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	returnVisitCell.selected = NO;
 	

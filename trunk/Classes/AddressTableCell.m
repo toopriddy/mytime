@@ -99,19 +99,22 @@
 - (void)layoutSubviews 
 {
     [super layoutSubviews];
-
+    CGRect contentRect = [self.contentView bounds];
+	
 	self.accessoryType = [self isEditing] ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
 	[topLabel sizeToFit];
 	CGRect lrect = [topLabel bounds];
 	lrect.origin.x += 100.0f;
 	lrect.origin.y += 15.0f;
+	lrect.size.width = contentRect.size.width - lrect.origin.x;
 	[topLabel setFrame: lrect];
 
 	[bottomLabel sizeToFit];
 	lrect = [bottomLabel bounds];
 	lrect.origin.x += 100.0f;
 	lrect.origin.y += 35.0f;
+	lrect.size.width = contentRect.size.width - lrect.origin.x;
 	[bottomLabel setFrame: lrect];
 }
 

@@ -436,6 +436,9 @@
 /* Tracts Publication Name */
 "Immortal Spirit" = "Immortal Spirit";
 
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Initial Visit";
+
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Initial Visit Notes";
 
