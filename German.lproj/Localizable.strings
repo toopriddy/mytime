@@ -1,16 +1,29 @@
 ﻿/* Publication Type and Seperator in the Publication Picker */
 "   BIBLE DVD" = "   BIBEL DVD";
 
+/* Publication Type and Seperator in the Publication Picker */
 "   BOOKS" = "   BÜCHER";
 
 /* Publication Type and Seperator in the Publication Picker */
 "   BROCHURES" = "   BROSCHÜREN";
 
 /* Publication Type and Seperator in the Publication Picker */
+"   CAMPAIGN TRACTS" = "   SONDERTRAKTATE";
+
+/* Publication Type and Seperator in the Publication Picker */
 "   DVD" = "   DVD";
 
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRAKTATE";
+
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
 
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%2$@ %1$@";
@@ -21,11 +34,8 @@
 /* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
 "%@ %@ %d, %d" = "%1$@ %3$d. %2$@ %4$d";
 
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month and %d is the day of the month as a decimal number */
-"%a %b %d" = "%a, %d. %b";
-
-/* Calendar format where %a is an abbreviated weekday %b is an abbreviated month %d is the day of the month as a decimal number and %Y is the current year */
-"%a %b %d, %Y" = "%a, %d. %b %Y";
+/* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
+"%@ Field Service Activity Report:\n" = "Predigtdienstbericht für %@:\n\n";
 
 /* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
 "%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
@@ -63,6 +73,12 @@
 /* Add a return visit action button */
 "Add a return visit" = "Rückbesuch hinzufügen";
 
+/* Button to click to add more information like phone number and email address */
+"Add Additional Information" = "Zusatzinfo hinzufügen";
+
+/* Add Information title */
+"Add Info" = "Zusatzinfo";
+
 /* Return Visit Notes Placeholder text */
 "Add Notes" = "Notiz hinzufügen";
 
@@ -75,6 +91,9 @@
 /* cancel button */
 "All Calls" = "Alle";
 
+/* all publicaitons label for publication type */
+"All Publications" = "Alle Publikationen";
+
 /* Book Publication Name */
 "All Scripture" = "Inspiriert-Buch";
 
@@ -83,6 +102,9 @@
 
 /* Long month name */
 "April" = "April";
+
+/* Apartment/Floor Number */
+"Apt/Floor" = "Apt/Floor";
 
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Willst Du wirklich den Besuch löschen (Die Rückbesuche und die Veröffentlichungen werden trotzdem gezählt)?";
@@ -100,10 +122,13 @@
 "Backup" = "Datensicherung";
 
 /* More View Table backup your data */
-"Backup your data" = "Daten sichern oder wiederherstellen";
+"Backup using 'MyTime Backup'" = "Daten sichern mit 'MyTime Backup'";
 
 /* Book Publication Name */
 "Bible" = "Bibel";
+
+/* Publication Type name */
+"Bible DVD" = "Bibel DVD";
 
 /* Bible DVD Publication Name */
 "Bible DVD: Acts" = "Bible DVD: Acts";
@@ -163,18 +188,24 @@
 "Call Address" = "Rückbesuch Adresse";
 
 /* View title */
-"Calls" = "angetroffen";
-
-/* view title */
 "Calls Sorted by City" = "Rückbesuche nach Ort";
 
-/* View title */
+/* view title */
 "Calls Sorted by Date" = "Rückbesuche nach Datum";
+
+/* View title */
+"Calls Sorted by Name" = "Rückbesuche nach Name";
 
 /* view title */
 "Calls Sorted by Street" = "Rückbesuche nach Straße";
 
-/* cancel button */
+/* Publication Type name */
+"Campaign Tract" = "Sondertraktat";
+
+/* Publication Type name */
+"Campaign Tracts" = "Sondertraktate";
+
+/* Cancel button */
 "Cancel" = "Abbrechen";
 
 /* Change Date action button for visit in call view */
@@ -213,11 +244,17 @@
 /* Book Publication Name */
 "Creator" = "Schöpfer-Buch";
 
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Custom";
+
 /* Book Publication Name */
 "Daniel's Prophecy" = "Daniel-Buch";
 
 /* button bar title */
 "Date Sorted" = "nach Datum";
+
+/* Call Metadata */
+"Date/Time" = "Date/Time";
 
 /* Short month name */
 "Dec" = "Dez";
@@ -232,7 +269,7 @@
 "Delete Call" = "Löschen";
 
 /* backup connected message */
-"Delete Call?" = "Rückbesuch löschen?";
+"Disconnected from the Backup Application" = "Verbindung zum Computer getrennt";
 
 /* Brochures Publication Name */
 "Divine Name" = "Göttlicher Name";
@@ -242,6 +279,12 @@
 
 /* Brochures Publication Name */
 "Does God Care" = "Kümmert sich";
+
+/* Publication Type name */
+"DVD" = "DVD Gebärde";
+
+/* Publication Type name */
+"DVD (not counted)" = "DVDs";
 
 /* DVD Publication Name */
 "DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
@@ -306,14 +349,32 @@
 /* Brochures Publication Name */
 "Education" = "Schulbildung";
 
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy" = "EEE d.M.yyyy";
+
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy h:mma" = "EEE d.M.yyyy H:mm";
+
+/* Call Metadata */
+"Email" = "Mail";
+
+/* More View Table backup your data by emailing the data */
+"Email backup" = "Daten sichern mit Mail";
+
+/* Months to email Information title */
+"Email Report" = "Mail Bericht";
+
 /* Google Localized Language Name */
 "en" = "de";
 
 /* More View Table Enable shown popups */
-"End of Month Statistics" = "Monats-Statistik";
+"Enable shown popups" = "Popups anzeigen";
 
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Familien-Leben";
+
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Enter Name Here";
 
 /* backup failed string */
 "Failed advertising server" = "Verbindung zum Server fehlgeschlagen";
@@ -329,6 +390,9 @@
 
 /* Long month name */
 "February" = "Februar";
+
+/* Subject text for the email that is sent for the Field Service Activity report */
+"Field Service Activity Report" = "Predigtdienstbericht";
 
 /* Brochures Publication Name */
 "God's Friend" = "Freund Gottes";
@@ -366,8 +430,14 @@
 /* Tracts Publication Name */
 "How to Find the Road to Paradise" = "Der Weg ins Paradies";
 
+/* button that the user clicks when they have let their Yes mean Yes that they have read the website */
+"I read the webpage" = "habe ich gelesen";
+
 /* Tracts Publication Name */
 "Immortal Spirit" = "Unsterbliche Geist";
+
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Initial Visit";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Rückbesuchsnotizen anzeigen";
@@ -459,8 +529,11 @@
 /* Plural form of the word minutes */
 "minutes" = "Minuten";
 
+/* Call Metadata */
+"Mobile Phone" = "Handy";
+
 /* Month singular */
-"More" = "Mehr";
+"Month" = "Monat";
 
 /* Title for selecting the number of months shown in the statistics view */
 "Month Count" = "Anzahl der Monate";
@@ -468,8 +541,14 @@
 /* Months plural */
 "Months" = "Monate";
 
+/* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
+"Move to next month" = "übertrage aufs nächste Monat";
+
 /* Book Publication Name */
 "My Book of Bible Stories" = "Mein Buch mit biblischen Geschichten";
+
+/* Email subject line for the email that has your backup data in it */
+"MyTime Application Data Backup" = "MyTime Datensicherung";
 
 /* More View Table MyTime Version */
 "MyTime Version" = "MyTime Version";
@@ -495,11 +574,17 @@
 /* return visit type name */
 "Not At Home" = "nicht zu Hause";
 
+/* Call Metadata */
+"Notes" = "Notes";
+
 /* Short month name */
 "Nov" = "Nov";
 
 /* Long month name */
 "November" = "November";
+
+/* Call Metadata */
+"Number" = "Number";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Anzahl abgegeben:";
@@ -525,6 +610,9 @@
 /* Tracts Publication Name */
 "Peaceful New World" = "Eine friedlichen neue Welt";
 
+/* Call Metadata */
+"Phone" = "Telefon";
+
 /* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
 "Placements" = "Straßendienst";
 
@@ -533,6 +621,9 @@
 
 /* More View Table Donation request */
 "Please Donate, help me help you" = "Bitte hilf mir dir zu helfen (Spende)";
+
+/* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
+"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Bitte lies die FAQ auf der MyTime Webseite bevor du mir per Mail eine Frage stellst. Lies bitte auch die vorhandene 'feature request' bevor du mich über eine gewünschte Funktion informierst.";
 
 /* Information for the user to know what is going on with this and new releases */
 "Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Bitte besuche mytime.googlecode.com um die Antworten für FAQ und geplante neue Funktionen zu erhalten. Es war viel Arbeit MyTime zu programmieren, falls das Programm für dich hilfreich ist würde ich mich über eine Spende freuen. Möchtest du gerne bei der Übersetzung von MyTime mithelfen, dann sende mir bitte eine Mail.";
@@ -591,8 +682,14 @@
 /* Book Publication Name */
 "Revelation Climax" = "Offenbarungs-Buch";
 
+/* Yes round up where %d is a placeholder for the number of hours */
+"Round Up to %d hours" = "gerundet auf %d Stunden";
+
 /* Brochures Publication Name */
 "Satisfying Life" = "Ein befriedigendes Leben";
+
+/* email address for the congregation secretary */
+"Secretary's email address" = "Mail-Adresse des Sekretärs";
 
 /* Title for the view where you Pick A Date */
 "Select Date" = "Datum wählen";
@@ -603,6 +700,12 @@
 /* Select Time Title for adding hours of field service to a particular day */
 "Select Time" = "Zeit eingeben";
 
+/* Publication Type title */
+"Select Type" = "bitte auswählen";
+
+/* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
+"Send" = "senden";
+
 /* initial message when trying to transfer backup files */
 "Sending Settings to the Backup Application" = "Datenaustausch zum Computer gestartet";
 
@@ -612,20 +715,17 @@
 /* Long month name */
 "September" = "September";
 
-/* Service year total quick build hours label */
-"Service Year Quick Build Total" = "gesamte Stunden des Jahres";
-
 /* Service year total hours label */
 "Service Year Total" = "Jahres-Gesamtzeit";
 
 /* 'Settings' ButtonBar View text and Statistics View Title */
 "Settings" = "Einstellungen";
 
+/* button that the user clicks when they have not read the FAQ or feature request list */
+"Show me the webpage" = "Zeige mir die Seite";
+
 /* Book Publication Name */
 "Sing Praises" = "Liederbuch";
-
-/* Publication Type name */
-"Special" = "Spezielle";
 
 /* Brochures Publication Name */
 "Spirits of the Dead" = "Unsichtbare Geister";
@@ -650,6 +750,12 @@
 
 /* Street Sorted button title */
 "Street Sorted" = "nach Straßen";
+
+/* Call Metadata */
+"String" = "String";
+
+/* View title */
+"Studies" = "Studies";
 
 /* return visit type name */
 "Study" = "Studium";
@@ -686,6 +792,9 @@
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Unbekannt";
+
+/* Call Metadata */
+"URL" = "URL";
 
 /* More View Table Group Title */
 "Version" = "Version";
@@ -738,111 +847,15 @@
 /* Book Publication Name */
 "Worship God" = "Anbetungsbuch";
 
+/* Book Publication Name */
+"Would You Like To Know the Truth?" = "Hätten Sie gern eine Antwort?";
+
+/* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
+"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Möchtest du die %1$d Minuten vom %2$@ auf das nächste Monat übertragen? Oder auf %3$d Stunden für %4$@ aufrunden?\n(Dies ändert die manuell eingegebene Zeit in der Stundenansicht)";
+
 /* Yes delete the call */
 "Yes" = "Ja";
 
 /* Book Publication Name */
 "Young People Ask" = "Fragen Junger Leute";
-
-/* Publication Type and Seperator in the Publication Picker */
-"   CAMPAIGN TRACTS" = "   SONDERTRAKTATE";
-
-/* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
-"%@ Field Service Activity Report:\n" = "Predigtdienstbericht für %@:\n\n";
-
-
-/* Button to click to add more information like phone number and email address */
-"Add Additional Information" = "Zusatzinfo hinzufügen";
-
-/* Add Information title */
-"Add Info" = "Zusatzinfo";
-
-/* all publicaitons label for publication type */
-"All Publications" = "Alle Publikationen";
-
-/* Publication Type name */
-"Bible DVD" = "Bibel DVD";
-
-/* Publication Type name */
-"Campaign Tract" = "Sondertraktat";
-
-/* Publication Type name */
-"Campaign Tracts" = "Sondertraktate";
-
-/* Publication Type name */
-"DVD" = "DVD Gebärde";
-
-/* Publication Type name */
-"DVD (not counted)" = "DVDs";
-
-/* localized date string string http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
-"EEE, M/d/yyy" = "EEE d.M.yyyy";
-
-/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
-"EEE, M/d/yyy h:mma" = "EEE d.M.yyyy H:mm";
-
-/* Call Metadata */
-"Email" = "Mail";
-
-/* More View Table backup your data by emailing the data */
-"Email backup" = "Daten sichern mit Mail";
-
-/* Months to email Information title */
-"Email Report" = "Mail Bericht";
-
-/* button that the user clicks when they have let their Yes mean Yes that they have read the website */
-"I read the webpage" = "habe ich gelesen";
-
-/* Call Metadata */
-"Mobile Phone" = "Handy";
-
-/* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
-"Move to next month" = "übertrage aufs nächste Monat";
-
-/* Email subject line for the email that has your backup data in it */
-"MyTime Application Data Backup" = "MyTime Datensicherung";
-
-/* Call Metadata */
-"Phone" = "Telefon";
-
-/* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
-"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Bitte lies die FAQ auf der MyTime Webseite bevor du mir per Mail eine Frage stellst. Lies bitte auch die vorhandene 'feature request' bevor du mich über eine gewünschte Funktion informierst.";
-
-/* Yes round up where %d is a placeholder for the number of hours */
-"Round Up to %d hours" = "gerundet auf %d Stunden";
-
-/* email address for the congregation secretary */
-"Secretary's email address" = "Mail-Adresse des Sekretärs";
-
-/* Publication Type title */
-"Select Type" = "bitte auswählen";
-
-/* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
-"Send" = "senden";
-
-/* button that the user clicks when they have not read the FAQ or feature request list */
-"Show me the webpage" = "Zeige mir die Seite";
-
-/* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
-"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Möchtest du die %1$d Minuten vom %2$@ auf das nächste Monat übertragen? Oder auf %3$d Stunden für %4$@ aufrunden?\n(Dies ändert die manuell eingegebene Zeit in der Stundenansicht)";
-
-/* More View Table Enable shown popups */
-"Enable shown popups" = "Popups anzeigen";
-
-/* More View Table backup your data */
-"Backup using 'MyTime Backup'" = "Daten sichern mit 'MyTime Backup'";
-
-/* View title */
-"Calls Sorted by Name" = "Rückbesuche nach Name";
-
-/* backup connected message */
-"Disconnected from the Backup Application" = "Verbindung zum Computer getrennt";
-
-/* Month singular */
-"Month" = "Monat";
-
-/* Subject text for the email that is sent for the Field Service Activity report */
-"Field Service Activity Report" = "Predigtdienstbericht";
-
-"Would You Like To Know the Truth?" = "Hätten Sie gern eine Antwort?";
 

@@ -16,6 +16,15 @@
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRACTS";
 
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
+
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%1$@ %2$@";
 
@@ -82,6 +91,9 @@
 /* cancel button */
 "All Calls" = "Tous les Contacts";
 
+/* all publicaitons label for publication type */
+"All Publications" = "All Publications";
+
 /* Book Publication Name */
 "All Scripture" = "Toute Écriture";
 
@@ -90,6 +102,9 @@
 
 /* Long month name */
 "April" = "Avril";
+
+/* Apartment/Floor Number */
+"Apt/Floor" = "Apt/Floor";
 
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Etes-vous sûrs de vouloir supprimer cet enregistrement (Les placements et les nouvelles visites seront néanmoins comptabilisés)?";
@@ -115,19 +130,19 @@
 /* Publication Type name */
 "Bible DVD" = "DVD Bible";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Acts" = "DVD Bible: Actes";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: John" = "DVD Bible: Jean";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Luke" = "DVD Bible: Luc";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Mark" = "DVD Bible: Marc";
 
-/* DVD Bible Publication Name */
+/* Bible DVD Publication Name */
 "Bible DVD: Matthew" = "DVD Bible: Matthieu";
 
 /* Bible DVD Publication Name */
@@ -190,7 +205,7 @@
 /* Publication Type name */
 "Campaign Tracts" = "Campagnes de Tract";
 
-/* cancel button */
+/* Cancel button */
 "Cancel" = "Abandonner";
 
 /* Change Date action button for visit in call view */
@@ -229,11 +244,17 @@
 /* Book Publication Name */
 "Creator" = "Créateur";
 
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Custom";
+
 /* Book Publication Name */
 "Daniel's Prophecy" = "Prophétie de Daniel";
 
 /* button bar title */
 "Date Sorted" = "Date Triée";
+
+/* Call Metadata */
+"Date/Time" = "Date/Time";
 
 /* Short month name */
 "Dec" = "Déc";
@@ -293,6 +314,9 @@
 "DVD: God's Friend" = "DVD: Ami de Dieu";
 
 /* DVD Publication Name */
+"DVD: Great Teacher" = "DVD: Great Teacher";
+
+/* DVD Publication Name */
 "DVD: Greatest Man" = "DVD: Le plus Grand Homme";
 
 /* DVD Publication Name */
@@ -349,6 +373,9 @@
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Une vie de famille agréable (T21)";
 
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Enter Name Here";
+
 /* backup failed string */
 "Failed advertising server" = "Echec de la sauvegarde";
 
@@ -391,11 +418,11 @@
 /* Singular form of the word hour */
 "hour" = "heure";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Heures";
-
 /* Plural form of the word hours */
 "hours" = "heures";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Heures";
 
 /* House Number */
 "House Number" = "Numéro d'habitation";
@@ -408,6 +435,9 @@
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Avez-vous un esprit immortel ? (T25)";
+
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Initial Visit";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Notes 1er contact";
@@ -499,7 +529,6 @@
 /* Plural form of the word minutes */
 "minutes" = "minutes";
 
-
 /* Call Metadata */
 "Mobile Phone" = "Téléphone Mobile";
 
@@ -514,7 +543,6 @@
 
 /* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
 "Move to next month" = "Afficher Mois suivant";
-
 
 /* Book Publication Name */
 "My Book of Bible Stories" = "Recueil d'Histoires Bibliques";
@@ -546,11 +574,17 @@
 /* return visit type name */
 "Not At Home" = "Absent de chez lui/elle";
 
+/* Call Metadata */
+"Notes" = "Notes";
+
 /* Short month name */
 "Nov" = "Nov";
 
 /* Long month name */
 "November" = "Novembre";
+
+/* Call Metadata */
+"Number" = "Number";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Nombre Placé:";
@@ -603,6 +637,9 @@
 /* Book Publication Name */
 "Proclaimers" = "Prédicateurs";
 
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publication";
+
 /* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
 "Publications" = "Publications";
 
@@ -645,8 +682,14 @@
 /* Book Publication Name */
 "Revelation Climax" = "Révélation - Grand Dénouement";
 
+/* Yes round up where %d is a placeholder for the number of hours */
+"Round Up to %d hours" = "Round Up to %d hours";
+
 /* Brochures Publication Name */
 "Satisfying Life" = "Une vie satisfaisante";
+
+/* email address for the congregation secretary */
+"Secretary's email address" = "Secretary's email address";
 
 /* Title for the view where you Pick A Date */
 "Select Date" = "Sélectionner Date";
@@ -672,9 +715,6 @@
 /* Long month name */
 "September" = "Septembre";
 
-/* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Création rapide du Total de l’année de Service";
-
 /* Service year total hours label */
 "Service Year Total" = "Total Année de Service";
 
@@ -684,12 +724,8 @@
 /* button that the user clicks when they have not read the FAQ or feature request list */
 "Show me the webpage" = "Afficher la webpage";
 
-
 /* Book Publication Name */
 "Sing Praises" = "Cantiques";
-
-/* Publication Type name */
-"Special" = "Spécial";
 
 /* Brochures Publication Name */
 "Spirits of the Dead" = "Esprit des morts";
@@ -714,6 +750,12 @@
 
 /* Street Sorted button title */
 "Street Sorted" = "Rue Triée";
+
+/* Call Metadata */
+"String" = "String";
+
+/* View title */
+"Studies" = "Studies";
 
 /* return visit type name */
 "Study" = "Étude";
@@ -745,8 +787,14 @@
 /* Brochures Publication Name */
 "Trinity" = "Trinité";
 
+/* Return visit type label */
+"Type" = "Type";
+
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Inconnu";
+
+/* Call Metadata */
+"URL" = "URL";
 
 /* More View Table Group Title */
 "Version" = "Version";
@@ -810,3 +858,4 @@
 
 /* Book Publication Name */
 "Young People Ask" = "Les jeunes s’interrogent";
+

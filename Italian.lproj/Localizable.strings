@@ -16,6 +16,15 @@
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   VOLANTINI";
 
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
+
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%2$@ %1$@";
 
@@ -94,6 +103,9 @@
 /* Long month name */
 "April" = "Aprile";
 
+/* Apartment/Floor Number */
+"Apt/Floor" = "Apt/Floor";
+
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Sei sicuro di voler cancellare il nominativo (le visite ulteriori e le pubblicazioni saranno contate comunque)?";
 
@@ -111,9 +123,6 @@
 
 /* More View Table backup your data */
 "Backup using 'MyTime Backup'" = "Backup tramite 'MyTime Backup'";
-
-/* More View Table backup your data */
-"Backup your data" = "Backup dei dati";
 
 /* Book Publication Name */
 "Bible" = "Bibbia";
@@ -235,11 +244,17 @@
 /* Book Publication Name */
 "Creator" = "Creatore";
 
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Custom";
+
 /* Book Publication Name */
 "Daniel's Prophecy" = "Profezie di Daniele";
 
 /* button bar title */
 "Date Sorted" = "Per data";
+
+/* Call Metadata */
+"Date/Time" = "Date/Time";
 
 /* Short month name */
 "Dec" = "Dic";
@@ -358,6 +373,9 @@
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Una vita familiare gioiosa";
 
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Enter Name Here";
+
 /* backup failed string */
 "Failed advertising server" = "Impossibile comunicare con il server";
 
@@ -417,6 +435,9 @@
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Anima immortale";
+
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Initial Visit";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Note sulla visita iniziale";
@@ -553,11 +574,17 @@
 /* return visit type name */
 "Not At Home" = "Assente";
 
+/* Call Metadata */
+"Notes" = "Notes";
+
 /* Short month name */
 "Nov" = "Nov";
 
 /* Long month name */
 "November" = "Novembre";
+
+/* Call Metadata */
+"Number" = "Number";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Quantità lasciata:";
@@ -688,9 +715,6 @@
 /* Long month name */
 "September" = "Settembre";
 
-/* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Totale ore per le\ncostruzioni nell'anno di servizio";
-
 /* Service year total hours label */
 "Service Year Total" = "Totale ore\nnell'anno di servizio";
 
@@ -727,6 +751,12 @@
 /* Street Sorted button title */
 "Street Sorted" = "Per indirizzo";
 
+/* Call Metadata */
+"String" = "String";
+
+/* View title */
+"Studies" = "Studies";
+
 /* return visit type name */
 "Study" = "Studio";
 
@@ -762,6 +792,9 @@
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Sconosciuta";
+
+/* Call Metadata */
+"URL" = "URL";
 
 /* More View Table Group Title */
 "Version" = "Versione";
@@ -825,3 +858,4 @@
 
 /* Book Publication Name */
 "Young People Ask" = "I Giovani chiedono";
+
