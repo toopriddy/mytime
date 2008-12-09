@@ -35,7 +35,7 @@
 	return NO;
 }
 
-- (BOOL)showDisclosureIcon
+- (BOOL) useNameAsMainLabel
 {
 	return NO;
 }

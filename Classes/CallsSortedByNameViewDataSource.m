@@ -47,7 +47,10 @@
 	return(self);
 }
 
-
+- (BOOL) useNameAsMainLabel
+{
+	return NO;
+}
 
 - (BOOL)respondsToSelector:(SEL)selector
 {

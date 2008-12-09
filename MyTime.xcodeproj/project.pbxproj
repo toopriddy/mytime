@@ -94,7 +94,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
 			remoteInfo = MyTime;
 		};
 /* End PBXContainerItemProxy section */
@@ -706,6 +706,7 @@
 				PROVISIONING_PROFILE = "E88B399C-C873-4E31-8756-86FE75523D3D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3D3286D6-8ACA-4E65-83E8-59B64B8266B5";
 				SDKROOT = iphoneos2.1;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};
 			name = "AdHoc Distribution";
 		};
@@ -740,6 +741,7 @@
 				PROVISIONING_PROFILE = "A5CDE12B-3C9C-40F0-A068-0C537BED6C58";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A5CDE12B-3C9C-40F0-A068-0C537BED6C58";
 				SDKROOT = iphoneos2.1;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};
 			name = Distribution;
 		};
