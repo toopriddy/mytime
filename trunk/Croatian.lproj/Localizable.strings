@@ -16,6 +16,15 @@
 /* Publication Type and Seperator in the Publication Picker */
 "   TRACTS" = "   TRAKTATI";
 
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
+
 /* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
 "%@ %@" = "%2$@ %1$@";
 
@@ -93,6 +102,9 @@
 
 /* Long month name */
 "April" = "Travanj";
+
+/* Apartment/Floor Number */
+"Apt/Floor" = "Apt/Floor";
 
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Jeste li sigurni da želite izbrisati sve bilješke (ponovni posjeti i ostavljene publikacije ipak će biti izbrojene)?";
@@ -232,11 +244,17 @@
 /* Book Publication Name */
 "Creator" = "Stvoritelj";
 
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Custom";
+
 /* Book Publication Name */
 "Daniel's Prophecy" = "Danijelovo proročanstvo";
 
 /* button bar title */
 "Date Sorted" = "Po Datumu";
+
+/* Call Metadata */
+"Date/Time" = "Date/Time";
 
 /* Short month name */
 "Dec" = "Pro";
@@ -355,6 +373,9 @@
 /* Tracts Publication Name */
 "Enjoy Family Life" = "Raduj se obiteljskom životu";
 
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Enter Name Here";
+
 /* backup failed string */
 "Failed advertising server" = "Nemoguće uspostaviti vezu sa serverom";
 
@@ -397,11 +418,11 @@
 /* Singular form of the word hour */
 "hour" = "sat";
 
-/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
-"Hours" = "Sati";
-
 /* Plural form of the word hours */
 "hours" = "sati";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "Sati";
 
 /* House Number */
 "House Number" = "Broj Kuće";
@@ -414,6 +435,9 @@
 
 /* Tracts Publication Name */
 "Immortal Spirit" = "Posjeduješ li besmertan duh?";
+
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Initial Visit";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Bilješke o prvom posjetu";
@@ -550,11 +574,17 @@
 /* return visit type name */
 "Not At Home" = "Nije kod kuće";
 
+/* Call Metadata */
+"Notes" = "Notes";
+
 /* Short month name */
 "Nov" = "Stu";
 
 /* Long month name */
 "November" = "Studeni";
+
+/* Call Metadata */
+"Number" = "Number";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Količina ostavljena:";
@@ -685,9 +715,6 @@
 /* Long month name */
 "September" = "Rujan";
 
-/* Service year total quick build hours label */
-"Service Year Quick Build Total" = "Sati za Gradnju Službene godine";
-
 /* Service year total hours label */
 "Service Year Total" = "Ukupno Službene godine";
 
@@ -724,6 +751,12 @@
 /* Street Sorted button title */
 "Street Sorted" = "Po Ulici";
 
+/* Call Metadata */
+"String" = "String";
+
+/* View title */
+"Studies" = "Studies";
+
 /* return visit type name */
 "Study" = "Tečaj";
 
@@ -759,6 +792,9 @@
 
 /* Sorted by Street Calls view section title for an unknown street */
 "Unknown" = "Nepoznata";
+
+/* Call Metadata */
+"URL" = "URL";
 
 /* More View Table Group Title */
 "Version" = "Verzija";
