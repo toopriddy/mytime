@@ -49,6 +49,11 @@
 	return YES;
 }
 
+- (BOOL) useNameAsMainLabel
+{
+	return NO;
+}
+
 - (NSMutableDictionary *)callForIndexPath:(NSIndexPath *)indexPath 
 {
 	return [callsSorter callForRowAtIndexPath:indexPath];
@@ -99,7 +104,7 @@
 	if ([self showDisclosureIcon])
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
-	if(callsSorter.sortedBy == CALLS_SORTED_BY_NAME)
+	if([self useNameAsMainLabel])
 	{
 		[cell useNameAsMainLabel];
 	}
