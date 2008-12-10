@@ -104,7 +104,7 @@
 "April" = "April";
 
 /* Apartment/Floor Number */
-"Apt/Floor" = "Apt/Floor";
+"Apt/Floor" = "Tür/Stock";
 
 /* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
 "Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Willst Du wirklich den Besuch löschen (Die Rückbesuche und die Veröffentlichungen werden trotzdem gezählt)?";
@@ -187,7 +187,7 @@
 /* Address title for address form */
 "Call Address" = "Rückbesuch Adresse";
 
-/* View title */
+/* view title */
 "Calls Sorted by City" = "Rückbesuche nach Ort";
 
 /* view title */
@@ -245,7 +245,7 @@
 "Creator" = "Schöpfer-Buch";
 
 /* Title for field in the Additional Information for the user to create their own additional information field */
-"Custom" = "Custom";
+"Custom" = "Eigene";
 
 /* Book Publication Name */
 "Daniel's Prophecy" = "Daniel-Buch";
@@ -254,7 +254,7 @@
 "Date Sorted" = "nach Datum";
 
 /* Call Metadata */
-"Date/Time" = "Date/Time";
+"Date/Time" = "Datum/Zeit";
 
 /* Short month name */
 "Dec" = "Dez";
@@ -290,7 +290,7 @@
 "DVD Drama: Bore Witness" = "DVD Drama: Bore Witness";
 
 /* DVD Publication Name */
-"DVD Drama: Pursue Goals" = "DVD Drama: Pursue Goals";
+"DVD Drama: Pursue Goals" = "DVD Drama: Ziele die Gott ehren";
 
 /* DVD Publication Name */
 "DVD Drama: Respect Authority" = "DVD Drama: Respect Authority";
@@ -311,7 +311,7 @@
 "DVD: Family Happiness" = "DVD: Family Happiness";
 
 /* DVD Publication Name */
-"DVD: God's Friend" = "DVD: God's Friend";
+"DVD: God's Friend" = "DVD: Freund Gottes";
 
 /* DVD Publication Name */
 "DVD: Great Teacher" = "DVD: Great Teacher";
@@ -323,13 +323,13 @@
 "DVD: Keep on the Watch" = "DVD: Keep on the Watch";
 
 /* DVD Publication Name */
-"DVD: Knowledge" = "DVD: Knowledge";
+"DVD: Knowledge" = "DVD: Erkenntnis";
 
 /* DVD Publication Name */
 "DVD: Noah/David" = "DVD: Noah/David";
 
 /* DVD Publication Name */
-"DVD: Require" = "DVD: Require";
+"DVD: Require" = "DVD: Erwartet";
 
 /* DVD Publication Name */
 "DVD: Sing Praises Vol 1&2" = "DVD: Sing Praises Vol 1&2";
@@ -374,7 +374,7 @@
 "Enjoy Family Life" = "Familien-Leben";
 
 /* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
-"Enter Name Here" = "Enter Name Here";
+"Enter Name Here" = "Feldname hier eingeben";
 
 /* backup failed string */
 "Failed advertising server" = "Verbindung zum Server fehlgeschlagen";
@@ -437,7 +437,7 @@
 "Immortal Spirit" = "Unsterbliche Geist";
 
 /* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
-"Initial Visit" = "Initial Visit";
+"Initial Visit" = "Erstbesuch";
 
 /* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
 "Initial Visit Notes" = "Rückbesuchsnotizen anzeigen";
@@ -575,7 +575,7 @@
 "Not At Home" = "nicht zu Hause";
 
 /* Call Metadata */
-"Notes" = "Notes";
+"Notes" = "Notizen";
 
 /* Short month name */
 "Nov" = "Nov";
@@ -584,7 +584,7 @@
 "November" = "November";
 
 /* Call Metadata */
-"Number" = "Number";
+"Number" = "Nummer";
 
 /* Number Placed label for the Number Picker for the number of publications placed */
 "Number Placed:" = "Anzahl abgegeben:";
@@ -752,10 +752,10 @@
 "Street Sorted" = "nach Straßen";
 
 /* Call Metadata */
-"String" = "String";
+"String" = "Zeichenfolge";
 
 /* View title */
-"Studies" = "Studies";
+"Studies" = "Studien";
 
 /* return visit type name */
 "Study" = "Studium";
