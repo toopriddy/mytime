@@ -66,7 +66,7 @@ static NSString *MONTHS[] = {
 	[[[Settings sharedInstance] settings] setObject:emailAddress forKey:SettingsSecretaryEmailAddress];
 	[[Settings sharedInstance] saveData];
 	
-	NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"mailto:%@?", emailAddress];
+	NSMutableString *string = [[[NSMutableString alloc] initWithFormat:@"mailto:%@?", emailAddress] autorelease];
 	[string appendString:@"subject="];
 	[string appendString:[NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	[string appendString:@"&body="];

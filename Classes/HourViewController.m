@@ -71,7 +71,7 @@ static int sortByDate(id v1, id v2, void *context)
 		NSString *timeEntriesName = (NSString *)(quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
 
 		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-		NSMutableArray *timeEntries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]];
+		NSMutableArray *timeEntries = [[[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]] autorelease];
 		[settings setObject:timeEntries forKey:timeEntriesName];
 		
 		
