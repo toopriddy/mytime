@@ -66,7 +66,7 @@ There are simple words that are included as translations purely for singular/plu
 
 *File format:*
 
-When you can define the format that the file is saved in, make sure it is UTF8.  If you are using TextEdit on OSX you have to do a "Save As" and then in the "Plain Text Encoding" select Unicode (utf-8)" and save the file's name as Localizable.strings
+When you can define the format that the file is saved in, make sure it is UTF-16.  If you are using TextEdit on OSX you have to do a "Save As" and then in the "Plain Text Encoding" select Unicode (utf-16)" and save the file's name as Localizable.strings
 
 
 *Questions*
@@ -87,6 +87,8 @@ If I send you a new mobileprovision file these are the instructions on how to up
   # Finally drag the MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
 
 = Transfer Localizable.strings using iTunes =
+
+Apparently this only worked on versions of iTunes < 8.0.2
 
 On OSX:
   # Right-click (or CTRL+Click for those of you without a mighty mouse, or even two finger click on a macbook) the unzipped !MyTime application that I emailed you and select Show Package Contents.
