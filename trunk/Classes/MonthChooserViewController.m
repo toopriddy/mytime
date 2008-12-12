@@ -10,6 +10,8 @@
 #import "PublicationViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "NotesViewController.h"
+#import "UITableViewMultilineTextCell.h"
 
 @interface MonthChooserViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
@@ -119,26 +121,55 @@
 }
 
 
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+{
+	[[[Settings sharedInstance] settings] setObject:notesViewController.textView.text forKey:SettingsSecretaryEmailNotes];
+	[[Settings sharedInstance] saveData];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
     int section = [indexPath section];
     DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row=%d", section, row);)
 	
-	if(section == 1)
+	switch(section)
 	{
-		BOOL value = [[_selected objectAtIndex:row] boolValue];
-		if(value)
-			_countSelected++;
-		else
-			_countSelected--;
-		
-		self.navigationItem.rightBarButtonItem.enabled = _countSelected && _emailAddress.textField.text.length;
+		case 0:
+		{
+			switch(row)
+			{
+				case 1:
+				{
+					[_emailAddress.textField resignFirstResponder];
+					// make the new call view 
+					NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes]] autorelease];
 
-		[_selected replaceObjectAtIndex:row withObject:[NSNumber numberWithBool:!value]];
+					p.delegate = self;
+
+					[[self navigationController] pushViewController:p animated:YES];		
+				}
+			}
+			break;
+		}
 		
-		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:[[_selected objectAtIndex:row] boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		case 1:
+		{
+			[_emailAddress.textField resignFirstResponder];
+			
+			BOOL value = [[_selected objectAtIndex:row] boolValue];
+			if(value)
+				_countSelected++;
+			else
+				_countSelected--;
+			
+			self.navigationItem.rightBarButtonItem.enabled = _countSelected && _emailAddress.textField.text.length;
+
+			[_selected replaceObjectAtIndex:row withObject:[NSNumber numberWithBool:!value]];
+			
+			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:[[_selected objectAtIndex:row] boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
+			[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		}
 	}
 }
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -171,12 +202,30 @@
 	switch(section)
 	{
 		case 0:
-			return 1;
+			return 2;
 		case 1:
 			return [_months count];
 		default:
 			return 0;
 	}
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int row = [indexPath row];
+	int section = [indexPath section];
+    VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d", row, section);)
+
+	if(section == 0 && row == 1)
+	{
+		float height;
+		height = [UITableViewMultilineTextCell heightForWidth:250 withText:[[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes]];
+		return(height);
+	}
+	if(row == -1)
+		return(theTableView.sectionHeaderHeight);
+	else
+		return theTableView.rowHeight;
 }
 
 
@@ -190,7 +239,27 @@
 	{
 		case 0:
 		{
-			return(self.emailAddress);
+			switch(row)
+			{
+				case 0:
+					return(self.emailAddress);
+				case 1:
+				{
+					UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+					if(cell == nil)
+					{
+						cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
+					}
+					NSMutableString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
+					cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+					if([notes length] == 0)
+						[cell setText:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")];
+					else
+						[cell setText:notes];
+					return cell;
+				}
+			}
 		}
 		
 		case 1:

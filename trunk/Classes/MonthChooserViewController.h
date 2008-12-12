@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UITableViewTextFieldCell.h"
+#import "NotesViewControllerDelegate.h"
 
 @class MonthChooserViewController;
 
@@ -18,7 +19,8 @@
 
 @interface MonthChooserViewController : UIViewController <UITableViewDelegate, 
 													      UITableViewDataSource,
-														  UITableViewTextFieldCellDelegate> 
+														  UITableViewTextFieldCellDelegate,
+														  NotesViewControllerDelegate> 
 {
 	id<MonthChooserViewControllerDelegate> delegate;
 @private
