@@ -26,7 +26,8 @@
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Settings", @"'Settings' ButtonBar View text and Statistics View Title");
-		self.tabBarItem.image = [UIImage imageNamed:@"settings.png"];
+		UIImage *image = [UIImage imageNamed:@"settings.png"];
+		self.tabBarItem.image = image;
 	}
 	return self;
 }

@@ -49,7 +49,7 @@
 
 - (BOOL) useNameAsMainLabel
 {
-	return NO;
+	return YES;
 }
 
 - (BOOL)respondsToSelector:(SEL)selector

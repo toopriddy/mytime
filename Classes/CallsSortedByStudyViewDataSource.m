@@ -37,7 +37,7 @@
 
 - (BOOL) useNameAsMainLabel
 {
-	return NO;
+	return YES;
 }
 
 - (UIImage *)tabBarImage 
