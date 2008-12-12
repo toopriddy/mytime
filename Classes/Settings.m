@@ -64,6 +64,7 @@ NSString const * const SettingsCurrentButtonBarIndex = @"currentButtonBarIndex";
 NSString const * const SettingsTimeAlertSheetShown = @"timeAlertShown";
 NSString const * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown2";
 NSString const * const SettingsSecretaryEmailAddress = @"secretaryEmail";
+NSString const * const SettingsSecretaryEmailNotes = @"secretaryNotes";
 NSString const * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
 NSString const * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
 

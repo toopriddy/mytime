@@ -88,6 +88,7 @@ extern NSString const * const SettingsMonthDisplayCount;
 extern NSString const * const SettingsTimeAlertSheetShown;
 extern NSString const * const SettingsStatisticsAlertSheetShown;
 extern NSString const * const SettingsSecretaryEmailAddress;
+extern NSString const * const SettingsSecretaryEmailNotes;
 
 extern NSString const * const SettingsMainAlertSheetShown;
 extern NSString const * const SettingsBulkLiteratureAlertSheetShown;

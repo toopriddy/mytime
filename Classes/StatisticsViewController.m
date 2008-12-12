@@ -37,7 +37,6 @@ static NSString *MONTHS[] = {
 	{
 		theTableView = nil;
 		
-		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Statistics", @"'Statistics' ButtonBar View text and Statistics View Title");
@@ -73,6 +72,15 @@ static NSString *MONTHS[] = {
 	NSArray *selectedMonths = monthChooserViewController.selected;
 	NSArray *monthNames = monthChooserViewController.months;
 	int index;
+	
+	// add notes if there are any
+	NSString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
+	if([notes length])
+	{
+		[string appendString:[notes stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[@"\n\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	}
+	
 	for(index = 0; index < [selectedMonths count]; ++index)
 	{
 		if([[selectedMonths objectAtIndex:index] boolValue])
@@ -123,7 +131,6 @@ static NSString *MONTHS[] = {
 	}
 	NSURL *url = [NSURL URLWithString:string];
 	[[UIApplication sharedApplication] openURL:url];
-	
 }
 
 - (void)navigationControlEmail:(id)sender
