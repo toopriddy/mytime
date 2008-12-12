@@ -41,6 +41,7 @@
 		}
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Email Report", @"Months to email Information title");
+		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
 }
