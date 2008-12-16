@@ -36,6 +36,7 @@
 	int _campaignTracts[kMonthsShown];
 	
 	int _selectedMonth;
+	BOOL _emailActionSheet;
 }
 @property (nonatomic,retain) UITableView *theTableView;
 
