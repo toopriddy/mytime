@@ -355,14 +355,14 @@
 					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
 																			 delegate:self
 																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
-															   destructiveButtonTitle:NSLocalizedString(@"I read the webpage", @"button that the user clicks when they have let their Yes mean Yes that they have read the website")
+															   destructiveButtonTitle:NSLocalizedString(@"I have read the webpage", @"button that the user clicks when they have let their Yes mean Yes that they have read the website")
 															        otherButtonTitles:NSLocalizedString(@"Show me the webpage", @"button that the user clicks when they have not read the FAQ or feature request list"), nil] autorelease];
 					// 0: grey with grey and black buttons
 					// 1: black background with grey and black buttons
 					// 2: transparent black background with grey and black buttons
 					// 3: grey transparent background
 					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-					[alertSheet showInView:self.view];
+					[alertSheet showInView:[[[UIApplication sharedApplication] windows] objectAtIndex:0]];
 					return;
 				}
 			}
