@@ -42,7 +42,7 @@
 
 - (UIImage *)tabBarImage 
 {
-	return [UIImage imageNamed:@"people.png"];
+	return [UIImage imageNamed:@"studies.png"];
 }
 
 - (void)dealloc
