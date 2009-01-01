@@ -289,15 +289,15 @@ static NSString *MONTHS[] = {
 					{
 						offset = _thisMonth - month;
 					}
-					else if(month != 12 && 
-							year == _thisYear - 1 &&
-							_thisMonth > month)
+					// if this call was made last year and in a month after this month
+					else if(year == _thisYear - 1 &&
+							_thisMonth < month)
 					{
-						offset = 12 - _thisMonth + month;
+						offset = 12 - month + _thisMonth;
 					}
 					
 					// this month's information should not be counted
-					if(offset < 0)
+					if(offset < 0 || offset > 11)
 						continue;
 						
 					NSString *type = [visit objectForKey:CallReturnVisitType];
@@ -441,21 +441,21 @@ static NSString *MONTHS[] = {
 			else if(year == _thisYear - 1 &&
 			        month > _thisMonth)
 			{
-				offset = 12 + _thisMonth - month;
+				offset = 12 - month + _thisMonth;
 			}
-			if(offset >= 0)
-			{
-				// we found a valid month
-				_minutes[offset] += [minutes intValue];
+			if(offset < 0 || offset > 11)
+				continue;
 
-				if(newServiceYear && offset <= (_thisMonth - 9))
-				{
-					_serviceYearMinutes += [minutes intValue];
-				}
-				else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
-				{
-					_serviceYearMinutes += [minutes intValue];
-				}
+			// we found a valid month
+			_minutes[offset] += [minutes intValue];
+
+			if(newServiceYear && offset <= (_thisMonth - 9))
+			{
+				_serviceYearMinutes += [minutes intValue];
+			}
+			else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
+			{
+				_serviceYearMinutes += [minutes intValue];
 			}
 		}
 	}
@@ -482,16 +482,16 @@ static NSString *MONTHS[] = {
 			{
 				offset = _thisMonth - month;
 			}
-			else if(month != 12 && 
-			        year == _thisYear - 1 &&
-			        _thisMonth > month)
+			// if this call was made last year and in a month after this month
+			else if(year == _thisYear - 1 &&
+					_thisMonth < month)
 			{
-				offset = 12 - _thisMonth + month;
+				offset = 12 - month + _thisMonth;
 			}
-			if(offset >= 0)
-			{
-				_quickBuildMinutes[offset] += [minutes intValue];
-			}
+			if(offset < 0 || offset > 11)
+				continue;
+
+			_quickBuildMinutes[offset] += [minutes intValue];
 
 			if(newServiceYear && offset <= (_thisMonth - 9))
 			{
@@ -535,13 +535,12 @@ static NSString *MONTHS[] = {
 			{
 				offset = _thisMonth - month;
 			}
-			else if(month != 12 && 
-			        year == _thisYear - 1 &&
-			        _thisMonth > month)
+			// if this call was made last year and in a month after this month
+			else if(year == _thisYear - 1 &&
+					_thisMonth < month)
 			{
-				offset = 12 - _thisMonth + month;
+				offset = 12 - month + _thisMonth;
 			}
-
 		}
 		
 		if(offset >= 0)
