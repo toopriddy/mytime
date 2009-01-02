@@ -738,15 +738,19 @@ static NSString *MONTHS[] = {
 			}
 
 			// use the current month unless it is over the 6th day of the month
-			NSString *monthGuess = [months objectAtIndex:0];
+			int monthGuess = 0;
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit) fromDate:[NSDate date]];
 
 			if([dateComponents day] <= 6)
 			{
-				monthGuess = [months objectAtIndex:1];
-			}	
-			
-			[self sendEmailUsingMonthNames:[NSArray arrayWithObject:monthGuess] selectedMonths:[NSArray arrayWithObject:[NSNumber numberWithBool:YES]]];
+				monthGuess = 1;
+			}
+			NSMutableArray *array = [NSMutableArray array];
+			for(int i = 0; i < 12; i++)
+			{
+				[array addObject:[NSNumber numberWithBool:(monthGuess == i)]];
+			}
+			[self sendEmailUsingMonthNames:months selectedMonths:array];
 		}
 	}
 	else
