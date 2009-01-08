@@ -19,6 +19,7 @@
 @synthesize streetOffsets;
 @synthesize cityOffsets;
 @synthesize sortedBy;
+@synthesize displayArray = _displayArray;
 
 int sortByName(id v1, id v2, void *context)
 {
@@ -108,7 +109,8 @@ int sortByDate(id v1, id v2, void *context)
 	self.streetRowCount = nil;
 	self.cityOffsets = nil;
 	self.streetOffsets = nil;
-
+	self.displayArray = nil;
+	
 	[super dealloc];
 }
 
@@ -145,23 +147,27 @@ int sortByDate(id v1, id v2, void *context)
 	{
 		case CALLS_SORTED_BY_STREET:
 			sortedArray = [calls sortedArrayUsingFunction:sortByStreet context:NULL];	
+			self.displayArray = nil;
 			break;
 		case CALLS_SORTED_BY_DATE:
 			sortedArray = [calls sortedArrayUsingFunction:sortByDate context:NULL];
+			self.displayArray = nil;
 			break;
 		case CALLS_SORTED_BY_CITY:
 			sortedArray = [calls sortedArrayUsingFunction:sortByCity context:NULL];
+			self.displayArray = nil;
 			break;
 		case CALLS_SORTED_BY_NAME:
 			sortedArray = [calls sortedArrayUsingFunction:sortByName context:NULL];
+			self.displayArray = nil;
 			break;
 		case CALLS_SORTED_BY_STUDY:
 		{
 			sortedArray = [calls sortedArrayUsingFunction:sortByName context:NULL];
 			NSEnumerator *enumerator = [sortedArray objectEnumerator];
-			NSMutableArray *newArray = [NSMutableArray array];
+			self.displayArray = [NSMutableArray array];
 			NSDictionary *call;
-			
+			int i = 0;
 			// go through all of the calls and their visits and see if they are a study
 			while( (call = [enumerator nextObject]) )
 			{
@@ -174,15 +180,12 @@ int sortByDate(id v1, id v2, void *context)
 					// by name list of all studies
 					if([[visit objectForKey:CallReturnVisitType] isEqualToString:(NSString *)CallReturnVisitTypeStudy])
 					{
-						[newArray addObject:call];
+						[_displayArray addObject:[NSNumber numberWithInt:i]];
 						break;
 					}
 				}
+				i++;
 			}
-			// assign the calls to something not the real array of calls
-			self.calls = [NSMutableArray array];
-			// and then finally assign the filtered and sorted array to sortedArray
-			sortedArray = newArray;
 			break;
 		}
 	}
@@ -191,8 +194,12 @@ int sortByDate(id v1, id v2, void *context)
 	[sortedArray release];
 
 	int i;
-	int count = [calls count];
-
+	int count;
+	if(_displayArray)
+		count = [_displayArray count];
+	else
+		count = [calls count];
+		
 	switch(sortedBy)
 	{
 		case CALLS_SORTED_BY_STREET:
@@ -217,7 +224,12 @@ int sortByDate(id v1, id v2, void *context)
 			}
 			else
 			{
-				NSString *street = [[calls objectAtIndex:0] objectForKey:key];
+				NSString *street;
+				if(_displayArray)
+					street = [[calls objectAtIndex:[[_displayArray objectAtIndex:0] intValue]] objectForKey:key];
+				else
+					street = [[calls objectAtIndex:0] objectForKey:key];
+					
 				if([street length] == 0)
 				{
 					[streetSections addObject:lastSectionTitle];
@@ -230,7 +242,10 @@ int sortByDate(id v1, id v2, void *context)
 				for(i = 0; i < count; ++i)
 				{
 					NSString *sectionTitle;
-					NSString *street = [[calls objectAtIndex:i] objectForKey:key];
+					if(_displayArray)
+						street = [[calls objectAtIndex:[[_displayArray objectAtIndex:i] intValue]] objectForKey:key];
+					else
+						street = [[calls objectAtIndex:i] objectForKey:key];
 					
 					rowCount++;
 					
@@ -433,7 +448,10 @@ int sortByDate(id v1, id v2, void *context)
 		case CALLS_SORTED_BY_STUDY:
 			if(section == ([streetOffsets count]-1))
 			{
-				ret = [calls count] - [[streetOffsets objectAtIndex:section] intValue];
+				if(_displayArray)
+					ret = [_displayArray count] - [[streetOffsets objectAtIndex:section] intValue];
+				else
+					ret = [calls count] - [[streetOffsets objectAtIndex:section] intValue];
 			}
 			else
 			{
@@ -497,26 +515,41 @@ int sortByDate(id v1, id v2, void *context)
 
 - (NSMutableDictionary *)callForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableDictionary *call = [calls objectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])];
+	int index;
+	if(_displayArray)
+		index = [[_displayArray objectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])] intValue];
+	else
+		index = [indexPath row] + [self callRowOffsetForSection:[indexPath section]];
+
+	NSMutableDictionary *call = [calls objectAtIndex:index];
 	VERBOSE(NSLog(@"sectionList: cellForRowAtIndexPath:%@ return = %@", indexPath, call);)
 	return(call);
 }
 
 - (void)setCall:(NSMutableDictionary *)call forIndexPath:(NSIndexPath *)indexPath
 {
-	[calls replaceObjectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]]) withObject:call];
-//	[[[Settings sharedInstance] settings] setObject:calls forKey:SettingsCalls];
+	int index;
+	if(_displayArray)
+		index = [[_displayArray objectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])] intValue];
+	else
+		index = [indexPath row] + [self callRowOffsetForSection:[indexPath section]];
+
+	[calls replaceObjectAtIndex:index withObject:call];
 }
 
 - (void)deleteCallAtIndexPath:(NSIndexPath *)indexPath
 {
-	[calls removeObjectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])];
+	int index;
+	if(_displayArray)
+		index = [[_displayArray objectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])] intValue];
+	else
+		index = [indexPath row] + [self callRowOffsetForSection:[indexPath section]];
+	[calls removeObjectAtIndex:index];
 }
 
 - (void)addCall:(NSMutableDictionary *)call
 {
 	[calls addObject:call];
-//	[[[Settings sharedInstance] settings] setObject:calls forKey:SettingsCalls];
 }
 
 
