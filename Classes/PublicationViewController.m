@@ -75,7 +75,7 @@
 		}
 		else
 		{
-			self.title = [NSString stringWithFormat:@"Select %@", [[NSBundle mainBundle] localizedStringForKey:(NSString *)filter value:(NSString *)filter table:@""]];
+			self.title = [NSString stringWithFormat:NSLocalizedString(@"Select %@", @"Title of the screen where you pick the publication type: Magazine, Book, tract..."), [[NSBundle mainBundle] localizedStringForKey:(NSString *)filter value:(NSString *)filter table:@""]];
 		}
 
 		self.publicationPicker = [[[PublicationPickerView alloc] initWithFrame:CGRectZero publication:publication year:year month:month day:day filter:filter] autorelease];

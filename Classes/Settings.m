@@ -18,6 +18,10 @@ NSString const * const CallStreet = @"street";
 NSString const * const CallCity = @"city";
 NSString const * const CallState = @"state";
 NSString const * const CallLattitudeLongitude = @"latLong";
+NSString const * const CallLocationType = @"locationType";
+NSString const * const CallLocationTypeManual = AlternateLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
+NSString const * const CallLocationTypeGoogleMaps = AlternateLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
+
 NSString const * const CallMetadata = @"metadata";
 NSString const * const CallMetadataName = @"name";
 NSString const * const CallMetadataType = @"type";

@@ -7,19 +7,32 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MapView.h"
+//#define USEMAPVIEW
 
-@interface MapViewController : UIViewController <MapWebViewDelegate>
+#import "RMMapView.h"
+#import "MapViewCallDetailController.h"
+#import "CallViewControllerDelegate.h"
+
+@interface MapViewController : UIViewController <RMMapViewDelegate,
+                                                 MapViewCallDetailControllerDelegate,
+												 CallViewControllerDelegate>
 {
-	MapView *webView;
+    RMMapView *mapView;
 	NSMutableDictionary *call;
 	UIActivityIndicatorView *progView;
+	MapViewCallDetailController *detailView;
+	
+	RMMarker *selectedMarker;
 }
 
-@property (nonatomic, retain) MapView *webView;
+@property (nonatomic, retain) MapViewCallDetailController *detailView;
+@property (nonatomic, retain) RMMapView *mapView;
 @property (nonatomic, retain) NSMutableDictionary *call;
 
 - (id)initWithTitle:(NSString *)theTitle call:(NSMutableDictionary *)call;
 - (id)initWithTitle:(NSString *)theTitle;
+
+- (NSString *)getAddressFromCall:(NSMutableDictionary *)theCall useHtml:(BOOL)useHtml;
+- (NSString *)getInfoFromCall:(NSMutableDictionary *)theCall;
 
 @end
