@@ -113,7 +113,6 @@
 		9003EE2C0EE3119E0065F24D /* UITableViewMultiTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultiTextFieldCell.h; sourceTree = "<group>"; };
 		9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultiTextFieldCell.m; sourceTree = "<group>"; };
 		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
-		900A216E0F1461F600BE1AF2 /* en_GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en_GB; path = en_GB.lproj/Localizable.strings; sourceTree = "<group>"; };
 		900A21750F1461FF00BE1AF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
@@ -163,6 +162,7 @@
 		907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataEditorViewController.m; sourceTree = "<group>"; };
 		907A63990EFD8EC6002E4144 /* en_US */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_US; path = en_US.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
+		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
@@ -654,8 +654,8 @@
 				9064D8B40ED11A4900A0FBBB /* Portuguese */,
 				907A63990EFD8EC6002E4144 /* en_US */,
 				90417EAB0F0EDE96007CBA7E /* Danish */,
-				900A216E0F1461F600BE1AF2 /* en_GB */,
 				900A21750F1461FF00BE1AF2 /* English */,
+				90ADA7640F18757800C65E40 /* en_UK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
