@@ -4616,16 +4616,16 @@
 	};
 	90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {832, 622}}";
-			sepNavSelRange = "{255, 7}";
+			sepNavIntBoundsRect = "{{0, 0}, {680, 888}}";
+			sepNavSelRange = "{0, 569}";
 			sepNavVisRange = "{0, 569}";
 		};
 	};
 	90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1008, 5082}}";
-			sepNavSelRange = "{3838, 0}";
-			sepNavVisRange = "{0, 622}";
+			sepNavIntBoundsRect = "{{0, 0}, {1008, 4732}}";
+			sepNavSelRange = "{0, 10042}";
+			sepNavVisRange = "{731, 2098}";
 		};
 	};
 	90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {
@@ -4805,9 +4805,9 @@
 	};
 	90FBEA500E3AA8A100FD8014 /* CallsSorter.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1284, 8204}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1176, 8442}}";
 			sepNavSelRange = "{14350, 5}";
-			sepNavVisRange = "{12786, 1476}";
+			sepNavVisRange = "{13087, 667}";
 		};
 	};
 	90FF15570EB029F6001CE434 /* PublicationTypeViewController.h */ = {
