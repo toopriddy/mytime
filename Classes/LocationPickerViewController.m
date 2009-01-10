@@ -145,12 +145,14 @@
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-	if(delegate)
-	{
-		[delegate locationPickerViewControllerDone:self];
-	}
+	[self retain];
+		[[self navigationController] popViewControllerAnimated:NO];
 
-	[[self navigationController] popViewControllerAnimated:YES];
+		if(delegate)
+		{
+			[delegate locationPickerViewControllerDone:self];
+		}
+	[self release];
 }
 
 // UITableViewDataSource methods
