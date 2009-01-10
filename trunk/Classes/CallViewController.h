@@ -20,6 +20,7 @@
 #import "MetadataViewController.h"
 #import "MetadataEditorViewController.h"
 #import "LocationPickerViewController.h"
+#import "SelectPositionMapViewController.h"
 
 @interface CallViewController : UIViewController <UITableViewDelegate, 
                                                   UITableViewDataSource, 
@@ -33,7 +34,8 @@
 												  MetadataViewControllerDelegate,
 												  MetadataEditorViewControllerDelegate,
 												  ReturnVisitTypeViewControllerDelegate,
-												  LocationPickerViewControllerDelegate> 
+												  LocationPickerViewControllerDelegate,
+												  SelectPositionMapViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	

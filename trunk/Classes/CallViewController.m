@@ -1644,10 +1644,26 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *   Location
  *
  ******************************************************************/
-#pragma mark Metadata Delegate
+#pragma mark Location Delegate
 - (void)locationPickerViewControllerDone:(LocationPickerViewController *)locationPickerViewController
 {
 	[_call setObject:locationPickerViewController.type forKey:CallLocationType];
+	if([locationPickerViewController.type isEqualToString:(NSString *)CallLocationTypeManual])
+	{
+		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:[_call objectForKey:CallLattitudeLongitude]] autorelease];
+		controller.delegate = self;
+		[[self navigationController] pushViewController:controller animated:YES];
+	}
+	else
+	{
+		// they are using google maps so kick off a lookup
+	}
+	[[Settings sharedInstance] saveData];
+}
+
+- (void)selectPositionMapViewControllerDone:(SelectPositionMapViewController *)selectPositionMapViewController
+{
+	[_call setObject:[NSString stringWithFormat:@"%f, %f", selectPositionMapViewController.point.latitude, selectPositionMapViewController.point.longitude] forKey:CallLattitudeLongitude];
 	[[Settings sharedInstance] saveData];
 }
 

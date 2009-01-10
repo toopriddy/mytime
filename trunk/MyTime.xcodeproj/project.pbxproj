@@ -61,6 +61,7 @@
 		90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */; };
 		90ADA8410F192B6900C65E40 /* MapViewCallDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA83F0F192B6900C65E40 /* MapViewCallDetailController.m */; };
 		90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */; };
+		90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */; };
 		90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */; };
 		90C148830E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */; };
 		90C148CE0E3B923C00C6EDAF /* statistics.png in Resources */ = {isa = PBXBuildFile; fileRef = 90C148C90E3B923C00C6EDAF /* statistics.png */; };
@@ -103,21 +104,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = B83E673E0E80F332001663B6 /* MapView.app */;
+			remoteGlobalIDString = B83E673E0E80F332001663B6;
 			remoteInfo = SimpleMap;
 		};
 		90ADA7C40F18773E00C65E40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = B8C974590E8A19B2007D16AD /* libMapView.a */;
+			remoteGlobalIDString = B8C974590E8A19B2007D16AD;
 			remoteInfo = MapView;
 		};
 		90ADA7C80F18779900C65E40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = B8C974130E8A19B2007D16AD /* MapView */;
+			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
 			remoteInfo = MapView;
 		};
 		90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */ = {
@@ -207,6 +208,8 @@
 		90ADA8400F192B6900C65E40 /* MapViewCallDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewCallDetailController.h; sourceTree = "<group>"; };
 		90ADA9860F194DBF00C65E40 /* LocationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationPickerViewController.h; sourceTree = "<group>"; };
 		90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationPickerViewController.m; sourceTree = "<group>"; };
+		90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPositionMapViewController.m; path = Classes/SelectPositionMapViewController.m; sourceTree = SOURCE_ROOT; };
+		90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPositionMapViewController.h; path = Classes/SelectPositionMapViewController.h; sourceTree = SOURCE_ROOT; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
@@ -331,6 +334,8 @@
 				90F079FE0E6A0D89004A3D3C /* MapViewController.m */,
 				90ADA8400F192B6900C65E40 /* MapViewCallDetailController.h */,
 				90ADA83F0F192B6900C65E40 /* MapViewCallDetailController.m */,
+				90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */,
+				90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */,
 				90ADA7A40F18760200C65E40 /* WebMapViewController.h */,
 				90ADA7A50F18760200C65E40 /* WebMapViewController.m */,
 				9013137E0EA0773A0055D890 /* NumberViewController.h */,
@@ -726,6 +731,7 @@
 				90ADA7A60F18760200C65E40 /* WebMapViewController.m in Sources */,
 				90ADA8410F192B6900C65E40 /* MapViewCallDetailController.m in Sources */,
 				90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */,
+				90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
