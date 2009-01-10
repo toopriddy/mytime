@@ -44,6 +44,27 @@
 	[super dealloc];
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if (!url) 
+	{  
+		return NO; 
+	}
+
+    NSString *URLString = [url absoluteString];
+	NSLog(@"%@", URLString);
+
+	UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+	[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+	alertSheet.title = [NSString stringWithFormat:@"WholeThing:\n%@\n\npath:%@\n\nquery:%@", URLString, [url path], [url query]];
+	[alertSheet show];
+
+    //[[NSUserDefaults standardUserDefaults] setObject:URLString forKey:@"url"];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+    return YES;
+}
+
+
 - (UIViewController *)removeControllerFromArray:(NSMutableArray *)array withName:(NSString *)name
 {
 	UIViewController *controller;

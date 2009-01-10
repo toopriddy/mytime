@@ -15,6 +15,10 @@ extern NSString const * const CallStreet;
 extern NSString const * const CallCity;
 extern NSString const * const CallState;
 extern NSString const * const CallLattitudeLongitude;
+extern NSString const * const CallLocationType;
+extern NSString const * const CallLocationTypeManual;
+extern NSString const * const CallLocationTypeGoogleMaps;
+
 
 extern NSString const * const CallMetadata;
 extern NSString const * const CallMetadataName;

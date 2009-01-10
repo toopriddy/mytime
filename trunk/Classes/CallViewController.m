@@ -33,21 +33,6 @@ const NSString *CallViewDeleteInvocations = @"delete";
 const NSString *CallViewInsertDelete = @"insertdelete";
 const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
-/* TODOS:
-. make the delete button at the end of the editing screen work
-. fix the "add new call" "done" display of cell entries
-. fix the notes section to be a multiline text view when displaying and when editing
-. get screen rotation working
-. make editing/done with editing transition
-. hot at home screen?
-. Time view
-    . return visits, publications, time? this month and last month
-
-
-*/
-
-
-
 @interface SelectAddressView : UIResponder <UITextFieldDelegate>
 {
 	UITableView *tableView;
@@ -459,7 +444,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 	NSEnumerator *oldDisplayInformation = [cachedItems objectEnumerator];
 	NSMutableDictionary *items;
-	[theTableView beginUpdates];
+
+[theTableView beginUpdates];
 	int section = 0;
 	int row = 0;
 	NSEnumerator *newDisplayInformation = [_displayInformation objectEnumerator];
@@ -527,7 +513,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	if(theTableView.editing != _editing)
 		theTableView.editing = _editing;		
 	[theTableView endUpdates];
-	[theTableView reloadData];
+	//[theTableView reloadData];
 #endif	
 }
 
@@ -847,6 +833,14 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 }
 
+- (void)locationTypeSelected
+{
+	LocationPickerViewController *p = [[[LocationPickerViewController alloc] initWithCall:_call] autorelease];
+	p.delegate = self;
+
+	[[self navigationController] pushViewController:p animated:YES];		
+}
+
 - (void)selectMetadataAtIndex:(int)metadataIndex
 {
 	NSMutableDictionary *metadata = [[_call objectForKey:CallMetadata] objectAtIndex:metadataIndex];
@@ -1142,6 +1136,25 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	return(cell);
 }
 
+- (UITableViewCell *)getLocationTypeCell
+{
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
+	}
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	NSString *locationType = [_call objectForKey:CallLocationType];
+	if(locationType == nil)
+	{
+		locationType = (NSString *)CallLocationTypeGoogleMaps;
+	}
+	[cell setValue:[[NSBundle mainBundle] localizedStringForKey:locationType value:locationType table:@""]];
+
+	return(cell);
+}
+
+
 - (UITableViewCell *)getAddMetadataCell
 {
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"addMetadataCell"];
@@ -1419,6 +1432,16 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			 indentWhenEditing:NO
 			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
 			  deleteInvocation:nil];
+
+			if(_editing)
+			{
+				[self  addRowInvocation:[self invocationForSelector:@selector(getLocationTypeCell)]
+						 rowHeight:-1
+					insertOrDelete:UITableViewCellEditingStyleNone
+				 indentWhenEditing:NO
+				  selectInvocation:[self invocationForSelector:@selector(locationTypeSelected)]
+				  deleteInvocation:nil];
+			}
 		}
 		
 		//  make it where they can hit hext and go into the address view to setup the address
@@ -1613,6 +1636,19 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	}
 
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)
+}
+
+
+/******************************************************************
+ *
+ *   Location
+ *
+ ******************************************************************/
+#pragma mark Metadata Delegate
+- (void)locationPickerViewControllerDone:(LocationPickerViewController *)locationPickerViewController
+{
+	[_call setObject:locationPickerViewController.type forKey:CallLocationType];
+	[[Settings sharedInstance] saveData];
 }
 
 /******************************************************************

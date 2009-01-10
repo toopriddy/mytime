@@ -6,16 +6,10 @@
 //  Copyright 2008 PG Software. All rights reserved.
 //
 
-#import "MapViewController.h"
+#import "WebMapViewController.h"
 #import "Settings.h"
-#import "RMMarker.h"
-#import "RMMarkerManager.h"
-#import "RMVirtualEarthSource.h"
-#import "RMCloudMadeMapSource.h"
-#import "CallViewController.h"
 
-@implementation MapViewController
-@synthesize detailView;
+@implementation WebMapViewController
 @synthesize mapView;
 @synthesize call;
 
@@ -58,98 +52,34 @@
 
 - (void)loadView
 {
-	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
-
-	self.mapView = [[[RMMapView alloc] initWithFrame:self.view.bounds] autorelease];
-	mapView.delegate = self;
+	self.mapView = [[MapView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     mapView.multipleTouchEnabled = YES;
-	[mapView setBackgroundColor:[UIColor blackColor]];
-	[mapView.contents setTileSource:[[RMVirtualEarthSource alloc] init]];
-	[self.view addSubview:mapView];
+	self.view = mapView;
 
-
-	self.detailView = [[[MapViewCallDetailController alloc] initWithNibName:@"MapViewCallDetail" bundle:[NSBundle mainBundle]] autorelease];
-	self.detailView.view.hidden = YES;
-	if(call == nil)
-	{
-		// only click on the disclosure if they are displaying all calls
-		self.detailView.delegate = self;
-	}
-	[self.view addSubview:self.detailView.view];
-
-
+	mapView.backgroundColor = [UIColor whiteColor];
+	mapView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+	mapView.map.mDelegate = self;
 	
-	[RMMapContents setPerformExpensiveOperations:YES];
+	//[self.view addSubview: mapView];
 	
-	RMMarkerManager *markerManager = mapView.markerManager;
-	CLLocationCoordinate2D ne;
-	CLLocationCoordinate2D sw;
-	BOOL init = false;
+	// create our progress indicator for busy feedback while loading web pages,
+	// make it our custom right view in the navigation bar
+	//
+	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+	progView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+	progView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+	progView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+									UIViewAutoresizingFlexibleRightMargin |
+									UIViewAutoresizingFlexibleTopMargin |
+									UIViewAutoresizingFlexibleBottomMargin);
 	
-	if(call)
-	{
-		NSString *str = [self getAddressFromCall:call useHtml:NO];
-		NSString *info = [self getInfoFromCall:call];
-		if(str)
-		{
-			NSString *latLong = [call objectForKey:CallLattitudeLongitude];
-			if(latLong)
-			{
-				RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
-				[marker setTextLabel:info];
-				[marker hideLabel];
-				CLLocationCoordinate2D point;
-				NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-				point.latitude = [[stringArray objectAtIndex:0] doubleValue];
-				point.longitude = [[stringArray objectAtIndex:1] doubleValue];
-				[markerManager addMarker:marker AtLatLong:point];
-			}
-		}
-	}
-	else
-	{
-		NSEnumerator *e = [[[[Settings sharedInstance] settings] objectForKey:SettingsCalls] objectEnumerator];
-		NSMutableDictionary *theCall;
-		
-		while ( (theCall = [e nextObject]) ) 
-		{
-			NSString *str = [self getAddressFromCall:theCall useHtml:NO];
-			if(str)
-			{
-				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-				if(latLong)
-				{
-					RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
-					[marker setData:theCall];
-					CLLocationCoordinate2D point;
-					NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-					point.latitude = [[stringArray objectAtIndex:0] doubleValue];
-					point.longitude = [[stringArray objectAtIndex:1] doubleValue];
-					[markerManager addMarker:marker AtLatLong:point];
-					[mapView moveToLatLong:point];
-					if(init)
-					{
-						if(point.latitude > ne.latitude)
-							ne.latitude = point.latitude;
-						if(point.latitude < sw.latitude)
-							sw.latitude = point.latitude;
-						if(point.longitude > ne.longitude)
-							ne.longitude = point.longitude;
-						if(point.longitude < sw.longitude)
-							sw.longitude = point.longitude;
-					}
-					else
-					{
-						init = true;
-						ne = point;
-						sw = point;
-					}
-				}
-			}
-		}
-	}
-
-	[mapView zoomWithLatLngBoundsNorthEast:ne SouthWest:sw];
+	UINavigationItem *navItem = self.navigationItem;
+	UIBarButtonItem *buttonItem = [[[UIBarButtonItem alloc] initWithCustomView:progView] autorelease];
+	navItem.rightBarButtonItem = buttonItem;
+	// we are done with these since the nav bar retains them:
+	
+	// start fetching the default web page
+	[progView startAnimating];							
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -157,34 +87,6 @@
 	// we support rotation in this view controller
 	return YES;
 }
-
-- (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map;
-{
-	if(marker == selectedMarker)
-	{
-		self.detailView.view.hidden = YES;
-		selectedMarker = nil;
-	}
-	else
-	{
-		NSMutableDictionary *selectedCall = (NSMutableDictionary *)[marker data];
-		self.detailView.call = selectedCall;
-		self.detailView.view.hidden = NO;
-		selectedMarker = marker;
-		if(marker.position.y < 150)
-		{
-			CGSize move;
-			move.width = 0;
-			move.height = 100 - marker.position.y + 50;
-			[UIView beginAnimations:nil context:nil];
-				[UIView setAnimationDuration:1.0];
-				[UIView setAnimationsEnabled:YES];
-				[mapView moveBy:move];
-			[UIView commitAnimations];
-		}
-	}
-}
-
 
 #define EMPTY_NSSTRING_IF_NULL(str) ((str) ? (str) : @"")
 - (NSString *)getAddressFromCall:(NSMutableDictionary *)theCall useHtml:(BOOL)useHtml
@@ -227,8 +129,26 @@
 
 
 
-#ifdef USEMAPVIEW
 #pragma mark UIWebView delegate methods
+
+- (void)stopProgressIndicator
+{
+	[progView stopAnimating];
+
+	// add Start Time button
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reload", @"'Reload' navigation bar action button for the Mapped Calls view")
+																style:UIBarButtonItemStylePlain
+															   target:mapView.mMapWebView
+															   action:@selector(reload)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:YES];
+}
+
+- (void)mapViewDidStartLoad:(MapWebView *)mapView
+{	
+	UIBarButtonItem *buttonItem = [[[UIBarButtonItem alloc] initWithCustomView:progView] autorelease];
+	[self.navigationItem setRightBarButtonItem:buttonItem animated:YES];
+	[progView startAnimating];
+}
 
 - (void)timer
 {
@@ -369,7 +289,6 @@
 {
 }
 
-#endif
 - (BOOL)respondsToSelector:(SEL)selector
 {
 	BOOL ret = [super respondsToSelector:selector];
@@ -389,53 +308,6 @@
     [super forwardInvocation:invocation];
 }
 
-- (void) mapViewCallDetailControllerSelected:(MapViewCallDetailController *)mapViewCallDetailController
-{
-	CallViewController *controller = [[[CallViewController alloc] initWithCall:mapViewCallDetailController.call] autorelease];
-	controller.delegate = self;
-	
-	// push the element view controller onto the navigation stack to display it
-	[[self navigationController] pushViewController:controller animated:YES];
-}
-
-- (void) mapViewCallDetailControllerCanceled:(MapViewCallDetailController *)mapViewCallDetailController
-{
-}
-
-
-//
-//
-// CallViewControllerDelegate methods
-// 
-//
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)thisCall keepInformation:(BOOL)keepInformation
-{
-	if(keepInformation)
-	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-		NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsDeletedCalls]];
-		[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
-		[deletedCalls addObject:thisCall];
-	}
-
-	NSMutableArray *array = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
-	[array removeObject:detailView.call];
-	[[Settings sharedInstance] saveData];
-
-	[mapView.markerManager removeMarker:selectedMarker];
-	selectedMarker = nil;
-	detailView.view.hidden = YES;
-}
-
-- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)newCall
-{
-	NSMutableArray *array = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
-	int index = [array indexOfObject:detailView.call];
-	[array replaceObjectAtIndex:index withObject:newCall];
-	
-	[selectedMarker setData:newCall];
-	detailView.call = newCall;
-}
 
 
 @end
