@@ -29,6 +29,7 @@
 
 	BOOL markerMoved;
 	BOOL pointInitalized;
+	BOOL defaultPointInitalized;
 	CLLocationCoordinate2D point;
 
 	NSObject<SelectPositionMapViewControllerDelegate> *delegate;

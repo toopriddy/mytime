@@ -234,8 +234,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -295,13 +293,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>110</integer>
+									<integer>60</integer>
+									<integer>36</integer>
 									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1252}, {295, 936}}</string>
+							<string>{{0, 789}, {295, 936}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -331,12 +330,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SelectPositionMapViewController.m</string>
+								<string>LocationPickerViewController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,11 +345,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SelectPositionMapViewController.m</string>
+										<string>LocationPickerViewController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90ADAA850F196D2400C65E40</string>
+										<string>90ADAAF60F19C24F00C65E40</string>
 										<key>history</key>
 										<array>
 											<string>90C4D4CF0E855AFF00E202E2</string>
@@ -491,8 +492,6 @@
 											<string>90ADA94C0F19420E00C65E40</string>
 											<string>90ADA96A0F194B8800C65E40</string>
 											<string>90ADA9980F195A5F00C65E40</string>
-											<string>90ADA9990F195A5F00C65E40</string>
-											<string>90ADA99A0F195A5F00C65E40</string>
 											<string>90ADA9AF0F195C7300C65E40</string>
 											<string>90ADA9D80F195EBB00C65E40</string>
 											<string>90ADA9DA0F195EBB00C65E40</string>
@@ -507,14 +506,20 @@
 											<string>90ADAA2F0F19681100C65E40</string>
 											<string>90ADAA300F19681100C65E40</string>
 											<string>90ADAA310F19681100C65E40</string>
-											<string>90ADAA320F19681100C65E40</string>
 											<string>90ADAA330F19681100C65E40</string>
-											<string>90ADAA530F19692100C65E40</string>
 											<string>90ADAA620F196AD400C65E40</string>
 											<string>90ADAA640F196AD400C65E40</string>
 											<string>90ADAA650F196AD400C65E40</string>
-											<string>90ADAA840F196D2400C65E40</string>
-											<string>90ADAA810F196D2000C65E40</string>
+											<string>90ADAABB0F19BCC100C65E40</string>
+											<string>90ADAABC0F19BCC100C65E40</string>
+											<string>90ADAACE0F19BF2E00C65E40</string>
+											<string>90ADAAF10F19C24F00C65E40</string>
+											<string>90ADAAF20F19C24F00C65E40</string>
+											<string>90ADAAF30F19C24F00C65E40</string>
+										</array>
+										<key>nextStack</key>
+										<array>
+											<string>90ADAAF50F19C24F00C65E40</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -659,14 +664,12 @@
 											<string>90ADA99F0F195A5F00C65E40</string>
 											<string>90ADA9DF0F195EBB00C65E40</string>
 											<string>90ADA9E00F195EBB00C65E40</string>
-											<string>90ADA9E10F195EBB00C65E40</string>
 											<string>90ADA9F90F19608E00C65E40</string>
 											<string>90ADAA360F19681100C65E40</string>
 											<string>90ADAA370F19681100C65E40</string>
 											<string>90ADAA380F19681100C65E40</string>
 											<string>90ADAA390F19681100C65E40</string>
 											<string>90ADAA3A0F19681100C65E40</string>
-											<string>90ADAA3B0F19681100C65E40</string>
 											<string>90ADAA3C0F19681100C65E40</string>
 											<string>90ADAA3D0F19681100C65E40</string>
 											<string>90ADAA3E0F19681100C65E40</string>
@@ -678,10 +681,17 @@
 											<string>90ADAA440F19681100C65E40</string>
 											<string>90ADAA450F19681100C65E40</string>
 											<string>90ADAA560F19692100C65E40</string>
-											<string>90ADAA5C0F1969F900C65E40</string>
 											<string>90ADAA740F196C6600C65E40</string>
-											<string>90ADAA7B0F196CB600C65E40</string>
 											<string>90ADAA7C0F196CB600C65E40</string>
+											<string>90ADAA8A0F19BA3600C65E40</string>
+											<string>90ADAAA90F19BBD300C65E40</string>
+											<string>90ADAABF0F19BCC100C65E40</string>
+											<string>90ADAAC00F19BCC100C65E40</string>
+											<string>90ADAAC10F19BCC100C65E40</string>
+											<string>90ADAAD10F19BF2E00C65E40</string>
+											<string>90ADAAD20F19BF2E00C65E40</string>
+											<string>90ADAAD30F19BF2E00C65E40</string>
+											<string>90ADAAF40F19C24F00C65E40</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -1016,6 +1026,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>90ADAAF70F19C24F00C65E40</string>
 		<string>90ADAA590F19692100C65E40</string>
 		<string>90ADAA4E0F19681100C65E40</string>
 		<string>/Users/bpriddy/Projects/Pending/MyTime/MyTime.xcodeproj</string>

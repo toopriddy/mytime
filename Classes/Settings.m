@@ -54,6 +54,9 @@ NSString const * const BulkLiteratureArrayYear = @"year";
 NSString const * const BulkLiteratureArrayMonth = @"month";
 NSString const * const BulkLiteratureArrayDay = @"day";
 
+NSString const * const SettingsLastLattitude = @"lastLattitude";
+NSString const * const SettingsLastLongitude = @"lastLongitude";
+
 NSString const * const SettingsCalls = @"calls";
 NSString const * const SettingsDeletedCalls = @"deletedCalls";
 NSString const * const SettingsMagazinePlacements = @"magazinePlacements";

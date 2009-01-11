@@ -71,6 +71,8 @@ extern NSString const * const MagazinePlacementDate;
 extern NSString const * const MagazinePlacementCount;
 
 
+extern NSString const * const SettingsLastLattitude;
+extern NSString const * const SettingsLastLongitude;
 extern NSString const * const SettingsCalls;
 extern NSString const * const SettingsDeletedCalls;
 extern NSString const * const SettingsMagazinePlacements;

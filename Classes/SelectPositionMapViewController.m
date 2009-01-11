@@ -28,12 +28,30 @@
 		// this title will appear in the navigation bar
 		self.title = NSLocalizedString(@"Select Location", @"Title for the view where you manually select the location for the call");
 		markerMoved = NO;
+
 		pointInitalized = latLong != nil;
 		if(latLong)
 		{
 			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 			point.latitude = [[stringArray objectAtIndex:0] doubleValue];
 			point.longitude = [[stringArray objectAtIndex:1] doubleValue];
+
+			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+			[settings setObject:[NSNumber numberWithFloat:point.latitude] forKey:SettingsLastLattitude];
+			[settings setObject:[NSNumber numberWithFloat:point.longitude] forKey:SettingsLastLongitude];
+			[[Settings sharedInstance] saveData];
+		}
+		else
+		{
+			NSDictionary *settings = [[Settings sharedInstance] settings];
+			NSNumber *lat = [settings objectForKey:SettingsLastLattitude];
+			NSNumber *lng = [settings objectForKey:SettingsLastLongitude];
+			defaultPointInitalized = (lat && lng);
+			if(defaultPointInitalized)
+			{
+				point.latitude = [lat floatValue];
+				point.longitude = [lng floatValue];
+			}
 		}
 	}
 	return self;
@@ -87,6 +105,16 @@
 	{
 		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
 		self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+		[self.locationManager startUpdatingLocation];
+		if(defaultPointInitalized)
+		{
+			marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
+			[marker setTextLabel:NSLocalizedString(@"Acquiring Location...", @"title for the marker when you have to manually set the location for a call")];
+			[marker showLabel];
+			[markerManager addMarker:marker AtLatLong:point];
+
+			[mapView moveToLatLong:point];
+		}
 	}
 
 	// add DONE button
@@ -109,25 +137,27 @@
 		if(marker == nil)
 		{
 			marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
-			[marker setTextLabel:NSLocalizedString(@"Location Unavaliable, please move me", @"title for the marker when you have to manually set the location for a call")];
 			[marker showLabel];
 			[mapView.markerManager addMarker:marker];
 		}
+		[marker setTextLabel:NSLocalizedString(@"Location Unavaliable, please move me", @"title for the marker when you have to manually set the location for a call")];
 	} 
 	else 
 	{
 		if(marker == nil)
 		{
 			marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
-			[marker setTextLabel:NSLocalizedString(@"Move me", @"title for the marker when you have to manually set the location for a call")];
 			[marker showLabel];
+			[mapView.markerManager addMarker:marker];
 			markerMoved = NO; // just in case
 		}
+		[marker setTextLabel:NSLocalizedString(@"Move me", @"title for the marker when you have to manually set the location for a call")];
 		if(!markerMoved)
 		{
 			point.latitude = newLocation.coordinate.latitude;
 			point.latitude = newLocation.coordinate.latitude;
 			[mapView.markerManager moveMarker:marker AtLatLon:point];
+			[mapView moveToLatLong:point];
 		}
 	}
 }
@@ -154,6 +184,12 @@
 	[markerManager moveMarker:theMarker AtXY:CGPointMake(position.x,position.y +rect.size.height/3)];
 	markerMoved = YES;
 	point = [map pixelToLatLong:position];
+	if(self.locationManager)
+	{
+		[self.locationManager stopUpdatingLocation];
+		self.locationManager = nil;
+	}
+
 }
 
 - (BOOL)respondsToSelector:(SEL)selector
