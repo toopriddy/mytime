@@ -21,7 +21,7 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos2.2;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
@@ -33,11 +33,6 @@
 			90C4D8230E85C78E00E202E2 /* BulkLiteraturePlacementViewContoller.m:107 */,
 			9022EC990E8AF207007DCD2D /* malloc_error_break */,
 			9022ECC40E8AF501007DCD2D /* malloc_error_break */,
-			90ADAA140F19658400C65E40 /* SelectPositionMapViewController.m:140 */,
-			90ADAA160F19658700C65E40 /* SelectPositionMapViewController.m:106 */,
-			90ADAA500F1968AA00C65E40 /* SelectPositionMapViewController.m:88 */,
-			90ADAA710F196C5000C65E40 /* LocationPickerViewController.m:136 */,
-			90ADAA780F196CA900C65E40 /* SelectPositionMapViewController.m:77 */,
 		);
 		codeSenseManager = 90FBE8380E36D02300FD8014 /* Code sense */;
 		executables = (
@@ -577,6 +572,78 @@
 			90ADAA810F196D2000C65E40 /* PBXTextBookmark */ = 90ADAA810F196D2000C65E40 /* PBXTextBookmark */;
 			90ADAA840F196D2400C65E40 /* PBXTextBookmark */ = 90ADAA840F196D2400C65E40 /* PBXTextBookmark */;
 			90ADAA850F196D2400C65E40 /* PBXTextBookmark */ = 90ADAA850F196D2400C65E40 /* PBXTextBookmark */;
+			90ADAA880F19BA3600C65E40 /* PBXTextBookmark */ = 90ADAA880F19BA3600C65E40 /* PBXTextBookmark */;
+			90ADAA890F19BA3600C65E40 /* PBXTextBookmark */ = 90ADAA890F19BA3600C65E40 /* PBXTextBookmark */;
+			90ADAA8A0F19BA3600C65E40 /* PBXTextBookmark */ = 90ADAA8A0F19BA3600C65E40 /* PBXTextBookmark */;
+			90ADAA8B0F19BA3600C65E40 /* PBXTextBookmark */ = 90ADAA8B0F19BA3600C65E40 /* PBXTextBookmark */;
+			90ADAA9C0F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAA9C0F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAA9D0F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAA9D0F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAA9E0F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAA9E0F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAA9F0F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAA9F0F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAAA00F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAAA00F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAAA10F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAAA10F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAAA20F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAAA20F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAAA30F19BB5C00C65E40 /* PBXTextBookmark */ = 90ADAAA30F19BB5C00C65E40 /* PBXTextBookmark */;
+			90ADAAA70F19BBD300C65E40 /* PBXTextBookmark */ = 90ADAAA70F19BBD300C65E40 /* PBXTextBookmark */;
+			90ADAAA80F19BBD300C65E40 /* PBXTextBookmark */ = 90ADAAA80F19BBD300C65E40 /* PBXTextBookmark */;
+			90ADAAA90F19BBD300C65E40 /* PBXTextBookmark */ = 90ADAAA90F19BBD300C65E40 /* PBXTextBookmark */;
+			90ADAAAA0F19BBD300C65E40 /* PBXTextBookmark */ = 90ADAAAA0F19BBD300C65E40 /* PBXTextBookmark */;
+			90ADAAAC0F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAAC0F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAAE0F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAAE0F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAAF0F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAAF0F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAB00F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAB00F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAB20F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAB20F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAB30F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAB30F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAB40F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAB40F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAAB50F19BC2400C65E40 /* PBXTextBookmark */ = 90ADAAB50F19BC2400C65E40 /* PBXTextBookmark */;
+			90ADAABA0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABA0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAABB0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABB0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAABC0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABC0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAABD0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABD0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAABE0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABE0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAABF0F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAABF0F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAAC00F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAAC00F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAAC10F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAAC10F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAAC20F19BCC100C65E40 /* PBXTextBookmark */ = 90ADAAC20F19BCC100C65E40 /* PBXTextBookmark */;
+			90ADAAC40F19BEC400C65E40 /* PBXTextBookmark */ = 90ADAAC40F19BEC400C65E40 /* PBXTextBookmark */;
+			90ADAAC50F19BEC400C65E40 /* PBXTextBookmark */ = 90ADAAC50F19BEC400C65E40 /* PBXTextBookmark */;
+			90ADAAC60F19BEC400C65E40 /* PBXTextBookmark */ = 90ADAAC60F19BEC400C65E40 /* PBXTextBookmark */;
+			90ADAAC70F19BEC400C65E40 /* PBXTextBookmark */ = 90ADAAC70F19BEC400C65E40 /* PBXTextBookmark */;
+			90ADAACE0F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAACE0F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAACF0F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAACF0F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAAD00F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAAD00F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAAD10F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAAD10F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAAD20F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAAD20F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAAD30F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAAD30F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAAD40F19BF2E00C65E40 /* PBXTextBookmark */ = 90ADAAD40F19BF2E00C65E40 /* PBXTextBookmark */;
+			90ADAADF0F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAADF0F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE00F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE00F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE10F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE10F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE20F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE20F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE30F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE30F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE40F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE40F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE50F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE50F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE60F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE60F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE70F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE70F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAE80F19C0F400C65E40 /* PBXTextBookmark */ = 90ADAAE80F19C0F400C65E40 /* PBXTextBookmark */;
+			90ADAAF10F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF10F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAAF20F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF20F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAAF30F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF30F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAAF40F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF40F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAAF50F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF50F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAAF60F19C24F00C65E40 /* PBXTextBookmark */ = 90ADAAF60F19C24F00C65E40 /* PBXTextBookmark */;
+			90ADAB070F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB070F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB080F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB080F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB090F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB090F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB0A0F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB0A0F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB0B0F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB0B0F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB0C0F19C54000C65E40 /* PBXTextBookmark */ = 90ADAB0C0F19C54000C65E40 /* PBXTextBookmark */;
+			90ADAB0D0F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB0D0F19C56000C65E40 /* PBXTextBookmark */;
+			90ADAB0F0F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB0F0F19C56000C65E40 /* PBXTextBookmark */;
+			90ADAB100F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB100F19C56000C65E40 /* PBXTextBookmark */;
+			90ADAB110F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB110F19C56000C65E40 /* PBXTextBookmark */;
+			90ADAB120F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB120F19C56000C65E40 /* PBXTextBookmark */;
+			90ADAB130F19C56000C65E40 /* PBXTextBookmark */ = 90ADAB130F19C56000C65E40 /* PBXTextBookmark */;
 			90AEB4250E9C372500943E6A = 90AEB4250E9C372500943E6A /* PBXTextBookmark */;
 			90B8F4240E7ECD5D0022A01F = 90B8F4240E7ECD5D0022A01F /* PlistBookmark */;
 			90C0DB210EA45F8400C47183 = 90C0DB210EA45F8400C47183 /* PBXTextBookmark */;
@@ -1415,7 +1482,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 253324156.083063;
+		modificationTime = 253347019.567898;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -1430,7 +1497,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 253324156.083888;
+		modificationTime = 253347019.568711;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -1787,9 +1854,9 @@
 	};
 	905C36DA0E3BBD4600C8DB27 /* CallViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1140, 29232}}";
-			sepNavSelRange = "{59999, 0}";
-			sepNavVisRange = "{59269, 1647}";
+			sepNavIntBoundsRect = "{{0, 0}, {1140, 29372}}";
+			sepNavSelRange = "{60298, 0}";
+			sepNavVisRange = "{59426, 1952}";
 			sepNavWindowFrame = "{{58, -2}, {1185, 775}}";
 		};
 	};
@@ -3997,9 +4064,9 @@
 	};
 	90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 2982}}";
-			sepNavSelRange = "{4169, 0}";
-			sepNavVisRange = "{3702, 885}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 3024}}";
+			sepNavSelRange = "{4412, 0}";
+			sepNavVisRange = "{3736, 896}";
 		};
 	};
 	90ADA9960F195A5F00C65E40 /* PBXTextBookmark */ = {
@@ -4057,7 +4124,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 107";
 		rLen = 140;
-		rLoc = 3000;
+		rLoc = 3032;
 		rType = 0;
 		vrLen = 2300;
 		vrLoc = 2130;
@@ -4224,16 +4291,16 @@
 	};
 	90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1044, 2548}}";
-			sepNavSelRange = "{2003, 0}";
-			sepNavVisRange = "{2309, 1520}";
+			sepNavIntBoundsRect = "{{0, 0}, {1339, 3038}}";
+			sepNavSelRange = "{1926, 0}";
+			sepNavVisRange = "{1727, 741}";
 		};
 	};
 	90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 630}}";
-			sepNavSelRange = "{1096, 0}";
-			sepNavVisRange = "{0, 1176}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 644}}";
+			sepNavSelRange = "{789, 0}";
+			sepNavVisRange = "{0, 1205}";
 		};
 	};
 	90ADA9D80F195EBB00C65E40 /* PBXTextBookmark */ = {
@@ -4271,7 +4338,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 147";
 		rLen = 0;
-		rLoc = 4292;
+		rLoc = 4324;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3603;
@@ -4325,7 +4392,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 147";
 		rLen = 0;
-		rLoc = 4292;
+		rLoc = 4324;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3603;
@@ -4385,7 +4452,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 78";
 		rLen = 0;
-		rLoc = 2832;
+		rLoc = 3934;
 		rType = 0;
 		vrLen = 1426;
 		vrLoc = 1117;
@@ -4425,7 +4492,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 34";
 		rLen = 0;
-		rLoc = 838;
+		rLoc = 839;
 		rType = 0;
 		vrLen = 1031;
 		vrLoc = 0;
@@ -4435,7 +4502,7 @@
 		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
 		name = "SelectPositionMapViewController.h: 27";
 		rLen = 0;
-		rLoc = 1127;
+		rLoc = 1157;
 		rType = 0;
 		vrLen = 819;
 		vrLoc = 0;
@@ -4455,7 +4522,7 @@
 		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
 		name = "SelectPositionMapViewController.h: 29";
 		rLen = 0;
-		rLoc = 1176;
+		rLoc = 1206;
 		rType = 0;
 		vrLen = 675;
 		vrLoc = 0;
@@ -4485,7 +4552,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 37";
 		rLen = 0;
-		rLoc = 1043;
+		rLoc = 1726;
 		rType = 0;
 		vrLen = 1256;
 		vrLoc = 523;
@@ -4505,7 +4572,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 37";
 		rLen = 0;
-		rLoc = 1043;
+		rLoc = 1726;
 		rType = 0;
 		vrLen = 1256;
 		vrLoc = 523;
@@ -4525,7 +4592,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 78";
 		rLen = 0;
-		rLoc = 2832;
+		rLoc = 3934;
 		rType = 0;
 		vrLen = 1426;
 		vrLoc = 1117;
@@ -4555,44 +4622,10 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 78";
 		rLen = 0;
-		rLoc = 2833;
+		rLoc = 3935;
 		rType = 0;
 		vrLen = 1360;
 		vrLoc = 1116;
-	};
-	90ADAA140F19658400C65E40 /* SelectPositionMapViewController.m:140 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
-		functionName = "-locationManager:didFailWithError:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 140;
-		location = MyTime;
-		modificationTime = 253324156.074538;
-		state = 1;
-	};
-	90ADAA160F19658700C65E40 /* SelectPositionMapViewController.m:106 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
-		functionName = "-locationManager:didUpdateToLocation:fromLocation:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 106;
-		location = MyTime;
-		modificationTime = 253324156.075604;
-		state = 1;
 	};
 	90ADAA230F19681100C65E40 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -4677,7 +4710,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 147";
 		rLen = 0;
-		rLoc = 4292;
+		rLoc = 4324;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 529;
@@ -4747,7 +4780,7 @@
 		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
 		name = "SelectPositionMapViewController.h: 40";
 		rLen = 0;
-		rLoc = 1096;
+		rLoc = 1126;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 0;
@@ -4777,7 +4810,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 173";
 		rLen = 5;
-		rLoc = 5449;
+		rLoc = 6738;
 		rType = 0;
 		vrLen = 1348;
 		vrLoc = 3488;
@@ -4837,7 +4870,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 147";
 		rLen = 0;
-		rLoc = 4292;
+		rLoc = 4324;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 529;
@@ -4897,7 +4930,7 @@
 		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
 		name = "SelectPositionMapViewController.h: 39";
 		rLen = 0;
-		rLoc = 1062;
+		rLoc = 1092;
 		rType = 0;
 		vrLen = 1113;
 		vrLoc = 0;
@@ -4917,7 +4950,7 @@
 		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
 		name = "SelectPositionMapViewController.h: 39";
 		rLen = 0;
-		rLoc = 1054;
+		rLoc = 1084;
 		rType = 0;
 		vrLen = 1119;
 		vrLoc = 0;
@@ -4952,29 +4985,12 @@
 		vrLen = 1064;
 		vrLoc = 0;
 	};
-	90ADAA500F1968AA00C65E40 /* SelectPositionMapViewController.m:88 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
-		functionName = "-loadView";
-		hitCount = 1;
-		ignoreCount = 0;
-		lineNumber = 88;
-		location = MyTime;
-		modificationTime = 253324491.817857;
-		state = 1;
-	};
 	90ADAA520F19692100C65E40 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 74";
 		rLen = 0;
-		rLoc = 1944;
+		rLoc = 2627;
 		rType = 0;
 		vrLen = 1407;
 		vrLoc = 1856;
@@ -4994,7 +5010,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 147";
 		rLen = 0;
-		rLoc = 4292;
+		rLoc = 4324;
 		rType = 0;
 		vrLen = 865;
 		vrLoc = 1118;
@@ -5004,7 +5020,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 74";
 		rLen = 0;
-		rLoc = 1944;
+		rLoc = 2627;
 		rType = 0;
 		vrLen = 1407;
 		vrLoc = 1856;
@@ -5024,7 +5040,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 3742;
@@ -5034,7 +5050,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 3742;
@@ -5043,7 +5059,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		rLen = 0;
-		rLoc = 155;
+		rLoc = 185;
 		rType = 1;
 	};
 	90ADAA5C0F1969F900C65E40 /* PBXTextBookmark */ = {
@@ -5051,7 +5067,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 3742;
@@ -5061,7 +5077,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 152";
 		rLen = 0;
-		rLoc = 4802;
+		rLoc = 5981;
 		rType = 0;
 		vrLen = 1246;
 		vrLoc = 4011;
@@ -5107,7 +5123,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 75";
 		rLen = 15;
-		rLoc = 1946;
+		rLoc = 2629;
 		rType = 0;
 		vrLen = 1400;
 		vrLoc = 1785;
@@ -5153,34 +5169,17 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 154";
 		rLen = 0;
-		rLoc = 4719;
+		rLoc = 5898;
 		rType = 0;
 		vrLen = 1263;
 		vrLoc = 4000;
-	};
-	90ADAA710F196C5000C65E40 /* LocationPickerViewController.m:136 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
-		functionName = "-tableView:didSelectRowAtIndexPath:";
-		hitCount = 3;
-		ignoreCount = 0;
-		lineNumber = 136;
-		location = MyTime;
-		modificationTime = 253324464.74069;
-		state = 1;
 	};
 	90ADAA720F196C6600C65E40 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 86";
 		rLen = 0;
-		rLoc = 2350;
+		rLoc = 3033;
 		rType = 0;
 		vrLen = 1437;
 		vrLoc = 1584;
@@ -5190,7 +5189,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 3742;
@@ -5200,7 +5199,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 86";
 		rLen = 0;
-		rLoc = 2350;
+		rLoc = 3033;
 		rType = 0;
 		vrLen = 1437;
 		vrLoc = 1584;
@@ -5210,7 +5209,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 3704;
@@ -5220,34 +5219,17 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 649;
 		vrLoc = 3937;
-	};
-	90ADAA780F196CA900C65E40 /* SelectPositionMapViewController.m:77 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
-		functionName = "-loadView";
-		hitCount = 1;
-		ignoreCount = 0;
-		lineNumber = 77;
-		location = MyTime;
-		modificationTime = 253324475.145244;
-		state = 1;
 	};
 	90ADAA790F196CB600C65E40 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 86";
 		rLen = 0;
-		rLoc = 2350;
+		rLoc = 3033;
 		rType = 0;
 		vrLen = 1374;
 		vrLoc = 1461;
@@ -5256,7 +5238,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		rLen = 0;
-		rLoc = 142;
+		rLoc = 143;
 		rType = 1;
 	};
 	90ADAA7B0F196CB600C65E40 /* PBXTextBookmark */ = {
@@ -5264,7 +5246,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 149";
 		rLen = 0;
-		rLoc = 4368;
+		rLoc = 4412;
 		rType = 0;
 		vrLen = 916;
 		vrLoc = 3776;
@@ -5274,7 +5256,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 86";
 		rLen = 0;
-		rLoc = 2350;
+		rLoc = 3033;
 		rType = 0;
 		vrLen = 1374;
 		vrLoc = 1461;
@@ -5284,7 +5266,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 143";
 		rLen = 0;
-		rLoc = 4169;
+		rLoc = 4201;
 		rType = 0;
 		vrLen = 916;
 		vrLoc = 3776;
@@ -5294,7 +5276,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 143";
 		rLen = 0;
-		rLoc = 4169;
+		rLoc = 4201;
 		rType = 0;
 		vrLen = 680;
 		vrLoc = 3906;
@@ -5303,7 +5285,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		rLen = 0;
-		rLoc = 76;
+		rLoc = 94;
 		rType = 1;
 	};
 	90ADAA800F196D2000C65E40 /* PBXTextBookmark */ = {
@@ -5311,7 +5293,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 143";
 		rLen = 0;
-		rLoc = 4169;
+		rLoc = 4201;
 		rType = 0;
 		vrLen = 680;
 		vrLoc = 3906;
@@ -5321,7 +5303,7 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 77";
 		rLen = 0;
-		rLoc = 2003;
+		rLoc = 2686;
 		rType = 0;
 		vrLen = 1009;
 		vrLoc = 2528;
@@ -5331,7 +5313,7 @@
 		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
 		name = "LocationPickerViewController.m: 143";
 		rLen = 0;
-		rLoc = 4169;
+		rLoc = 4201;
 		rType = 0;
 		vrLen = 885;
 		vrLoc = 3702;
@@ -5341,10 +5323,724 @@
 		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
 		name = "SelectPositionMapViewController.m: 77";
 		rLen = 0;
-		rLoc = 2003;
+		rLoc = 2686;
 		rType = 0;
 		vrLen = 1520;
 		vrLoc = 2309;
+	};
+	90ADAA880F19BA3600C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 94";
+		rLen = 0;
+		rLoc = 3769;
+		rType = 0;
+		vrLen = 1428;
+		vrLoc = 1667;
+	};
+	90ADAA890F19BA3600C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		rLen = 0;
+		rLoc = 136;
+		rType = 1;
+	};
+	90ADAA8A0F19BA3600C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 94";
+		rLen = 0;
+		rLoc = 3769;
+		rType = 0;
+		vrLen = 1428;
+		vrLoc = 1667;
+	};
+	90ADAA8B0F19BA3600C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 882;
+		vrLoc = 3702;
+	};
+	90ADAA9C0F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 689;
+		vrLoc = 3702;
+	};
+	90ADAA9D0F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
+		name = "SelectPositionMapViewController.h: 40";
+		rLen = 0;
+		rLoc = 1126;
+		rType = 0;
+		vrLen = 936;
+		vrLoc = 239;
+	};
+	90ADAA9E0F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 83";
+		rLen = 0;
+		rLoc = 2991;
+		rType = 0;
+		vrLen = 1039;
+		vrLoc = 1889;
+	};
+	90ADAA9F0F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 77";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 1005;
+		vrLoc = 2528;
+	};
+	90ADAAA00F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 689;
+		vrLoc = 3702;
+	};
+	90ADAAA10F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 83";
+		rLen = 0;
+		rLoc = 2991;
+		rType = 0;
+		vrLen = 1039;
+		vrLoc = 1889;
+	};
+	90ADAAA20F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
+		name = "SelectPositionMapViewController.h: 40";
+		rLen = 0;
+		rLoc = 1126;
+		rType = 0;
+		vrLen = 936;
+		vrLoc = 239;
+	};
+	90ADAAA30F19BB5C00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 83";
+		rLen = 0;
+		rLoc = 2991;
+		rType = 0;
+		vrLen = 1128;
+		vrLoc = 1891;
+	};
+	90ADAAA70F19BBD300C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 162";
+		rLen = 0;
+		rLoc = 6129;
+		rType = 0;
+		vrLen = 1309;
+		vrLoc = 4166;
+	};
+	90ADAAA80F19BBD300C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		rLen = 0;
+		rLoc = 136;
+		rType = 1;
+	};
+	90ADAAA90F19BBD300C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 162";
+		rLen = 0;
+		rLoc = 6129;
+		rType = 0;
+		vrLen = 1309;
+		vrLoc = 4166;
+	};
+	90ADAAAA0F19BBD300C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 862;
+		vrLoc = 3603;
+	};
+	90ADAAAC0F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADAAAD0F19BC2400C65E40 /* asm __dyld__dyld_start  0x2fe01028 */;
+		name = "asm __dyld__dyld_start  0x2fe01028: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 581;
+		vrLoc = 0;
+	};
+	90ADAAAD0F19BC2400C65E40 /* asm __dyld__dyld_start  0x2fe01028 */ = {
+		isa = PBXFileReference;
+		path = "asm __dyld__dyld_start  0x2fe01028";
+		sourceTree = "<group>";
+	};
+	90ADAAAE0F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 626;
+		vrLoc = 3603;
+	};
+	90ADAAAF0F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 77";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 991;
+		vrLoc = 3237;
+	};
+	90ADAAB00F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADAAB10F19BC2400C65E40 /* asm __kill  0x31459c50 */;
+		rLen = 0;
+		rLoc = 2147483647;
+		rType = 0;
+	};
+	90ADAAB10F19BC2400C65E40 /* asm __kill  0x31459c50 */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text;
+		path = "asm __kill  0x31459c50";
+		sourceTree = "<group>";
+	};
+	90ADAAB20F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 83";
+		rLen = 0;
+		rLoc = 2991;
+		rType = 0;
+		vrLen = 1149;
+		vrLoc = 1733;
+	};
+	90ADAAB30F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 626;
+		vrLoc = 3603;
+	};
+	90ADAAB40F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 77";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 991;
+		vrLoc = 3237;
+	};
+	90ADAAB50F19BC2400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADAAB60F19BC2400C65E40 /* asm __kill  0x31459c50 */;
+		name = "asm __kill  0x31459c50: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 375;
+		vrLoc = 0;
+	};
+	90ADAAB60F19BC2400C65E40 /* asm __kill  0x31459c50 */ = {
+		isa = PBXFileReference;
+		path = "asm __kill  0x31459c50";
+		sourceTree = "<group>";
+	};
+	90ADAABA0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 31";
+		rLen = 0;
+		rLoc = 821;
+		rType = 0;
+		vrLen = 1003;
+		vrLoc = 152;
+	};
+	90ADAABB0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE88E0E39938F00FD8014 /* Settings.h */;
+		name = "Settings.h: 74";
+		rLen = 106;
+		rLoc = 3207;
+		rType = 0;
+		vrLen = 1960;
+		vrLoc = 2609;
+	};
+	90ADAABC0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE88F0E39938F00FD8014 /* Settings.m */;
+		name = "Settings.m: 58";
+		rLen = 0;
+		rLoc = 2935;
+		rType = 0;
+		vrLen = 2372;
+		vrLoc = 910;
+	};
+	90ADAABD0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		rLen = 0;
+		rLoc = 136;
+		rType = 1;
+	};
+	90ADAABE0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 115";
+		rLen = 0;
+		rLoc = 3636;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 699;
+	};
+	90ADAABF0F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 31";
+		rLen = 0;
+		rLoc = 821;
+		rType = 0;
+		vrLen = 1003;
+		vrLoc = 152;
+	};
+	90ADAAC00F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE88E0E39938F00FD8014 /* Settings.h */;
+		name = "Settings.h: 74";
+		rLen = 106;
+		rLoc = 3207;
+		rType = 0;
+		vrLen = 1960;
+		vrLoc = 2609;
+	};
+	90ADAAC10F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE88F0E39938F00FD8014 /* Settings.m */;
+		name = "Settings.m: 58";
+		rLen = 0;
+		rLoc = 2935;
+		rType = 0;
+		vrLen = 2372;
+		vrLoc = 910;
+	};
+	90ADAAC20F19BCC100C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 862;
+		vrLoc = 3605;
+	};
+	90ADAAC40F19BEC400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 3605;
+	};
+	90ADAAC50F19BEC400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		rLen = 0;
+		rLoc = 94;
+		rType = 1;
+	};
+	90ADAAC60F19BEC400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 3605;
+	};
+	90ADAAC70F19BEC400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 143";
+		rLen = 0;
+		rLoc = 4439;
+		rType = 0;
+		vrLen = 1125;
+		vrLoc = 2159;
+	};
+	90ADAACE0F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
+		name = "SelectPositionMapViewController.h: 32";
+		rLen = 0;
+		rLoc = 789;
+		rType = 0;
+		vrLen = 1205;
+		vrLoc = 0;
+	};
+	90ADAACF0F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 49";
+		rLen = 0;
+		rLoc = 1587;
+		rType = 0;
+		vrLen = 1314;
+		vrLoc = 433;
+	};
+	90ADAAD00F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		rLen = 0;
+		rLoc = 136;
+		rType = 1;
+	};
+	90ADAAD10F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 109";
+		rLen = 22;
+		rLoc = 3264;
+		rType = 0;
+		vrLen = 1544;
+		vrLoc = 2074;
+	};
+	90ADAAD20F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */;
+		name = "SelectPositionMapViewController.h: 32";
+		rLen = 0;
+		rLoc = 789;
+		rType = 0;
+		vrLen = 1205;
+		vrLoc = 0;
+	};
+	90ADAAD30F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 49";
+		rLen = 0;
+		rLoc = 1587;
+		rType = 0;
+		vrLen = 1314;
+		vrLoc = 433;
+	};
+	90ADAAD40F19BF2E00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 862;
+		vrLoc = 3603;
+	};
+	90ADAADF0F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 3605;
+	};
+	90ADAAE00F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		rLen = 0;
+		rLoc = 94;
+		rType = 1;
+	};
+	90ADAAE10F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 143";
+		rLen = 0;
+		rLoc = 4439;
+		rType = 0;
+		vrLen = 1091;
+		vrLoc = 2539;
+	};
+	90ADAAE20F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 626;
+		vrLoc = 3603;
+	};
+	90ADAAE30F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 1041;
+		vrLoc = 3937;
+	};
+	90ADAAE40F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 3605;
+	};
+	90ADAAE50F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 1158;
+		vrLoc = 2468;
+	};
+	90ADAAE60F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 170";
+		rLen = 0;
+		rLoc = 5337;
+		rType = 0;
+		vrLen = 1026;
+		vrLoc = 4955;
+	};
+	90ADAAE70F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 136";
+		rLen = 0;
+		rLoc = 4008;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 3605;
+	};
+	90ADAAE80F19C0F400C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 1017;
+		vrLoc = 4600;
+	};
+	90ADAAF10F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 150";
+		rLen = 0;
+		rLoc = 4715;
+		rType = 0;
+		vrLen = 1534;
+		vrLoc = 4291;
+	};
+	90ADAAF20F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1951";
+		rLen = 22;
+		rLoc = 70974;
+		rType = 0;
+		vrLen = 1479;
+		vrLoc = 69614;
+	};
+	90ADAAF30F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 139";
+		rLen = 0;
+		rLoc = 3844;
+		rType = 0;
+		vrLen = 1043;
+		vrLoc = 3361;
+	};
+	90ADAAF40F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 150";
+		rLen = 0;
+		rLoc = 4715;
+		rType = 0;
+		vrLen = 1534;
+		vrLoc = 4291;
+	};
+	90ADAAF50F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1951";
+		rLen = 22;
+		rLoc = 70974;
+		rType = 0;
+		vrLen = 1479;
+		vrLoc = 69614;
+	};
+	90ADAAF60F19C24F00C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 132";
+		rLen = 0;
+		rLoc = 3844;
+		rType = 0;
+		vrLen = 1003;
+		vrLoc = 3361;
+	};
+	90ADAB070F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 102";
+		rLen = 0;
+		rLoc = 2802;
+		rType = 0;
+		vrLen = 872;
+		vrLoc = 3608;
+	};
+	90ADAB080F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 992;
+		vrLoc = 1634;
+	};
+	90ADAB090F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		rLen = 0;
+		rLoc = 1665;
+		rType = 1;
+	};
+	90ADAB0A0F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */;
+		name = "LocationPickerViewController.m: 102";
+		rLen = 0;
+		rLoc = 2802;
+		rType = 0;
+		vrLen = 872;
+		vrLoc = 3608;
+	};
+	90ADAB0B0F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 992;
+		vrLoc = 1634;
+	};
+	90ADAB0C0F19C54000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1666";
+		rLen = 0;
+		rLoc = 60298;
+		rType = 0;
+		vrLen = 1869;
+		vrLoc = 59526;
+	};
+	90ADAB0D0F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADAB0E0F19C56000C65E40 /* asm __dyld__dyld_start  0x2fe01028 */;
+		name = "asm __dyld__dyld_start  0x2fe01028: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 581;
+		vrLoc = 0;
+	};
+	90ADAB0E0F19C56000C65E40 /* asm __dyld__dyld_start  0x2fe01028 */ = {
+		isa = PBXFileReference;
+		path = "asm __dyld__dyld_start  0x2fe01028";
+		sourceTree = "<group>";
+	};
+	90ADAB0F0F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1666";
+		rLen = 0;
+		rLoc = 60298;
+		rType = 0;
+		vrLen = 1287;
+		vrLoc = 59426;
+	};
+	90ADAB100F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		rLen = 0;
+		rLoc = 70;
+		rType = 1;
+	};
+	90ADAB110F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 95";
+		rLen = 0;
+		rLoc = 2686;
+		rType = 0;
+		vrLen = 995;
+		vrLoc = 4600;
+	};
+	90ADAB120F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
+		name = "CallViewController.m: 1666";
+		rLen = 0;
+		rLoc = 60298;
+		rType = 0;
+		vrLen = 1287;
+		vrLoc = 59426;
+	};
+	90ADAB130F19C56000C65E40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
+		name = "SelectPositionMapViewController.m: 71";
+		rLen = 0;
+		rLoc = 1926;
+		rType = 0;
+		vrLen = 861;
+		vrLoc = 1765;
 	};
 	90AEB40D0E9C218A00943E6A /* Japanese */ = {
 		uiCtxt = {
@@ -5872,7 +6568,7 @@
 		ignoreCount = 0;
 		lineNumber = 97;
 		location = MyTime;
-		modificationTime = 253324156.07299;
+		modificationTime = 253347019.558438;
 		state = 1;
 	};
 	90C4D8230E85C78E00E202E2 /* BulkLiteraturePlacementViewContoller.m:107 */ = {
@@ -5889,7 +6585,7 @@
 		ignoreCount = 0;
 		lineNumber = 107;
 		location = MyTime;
-		modificationTime = 253324156.073812;
+		modificationTime = 253347019.559089;
 		state = 1;
 	};
 	90C4D8300E85C86F00E202E2 /* PBXTextBookmark */ = {
@@ -6634,16 +7330,16 @@
 	};
 	90FBE88E0E39938F00FD8014 /* Settings.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 1806}}";
-			sepNavSelRange = "{628, 0}";
-			sepNavVisRange = "{1255, 2230}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 1792}}";
+			sepNavSelRange = "{3207, 106}";
+			sepNavVisRange = "{2609, 1960}";
 		};
 	};
 	90FBE88F0E39938F00FD8014 /* Settings.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 2646}}";
-			sepNavSelRange = "{909, 0}";
-			sepNavVisRange = "{32, 2364}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 2562}}";
+			sepNavSelRange = "{2935, 0}";
+			sepNavVisRange = "{910, 2372}";
 		};
 	};
 	90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */ = {

@@ -99,6 +99,7 @@
 	// set the tableview delegate to this object and the datasource to the datasource which has already been set
 	theTableView.delegate = self;
 	theTableView.dataSource = self;
+	theTableView.rowHeight = 70.0;
 	
 	// set the tableview as the controller view
 	self.view = self.theTableView;
@@ -146,7 +147,7 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	[self retain];
-		[[self navigationController] popViewControllerAnimated:NO];
+		[[self navigationController] popViewControllerAnimated:(section == 0)];
 
 		if(delegate)
 		{
