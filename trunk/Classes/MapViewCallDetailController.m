@@ -44,20 +44,7 @@
 	NSString *apartmentNumber = [call objectForKey:CallApartmentNumber ];
 	NSString *street = [call objectForKey:CallStreet];
 
-	if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length] && street && [street length])
-		[top appendFormat:NSLocalizedString(@"%@ #%@ %@ ", @"House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name"), houseNumber, apartmentNumber, street];
-	else if(houseNumber && [houseNumber length] && street && [street length])
-		[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
-	else if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length])
-		[top appendFormat:NSLocalizedString(@"%@ #%@", @"House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number"), houseNumber, apartmentNumber];
-	else if(houseNumber && [houseNumber length])
-		[top appendFormat:houseNumber];
-	else if(street && [street length] && apartmentNumber && [apartmentNumber length])
-		[top appendFormat:NSLocalizedString(@"#%@ %@", @"Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name"), apartmentNumber, street];
-	else if(street && [street length])
-		[top appendFormat:street];
-	else if(apartmentNumber && [apartmentNumber length])
-		[top appendFormat:street];
+	[Settings formatStreetNumber:houseNumber apartment:apartmentNumber street:street city:nil state:nil topLine:top bottomLine:nil];
 
 	if([top length] == 0)
 		[top setString:NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view")];

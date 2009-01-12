@@ -60,6 +60,8 @@
 	BOOL _editing;
 	BOOL _shouldReloadAll;
 	
+	BOOL _actionSheetSource;
+	
 	int _selectedRow;
 	int _setFirstResponderGroup;
 

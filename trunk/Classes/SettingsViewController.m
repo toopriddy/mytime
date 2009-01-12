@@ -352,7 +352,7 @@
 				// email me
 				case 1:
 				{
-					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Because I might have received > 200 emails about a question, please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
 																			 delegate:self
 																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 															   destructiveButtonTitle:NSLocalizedString(@"I have read the webpage", @"button that the user clicks when they have let their Yes mean Yes that they have read the website")
@@ -377,15 +377,28 @@
 					                                                                  @"mailto:?subject=", 
 																					  [NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 																					  @"&body="];
-					NSMutableString *filedata = [[NSMutableString alloc] initWithContentsOfFile:[[Settings sharedInstance] filename]];
-					// fix any []'s first
-					[filedata replaceOccurrencesOfString:@"[" withString:[@"[" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
-					[filedata replaceOccurrencesOfString:@"]" withString:[@"]" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
-					// now convert standard tags in XML from <>'s to []'s to force mail to allow us to send xml encoded data
-					[filedata replaceOccurrencesOfString:@"<" withString:@"[" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
-					[filedata replaceOccurrencesOfString:@">" withString:@"]" options:NSLiteralSearch range:NSMakeRange(0, filedata.length)];
-					[string appendString:[filedata stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-					[filedata release]; // get rid of that huge buffer
+					[string appendString:[NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n\nWARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP\n\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+					// now add the url that will allow importing
+					NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
+					NSMutableString *theurl = [NSMutableString string];
+					NSMutableString *link = [NSMutableString string];
+					[link appendString:@"<a href=\""];
+					[theurl appendString:@"mytime://mytime/restoreBackup?"];
+					int length = data.length;
+					unsigned char *bytes = (unsigned char *)data.bytes;
+					for(int i = 0; i < length; ++i)
+					{
+						[theurl appendFormat:@"%02X", *bytes++];
+					}
+					[link appendString:theurl];
+					[link appendString:@"\">"];
+					[link appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
+					[link appendString:@"</a>"];
+					[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"")];
+
+					[string appendString:[link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
 					NSURL *url = [NSURL URLWithString:string];
 					[[UIApplication sharedApplication] openURL:url];
 					return;

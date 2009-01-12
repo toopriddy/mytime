@@ -25,7 +25,8 @@
 
 @synthesize window;
 @synthesize tabBarController;
-
+@synthesize callToImport;
+@synthesize settingsToRestore;
 
 - init 
 {
@@ -44,26 +45,196 @@
 	[super dealloc];
 }
 
+NSData *allocNSDataFromNSStringByteString(NSString *data)
+{
+	int length = data.length;
+	if(length & 1 != 0)
+	{
+		// odd number of bytes
+		return nil;
+	}
+	char hi;
+	char lo;
+	BOOL failed = NO;
+	char *buffer = malloc(length/2);
+	char *ptr = buffer;
+	for (int i = 0; i < length;)
+	{
+		hi = [data characterAtIndex:i++];
+		lo = [data characterAtIndex:i++];
+		if(!isnumber(hi))
+		{
+			if(!ishexnumber(hi))
+			{
+				failed = YES;
+				break;
+			}
+			else
+			{
+				hi = hi - 'A' + 10;
+			}
+		}
+		else
+		{
+			hi = hi - '0';
+		}
+		if(!isnumber(lo))
+		{
+			if(!ishexnumber(lo))
+			{
+				failed = YES;
+				break;
+			}
+			else
+			{
+				lo = lo - 'A' + 10;
+			}
+		}
+		else
+		{
+			lo = lo - '0';
+		}
+		*ptr++ = (hi << 4) | lo;
+	}
+	
+	if(failed)
+	{
+		free(buffer);
+		return nil;
+	}
+	return [[NSData alloc] initWithBytesNoCopy:buffer length:length/2 freeWhenDone:YES];
+}
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     if (!url) 
 	{  
 		return NO; 
 	}
+//	sleep(20);
 
     NSString *URLString = [url absoluteString];
 	NSLog(@"%@", URLString);
 
-	UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-	[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-	alertSheet.title = [NSString stringWithFormat:@"WholeThing:\n%@\n\npath:%@\n\nquery:%@", URLString, [url path], [url query]];
-	[alertSheet show];
+	NSString *path = [url path];
+	NSString *data = [url query];
+	BOOL handled = NO;
+	if(path && data)
+	{
+		if([@"/addCall" isEqualToString:[url path]])
+		{
+			do 
+			{
+				NSData *dataStore = allocNSDataFromNSStringByteString(data);
+				if(dataStore == nil)
+					break;
 
-    //[[NSUserDefaults standardUserDefaults] setObject:URLString forKey:@"url"];
-    //[[NSUserDefaults standardUserDefaults] synchronize];
+				self.callToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				[dataStore release];
+				DEBUG(NSLog(@"%@", callToImport);)
+
+				if(self.callToImport == nil)
+					break;
+
+				handled = YES;
+				_actionSheetType = ADD_CALL;
+				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"")
+																		 delegate:self
+																cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+														   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
+																otherButtonTitles:nil] autorelease];
+
+				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+				[alertSheet showInView:window];
+			} while (false);
+		}
+		if([@"/restoreBackup" isEqualToString:[url path]])
+		{
+			do 
+			{
+				NSData *dataStore = allocNSDataFromNSStringByteString(data);
+				if(dataStore == nil)
+					break;
+
+				self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				[dataStore release];
+				DEBUG(NSLog(@"%@", self.settingsToRestore);)
+
+				if(self.settingsToRestore == nil)
+					break;
+
+				handled = YES;
+				_actionSheetType = RESTORE_BACKUP;
+				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"")
+																		 delegate:self
+																cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+														   destructiveButtonTitle:NSLocalizedString(@"Restore from Backup", @"Yes restore from the backup please")
+																otherButtonTitles:nil] autorelease];
+
+				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+				[alertSheet showInView:window];
+			} while (false);
+		}
+	}
+
+	if(!handled)
+	{
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"MyTime opened with invalid URL", @"")];
+		[alertSheet show];
+	}
     return YES;
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+
+	switch(_actionSheetType)
+	{
+		case ADD_CALL:
+			switch(button)
+			{
+				//import
+				case 0:
+				{
+					NSMutableArray *calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+					[calls addObject:[NSMutableDictionary dictionaryWithDictionary:callToImport]];
+					[[Settings sharedInstance] saveData];
+					self.callToImport = nil;
+					break;
+				}
+				// cancel
+				case 1:
+				{
+					self.callToImport = nil;
+					break;
+				}
+			}
+			break;
+		case RESTORE_BACKUP:
+			switch(button)
+			{
+				//import
+				case 0:
+				{
+					NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+					[settings removeAllObjects];
+					[settings addEntriesFromDictionary:self.settingsToRestore];
+					[[Settings sharedInstance] saveData];
+					self.settingsToRestore = nil;
+					break;
+				}
+				// cancel
+				case 1:
+				{
+					self.callToImport = nil;
+					break;
+				}
+			}
+			break;
+	}
+}
 
 - (UIViewController *)removeControllerFromArray:(NSMutableArray *)array withName:(NSString *)name
 {
