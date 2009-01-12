@@ -192,6 +192,44 @@ NSString const * const SettingsFourthView = @"fourthView";
     return self;
 }
 
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom
+{
+	if(top)
+		[top setString:@""];
+	if(bottom)
+		[bottom setString:@""];
+
+	if(top)
+	{
+		if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length] && street && [street length])
+			[top appendFormat:NSLocalizedString(@"%@ #%@ %@ ", @"House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name"), houseNumber, apartmentNumber, street];
+		else if(houseNumber && [houseNumber length] && street && [street length])
+			[top appendFormat:NSLocalizedString(@"%@ %@", @"House number and Street represented by %1$@ as the house number and %2$@ as the street name"), houseNumber, street];
+		else if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length])
+			[top appendFormat:NSLocalizedString(@"%@ #%@", @"House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number"), houseNumber, apartmentNumber];
+		else if(houseNumber && [houseNumber length])
+			[top appendFormat:houseNumber];
+		else if(street && [street length] && apartmentNumber && [apartmentNumber length])
+			[top appendFormat:NSLocalizedString(@"#%@ %@", @"Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name"), apartmentNumber, street];
+		else if(street && [street length])
+			[top appendFormat:street];
+		else if(apartmentNumber && [apartmentNumber length])
+			[top appendFormat:street];
+	}
+	if(bottom)
+	{
+		if(city != nil && [city length])
+		{
+			[bottom appendFormat:@"%@", city];
+		}
+		if(state != nil && [state length])
+		{
+			[bottom appendFormat:@", %@", state];
+		}
+	}
+}
+
+
 
 - (BOOL)respondsToSelector:(SEL)selector
 {

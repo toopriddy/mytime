@@ -125,6 +125,8 @@ extern int debugging;
 + (Settings *)sharedInstance;
 + (id)initWithZone:(NSZone *)zone;
 
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
+
 - (NSString *)filename;
 - (void)readData;
 - (void)saveData;

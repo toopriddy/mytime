@@ -306,6 +306,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 																			 target:self
 																			 action:@selector(navigationControlEdit:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:YES];
+	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	// show the back button when they are done editing
 	self.navigationItem.hidesBackButton = NO;
 	
@@ -409,6 +410,21 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 }
 
+
+- (void)navigationControlActionSheet:(id)sender 
+{
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You can transfer this call to someone else. Transferring will delete this call from your data, but your statistics from this call will stay. The witness who gets this email will be able to click on a link in the email and add the call to MyTime.", @"")
+															 delegate:self
+												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+											   destructiveButtonTitle:NSLocalizedString(@"Transfer, and Delete", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
+												    otherButtonTitles:NSLocalizedString(@"Email Details", @"Email the call details to another MyTime user"), nil] autorelease];
+
+	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+	[alertSheet showInView:self.view];
+	_actionSheetSource = YES;
+}
+
 - (void)navigationControlCancel:(id)sender 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -431,6 +447,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:YES];
+
+	// update the button in the nav bar
+	button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+															 target:self
+															 action:@selector(navigationControlActionSheet:)] autorelease];
+	[self.navigationItem setLeftBarButtonItem:button animated:YES];
+
 	// hide the back button so that they cant cancel the edit without hitting done
 	self.navigationItem.hidesBackButton = YES;
 
@@ -955,6 +978,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// 3: grey transparent background
 	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 	[alertSheet showInView:self.view];
+	_actionSheetSource = NO;
 }
 
 
@@ -1899,33 +1923,168 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 /******************************************************************
  *
- *   DELETE ACTION SHEET DELEGATE FUNCTIONS
+ *   ACTION SHEET DELEGATE FUNCTIONS
  *
  ******************************************************************/
-#pragma mark Delete ActionSheet Delegate
+#pragma mark ActionSheet Delegate
+
+- (void)emailCallToUser
+{
+	// add notes if there are any
+	NSString *value;
+		
+	NSMutableString *string = [[[NSMutableString alloc] initWithString:@"mailto:?"] autorelease];
+	[string appendString:@"subject="];
+	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:@"&body="];
+
+	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"a person's name"), [_call objectForKey:CallName]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	
+	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
+	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
+	[Settings formatStreetNumber:[_call objectForKey:CallStreetNumber]
+	                   apartment:[_call objectForKey:CallApartmentNumber]
+					      street:[_call objectForKey:CallStreet]
+							city:[_call objectForKey:CallCity]
+						   state:[_call objectForKey:CallState]
+						 topLine:top 
+				      bottomLine:bottom];
+	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+	// Add Metadata
+	// they had an array of publications, lets check them too
+	NSMutableArray *metadata = [_call objectForKey:CallMetadata];
+	if(metadata != nil)
+	{
+		int j;
+		int endMetadata = [metadata count];
+		for(j = 0; j < endMetadata; ++j)
+		{
+			// METADATA
+			NSMutableDictionary *entry = [metadata objectAtIndex:j];
+			NSString *name = [entry objectForKey:SettingsMetadataName];
+			value = [entry objectForKey:SettingsMetadataValue];
+			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[NSBundle mainBundle] localizedStringForKey:name value:name table:@""], value] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		}
+	}
+
+	[string appendString:[@"\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+
+	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
+	NSMutableDictionary *visit;
+
+	int i;
+	int end = [returnVisits count];
+	for(i = 0; i < end; ++i)
+	{
+		visit = [returnVisits objectAtIndex:i];
+
+		// GROUP TITLE
+		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
+		// create dictionary entry for This Return Visit
+		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
+
+		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		value = [visit objectForKey:CallReturnVisitType];
+		[string appendString:[[NSString stringWithFormat:@"%@\n", [[NSBundle mainBundle] localizedStringForKey:value value:value table:@""]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+		// Publications
+		if([visit objectForKey:CallReturnVisitPublications] != nil)
+		{
+			// they had an array of publications, lets check them too
+			NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
+			int j;
+			int endPublications = [publications count];
+			for(j = 0; j < endPublications; ++j)
+			{
+				NSDictionary *publication = [publications objectAtIndex:j];
+				// PUBLICATION
+				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			}
+		}
+		
+		[string appendString:[@"%@\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	}
+
+	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+	// now add the url that will allow importing
+
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_call];
+	NSMutableString *theurl = [NSMutableString string];
+	NSMutableString *link = [NSMutableString string];
+	[link appendString:@"<a href=\""];
+	[theurl appendString:@"mytime://mytime/addCall?"];
+	int length = data.length;
+	unsigned char *bytes = (unsigned char *)data.bytes;
+	for(int i = 0; i < length; ++i)
+	{
+		[theurl appendFormat:@"%02X", *bytes++];
+	}
+	[link appendString:theurl];
+	[link appendString:@"\">"];
+	[link appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime")];
+	[link appendString:@"</a>"];
+	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"")];
+
+
+
+	[string appendString:[link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+	// open the mail program
+	NSURL *url = [NSURL URLWithString:string];
+	[[UIApplication sharedApplication] openURL:url];
+}
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
 {
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 //	[sheet dismissAnimated:YES];
-
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	if(button == 0)
+	if(_actionSheetSource)
 	{
-		if(delegate)
+		switch(button)
 		{
-			[delegate callViewController:self deleteCall:_call keepInformation:YES];
-			[self.navigationController popViewControllerAnimated:YES];
-
+			//transfer
+			case 0:
+			{
+				[delegate callViewController:self deleteCall:_call keepInformation:YES];
+				[self emailCallToUser];
+				break;
+			}
+			// email
+			case 1:
+			{
+				[self emailCallToUser];
+				break;
+			}
 		}
 	}
-	if(button == 1)
+	else
 	{
-		if(delegate)
+		[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+		if(button == 0)
 		{
-			[delegate callViewController:self deleteCall:_call keepInformation:NO];
-			[self.navigationController popViewControllerAnimated:YES];
+			if(delegate)
+			{
+				[delegate callViewController:self deleteCall:_call keepInformation:YES];
+				[self.navigationController popViewControllerAnimated:YES];
+
+			}
+		}
+		if(button == 1)
+		{
+			if(delegate)
+			{
+				[delegate callViewController:self deleteCall:_call keepInformation:NO];
+				[self.navigationController popViewControllerAnimated:YES];
+			}
 		}
 	}
 }
