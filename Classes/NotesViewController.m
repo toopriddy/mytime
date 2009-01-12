@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 9/20/08.
-//  Copyright 2008 PG Software. All rights reserved.
+//  Copyright 2008 Priddy Software, LLC. All rights reserved.
 //
 
 #import "NotesViewController.h"

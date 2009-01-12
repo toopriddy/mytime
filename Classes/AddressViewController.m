@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/26/08.
-//  Copyright 2008 PG Software. All rights reserved.
+//  Copyright 2008 Priddy Software, LLC. All rights reserved.
 //
 
 #import "AddressViewController.h"
