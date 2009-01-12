@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/26/08.
-//  Copyright 2008 PG Software. All rights reserved.
+//  Copyright 2008 Priddy Software, LLC. All rights reserved.
 //
 
 #import "CallViewController.h"
@@ -1928,7 +1928,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  ******************************************************************/
 #pragma mark ActionSheet Delegate
 
-- (void)emailCallToUser
+- (BOOL)emailCallToUser
 {
 	// add notes if there are any
 	NSString *value;
@@ -2008,8 +2008,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 			}
 		}
-		
-		[string appendString:[@"%@\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[@" \n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	}
 
 	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -2030,7 +2029,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[link appendString:theurl];
 	[link appendString:@"\">"];
 	[link appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime")];
-	[link appendString:@"</a>"];
+	[link appendString:@"</a>\n\n"];
 	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"")];
 
 
@@ -2039,7 +2038,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// open the mail program
 	NSURL *url = [NSURL URLWithString:string];
-	[[UIApplication sharedApplication] openURL:url];
+	return [[UIApplication sharedApplication] openURL:url];
 }
 
 
@@ -2054,8 +2053,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			//transfer
 			case 0:
 			{
-				[delegate callViewController:self deleteCall:_call keepInformation:YES];
-				[self emailCallToUser];
+				if([self emailCallToUser])
+				{
+					[delegate callViewController:self deleteCall:_call keepInformation:YES];
+				}
 				break;
 			}
 			// email

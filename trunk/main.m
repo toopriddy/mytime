@@ -2,7 +2,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 12/29/07.
-//  Copyright 2007 PG Software. All rights reserved.
+//  Copyright 2007 Priddy Software, LLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

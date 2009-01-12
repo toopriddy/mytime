@@ -3,7 +3,7 @@
 //  MyTime
 //
 //  Created by Brent Priddy on 7/22/08.
-//  Copyright PG Software 2008. All rights reserved.
+//  Copyright Priddy Software, LLC 2008. All rights reserved.
 //
 
 #import "MyTimeAppDelegate.h"
@@ -202,6 +202,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					[calls addObject:[NSMutableDictionary dictionaryWithDictionary:callToImport]];
 					[[Settings sharedInstance] saveData];
 					self.callToImport = nil;
+
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"")];
+					[alertSheet show];
 					break;
 				}
 				// cancel
@@ -223,6 +228,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					[settings addEntriesFromDictionary:self.settingsToRestore];
 					[[Settings sharedInstance] saveData];
 					self.settingsToRestore = nil;
+
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"")];
+					[alertSheet show];
 					break;
 				}
 				// cancel

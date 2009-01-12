@@ -3,7 +3,7 @@
 //  BonjourTest
 //
 //  Created by Brent Priddy on 9/14/08.
-//  Copyright 2008 PG Software. All rights reserved.
+//  Copyright 2008 Priddy Software, LLC. All rights reserved.
 //
 
 #import "EventAgent.h"
