@@ -21,6 +21,7 @@
 #import "MetadataEditorViewController.h"
 #import "LocationPickerViewController.h"
 #import "SelectPositionMapViewController.h"
+#import "GeocacheViewController.h"
 
 @interface CallViewController : UIViewController <UITableViewDelegate, 
                                                   UITableViewDataSource, 
@@ -42,6 +43,8 @@
 	BOOL _initialView;
 	
     UITableViewTextFieldCell *_name;
+
+	GeocacheViewController *geocacheViewController;
 
     NSMutableDictionary *_call;
 	
@@ -73,6 +76,7 @@
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) UIResponder *currentFirstResponder;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
+@property (nonatomic, retain) GeocacheViewController *geocacheViewController;
 
 
 /**

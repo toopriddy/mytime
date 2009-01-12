@@ -80,6 +80,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 @synthesize delegate;
 @synthesize currentFirstResponder;
 @synthesize currentIndexPath;
+@synthesize geocacheViewController;
 
 /******************************************************************
  *
@@ -1138,6 +1139,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (UITableViewCell *)getLocationTypeCell
 {
+#if 1
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
 	if(cell == nil)
 	{
@@ -1151,6 +1153,56 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	[cell setValue:[[NSBundle mainBundle] localizedStringForKey:locationType value:locationType table:@""]];
 
+	
+	// if this does not have a latitude/longitude then look it up
+	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
+	   [_call objectForKey:CallLattitudeLongitude] != nil)
+	{
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else
+	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	}
+	
+	// if this does not have a latitude/longitude then look it up
+	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
+	   [_call objectForKey:CallLattitudeLongitude] == nil &&
+	   self.geocacheViewController == nil)
+	{
+		self.geocacheViewController = [[[GeocacheViewController alloc] initWithCall:_call] autorelease];
+	}
+	if(self.geocacheViewController)
+	{
+		cell.accessoryView = self.geocacheViewController;
+	}
+#else
+	UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
+	}	
+	//cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	NSString *locationType = [_call objectForKey:CallLocationType];
+	if(locationType == nil)
+	{
+		locationType = (NSString *)CallLocationTypeGoogleMaps;
+	}
+	[cell setText:[[NSBundle mainBundle] localizedStringForKey:locationType value:locationType table:@""]];
+	
+	// if this does not have a latitude/longitude then look it up
+	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
+	   [_call objectForKey:CallLattitudeLongitude] == nil &&
+	   self.geocacheViewController == nil)
+	{
+		self.geocacheViewController = [[[GeocacheViewController alloc] initWithCall:_call] autorelease];
+	}
+	
+	if(self.geocacheViewController)
+	{
+		cell.accessoryView = self.geocacheViewController;
+	}
+#endif
 	return(cell);
 }
 
@@ -1775,6 +1827,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_call setObject:(addressViewController.state ? addressViewController.state : @"") forKey:CallState];
 	// remove the gps location so that they will look it up again
 	[_call removeObjectForKey:CallLattitudeLongitude];
+
+	// kill the geocacher so that we can retry
+	self.geocacheViewController = nil;
+
 
 	[self reloadData];
 	[self save];
