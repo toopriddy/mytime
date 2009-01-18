@@ -414,9 +414,9 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 - (void)navigationControlActionSheet:(id)sender 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You can transfer this call to someone else. Transferring will delete this call from your data, but your statistics from this call will stay. The witness who gets this email will be able to click on a link in the email and add the call to MyTime.", @"")
+	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You can transfer this call to someone else. Transferring will delete this call from your data, but your statistics from this call will stay. The witness who gets this email will be able to click on a link in the email and add the call to MyTime.", @"This message is displayed when the user clicks on a Call then clicks on Edit and clicks on the \"Action\" button at the top left of the screen")
 															 delegate:self
-												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 											   destructiveButtonTitle:NSLocalizedString(@"Transfer, and Delete", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
 												    otherButtonTitles:NSLocalizedString(@"Email Details", @"Email the call details to another MyTime user"), nil] autorelease];
 
@@ -1938,8 +1938,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	[string appendString:@"&body="];
 
-	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"a person's name"), [_call objectForKey:CallName]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [_call objectForKey:CallName]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	
 	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
 	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
@@ -2011,7 +2011,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[string appendString:[@" \n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	}
 
-	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
 	// now add the url that will allow importing
 
@@ -2030,7 +2030,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[link appendString:@"\">"];
 	[link appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime")];
 	[link appendString:@"</a>\n\n"];
-	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"")];
+	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
 
 
 

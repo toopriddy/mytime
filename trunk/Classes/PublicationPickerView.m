@@ -49,123 +49,121 @@ typedef struct {
 } PublicationInformation;
 
 static const PublicationInformation PUBLICATIONS[] = {
-	{AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name"),     PublicationTypeMagazine}
-,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name"),       PublicationTypeMagazine}
+	{AlternateLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
 
 ,   {AlternateLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
-,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Book Publication Name"),   PublicationTypeCampaignTract}
+,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Campaign Tract Publication Name (kt)"),   PublicationTypeCampaignTract}
 
 ,   {AlternateLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {AlternateLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"All Scripture", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Bible Stories", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Bible Teach", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Close to Jehovah", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"What Does the Bible Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Concordance", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Creation", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Creator", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Daniel's Prophecy", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Family Happiness", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"God's Word", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Greatest Man", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Insight", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Jehovah's Day", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Knowledge", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Mankind's Search for God", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Ministry School", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"My Book of Bible Stories", @"Book Publication Name"),       PublicationTypeBook}
-,   {AlternateLocalizedString(@"Organized", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Proclaimers", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Revelation Climax", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Sing Praises", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Teacher", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Worship God", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Young People Ask", @"Book Publication Name"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Reasoning", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Is there a Creator Who Cares About You?", @"Book Publication Name (ct)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Daniel's Prophecy", @"Book Publication Name (dp)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Evolution or Creation", @"Book Publication Name (ce)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Family Happiness", @"Book Publication Name (fy)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"God's Word", @"Book Publication Name (gm)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Greatest Man", @"Book Publication Name (gt)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Insight", @"Book Publication Name (it)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name (ip-1)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name (ip-2)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Jehovah's Day", @"Book Publication Name (jd)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Knowledge That Leads to Everlasting Life", @"Book Publication Name (kl)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Mankind's Search for God", @"Book Publication Name (sh)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Ministry School", @"Book Publication Name (sg)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"My Book of Bible Stories", @"Book Publication Name (my)"),       PublicationTypeBook}
+,   {AlternateLocalizedString(@"Organized To Do Jehovah's Will", @"Book Publication Name (od)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Proclaimers", @"Book Publication Name (jv)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Revelation Climax", @"Book Publication Name (re)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Sing Praises", @"Book Publication Name (Ssb)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Worship God", @"Book Publication Name (wj)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Young People Ask 1", @"Book Publication Name (ype-1)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Young People Ask 2", @"Book Publication Name (ype-2)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Reasoning", @"Book Publication Name (rs)"),   PublicationTypeBook}
 
 ,   {AlternateLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {AlternateLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {AlternateLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {AlternateLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {AlternateLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name (1540)"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name (1541)"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name (1542)"),   PublicationTypeDVDBible}
+,   {AlternateLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name (1543)"),   PublicationTypeDVDBible}
 ,   {AlternateLocalizedString(@"Bible DVD: Acts", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 ,   {AlternateLocalizedString(@"Bible DVD: Romans", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 
 
 ,   {AlternateLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {AlternateLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Worship God", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Great Teacher", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name (9232)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name (9220)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Worship God", @"DVD Publication Name (9213)"),   PublicationTypeDVDBook}
 ,   {AlternateLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: God's Friend", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Require", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Keep on the Watch", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Spirits of the dead", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Knowledge", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name"),   PublicationTypeDVDBook}
-,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name (9202)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: God's Friend", @"DVD Publication Name (9211)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Require", @"DVD Publication Name (9201)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Keep on the Watch", @"DVD Publication Name (9218)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Spirits of the dead", @"DVD Publication Name (9216)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name (9221)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Knowledge", @"DVD Publication Name (1297)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name (9203)"),   PublicationTypeDVDBook}
+,   {AlternateLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name (9229)"),   PublicationTypeDVDBook}
 
-,   {AlternateLocalizedString(@"DVD: Noah/David", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
-,   {AlternateLocalizedString(@"DVD Drama: Pursue Goals", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
-,   {AlternateLocalizedString(@"DVD Drama: Bore Witness", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
-,   {AlternateLocalizedString(@"DVD Drama: Troublesome Times/Boldly Witnessing", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
-,   {AlternateLocalizedString(@"DVD Drama: Submit to Authority", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
-,   {AlternateLocalizedString(@"DVD Drama: Respect Authority", @"DVD Publication Name"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Noah/David", @"DVD Publication Name  (9215)"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Pursue Goals", @"DVD Publication Name (9215)"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Bore Witness", @"DVD Publication Name (9224)"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Troublesome Times/Boldly Witnessing", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Submit to Authority", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
+,   {AlternateLocalizedString(@"DVD Drama: Respect Authority", @"DVD Publication Name "),   PublicationTypeDVDNotCount}
 
 ,   {AlternateLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {AlternateLocalizedString(@"Blood", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Book for All", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Divine Name", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Does God Care", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Education", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"God's Friend", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Good Land", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Government", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Guidance of God", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Lasting Peace", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Life on Earth", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Look!", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Nations", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Our Problems", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Purpose of Life", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Require", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Satisfying Life", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Trinity", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Watch!", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"When Someone Dies", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"When We Die", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"Why Worship God", @"Brochures Publication Name"),   PublicationTypeBrochure}
-,   {AlternateLocalizedString(@"World Without War", @"Brochures Publication Name"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Blood", @"Brochures Publication Name (hb)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Book for All", @"Brochures Publication Name (ba)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Divine Name", @"Brochures Publication Name (na)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Does God Care", @"Brochures Publication Name (dg)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Education", @"Brochures Publication Name (ed)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"God's Friend", @"Brochures Publication Name (gf)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Good Land", @"Brochures Publication Name (gl)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Government", @"Brochures Publication Name (hp)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Guidance of God", @"Brochures Publication Name (gu)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name (jt)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Lasting Peace", @"Brochures Publication Name (pc)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Life on Earth", @"Brochures Publication Name (le)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Look!", @"Brochures Publication Name (mn)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Good News for People of All Nations", @"Brochures Publication Name "),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Our Problems", @"Brochures Publication Name (op)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Purpose of Life", @"Brochures Publication Name (pr)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Require", @"Brochures Publication Name (rq)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Satisfying Life", @"Brochures Publication Name (la)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name (sp)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Trinity", @"Brochures Publication Name (ti)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Keep on the Watch!", @"Brochures Publication Name (kp)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"When Someone Dies", @"Brochures Publication Name (we)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"When We Die", @"Brochures Publication Name (ie)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"Why Worship God", @"Brochures Publication Name (wj)"),   PublicationTypeBrochure}
+,   {AlternateLocalizedString(@"World Without War", @"Brochures Publication Name (wi)"),   PublicationTypeBrochure}
 
 
 ,   {AlternateLocalizedString(@"   TRACTS", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {AlternateLocalizedString(@"A Peaceful New World-Will It Come?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Does Fate Rule Our Lives", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"How to Find the Road to Paradise", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Immortal Spirit", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"The Greatest Name", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Who Are Jehovah's Witnesses?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Comfort for the Depressed", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Enjoy Family Life", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Jehovah-Who Is He?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Jesus Christ-Who Is He?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Know the Bible", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Peaceful New World", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Suffering to End", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"What Hope for Dead Loved Ones?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Who Really Rules the World?", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Why You Can Trust the Bible", @"Tracts Publication Name"),   PublicationTypeTract}
-,   {AlternateLocalizedString(@"Will This World Survive?", @"Tracts Publication Name"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"A Peaceful New World-Will It Come?", @"Tracts Publication Name (T-17)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Does Fate Rule Our Lives", @"Tracts Publication Name (T-71)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Tracts Publication Name (T-74)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"How to Find the Road to Paradise", @"Tracts Publication Name (rp)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Do You Have an Immortal Spirit", @"Tracts Publication Name (T-25)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Tracts Publication Name (T-18)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"The Greatest Name", @"Tracts Publication Name (T-72)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Who Are Jehovah's Witnesses?", @"Tracts Publication Name (T-73)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Comfort for the Depressed", @"Tracts Publication Name (T-20)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Enjoy Family Life", @"Tracts Publication Name (T-21)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jehovah-Who Is He?", @"Tracts Publication Name (T-23)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Jesus Christ-Who Is He?", @"Tracts Publication Name (T-24)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Know the Bible", @"Tracts Publication Name (T-26)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Life in a Peaceful New World", @"Tracts Publication Name (T-15)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"All Suffering Soon to End", @"Tracts Publication Name (T-27)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name (T-14)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"What Hope for Dead Loved Ones?", @"Tracts Publication Name (T-16)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Who Really Rules the World?", @"Tracts Publication Name (T-22)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Why You Can Trust the Bible", @"Tracts Publication Name (T-13)"),   PublicationTypeTract}
+,   {AlternateLocalizedString(@"Will This World Survive?", @"Tracts Publication Name (T-19)"),   PublicationTypeTract}
 };
 
 + (NSString *)watchtower

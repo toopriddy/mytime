@@ -52,6 +52,11 @@
 				point.latitude = [lat floatValue];
 				point.longitude = [lng floatValue];
 			}
+			else
+			{
+				point.latitude = 34;
+				point.longitude = -86;
+			}
 		}
 	}
 	return self;
@@ -68,6 +73,13 @@
 - (void)navigationControlDone:(id)sender 
 {
 	VERBOSE(NSLog(@"navigationControlDone:");)
+
+	// save this position
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	[settings setObject:[NSNumber numberWithFloat:point.latitude] forKey:SettingsLastLattitude];
+	[settings setObject:[NSNumber numberWithFloat:point.longitude] forKey:SettingsLastLongitude];
+	[[Settings sharedInstance] saveData];
+
 	if(delegate && [delegate respondsToSelector:@selector(selectPositionMapViewControllerDone:)])
 	{
 		[delegate selectPositionMapViewControllerDone:self];
@@ -80,7 +92,7 @@
 {
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 
-	self.mapView = [[[RMMapView alloc] initWithFrame:self.view.bounds] autorelease];
+	self.mapView = [[[RMMapView alloc] initWithFrame:self.view.bounds WithLocation:point] autorelease];
 	mapView.delegate = self;
     mapView.multipleTouchEnabled = YES;
 	[mapView setBackgroundColor:[UIColor blackColor]];
@@ -155,7 +167,12 @@
 		if(!markerMoved)
 		{
 			point.latitude = newLocation.coordinate.latitude;
-			point.latitude = newLocation.coordinate.latitude;
+			point.longitude = newLocation.coordinate.longitude;
+			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+			[settings setObject:[NSNumber numberWithFloat:point.latitude] forKey:SettingsLastLattitude];
+			[settings setObject:[NSNumber numberWithFloat:point.longitude] forKey:SettingsLastLongitude];
+			[[Settings sharedInstance] saveData];
+
 			[mapView.markerManager moveMarker:marker AtLatLon:point];
 			[mapView moveToLatLong:point];
 		}
