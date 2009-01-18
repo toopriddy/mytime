@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 {
 	08FB7793FE84155DC02AAC07 /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Release;
 		activeExecutable = 90A799C70F22A87F00365D96 /* LocalizableMerge */;
 		activeTarget = 8DD76F740486A8DE00D96B5E /* LocalizableMerge */;
 		addToTargets = (
@@ -19,7 +19,7 @@
 					20,
 					704,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -34,12 +34,12 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 253929599;
-			PBXWorkspaceStateSaveDate = 253929599;
+			PBXPerProjectTemplateStateSaveDate = 253937384;
+			PBXWorkspaceStateSaveDate = 253937384;
 		};
 		perUserProjectItems = {
-			90A799FA0F22C08500365D96 /* PBXTextBookmark */ = 90A799FA0F22C08500365D96 /* PBXTextBookmark */;
-			90A799FB0F22C08500365D96 /* PBXTextBookmark */ = 90A799FB0F22C08500365D96 /* PBXTextBookmark */;
+			906BFFDE0F22C2980083AFC3 = 906BFFDE0F22C2980083AFC3 /* PBXTextBookmark */;
+			90A799FB0F22C08500365D96 = 90A799FB0F22C08500365D96 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 90A799CE0F22A89200365D96 /* Source Control */;
 		userBuildSettings = {
@@ -58,6 +58,16 @@
 		executables = (
 			90A799C70F22A87F00365D96 /* LocalizableMerge */,
 		);
+	};
+	906BFFDE0F22C2980083AFC3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 91";
+		rLen = 0;
+		rLoc = 2685;
+		rType = 0;
+		vrLen = 1350;
+		vrLoc = 2314;
 	};
 	90A799C70F22A87F00365D96 /* LocalizableMerge */ = {
 		isa = PBXExecutable;
@@ -92,16 +102,6 @@
 	90A799CF0F22A89200365D96 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
-	};
-	90A799FA0F22C08500365D96 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 102";
-		rLen = 0;
-		rLoc = 3012;
-		rType = 0;
-		vrLen = 1345;
-		vrLoc = 2319;
 	};
 	90A799FB0F22C08500365D96 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;

@@ -197,7 +197,7 @@
 		907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataEditorViewController.m; sourceTree = "<group>"; };
 		907A63990EFD8EC6002E4144 /* en_US */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_US; path = en_US.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
-		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90ADA7A40F18760200C65E40 /* WebMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebMapViewController.h; sourceTree = "<group>"; };
 		90ADA7A50F18760200C65E40 /* WebMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebMapViewController.m; sourceTree = "<group>"; };
 		90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue-withletter.png"; path = "../MapView/Map/Resources/marker-blue-withletter.png"; sourceTree = SOURCE_ROOT; };
@@ -829,7 +829,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "E88B399C-C873-4E31-8756-86FE75523D3D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "525CE2CE-1854-4935-A84D-CFABB1C84D0C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A5C38323-B394-41ED-986C-BC83915EC0B4";
 				SDKROOT = iphoneos2.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};
@@ -989,7 +989,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Priddy";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
@@ -999,7 +999,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "0C4FB617-FCA5-4D6B-9D00-990132A107C5";
-				SDKROOT = iphonesimulator2.1;
+				SDKROOT = iphoneos2.2;
+				VALID_ARCHS = armv6;
 			};
 			name = Release;
 		};

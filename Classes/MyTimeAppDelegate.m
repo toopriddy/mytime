@@ -138,9 +138,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 				handled = YES;
 				_actionSheetType = ADD_CALL;
-				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"")
+				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a call from an email when the call was transferred from another iphone/itouch")
 																		 delegate:self
-																cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+																cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 														   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
 																otherButtonTitles:nil] autorelease];
 
@@ -165,9 +165,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 				handled = YES;
 				_actionSheetType = RESTORE_BACKUP;
-				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"")
+				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"This message gets displayed when the user is trying to restore from a backup from the email program")
 																		 delegate:self
-																cancelButtonTitle:NSLocalizedString(@"Cancel", @"cancel")
+																cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 														   destructiveButtonTitle:NSLocalizedString(@"Restore from Backup", @"Yes restore from the backup please")
 																otherButtonTitles:nil] autorelease];
 
@@ -181,7 +181,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"MyTime opened with invalid URL", @"")];
+		alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"MyTime opened with invalid URL", @"This message is displayed when someone clicks on a link in an email or a webpage which will open up mytime to either add a transfered call or restore from a backup")];
 		[alertSheet show];
 	}
     return YES;
@@ -205,7 +205,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"")];
+					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup")];
 					[alertSheet show];
 					break;
 				}
@@ -231,7 +231,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"")];
+					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup")];
 					[alertSheet show];
 					break;
 				}

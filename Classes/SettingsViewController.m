@@ -120,8 +120,9 @@
 		
         // Website
         case 2:
-			count++; 
-			count++; 
+			count++; // mytime website
+			count++; // found a bug?
+			count++; // question comments? 
 			break;
 		
 		// bakup
@@ -234,6 +235,10 @@
 					break;
 					
 				case 1:
+					[cell setTitle:NSLocalizedString(@"Found a bug?", @"Button in More->settings that points the user to the bug tracking system")];
+					break;
+					
+				case 2:
 					[cell setTitle:NSLocalizedString(@"Questions, Comments? Email me", @"More View Table Questions, Comments? Email me")];
 					break;
 			}
@@ -349,8 +354,17 @@
 					return;
 				}
 
-				// email me
+				// found a bug?
 				case 1:
+				{
+					// open up a url to mytime.googlecode.com
+					NSURL *url = [NSURL URLWithString:@"http://code.google.com/p/mytime/issues/list"];
+					[[UIApplication sharedApplication] openURL:url];
+					return;
+				}
+
+				// email me
+				case 2:
 				{
 					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Because I might have received > 200 emails about a question, please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
 																			 delegate:self
@@ -377,7 +391,7 @@
 					                                                                  @"mailto:?subject=", 
 																					  [NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 																					  @"&body="];
-					[string appendString:[NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n\nWARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP\n\n", @"") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+					[string appendString:[NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n\nWARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP\n\n", @"This is the body of the email that is sent when you go to More->Settings->Email Backup") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
 					// now add the url that will allow importing
 					NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
@@ -395,7 +409,7 @@
 					[link appendString:@"\">"];
 					[link appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
 					[link appendString:@"</a>"];
-					[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"")];
+					[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
 
 					[string appendString:[link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
