@@ -59,6 +59,7 @@
 
 - (void)dealloc
 {
+	mapView.map.mDelegate = nil;
 	self.mapView = nil;
 	self.call = nil;
 	
