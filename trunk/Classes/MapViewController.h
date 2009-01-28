@@ -12,10 +12,12 @@
 #import "RMMapView.h"
 #import "MapViewCallDetailController.h"
 #import "CallViewControllerDelegate.h"
+#import "Geocache.h"
 
 @interface MapViewController : UIViewController <RMMapViewDelegate,
                                                  MapViewCallDetailControllerDelegate,
-												 CallViewControllerDelegate>
+												 CallViewControllerDelegate,
+												 GeocacheDelegate>
 {
     RMMapView *mapView;
 	NSMutableDictionary *call;

@@ -13,6 +13,7 @@
 @synthesize mapView;
 @synthesize call;
 @synthesize progressView;
+@synthesize delegate = _delegate;
 
 - (id)initWithCall:(NSMutableDictionary *)theCall
 {
@@ -20,6 +21,7 @@
 	self = [super initWithFrame:frame];
 	if (self)
 	{
+		inProgress = YES;
 		self.call = theCall;
 		self.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
 									UIViewAutoresizingFlexibleRightMargin |
@@ -134,6 +136,12 @@
 	{
 		// all done, dont need to keep calling the timer
 		[self stopProgressIndicator];
+		inProgress = NO;
+		if(_delegate && [_delegate respondsToSelector:@selector(geocacheViewControllerDone:)])
+		{
+			[_delegate geocacheViewControllerDone:self];
+		}
+		
 		return;
 	}
 	else
@@ -185,6 +193,14 @@
 					NSLog(@"script failure");
 				}
 				found = YES;
+			}
+		}
+		else
+		{
+			[call setObject:@"nil" forKey:CallLattitudeLongitude];
+			if(_delegate && [_delegate respondsToSelector:@selector(geocacheViewControllerDone:)])
+			{
+				[_delegate geocacheViewControllerDone:self];
 			}
 		}
 	}

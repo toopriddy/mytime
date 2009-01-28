@@ -44,8 +44,6 @@
 	
     UITableViewTextFieldCell *_name;
 
-	GeocacheViewController *geocacheViewController;
-
     NSMutableDictionary *_call;
 	
 	NSMutableArray *_displayInformation;
@@ -78,7 +76,6 @@
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) UIResponder *currentFirstResponder;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
-@property (nonatomic, retain) GeocacheViewController *geocacheViewController;
 
 
 /**

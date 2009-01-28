@@ -20,10 +20,6 @@
 {
 	if ([super init]) 
 	{
-		containerView = nil;
-		textView = nil;
-		delegate = nil;
-		
 		// set the title, and tab bar images from the dataSource
 		// object.
         
@@ -94,14 +90,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
-}
-
-
-- (void)viewDidAppear:(BOOL)animated 
-{
 	[textView becomeFirstResponder];
-	
+	[super viewWillAppear:animated];
 }
 
 // date

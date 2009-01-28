@@ -43,12 +43,14 @@
 		self.call = nil;
 
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
+		[[Geocache sharedInstance] addDelegate:self];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[[Geocache sharedInstance] removeDelegate:self];
 	self.mapView = nil;
 	self.call = nil;
 	
@@ -56,17 +58,14 @@
 	[super dealloc];
 }
 
-- (void)loadView
+- (void)loadMapView
 {
-	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
-
 	self.mapView = [[[RMMapView alloc] initWithFrame:self.view.bounds] autorelease];
 	mapView.delegate = self;
     mapView.multipleTouchEnabled = YES;
 	[mapView setBackgroundColor:[UIColor blackColor]];
 	[mapView.contents setTileSource:[[RMVirtualEarthSource alloc] init]];
 	[self.view addSubview:mapView];
-
 
 	self.detailView = [[[MapViewCallDetailController alloc] initWithNibName:@"MapViewCallDetail" bundle:[NSBundle mainBundle]] autorelease];
 	self.detailView.view.hidden = YES;
@@ -76,9 +75,8 @@
 		self.detailView.delegate = self;
 	}
 	[self.view addSubview:self.detailView.view];
-
-
 	
+
 	[RMMapContents setPerformExpensiveOperations:YES];
 	
 	RMMarkerManager *markerManager = mapView.markerManager;
@@ -117,7 +115,7 @@
 			if(str)
 			{
 				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-				if(latLong)
+				if(latLong && ![latLong isEqualToString:@"nil"])
 				{
 					RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
 					[marker setData:theCall];
@@ -151,6 +149,56 @@
 
 	[mapView zoomWithLatLngBoundsNorthEast:ne SouthWest:sw];
 }
+
+- (void)loadView
+{
+	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+	self.view.backgroundColor = [UIColor blackColor];
+
+
+	// load the map after it slides in
+	[self performSelector:@selector(loadMapView) withObject:nil afterDelay:0.3];
+}
+
+- (void)geocacheDone:(Geocache *)geocache forCall:(NSMutableDictionary *)theCall
+{
+	RMMarkerManager *markerManager = mapView.markerManager;
+	NSArray *markers = [markerManager getMarkers];
+	BOOL found = NO;
+
+	for(RMMarker *marker in markers)
+	{
+		if(theCall == marker.data)
+		{
+			found = YES;
+			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
+			if(latLong && ![latLong isEqualToString:@"nil"])
+			{
+				CLLocationCoordinate2D point;
+				NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+				point.latitude = [[stringArray objectAtIndex:0] doubleValue];
+				point.longitude = [[stringArray objectAtIndex:1] doubleValue];
+				[markerManager moveMarker:marker AtLatLon:point];
+			}
+		}
+	}
+	
+	if(!found && markerManager)
+	{
+		NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
+		if(latLong && ![latLong isEqualToString:@"nil"])
+		{
+			RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
+			[marker setData:theCall];
+			CLLocationCoordinate2D point;
+			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+			point.latitude = [[stringArray objectAtIndex:0] doubleValue];
+			point.longitude = [[stringArray objectAtIndex:1] doubleValue];
+			[markerManager addMarker:marker AtLatLong:point];
+		}
+	}
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

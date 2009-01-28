@@ -20,6 +20,7 @@
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
 #import "Settings.h"
+#import "Geocache.h"
 
 @implementation MyTimeAppDelegate
 
@@ -385,6 +386,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
 		[alertSheet show];
 	}
+
+	// kick off the Geocache lookup
+	[[Geocache sharedInstance] setWindow:window];
 }
 
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController

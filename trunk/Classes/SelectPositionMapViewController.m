@@ -30,7 +30,7 @@
 		markerMoved = NO;
 
 		pointInitalized = latLong != nil;
-		if(latLong)
+		if(latLong && ![latLong isEqualToString:@"nil"])
 		{
 			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 			point.latitude = [[stringArray objectAtIndex:0] doubleValue];

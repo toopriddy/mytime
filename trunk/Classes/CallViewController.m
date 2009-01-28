@@ -19,6 +19,7 @@
 #import "SwitchTableCell.h"
 #import "MetadataViewController.h"
 #import "MetadataEditorViewController.h"
+#import "Geocache.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -80,7 +81,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 @synthesize delegate;
 @synthesize currentFirstResponder;
 @synthesize currentIndexPath;
-@synthesize geocacheViewController;
 
 /******************************************************************
  *
@@ -561,7 +561,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		self.currentFirstResponder = nil;
 		if(cell.tableView && cell.indexPath)
 		{
-			[cell.tableView deselectRowAtIndexPath:cell.indexPath animated:YES];
+// this was causing users to press things twice
+//			[cell.tableView deselectRowAtIndexPath:cell.indexPath animated:YES];
 		}
 	}
 }
@@ -1163,7 +1164,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (UITableViewCell *)getLocationTypeCell
 {
-#if 1
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
 	if(cell == nil)
 	{
@@ -1191,42 +1191,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	
 	// if this does not have a latitude/longitude then look it up
 	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
-	   [_call objectForKey:CallLattitudeLongitude] == nil &&
-	   self.geocacheViewController == nil)
+	   [_call objectForKey:CallLattitudeLongitude] == nil)
 	{
-		self.geocacheViewController = [[[GeocacheViewController alloc] initWithCall:_call] autorelease];
+		// TODO: Need to have a spinnie show up here
 	}
-	if(self.geocacheViewController)
-	{
-		cell.accessoryView = self.geocacheViewController;
-	}
-#else
-	UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
-	}	
-	//cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	NSString *locationType = [_call objectForKey:CallLocationType];
-	if(locationType == nil)
-	{
-		locationType = (NSString *)CallLocationTypeGoogleMaps;
-	}
-	[cell setText:[[NSBundle mainBundle] localizedStringForKey:locationType value:locationType table:@""]];
-	
-	// if this does not have a latitude/longitude then look it up
-	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
-	   [_call objectForKey:CallLattitudeLongitude] == nil &&
-	   self.geocacheViewController == nil)
-	{
-		self.geocacheViewController = [[[GeocacheViewController alloc] initWithCall:_call] autorelease];
-	}
-	
-	if(self.geocacheViewController)
-	{
-		cell.accessoryView = self.geocacheViewController;
-	}
-#endif
 	return(cell);
 }
 
@@ -1509,6 +1477,9 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
 			  deleteInvocation:nil];
 
+			//  make it where they can hit hext and go into the address view to setup the address
+			_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
+
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getLocationTypeCell)]
@@ -1519,9 +1490,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 				  deleteInvocation:nil];
 			}
 		}
-		
-		//  make it where they can hit hext and go into the address view to setup the address
-		_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
 	}
 
 	// Add Metadata
@@ -1733,6 +1701,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	else
 	{
 		// they are using google maps so kick off a lookup
+		[[Geocache sharedInstance] lookupCall:_call];
 	}
 	[[Settings sharedInstance] saveData];
 }
@@ -1851,13 +1820,14 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[_call setObject:(addressViewController.state ? addressViewController.state : @"") forKey:CallState];
 	// remove the gps location so that they will look it up again
 	[_call removeObjectForKey:CallLattitudeLongitude];
-
-	// kill the geocacher so that we can retry
-	self.geocacheViewController = nil;
-
-
+	
 	[self reloadData];
 	[self save];
+	if(![[_call objectForKey:CallLocationType] isEqualToString:(NSString *)CallLocationTypeManual])
+	{
+		[[Geocache sharedInstance] lookupCall:_call];
+	}
+
 	[theTableView reloadData];
 }
 
