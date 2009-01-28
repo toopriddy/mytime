@@ -113,7 +113,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					677,
+					10,
 					20,
 					48,
 					43,
@@ -188,8 +188,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 254878239;
-			PBXWorkspaceStateSaveDate = 254878239;
+			PBXPerProjectTemplateStateSaveDate = 254878351;
+			PBXWorkspaceStateSaveDate = 254878351;
 		};
 		perUserProjectItems = {
 			9001FEC30E9B13960091F8FD = 9001FEC30E9B13960091F8FD /* PBXTextBookmark */;
@@ -260,8 +260,6 @@
 			9028683F0ECFF73C0076BCBD = 9028683F0ECFF73C0076BCBD /* PBXTextBookmark */;
 			902868440ECFF73C0076BCBD = 902868440ECFF73C0076BCBD /* PBXTextBookmark */;
 			9029BBBA0ED9B0C3006C7070 = 9029BBBA0ED9B0C3006C7070 /* PlistBookmark */;
-			9032C88F0F3121FD005FA8D0 = 9032C88F0F3121FD005FA8D0 /* PBXBookmark */;
-			9032C8910F3121FD005FA8D0 = 9032C8910F3121FD005FA8D0 /* PBXTextBookmark */;
 			903B6FA50EF21D8200D6E2E1 = 903B6FA50EF21D8200D6E2E1 /* PBXTextBookmark */;
 			903B6FBB0EF21D8200D6E2E1 = 903B6FBB0EF21D8200D6E2E1 /* PBXTextBookmark */;
 			903B70FC0EF242EE00D6E2E1 = 903B70FC0EF242EE00D6E2E1 /* PBXTextBookmark */;
@@ -1360,34 +1358,6 @@
 		name = /Users/bpriddy/Projects/MyTime/Entitlements.plist;
 		rLen = 0;
 		rLoc = 2147483647;
-	};
-	9032C88F0F3121FD005FA8D0 /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 9032C8900F3121FD005FA8D0 /* bpriddy.perspectivev3 */;
-	};
-	9032C8900F3121FD005FA8D0 /* bpriddy.perspectivev3 */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.xml;
-		name = bpriddy.perspectivev3;
-		path = /Users/bpriddy/Projects/Pending/MyTime/MyTime.xcodeproj/bpriddy.perspectivev3;
-		sourceTree = "<absolute>";
-	};
-	9032C8910F3121FD005FA8D0 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 9032C8920F3121FD005FA8D0 /* bpriddy.perspectivev3 */;
-		name = "bpriddy.perspectivev3: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 908;
-		vrLoc = 0;
-	};
-	9032C8920F3121FD005FA8D0 /* bpriddy.perspectivev3 */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.xml;
-		name = bpriddy.perspectivev3;
-		path = /Users/bpriddy/Projects/Pending/MyTime/MyTime.xcodeproj/bpriddy.perspectivev3;
-		sourceTree = "<absolute>";
 	};
 	903477630E8CAA0100BB6F2D /* Swedish */ = {
 		uiCtxt = {
