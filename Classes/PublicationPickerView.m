@@ -60,7 +60,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"What Does the Bible Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
-,   {AlternateLocalizedString(@"Concordance", @"Book Publication Name"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Is there a Creator Who Cares About You?", @"Book Publication Name (ct)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Daniel's Prophecy", @"Book Publication Name (dp)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Evolution or Creation", @"Book Publication Name (ce)"),   PublicationTypeBook}

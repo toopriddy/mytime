@@ -237,7 +237,7 @@
 			if(str)
 			{
 				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-				if(latLong)
+				if(latLong && ![latLong isEqualToString:@"nil"])
 				{
 					NSString *script = [NSString stringWithFormat:@"showAddress(\"%@\", %@);", info, latLong];
 					VERBOSE(NSLog(@"%@", script);)

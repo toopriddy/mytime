@@ -35,6 +35,7 @@
 		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
 		902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902866600ECF757A0076BCBD /* MonthChooserViewController.m */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
+		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
 		9045A7260E7C1423001B439C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7250E7C1423001B439C /* TCPServer.m */; };
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
 		9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9045A8F80E7D6F86001B439C /* Localizable.strings */; };
@@ -157,6 +158,8 @@
 		9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthChooserViewController.h; sourceTree = "<group>"; };
 		902866600ECF757A0076BCBD /* MonthChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthChooserViewController.m; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
+		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
 		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90417EAB0F0EDE96007CBA7E /* Danish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Danish; path = Danish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 				90ADA7A50F18760200C65E40 /* WebMapViewController.m */,
 				90674D340F1ABBB800D524C0 /* GeocacheViewController.h */,
 				90674D330F1ABBB800D524C0 /* GeocacheViewController.m */,
+				9032C7520F30DACA005FA8D0 /* Geocache.h */,
+				9032C7530F30DACA005FA8D0 /* Geocache.m */,
 				9013137E0EA0773A0055D890 /* NumberViewController.h */,
 				9013137F0EA0773A0055D890 /* NumberViewController.m */,
 				901313810EA078780055D890 /* NumberViewControllerDelegate.h */,
@@ -545,7 +550,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MyTime */ = {
+		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -600,7 +605,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MyTime */,
+				1D6058900D05DD3D006BFB54 /* SimpleMap */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -738,6 +743,7 @@
 				90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */,
 				90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */,
 				90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */,
+				9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,7 +757,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */

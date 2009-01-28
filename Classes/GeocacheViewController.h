@@ -9,13 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "MapView.h"
 
+@class GeocacheViewController;
+@protocol GeocacheViewControllerDelegate<NSObject>
+@required
+- (void)geocacheViewControllerDone:(GeocacheViewController *)geocacheViewController;
+@end
+
+
 @interface GeocacheViewController : UIView <MapWebViewDelegate>
 {
+	BOOL inProgress;
 	MapView *mapView;
 	NSMutableDictionary *call;
 	UIActivityIndicatorView *progressView;
+	NSObject<GeocacheViewControllerDelegate> *_delegate;
 }
 
+@property (nonatomic, assign) NSObject<GeocacheViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MapView *mapView;
 @property (nonatomic, retain) NSMutableDictionary *call;
 @property (nonatomic, retain) UIActivityIndicatorView *progressView;

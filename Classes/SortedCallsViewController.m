@@ -32,6 +32,7 @@
 	
 	// push the element view controller onto the navigation stack to display it
 	[[self navigationController] pushViewController:controller animated:YES];
+//	[self presentModalViewController:<#(UIViewController *)modalViewController#> animated:<#(BOOL)animated#>
 } 
 
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol,UITableViewDataSource>)theDataSource 
