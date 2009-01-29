@@ -241,6 +241,15 @@
 	return 1;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	if(section == 3)
+	{
+		return NSLocalizedString(@"When Transfered To You:", @"This is the section title for transferred calls in the view that allows you to select a visit type for your call");
+	}
+	
+	return nil;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
