@@ -200,7 +200,26 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				case 0:
 				{
 					NSMutableArray *calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
-					[calls addObject:[NSMutableDictionary dictionaryWithDictionary:callToImport]];
+					NSMutableDictionary *newCall = [NSMutableDictionary dictionaryWithDictionary:callToImport];
+					
+					// change all return visits to be transferrs so that we dont count the other person's work
+					for(NSMutableDictionary *visit in [newCall objectForKey:CallReturnVisits])
+					{
+						NSString *type = [visit objectForKey:CallReturnVisitType];
+						if(type == nil || [type isEqualToString:CallReturnVisitTypeReturnVisit])
+						{
+							[visit setObject:CallReturnVisitTypeTransferedReturnVisit forKey:CallReturnVisitType];
+						}
+						else if(type == nil || [type isEqualToString:CallReturnVisitTypeNotAtHome])
+						{
+							[visit setObject:CallReturnVisitTypeTransferedNotAtHome forKey:CallReturnVisitType];
+						}
+						else if(type == nil || [type isEqualToString:CallReturnVisitTypeStudy])
+						{
+							[visit setObject:CallReturnVisitTypeTransferedStudy forKey:CallReturnVisitType];
+						}
+					}
+					[calls addObject:newCall];
 					[[Settings sharedInstance] saveData];
 					self.callToImport = nil;
 

@@ -27,6 +27,9 @@
 	UITableViewCell *returnVisitCell;
     UITableViewCell *studyCell;
     UITableViewCell *notAtHomeCell;
+    UITableViewCell *transferedReturnVisitCell;
+    UITableViewCell *transferedStudyCell;
+    UITableViewCell *transferedNotAtHomeCell;
 	BOOL isInitialVisit;
 }
 

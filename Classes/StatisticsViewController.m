@@ -303,6 +303,9 @@ static NSString *MONTHS[] = {
 					NSString *type = [visit objectForKey:CallReturnVisitType];
 					BOOL isStudy = [type isEqualToString:(NSString *)CallReturnVisitTypeStudy];
 					BOOL isNotAtHome = [type isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome];
+					BOOL isTransfer = [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedStudy] ||
+									  [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedReturnVisit] ||
+									  [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedNotAtHome];
 					
 					bool counted = NO;
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
@@ -310,7 +313,7 @@ static NSString *MONTHS[] = {
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						if(!isNotAtHome)
+						if(!isNotAtHome && !isTransfer)
 						{
 							_returnVisits[offset]++;
 							counted = YES;

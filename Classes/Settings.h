@@ -37,6 +37,9 @@ extern NSString const * const CallReturnVisitPublicationYear;
 extern NSString const * const CallReturnVisitPublicationMonth;
 extern NSString const * const CallReturnVisitPublicationDay;
 
+extern NSString const * const CallReturnVisitTypeTransferedStudy;
+extern NSString const * const CallReturnVisitTypeTransferedNotAtHome;
+extern NSString const * const CallReturnVisitTypeTransferedReturnVisit;
 extern NSString const * const CallReturnVisitTypeReturnVisit;
 extern NSString const * const CallReturnVisitTypeStudy;
 extern NSString const * const CallReturnVisitTypeNotAtHome;

@@ -39,6 +39,13 @@ NSString const * const CallReturnVisitPublicationYear = @"year";
 NSString const * const CallReturnVisitPublicationMonth = @"month";
 NSString const * const CallReturnVisitPublicationDay = @"day";
 
+extern NSString const * const CallReturnVisitTypeTransferedStudy;
+extern NSString const * const CallReturnVisitTypeTransferedNotAtHome;
+extern NSString const * const CallReturnVisitTypeTransferedReturnVisit;
+
+NSString const * const CallReturnVisitTypeTransferedStudy = AlternateLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
+NSString const * const CallReturnVisitTypeTransferedNotAtHome = AlternateLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
+NSString const * const CallReturnVisitTypeTransferedReturnVisit = AlternateLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
 NSString const * const CallReturnVisitTypeReturnVisit = AlternateLocalizedString(@"Return Visit", @"return visit type name");
 NSString const * const CallReturnVisitTypeStudy = AlternateLocalizedString(@"Study", @"return visit type name");
 NSString const * const CallReturnVisitTypeNotAtHome = AlternateLocalizedString(@"Not At Home", @"return visit type name");
