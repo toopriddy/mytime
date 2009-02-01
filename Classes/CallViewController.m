@@ -29,6 +29,7 @@ const NSString *CallViewRowHeight = @"rowHeight";
 const NSString *CallViewGroupText = @"group";
 const NSString *CallViewType = @"type";
 const NSString *CallViewRows = @"rows";
+const NSString *CallViewNames = @"names";
 const NSString *CallViewSelectedInvocations = @"select";
 const NSString *CallViewDeleteInvocations = @"delete";
 const NSString *CallViewInsertDelete = @"insertdelete";
@@ -457,7 +458,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	// hide the back button so that they cant cancel the edit without hitting done
 	self.navigationItem.hidesBackButton = YES;
 
-#if 1
+#if 0
 	[self reloadData];
 	[theTableView reloadData];
 	if(theTableView.editing != _editing)
@@ -469,75 +470,69 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSEnumerator *oldDisplayInformation = [cachedItems objectEnumerator];
 	NSMutableDictionary *items;
 
-[theTableView beginUpdates];
 	int section = 0;
 	int row = 0;
 	NSEnumerator *newDisplayInformation = [_displayInformation objectEnumerator];
 	NSMutableDictionary *newItems;
 	
-	NSMutableIndexSet *insertSections = [NSMutableIndexSet indexSet];
-	NSMutableArray *insertRows = [NSMutableArray array];
-
+[theTableView beginUpdates];
 	while( YES )
 	{
+		row = 0;
+		// get the next old items and if there are no more then dont increment the section
 		items = [oldDisplayInformation nextObject];
+		// if there were no more new items bust out
 		if(items == nil)
 			break;
 		// advance to the next section
 		newItems = [newDisplayInformation nextObject];
 
-
-		int start = section;
+		// see if the new section at section is the sames as the older section, if it is new
+		// then loop till we find the old section
 		while(![[newItems objectForKey:CallViewType] isEqualToString:[items objectForKey:CallViewType]])
 		{
+			[theTableView insertSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+			DEBUG(NSLog(@"insertSection: %d %@", section, [newItems objectForKey:CallViewType]);)
 			section++;
 			newItems = [newDisplayInformation nextObject];
 		}
-		if(start != section)
+		
+		NSEnumerator *oldRows = [[items objectForKey:CallViewNames] objectEnumerator];
+		NSString *oldName;
+		NSEnumerator *newRows = [[newItems objectForKey:CallViewNames] objectEnumerator];
+		NSString *newName = [newRows nextObject];
+		while( (oldName = [oldRows nextObject]) )
 		{
-			[insertSections addIndexesInRange:NSMakeRange(start, section - start)];
-		}
-		NSEnumerator *rows = [[items objectForKey:CallViewRows] objectEnumerator];
-		NSInvocation *invocation;
-		NSEnumerator *newRows = [[newItems objectForKey:CallViewRows] objectEnumerator];
-		NSInvocation *newInvocation = [newRows nextObject];
-		while( (invocation = [rows nextObject]) )
-		{
-			NSMutableArray *array = [[NSMutableArray alloc] init];
-			while([invocation selector] != [newInvocation selector])
+			while(![oldName isEqualToString:newName])
 			{
-				[array addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+				[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
+				DEBUG(NSLog(@"insertRow: %d,%d %@", section, row, newName);)
 				row++;
-				newInvocation = [newRows nextObject];
+				newName = [newRows nextObject];
 			}
-			if([array count])
-			{
-				[insertRows addObjectsFromArray:array];
-			}
-			[array release];
+			newName = [newRows nextObject];
 			row++;
 		}
 		while( [newRows nextObject] )
 		{
-			[insertRows addObject:[NSIndexPath indexPathForRow:row inSection:section]];
+			[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
+			DEBUG(NSLog(@"insertRow: %d,%d %@", section, row, newName);)
 			row++;
 		}
 
 		section++;
-		row = 0;
 	}
-	while( [newDisplayInformation nextObject] )
+	
+	while( (newItems = [newDisplayInformation nextObject]) )
 	{
-		[insertSections addIndex:section];
+		[theTableView insertSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+		DEBUG(NSLog(@"insertSection: %d %@", section, [newItems objectForKey:CallViewType]);)
 		section++;
 	}
-	[theTableView insertSections:insertSections withRowAnimation:UITableViewRowAnimationFade];
-	[theTableView insertRowsAtIndexPaths:insertRows withRowAnimation:UITableViewRowAnimationFade];
 
 	if(theTableView.editing != _editing)
 		theTableView.editing = _editing;		
-	[theTableView endUpdates];
-	//[theTableView reloadData];
+[theTableView endUpdates];
 #endif	
 }
 
@@ -1082,6 +1077,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	
 	// initialize the arrays
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewRows];
+	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewNames];
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewSelectedInvocations];
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewDeleteInvocations];
 	[_currentGroup setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallViewInsertDelete];
@@ -1099,6 +1095,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 }
 
 - (void) addRowInvocation:(NSInvocation *)cellInvocation 
+				 cellName:(NSString *)name
 			 rowHeight:(int)rowHeight
      insertOrDelete:(UITableViewCellEditingStyle)insertOrDelete
   indentWhenEditing:(BOOL)indentWhenEditing 
@@ -1109,6 +1106,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSInvocation *dummyInvocation = [self invocationForSelector:@selector(dummyFunction)];
 
 	[[_currentGroup objectForKey:CallViewRows] addObject:cellInvocation];
+	[[_currentGroup objectForKey:CallViewNames] addObject:name];
 	[[_currentGroup objectForKey:CallViewSelectedInvocations] addObject:(selectInvocation ? selectInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewDeleteInvocations] addObject:(deleteInvocation ? deleteInvocation : dummyInvocation)];
 	[[_currentGroup objectForKey:CallViewInsertDelete] addObject:[NSNumber numberWithInt:insertOrDelete]];
@@ -1283,6 +1281,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
 	}
 	NSMutableString *notes = [[[_call objectForKey:CallReturnVisits] objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitNotes];
+
 	if(_editing)
 	{
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -1438,6 +1437,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 		// use the textfield
 		[self  addRowInvocation:[self invocationForSelector:@selector(getNameCell)]
+		           cellName:@"Name"     
 				 rowHeight:50
 			insertOrDelete:UITableViewCellEditingStyleNone
 		 indentWhenEditing:NO
@@ -1471,6 +1471,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			[self addGroup:nil type:@"Address"];
 			
 			[self  addRowInvocation:[self invocationForSelector:@selector(getAddressCell)]
+						   cellName:@"Address"
 					 rowHeight:70
 				insertOrDelete:UITableViewCellEditingStyleNone
 			 indentWhenEditing:NO
@@ -1483,6 +1484,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getLocationTypeCell)]
+						   cellName:@"Location"
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:NO
@@ -1496,43 +1498,45 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		// they had an array of publications, lets check them too
 		NSMutableArray *metadata = [_call objectForKey:CallMetadata];
-		if(_editing || metadata)
+		if(_editing || (metadata && metadata.count))
 		{
 			// we need a larger row height
 			[self addGroup:nil type:@"Metadata"];
-		}
-		if(metadata != nil)
-		{
-			int j;
-			int endMetadata = [metadata count];
-			for(j = 0; j < endMetadata; ++j)
+			if(metadata != nil)
 			{
-				// METADATA
-				int height = -1;
-				NSMutableDictionary *entry = [metadata objectAtIndex:j];
-				// if the entry is a notes entry then we need to adjust the height of the cell
-				if([[entry objectForKey:SettingsMetadataType] intValue] == NOTES &&
-				   [[entry objectForKey:SettingsMetadataValue] length])
+				int j;
+				int endMetadata = [metadata count];
+				for(j = 0; j < endMetadata; ++j)
 				{
-					height = [UITableViewMultilineTextCell heightForWidth:250 withText:[entry objectForKey:SettingsMetadataValue]];
+					// METADATA
+					int height = -1;
+					NSMutableDictionary *entry = [metadata objectAtIndex:j];
+					// if the entry is a notes entry then we need to adjust the height of the cell
+					if([[entry objectForKey:SettingsMetadataType] intValue] == NOTES &&
+					   [[entry objectForKey:SettingsMetadataValue] length])
+					{
+						height = [UITableViewMultilineTextCell heightForWidth:250 withText:[entry objectForKey:SettingsMetadataValue]];
+					}
+					[self  addRowInvocation:[self invocationForSelector:@selector(getMetadataCellAtIndex:) withArgument:(void *)j]
+							   cellName:[entry objectForKey:SettingsMetadataName]
+								 rowHeight:height
+							insertOrDelete:(_editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone)
+						indentWhenEditing:YES
+						  selectInvocation:[self invocationForSelector:@selector(selectMetadataAtIndex:) withArgument:(void *)j]
+						  deleteInvocation:[self invocationForSelector:@selector(deleteMetadataAtIndex:) withArgument:(void *)j]];
 				}
-				[self  addRowInvocation:[self invocationForSelector:@selector(getMetadataCellAtIndex:) withArgument:(void *)j]
-							 rowHeight:height
-						insertOrDelete:(_editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone)
-					indentWhenEditing:YES
-					  selectInvocation:[self invocationForSelector:@selector(selectMetadataAtIndex:) withArgument:(void *)j]
-					  deleteInvocation:[self invocationForSelector:@selector(deleteMetadataAtIndex:) withArgument:(void *)j]];
 			}
-		}
 
-		if(_editing)
-		{
-			[self  addRowInvocation:[self invocationForSelector:@selector(getAddMetadataCell)]
-					 rowHeight:-1
-				insertOrDelete:UITableViewCellEditingStyleInsert
-			 indentWhenEditing:YES
-			  selectInvocation:[self invocationForSelector:@selector(addMetadataSelected)]
-			  deleteInvocation:nil];
+			if(_editing)
+			{
+				[self  addRowInvocation:[self invocationForSelector:@selector(getAddMetadataCell)]
+							   cellName:@"New Metadata UNIQUE TITLE"
+						 rowHeight:-1
+					insertOrDelete:UITableViewCellEditingStyleInsert
+				 indentWhenEditing:YES
+				  selectInvocation:[self invocationForSelector:@selector(addMetadataSelected)]
+				  deleteInvocation:nil];
+			}
 		}
 	}
 
@@ -1543,6 +1547,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		[self addGroup:nil type:@"AddCall"];
 
 		[self  addRowInvocation:[self invocationForSelector:@selector(getAddReturnVisitCell)]
+					   cellName:@"Add Call"
 				 rowHeight:-1
 			insertOrDelete:UITableViewCellEditingStyleInsert
 		 indentWhenEditing:YES
@@ -1576,6 +1581,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
+						   cellName:@"Notes"
 						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:(end == 1 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete)
 				 indentWhenEditing:YES
@@ -1585,7 +1591,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			else
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
-						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
+						   cellName:@"Notes"
+						 rowHeight:[UITableViewMultilineTextCell heightForWidth:280 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:NO
 				  selectInvocation:nil
@@ -1597,6 +1604,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getChangeDateCellForReturnVisitIndex:) withArgument:(void *)i]
+						   cellName:@"ChangeDate"
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
            		 indentWhenEditing:YES
@@ -1612,6 +1620,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			if(_editing || ![type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit])
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getTypeCellForReturnVisitIndex:) withArgument:(void *)i]
+						   cellName:@"Return Visit Type"
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:YES
@@ -1635,6 +1644,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					if(_editing)
 					{
 						[self  addRowInvocation:[self invocationForSelector:@selector(getPublicationCellForReturnVisitIndex:publicationIndex:) withArgument:(void *)i andArgument:(void *)j]
+						   cellName:[[publications objectAtIndex:j] objectForKey:CallReturnVisitPublicationTitle]
 								 rowHeight:-1
 							insertOrDelete:UITableViewCellEditingStyleDelete
 						indentWhenEditing:YES
@@ -1644,6 +1654,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 					else
 					{
 						[self  addRowInvocation:[self invocationForSelector:@selector(getPublicationCellForReturnVisitIndex:publicationIndex:) withArgument:(void *)i andArgument:(void *)j]
+									   cellName:[[publications objectAtIndex:j] objectForKey:CallReturnVisitPublicationTitle]
 								 rowHeight:-1
 							insertOrDelete:UITableViewCellEditingStyleNone
 						indentWhenEditing:NO
@@ -1657,6 +1668,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getAddPublicationCellForReturnVisitIndex:) withArgument:(void *)i]
+						   cellName:@"Add Publication"
 						 rowHeight:-1
 					insertOrDelete:UITableViewCellEditingStyleInsert
 				 indentWhenEditing:YES
@@ -1672,6 +1684,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[self addGroup:nil type:@"Delete"];
 
 		[self  addRowInvocation:[self invocationForSelector:@selector(getDeleteCallCell)]
+					   cellName:@"Delete"
 				 rowHeight:-1
 			insertOrDelete:UITableViewCellEditingStyleNone
 		 indentWhenEditing:NO
@@ -2109,32 +2122,12 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 {
 	int row = [indexPath row];
 	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d", row, section);)
-	if (row == -1) 
-	{
-		if([[_displayInformation objectAtIndex:section] objectForKey:CallViewGroupText] != nil)
-		{
-			return 40;
-		}
-	}
-	else
-	{
-		float height;
-#if 0
-		if([[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] respondsToSelector:@selector(height)])
-		{
-			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRows] objectAtIndex:row] height];
-		}
-		else
-#endif
-		{
-			height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRowHeight] objectAtIndex:row] floatValue];
-		}
-		VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d height=%f", row, section, height);)
-		if(height >= 0.0)
-			return(height);
-	}
-	return theTableView.rowHeight;
+	float height = [[[[_displayInformation objectAtIndex:section] objectForKey:CallViewRowHeight] objectAtIndex:row] floatValue];
+	
+	if(height < 0.0)
+		height = theTableView.rowHeight;
+	VERBOSE(NSLog(@"tableView: heightForRowAtIndexPath: row=%d section=%d height=%f", row, section, height);)
+	return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

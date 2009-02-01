@@ -15,17 +15,16 @@ typedef enum {
 	, CALLS_SORTED_BY_CITY
 	, CALLS_SORTED_BY_NAME
 	, CALLS_SORTED_BY_STUDY
+	, CALLS_SORTED_BY_METADATA
 } SortCallsType;
 
 
 @interface CallsSorter : NSObject {
 	NSMutableArray *calls;
-	NSMutableArray *streetSections;
-	NSMutableArray *citySections;
-	NSMutableArray *streetRowCount;
-	NSMutableArray *cityRowCount;
-	NSMutableArray *streetOffsets;
-	NSMutableArray *cityOffsets;
+	NSMutableArray *sectionNames;
+	NSMutableArray *sectionIndexNames;
+	NSMutableArray *sectionRowCount;
+	NSMutableArray *sectionOffsets;
 
 	NSMutableArray *_displayArray;
 	
@@ -33,12 +32,10 @@ typedef enum {
 }
 
 @property (nonatomic, retain) NSMutableArray *calls;
-@property (nonatomic, retain) NSMutableArray *streetSections;
-@property (nonatomic, retain) NSMutableArray *citySections;
-@property (nonatomic, retain) NSMutableArray *streetRowCount;
-@property (nonatomic, retain) NSMutableArray *cityRowCount;
-@property (nonatomic, retain) NSMutableArray *streetOffsets;
-@property (nonatomic, retain) NSMutableArray *cityOffsets;
+@property (nonatomic, retain) NSMutableArray *sectionNames;
+@property (nonatomic, retain) NSMutableArray *sectionIndexNames;
+@property (nonatomic, retain) NSMutableArray *sectionRowCount;
+@property (nonatomic, retain) NSMutableArray *sectionOffsets;
 @property (nonatomic, retain) NSMutableArray *displayArray;
 @property (nonatomic, assign) SortCallsType sortedBy;
 
