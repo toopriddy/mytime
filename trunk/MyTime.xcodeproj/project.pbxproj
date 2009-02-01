@@ -27,6 +27,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		9001FEAF0E9B0B820091F8FD /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */; };
+		9003010F0F337AC000F2B68F /* CallsSortedByFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003010E0F337AC000F2B68F /* CallsSortedByFilterDataSource.m */; };
 		9003EC4A0EE1E9070065F24D /* MetadataCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */; };
 		9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
@@ -142,6 +143,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9001FEAD0E9B0B820091F8FD /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
+		9003010D0F337AC000F2B68F /* CallsSortedByFilterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByFilterDataSource.h; sourceTree = "<group>"; };
+		9003010E0F337AC000F2B68F /* CallsSortedByFilterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByFilterDataSource.m; sourceTree = "<group>"; };
 		9003EC480EE1E9070065F24D /* MetadataCustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataCustomViewController.h; sourceTree = "<group>"; };
 		9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataCustomViewController.m; sourceTree = "<group>"; };
 		9003EE2C0EE3119E0065F24D /* UITableViewMultiTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultiTextFieldCell.h; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 				9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */,
 				90E6D1D30EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.h */,
 				90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */,
+				9003010D0F337AC000F2B68F /* CallsSortedByFilterDataSource.h */,
+				9003010E0F337AC000F2B68F /* CallsSortedByFilterDataSource.m */,
 				90FBE8760E39887300FD8014 /* SortedCallsViewController.h */,
 				90FBE8770E39887300FD8014 /* SortedCallsViewController.m */,
 				90FBE87F0E398CAE00FD8014 /* SortedCallsViewDataSourceProtocol.h */,
@@ -744,6 +749,7 @@
 				90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */,
 				90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */,
 				9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */,
+				9003010F0F337AC000F2B68F /* CallsSortedByFilterDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

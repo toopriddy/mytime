@@ -12,12 +12,10 @@
 @implementation CallsSorter
 
 @synthesize calls;
-@synthesize streetSections;
-@synthesize citySections;
-@synthesize streetRowCount;
-@synthesize cityRowCount;
-@synthesize streetOffsets;
-@synthesize cityOffsets;
+@synthesize sectionNames;
+@synthesize sectionIndexNames;
+@synthesize sectionRowCount;
+@synthesize sectionOffsets;
 @synthesize sortedBy;
 @synthesize displayArray = _displayArray;
 
@@ -103,12 +101,9 @@ int sortByDate(id v1, id v2, void *context)
 {
     DEBUG(NSLog(@"%s: dealloc", __FILE__);)
 	self.calls = nil;
-	self.citySections = nil;
-	self.streetSections = nil;
-	self.cityRowCount = nil;
-	self.streetRowCount = nil;
-	self.cityOffsets = nil;
-	self.streetOffsets = nil;
+	self.sectionNames = nil;
+	self.sectionRowCount = nil;
+	self.sectionOffsets = nil;
 	self.displayArray = nil;
 	
 	[super dealloc];
@@ -125,12 +120,6 @@ int sortByDate(id v1, id v2, void *context)
 		self.calls = [NSMutableArray array];
 		[[[Settings sharedInstance] settings] setObject:self.calls forKey:SettingsCalls];
 	}
-	self.citySections = [[NSMutableArray alloc] init];
-	self.streetSections = [[NSMutableArray alloc] init];
-	self.cityRowCount = [[NSMutableArray alloc] init];
-	self.streetRowCount = [[NSMutableArray alloc] init];
-	self.cityOffsets = [[NSMutableArray alloc] init];
-	self.streetOffsets = [[NSMutableArray alloc] init];
 	[self refreshData];
 	return(self);
 }
@@ -199,28 +188,40 @@ int sortByDate(id v1, id v2, void *context)
 		count = [_displayArray count];
 	else
 		count = [calls count];
-		
+
+	// reinitalize the info
+	self.sectionNames = [NSMutableArray array];
+	self.sectionIndexNames = [NSMutableArray array];
+	self.sectionRowCount = [NSMutableArray array];
+	self.sectionOffsets = [NSMutableArray array];
+
 	switch(sortedBy)
 	{
+		case CALLS_SORTED_BY_DATE:
+		{
+			self.sectionIndexNames = nil;
+			[sectionNames addObject:NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'")];
+			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+			break;
+		}
+		
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
 		{
 			const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
-			[streetSections removeAllObjects];
-			[streetRowCount removeAllObjects];
-			[streetOffsets removeAllObjects];
+			self.sectionIndexNames = [NSMutableArray arrayWithObjects:@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
 			
 			VERY_VERBOSE(NSLog(@"street count=%d", count);)
 			NSString *lastSectionTitle = @"#";
 			int rowCount = 0;
 
-			[streetRowCount addObject:[NSNumber numberWithInt:0]];
-			[streetOffsets addObject:[NSNumber numberWithInt:0]];
+			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 			
 			if(count == 0)
 			{
-				[streetSections addObject:@""];
+				[sectionNames addObject:@""];
 			}
 			else
 			{
@@ -232,11 +233,11 @@ int sortByDate(id v1, id v2, void *context)
 					
 				if([street length] == 0)
 				{
-					[streetSections addObject:lastSectionTitle];
+					[sectionNames addObject:lastSectionTitle];
 				}
 				else
 				{
-					[streetSections addObject:@""];
+					[sectionNames addObject:@""];
 				}
 
 				for(i = 0; i < count; ++i)
@@ -265,9 +266,9 @@ int sortByDate(id v1, id v2, void *context)
 					{
 						lastSectionTitle = sectionTitle;
 						VERY_VERBOSE(NSLog(@"added");)
-						[streetRowCount addObject:[NSNumber numberWithInt:rowCount]];
-						[streetOffsets addObject:[NSNumber numberWithInt:i]];
-						[streetSections addObject:sectionTitle];
+						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+						[sectionNames addObject:sectionTitle];
 						rowCount = 0;
 					}
 				}
@@ -278,30 +279,27 @@ int sortByDate(id v1, id v2, void *context)
 		
 		case CALLS_SORTED_BY_CITY:
 		{
-			[citySections removeAllObjects];
-			[cityRowCount removeAllObjects];
-			[cityOffsets removeAllObjects];
 			VERY_VERBOSE(NSLog(@"city count=%d", count);)
 			NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
 			int rowCount = 0;
 
-			[cityRowCount addObject:[NSNumber numberWithInt:0]];
-			[cityOffsets addObject:[NSNumber numberWithInt:0]];
+			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 
 			if(count == 0)
 			{
-				[citySections addObject:@""];
+				[sectionNames addObject:@""];
 			}
 			else
 			{
 				NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
 				if([city length] == 0)
 				{
-					[citySections addObject:lastSectionTitle];
+					[sectionNames addObject:lastSectionTitle];
 				}
 				else
 				{
-					[citySections addObject:@""];
+					[sectionNames addObject:@""];
 				}
 
 				for(i = 0; i < count; ++i)
@@ -326,9 +324,71 @@ int sortByDate(id v1, id v2, void *context)
 					{
 						lastSectionTitle = sectionTitle;
 						VERY_VERBOSE(NSLog(@"added");)
-						[cityRowCount addObject:[NSNumber numberWithInt:rowCount]];
-						[cityOffsets addObject:[NSNumber numberWithInt:i]];
-						[citySections addObject:sectionTitle];
+						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+						[sectionNames addObject:sectionTitle];
+						rowCount = 0;
+					}
+				}
+			}
+			// the index is the same as the section names
+			[sectionIndexNames setArray:sectionNames];
+			break;
+		}
+		case CALLS_SORTED_BY_METADATA:
+		{
+			self.sectionRowCount = [NSMutableArray array];
+			self.sectionOffsets = [NSMutableArray array];
+			self.sectionNames = [NSMutableArray array];
+
+			VERY_VERBOSE(NSLog(@"city count=%d", count);)
+			NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+			int rowCount = 0;
+
+			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+
+			if(count == 0)
+			{
+				[sectionNames addObject:@""];
+			}
+			else
+			{
+				NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
+				if([city length] == 0)
+				{
+					[sectionNames addObject:lastSectionTitle];
+				}
+				else
+				{
+					[sectionNames addObject:@""];
+				}
+
+				for(i = 0; i < count; ++i)
+				{
+					NSString *sectionTitle;
+					NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
+					
+					rowCount++;
+					
+					if([city length] == 0)
+					{
+						sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+					}
+					else
+					{
+						sectionTitle = city;
+					}
+					VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
+					// lets see if the new section has a different letter than the previous or if
+					// this is the first entry add it to the sections
+					if(![sectionTitle isEqualToString:lastSectionTitle])
+					{
+						lastSectionTitle = sectionTitle;
+						VERY_VERBOSE(NSLog(@"added");)
+						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+						[sectionNames addObject:sectionTitle];
 						rowCount = 0;
 					}
 				}
@@ -340,49 +400,17 @@ int sortByDate(id v1, id v2, void *context)
 
 - (NSInteger)numberOfSections 
 {
-	int ret = 1;
-	switch(sortedBy)
-	{
-		case CALLS_SORTED_BY_DATE:
-			ret = 1;
-			break;
-			
-		case CALLS_SORTED_BY_CITY:
-			ret = [citySections count];
-			break;
-			
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-			ret = [streetSections count];
-			break;
-	}
+	int ret = [sectionNames count];
+	if(ret <= 0)
+		ret = 1;
 	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%d", ret);)
 	return ret;
 }
 
 - (NSArray *)sectionIndexTitles 
 {
-	NSArray *ret;
-	switch(sortedBy)
-	{
-		case CALLS_SORTED_BY_DATE:
-			ret = nil;
-			break;
-			
-		case CALLS_SORTED_BY_CITY:
-			ret = citySections;
-			break;
-			
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-			ret = [NSArray arrayWithObjects:@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
-//			ret = streetSections;
-			break;
-	}
-	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%@", ret);)
-	return ret;
+	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%@", sectionNames);)
+	return sectionIndexNames;
 }
 
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
@@ -403,7 +431,7 @@ int sortByDate(id v1, id v2, void *context)
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
 		{
-			NSEnumerator *e = [streetSections objectEnumerator];
+			NSEnumerator *e = [sectionIndexNames objectEnumerator];
 			NSString *name;
 			int i = 0;
 			while ( (name = [e nextObject]) ) 
@@ -433,29 +461,29 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 			
 		case CALLS_SORTED_BY_CITY:
-			if(section == ([cityOffsets count]-1))
+			if(section == ([sectionOffsets count]-1))
 			{
-				ret = [calls count] - [[cityOffsets objectAtIndex:section] intValue];
+				ret = [calls count] - [[sectionOffsets objectAtIndex:section] intValue];
 			}
 			else
 			{
-				ret = [[cityOffsets objectAtIndex:(section + 1)] intValue] - [[cityOffsets objectAtIndex:section] intValue];
+				ret = [[sectionOffsets objectAtIndex:(section + 1)] intValue] - [[sectionOffsets objectAtIndex:section] intValue];
 			}
 			break;
 			
 		case CALLS_SORTED_BY_STREET:
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
-			if(section == ([streetOffsets count]-1))
+			if(section == ([sectionOffsets count]-1))
 			{
 				if(_displayArray)
-					ret = [_displayArray count] - [[streetOffsets objectAtIndex:section] intValue];
+					ret = [_displayArray count] - [[sectionOffsets objectAtIndex:section] intValue];
 				else
-					ret = [calls count] - [[streetOffsets objectAtIndex:section] intValue];
+					ret = [calls count] - [[sectionOffsets objectAtIndex:section] intValue];
 			}
 			else
 			{
-				ret = [[streetOffsets objectAtIndex:(section + 1)] intValue] - [[streetOffsets objectAtIndex:section] intValue];
+				ret = [[sectionOffsets objectAtIndex:(section + 1)] intValue] - [[sectionOffsets objectAtIndex:section] intValue];
 			}
 			break;
 	}
@@ -467,48 +495,14 @@ int sortByDate(id v1, id v2, void *context)
 
 - (NSString *)titleForHeaderInSection:(NSInteger)section 
 {
-	NSString *name;
-
-	switch(sortedBy)
-	{
-		case CALLS_SORTED_BY_DATE:
-			name = NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'");
-			break;
-			
-		case CALLS_SORTED_BY_CITY:
-			name = [citySections objectAtIndex:section];
-			break;
-
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-			name = [streetSections objectAtIndex:section];
-			break;
-	}
+	NSString *name = [sectionNames objectAtIndex:section];
 	VERBOSE(NSLog(@"sectionList: titleForSection:%d return = %@", section, name);)
-	return(name);
+	return name;
 }
 
 - (NSInteger)callRowOffsetForSection:(NSInteger)section
 {
-	NSInteger ret = 0;
-
-	switch(sortedBy)
-	{
-		case CALLS_SORTED_BY_DATE:
-			ret = 0;
-			break;
-			
-		case CALLS_SORTED_BY_CITY:
-			ret = [[cityOffsets objectAtIndex:section] intValue];
-			break;
-
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-			ret = [[streetOffsets objectAtIndex:section] intValue];
-			break;
-	}
+	NSInteger ret = [[sectionOffsets objectAtIndex:section] intValue];
 	VERBOSE(NSLog(@"callRowOffsetForSection:%d return = %d", section, ret);)
 	return(ret);
 }
