@@ -62,5 +62,9 @@
 	address.text = top;
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
+{
+	[self callDetailSelected];
+}
 
 @end

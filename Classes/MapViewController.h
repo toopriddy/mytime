@@ -23,7 +23,8 @@
 	NSMutableDictionary *call;
 	UIActivityIndicatorView *progView;
 	MapViewCallDetailController *detailView;
-	
+	BOOL _shouldReloadMarkers;
+
 	RMMarker *selectedMarker;
 }
 
@@ -33,8 +34,5 @@
 
 - (id)initWithTitle:(NSString *)theTitle call:(NSMutableDictionary *)call;
 - (id)initWithTitle:(NSString *)theTitle;
-
-- (NSString *)getAddressFromCall:(NSMutableDictionary *)theCall useHtml:(BOOL)useHtml;
-- (NSString *)getInfoFromCall:(NSMutableDictionary *)theCall;
 
 @end

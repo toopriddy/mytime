@@ -343,7 +343,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		int row = 0;
 		NSEnumerator *newDisplayInformation = [cachedItems objectEnumerator];
 		NSMutableDictionary *newItems;
-		
+
 		NSMutableIndexSet *insertSections = [NSMutableIndexSet indexSet];
 		NSMutableArray *insertRows = [NSMutableArray array];
 
@@ -1592,7 +1592,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
 						   cellName:@"Notes"
-						 rowHeight:[UITableViewMultilineTextCell heightForWidth:280 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
+						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:NO
 				  selectInvocation:nil
