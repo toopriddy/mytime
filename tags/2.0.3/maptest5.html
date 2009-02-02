@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script
+    src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA8ZaIKMZcvWHNxFL4rpcPlxR4MgLgohEpMJOdpRIqyc07Qp4zFRRNU4wM18YEuS7Vh24_NSPNY8OJVA"
+      type="text/javascript"></script>
+
+<!-- Make the document body take up the full screen --> <style
+type="text/css"> v\:* {behavior:url(#default#VML);} html, body {width: 100%;
+height: 100%} body {margin-top: 0px; margin-right: 0px; margin-left: 0px;
+margin-bottom: 0px} </style>
+
+</head>
+<body>
+
+  <!-- Declare the div, make it take up the full document body -->
+  <div id="map" style="width: 100%; height: 100%;"></div>
+
+  <script type="text/javascript">
+    //<![CDATA[        
+
+    var map = null;
+    var geocoder = null;
+    if (GBrowserIsCompatible()) {
+      map = new GMap(document.getElementById("map"));
+      map.enableScrollWheelZoom();
+      map.enableDoubleClickZoom();
+      map.enableContinuousZoom();
+//      map.centerAndZoom(new GPoint(-122.141944, 37.441944), 4);
+      map.addControl(GSmallZoomControl());
+      geocoder = new GClientGeocoder();
+      // Monitor the window resize event and let the map know when it occurs 
+      if(window.attachEvent) 
+      { 
+          window.attachEvent("onresize", function() {this.map.onResize()} ); 
+      } 
+      else 
+      { 
+          window.addEventListener("resize",function() {this.map.onResize()} , false); 
+      }
+
+    }
+    function showAddress(address) {
+      if (geocoder) {
+        geocoder.getLatLng(
+          address,
+          function(point) {
+            if (!point) {
+              alert(address + " not found");
+            } else {
+              map.setCenter(point, 13);
+              var marker = new GMarker(point);
+              map.addOverlay(marker);
+              marker.openInfoWindowHtml(address);
+            }
+          }
+        );
+      }
+    }
+
+    //]]>
+  </script>
+
+</body></html>
+
