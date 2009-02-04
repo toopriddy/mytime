@@ -322,6 +322,7 @@
 			90059CF40F3A2E47006DF536 /* PlistBookmark */ = 90059CF40F3A2E47006DF536 /* PlistBookmark */;
 			90059CF50F3A2E47006DF536 /* PBXTextBookmark */ = 90059CF50F3A2E47006DF536 /* PBXTextBookmark */;
 			90059CF70F3A2E47006DF536 /* PBXTextBookmark */ = 90059CF70F3A2E47006DF536 /* PBXTextBookmark */;
+			90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */ = 90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */;
 			9007C2970EE0EF6300FE19D5 = 9007C2970EE0EF6300FE19D5 /* PBXTextBookmark */;
 			9007C2A00EE0EF6300FE19D5 = 9007C2A00EE0EF6300FE19D5 /* PBXTextBookmark */;
 			900A21BB0F146E6800BE1AF2 = 900A21BB0F146E6800BE1AF2 /* PBXTextBookmark */;
@@ -2021,10 +2022,20 @@
 		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
 		name = "Localizable.strings: 952";
 		rLen = 0;
-		rLoc = 35732;
+		rLoc = 35734;
 		rType = 0;
 		vrLen = 3858;
 		vrLoc = 31874;
+	};
+	90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
+		name = "Localizable.strings: 419";
+		rLen = 0;
+		rLoc = 13803;
+		rType = 0;
+		vrLen = 954;
+		vrLoc = 13152;
 	};
 	9007C2970EE0EF6300FE19D5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3046,9 +3057,9 @@
 	};
 	90417EAB0F0EDE96007CBA7E /* Danish */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {4842, 12124}}";
-			sepNavSelRange = "{35732, 0}";
-			sepNavVisRange = "{31874, 3858}";
+			sepNavIntBoundsRect = "{{0, 0}, {4842, 12110}}";
+			sepNavSelRange = "{13803, 0}";
+			sepNavVisRange = "{13152, 954}";
 		};
 	};
 	9045A7240E7C1423001B439C /* TCPServer.h */ = {
