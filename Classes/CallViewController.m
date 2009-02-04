@@ -20,6 +20,7 @@
 #import "MetadataViewController.h"
 #import "MetadataEditorViewController.h"
 #import "Geocache.h"
+#import "PSUrlString.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -1927,11 +1928,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		
 	NSMutableString *string = [[[NSMutableString alloc] initWithString:@"mailto:?"] autorelease];
 	[string appendString:@"subject="];
-	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringWithEscapedCharacters]];
 	[string appendString:@"&body="];
 
-	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [_call objectForKey:CallName]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
+	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [_call objectForKey:CallName]] stringWithEscapedCharacters]];
 	
 	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
 	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
@@ -1942,7 +1943,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						   state:[_call objectForKey:CallState]
 						 topLine:top 
 				      bottomLine:bottom];
-	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringWithEscapedCharacters]];
 
 	// Add Metadata
 	// they had an array of publications, lets check them too
@@ -1957,11 +1958,11 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			NSMutableDictionary *entry = [metadata objectAtIndex:j];
 			NSString *name = [entry objectForKey:SettingsMetadataName];
 			value = [entry objectForKey:SettingsMetadataValue];
-			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[NSBundle mainBundle] localizedStringForKey:name value:name table:@""], value] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[NSBundle mainBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
 		}
 	}
 
-	[string appendString:[@"\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[@"\n" stringWithEscapedCharacters]];
 
 
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
@@ -1981,10 +1982,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 
-		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringWithEscapedCharacters]];
 		value = [visit objectForKey:CallReturnVisitType];
-		[string appendString:[[NSString stringWithFormat:@"%@\n", [[NSBundle mainBundle] localizedStringForKey:value value:value table:@""]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[[NSString stringWithFormat:@"%@\n", [[NSBundle mainBundle] localizedStringForKey:value value:value table:@""]] stringWithEscapedCharacters]];
+		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringWithEscapedCharacters]];
 
 		// Publications
 		if([visit objectForKey:CallReturnVisitPublications] != nil)
@@ -1997,13 +1998,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				NSDictionary *publication = [publications objectAtIndex:j];
 				// PUBLICATION
-				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringWithEscapedCharacters]];
 			}
 		}
-		[string appendString:[@" \n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[string appendString:[@" \n" stringWithEscapedCharacters]];
 	}
 
-	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
 
 	// now add the url that will allow importing
 
@@ -2026,7 +2027,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 
 
-	[string appendString:[link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	[string appendString:[link stringWithEscapedCharacters]];
 
 	// open the mail program
 	NSURL *url = [NSURL URLWithString:string];
