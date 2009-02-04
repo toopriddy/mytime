@@ -30,6 +30,7 @@
 		9003010F0F337AC000F2B68F /* CallsSortedByFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003010E0F337AC000F2B68F /* CallsSortedByFilterDataSource.m */; };
 		9003EC4A0EE1E9070065F24D /* MetadataCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */; };
 		9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */; };
+		90059C900F3A2112006DF536 /* PSUrlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 90059C8F0F3A2112006DF536 /* PSUrlString.m */; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
 		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
@@ -149,6 +150,8 @@
 		9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataCustomViewController.m; sourceTree = "<group>"; };
 		9003EE2C0EE3119E0065F24D /* UITableViewMultiTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultiTextFieldCell.h; sourceTree = "<group>"; };
 		9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultiTextFieldCell.m; sourceTree = "<group>"; };
+		90059C8E0F3A2112006DF536 /* PSUrlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSUrlString.h; sourceTree = "<group>"; };
+		90059C8F0F3A2112006DF536 /* PSUrlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSUrlString.m; sourceTree = "<group>"; };
 		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		900A21750F1461FF00BE1AF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -354,6 +357,8 @@
 				9013137E0EA0773A0055D890 /* NumberViewController.h */,
 				9013137F0EA0773A0055D890 /* NumberViewController.m */,
 				901313810EA078780055D890 /* NumberViewControllerDelegate.h */,
+				90059C8E0F3A2112006DF536 /* PSUrlString.h */,
+				90059C8F0F3A2112006DF536 /* PSUrlString.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -750,6 +755,7 @@
 				90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */,
 				9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */,
 				9003010F0F337AC000F2B68F /* CallsSortedByFilterDataSource.m in Sources */,
+				90059C900F3A2112006DF536 /* PSUrlString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,43 +906,6 @@
 			};
 			name = Distribution;
 		};
-		90C0DAE30EA43DF700C47183 /* Simulator */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy";
-				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_SYMBOL_SEPARATION = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				PROVISIONING_PROFILE = DefaultProfileUuid;
-				SDKROOT = iphonesimulator2.1;
-			};
-			name = Simulator;
-		};
-		90C0DAE40EA43DF700C47183 /* Simulator */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
-				HEADER_SEARCH_PATHS = "../MapView/**";
-				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = MyTime;
-			};
-			name = Simulator;
-		};
 		90E6D10A0EEC3D18008B4A9C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -946,13 +915,6 @@
 				PRODUCT_NAME = "Build ipa";
 			};
 			name = Debug;
-		};
-		90E6D10B0EEC3D18008B4A9C /* Simulator */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Build ipa";
-			};
-			name = Simulator;
 		};
 		90E6D10C0EEC3D18008B4A9C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1024,7 +986,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
-				90C0DAE40EA43DF700C47183 /* Simulator */,
 				1D6058950D05DD3E006BFB54 /* Release */,
 				9052DB320E44462A00E191AB /* Distribution */,
 				904B20BE0E9B234B0020816E /* AdHoc Distribution */,
@@ -1036,7 +997,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				90E6D10A0EEC3D18008B4A9C /* Debug */,
-				90E6D10B0EEC3D18008B4A9C /* Simulator */,
 				90E6D10C0EEC3D18008B4A9C /* Release */,
 				90E6D10D0EEC3D18008B4A9C /* Distribution */,
 				90E6D10E0EEC3D18008B4A9C /* AdHoc Distribution */,
@@ -1048,7 +1008,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
-				90C0DAE30EA43DF700C47183 /* Simulator */,
 				C01FCF5008A954540054247B /* Release */,
 				9052DB310E44462A00E191AB /* Distribution */,
 				904B20BD0E9B234B0020816E /* AdHoc Distribution */,
