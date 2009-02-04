@@ -21,7 +21,7 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = "AdHoc Distribution";
+		activeBuildConfigurationName = Distribution;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos2.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
@@ -323,6 +323,8 @@
 			90059CF50F3A2E47006DF536 /* PBXTextBookmark */ = 90059CF50F3A2E47006DF536 /* PBXTextBookmark */;
 			90059CF70F3A2E47006DF536 /* PBXTextBookmark */ = 90059CF70F3A2E47006DF536 /* PBXTextBookmark */;
 			90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */ = 90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */;
+			90059CFD0F3A2E72006DF536 /* PBXTextBookmark */ = 90059CFD0F3A2E72006DF536 /* PBXTextBookmark */;
+			90059CFF0F3A5D1D006DF536 /* PBXTextBookmark */ = 90059CFF0F3A5D1D006DF536 /* PBXTextBookmark */;
 			9007C2970EE0EF6300FE19D5 = 9007C2970EE0EF6300FE19D5 /* PBXTextBookmark */;
 			9007C2A00EE0EF6300FE19D5 = 9007C2A00EE0EF6300FE19D5 /* PBXTextBookmark */;
 			900A21BB0F146E6800BE1AF2 = 900A21BB0F146E6800BE1AF2 /* PBXTextBookmark */;
@@ -2028,6 +2030,26 @@
 		vrLoc = 31874;
 	};
 	90059CFA0F3A2E5F006DF536 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
+		name = "Localizable.strings: 419";
+		rLen = 0;
+		rLoc = 13803;
+		rType = 0;
+		vrLen = 954;
+		vrLoc = 13152;
+	};
+	90059CFD0F3A2E72006DF536 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
+		name = "Localizable.strings: 419";
+		rLen = 0;
+		rLoc = 13803;
+		rType = 0;
+		vrLen = 954;
+		vrLoc = 13152;
+	};
+	90059CFF0F3A5D1D006DF536 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
 		name = "Localizable.strings: 419";
