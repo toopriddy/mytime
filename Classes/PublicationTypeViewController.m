@@ -131,10 +131,17 @@
 			break;
 	}
 	// make the new call view 
-	PublicationViewController *p = [[[PublicationViewController alloc] initShowingCount:NO filteredToType:filter] autorelease];
-	p.delegate = self;
+	if([PublicationPickerView areTherePublicationsForFilter:filter])
+	{
+		PublicationViewController *p = [[[PublicationViewController alloc] initShowingCount:NO filteredToType:filter] autorelease];
+		p.delegate = self;
 
-	[[self navigationController] pushViewController:p animated:YES];		
+		[[self navigationController] pushViewController:p animated:YES];
+	}
+	else
+	{
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}
 }
 
 - (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController;

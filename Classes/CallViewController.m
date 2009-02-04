@@ -500,9 +500,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		NSEnumerator *oldRows = [[items objectForKey:CallViewNames] objectEnumerator];
 		NSString *oldName;
 		NSEnumerator *newRows = [[newItems objectForKey:CallViewNames] objectEnumerator];
-		NSString *newName = [newRows nextObject];
+		NSString *newName;
 		while( (oldName = [oldRows nextObject]) )
 		{
+			newName = [newRows nextObject];
 			while(![oldName isEqualToString:newName])
 			{
 				[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
@@ -510,10 +511,9 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 				row++;
 				newName = [newRows nextObject];
 			}
-			newName = [newRows nextObject];
 			row++;
 		}
-		while( [newRows nextObject] )
+		while( (newName = [newRows nextObject]) )
 		{
 			[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
 			DEBUG(NSLog(@"insertRow: %d,%d %@", section, row, newName);)
@@ -804,11 +804,14 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
+		NSString *latLong = [_call objectForKey:CallLattitudeLongitude];
 		
 		// if they have not initialized the address then dont show the map program
+		// if they have initalized a latLong then include that
 		if(!((street == nil || [street isEqualToString:@""]) &&
 			 (city == nil || [city isEqualToString:@""]) &&
-			 (state == nil || [state isEqualToString:@""])))
+			 (state == nil || [state isEqualToString:@""])) ||
+		   (latLong != nil && ![latLong isEqualToString:@"nil"]))
 		{
 			// pop up a alert sheet to display buttons to show in google maps?
 			//http://maps.google.com/?hl=en&q=kansas+city
@@ -826,17 +829,21 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 				city = @"";
 			if(state == nil)
 				state = @"";
-
+			if(latLong == nil || [latLong isEqualToString:@"nil"])
+				latLong = @"";
+			else
+				latLong = [NSString stringWithFormat:@"@%@", [[latLong stringByReplacingOccurrencesOfString:@" " withString:@"" ] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 #if 1		
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
-										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@+%@,+%@", 
+										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@+%@,+%@%@", 
 										                  NSLocalizedString(@"en", @"Google Localized Language Name"),
 														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [apartmentNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [street stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
 														  [city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
-														  [state stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+														  [state stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+														  latLong]];
 			DEBUG(NSLog(@"Trying to open url %@", url);)
 			// open up the google map page for this call
 			[[UIApplication sharedApplication] openURL:url];
@@ -1452,13 +1459,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		NSString *street = [_call objectForKey:CallStreet];
 		NSString *city = [_call objectForKey:CallCity];
 		NSString *state = [_call objectForKey:CallState];
+		NSString *latLong = [_call objectForKey:CallLattitudeLongitude];
 
 		BOOL found = NO;
 		if((streetNumber && [streetNumber length]) ||
 		   (apartmentNumber && [apartmentNumber length]) || 
 		   (street && [street length]) || 
 		   (city && [city length]) || 
-		   (state && [state length]))
+		   (state && [state length]) ||
+		   (latLong && ![latLong isEqualToString:@"nil"]))
 		{
 			found = YES;
 		}
