@@ -16,8 +16,7 @@
     int _publication;
     int _day;
 	
-	int _offset;
-	int _count;
+	NSMutableArray *_publicationLookupTable;
 }
 #if 0
 // Delegate Methods
@@ -29,6 +28,9 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
 #endif
+
++ (BOOL)areTherePublicationsForFilter:(NSString *)filter;
+
 /**
  * names for the publications used for comparison
  * @return the "official" name of the publication as used in this program

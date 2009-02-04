@@ -197,10 +197,12 @@
 {
 	RMMarkerManager *markerManager = [mapView markerManager];
 	CGRect rect = [theMarker bounds];
-	
-	[markerManager moveMarker:theMarker AtXY:CGPointMake(position.x,position.y +rect.size.height/3)];
+	CGPoint modifiedPoint = position;
+	// account for the marker height, lets get right in the large bubble which is 1/3 the way down
+	modifiedPoint.y += rect.size.height/3;
+	point = [map pixelToLatLong:modifiedPoint];
+	[markerManager moveMarker:theMarker AtXY:modifiedPoint];
 	markerMoved = YES;
-	point = [map pixelToLatLong:position];
 	if(self.locationManager)
 	{
 		[self.locationManager stopUpdatingLocation];

@@ -408,7 +408,7 @@
 					[link appendString:theurl];
 					[link appendString:@"\">"];
 					[link appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
-					[link appendString:@"</a>"];
+					[link appendString:@"</a>\n\n"];
 					[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
 
 					[string appendString:[link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];

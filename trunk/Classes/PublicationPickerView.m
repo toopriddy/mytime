@@ -176,6 +176,16 @@ static const PublicationInformation PUBLICATIONS[] = {
 	return([[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[1].name table:@""]);
 }
 
+- (BOOL)publicationIsWatchtower:(int)publication
+{
+	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 0;
+}
+
+- (BOOL)publicationIsAwake:(int)publication
+{
+	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 1;
+}
+
 
 
 // Delegate Methods
@@ -242,60 +252,62 @@ static const PublicationInformation PUBLICATIONS[] = {
     {
 		
 		cell.textAlignment = UITextAlignmentLeft;
-		cell.text = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row + _offset].name value:PUBLICATIONS[row + _offset].name table:@""];
+		int index = [[_publicationLookupTable objectAtIndex:row] intValue];
+		cell.text = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
     }
     else
     {
         // if the publicaiton is a watchtower or an awake, then
         // we have to display the month year and possibly date of
         // the publication
-        switch(_publication)
-        {
-            case 0: // Watchtower Jan 2007 15
-                switch(component)
+		if([self publicationIsWatchtower:_publication])
+		{
+            // Watchtower Jan 2007 15
+			switch(component)
+			{
+				case 1: // Month
 				{
-					case 1: // Month
-					{
-						cell.textAlignment = UITextAlignmentCenter;
-						cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
-						break;
-					}	
-					case 2: // Year
-						cell.textAlignment = UITextAlignmentLeft;
-						// we offset the _year from 1900
-						cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
-						break;
-						
-					case 3: // day
-						cell.textAlignment = UITextAlignmentCenter;
-						// when the watchtower was bimonthly, it came out on the 1st and 15th
-						cell.text = row == 0 ? @"1" : @"15";
-						break;
-				}
-                break;
-                
-            case 1: // Awake Jan 2007 15
-                switch(component)
+					cell.textAlignment = UITextAlignmentCenter;
+					cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				}	
+				case 2: // Year
+					cell.textAlignment = UITextAlignmentLeft;
+					// we offset the _year from 1900
+					cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+					
+				case 3: // day
+					cell.textAlignment = UITextAlignmentCenter;
+					// when the watchtower was bimonthly, it came out on the 1st and 15th
+					cell.text = row == 0 ? @"1" : @"15";
+					break;
+			}
+		} 
+		else if([self publicationIsAwake:_publication])
+		{
+			// Awake Jan 2007 15
+			switch(component)
+			{
+				case 1: // Month
 				{
-					case 1: // Month
-					{
-						cell.textAlignment = UITextAlignmentCenter;
-						cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
-						break;
-					}	
-					case 2: // Year
-						cell.textAlignment = UITextAlignmentLeft;
-						// we offset the _year from 1900
-						cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
-						break;
-						
-					case 3: // day
-						cell.textAlignment = UITextAlignmentCenter;
-						// when the awake was bimonthly, it came out on the 8th and 22nd
-						cell.text = row == 0 ? @"8" : @"22";
-						break;
-				}
-				break;
+					cell.textAlignment = UITextAlignmentCenter;
+					cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				}	
+				case 2: // Year
+					cell.textAlignment = UITextAlignmentLeft;
+					// we offset the _year from 1900
+					cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+					
+				case 3: // day
+					cell.textAlignment = UITextAlignmentCenter;
+					// when the awake was bimonthly, it came out on the 8th and 22nd
+					cell.text = row == 0 ? @"8" : @"22";
+					break;
+			}
+		
         }
     }    
 	return(cell);
@@ -310,52 +322,53 @@ static const PublicationInformation PUBLICATIONS[] = {
     // publication name
     if(component == 0)
     {
-		ret = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[row + _offset].name value:PUBLICATIONS[row + _offset].name table:@""];
+		int index = [[_publicationLookupTable objectAtIndex:row] intValue];
+		ret = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
     }
     else
     {
         // if the publicaiton is a watchtower or an awake, then
         // we have to display the month year and possibly date of
         // the publication
-        switch(_publication)
-        {
-            case 0: // Watchtower Jan 2007 15
-                switch(component)
+		if([self publicationIsWatchtower:_publication])
+		{
+			// Watchtower Jan 2007 15
+			switch(component)
+			{
+				case 1: // Month
+					ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				case 2: // Year
+					// we offset the _year from 1900
+					ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+					
+				case 3: // day
+					// when the watchtower was bimonthly, it came out on the 1st and 15th
+					ret = row == 0 ? @"1" : @"15";
+					break;
+			}
+		}
+		else if([self publicationIsAwake:_publication])
+		{
+            // Awake Jan 2007 15
+			switch(component)
+			{
+				case 1: // Month
 				{
-					case 1: // Month
-						ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
-						break;
-					case 2: // Year
-						// we offset the _year from 1900
-						ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
-						break;
-						
-					case 3: // day
-						// when the watchtower was bimonthly, it came out on the 1st and 15th
-						ret = row == 0 ? @"1" : @"15";
-						break;
-				}
-                break;
-                
-            case 1: // Awake Jan 2007 15
-                switch(component)
-				{
-					case 1: // Month
-					{
-						ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
-						break;
-					}	
-					case 2: // Year
-						// we offset the _year from 1900
-						ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
-						break;
-						
-					case 3: // day
-						// when the awake was bimonthly, it came out on the 8th and 22nd
-						ret = row == 0 ? @"8" : @"22";
-						break;
-				}
-				break;
+					ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				}	
+				case 2: // Year
+					// we offset the _year from 1900
+					ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+					
+				case 3: // day
+					// when the awake was bimonthly, it came out on the 8th and 22nd
+					ret = row == 0 ? @"8" : @"22";
+					break;
+			}
         }
     }    
 	return(ret);
@@ -371,16 +384,17 @@ static const PublicationInformation PUBLICATIONS[] = {
     int previousMonth = _month;
     int previousDay = _day;
 	
-    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
+	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
+    VERBOSE(NSLog(@"publication:%@ month:%@ year:%d day:%d", PUBLICATIONS[index], MONTHS[_month], _year + YEAR_OFFSET, _day);)
 	
 	// what is the new publication?
 	if(component == 0)
 	{
-		_publication = row + _offset;
+		_publication = row;
     }
     // if the previous publication was a watchtower or awake, then 
     // lets get at the month year and possibly date of the magazine
-    if(previousPublication == 0 || previousPublication == 1)
+    if([self publicationIsWatchtower:previousPublication] || [self publicationIsAwake:previousPublication])
     {
         if(component == 1)
 			_month = row;
@@ -388,12 +402,12 @@ static const PublicationInformation PUBLICATIONS[] = {
 			_year = row;
         // if the previous year selected was < 2008 then the watchtower would have had a date 
         // column in the picker
-        if(component == 3 && previousPublication == 0 && previousYear + YEAR_OFFSET < 2008)
+        if(component == 3 && [self publicationIsWatchtower:previousPublication] && previousYear + YEAR_OFFSET < 2008)
             _day = row;
         
         // if the previous year selected was < 2007 then the awake would have had a date 
         // column in the picker
-        if(component == 3 && previousPublication == 1 && previousYear + YEAR_OFFSET < 2007)
+        if(component == 3 && [self publicationIsAwake:previousPublication] && previousYear + YEAR_OFFSET < 2007)
             _day = row;
     }
     // if anything changed, update the picker so that it will dynamically display the columns
@@ -406,21 +420,29 @@ static const PublicationInformation PUBLICATIONS[] = {
        previousDay != _day ||
        previousPublication != _publication)
     {
-        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[_publication], MONTHS[_month], _year + YEAR_OFFSET, _day);)
-        [pickerView reloadAllComponents];
 
-        if(component == 0 &&
-		   [PUBLICATIONS[_publication].type isEqualToString:PublicationTypeHeading])
+		index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
+        DEBUG(NSLog(@"DATA CHANGED:\npublication:%@ month:%@ year:%d day:%d", PUBLICATIONS[index], MONTHS[_month], _year + YEAR_OFFSET, _day);)
+        [pickerView reloadAllComponents];
+		
+		BOOL skipped = NO;
+		// advance past any headings (might have more than once because of translators)
+		while(component == 0 &&
+		   [PUBLICATIONS[[[_publicationLookupTable objectAtIndex:_publication] intValue]].type isEqualToString:PublicationTypeHeading])
 		{
 			// skip past the heading
 			_publication++;
-			[self selectRow: _publication inComponent: 0 animated: YES];
+			skipped = YES;
+		}
+		if(skipped)
+		{
+			[self selectRow:_publication inComponent:0 animated:YES];
 		}
 
 		// the watchtower and awake are the only ones that have a subscription
 		// type of placement, all others are just books that do not have a release
 		// time
-		if(_publication == 0 || _publication == 1)
+		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
 		{
 			[self selectRow: _month inComponent: 1 animated: NO];
 			[self selectRow: _year inComponent: 2 animated: NO];
@@ -440,34 +462,35 @@ static const PublicationInformation PUBLICATIONS[] = {
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     int ret = 1;
-    switch(_publication)
-    {
-        case 0: // Watchtower Jan 2007 15
-            // check to see if they chose something before 2008, if so then
-            // we need to specify the 1st or the 15th of the month
-            if( _year + YEAR_OFFSET < 2008)
-            {
-                ret = 4;
-            }
-            else
-            {
-                // we went to only one a month in 2008
-                ret = 3;
-            }
-            break;
-            
-        case 1: // Awake Jan 2006 22
-            // check to see if they chose something before 2007, if so then
-            // we need to specify the 1st or the 15th of the month
-            if( _year + YEAR_OFFSET < 2007)
-            {
-                ret = 4;
-            }
-            else
-            {
-                // we went to only one a month in 2008
-                ret = 3;
-            }
+	if([self publicationIsWatchtower:_publication])
+	{
+		// Watchtower Jan 2007 15
+		// check to see if they chose something before 2008, if so then
+		// we need to specify the 1st or the 15th of the month
+		if( _year + YEAR_OFFSET < 2008)
+		{
+			ret = 4;
+		}
+		else
+		{
+			// we went to only one a month in 2008
+			ret = 3;
+		}
+	}
+	else if([self publicationIsAwake:_publication])
+	{
+        // Awake Jan 2006 22
+		// check to see if they chose something before 2007, if so then
+		// we need to specify the 1st or the 15th of the month
+		if( _year + YEAR_OFFSET < 2007)
+		{
+			ret = 4;
+		}
+		else
+		{
+			// we went to only one a month in 2008
+			ret = 3;
+		}
     }
     VERY_VERBOSE(NSLog(@"numberOfComponentsInPickerView: %d", ret);)
     return(ret);
@@ -480,41 +503,35 @@ static const PublicationInformation PUBLICATIONS[] = {
     // col 0 is the publications column
     if(component == 0)
     {
-        return(_count);
+        return(_publicationLookupTable.count);
     }
     else
     {
         // if the publication is a watchtower or an awake
         // then there might be 3 or four columns
-        switch(_publication)
-        {
-            case 0: // Watchtower Jan 2007 15
-            case 1: // Awake Jan 2006 22
-            {
-                switch(component)
-                {
-                    case 1: // Month
-                        return(12);
-                    case 2: // Year
-                        return(200);
-                    case 3: // day
-                        return(2);
-                        
-                }
-			}
-				
-			default:
+		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+		{
+            // Watchtower Jan 2007 15
+            // Awake Jan 2006 22
+			switch(component)
 			{
-                return(0);
+				case 1: // Month
+					return(12);
+				case 2: // Year
+					return(200);
+				case 3: // day
+					return(2);
+					
 			}
-        }
+		}
     }
+	return(0);
 }
 
 - (void) dealloc
 {
     VERY_VERBOSE(NSLog(@"PublicationPicker: dealloc");)
-	
+	[_publicationLookupTable release];
     [super dealloc];
 }
 
@@ -561,42 +578,59 @@ static const PublicationInformation PUBLICATIONS[] = {
         // we are managing the picker's data and display
 		self.delegate = self;
 		self.dataSource = self;
-
-		int offset = -1;
+		_publicationLookupTable = [[NSMutableArray alloc] init];
+		BOOL foundFilter = filter == nil;
+		const BOOL usingFilter = filter != nil;
 		for(i = 0; i < ARRAY_SIZE(PUBLICATIONS); i++)
 		{
-			if(offset >= 0)
+			if(foundFilter)
 			{
-				if([PUBLICATIONS[i].type isEqualToString:PublicationTypeHeading])
+				// we are adding to the display list and if we hit a headding stop
+				if(usingFilter && [PUBLICATIONS[i].type isEqualToString:PublicationTypeHeading])
 				{
 					break;
 				}
+				NSString *translatedName = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
+				if(translatedName.length)
+				{
+					[_publicationLookupTable addObject:[NSNumber numberWithInt:i]];
+				}
+				else
+				{
+					DEBUG(NSLog(@"%s missing %@", __FUNCTION__, PUBLICATIONS[i].name);)
+				}
 			}
-			else if([filter isEqualToString:PUBLICATIONS[i].type])
+			else
 			{
-				offset = i;
+				if([filter isEqualToString:PUBLICATIONS[i].type])
+				{
+					foundFilter = YES;
+					--i; // subtract one from the count so that we can try again
+				}
 			}
 		}
-		_offset = offset >= 0 ? offset : 0;
-		_count = offset >= 0 ? i - offset : ARRAY_SIZE(PUBLICATIONS);
-		
-        _publication = _offset;
-        for(i = _offset; i < _count + _offset; ++i)
+
+        _publication = 0;
+		i = 0;
+        for(NSNumber *number in _publicationLookupTable)
         {
-            if([publication isEqualToString:PUBLICATIONS[i].name])
+			int index = [number intValue];
+            if([publication isEqualToString:PUBLICATIONS[index].name])
             {
                 _publication = i;
                 break;
             }
+			++i;
         }
-        if(_publication == 0 || _publication == 1)
+		
+        if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
         {
             _year = year - YEAR_OFFSET;
             _month = month - 1;
             // translate the publication date, otherwise leave it at index 0
-            if(_publication == 0)
+            if([self publicationIsWatchtower:_publication])
                 _day = day == 15 ? 1 : 0;
-            if(_publication == 1)
+            if([self publicationIsAwake:_publication])
                 _day = day == 22 ? 1 : 0;
         }
         else
@@ -614,28 +648,47 @@ static const PublicationInformation PUBLICATIONS[] = {
 		
 		[self reloadAllComponents];
 		// select the publication
-		[self selectRow: _publication - _offset inComponent: 0 animated: NO];
+		[self selectRow:_publication inComponent: 0 animated: NO];
 		
 		// the watchtower and awake are the only ones that have a subscription
 		// type of placement, all others are just books that do not have a release
 		// time
-		if(_publication == 0 || _publication == 1)
+		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
 		{
 			[self selectRow: _month inComponent: 1 animated: NO];
 			[self selectRow: _year inComponent: 2 animated: NO];
 			
 			// in 2008, the watchtower went from bimonthly to monthly
-			if(_publication == 0 && _year + YEAR_OFFSET < 2008)
+			if([self publicationIsWatchtower:_publication] && _year + YEAR_OFFSET < 2008)
 				[self selectRow: _day inComponent: 3 animated: NO];
 			
 			// in 2007, the awake went from bimonthly to monthly
-			if(_publication == 1 && _year + YEAR_OFFSET < 2007)
+			if([self publicationIsAwake:_publication] && _year + YEAR_OFFSET < 2007)
 				[self selectRow: _day inComponent: 3 animated: NO];
 		}
 		[self setSoundsEnabled:NO];
     }
     
     return(self);
+}
+
++ (BOOL)areTherePublicationsForFilter:(NSString *)filter
+{
+	if(filter == nil || filter.length == 0)
+		return YES;
+		
+	for(int i = 0; i < ARRAY_SIZE(PUBLICATIONS); i++)
+	{
+		if([filter isEqualToString:PUBLICATIONS[i].type])
+		{
+			NSString *translatedName = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
+			if(translatedName.length)
+			{
+				return YES;
+			}
+		}
+	}
+	return NO;
 }
 
 // year of our common era
@@ -647,7 +700,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 // 0-11 where 0=Jan
 - (int)month
 {
-    if(_publication == 0 || _publication == 1)
+    if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
         return(_month + 1);
     else
         return(0);
@@ -656,7 +709,8 @@ static const PublicationInformation PUBLICATIONS[] = {
 // string of the publication name
 - (NSString *)publication
 {
-    return([NSString stringWithString:PUBLICATIONS[_publication].name]);
+	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
+    return([NSString stringWithString:PUBLICATIONS[index].name]);
 }
 
 // string of the publication title
@@ -666,30 +720,32 @@ static const PublicationInformation PUBLICATIONS[] = {
     int year = [self year];
     int month = [self month];
 	
-    if(_publication == 0 || _publication == 1)
+	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
+    if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
     {
         if(day)
             return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),
-							                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], 
+							                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
 																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
 																day, 
 																year ]);
         else
             return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),
-			                                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""], 
+			                                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
 																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
 																year ]);
     }
     else
     {
-        return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[_publication].name value:PUBLICATIONS[_publication].name table:@""]] );
+        return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""]] );
     }
 }
 
 // string of the publication name
 - (NSString *)publicationType
 {
-    return([NSString stringWithString:PUBLICATIONS[_publication].type]);
+	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
+    return([NSString stringWithString:PUBLICATIONS[index].type]);
 }
 
 
@@ -699,12 +755,12 @@ static const PublicationInformation PUBLICATIONS[] = {
 {
     // if the previous year selected was < 2008 then the watchtower would have had a date 
     // column in the picker, so figure out which date it is
-    if(_publication == 0 && _year + YEAR_OFFSET < 2008)
+    if([self publicationIsWatchtower:_publication] && _year + YEAR_OFFSET < 2008)
         return(_day ? 15 : 1);
     
     // if the previous year selected was < 2007 then the awake would have had a date 
     // column in the picker, so figure out which date it is
-    if(_publication == 1 && _year + YEAR_OFFSET < 2007)
+    if([self publicationIsAwake:_publication] && _year + YEAR_OFFSET < 2007)
         return(_day ? 22 : 8);
 	
     return(0);
