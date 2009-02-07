@@ -107,12 +107,12 @@
 		while ( (theCall = [e nextObject]) ) 
 		{
 			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-			if(latLong && ![latLong isEqualToString:@"nil"])
+			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+			if(latLong && ![latLong isEqualToString:@"nil"] && stringArray.count == 2)
 			{
 				RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
 				[marker setData:theCall];
 				CLLocationCoordinate2D point;
-				NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 				point.latitude = [[stringArray objectAtIndex:0] doubleValue];
 				point.longitude = [[stringArray objectAtIndex:1] doubleValue];
 				[markerManager addMarker:marker AtLatLong:point];
