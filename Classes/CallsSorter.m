@@ -431,7 +431,7 @@ int sortByDate(id v1, id v2, void *context)
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
 		{
-			NSEnumerator *e = [sectionIndexNames objectEnumerator];
+			NSEnumerator *e = [sectionNames objectEnumerator];
 			NSString *name;
 			int i = 0;
 			while ( (name = [e nextObject]) ) 
