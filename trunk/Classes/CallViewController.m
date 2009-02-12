@@ -477,6 +477,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSMutableDictionary *newItems;
 	
 [theTableView beginUpdates];
+
 	while( YES )
 	{
 		row = 0;
@@ -533,6 +534,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 	if(theTableView.editing != _editing)
 		theTableView.editing = _editing;		
+
 [theTableView endUpdates];
 #endif	
 }
