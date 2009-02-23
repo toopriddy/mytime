@@ -452,11 +452,13 @@ static NSString *MONTHS[] = {
 			// we found a valid month
 			_minutes[offset] += [minutes intValue];
 
+			// newServiceYear means that the months that are added are above the current month
 			if(newServiceYear && offset <= (_thisMonth - 9))
 			{
 				_serviceYearMinutes += [minutes intValue];
 			}
-			else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
+			// !newServiceYear means that we add the months that are below the current month
+			else if(!newServiceYear && offset <= _thisMonth)
 			{
 				_serviceYearMinutes += [minutes intValue];
 			}
@@ -496,11 +498,13 @@ static NSString *MONTHS[] = {
 
 			_quickBuildMinutes[offset] += [minutes intValue];
 
+			// newServiceYear means that the months that are added are above the current month
 			if(newServiceYear && offset <= (_thisMonth - 9))
 			{
 				_serviceYearQuickBuildMinutes += [minutes intValue];
 			}
-			else if(!newServiceYear && offset <= 12 - (_thisMonth - 9))
+			// !newServiceYear means that we add the months that are below the current month
+			else if(!newServiceYear && offset <= _thisMonth)
 			{
 				_serviceYearQuickBuildMinutes += [minutes intValue];
 			}
