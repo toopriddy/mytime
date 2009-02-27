@@ -14,16 +14,12 @@
 	UITextField *textField;
 	UILabel *titleLabel;
 	UIResponder *nextKeyboardResponder;
-	NSIndexPath *indexPath;
-	UITableView *tableView;
 	
 	id<UITableViewTextFieldCellDelegate> delegate;
 }
 
 @property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
-@property (nonatomic, retain) NSIndexPath *indexPath;
-@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, assign) id<UITableViewTextFieldCellDelegate> delegate;
 

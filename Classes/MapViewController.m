@@ -66,6 +66,8 @@
     mapView.multipleTouchEnabled = YES;
 	[mapView setBackgroundColor:[UIColor blackColor]];
 	[mapView.contents setTileSource:[[RMVirtualEarthSource alloc] init]];
+	mapView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	
 	[self.view addSubview:mapView];
 
 	self.detailView = [[[MapViewCallDetailController alloc] initWithNibName:@"MapViewCallDetail" bundle:[NSBundle mainBundle]] autorelease];
@@ -145,6 +147,7 @@
 {
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 	self.view.backgroundColor = [UIColor blackColor];
+	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 
 
 	// load the map after it slides in
@@ -219,6 +222,12 @@
 	}
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	[self.mapView removeFromSuperview];
+	[self loadMapView];
+	NSLog(@"%f, %f", self.view.frame.size.height, self.view.frame.size.width);
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

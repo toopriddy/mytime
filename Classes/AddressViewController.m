@@ -111,7 +111,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return(YES);
+	return YES;
 }
 
 - (void)navigationControlDone:(id)sender 
@@ -159,7 +159,7 @@
 													  style:UITableViewStyleGrouped] autorelease];
 	
 	// alow the loupe to work within text fields
-	theTableView.scrollEnabled = NO;
+//	theTableView.scrollEnabled = NO;
 	// set the autoresizing mask so that the table will always fill the view
 	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
@@ -172,6 +172,7 @@
 
 	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
 	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.55], [NSNumber numberWithFloat:.45], nil];
+	streetNumberAndApartmentCell.delegate = self;
 	UITextField *streetTextField = [streetNumberAndApartmentCell textFieldAtIndex:0];
 	UITextField *apartmentTextField = [streetNumberAndApartmentCell textFieldAtIndex:1];
 	streetTextField.text = streetNumber;
@@ -194,6 +195,7 @@
 	streetCell.textField.returnKeyType = UIReturnKeyNext;
 	streetCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	streetCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+	streetCell.delegate = self;
 	
 	self.cityCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	cityCell.textField.text = city;
@@ -201,6 +203,7 @@
 	cityCell.textField.returnKeyType = UIReturnKeyNext;
 	cityCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	cityCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+	cityCell.delegate = self;
 
 
 	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
@@ -209,6 +212,7 @@
 	stateCell.textField.returnKeyType = UIReturnKeyDone;
 	stateCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+	stateCell.delegate = self;
 
 	streetNumberAndApartmentCell.nextKeyboardResponder = streetCell.textField;
 	streetCell.nextKeyboardResponder = cityCell.textField;
@@ -231,23 +235,52 @@
 	[self.theTableView reloadData];
 }
 
-
-
-
 -(void)viewWillAppear:(BOOL)animated
 {
 	// force the tableview to load
 	[self.theTableView reloadData];
+
+	[super viewWillAppear:animated];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidLoad
 {
 	[self.theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
 }
 
-
 // UITableViewDataSource methods
 
+- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
+{
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	if(selected)
+	{
+		if(cell == self.streetNumberAndApartmentCell)
+		{
+			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+		}
+	}
+}
+
+- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
+{
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	if(selected)
+	{
+		if(cell == self.streetCell)
+		{
+			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+		}
+		else if(cell == self.cityCell)
+		{
+			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+		}
+		else if(cell == self.stateCell)
+		{
+			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+		}
+	}
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
@@ -260,6 +293,20 @@
 	return 4;
 }
 
+
+// make the footer be as tall as the keyboard is tall when we are in landscape mode.
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return 165;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	UIView *view = [[[UIView alloc] init] autorelease];
+	view.backgroundColor = [UIColor clearColor];
+	
+	return view;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

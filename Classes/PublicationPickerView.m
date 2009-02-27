@@ -67,6 +67,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"Family Happiness", @"Book Publication Name (fy)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"God's Word", @"Book Publication Name (gm)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Greatest Man", @"Book Publication Name (gt)"),   PublicationTypeBook}
+,   {AlternateLocalizedString(@"Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Insight", @"Book Publication Name (it)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name (ip-1)"),   PublicationTypeBook}
 ,   {AlternateLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name (ip-2)"),   PublicationTypeBook}
