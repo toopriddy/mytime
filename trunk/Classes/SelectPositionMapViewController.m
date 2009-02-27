@@ -87,11 +87,13 @@
 	[[self navigationController] popViewControllerAnimated:YES];
 }
 
-
-- (void)loadView
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+	return YES;
+}
 
+- (void)loadMapView
+{
 	self.mapView = [[[RMMapView alloc] initWithFrame:self.view.bounds WithLocation:point] autorelease];
 	mapView.delegate = self;
     mapView.multipleTouchEnabled = YES;
@@ -134,6 +136,24 @@
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
+}
+
+- (void)loadView
+{
+	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+	self.view.backgroundColor = [UIColor blackColor];
+	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+
+
+	// load the map after it slides in
+	[self performSelector:@selector(loadMapView) withObject:nil afterDelay:0.3];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	[self.mapView removeFromSuperview];
+	[self loadMapView];
+	NSLog(@"%f, %f", self.view.frame.size.height, self.view.frame.size.width);
 }
 
 

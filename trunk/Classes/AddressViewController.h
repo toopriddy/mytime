@@ -11,7 +11,10 @@
 #import "AddressViewControllerDelegate.h"
 #import "UITableViewMultiTextFieldCell.h"
 
-@interface AddressViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> 
+@interface AddressViewController : UIViewController <UITableViewDelegate, 
+                                                     UITableViewDataSource,
+													 UITableViewTextFieldCellDelegate,
+													 UITableViewMultiTextFieldCellDelegate> 
 {
 	id<AddressViewControllerDelegate> delegate;
 	UITableView *theTableView;

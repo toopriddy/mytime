@@ -20,9 +20,7 @@
 
 @synthesize textField;
 @synthesize nextKeyboardResponder;
-@synthesize indexPath;
 @synthesize titleLabel;
-@synthesize tableView;
 @synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
@@ -31,13 +29,6 @@
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
-		
-		delegate = nil;
-		nextKeyboardResponder = nil;
-		tableView = nil;
-		indexPath = nil;
-		titleLabel = nil;
-		textField = nil;
 		
 		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		titleLabel.backgroundColor = [UIColor clearColor];
@@ -61,8 +52,6 @@
 	self.nextKeyboardResponder = nil;
 	self.textField = nil;
 	self.titleLabel = nil;
-	self.tableView = nil;
-	self.indexPath = nil;
 	self.delegate = nil;
 	[super dealloc];
 }

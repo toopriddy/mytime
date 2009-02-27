@@ -144,7 +144,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		}
 
 		_name = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil];
-		_name.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 		_name.delegate = self;
 		_name.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		_name.textField.returnKeyType = UIReturnKeyDone;
@@ -539,16 +538,16 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 #endif	
 }
 
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected;
+- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(selected)
 	{
-		if(cell.tableView && cell.indexPath)
+		if(cell == _name)
 		{
-			[cell.tableView selectRowAtIndexPath:cell.indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+			self.currentFirstResponder = _name;
 		}
-		self.currentFirstResponder = cell.textField;
 	}
 	else
 	{
@@ -557,11 +556,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			[self.currentFirstResponder resignFirstResponder];
 		}
 		self.currentFirstResponder = nil;
-		if(cell.tableView && cell.indexPath)
-		{
-// this was causing users to press things twice
-//			[cell.tableView deselectRowAtIndexPath:cell.indexPath animated:YES];
-		}
 	}
 }
 - (void)scrollToSelected:(id)unused
@@ -623,6 +617,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	UIView *contentView = [[[UIView alloc] initWithFrame:rect] autorelease];
 	contentView.backgroundColor = [UIColor blackColor];
 	contentView.autoresizesSubviews = YES;
+	contentView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	self.view = contentView;
 
 	// create a new table using the full application frame
@@ -630,7 +625,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	UITableView *tableView = [[[UITableView alloc] initWithFrame:self.view.bounds 
 														  style:UITableViewStyleGrouped] autorelease];
 
-	_name.tableView = tableView;
 	tableView.editing = _newCall;
 	tableView.allowsSelectionDuringEditing = YES;
 	// set the autoresizing mask so that the table will always fill the view

@@ -56,7 +56,7 @@ static NSString *MONTHS[] = {
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return(NO);
+	return YES;
 }
 
 - (void)sendEmailUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  

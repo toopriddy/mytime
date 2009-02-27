@@ -121,6 +121,12 @@
 	[self.theTableView reloadData];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	// we support rotation in this view controller
+	return YES;
+}
+
 
 
 

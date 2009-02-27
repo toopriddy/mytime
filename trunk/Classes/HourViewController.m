@@ -103,7 +103,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return(YES);
+	return YES;
 }
 
 - (void)navigationControlAdd:(id)sender 
