@@ -361,6 +361,7 @@
 {
     DEBUG(NSLog(@"LiteraturePlacementView addNewPublicationSaveAction:");)
     NSMutableDictionary *publication;
+	BOOL newRow = NO;
     if([selectedIndexPath row] == [[placements objectForKey:BulkLiteratureArray] count])
     {
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
@@ -368,6 +369,7 @@
         // of the publications array
         publication = [[[NSMutableDictionary alloc] init] autorelease];
         [[placements objectForKey:BulkLiteratureArray] addObject:publication];
+		newRow = YES;
     }
 	else
 	{
@@ -387,12 +389,18 @@
 
     VERBOSE(NSLog(@"publication is = %@", publication);)
 
-    [tableView beginUpdates];
+	if(newRow)
+	{
+		[tableView beginUpdates];
+			[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+			[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+		[tableView endUpdates];
+	}
+	else
+	{
 		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-		[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationRight];
-    [tableView endUpdates];
-
-	[tableView reloadData];
+		[tableView reloadData];
+	}
 }
 
 
