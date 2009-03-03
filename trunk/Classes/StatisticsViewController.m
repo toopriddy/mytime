@@ -457,8 +457,8 @@ static NSString *MONTHS[] = {
 			{
 				_serviceYearMinutes += [minutes intValue];
 			}
-			// !newServiceYear means that we add the months that are below the current month
-			else if(!newServiceYear && offset <= _thisMonth)
+			// !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			else if(!newServiceYear && _thisMonth + 4 > offset)
 			{
 				_serviceYearMinutes += [minutes intValue];
 			}
@@ -503,8 +503,8 @@ static NSString *MONTHS[] = {
 			{
 				_serviceYearQuickBuildMinutes += [minutes intValue];
 			}
-			// !newServiceYear means that we add the months that are below the current month
-			else if(!newServiceYear && offset <= _thisMonth)
+			// !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			else if(!newServiceYear && _thisMonth + 4 > offset)
 			{
 				_serviceYearQuickBuildMinutes += [minutes intValue];
 			}
