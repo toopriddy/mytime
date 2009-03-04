@@ -21,9 +21,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator2.2;
+		activeSDKPreference = iphoneos2.2;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -471,6 +471,12 @@
 			904E81F10F5E1F4400073BC1 /* PBXTextBookmark */ = 904E81F10F5E1F4400073BC1 /* PBXTextBookmark */;
 			904E81F20F5E1F4400073BC1 /* PBXTextBookmark */ = 904E81F20F5E1F4400073BC1 /* PBXTextBookmark */;
 			904E81F40F5E1F5900073BC1 /* PBXTextBookmark */ = 904E81F40F5E1F5900073BC1 /* PBXTextBookmark */;
+			904E81FA0F5E20D400073BC1 /* PBXTextBookmark */ = 904E81FA0F5E20D400073BC1 /* PBXTextBookmark */;
+			904E81FC0F5E226E00073BC1 /* PBXTextBookmark */ = 904E81FC0F5E226E00073BC1 /* PBXTextBookmark */;
+			904E81FD0F5E226E00073BC1 /* PBXTextBookmark */ = 904E81FD0F5E226E00073BC1 /* PBXTextBookmark */;
+			904E81FE0F5E226E00073BC1 /* PBXTextBookmark */ = 904E81FE0F5E226E00073BC1 /* PBXTextBookmark */;
+			904E81FF0F5E226E00073BC1 /* PBXTextBookmark */ = 904E81FF0F5E226E00073BC1 /* PBXTextBookmark */;
+			904E82020F5E236D00073BC1 /* PBXTextBookmark */ = 904E82020F5E236D00073BC1 /* PBXTextBookmark */;
 			90617A6B0ECAA963002787D7 = 90617A6B0ECAA963002787D7 /* PBXTextBookmark */;
 			90674D450F1AC25700D524C0 = 90674D450F1AC25700D524C0 /* PBXTextBookmark */;
 			90674DFE0F1ACB0D00D524C0 = 90674DFE0F1ACB0D00D524C0 /* PBXTextBookmark */;
@@ -1206,7 +1212,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 70";
 		rLen = 0;
-		rLoc = 3416;
+		rLoc = 3415;
 		rType = 0;
 		vrLen = 4736;
 		vrLoc = 1268;
@@ -1835,7 +1841,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 70";
 		rLen = 0;
-		rLoc = 3416;
+		rLoc = 3415;
 		rType = 0;
 		vrLen = 3324;
 		vrLoc = 2549;
@@ -1857,7 +1863,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 56";
 		rLen = 0;
-		rLoc = 1756;
+		rLoc = 1741;
 		rType = 0;
 		vrLen = 2711;
 		vrLoc = 1286;
@@ -2296,7 +2302,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 257826602.571868;
+		modificationTime = 257827058.953515;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -2311,7 +2317,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 257826602.572033;
+		modificationTime = 257827058.953704;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -2506,7 +2512,7 @@
 		ignoreCount = 0;
 		lineNumber = 218;
 		location = MyTime;
-		modificationTime = 257826602.571214;
+		modificationTime = 257827058.951787;
 		state = 2;
 	};
 	902E79290F38CBD000E4F2F8 /* PBXTextBookmark */ = {
@@ -2632,7 +2638,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 679";
 		rLen = 0;
-		rLoc = 30878;
+		rLoc = 30877;
 		rType = 0;
 		vrLen = 2452;
 		vrLoc = 31001;
@@ -2815,7 +2821,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 56";
 		rLen = 0;
-		rLoc = 1756;
+		rLoc = 1741;
 		rType = 0;
 		vrLen = 2711;
 		vrLoc = 1286;
@@ -2835,7 +2841,7 @@
 		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
 		name = "PublicationPickerView.m: 56";
 		rLen = 0;
-		rLoc = 1756;
+		rLoc = 1741;
 		rType = 0;
 		vrLen = 2711;
 		vrLoc = 1286;
@@ -3789,6 +3795,66 @@
 		vrLen = 929;
 		vrLoc = 24079;
 	};
+	904E81FA0F5E20D400073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 27";
+		rLen = 0;
+		rLoc = 956;
+		rType = 0;
+		vrLen = 1554;
+		vrLoc = 253;
+	};
+	904E81FC0F5E226E00073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 27";
+		rLen = 0;
+		rLoc = 956;
+		rType = 0;
+		vrLen = 1483;
+		vrLoc = 253;
+	};
+	904E81FD0F5E226E00073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
+		name = "PublicationPickerView.m: 56";
+		rLen = 0;
+		rLoc = 1741;
+		rType = 0;
+		vrLen = 3153;
+		vrLoc = 958;
+	};
+	904E81FE0F5E226E00073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
+		name = "StatisticsViewController.m: 27";
+		rLen = 0;
+		rLoc = 956;
+		rType = 0;
+		vrLen = 1483;
+		vrLoc = 253;
+	};
+	904E81FF0F5E226E00073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
+		name = "PublicationPickerView.m: 56";
+		rLen = 0;
+		rLoc = 1840;
+		rType = 0;
+		vrLen = 4447;
+		vrLoc = 1226;
+	};
+	904E82020F5E236D00073BC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140390E4ABBBC0072BA7B /* PublicationPickerView.m */;
+		name = "PublicationPickerView.m: 53";
+		rLen = 0;
+		rLoc = 1515;
+		rType = 0;
+		vrLen = 4672;
+		vrLoc = 1226;
+	};
 	9053E0580E8DDD7100BA35F7 /* Italian */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {5202, 12110}}";
@@ -3870,9 +3936,9 @@
 	};
 	906140390E4ABBBC0072BA7B /* PublicationPickerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {859, 10892}}";
-			sepNavSelRange = "{1756, 0}";
-			sepNavVisRange = "{1286, 2711}";
+			sepNavIntBoundsRect = "{{0, 0}, {859, 10570}}";
+			sepNavSelRange = "{1515, 0}";
+			sepNavVisRange = "{1226, 4672}";
 			sepNavWindowFrame = "{{58, -2}, {1185, 775}}";
 		};
 	};
@@ -4011,7 +4077,7 @@
 		ignoreCount = 0;
 		lineNumber = 225;
 		location = MyTime;
-		modificationTime = 257826602.570299;
+		modificationTime = 257827058.950783;
 		state = 1;
 	};
 	90674DFE0F1ACB0D00D524C0 /* PBXTextBookmark */ = {
@@ -4092,7 +4158,7 @@
 		ignoreCount = 0;
 		lineNumber = 116;
 		location = MyTime;
-		modificationTime = 257826602.570445;
+		modificationTime = 257827058.950948;
 		state = 1;
 	};
 	90674F180F1B013100D524C0 /* MyTimeAppDelegate.m:128 */ = {
@@ -4109,7 +4175,7 @@
 		ignoreCount = 0;
 		lineNumber = 128;
 		location = MyTime;
-		modificationTime = 257826602.570624;
+		modificationTime = 257827058.951113;
 		state = 1;
 	};
 	90674F1A0F1B013300D524C0 /* MyTimeAppDelegate.m:128 */ = {
@@ -4126,7 +4192,7 @@
 		ignoreCount = 0;
 		lineNumber = 128;
 		location = MyTime;
-		modificationTime = 257826602.570773;
+		modificationTime = 257827058.951276;
 		state = 1;
 	};
 	90674F1C0F1B013600D524C0 /* MyTimeAppDelegate.m:128 */ = {
@@ -4143,7 +4209,7 @@
 		ignoreCount = 0;
 		lineNumber = 128;
 		location = MyTime;
-		modificationTime = 257826602.570919;
+		modificationTime = 257827058.951441;
 		state = 1;
 	};
 	90674F1E0F1B013700D524C0 /* MyTimeAppDelegate.m:128 */ = {
@@ -4160,7 +4226,7 @@
 		ignoreCount = 0;
 		lineNumber = 128;
 		location = MyTime;
-		modificationTime = 257826602.571067;
+		modificationTime = 257827058.951617;
 		state = 1;
 	};
 	90674F300F1B076600D524C0 /* PBXTextBookmark */ = {
@@ -4645,7 +4711,7 @@
 		ignoreCount = 0;
 		lineNumber = 2106;
 		location = MyTime;
-		modificationTime = 257826602.571363;
+		modificationTime = 257827058.951955;
 		state = 2;
 	};
 	907E33EA0F43DECF008E0CE6 /* PBXTextBookmark */ = {
@@ -5345,9 +5411,9 @@
 	};
 	90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {3858, 14406}}";
-			sepNavSelRange = "{24232, 0}";
-			sepNavVisRange = "{24079, 929}";
+			sepNavIntBoundsRect = "{{0, 0}, {3858, 14980}}";
+			sepNavSelRange = "{956, 0}";
+			sepNavVisRange = "{253, 1483}";
 		};
 	};
 	90C1497D0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.h */ = {
@@ -5650,7 +5716,7 @@
 		ignoreCount = 0;
 		lineNumber = 97;
 		location = MyTime;
-		modificationTime = 257826602.570009;
+		modificationTime = 257827058.950452;
 		state = 1;
 	};
 	90C4D8230E85C78E00E202E2 /* BulkLiteraturePlacementViewContoller.m:107 */ = {
@@ -5667,7 +5733,7 @@
 		ignoreCount = 0;
 		lineNumber = 107;
 		location = MyTime;
-		modificationTime = 257826602.570155;
+		modificationTime = 257827058.950618;
 		state = 1;
 	};
 	90C4D8300E85C86F00E202E2 /* PBXTextBookmark */ = {
