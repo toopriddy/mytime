@@ -71,6 +71,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 	// force the tableview to load
 	[theTableView reloadData];
 }
@@ -115,6 +116,7 @@
         case 1:
 			count++; // enable popups
 			count++; // number of months shown
+			count++; // publisher type
 			break;
 		
         // Website
@@ -187,8 +189,10 @@
 	}
 	else
 	{
+		[cell setAccessoryType:UITableViewCellAccessoryNone];
 		[cell setValue:@""];
 		[cell setTitle:@""];
+		[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 	}
 
 
@@ -220,6 +224,15 @@
 						number = [value intValue];
 					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Months Displayed", @"Number of months shown in the statistics view, setting title"), number]];
 					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+					break;
+				}
+				case 2:
+				{
+					[cell setTitle:NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title")];
+					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+					if(value == nil)
+						value = (NSString *)PublisherTypePioneer;
+					[cell setValue:value];
 					break;
 				}
 			}
@@ -264,10 +277,12 @@
 				case 0:
 					[cell setTitle:NSLocalizedString(@"MyTime Version", @"More View Table MyTime Version")];
 					[cell setValue:[NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
+					[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 					break;
 				case 1:
 					[cell setTitle:NSLocalizedString(@"Build Date", @"More View Table Build Date")];
 					[cell setValue:[NSString stringWithFormat:@"%s", __DATE__]];
+					[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 					break;
 			}
 			break;
@@ -316,7 +331,7 @@
 	
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = NSLocalizedString(@"Popup messages like this are now enabled all throughout MyTime", @"Confirmation message about enabling popup messages");
+					alertSheet.title = NSLocalizedString(@"Popup messages like this are now enabled to be shown once all throughout MyTime", @"Confirmation message about enabling popup messages");
 					[alertSheet show];
 					return;
 				}
@@ -334,6 +349,17 @@
 																								 number:number
 																								    min:1 
 																									max:12] autorelease];
+					viewController.delegate = self;
+					[[self navigationController] pushViewController:viewController animated:YES];
+					return;
+				}
+				case 2:
+				{
+					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+					if(value == nil)
+						value = (NSString *)PublisherTypePioneer;
+
+					PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
 					viewController.delegate = self;
 					[[self navigationController] pushViewController:viewController animated:YES];
 					return;
@@ -427,6 +453,8 @@
 			}
 			break;
 	}
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -466,6 +494,13 @@
 			break;
 		}
 	}
+}
+
+
+- (void)publisherTypeViewControllerDone:(PublisherTypeViewController *)publisherTypeViewController
+{
+	[[[Settings sharedInstance] settings] setObject:publisherTypeViewController.type forKey:SettingsPublisherType];
+	[[Settings sharedInstance] saveData];
 }
 
 

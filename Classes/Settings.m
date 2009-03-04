@@ -106,6 +106,14 @@ NSString const * const SettingsSecondView = @"secondView";
 NSString const * const SettingsThirdView = @"thirdView";
 NSString const * const SettingsFourthView = @"fourthView";
 
+NSString const * const SettingsPublisherType = @"publisherType";
+
+NSString const * const PublisherTypePublisher = AlternateLocalizedString(@"Publisher", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString const * const PublisherTypeAuxilliaryPioneer = AlternateLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString const * const PublisherTypePioneer = AlternateLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString const * const PublisherTypeSpecialPioneer = AlternateLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString const * const PublisherTypeTravelingServent = AlternateLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
+
 
 @implementation Settings
 
