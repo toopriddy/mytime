@@ -54,6 +54,15 @@ static NSString *MONTHS[] = {
 	[super dealloc];
 }
 
+- (BOOL)showYearInformation
+{
+	NSString *type = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+	return type == nil || 
+	       [type isEqualToString:(NSString *)PublisherTypePioneer] ||
+		   [type isEqualToString:(NSString *)PublisherTypeSpecialPioneer] ||
+		   [type isEqualToString:(NSString *)PublisherTypeTravelingServent];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return YES;
@@ -603,7 +612,9 @@ static NSString *MONTHS[] = {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-	int count = 1;
+	int count = 0;
+	if([self showYearInformation])
+		count++;
 	
 	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
 	if(value)
@@ -618,27 +629,30 @@ static NSString *MONTHS[] = {
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
 {
 	// the service year is the first section
-	if(section == 0)
+	if([self showYearInformation])
 	{
-		return(_serviceYearQuickBuildMinutes ? 2 : 1);
+		if(section == 0)
+		{
+			return(_serviceYearQuickBuildMinutes ? 2 : 1);
+		}
+		section--;
 	}
-
-	int index = section - 1;
+	
 	int count = 0;
 	count++; // always show hours
-	if(_books[index])
+	if(_books[section])
 		count++;
-	if(_brochures[index])
+	if(_brochures[section])
 		count++;
-	if(_magazines[index])
+	if(_magazines[section])
 		count++;
-	if(_returnVisits[index])
+	if(_returnVisits[section])
 		count++;
-	if(_bibleStudies[index])
+	if(_bibleStudies[section])
 		count++;
-	if(_campaignTracts[index])
+	if(_campaignTracts[section])
 		count++;
-	if(_quickBuildMinutes[index])
+	if(_quickBuildMinutes[section])
 		count++;
 
 	return(count);
@@ -649,12 +663,16 @@ static NSString *MONTHS[] = {
 {
     VERBOSE(NSLog(@"tableView: titleForHeaderInSection:%d", section);)
 	
-	if(section == 0)
+	if([self showYearInformation])
 	{
-		return (NSLocalizedString(@"Service Year Total", @"Service year total hours label"));
+		if(section == 0)
+		{
+			return (NSLocalizedString(@"Service Year Total", @"Service year total hours label"));
+		}
+		section--;
 	}
 	NSString *title = @"";
-	int month = _thisMonth - (section - 1);
+	int month = _thisMonth - section;
 	if(month < 1)
 		month = 12 + month;
 	title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
@@ -668,22 +686,25 @@ static NSString *MONTHS[] = {
 	int section = [indexPath section];
     VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
 
-	if(section == 0)
-		return;
+	if([self showYearInformation])
+	{
+		if(section == 0)
+			return;
 
-	int index = section - 1;
+		section--;
+	}
 
 	if(row-- == 0)
 	{
 		// if we are not editing, then 
-		int hours = _minutes[index] / 60;
-		int minutes = _minutes[index] % 60;
+		int hours = _minutes[section] / 60;
+		int minutes = _minutes[section] % 60;
 		
 		if(minutes)
 		{
-			_selectedMonth = index;
+			_selectedMonth = section;
 			_emailActionSheet = NO;
-			int month = _thisMonth - index;
+			int month = _thisMonth - section;
 			if(month < 1)
 				month = 12 + month;
 			NSString *monthName = [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""];
@@ -874,56 +895,58 @@ static NSString *MONTHS[] = {
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 
-	if(section == 0)
+	if([self showYearInformation])
 	{
-		switch(row)
+		if(section == 0)
 		{
-			case 0:
+			switch(row)
 			{
-				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-				int hours = _serviceYearMinutes / 60;
-				int minutes = _serviceYearMinutes % 60;
-				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else
-					[cell setValue:@"0"];
+				case 0:
+				{
+					[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
+					int hours = _serviceYearMinutes / 60;
+					int minutes = _serviceYearMinutes % 60;
+					if(hours && minutes)
+						[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+					else if(hours)
+						[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+					else if(minutes)
+						[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+					else
+						[cell setValue:@"0"];
 
-				return cell;
-			}
-			case 1:
-			{
-				[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
-				int hours = _serviceYearQuickBuildMinutes / 60;
-				int minutes = _serviceYearQuickBuildMinutes % 60;
-				if(hours && minutes)
-					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else if(hours)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-				else if(minutes)
-					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-				else
-					[cell setValue:@"0"];
+					return cell;
+				}
+				case 1:
+				{
+					[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
+					int hours = _serviceYearQuickBuildMinutes / 60;
+					int minutes = _serviceYearQuickBuildMinutes % 60;
+					if(hours && minutes)
+						[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+					else if(hours)
+						[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+					else if(minutes)
+						[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+					else
+						[cell setValue:@"0"];
 
-				return cell;
+					return cell;
+				}
 			}
+			return nil;
 		}
-		return nil;
+		
+		section--;
 	}
-
-	int index = section - 1;
-
 
 	if(row-- == 0)
 	{
 		// if we are not editing, then 
 		
 		[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-		int hours = _minutes[index] / 60;
-		int minutes = _minutes[index] % 60;
+		int hours = _minutes[section] / 60;
+		int minutes = _minutes[section] % 60;
 		if(hours && minutes)
 			[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 		else if(hours)
@@ -939,48 +962,48 @@ static NSString *MONTHS[] = {
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 	}
-	else if(_books[index] && row-- == 0)
+	else if(_books[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _books[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _books[section]]];
 	}
-	else if(_brochures[index] && row-- == 0)
+	else if(_brochures[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _brochures[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _brochures[section]]];
 	}
-	else if(_magazines[index] && row-- == 0)
+	else if(_magazines[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _magazines[section]]];
 	}
-	else if(_returnVisits[index] && row-- == 0)
+	else if(_returnVisits[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _returnVisits[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _returnVisits[section]]];
 	}
-	else if(_bibleStudies[index] && row-- == 0)
+	else if(_bibleStudies[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _bibleStudies[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _bibleStudies[section]]];
 	}
-	else if(_campaignTracts[index] && row-- == 0)
+	else if(_campaignTracts[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
-		[cell setValue:[NSString stringWithFormat:@"%d", _campaignTracts[index]]];
+		[cell setValue:[NSString stringWithFormat:@"%d", _campaignTracts[section]]];
 	}
-	else if(_quickBuildMinutes[index] && row-- == 0)
+	else if(_quickBuildMinutes[section] && row-- == 0)
 	{
 		// if we are not editing, then 
 		[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
-		int hours = _quickBuildMinutes[index] / 60;
-		int minutes = _quickBuildMinutes[index] % 60;
+		int hours = _quickBuildMinutes[section] / 60;
+		int minutes = _quickBuildMinutes[section] % 60;
 		if(hours && minutes)
 			[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
 		else if(hours)

@@ -115,6 +115,13 @@ extern NSString const * const SettingsSecondView;
 extern NSString const * const SettingsThirdView;
 extern NSString const * const SettingsFourthView;
 
+extern NSString const * const SettingsPublisherType;
+extern NSString const * const PublisherTypePublisher;
+extern NSString const * const PublisherTypeAuxilliaryPioneer;
+extern NSString const * const PublisherTypePioneer;
+extern NSString const * const PublisherTypeSpecialPioneer;
+extern NSString const * const PublisherTypeTravelingServent;
+
 extern int debugging;
 
 #define DEBUG(a) if(debugging) { a }

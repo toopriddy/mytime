@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "BackupView.h"
 #import "NumberViewControllerDelegate.h"
+#import "PublisherTypeViewController.h"
 
 @interface SettingsViewController : UIViewController <UITableViewDelegate, 
                                                       UITableViewDataSource,
 													  NumberViewControllerDelegate,
-													  UIActionSheetDelegate> 
+													  UIActionSheetDelegate,
+													  PublisherTypeViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	BackupView *backupView;
