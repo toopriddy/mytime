@@ -53,8 +53,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {AlternateLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
 
 ,   {AlternateLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
-#warning fix me
-,   {AlternateLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name ()"),   PublicationTypeCampaignTract}
+,   {AlternateLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
 ,   {AlternateLocalizedString(@"Would You Like To Know the Truth?", @"Campaign Tract Publication Name (kt)"),   PublicationTypeCampaignTract}
 
 ,   {AlternateLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
