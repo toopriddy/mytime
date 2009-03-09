@@ -28,6 +28,7 @@ typedef enum {
 
 	NSMutableArray *_displayArray;
 	
+	NSString *_searchText;
 	SortCallsType sortedBy;
 }
 
@@ -38,8 +39,10 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *sectionOffsets;
 @property (nonatomic, retain) NSMutableArray *displayArray;
 @property (nonatomic, assign) SortCallsType sortedBy;
+@property (nonatomic, retain) NSString *searchText;
 
 - (id)initSortedBy:(SortCallsType)theSortedBy;
+- (void)filterUsingSearchText:(NSString *)searchText;
 - (NSInteger)numberOfSections;
 - (NSArray *)sectionIndexTitles;
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index;

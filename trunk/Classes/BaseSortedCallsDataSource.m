@@ -89,6 +89,13 @@
 	[callsSorter refreshData];
 }
 
+- (void)filterUsingSearchText:(NSString *)searchText
+{
+	[callsSorter filterUsingSearchText:searchText];
+	[callsSorter refreshData];
+}
+
+
 // UITableViewDataSource methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

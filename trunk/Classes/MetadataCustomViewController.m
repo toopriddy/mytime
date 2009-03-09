@@ -18,7 +18,7 @@ static MetadataInformation commonInformation[] = {
 ,	{AlternateLocalizedString(@"Notes", @"Call Metadata"), NOTES}
 ,	{AlternateLocalizedString(@"Number", @"Call Metadata"), NUMBER}
 ,	{AlternateLocalizedString(@"Date/Time", @"Call Metadata"), DATE}
-,	{AlternateLocalizedString(@"URL", @"Call Metadata"), URL}
+//,	{AlternateLocalizedString(@"URL", @"Call Metadata"), URL}
 };
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))

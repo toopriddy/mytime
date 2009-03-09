@@ -104,8 +104,9 @@ extern NSString const * const SettingsBulkLiteratureAlertSheetShown;
 extern NSString const * const SettingsExistingCallAlertSheetShown;
 
 extern NSString const * const SettingsTimeStartDate;
+extern NSString const * const SettingsRBCTimeStartDate;
 extern NSString const * const SettingsTimeEntries;
-extern NSString const * const SettingsQuickBuildTimeEntries;
+extern NSString const * const SettingsRBCTimeEntries;
 extern NSString const * const SettingsTimeEntryDate;
 extern NSString const * const SettingsTimeEntryMinutes;
 

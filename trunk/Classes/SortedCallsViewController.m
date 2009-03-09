@@ -80,7 +80,12 @@
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	UITableView *tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:[dataSource tableViewStyle]] autorelease];
-	
+#if 0
+	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)] autorelease];
+	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+	searchBar.delegate = self;
+	tableView.tableHeaderView = searchBar;
+#endif	
 	// set the autoresizing mask so that the table will always fill the view
 	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
@@ -95,6 +100,17 @@
 	// set the tableview as the controller view
 	self.theTableView = tableView;
 	self.view = tableView;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	[theTableView.tableHeaderView resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+	[dataSource filterUsingSearchText:searchText];
+	[theTableView reloadData];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

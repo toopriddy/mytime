@@ -28,6 +28,7 @@
 		self.title = NSLocalizedString(@"Visit Notes", @"Title for the view where you write notes for a call");
 		
 		self.textView = [[[UITextView alloc] initWithFrame:CGRectZero] autorelease];
+		textView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 		textView.text = notes;
 	}
 	return self;
@@ -57,14 +58,8 @@
 	[[self navigationController] popViewControllerAnimated:YES];
 }
 
-- (void)loadView 
+- (void)updateTextView
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.containerView = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
-	// set the autoresizing mask so that the table will always fill the view
-	containerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
 	// make a picker for the publications
 	CGRect textViewRect = [containerView bounds];
 	if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
@@ -73,9 +68,25 @@
 	}
 	else
 	{
-		textViewRect.size.height = 200;
+		textViewRect.size.height -= 218;
 	}
 	textView.frame = textViewRect;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	[self updateTextView];
+}
+
+- (void)loadView 
+{
+	// create a new table using the full application frame
+	// we'll ask the datasource which type of table to use (plain or grouped)
+	self.containerView = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+	// set the autoresizing mask so that the table will always fill the view
+	containerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+
+	[self updateTextView];
 	[containerView setBackgroundColor:[UIColor whiteColor]];
 	[containerView addSubview:textView];
 	self.view = containerView;

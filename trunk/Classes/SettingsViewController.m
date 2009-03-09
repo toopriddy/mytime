@@ -232,7 +232,7 @@
 					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
 					if(value == nil)
 						value = (NSString *)PublisherTypePioneer;
-					[cell setValue:value];
+					[cell setValue:[[NSBundle mainBundle] localizedStringForKey:(NSString *)value value:(NSString *)value table:@""]];
 					break;
 				}
 			}
