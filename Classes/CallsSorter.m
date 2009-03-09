@@ -9,6 +9,16 @@
 #import "CallsSorter.h"
 #import "Settings.h"
 
+@interface CallsSorter ()
+
+- (BOOL)isFilteredText:(NSString *)searchText inObject:(NSObject *)entry;
+- (BOOL)isFilteredText:(NSString *)searchText inArray:(NSArray *)array;
+- (BOOL)isFilteredText:(NSString *)searchText inDictionary:(NSDictionary *)dictionary;
+
+@end
+
+
+
 @implementation CallsSorter
 
 @synthesize calls;
@@ -18,6 +28,7 @@
 @synthesize sectionOffsets;
 @synthesize sortedBy;
 @synthesize displayArray = _displayArray;
+@synthesize searchText = _searchText;
 
 int sortByName(id v1, id v2, void *context)
 {
@@ -124,6 +135,64 @@ int sortByDate(id v1, id v2, void *context)
 	return(self);
 }
 
+- (void)filterUsingSearchText:(NSString *)searchText
+{
+	self.searchText = searchText;
+}
+
+
+- (BOOL)isFilteredText:(NSString *)searchText inObject:(NSObject *)entry
+{
+	if([entry isKindOfClass:[NSString class]])
+	{
+		if([(NSString *)entry rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
+		{
+			return YES;
+		}
+	}
+	else if([entry isKindOfClass:[NSArray class]])
+	{
+		if([self isFilteredText:searchText inArray:(NSArray *)entry])
+		{
+			return YES;
+		}
+	}
+	else if([entry isKindOfClass:[NSDictionary class]])
+	{
+		if([self isFilteredText:searchText inDictionary:(NSDictionary *)entry])
+		{
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
+- (BOOL)isFilteredText:(NSString *)searchText inArray:(NSArray *)array
+{
+	for(NSObject *entry in array)
+	{
+		if([self isFilteredText:searchText inObject:entry])
+			return YES;
+	}
+	return NO;
+}
+
+
+- (BOOL)isFilteredText:(NSString *)searchText inDictionary:(NSDictionary *)dictionary
+{
+	NSEnumerator *enumerator = [dictionary objectEnumerator];
+	NSObject *entry;
+	while( (entry = [enumerator nextObject]) )
+	{
+		if([self isFilteredText:searchText inObject:entry])
+			return YES;
+	}
+	
+	return NO;
+}
+
+
 - (void)refreshData
 {
 	VERY_VERBOSE(NSLog(@"refreshData:");)
@@ -178,6 +247,39 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 		}
 	}
+#if 0
+	if(_searchText && _searchText.length)
+	{
+		if(_displayArray)
+		{
+			NSMutableArray *filteredArray = [NSMutableArray array];
+			int i = 0;
+			for(NSNumber *number in _displayArray)
+			{
+				if([self isFilteredText:_searchText inDictionary:[sortedArray objectAtIndex:[number intValue]]])
+				{
+					[filteredArray addObject:[NSNumber numberWithInt:i]];
+				}
+				i++;
+			}
+			self.displayArray = filteredArray;
+		}
+		else
+		{
+			self.displayArray = [NSMutableArray array];
+
+			int i = 0;
+			for(NSDictionary *call in sortedArray)
+			{
+				if([self isFilteredText:_searchText inDictionary:call])
+				{
+					[_displayArray addObject:[NSNumber numberWithInt:i]];
+				}
+				i++;
+			}
+		}
+	}
+#endif
 	[sortedArray retain];
 	[calls setArray:sortedArray];
 	[sortedArray release];
@@ -210,7 +312,7 @@ int sortByDate(id v1, id v2, void *context)
 		case CALLS_SORTED_BY_STUDY:
 		{
 			const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
-			self.sectionIndexNames = [NSMutableArray arrayWithObjects:@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
+			self.sectionIndexNames = [NSMutableArray arrayWithObjects:/*@"{search}", */@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
 			
 			VERY_VERBOSE(NSLog(@"street count=%d", count);)
 			NSString *lastSectionTitle = @"#";
@@ -410,13 +512,20 @@ int sortByDate(id v1, id v2, void *context)
 - (NSArray *)sectionIndexTitles 
 {
 	VERBOSE(NSLog(@"numberOfSectionsInSectionList: return=%@", sectionNames);)
-	return sectionIndexNames;
+	if(_searchText == nil || _searchText.length == 0)
+		return sectionIndexNames;
+	else
+		return nil;
 }
 
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
 	VERBOSE(NSLog(@"sectionForSectionIndexTitle:%@ index%d", title, index);)
 	NSInteger ret = index;
+	if([title isEqualToString:@"{search}"])
+	{
+		return 0;
+	}
 	switch(sortedBy)
 	{
 		case CALLS_SORTED_BY_DATE:

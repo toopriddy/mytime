@@ -30,7 +30,7 @@ static int sortByDate(id v1, id v2, void *context)
 - (void)reloadData
 {
 	// refresh the data
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	NSMutableArray *timeEntries = [settings objectForKey:timeEntriesName];
 
@@ -68,7 +68,7 @@ static int sortByDate(id v1, id v2, void *context)
 		selectedIndexPath = nil;
 
 		_quickBuild = quickBuild;
-		NSString *timeEntriesName = (NSString *)(quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+		NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 
 		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 		NSMutableArray *timeEntries = [[[NSMutableArray alloc] initWithArray:[settings objectForKey:timeEntriesName]] autorelease];
@@ -79,7 +79,7 @@ static int sortByDate(id v1, id v2, void *context)
 		// object. 
 		if(quickBuild)
 		{
-			self.title = NSLocalizedString(@"Quick Build", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
+			self.title = NSLocalizedString(@"RBC", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
 			self.tabBarItem.image = [UIImage imageNamed:@"build.png"];
 		}
 		else
@@ -116,27 +116,26 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)updatePrompt
 {
-	if(!_quickBuild)
+	NSString *whichStartDate = (NSString *)(_quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate);
+	NSDate *date = [[[Settings sharedInstance] settings] objectForKey:whichStartDate];
+	if(date)
 	{
-		NSDate *date = [[[Settings sharedInstance] settings] objectForKey:SettingsTimeStartDate];
-		if(date)
-		{
-			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 
-			[self.navigationItem setPrompt:[NSString stringWithFormat:NSLocalizedString(@"Time started at: %@", @"Hours view prompt when you press the start time button"), [dateFormatter stringFromDate:date]]];
-		}
-		else
-		{	
-			[self.navigationItem setPrompt:nil];
-		}
+		[self.navigationItem setPrompt:[NSString stringWithFormat:NSLocalizedString(@"Time started at: %@", @"Hours view prompt when you press the start time button"), [dateFormatter stringFromDate:date]]];
+	}
+	else
+	{	
+		[self.navigationItem setPrompt:nil];
 	}
 }
 
 - (void)navigationControlStartTime:(id)sender 
 {
-	[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsTimeStartDate];
+	NSString *whichStartDate = (NSString *)(_quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate);
+	[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:whichStartDate];
 	[[Settings sharedInstance] saveData];
 	// add Stop Time button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
@@ -149,16 +148,17 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)navigationControlStopTime:(id)sender 
 {
+	NSString *whichStartDate = (NSString *)(_quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate);
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	// we found a saved start date, lets see how much time there was between then and now
-	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[settings objectForKey:SettingsTimeStartDate] timeIntervalSinceReferenceDate]] autorelease];	
+	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[settings objectForKey:whichStartDate] timeIntervalSinceReferenceDate]] autorelease];	
 	NSDate *now = [NSDate date];
 	
 	int minutes = [now timeIntervalSinceDate:date]/60.0;
 	if(minutes > 0)
 	{
-		NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
-		NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
+		NSString *whichTimeEntryName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
+		NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:whichTimeEntryName];
 	
 		NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
 
@@ -168,7 +168,7 @@ static int sortByDate(id v1, id v2, void *context)
 	
 		[tableView reloadData];
 	}
-	[settings removeObjectForKey:SettingsTimeStartDate];
+	[settings removeObjectForKey:whichStartDate];
 	[[Settings sharedInstance] saveData];
 
 
@@ -206,26 +206,24 @@ static int sortByDate(id v1, id v2, void *context)
 																			 action:@selector(navigationControlAdd:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
 
-	if(!_quickBuild)
+	NSString *whichStartDate = (NSString *)(_quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate);
+	if([[[Settings sharedInstance] settings] objectForKey:whichStartDate] == nil)
 	{
-		if([[[Settings sharedInstance] settings] objectForKey:SettingsTimeStartDate] == nil)
-		{
-			// add Start Time button
-			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
-																		style:UIBarButtonItemStylePlain
-																	   target:self
-																	   action:@selector(navigationControlStartTime:)] autorelease];
-			[self.navigationItem setLeftBarButtonItem:button animated:NO];
-		}
-		else
-		{
-			// add Stop Time button
-			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
-																		style:UIBarButtonItemStyleDone
-																	   target:self
-																	   action:@selector(navigationControlStopTime:)] autorelease];
-			[self.navigationItem setLeftBarButtonItem:button animated:NO];
-		}
+		// add Start Time button
+		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
+																	style:UIBarButtonItemStylePlain
+																   target:self
+																   action:@selector(navigationControlStartTime:)] autorelease];
+		[self.navigationItem setLeftBarButtonItem:button animated:NO];
+	}
+	else
+	{
+		// add Stop Time button
+		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
+																	style:UIBarButtonItemStyleDone
+																   target:self
+																   action:@selector(navigationControlStopTime:)] autorelease];
+		[self.navigationItem setLeftBarButtonItem:button animated:NO];
 	}
 	[self updatePrompt];
 }
@@ -261,7 +259,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)timePickerViewControllerDone:(TimePickerViewController *)timePickerController 
 {
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	if(selectedIndexPath != nil)
 	{
@@ -304,7 +302,7 @@ static int sortByDate(id v1, id v2, void *context)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     DEBUG(NSLog(@"numberOfRowsInTable:");)
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	int count = [timeEntries count];
     DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
@@ -326,7 +324,7 @@ static int sortByDate(id v1, id v2, void *context)
 		[cell setTitle:@""];
 	}
 
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	
 	if(row >= [timeEntries count])
@@ -365,7 +363,7 @@ static int sortByDate(id v1, id v2, void *context)
     int row = [indexPath row];
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
 	self.selectedIndexPath = indexPath;
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
 
@@ -382,7 +380,7 @@ static int sortByDate(id v1, id v2, void *context)
 - (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsQuickBuildTimeEntries : SettingsTimeEntries);
+	NSString *timeEntriesName = (NSString *)(_quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries);
 	NSMutableArray *timeEntries = [[[Settings sharedInstance] settings] objectForKey:timeEntriesName];
 	[timeEntries removeObjectAtIndex:[indexPath row]];
 	[[Settings sharedInstance] saveData];

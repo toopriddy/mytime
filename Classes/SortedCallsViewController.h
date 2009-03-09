@@ -10,7 +10,7 @@
 #import "SortedCallsViewDataSourceProtocol.h"
 #import "CallViewController.h"
 
-@interface SortedCallsViewController : UIViewController <UITableViewDelegate, CallViewControllerDelegate> 
+@interface SortedCallsViewController : UIViewController <UITableViewDelegate, CallViewControllerDelegate, UISearchBarDelegate> 
 {
 	UITableView *theTableView;
 	id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;

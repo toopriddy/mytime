@@ -245,6 +245,9 @@
 	else
 	{
 		NSMutableDictionary *selectedCall = (NSMutableDictionary *)[marker data];
+		CGRect rect = self.detailView.view.frame;
+		rect.size.width = self.view.bounds.size.width;
+		self.detailView.view.frame = rect;
 		self.detailView.call = selectedCall;
 		self.detailView.view.hidden = NO;
 		selectedMarker = marker;

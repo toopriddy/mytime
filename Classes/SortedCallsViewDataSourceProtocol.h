@@ -29,6 +29,7 @@
 - (void)setCall:(NSMutableDictionary *)call forIndexPath:(NSIndexPath *)indexPath;
 - (void)addCall:(NSMutableDictionary *)call;
 - (void)deleteCallAtIndexPath:(NSIndexPath *)indexPath keepInformation:(BOOL)keepInformation;
+- (void)filterUsingSearchText:(NSString *)searchText;
 
 
 

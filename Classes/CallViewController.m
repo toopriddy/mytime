@@ -1588,7 +1588,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
 						   cellName:@"Notes"
-						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
+						 rowHeight:[UITableViewMultilineTextCell heightForWidth:(self.view.bounds.size.width - 70) withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:(end == 1 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete)
 				 indentWhenEditing:YES
 				  selectInvocation:[self invocationForSelector:@selector(changeNotesForReturnVisitAtIndex:) withArgument:(void *)i]
@@ -1598,7 +1598,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getNotesCellForReturnVisitIndex:) withArgument:(void *)i]
 						   cellName:@"Notes"
-						 rowHeight:[UITableViewMultilineTextCell heightForWidth:250 withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
+						 rowHeight:[UITableViewMultilineTextCell heightForWidth:(self.view.bounds.size.width - 70) withText:[[returnVisits objectAtIndex:i] objectForKey:CallReturnVisitNotes]]
 					insertOrDelete:UITableViewCellEditingStyleNone
 				 indentWhenEditing:NO
 				  selectInvocation:nil

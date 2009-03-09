@@ -1,5 +1,16 @@
 LOCALIZABLE_MERGE=LocalizableMerge/build/Release/LocalizableMerge
-
+LANGUAGES = \
+Croatian.lproj \
+Danish.lproj \
+Dutch.lproj \
+en_UK.lproj \
+French.lproj \
+German.lproj \
+Italian.lproj \
+Japanese.lproj \
+Portuguese.lproj \
+Spanish.lproj \
+Swedish.lproj \
 
 all: genstrings
 
@@ -8,17 +19,11 @@ genstrings:
 	cp en_US.lproj/Localizable.strings English.lproj/
 
 merge:
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Croatian.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Danish.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Dutch.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings en_UK.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings French.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings German.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Italian.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Japanese.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Portuguese.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Spanish.lproj/Localizable.strings
-	$(LOCALIZABLE_MERGE) English.lproj/Localizable.strings Swedish.lproj/Localizable.strings
+	for x in $(LANGUAGES); do $(LOCALIZABLE_MERGE) English.lproj/Localizable.strings $$x/Localizable.strings; done
+
+zip:
+	rm -rf translations.zip
+	zip translations.zip $(patsubst %,%/Localizable.strings,$(LANGUAGES))
 
 clang:
 	scan-build xcodebuild

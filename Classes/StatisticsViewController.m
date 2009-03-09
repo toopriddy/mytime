@@ -131,7 +131,7 @@ static NSString *MONTHS[] = {
 					count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
 				else if(minutes)
 					count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-				[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+				[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 			}
 			[string appendString:[@"\n\n" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 		}
@@ -476,7 +476,7 @@ static NSString *MONTHS[] = {
 
 	// QUICK BUILD
 	
-	timeEntries = [settings objectForKey:SettingsQuickBuildTimeEntries];
+	timeEntries = [settings objectForKey:SettingsRBCTimeEntries];
 	timeCount = [timeEntries count];
 	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
 	{
@@ -919,7 +919,7 @@ static NSString *MONTHS[] = {
 				}
 				case 1:
 				{
-					[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
+					[cell setTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
 					int hours = _serviceYearQuickBuildMinutes / 60;
 					int minutes = _serviceYearQuickBuildMinutes % 60;
 					if(hours && minutes)
@@ -1001,7 +1001,7 @@ static NSString *MONTHS[] = {
 	else if(_quickBuildMinutes[section] && row-- == 0)
 	{
 		// if we are not editing, then 
-		[cell setTitle:NSLocalizedString(@"Quick Build Hours", @"'Quick Build Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
+		[cell setTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
 		int hours = _quickBuildMinutes[section] / 60;
 		int minutes = _quickBuildMinutes[section] % 60;
 		if(hours && minutes)
