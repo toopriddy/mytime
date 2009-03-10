@@ -247,7 +247,7 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 		}
 	}
-#if 0
+#if 1
 	if(_searchText && _searchText.length)
 	{
 		if(_displayArray)
@@ -258,7 +258,7 @@ int sortByDate(id v1, id v2, void *context)
 			{
 				if([self isFilteredText:_searchText inDictionary:[sortedArray objectAtIndex:[number intValue]]])
 				{
-					[filteredArray addObject:[NSNumber numberWithInt:i]];
+					[filteredArray addObject:number];
 				}
 				i++;
 			}
@@ -563,40 +563,17 @@ int sortByDate(id v1, id v2, void *context)
 - (NSInteger)numberOfRowsInSection:(NSInteger)section 
 {
 	int ret;
-	switch(sortedBy)
+	if(section == ([sectionOffsets count]-1))
 	{
-		case CALLS_SORTED_BY_DATE:
-			ret = [calls count];
-			break;
-			
-		case CALLS_SORTED_BY_CITY:
-			if(section == ([sectionOffsets count]-1))
-			{
-				ret = [calls count] - [[sectionOffsets objectAtIndex:section] intValue];
-			}
-			else
-			{
-				ret = [[sectionOffsets objectAtIndex:(section + 1)] intValue] - [[sectionOffsets objectAtIndex:section] intValue];
-			}
-			break;
-			
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-			if(section == ([sectionOffsets count]-1))
-			{
-				if(_displayArray)
-					ret = [_displayArray count] - [[sectionOffsets objectAtIndex:section] intValue];
-				else
-					ret = [calls count] - [[sectionOffsets objectAtIndex:section] intValue];
-			}
-			else
-			{
-				ret = [[sectionOffsets objectAtIndex:(section + 1)] intValue] - [[sectionOffsets objectAtIndex:section] intValue];
-			}
-			break;
+		if(_displayArray)
+			ret = [_displayArray count] - [[sectionOffsets objectAtIndex:section] intValue];
+		else
+			ret = [calls count] - [[sectionOffsets objectAtIndex:section] intValue];
 	}
-
+	else
+	{
+		ret = [[sectionOffsets objectAtIndex:(section + 1)] intValue] - [[sectionOffsets objectAtIndex:section] intValue];
+	}
 	VERBOSE(NSLog(@"numberOfRowsInSection:%d return=%d", section, ret);)
 	return(ret);
 }

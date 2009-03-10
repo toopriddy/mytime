@@ -80,12 +80,12 @@
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	UITableView *tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:[dataSource tableViewStyle]] autorelease];
-#if 0
+
 	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)] autorelease];
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	searchBar.delegate = self;
 	tableView.tableHeaderView = searchBar;
-#endif	
+
 	// set the autoresizing mask so that the table will always fill the view
 	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
@@ -172,6 +172,8 @@
 // the user selected a row in the table.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath 
 {
+	[theTableView.tableHeaderView resignFirstResponder];
+
 	// create a custom navigation bar button and set it to always say "back"
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"All Calls", @"cancel button");
