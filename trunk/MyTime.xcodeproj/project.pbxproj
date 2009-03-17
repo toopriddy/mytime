@@ -226,6 +226,7 @@
 		90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPositionMapViewController.m; path = Classes/SelectPositionMapViewController.m; sourceTree = SOURCE_ROOT; };
 		90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPositionMapViewController.h; path = Classes/SelectPositionMapViewController.h; sourceTree = SOURCE_ROOT; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90B5B6260F6F1E9800354889 /* Greek */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Greek; path = Greek.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
 		90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnVisitTypeViewController.m; sourceTree = "<group>"; };
@@ -609,6 +610,7 @@
 				en_UK,
 				Danish,
 				en_GB,
+				Greek,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -791,6 +793,7 @@
 				90ADA7640F18757800C65E40 /* en_UK */,
 				907A63990EFD8EC6002E4144 /* en_US */,
 				901313140EA03A4B0055D890 /* French */,
+				90B5B6260F6F1E9800354889 /* Greek */,
 				90B8F4170E7ECD300022A01F /* German */,
 				9053E0580E8DDD7100BA35F7 /* Italian */,
 				90AEB40D0E9C218A00943E6A /* Japanese */,

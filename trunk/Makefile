@@ -6,6 +6,7 @@ Dutch.lproj \
 en_UK.lproj \
 French.lproj \
 German.lproj \
+Greek.lproj \
 Italian.lproj \
 Japanese.lproj \
 Portuguese.lproj \
