@@ -70,18 +70,11 @@
 
 	if(self.selectionStyle != UITableViewCellSelectionStyleNone)
 	{
-		if(selected)
-		{
-			textView.textColor = [UIColor whiteColor];
-		}
-		else
-		{
-#if 1
-			textView.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
-#else
-			textView.textColor = [UIColor blackColor];
-#endif
-		}
+		UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
+
+		textView.backgroundColor = backgroundColor;
+		textView.highlighted = selected;
+		textView.opaque = !selected;
 	}
 }
 

@@ -230,6 +230,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	if(selectedIndexPath)
 	{
 		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
@@ -239,8 +240,11 @@ static int sortByDate(id v1, id v2, void *context)
 	[self reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated 
+- (void)viewDidAppear:(BOOL)animated
 {
+	[tableView flashScrollIndicators];
+	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+
 #if 0
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	if([settings objectForKey:SettingsTimeAlertSheetShown] == nil)

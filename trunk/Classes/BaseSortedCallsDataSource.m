@@ -135,6 +135,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index 
 {
+	if([title isEqualToString:@"{search}"])
+	{
+		[tableView scrollRectToVisible:[[tableView tableHeaderView] bounds] animated:NO];
+		return -1;
+	}
 	return [callsSorter sectionForSectionIndexTitle:title atIndex:index];
 }
 

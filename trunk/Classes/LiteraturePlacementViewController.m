@@ -117,13 +117,17 @@
 	self.navigationItem.hidesBackButton = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[tableView flashScrollIndicators];
+	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
-	if(selectedIndexPath)
-	{
-		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-		selectedIndexPath = nil;
-	}
+	[super viewWillAppear:animated];
+	selectedIndexPath = nil;
 	// force the tableview to load
 	[tableView reloadData];
 }

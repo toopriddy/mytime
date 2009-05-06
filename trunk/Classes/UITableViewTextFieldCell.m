@@ -90,6 +90,15 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+	UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
+
+	textField.backgroundColor = backgroundColor;
+	textField.highlighted = selected;
+	textField.opaque = !selected;
+	titleLabel.backgroundColor = backgroundColor;
+	titleLabel.highlighted = selected;
+	titleLabel.opaque = !selected;
+	
 	if(selected)
 	{
 		[self.textField becomeFirstResponder];

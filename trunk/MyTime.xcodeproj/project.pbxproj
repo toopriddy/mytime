@@ -55,6 +55,7 @@
 		90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */; };
 		907A23160ECA82A600BE38DD /* MetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A23150ECA82A600BE38DD /* MetadataViewController.m */; };
 		907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */; };
+		907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907BEA100FB212DA00178ED6 /* OverlayViewController.m */; };
 		90A7AE830EA5A62200EBEF2D /* build.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A7AE820EA5A62100EBEF2D /* build.png */; };
 		90ADA7A60F18760200C65E40 /* WebMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA7A50F18760200C65E40 /* WebMapViewController.m */; };
 		90ADA7AC0F1876C500C65E40 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */; };
@@ -208,6 +209,9 @@
 		907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataEditorViewController.h; sourceTree = "<group>"; };
 		907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataEditorViewController.m; sourceTree = "<group>"; };
 		907A63990EFD8EC6002E4144 /* en_US */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_US; path = en_US.lproj/Localizable.strings; sourceTree = "<group>"; };
+		907BEA0F0FB212DA00178ED6 /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
+		907BEA100FB212DA00178ED6 /* OverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayViewController.m; sourceTree = "<group>"; };
+		907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovableTableViewIndex.h; sourceTree = "<group>"; };
 		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
 		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90ADA7A40F18760200C65E40 /* WebMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebMapViewController.h; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 				901313810EA078780055D890 /* NumberViewControllerDelegate.h */,
 				90059C8E0F3A2112006DF536 /* PSUrlString.h */,
 				90059C8F0F3A2112006DF536 /* PSUrlString.m */,
+				907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -536,6 +541,8 @@
 				90FBE8760E39887300FD8014 /* SortedCallsViewController.h */,
 				90FBE8770E39887300FD8014 /* SortedCallsViewController.m */,
 				90FBE87F0E398CAE00FD8014 /* SortedCallsViewDataSourceProtocol.h */,
+				907BEA0F0FB212DA00178ED6 /* OverlayViewController.h */,
+				907BEA100FB212DA00178ED6 /* OverlayViewController.m */,
 				905C36D90E3BBD4600C8DB27 /* CallViewController.h */,
 				905C36DA0E3BBD4600C8DB27 /* CallViewController.m */,
 				90D02E820E53B7AE001CEF0D /* CallViewControllerDelegate.h */,
@@ -764,6 +771,7 @@
 				9003010F0F337AC000F2B68F /* CallsSortedByFilterDataSource.m in Sources */,
 				90059C900F3A2112006DF536 /* PSUrlString.m in Sources */,
 				904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */,
+				907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,8 +863,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "E88B399C-C873-4E31-8756-86FE75523D3D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6C65CB6-F87F-49B5-8D35-459C9AF661E3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A09E376-AECE-43F6-8067-2196826687E3";
 				SDKROOT = iphoneos2.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};
@@ -891,7 +898,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "A5CDE12B-3C9C-40F0-A068-0C537BED6C58";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96F69C15-BD92-402E-B074-A404F4435000";
 				SDKROOT = iphoneos2.2;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
@@ -964,7 +970,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "63DBD5D2-BADF-4ABA-B2A0-A75464A3EEBC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FF43E85-652F-4B6D-8DBF-DDA7D0A43730";
 				SDKROOT = iphoneos2.1;
 			};
 			name = Debug;

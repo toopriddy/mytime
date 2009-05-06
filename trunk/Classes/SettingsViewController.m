@@ -71,12 +71,17 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+	[super viewWillAppear:animated];
 	// force the tableview to load
 	[theTableView reloadData];
 }
 
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[theTableView flashScrollIndicators];
+	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  

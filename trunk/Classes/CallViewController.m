@@ -295,6 +295,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// go through the notes and make them resign the first responder
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
+	[theTableView flashScrollIndicators];
 	[_name resignFirstResponder];
 
 	BOOL isNewCall = _newCall;
@@ -442,6 +443,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	_showAddCall = YES;
 	
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:NO];
+	[theTableView flashScrollIndicators];
 	
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -566,17 +568,20 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	// force the tableview to load
 	[self reloadData];
 	[theTableView reloadData];
-	[super viewWillAppear:animated];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated 
 {
+	[super viewDidAppear:animated];
+
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	[theTableView flashScrollIndicators];
 	if(!_initialView)
 	{
 		[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
@@ -595,9 +600,6 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		[alertSheet show];
 		
 	}
-
-
-	[super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

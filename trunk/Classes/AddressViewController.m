@@ -237,10 +237,10 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
 	// force the tableview to load
 	[self.theTableView reloadData];
-
-	[super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad

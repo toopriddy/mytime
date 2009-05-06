@@ -247,7 +247,7 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 		}
 	}
-#if 1
+
 	if(_searchText && _searchText.length)
 	{
 		if(_displayArray)
@@ -279,7 +279,7 @@ int sortByDate(id v1, id v2, void *context)
 			}
 		}
 	}
-#endif
+
 	[sortedArray retain];
 	[calls setArray:sortedArray];
 	[sortedArray release];
@@ -297,206 +297,216 @@ int sortByDate(id v1, id v2, void *context)
 	self.sectionRowCount = [NSMutableArray array];
 	self.sectionOffsets = [NSMutableArray array];
 
-	switch(sortedBy)
+	if(_searchText == nil || _searchText.length == 0)
 	{
-		case CALLS_SORTED_BY_DATE:
+		switch(sortedBy)
 		{
-			self.sectionIndexNames = nil;
-			[sectionNames addObject:NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'")];
-			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
-			break;
-		}
-		
-		case CALLS_SORTED_BY_STREET:
-		case CALLS_SORTED_BY_NAME:
-		case CALLS_SORTED_BY_STUDY:
-		{
-			const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
-			self.sectionIndexNames = [NSMutableArray arrayWithObjects:/*@"{search}", */@"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
-			
-			VERY_VERBOSE(NSLog(@"street count=%d", count);)
-			NSString *lastSectionTitle = @"#";
-			int rowCount = 0;
-
-			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
-			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
-			
-			if(count == 0)
+			case CALLS_SORTED_BY_DATE:
 			{
-				[sectionNames addObject:@""];
+				self.sectionIndexNames = nil;
+				[sectionNames addObject:NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'")];
+				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+				break;
 			}
-			else
+			
+			case CALLS_SORTED_BY_STREET:
+			case CALLS_SORTED_BY_NAME:
+			case CALLS_SORTED_BY_STUDY:
 			{
-				NSString *street;
-				if(_displayArray)
-					street = [[calls objectAtIndex:[[_displayArray objectAtIndex:0] intValue]] objectForKey:key];
-				else
-					street = [[calls objectAtIndex:0] objectForKey:key];
-					
-				if([street length] == 0)
-				{
-					[sectionNames addObject:lastSectionTitle];
-				}
-				else
+				const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
+				self.sectionIndexNames = [NSMutableArray arrayWithObjects:@"{search}", @"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
+				
+				VERY_VERBOSE(NSLog(@"street count=%d", count);)
+				NSString *lastSectionTitle = @"#";
+				int rowCount = 0;
+
+				[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+				
+				if(count == 0)
 				{
 					[sectionNames addObject:@""];
 				}
-
-				for(i = 0; i < count; ++i)
+				else
 				{
-					NSString *sectionTitle;
+					NSString *street;
 					if(_displayArray)
-						street = [[calls objectAtIndex:[[_displayArray objectAtIndex:i] intValue]] objectForKey:key];
+						street = [[calls objectAtIndex:[[_displayArray objectAtIndex:0] intValue]] objectForKey:key];
 					else
-						street = [[calls objectAtIndex:i] objectForKey:key];
-					
-					rowCount++;
-					
+						street = [[calls objectAtIndex:0] objectForKey:key];
+						
 					if([street length] == 0)
 					{
-						sectionTitle = @"#";
+						[sectionNames addObject:lastSectionTitle];
 					}
 					else
 					{
-						unichar c = [street characterAtIndex:0];
-						sectionTitle = [[NSString stringWithCharacters:&c length:1] uppercaseString];
+						[sectionNames addObject:@""];
 					}
-					VERY_VERBOSE(NSLog(@"title=%@ street=%@", sectionTitle, street);)
-					// lets see if the new section has a different letter than the previous or if
-					// this is the first entry add it to the sections
-					if(![sectionTitle isEqualToString:lastSectionTitle])
+
+					for(i = 0; i < count; ++i)
 					{
-						lastSectionTitle = sectionTitle;
-						VERY_VERBOSE(NSLog(@"added");)
-						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
-						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
-						[sectionNames addObject:sectionTitle];
-						rowCount = 0;
+						NSString *sectionTitle;
+						if(_displayArray)
+							street = [[calls objectAtIndex:[[_displayArray objectAtIndex:i] intValue]] objectForKey:key];
+						else
+							street = [[calls objectAtIndex:i] objectForKey:key];
+						
+						rowCount++;
+						
+						if([street length] == 0)
+						{
+							sectionTitle = @"#";
+						}
+						else
+						{
+							unichar c = [street characterAtIndex:0];
+							sectionTitle = [[NSString stringWithCharacters:&c length:1] uppercaseString];
+						}
+						VERY_VERBOSE(NSLog(@"title=%@ street=%@", sectionTitle, street);)
+						// lets see if the new section has a different letter than the previous or if
+						// this is the first entry add it to the sections
+						if(![sectionTitle isEqualToString:lastSectionTitle])
+						{
+							lastSectionTitle = sectionTitle;
+							VERY_VERBOSE(NSLog(@"added");)
+							[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+							[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+							[sectionNames addObject:sectionTitle];
+							rowCount = 0;
+						}
 					}
 				}
+				
+				break;
 			}
 			
-			break;
-		}
-		
-		case CALLS_SORTED_BY_CITY:
-		{
-			VERY_VERBOSE(NSLog(@"city count=%d", count);)
-			NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
-			int rowCount = 0;
-
-			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
-			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
-
-			if(count == 0)
+			case CALLS_SORTED_BY_CITY:
 			{
-				[sectionNames addObject:@""];
-			}
-			else
-			{
-				NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
-				if([city length] == 0)
-				{
-					[sectionNames addObject:lastSectionTitle];
-				}
-				else
+				VERY_VERBOSE(NSLog(@"city count=%d", count);)
+				NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+				int rowCount = 0;
+
+				[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+
+				if(count == 0)
 				{
 					[sectionNames addObject:@""];
 				}
-
-				for(i = 0; i < count; ++i)
+				else
 				{
-					NSString *sectionTitle;
-					NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
-					
-					rowCount++;
-					
+					NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
 					if([city length] == 0)
 					{
-						sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+						[sectionNames addObject:lastSectionTitle];
 					}
 					else
 					{
-						sectionTitle = city;
+						[sectionNames addObject:@""];
 					}
-					VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
-					// lets see if the new section has a different letter than the previous or if
-					// this is the first entry add it to the sections
-					if(![sectionTitle isEqualToString:lastSectionTitle])
+
+					for(i = 0; i < count; ++i)
 					{
-						lastSectionTitle = sectionTitle;
-						VERY_VERBOSE(NSLog(@"added");)
-						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
-						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
-						[sectionNames addObject:sectionTitle];
-						rowCount = 0;
+						NSString *sectionTitle;
+						NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
+						
+						rowCount++;
+						
+						if([city length] == 0)
+						{
+							sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+						}
+						else
+						{
+							sectionTitle = city;
+						}
+						VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
+						// lets see if the new section has a different letter than the previous or if
+						// this is the first entry add it to the sections
+						if(![sectionTitle isEqualToString:lastSectionTitle])
+						{
+							lastSectionTitle = sectionTitle;
+							VERY_VERBOSE(NSLog(@"added");)
+							[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+							[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+							[sectionNames addObject:sectionTitle];
+							rowCount = 0;
+						}
 					}
 				}
+				// the index is the same as the section names
+				[sectionIndexNames setArray:sectionNames];
+				break;
 			}
-			// the index is the same as the section names
-			[sectionIndexNames setArray:sectionNames];
-			break;
-		}
-		case CALLS_SORTED_BY_METADATA:
-		{
-			self.sectionRowCount = [NSMutableArray array];
-			self.sectionOffsets = [NSMutableArray array];
-			self.sectionNames = [NSMutableArray array];
-
-			VERY_VERBOSE(NSLog(@"city count=%d", count);)
-			NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
-			int rowCount = 0;
-
-			[sectionRowCount addObject:[NSNumber numberWithInt:0]];
-			[sectionOffsets addObject:[NSNumber numberWithInt:0]];
-
-			if(count == 0)
+			case CALLS_SORTED_BY_METADATA:
 			{
-				[sectionNames addObject:@""];
-			}
-			else
-			{
-				NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
-				if([city length] == 0)
-				{
-					[sectionNames addObject:lastSectionTitle];
-				}
-				else
+				self.sectionRowCount = [NSMutableArray array];
+				self.sectionOffsets = [NSMutableArray array];
+				self.sectionNames = [NSMutableArray array];
+
+				VERY_VERBOSE(NSLog(@"city count=%d", count);)
+				NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+				int rowCount = 0;
+
+				[sectionRowCount addObject:[NSNumber numberWithInt:0]];
+				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
+
+				if(count == 0)
 				{
 					[sectionNames addObject:@""];
 				}
-
-				for(i = 0; i < count; ++i)
+				else
 				{
-					NSString *sectionTitle;
-					NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
-					
-					rowCount++;
-					
+					NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
 					if([city length] == 0)
 					{
-						sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+						[sectionNames addObject:lastSectionTitle];
 					}
 					else
 					{
-						sectionTitle = city;
+						[sectionNames addObject:@""];
 					}
-					VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
-					// lets see if the new section has a different letter than the previous or if
-					// this is the first entry add it to the sections
-					if(![sectionTitle isEqualToString:lastSectionTitle])
+
+					for(i = 0; i < count; ++i)
 					{
-						lastSectionTitle = sectionTitle;
-						VERY_VERBOSE(NSLog(@"added");)
-						[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
-						[sectionOffsets addObject:[NSNumber numberWithInt:i]];
-						[sectionNames addObject:sectionTitle];
-						rowCount = 0;
+						NSString *sectionTitle;
+						NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
+						
+						rowCount++;
+						
+						if([city length] == 0)
+						{
+							sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
+						}
+						else
+						{
+							sectionTitle = city;
+						}
+						VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
+						// lets see if the new section has a different letter than the previous or if
+						// this is the first entry add it to the sections
+						if(![sectionTitle isEqualToString:lastSectionTitle])
+						{
+							lastSectionTitle = sectionTitle;
+							VERY_VERBOSE(NSLog(@"added");)
+							[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
+							[sectionOffsets addObject:[NSNumber numberWithInt:i]];
+							[sectionNames addObject:sectionTitle];
+							rowCount = 0;
+						}
 					}
 				}
+				break;
 			}
-			break;
 		}
+	}
+	else
+	{
+		// we are searching so there is only one section
+		self.sectionIndexNames = nil;
+		[sectionNames addObject:NSLocalizedString(@"Search Results", @"Section Title when the user is searching")];
+		[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 	}
 }
 
@@ -524,7 +534,7 @@ int sortByDate(id v1, id v2, void *context)
 	NSInteger ret = index;
 	if([title isEqualToString:@"{search}"])
 	{
-		return 0;
+		return -1;
 	}
 	switch(sortedBy)
 	{
