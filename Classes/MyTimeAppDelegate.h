@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+// for moving around the UITableViewIndex
+static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
+static BOOL tableViewIndexMoveOut(id self, SEL _cmd);
+
 typedef enum {
 	ADD_CALL,
 	RESTORE_BACKUP

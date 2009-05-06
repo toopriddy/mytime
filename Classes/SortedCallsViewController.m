@@ -11,10 +11,10 @@
 #import "CallTableCell.h"
 #import "CallViewController.h"
 #import "Settings.h"
-
+#import "MovableTableViewIndex.h"
 @implementation SortedCallsViewController
 
-@synthesize theTableView;
+@synthesize tableView;
 @synthesize dataSource;
 @synthesize indexPath;
 
@@ -39,7 +39,7 @@
 {
 	if ([self init]) 
 	{
-		theTableView = nil;
+		tableView = nil;
 		
 		indexPath = nil;
 		
@@ -66,9 +66,10 @@
 
 - (void)dealloc 
 {
-	theTableView.delegate = nil;
-	theTableView.dataSource = nil;
-	[theTableView release];
+	[ovController release];
+	tableView.delegate = nil;
+	tableView.dataSource = nil;
+	[tableView release];
 	[dataSource release];
 	[super dealloc];
 }
@@ -78,13 +79,17 @@
 {	
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
-	UITableView *tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
+	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:[dataSource tableViewStyle]] autorelease];
 
-	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)] autorelease];
+	searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44.0)] autorelease];
+	searchBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	searchBar.delegate = self;
+	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	tableView.tableHeaderView = searchBar;
+
+	searching = NO;
 
 	// set the autoresizing mask so that the table will always fill the view
 	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
@@ -96,22 +101,127 @@
 	// set the tableview delegate to this object and the datasource to the datasource which has already been set
 	tableView.delegate = self;
 	tableView.dataSource = dataSource;
+
 	
 	// set the tableview as the controller view
-	self.theTableView = tableView;
 	self.view = tableView;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	[theTableView.tableHeaderView resignFirstResponder];
+	[tableView.tableHeaderView resignFirstResponder];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+#pragma mark -
+#pragma mark Search Bar 
+
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar 
+{
+	//This method is called again when the user clicks back from teh detail view.
+	//So the overlay is displayed on the results, which is something we do not want to happen.
+	if(searching)
+		return;
+
+// move the index out of the way
+	for ( UIView *view in tableView.subviews ) 
+	{
+		if ( [view respondsToSelector:@selector(moveIndexOut)] ) 
+		{
+			MovableTableViewIndex *index = (MovableTableViewIndex *)view;
+			[index moveIndexOut];
+		}
+	}
+		
+	//Add the overlay view.
+	if(ovController == nil)
+	{
+		ovController = [[OverlayViewController alloc] init];
+	}
+	
+	CGFloat yaxis = self.navigationController.navigationBar.frame.size.height;
+	CGFloat width = self.view.frame.size.width;
+	CGFloat height = self.view.frame.size.height;
+	
+	//Parameters x = origion on x-axis, y = origon on y-axis.
+	CGRect frame = CGRectMake(0, yaxis, width, height);
+	ovController.view.frame = frame;	
+	ovController.view.backgroundColor = [UIColor grayColor];
+	ovController.view.alpha = 0.5;
+	
+	ovController.delegate = self;
+	
+	[tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
+	
+	tableView.sectionIndexMinimumDisplayRowCount = NSIntegerMax;
+	searching = YES;
+	tableView.scrollEnabled = NO;
+
+	//Add the done button.
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
+											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+											   target:self action:@selector(overlayViewControllerDone:)] autorelease];
+}
+
+- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText 
 {
 	[dataSource filterUsingSearchText:searchText];
-	[theTableView reloadData];
+
+	if(searchText.length > 0) 
+	{
+		[ovController.view removeFromSuperview];
+		searching = YES;
+		tableView.scrollEnabled = YES;
+	}
+	else 
+	{
+		[self.tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
+		
+		searching = NO;
+		tableView.scrollEnabled = NO;
+	}
+	
+	[self.tableView reloadData];
 }
+
+- (void)overlayViewControllerDone:(OverlayViewController *)overlay 
+{
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
+
+	// move the index back
+	for ( UIView *view in tableView.subviews ) 
+	{
+		if ( [view respondsToSelector:@selector(moveIndexIn)] ) 
+		{
+			MovableTableViewIndex *index = (MovableTableViewIndex *)view;
+			[index moveIndexIn];
+		}
+	}	
+	searching = NO;
+	tableView.scrollEnabled = YES;
+
+	// only show the add new call button if they want to
+	if([dataSource showAddNewCall])
+	{
+		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+																				 target:self
+																				 action:@selector(navigationControlAdd:)] autorelease];
+		[self.navigationItem setRightBarButtonItem:button animated:NO];
+	}
+	
+	tableView.sectionIndexMinimumDisplayRowCount = 6;
+	[ovController.view removeFromSuperview];
+	[ovController release];
+	ovController = nil;
+	
+	[dataSource filterUsingSearchText:@""];
+	[tableView reloadData];
+}
+
+
+
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,21 +230,22 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
 	self.indexPath = nil;
 	
 	// force the tableview to load
 	[dataSource refreshData];
-	[theTableView reloadData];
-	
-	[super viewWillAppear:animated];
+	[tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated 
 {
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	DEBUG(NSLog(@"%s: viewDidAppear", __FILE__);)
-	
 	[super viewDidAppear:animated];
+
+	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+	[tableView flashScrollIndicators];
+	DEBUG(NSLog(@"%s: viewDidAppear", __FILE__);)
 }
 
 //
@@ -170,9 +281,9 @@
 //
 //
 // the user selected a row in the table.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath 
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath 
 {
-	[theTableView.tableHeaderView resignFirstResponder];
+	[tableView.tableHeaderView resignFirstResponder];
 
 	// create a custom navigation bar button and set it to always say "back"
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];

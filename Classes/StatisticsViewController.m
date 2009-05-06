@@ -237,12 +237,15 @@ static NSString *MONTHS[] = {
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	// force the tableview to load
 	[self reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated 
+- (void)viewDidAppear:(BOOL)animated
 {
+	[theTableView flashScrollIndicators];
+
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	if([settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
 	{

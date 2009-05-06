@@ -21,6 +21,7 @@
 #import "MapViewController.h"
 #import "Settings.h"
 #import "Geocache.h"
+#import <objc/runtime.h>
 
 @implementation MyTimeAppDelegate
 
@@ -289,6 +290,26 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
+	// dynamically add a method to UITableViewIndex that lets us move around the index
+	Class tvi = NSClassFromString(@"UITableViewIndex");
+	if ( class_addMethod(tvi, @selector(moveIndexIn), (IMP)tableViewIndexMoveIn, "v@:") ) 
+	{
+		NSLog(@"Added method moveIndexIn to UITableViewIndex");
+	} 
+	else 
+	{
+		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
+	}
+	if ( class_addMethod(tvi, @selector(moveIndexOut), (IMP)tableViewIndexMoveOut, "v@:") ) 
+	{
+		NSLog(@"Added method moveIndexIn to UITableViewIndex");
+	} 
+	else 
+	{
+		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
+	}
+	
+
 	[[Settings sharedInstance] readData];
 	[[Settings sharedInstance] saveData];
 
@@ -435,6 +456,31 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		
 		[[Settings sharedInstance] saveData];
 	}
+}
+
+
+#pragma mark UITableViewIndex Added Methods
+ 
+static BOOL tableViewIndexMoveIn(id self, SEL _cmd) 
+{
+	UIView *index = (UIView *)self;
+	
+	[UIView beginAnimations:nil context:nil];
+	index.center = CGPointMake(index.center.x - 30, index.center.y);
+	[UIView commitAnimations];
+	
+    return YES;
+}
+ 
+static BOOL tableViewIndexMoveOut(id self, SEL _cmd) 
+{
+	UIView *index = (UIView *)self;
+	
+	[UIView beginAnimations:nil context:nil];
+	index.center = CGPointMake(index.center.x + 30, index.center.y);
+	[UIView commitAnimations];
+	
+    return YES;
 }
 
 - (BOOL)respondsToSelector:(SEL)selector

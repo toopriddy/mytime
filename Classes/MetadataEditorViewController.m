@@ -297,6 +297,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	// force the tableview to load
 	[self.theTableView reloadData];
 }
@@ -304,6 +305,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
 	[_theTableView deselectRowAtIndexPath:[_theTableView indexPathForSelectedRow] animated:YES];
+	[_theTableView flashScrollIndicators];
 }
 
 

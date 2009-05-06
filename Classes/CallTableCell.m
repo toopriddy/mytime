@@ -124,9 +124,19 @@
     */
 	[super setSelected:selected animated:animated];
 
-	[mainLabel setHighlighted:selected];
-	[secondaryLabel setHighlighted:selected];
-	[infoLabel setHighlighted:selected];
+	UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
+
+	mainLabel.backgroundColor = backgroundColor;
+	mainLabel.highlighted = selected;
+	mainLabel.opaque = !selected;
+
+	secondaryLabel.backgroundColor = backgroundColor;
+	secondaryLabel.highlighted = selected;
+	secondaryLabel.opaque = !selected;
+
+	infoLabel.backgroundColor = backgroundColor;
+	infoLabel.highlighted = selected;
+	infoLabel.opaque = !selected;
 }
 
 - (void)layoutSubviews 

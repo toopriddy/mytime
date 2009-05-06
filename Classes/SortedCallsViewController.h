@@ -9,15 +9,22 @@
 #import <UIKit/UIKit.h>
 #import "SortedCallsViewDataSourceProtocol.h"
 #import "CallViewController.h"
+#import "OverlayViewController.h"
 
-@interface SortedCallsViewController : UIViewController <UITableViewDelegate, CallViewControllerDelegate, UISearchBarDelegate> 
+@interface SortedCallsViewController : UIViewController <UITableViewDelegate, 
+														 CallViewControllerDelegate, 
+														 UISearchBarDelegate, 
+														 OverlayViewControllerDelegate> 
 {
-	UITableView *theTableView;
+	UISearchBar *searchBar;
+	UITableView *tableView;
 	id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
 	NSIndexPath *indexPath;
+	BOOL searching;
+	OverlayViewController *ovController;
 }
 
-@property (nonatomic,retain) UITableView *theTableView;
+@property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
 @property (nonatomic,retain) NSIndexPath *indexPath;
 

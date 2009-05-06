@@ -101,8 +101,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-	[textView becomeFirstResponder];
 	[super viewWillAppear:animated];
+	[textView becomeFirstResponder];
 }
 
 // date
