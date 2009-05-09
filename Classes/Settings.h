@@ -18,6 +18,7 @@ extern NSString const * const CallLattitudeLongitude;
 extern NSString const * const CallLocationType;
 extern NSString const * const CallLocationTypeManual;
 extern NSString const * const CallLocationTypeGoogleMaps;
+extern NSString const * const CallLocationTypeDoNotShow;
 
 
 extern NSString const * const CallMetadata;

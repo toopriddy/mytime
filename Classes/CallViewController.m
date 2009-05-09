@@ -152,7 +152,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		_name.textField.placeholder = NSLocalizedString(@"Name", @"Name label for Call in editing mode");
         if((temp = [_call objectForKey:CallName]) != nil)
 		{
-            _name.textField.text = temp;
+            _name.value = temp;
 		}
         else
 		{
@@ -1134,8 +1134,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			_setFirstResponderGroup = -1;
 		}
 
-		return(_name);
 	}
+
+		return(_name);
+#if 0
 	else
 	{
 		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCell"];
@@ -1148,6 +1150,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		return(cell);
 	}
+#endif	
 }
 
 - (UITableViewCell *)getAddressCell
@@ -1168,6 +1171,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (UITableViewCell *)getLocationTypeCell
 {
+	NSLocale * locale = [NSLocale currentLocale];
+	NSLog(@"current locale %@", [locale localeIdentifier]);
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"locationCell"];
 	if(cell == nil)
 	{
@@ -1225,10 +1230,10 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 	if([type intValue] == NOTES)
 	{
-		UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+		UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"MetadataNotesCell"];
 		if(cell == nil)
 		{
-			cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
+			cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataNotesCell"] autorelease];
 		}
 		cell.selectionStyle = _editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 		[cell setText:value.length ? value : name];
@@ -1579,7 +1584,14 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			// create dictionary entry for This Return Visit
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+			}
+			else
+			{
+				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
 			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 			[self addGroup:formattedDateString type:@"Visit"];
 
@@ -1719,7 +1731,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		controller.delegate = self;
 		[[self navigationController] pushViewController:controller animated:YES];
 	}
-	else
+	else if([locationPickerViewController.type isEqualToString:(NSString *)CallLocationTypeGoogleMaps])
 	{
 		// they are using google maps so kick off a lookup
 		[[Geocache sharedInstance] lookupCall:_call];
@@ -1763,7 +1775,14 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		{
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+			}
+			else
+			{
+				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
 			NSDate *date = [NSDate date];
 			NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 			[newData setObject:formattedDateString forKey:CallMetadataValue];
@@ -1977,7 +1996,14 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		// create dictionary entry for This Return Visit
 		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		{
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+		}
+		else
+		{
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		}
 		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 
 		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringWithEscapedCharacters]];
@@ -2211,10 +2237,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 - (NSString *)name
 {
-    if(_name.textField.text == nil)
-        return(@"");
+    if(_name.value == nil)
+        return @"";
     else
-        return(_name.textField.text);
+        return _name.value;
 }
 
 - (NSString *)street

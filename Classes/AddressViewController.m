@@ -208,7 +208,7 @@
 
 	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	stateCell.textField.text = state;
-	stateCell.textField.placeholder = NSLocalizedString(@"State", @"State");
+	stateCell.textField.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
 	stateCell.textField.returnKeyType = UIReturnKeyDone;
 	stateCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
