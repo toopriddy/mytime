@@ -42,19 +42,59 @@ int sortByStreet(id v1, id v2, void *context)
 {
 	NSString *street1 = [v1 objectForKey:CallStreet];
 	NSString *street2 = [v2 objectForKey:CallStreet];
-	NSNumber *house1 = [v1 objectForKey:CallStreetNumber];
-	NSNumber *house2 = [v2 objectForKey:CallStreetNumber];
-	NSNumber *apartment1 = [v1 objectForKey:CallApartmentNumber];
-	NSNumber *apartment2 = [v2 objectForKey:CallApartmentNumber];
+	NSString *house1 = [v1 objectForKey:CallStreetNumber];
+	NSString *house2 = [v2 objectForKey:CallStreetNumber];
+	NSString *apartment1 = [v1 objectForKey:CallApartmentNumber];
+	NSString *apartment2 = [v2 objectForKey:CallApartmentNumber];
 	
 	int compare = [street1 localizedCaseInsensitiveCompare:street2];
 	if(compare == 0)
 	{
-		compare = [house1 compare:house2];
-		if(compare == 0)
+		NSInteger house1Number = [house1 integerValue];
+		NSInteger house2Number = [house2 integerValue];
+		if(house1Number == 0 || house1Number == 0)
 		{
-			compare = [apartment1 compare:apartment2];
-			if(compare == 0)
+			compare = [house1 compare:house2];
+		}
+		else
+		{
+			if(house1Number == house2Number)
+			{
+				compare = NSOrderedSame;
+			}
+			else if(house1Number < house2Number)
+			{
+				compare = NSOrderedAscending;
+			}
+			else
+			{
+				compare = NSOrderedDescending;
+			}
+		}
+		if(compare == NSOrderedSame)
+		{
+			NSInteger apartment1Number = [apartment1 integerValue];
+			NSInteger apartment2Number = [apartment2 integerValue];
+			if(apartment1Number == 0 || apartment1Number == 0)
+			{
+				compare = [apartment1 compare:apartment2];
+			}
+			else
+			{
+				if(apartment1Number == apartment2Number)
+				{
+					compare = NSOrderedSame;
+				}
+				else if(apartment1Number < apartment2Number)
+				{
+					compare = NSOrderedAscending;
+				}
+				else
+				{
+					compare = NSOrderedDescending;
+				}
+			}
+			if(compare == NSOrderedSame)
 			{
 				compare = sortByName(v1, v2, context);
 			}

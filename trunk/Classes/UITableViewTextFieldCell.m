@@ -21,7 +21,9 @@
 @synthesize textField;
 @synthesize nextKeyboardResponder;
 @synthesize titleLabel;
+@synthesize valueLabel;
 @synthesize delegate;
+@synthesize observeEditing;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
 {
@@ -29,18 +31,30 @@
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
+		observeEditing = NO;
 		
 		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor blackColor];
+		titleLabel.textAlignment = UITextAlignmentLeft;
+		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		[self.contentView addSubview:titleLabel];
 
 		self.textField = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
 		textField.backgroundColor = [UIColor clearColor];
 		textField.textColor = [UIColor darkGrayColor];
+		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
+		textField.font = [UIFont systemFontOfSize:16];
 		textField.delegate = self;
-
 		[self.contentView addSubview:self.textField];
+
+		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+		valueLabel.backgroundColor = [UIColor clearColor];
+		valueLabel.font = [UIFont systemFontOfSize:16];
+		valueLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
+		valueLabel.highlightedTextColor = [UIColor whiteColor];
+		valueLabel.text = @"";
+		[self.contentView addSubview: valueLabel];
 	}
 	return self;
 }
@@ -52,6 +66,7 @@
 	self.nextKeyboardResponder = nil;
 	self.textField = nil;
 	self.titleLabel = nil;
+	self.valueLabel = nil;
 	self.delegate = nil;
 	[super dealloc];
 }
@@ -126,6 +141,12 @@
 	}
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+	valueLabel.text = textField.text;
+	[super setEditing:editing animated:animated];
+}
+
 - (void)layoutSubviews 
 {
     [super layoutSubviews];
@@ -147,27 +168,41 @@
 	{
 		CGSize size = [@"Ig" sizeWithFont:textField.font];
 		frame = CGRectMake(boundsX, (height - size.height)/2, width, size.height);
-		[textField setFrame:frame];
-		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
-		textField.font = [UIFont systemFontOfSize:16];
+		textField.frame = frame;
+		valueLabel.frame = frame;
 		textField.selected = NO;
 		titleLabel.hidden = YES;
+		
+		valueLabel.textColor = [UIColor blackColor];
+		valueLabel.textAlignment = UITextAlignmentLeft;
+		valueLabel.font = [UIFont boldSystemFontOfSize:16];
 	}
 	else
 	{
 		CGSize size = [titleLabel.text sizeWithFont:titleLabel.font];
 		frame = CGRectMake(boundsX , (height - size.height)/2, size.width, size.height);
 		[titleLabel setFrame:frame];
-		titleLabel.textAlignment = UITextAlignmentLeft;
-		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		titleLabel.hidden = NO;
 
-		textField.font = [UIFont systemFontOfSize:16];
-		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		CGSize textSize = [@"Ig" sizeWithFont:textField.font];
 		frame = CGRectMake(boundsX + TITLE_LEFT_OFFSET + size.width, (height - textSize.height)/2, width - size.width - TITLE_LEFT_OFFSET, textSize.height);
-		[textField setFrame:frame];
+		textField.frame = frame;
+		valueLabel.frame = frame;
 	}
+
+	if(self.editing || !observeEditing)
+	{
+		textField.hidden = NO;
+		textField.enabled = YES;
+		valueLabel.hidden = YES;
+	}
+	else
+	{
+		textField.hidden = YES;
+		textField.enabled = NO;
+		valueLabel.hidden = NO;
+	}
+
 }
 
 - (void)setText:(NSString *)theText
@@ -178,6 +213,17 @@
 - (NSString *)text
 {
 	return(titleLabel.text);
+}
+
+- (void)setValue:(NSString *)theText
+{
+	textField.text = theText;
+	valueLabel.text = theText;
+}
+
+- (NSString *)value
+{
+	return textField.text;
 }
 
 - (BOOL)respondsToSelector:(SEL)selector

@@ -26,6 +26,7 @@
 
 	UITableViewCell *manualCell;
     UITableViewCell *googleMapsCell;
+    UITableViewCell *doNotShowCell;
 	NSMutableDictionary *call;
 }
 

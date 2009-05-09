@@ -110,6 +110,14 @@
 		{
 			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
 			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+
+			NSString *lookupType = [theCall objectForKey:CallLocationType];
+			if([lookupType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+			{
+				// they dont want this displayed
+				continue;
+			}
+
 			if(latLong && ![latLong isEqualToString:@"nil"] && stringArray.count == 2)
 			{
 				RMMarker *marker = [[[RMMarker alloc] initWithKey:RMMarkerBlueKey] autorelease];
@@ -171,6 +179,16 @@
 		{
 			NSMutableDictionary *theCall = (NSMutableDictionary *)marker.data;
 			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
+			NSString *lookupType = [theCall objectForKey:CallLocationType];
+			if([lookupType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+			{
+				// make the detail view go away
+				[self tapOnMarker:selectedMarker onMap:mapView];
+
+				[markerManager removeMarker:marker];
+				continue;
+			}
+
 			if(latLong && ![latLong isEqualToString:@"nil"])
 			{
 				CLLocationCoordinate2D point;

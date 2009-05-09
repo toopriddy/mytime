@@ -95,6 +95,11 @@
 	[self updateLayout];
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+	[super setEditing:editing animated:animated];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated 
 {
 	UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];

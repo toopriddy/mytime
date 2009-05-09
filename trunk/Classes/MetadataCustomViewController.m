@@ -137,7 +137,7 @@ static MetadataInformation commonInformation[] = {
 		
 		_selected = row;
 		
-		self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && _name.textField.text.length;
+		self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && _name.value.length;
 		
 		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:(_selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone)];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -146,7 +146,7 @@ static MetadataInformation commonInformation[] = {
 
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	int length = _name.textField.text.length;
+	int length = _name.value.length;
 	if(string.length == 0)
 	{
 		length -= range.length;

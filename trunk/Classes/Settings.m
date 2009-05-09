@@ -21,6 +21,7 @@ NSString const * const CallLattitudeLongitude = @"latLong";
 NSString const * const CallLocationType = @"locationType";
 NSString const * const CallLocationTypeManual = AlternateLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
 NSString const * const CallLocationTypeGoogleMaps = AlternateLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
+NSString const * const CallLocationTypeDoNotShow = AlternateLocalizedString(@"Do not show in map", @"Label for picking the location lookup type when they do not want the return visit to show up in the map");
 
 NSString const * const CallMetadata = @"metadata";
 NSString const * const CallMetadataName = @"name";

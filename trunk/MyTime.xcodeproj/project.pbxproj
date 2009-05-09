@@ -573,7 +573,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MyTime */ = {
+		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -629,7 +629,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MyTime */,
+				1D6058900D05DD3D006BFB54 /* SimpleMap */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -785,7 +785,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -859,12 +859,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A09E376-AECE-43F6-8067-2196826687E3";
-				SDKROOT = iphoneos2.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "223C4EF9-1606-4D75-AA4B-1A5A29173B23";
+				SDKROOT = iphoneos2.2;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};
 			name = "AdHoc Distribution";
@@ -971,7 +972,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FF43E85-652F-4B6D-8DBF-DDA7D0A43730";
-				SDKROOT = iphoneos2.1;
+				SDKROOT = iphoneos2.2;
 			};
 			name = Debug;
 		};

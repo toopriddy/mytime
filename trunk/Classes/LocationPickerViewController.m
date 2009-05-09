@@ -14,6 +14,7 @@
 @property (nonatomic, retain) UITableView *theTableView;
 @property (nonatomic, retain) UITableViewCell *manualCell;
 @property (nonatomic, retain) UITableViewCell *googleMapsCell;
+@property (nonatomic, retain) UITableViewCell *doNotShowCell;
 @property (nonatomic, retain) NSMutableDictionary *call;
 @end
 
@@ -25,6 +26,7 @@
 @synthesize manualCell;
 @synthesize googleMapsCell;
 @synthesize call;
+@synthesize doNotShowCell;
 
 - (id) initWithCall:(NSMutableDictionary *)theCall
 {
@@ -67,6 +69,7 @@
 	UITableViewCell *selected = nil;
 	UITableViewCell *unselected1 = manualCell;
 	UITableViewCell *unselected2 = googleMapsCell;
+	UITableViewCell *unselected3 = doNotShowCell;
 	
 	if([newType isEqualToString:(NSString *)CallLocationTypeGoogleMaps])
 	{
@@ -78,9 +81,15 @@
 		selected = manualCell;
 		unselected1 = nil;
 	}
+	else if([newType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+	{
+		selected = doNotShowCell;
+		unselected3 = nil;
+	}
 
 	unselected1.accessoryType = UITableViewCellAccessoryNone;
 	unselected2.accessoryType = UITableViewCellAccessoryNone;
+	unselected3.accessoryType = UITableViewCellAccessoryNone;
 	selected.accessoryType = UITableViewCellAccessoryCheckmark;
 
 	self.type = [NSString stringWithString:(NSString *)newType];
@@ -109,10 +118,15 @@
 	googleMapsCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	googleMapsCell.selected = NO;
 	
-	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"manualCell"] autorelease];
 	manualCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallLocationTypeManual value:(NSString *)CallLocationTypeManual table:@""];
 	manualCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	manualCell.selected = NO;
+	
+	self.doNotShowCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"doNotShowCell"] autorelease];
+	doNotShowCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallLocationTypeDoNotShow value:(NSString *)CallLocationTypeDoNotShow table:@""];
+	doNotShowCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	doNotShowCell.selected = NO;
 	
 
 	//make one be selected
@@ -157,11 +171,14 @@
 		case 1:
 			[self updateSelection:CallLocationTypeManual];
 			break;
+		case 2:
+			[self updateSelection:CallLocationTypeDoNotShow];
+			break;
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	[self retain];
-		[[self navigationController] popViewControllerAnimated:(section == 0)];
+		[[self navigationController] popViewControllerAnimated:(section != 1)];
 
 		if(delegate)
 		{
@@ -175,7 +192,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-	return 2;
+	return 3;
 }
 
 
@@ -196,6 +213,8 @@
 			return(googleMapsCell);
 		case 1:
 			return(manualCell);
+		case 2:
+			return(doNotShowCell);
     }
 	return(nil);
 }
