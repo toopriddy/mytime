@@ -1958,8 +1958,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
 	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [_call objectForKey:CallName]] stringWithEscapedCharacters]];
 	
-	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
+	NSMutableString *top = [[NSMutableString alloc] init];
+	NSMutableString *bottom = [[NSMutableString alloc] init];
 	[Settings formatStreetNumber:[_call objectForKey:CallStreetNumber]
 	                   apartment:[_call objectForKey:CallApartmentNumber]
 					      street:[_call objectForKey:CallStreet]
@@ -1968,7 +1968,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 						 topLine:top 
 				      bottomLine:bottom];
 	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringWithEscapedCharacters]];
-
+	[top release];
+	[bottom release];
+	
 	// Add Metadata
 	// they had an array of publications, lets check them too
 	NSMutableArray *metadata = [_call objectForKey:CallMetadata];
@@ -2062,7 +2064,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 	// open the mail program
 	NSURL *url = [NSURL URLWithString:string];
-	return [[UIApplication sharedApplication] openURL:url];
+	BOOL worked = [[UIApplication sharedApplication] openURL:url];
+	NSLog(@"it %s", worked ? "worked" : "did not work");
+	return worked;
 }
 
 
