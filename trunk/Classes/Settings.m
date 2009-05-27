@@ -238,7 +238,7 @@ NSString const * const PublisherTypeTravelingServent = AlternateLocalizedString(
 		else if(street && [street length])
 			[top appendFormat:street];
 		else if(apartmentNumber && [apartmentNumber length])
-			[top appendFormat:street];
+			[top appendFormat:apartmentNumber];
 	}
 	if(bottom)
 	{
