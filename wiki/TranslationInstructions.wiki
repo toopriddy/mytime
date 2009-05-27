@@ -14,13 +14,15 @@ Use the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.string
 "Add a return visit" = "Add a return visit";
 }}}
 
-The First line is called a "comment" it is just used to help you know where this text is used within the !MyTime program.  Do not change this.
+The First red line above is called a "comment" it is just used to help you know where this text is used within the !MyTime program.  Do not change this.
 
 The Next line has two quoted sentences, do not change the first one, the first one is used by the program to lookup the translation.  The second quoted sentence is what you change.  You change this second quoted string to what is natural in your language. Like so:
 {{{
 /* Add a return visit action button */
 "Add a return visit" = "Rückbesuch hinzufügen";
 }}}
+
+Please note that the only thing you change is the text inbetween the quotes.  Do not put the text on multiple lines or have it word wrap, it is supposed to be all on one line.
 
 I am trying to stay with the style of the iPhone, so if there are any buttons that it uses normally like "Edit" and "Done" in whatever other language is on your iPhone, please use those words.  Also pick words that show the meaning and do not take a lot of space. Just a warning, I am a picky person and capitalization, being formal with the text (no slang) and conveying the correct thought are very high priorities.  This program is to be used by many people, I would not like to offend anyone or stumble anyone because of this program.  I usually have a firm grasp on what is displayed on programs that I write, but since I can not translate the text into another language, I have to depend on and trust others to translate the text just like I would if I could.
 
@@ -50,7 +52,7 @@ As the comment said the %1$d is the house number and the %2$@ is represented as 
 /* House number and Street represented by %1$d as the house number and %2$@ as the street name */
 "%d %@" = "%2$@ %1$d";
 }}}
-You will see that this is common throughout some of the translations. As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because !MyTime will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others as represented in %1$*d*).  Without getting into programming, just move the whole word (like "%1$d") don't just change the number.
+Notice how the order changed in the above text?  You will see that this is common throughout some of the translations.  As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because !MyTime will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others as represented in %1$*d*).  Without getting into programming, just move the whole word (like "%1$d") don't just change the number.
 
 *Singular/Plural:*
 
