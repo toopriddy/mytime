@@ -21,8 +21,6 @@
 
 @implementation CallsSortedByCityViewDataSource
 
-@synthesize callsSorter;
-
 
 
 // return the callsSorter used by the navigation controller and tab bar item

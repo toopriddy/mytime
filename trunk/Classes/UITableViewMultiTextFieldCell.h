@@ -27,12 +27,9 @@
 @interface UITableViewMultiTextFieldCell : UITableViewCell <UITextFieldDelegate> {
 	id<UITableViewMultiTextFieldCellDelegate> delegate;
 @private
-	NSMutableArray *_textFields;
+	NSMutableArray *_multiTextFields;
 	NSMutableArray *_widths;
 	UIResponder *_nextKeyboardResponder;
-//	NSIndexPath *_indexPath;
-//	UITableView *_tableView;
-	
 }
 
 @property (nonatomic, assign) id<UITableViewMultiTextFieldCellDelegate> delegate;

@@ -21,8 +21,6 @@
 
 @implementation CallsSortedByDateViewDataSource
 
-@synthesize callsSorter;
-
 - (NSString *)name 
 {
 	return NSLocalizedString(@"Date Sorted", @"button bar title");

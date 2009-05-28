@@ -23,19 +23,14 @@
 #define VALUE_HEIGHT 30
 
 @interface UITableViewMultiTextFieldCell ()
-//@property (nonatomic,retain) UITableView *theTableView;
-@property (nonatomic, retain) NSMutableArray *textFields;
-//@property (nonatomic, retain) NSIndexPath *indexPath;
-//@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) NSMutableArray *multiTextFields;
 @end
 
 
 @implementation UITableViewMultiTextFieldCell
 
-@synthesize textFields = _textFields;
+@synthesize multiTextFields = _multiTextFields;
 @synthesize nextKeyboardResponder = _nextKeyboardResponder;
-//@synthesize indexPath;
-//@synthesize tableView;
 @synthesize delegate;
 @synthesize widths = _widths;
 
@@ -45,10 +40,11 @@
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
-		
-//		tableView = nil;
-//		indexPath = nil;
-		self.textFields = [NSMutableArray array];
+
+//		_multiTextFields = [[NSMutableArray array] retain];
+		NSLog(@"it is %p", _multiTextFields);
+		self.multiTextFields = [NSMutableArray array];
+		NSLog(@"it is %p", self.multiTextFields);
 		int i;
 		for(i = 0; i < textFieldCount; i++)
 		{
@@ -58,8 +54,8 @@
 			textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 			textField.delegate = self;
 			textField.returnKeyType = UIReturnKeyDone;
-			[[_textFields lastObject] setReturnKeyType:UIReturnKeyNext];
-			[_textFields addObject:textField];
+			[[self.multiTextFields lastObject] setReturnKeyType:UIReturnKeyNext];
+			[self.multiTextFields addObject:textField];
 			
 			[self.contentView addSubview:textField];
 		}
@@ -72,7 +68,7 @@
     VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 	
 	self.nextKeyboardResponder = nil;
-	self.textFields = nil;
+	self.multiTextFields = nil;
 //	self.tableView = nil;
 //	self.indexPath = nil;
 	self.delegate = nil;
@@ -81,7 +77,7 @@
 
 - (void)setNextKeyboardResponder:(UIResponder *)next
 {
-	[[_textFields lastObject] setReturnKeyType:(next == NULL ? UIReturnKeyDone : UIReturnKeyNext)];
+	[[self.multiTextFields lastObject] setReturnKeyType:(next == NULL ? UIReturnKeyDone : UIReturnKeyNext)];
 	[_nextKeyboardResponder release];
 	_nextKeyboardResponder = next;
 	[_nextKeyboardResponder retain];
@@ -94,7 +90,7 @@
 	{
 		[delegate tableViewMultiTextFieldCell:self textField:textField selected:NO];
 	}
-	if([_textFields indexOfObject:textField] + 1 == [_textFields count])
+	if([self.multiTextFields indexOfObject:textField] + 1 == [self.multiTextFields count])
 	{
 		if(_nextKeyboardResponder)
 		{
@@ -103,7 +99,7 @@
 	}
 	else
 	{
-		[[_textFields objectAtIndex:[_textFields indexOfObject:textField] + 1] becomeFirstResponder];
+		[[self.multiTextFields objectAtIndex:[self.multiTextFields indexOfObject:textField] + 1] becomeFirstResponder];
 	}
 	return YES;
 }
@@ -122,11 +118,11 @@
 {
 	if(selected)
 	{
-		[[_textFields objectAtIndex:0] becomeFirstResponder];
+		[[self.multiTextFields objectAtIndex:0] becomeFirstResponder];
 	}
 	else
 	{
-		[[_textFields objectAtIndex:0] resignFirstResponder];
+		[[self.multiTextFields objectAtIndex:0] resignFirstResponder];
 	}
 }
 
@@ -162,12 +158,12 @@
 	float height = contentRect.size.height;
 	CGRect frame;
 
-	int count = [_textFields count];
+	int count = [self.multiTextFields count];
 	float avaliableWidth = width - (count == 0 ? 0 : (TITLE_LEFT_OFFSET * (count - 1)));
 	int i;
 	for(i = 0; i < count; ++i)
 	{
-		UITextField *textField = [_textFields objectAtIndex:i];
+		UITextField *textField = [self.multiTextFields objectAtIndex:i];
 		float thisWidth = avaliableWidth * [[_widths objectAtIndex:i] floatValue];
 		CGSize textSize = [@"Ig" sizeWithFont:textField.font];
 		frame = CGRectMake(xoffset, (height - textSize.height)/2, thisWidth, textSize.height);
@@ -178,17 +174,17 @@
 
 - (UITextField *)textFieldAtIndex:(int)index
 {
-	return [_textFields objectAtIndex:index];
+	return [self.multiTextFields objectAtIndex:index];
 }
 
 - (void)setText:(NSString *)theText atIndex:(int)index
 {
-	[[_textFields objectAtIndex:index] setText:theText];
+	[[self.multiTextFields objectAtIndex:index] setText:theText];
 }
 
 - (NSString *)textAtIndex:(int)index
 {
-	return [[_textFields objectAtIndex:index] text];
+	return [[self.multiTextFields objectAtIndex:index] text];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector
