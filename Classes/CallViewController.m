@@ -1970,6 +1970,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringWithEscapedCharacters]];
 	[top release];
 	[bottom release];
+	top = nil;
+	bottom = nil;
 	
 	// Add Metadata
 	// they had an array of publications, lets check them too
@@ -2034,7 +2036,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringWithEscapedCharacters]];
 			}
 		}
-		[string appendString:[@" \n" stringWithEscapedCharacters]];
+		[string appendString:[[NSString stringWithFormat:@"  \n"] stringWithEscapedCharacters]];
 	}
 
 	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];

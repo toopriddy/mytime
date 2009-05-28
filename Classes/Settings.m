@@ -181,7 +181,7 @@ NSString const * const PublisherTypeTravelingServent = AlternateLocalizedString(
 	}
 	else
 	{
-		VERBOSE(NSLog(@"restored data from file:\n%@", settings);)
+//		VERBOSE(NSLog(@"restored data from file:\n%@", settings);)
 	}
 }
 
