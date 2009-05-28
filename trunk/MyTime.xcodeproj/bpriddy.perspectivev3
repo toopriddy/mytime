@@ -292,14 +292,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
-									<integer>3</integer>
+									<integer>64</integer>
+									<integer>36</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {310, 877}}</string>
+							<string>{{0, 539}, {310, 877}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -348,7 +348,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90F588550FCE2F7E0012E067</string>
+										<string>90F588610FCE30EE0012E067</string>
 										<key>history</key>
 										<array>
 											<string>90C4D4CF0E855AFF00E202E2</string>
@@ -537,7 +537,7 @@
 											<string>90F588430FCE2CC80012E067</string>
 											<string>90F588440FCE2CC80012E067</string>
 											<string>90F588450FCE2CC80012E067</string>
-											<string>90F588530FCE2F750012E067</string>
+											<string>90F5885B0FCE308F0012E067</string>
 										</array>
 										<key>nextStack</key>
 										<array>
@@ -1058,6 +1058,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>90F588620FCE30EE0012E067</string>
 		<string>90F5883A0FCE2B3C0012E067</string>
 		<string>90F5883B0FCE2B3C0012E067</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
