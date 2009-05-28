@@ -56,7 +56,7 @@
     if (! (self = [super initWithFrame:frame]))
         return nil;
     
-    self.onClickHandler = nil;
+    self.mOnClickHandler = nil;
     self.autoresizesSubviews = YES;
     self.multipleTouchEnabled = YES;
     
