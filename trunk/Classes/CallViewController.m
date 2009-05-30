@@ -150,16 +150,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			_call = [[NSMutableDictionary alloc] initWithDictionary:call copyItems:YES];
 		}
 
-		_name = [[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:nil];
-		_name.delegate = self;
-		_name.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-		_name.textField.returnKeyType = UIReturnKeyDone;
+		_name = [[UITextField alloc] initWithFrame:CGRectZero];
+		_name.autocapitalizationType = UITextAutocapitalizationTypeWords;
+		_name.returnKeyType = UIReturnKeyDone;
         // _name (make sure that it is initalized)
         //[_name setText:NSLocalizedString(@"Name", @"Name label for Call in editing mode")];
-		_name.textField.placeholder = NSLocalizedString(@"Name", @"Name label for Call in editing mode");
+		_name.placeholder = NSLocalizedString(@"Name", @"Name label for Call in editing mode");
         if((temp = [_call objectForKey:CallName]) != nil)
 		{
-            _name.value = temp;
+            _name.text = temp;
 		}
         else
 		{
@@ -547,12 +546,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 #endif	
 }
 
+
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(selected)
 	{
-		if(cell == _name)
+		if(cell.textField == _name)
 		{
 			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
 			self.currentFirstResponder = _name;
@@ -1131,6 +1131,12 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (UITableViewCell *)getNameCell
 {
+	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCell"];
+	if(cell == nil)
+	{
+		cell = [[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"NameCell"];
+	}
+	cell.delegate = self;
 	if(_editing)
 	{
 		if(_setFirstResponderGroup == 0)
@@ -1141,23 +1147,11 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			_setFirstResponderGroup = -1;
 		}
 
+		//  make it where they can hit hext and go into the address view to setup the address
+		cell.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
 	}
-
-	return(_name);
-#if 0
-	else
-	{
-		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[theTableView dequeueReusableCellWithIdentifier:@"NameCell"];
-		if(cell == nil)
-		{
-			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NameCell"] autorelease];
-		}
-		// if we are not editing, then just display the name
-		[cell setTitle:[_call objectForKey:CallName]];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		return(cell);
-	}
-#endif	
+	
+	return(cell);
 }
 
 - (UITableViewCell *)getAddressCell
@@ -1499,8 +1493,8 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			  deleteInvocation:nil];
 
 			//  make it where they can hit hext and go into the address view to setup the address
-			_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
-
+//			_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
+				
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getLocationTypeCell)]
@@ -2250,10 +2244,10 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 - (NSString *)name
 {
-    if(_name.value == nil)
+    if(_name.text == nil)
         return @"";
     else
-        return _name.value;
+        return _name.text;
 }
 
 - (NSString *)street

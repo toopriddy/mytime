@@ -32,7 +32,7 @@
 @synthesize delegate;
 @synthesize observeEditing;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
+- (id)initWithTextField:(UITextField *)field Frame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
@@ -46,24 +46,31 @@
 		titleLabel.textAlignment = UITextAlignmentLeft;
 		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		[self.contentView addSubview:titleLabel];
-
-		self.textField = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+		
+		self.textField = field;
 		textField.backgroundColor = [UIColor clearColor];
 		textField.textColor = [UIColor darkGrayColor];
 		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		textField.font = [UIFont systemFontOfSize:16];
 		textField.delegate = self;
 		[self.contentView addSubview:self.textField];
-
+		
 		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 		valueLabel.backgroundColor = [UIColor clearColor];
 		valueLabel.font = [UIFont systemFontOfSize:16];
 		valueLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		valueLabel.highlightedTextColor = [UIColor whiteColor];
-		valueLabel.text = @"";
+		valueLabel.text = textField.text;
 		[self.contentView addSubview: valueLabel];
 	}
 	return self;
+}
+
+
+- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
+{
+	UITextField *field = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+	return [self initWithTextField:field Frame:frame reuseIdentifier:reuseIdentifier];
 }
 
 - (void)dealloc

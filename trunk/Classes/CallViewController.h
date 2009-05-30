@@ -49,7 +49,7 @@
 	
 	BOOL _initialView;
 	
-    UITableViewTextFieldCell *_name;
+    UITextField *_name;
 
     NSMutableDictionary *_call;
 	
