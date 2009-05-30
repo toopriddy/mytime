@@ -35,6 +35,7 @@
 @property (nonatomic, assign) BOOL observeEditing;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
+- (id)initWithTextField:(UITextField *)field Frame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end
 
