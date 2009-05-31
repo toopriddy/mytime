@@ -16,6 +16,7 @@
 #import "PublisherTypeViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 @interface PublisherTypeViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
@@ -139,27 +140,27 @@
 	self.view = self.theTableView;
 
 	self.publisher = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	publisher.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)PublisherTypePublisher value:(NSString *)PublisherTypePublisher table:@""];
+	publisher.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)PublisherTypePublisher value:(NSString *)PublisherTypePublisher table:@""];
 	publisher.accessoryType = UITableViewCellAccessoryCheckmark;
 	publisher.selected = NO;
 	
 	self.auxiliaryPioneer = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	auxiliaryPioneer.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)PublisherTypeAuxilliaryPioneer value:(NSString *)PublisherTypeAuxilliaryPioneer table:@""];
+	auxiliaryPioneer.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)PublisherTypeAuxilliaryPioneer value:(NSString *)PublisherTypeAuxilliaryPioneer table:@""];
 	auxiliaryPioneer.accessoryType = UITableViewCellAccessoryCheckmark;
 	auxiliaryPioneer.selected = NO;
 
 	self.pioneer = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	pioneer.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)PublisherTypePioneer value:(NSString *)PublisherTypePioneer table:@""];
+	pioneer.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)PublisherTypePioneer value:(NSString *)PublisherTypePioneer table:@""];
 	pioneer.accessoryType = UITableViewCellAccessoryCheckmark;
 	pioneer.selected = NO;
 
 	self.specialPioneer = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	specialPioneer.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)PublisherTypeSpecialPioneer value:(NSString *)PublisherTypeSpecialPioneer table:@""];
+	specialPioneer.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)PublisherTypeSpecialPioneer value:(NSString *)PublisherTypeSpecialPioneer table:@""];
 	specialPioneer.accessoryType = UITableViewCellAccessoryCheckmark;
 	specialPioneer.selected = NO;
 
 	self.travelingServent = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	travelingServent.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)PublisherTypeTravelingServent value:(NSString *)PublisherTypeTravelingServent table:@""];
+	travelingServent.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)PublisherTypeTravelingServent value:(NSString *)PublisherTypeTravelingServent table:@""];
 	travelingServent.accessoryType = UITableViewCellAccessoryCheckmark;
 	travelingServent.selected = NO;
 

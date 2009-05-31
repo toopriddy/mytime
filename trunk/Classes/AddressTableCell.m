@@ -15,6 +15,7 @@
 
 #import "AddressTableCell.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 
 @implementation AddressTableCell

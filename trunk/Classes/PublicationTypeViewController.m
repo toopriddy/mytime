@@ -17,6 +17,7 @@
 #import "PublicationViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 @interface PublicationTypeViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
@@ -206,35 +207,35 @@
 			break;
 		// PublicationTypeMagazine @"Magazine"
 		case 1:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeMagazine value:PublicationTypeMagazine table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeMagazine value:PublicationTypeMagazine table:@""]];
 			break;
 		// PublicationTypeBook @"Book"
 		case 2:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeBook value:PublicationTypeBook table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBook value:PublicationTypeBook table:@""]];
 			break;
 		// PublicationTypeCampaignTract @"Campaign Tract"
 		case 3:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeCampaignTract value:PublicationTypeCampaignTract table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeCampaignTract value:PublicationTypeCampaignTract table:@""]];
 			break;
 		// PublicationTypeBrochure @"Brochure"
 		case 4:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeBrochure value:PublicationTypeBrochure table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBrochure value:PublicationTypeBrochure table:@""]];
 			break;
 		// PublicationTypeDVDBible @"Bible DVD"
 		case 5:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDBible value:PublicationTypeDVDBible table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBible value:PublicationTypeDVDBible table:@""]];
 			break;
 		// PublicationTypeDVDBook @"DVD"
 		case 6:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""]];
 			break;
 		// PublicationTypeDVDNotCount @"DVD Not Counted"
 		case 7:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""]];
 			break;
 		// PublicationTypeTract @"Tract"
 		case 8:
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""]];
 			break;
     }
 	return(cell);

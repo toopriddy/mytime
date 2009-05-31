@@ -17,6 +17,7 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "LiteraturePlacementViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 /* NSMutableArray bulkLiterature
  *     NSMutableDictionary

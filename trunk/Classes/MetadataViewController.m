@@ -17,6 +17,7 @@
 #import "PublicationViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 static MetadataInformation commonInformation[] = {
 	{AlternateLocalizedString(@"Email", @"Call Metadata"), EMAIL}
@@ -179,7 +180,7 @@ static MetadataInformation commonInformation[] = {
 		if(row < ARRAY_SIZE(commonInformation))
 		{
 			NSString *name = (NSString *)commonInformation[row].name;
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""]];
 		}
 		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
 		{

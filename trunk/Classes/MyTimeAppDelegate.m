@@ -29,6 +29,7 @@
 #import "Settings.h"
 #import "Geocache.h"
 #import <objc/runtime.h>
+#import "PSLocalization.h"
 
 @implementation MyTimeAppDelegate
 
@@ -41,6 +42,7 @@
 {
 	if(self = [super init]) 
 	{
+		[PSLocalization initalizeCustomLocalization];
 		// initialize  to nil
 		window = nil;
 		tabBarController = nil;

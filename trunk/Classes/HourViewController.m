@@ -17,6 +17,7 @@
 #import "TimePickerViewController.h"
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "PSLocalization.h"
 
 @implementation HourViewController
 

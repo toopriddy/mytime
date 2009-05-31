@@ -16,6 +16,7 @@
 #import "ReturnVisitTypeViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 @interface ReturnVisitTypeViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
@@ -154,32 +155,32 @@
 	if(isInitialVisit)
 		returnVisitCell.text = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
 	else
-		returnVisitCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeReturnVisit value:(NSString *)CallReturnVisitTypeReturnVisit table:@""];
+		returnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeReturnVisit value:(NSString *)CallReturnVisitTypeReturnVisit table:@""];
 	returnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	returnVisitCell.selected = NO;
 	
 	self.studyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	studyCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeStudy value:(NSString *)CallReturnVisitTypeStudy table:@""];
+	studyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeStudy value:(NSString *)CallReturnVisitTypeStudy table:@""];
 	studyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	studyCell.selected = NO;
 	
 	self.notAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	notAtHomeCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeNotAtHome value:(NSString *)CallReturnVisitTypeNotAtHome table:@""];
+	notAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeNotAtHome value:(NSString *)CallReturnVisitTypeNotAtHome table:@""];
 	notAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	notAtHomeCell.selected = NO;
 
 	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedReturnVisitCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedReturnVisit value:(NSString *)CallReturnVisitTypeTransferedReturnVisit table:@""];
+	transferedReturnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedReturnVisit value:(NSString *)CallReturnVisitTypeTransferedReturnVisit table:@""];
 	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedReturnVisitCell.selected = NO;
 
 	self.transferedStudyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedStudyCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedStudy value:(NSString *)CallReturnVisitTypeTransferedStudy table:@""];
+	transferedStudyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedStudy value:(NSString *)CallReturnVisitTypeTransferedStudy table:@""];
 	transferedStudyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedStudyCell.selected = NO;
 
 	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedNotAtHomeCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedNotAtHome value:(NSString *)CallReturnVisitTypeTransferedNotAtHome table:@""];
+	transferedNotAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedNotAtHome value:(NSString *)CallReturnVisitTypeTransferedNotAtHome table:@""];
 	transferedNotAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedNotAtHomeCell.selected = NO;
 

@@ -14,6 +14,7 @@
 //
 
 #import "Settings.h"
+#import "PSLocalization.h"
 
 
 static Settings *instance = nil;

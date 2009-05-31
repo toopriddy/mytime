@@ -16,6 +16,7 @@
 #import "StatisticsViewController.h"
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "PSLocalization.h"
 
 
 
@@ -168,7 +169,7 @@ static NSString *MONTHS[] = {
 	{
 		if(month < 1)
 			month = 12 + month;
-		[months addObject:[[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+		[months addObject:[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
 		
 		--month;
 	}
@@ -686,7 +687,7 @@ static NSString *MONTHS[] = {
 	if(month < 1)
 		month = 12 + month;
 	title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
-														 [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+														 [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
     return(title);
 }
 
@@ -717,7 +718,7 @@ static NSString *MONTHS[] = {
 			int month = _thisMonth - section;
 			if(month < 1)
 				month = 12 + month;
-			NSString *monthName = [[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""];
+			NSString *monthName = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""];
 
 			// handle rolling over minutes
 			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)", @"If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes"), minutes, monthName, (hours+1), monthName]
@@ -751,7 +752,7 @@ static NSString *MONTHS[] = {
 			{
 				if(month < 1)
 					month = 12 + month;
-				[months addObject:[[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+				[months addObject:[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
 				
 				--month;
 			}
@@ -770,7 +771,7 @@ static NSString *MONTHS[] = {
 			{
 				if(month < 1)
 					month = 12 + month;
-				[months addObject:[[NSBundle mainBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+				[months addObject:[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
 				
 				--month;
 			}

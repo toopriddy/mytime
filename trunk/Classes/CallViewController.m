@@ -28,6 +28,7 @@
 #import "MetadataEditorViewController.h"
 #import "Geocache.h"
 #import "PSUrlString.h"
+#import "PSLocalization.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -1187,7 +1188,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		locationType = (NSString *)CallLocationTypeGoogleMaps;
 	}
-	[cell setValue:[[NSBundle mainBundle] localizedStringForKey:locationType value:locationType table:@""]];
+	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
 
 	
 	// if this does not have a latitude/longitude then look it up
@@ -1260,7 +1261,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 				// fallthrough
 			default:
-				[cell setTitle:[[NSBundle mainBundle] localizedStringForKey:name value:name table:@""]];
+				[cell setTitle:[[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""]];
 				[cell setValue:value];
 				break;
 		}
@@ -1356,7 +1357,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	else
 	{
-		[cell setValue:[[NSBundle mainBundle] localizedStringForKey:type value:type table:@""]];
+		[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""]];
 	}
 
 	cell.accessoryType = _editing ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
@@ -1982,7 +1983,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			NSMutableDictionary *entry = [metadata objectAtIndex:j];
 			NSString *name = [entry objectForKey:SettingsMetadataName];
 			value = [entry objectForKey:SettingsMetadataValue];
-			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[NSBundle mainBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
+			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
 		}
 	}
 
@@ -2015,7 +2016,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 
 		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringWithEscapedCharacters]];
 		value = [visit objectForKey:CallReturnVisitType];
-		[string appendString:[[NSString stringWithFormat:@"%@\n", [[NSBundle mainBundle] localizedStringForKey:value value:value table:@""]] stringWithEscapedCharacters]];
+		[string appendString:[[NSString stringWithFormat:@"%@\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""]] stringWithEscapedCharacters]];
 		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringWithEscapedCharacters]];
 
 		// Publications

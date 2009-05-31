@@ -15,6 +15,7 @@
 
 #import "NotesViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @implementation NotesViewController
 @synthesize textView;

@@ -15,6 +15,7 @@
 
 #import "CallsSorter.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @interface CallsSorter ()
 
