@@ -88,70 +88,29 @@ If I send you a new mobileprovision file these are the instructions on how to up
   # sync your iphone with your Mac
   # Finally drag the MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
 
-= Transfer Localizable.strings using iTunes =
+= Test your translation (OSX 10.5 only, sorry) =
+Requirements:
+  * an Apple computer running a minimum of OSX 10.5
+  * a wireless network that both your iPhone and your Mac are on
 
-Apparently this only worked on versions of iTunes < 8.0.2
-
-On OSX:
-  # Right-click (or CTRL+Click for those of you without a mighty mouse, or even two finger click on a macbook) the unzipped !MyTime application that I emailed you and select Show Package Contents.
-  # save the translated Localizable.strings file that I emailed you to a German.lproj directory or Romanian.lproj directory or <Insert Language Here>.lproj; You need to create this directory in the window that pops up from the "Show Package Contents" and save the Localizable.strings file there.
-  # drag the unzipped !MyTime application into iTunes and say yes to add/replace this application
-  # sync your iPhone/iTouch to download the new version and test your translation
-
-On Windows:
-  # Unzip the MyTime.zip
-  # go into the MyTime.app directory and save the translated Localizable.strings file that I emailed you to a German.lproj directory or Romanian.lproj directory or <Insert Language Here>.lproj; You need to create this directory in the window that pops up from the "Show Package Contents" and save the Localizable.strings file there.
-  # Drag the MyTime.app directory into iTunes (you should see a + on your cursor) and say yes to add/replace this application
-  # sync your iPhone/iTouch to download the new version and test your translation
-  
-
-
-
-= Transfer Localizable.strings using ssh =
-
-If you have jailbroken your iPhone. Install "OpenSSH" using the Installer Application, and reboot your iPhone/iTouch (Hold down the power button and slide to power off and then turn it back on).
-
-Connect your iPhone/iTouch to your home WiFi network (or a friend's WiFi network) and figure out what your IP address is, on the iPhone:
-  # Click on Settings -> Wi-Fi
-  # Select ">" on the WiFi network your iPhone is on
-  # remember the X.X.X.X "IP Address" on that page
-
-log into your iPhone:
-
-Windows:
-  # download [http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe PSCP] and save it in your c:\Windows directory
-  # open up a command line terminal Start->Run and type in "cmd" and hit OK
-  # save the Localizable.strings file that I emailed you to a German.lproj directory or Romanian.lproj directory or <Insert Language Here>.lproj you need to create this directory somewhere and save the Localizable.strings file there
-  # Navigate using the command line to the directory that holds the German.lproj, Romanian.lproj, Spanish.lproj, etc
-  ## You can do this easily by typing *cd * (that is cd and then a space) and then drag your German.lproj directory into the command line, and then hit enter on the command line
-  ## Now do a "cd .." on the command line, to move to the parent directory
-  # Do Start->Run and type in "notepad.exe" to edit the Localizable.strings (yes you MUST use notepad to edit these files on windows)
-  ## edit your Localizable.strings change the values and save 
-  # Make sure that !MyTime is "Quitted" on your iPhone/iTouch
-  # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english word of your language is)  
-{{{
-pscp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
-}}}
-  # enter "alpine" as the password
-  # after the file has been pushed, run !MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
-  # you can go back to the "Edit your Localizable.strings file" step and repeat over and over
+Instructions:
+  # on the Mac:
+  ## get the latest [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application
+  ## make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
+  ## do you have the file in the appropriate directory? like ~/Desktop/French.lproj/Localizable.strings  It REALLY matters what the parent directory is and what the name of the file is.  Please do not use any other filename than Localizable.strings or a parent directory that does not match the above <language>.lproj directories
+  ## Now that you have the appropriate file and directory setup, open the new MyTime Backup application
+  # On the iPhone:
+  ## Start MyTime
+  ## Go to More->Settings->Backup Using 'MyTime Backup'
+  # On the Mac:
+  ## Notice that the MyTime Backup application now has the buttons enabled (there is a small window with 3 buttons that started when you start MyTime BAckup)
+  ## click on "Send Translation"
+  ## select the translation for your langauge (remember it must be named EXACTLY "<your language here>.lproj/Localizable.strings")
+  # On the Iphone:
+  ## It should now tell you that you need to restart MyTime to apply the localization. So hit the home button to quit and then you need to restart MyTime.
+  ## to remove your custom translation (because it might be a bit slow and use a bit more memory, go to More->Settings->Remove Custom Translation, you will have to restart to apply)
 
 
-OSX:
-  # open up a command line terminal "Applications/Utilities/Terminal"
-  # Navigate using the command line to the directory that holds the German.lproj, Romanian.lproj, Spanish.lproj, etc
-  ## You can do this easily by typing *cd * (that is cd and then a space) and then go to your German.lproj, Spanish.lproj or Italian.lproj directory and Command-C copy the German.lproj directory, and then go to the command line and use Command-V to paste the directory path, then hit enter
-  ## Now do a "cd .." on the command line, to move to the parent directory
-  # Do Start->Run and run "TextEdit" to edit the Localizable.strings (yes you MUST use textedit to edit these files on windows)
-  ## edit your Localizable.strings change the values and save 
-  # Make sure that !MyTime is "Quitted" on your iPhone/iTouch
-  # Type in the following in the command line you still had open (replace X.X.X.X with the IP address that you got above, and use the right language German, Spanish, Portuguese, whatever the english version of your language is)  
-{{{
-scp -r German.lproj root@X.X.X.X:/var/mobile/Applications/<a directory here>/MyTime.app/
-}}}
-  # enter "alpine" as the password
-  # after the file has been pushed, run !MyTime and check your work (you have to have your language setup in Settings->General->International->Language)
-  # you can go back to the "Edit your Localizable.strings file
 
 = Updating the Localizable.strings with the latest version =
 If you have already submitted a translation or are in the process of translating a file and I update the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file, this section will tell you what to do.
