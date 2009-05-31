@@ -130,7 +130,10 @@
 	
 	if(selected)
 	{
-		[self.textField becomeFirstResponder];
+		if(self.editing || !observeEditing)
+		{
+			[self.textField becomeFirstResponder];
+		}
 	}
 	else
 	{
