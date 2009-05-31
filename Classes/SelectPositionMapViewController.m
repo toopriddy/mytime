@@ -20,6 +20,7 @@
 #import "RMVirtualEarthSource.h"
 #import "RMCloudMadeMapSource.h"
 #import "CallViewController.h"
+#import "PSLocalization.h"
 
 @implementation SelectPositionMapViewController
 @synthesize mapView;

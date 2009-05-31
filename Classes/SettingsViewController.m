@@ -19,6 +19,8 @@
 #import "BackupView.h"
 #import "NumberViewController.h"
 #import "PSUrlString.h"
+#import "PSLocalization.h"
+
 
 @implementation SettingsViewController
 
@@ -126,11 +128,16 @@
 
         // Settings
         case 1:
+		{
 			count++; // enable popups
 			count++; // number of months shown
 			count++; // publisher type
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			if([fileManager fileExistsAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath]])
+				count++;
 			break;
-		
+		}
+				
         // Website
         case 2:
 			count++; // mytime website
@@ -244,7 +251,12 @@
 					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
 					if(value == nil)
 						value = (NSString *)PublisherTypePioneer;
-					[cell setValue:[[NSBundle mainBundle] localizedStringForKey:(NSString *)value value:(NSString *)value table:@""]];
+					[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:(NSString *)value value:(NSString *)value table:@""]];
+					break;
+				}
+				case 3:
+				{
+					[cell setTitle:NSLocalizedString(@"Remove Custom Translation", @"More->Settings custom translation title")];
 					break;
 				}
 			}
@@ -374,6 +386,22 @@
 					PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
 					viewController.delegate = self;
 					[[self navigationController] pushViewController:viewController animated:YES];
+					return;
+				}
+				case 3:
+				{
+					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+					if(![fileManager removeItemAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath] error:nil])
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+						alertSheet.title = NSLocalizedString(@"Could not remove custom translation", @"More->Settings->Remove Custom Translation: error message if the custom translation file could not be removed");
+						[alertSheet show];
+					}
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Please quit MyTime to apply change", @"More->Settings->Remove Custom Translation: confirmaiton message when you have applied the 'Remove Custom Translation'");
+					[alertSheet show];
 					return;
 				}
 			}

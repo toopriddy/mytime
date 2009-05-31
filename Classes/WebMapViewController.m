@@ -15,6 +15,7 @@
 
 #import "WebMapViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @implementation WebMapViewController
 @synthesize mapView;

@@ -19,6 +19,7 @@
 #import "UITableViewTextFieldCell.h"
 #import "NotesViewController.h"
 #import "UITableViewMultilineTextCell.h"
+#import "PSLocalization.h"
 
 @interface MonthChooserViewController ()
 @property (nonatomic,retain) UITableView *theTableView;

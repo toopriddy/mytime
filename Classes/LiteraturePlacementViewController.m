@@ -18,6 +18,7 @@
 #import "DatePickerViewController.h"
 #import "PublicationViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 /* NSMutableArray bulkLiterature
  *     NSMutableDictionary

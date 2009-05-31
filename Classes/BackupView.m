@@ -15,6 +15,7 @@
 
 #import "BackupView.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @implementation BackupView
 
@@ -231,21 +232,24 @@
 		case kPushTranslation:
 		{
 			NSMutableDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
+			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+
+			
 			NSString *directory = [dictionary objectForKey:@"directory"];
 			NSString *filename = [dictionary objectForKey:@"name"];
 			NSData *contents = [dictionary objectForKey:@"file"];
-			NSMutableString *path = [NSMutableString stringWithString:[[NSBundle mainBundle] pathForResource:@"map" ofType:@"html"]];
 			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-			[path replaceOccurrencesOfString:@"map.html" withString:[NSString stringWithFormat:@"%@", directory] options:NSCaseInsensitiveSearch range:NSMakeRange(0, [path length])];
-			if(![fileManager createDirectoryAtPath:path attributes:nil])
+			NSMutableString *bundlePath = [NSMutableString stringWithString:[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"translation.bundle/Contents/Resources/"] stringByAppendingPathComponent:directory]];
+			
+			if(![fileManager createDirectoryAtPath:bundlePath withIntermediateDirectories:YES attributes:nil error:nil])
 			{
-				NSLog(@"could not create directory at %@", path);
+				NSLog(@"could not create directory at %@", bundlePath);
 				self.title = [NSString stringWithFormat:NSLocalizedString(@"Could not create %@ directory", @"initial message when trying to transfer backup files"), directory];
 			}
 			else
 			{
-				[path appendFormat:@"/%@", filename];
-				[contents writeToFile:path atomically:YES];
+				[bundlePath appendFormat:@"/%@", filename];
+				[contents writeToFile:bundlePath atomically:YES];
 				self.title = [NSString stringWithFormat:NSLocalizedString(@"Pushed %@ translation file, restart MyTime to see the changes.", @"initial message when trying to transfer backup files"), directory];
 			}
 			break;

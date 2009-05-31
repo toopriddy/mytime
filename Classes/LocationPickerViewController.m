@@ -16,6 +16,7 @@
 #import "LocationPickerViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 @interface LocationPickerViewController ()
 @property (nonatomic, retain) UITableView *theTableView;
@@ -121,17 +122,17 @@
 	self.view = self.theTableView;
 
 	self.googleMapsCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"googleMapsCell"] autorelease];
-	googleMapsCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallLocationTypeGoogleMaps value:(NSString *)CallLocationTypeGoogleMaps table:@""];
+	googleMapsCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeGoogleMaps value:(NSString *)CallLocationTypeGoogleMaps table:@""];
 	googleMapsCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	googleMapsCell.selected = NO;
 	
 	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"manualCell"] autorelease];
-	manualCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallLocationTypeManual value:(NSString *)CallLocationTypeManual table:@""];
+	manualCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeManual value:(NSString *)CallLocationTypeManual table:@""];
 	manualCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	manualCell.selected = NO;
 	
 	self.doNotShowCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"doNotShowCell"] autorelease];
-	doNotShowCell.text = [[NSBundle mainBundle] localizedStringForKey:(NSString *)CallLocationTypeDoNotShow value:(NSString *)CallLocationTypeDoNotShow table:@""];
+	doNotShowCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeDoNotShow value:(NSString *)CallLocationTypeDoNotShow table:@""];
 	doNotShowCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	doNotShowCell.selected = NO;
 	

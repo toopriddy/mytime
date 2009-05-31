@@ -16,6 +16,7 @@
 #import "AddressViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 
 

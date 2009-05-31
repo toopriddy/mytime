@@ -15,6 +15,7 @@
 
 #import "PublicationPickerView.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @interface UIPickerView (soundsEnabled)
 - (void)setSoundsEnabled:(BOOL)fp8;
@@ -209,12 +210,12 @@ static const PublicationInformation PUBLICATIONS[] = {
 
 + (NSString *)watchtower
 {
-	return([[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[0].name table:@""]);
+	return([[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[0].name table:@""]);
 }
 
 + (NSString *)awake
 {
-	return([[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[1].name table:@""]);
+	return([[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[1].name table:@""]);
 }
 
 - (BOOL)publicationIsWatchtower:(int)publication
@@ -294,7 +295,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 		
 		cell.textAlignment = UITextAlignmentLeft;
 		int index = [[_publicationLookupTable objectAtIndex:row] intValue];
-		cell.text = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
+		cell.text = [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
     }
     else
     {
@@ -309,7 +310,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 				case 1: // Month
 				{
 					cell.textAlignment = UITextAlignmentCenter;
-					cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					cell.text = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
 					break;
 				}	
 				case 2: // Year
@@ -333,7 +334,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 				case 1: // Month
 				{
 					cell.textAlignment = UITextAlignmentCenter;
-					cell.text = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					cell.text = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
 					break;
 				}	
 				case 2: // Year
@@ -364,7 +365,7 @@ static const PublicationInformation PUBLICATIONS[] = {
     if(component == 0)
     {
 		int index = [[_publicationLookupTable objectAtIndex:row] intValue];
-		ret = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
+		ret = [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""];
     }
     else
     {
@@ -377,7 +378,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 			switch(component)
 			{
 				case 1: // Month
-					ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					ret = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
 					break;
 				case 2: // Year
 					// we offset the _year from 1900
@@ -397,7 +398,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 			{
 				case 1: // Month
 				{
-					ret = [[NSBundle mainBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					ret = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
 					break;
 				}	
 				case 2: // Year
@@ -631,7 +632,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 				{
 					break;
 				}
-				NSString *translatedName = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
+				NSString *translatedName = [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
 				if(translatedName.length)
 				{
 					[_publicationLookupTable addObject:[NSNumber numberWithInt:i]];
@@ -722,7 +723,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	{
 		if([filter isEqualToString:PUBLICATIONS[i].type])
 		{
-			NSString *translatedName = [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
+			NSString *translatedName = [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[i].name value:PUBLICATIONS[i].name table:@""];
 			if(translatedName.length)
 			{
 				return YES;
@@ -766,19 +767,19 @@ static const PublicationInformation PUBLICATIONS[] = {
     {
         if(day)
             return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),
-							                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
-																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
+							                                    [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
+																[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
 																day, 
 																year ]);
         else
             return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),
-			                                                    [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
-																[[NSBundle mainBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
+			                                                    [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
+																[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
 																year ]);
     }
     else
     {
-        return([NSString stringWithString: [[NSBundle mainBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""]] );
+        return([NSString stringWithString: [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""]] );
     }
 }
 

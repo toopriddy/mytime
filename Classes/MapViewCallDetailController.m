@@ -14,6 +14,7 @@
 //
 #import "MapViewCallDetailController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @implementation MapViewCallDetailController
 @synthesize delegate;

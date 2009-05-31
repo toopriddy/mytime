@@ -17,6 +17,7 @@
 #import "PublicationViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
+#import "PSLocalization.h"
 
 static MetadataInformation commonInformation[] = {
 	{AlternateLocalizedString(@"Email", @"Call Metadata"), EMAIL}
@@ -209,7 +210,7 @@ static MetadataInformation commonInformation[] = {
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
 			}
 			
-			[cell setText:[[NSBundle mainBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""]];
+			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""]];
 			cell.accessoryType = _selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			
 			return cell;

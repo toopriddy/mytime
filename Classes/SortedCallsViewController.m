@@ -19,6 +19,8 @@
 #import "CallViewController.h"
 #import "Settings.h"
 #import "MovableTableViewIndex.h"
+#import "PSLocalization.h"
+
 @implementation SortedCallsViewController
 
 @synthesize tableView;

@@ -94,6 +94,7 @@
 		90D031350E567B20001CEF0D /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031340E567B20001CEF0D /* DatePickerViewController.m */; };
 		90D031D80E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */; };
 		90D031F70E56944C001CEF0D /* LiteraturePlacementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */; };
+		90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D0F3C10FD333D600107ADB /* PSLocalization.m */; };
 		90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
@@ -276,6 +277,8 @@
 		90D031F50E56944C001CEF0D /* LiteraturePlacementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewController.h; sourceTree = "<group>"; };
 		90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiteraturePlacementViewController.m; sourceTree = "<group>"; };
 		90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewControllerDelegate.h; sourceTree = "<group>"; };
+		90D0F3C00FD3336100107ADB /* PSLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLocalization.h; sourceTree = "<group>"; };
+		90D0F3C10FD333D600107ADB /* PSLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLocalization.m; sourceTree = "<group>"; };
 		90D6A2AA0EA1A13400FA0252 /* SwitchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTableCell.h; sourceTree = "<group>"; };
 		90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 				90059C8E0F3A2112006DF536 /* PSUrlString.h */,
 				90059C8F0F3A2112006DF536 /* PSUrlString.m */,
 				907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */,
+				90D0F3C00FD3336100107ADB /* PSLocalization.h */,
+				90D0F3C10FD333D600107ADB /* PSLocalization.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -772,6 +777,7 @@
 				90059C900F3A2112006DF536 /* PSUrlString.m in Sources */,
 				904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */,
 				907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */,
+				90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

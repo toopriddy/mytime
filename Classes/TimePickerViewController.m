@@ -15,6 +15,7 @@
 
 #import "TimePickerViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @interface UIPickerView (soundsEnabled)
 - (void)setSoundsEnabled:(BOOL)fp8;
