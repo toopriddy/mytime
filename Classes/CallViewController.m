@@ -1137,13 +1137,15 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell = [[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"NameCell"];
 	}
 	cell.delegate = self;
+	cell.observeEditing = YES;
 	if(_editing)
 	{
 		if(_setFirstResponderGroup == 0)
 		{
-			[self performSelector: @selector(selectRow:) 
-					   withObject:[[NSIndexPath indexPathForRow:0 inSection:0] retain]];
-
+			
+			[self performSelector:@selector(selectRow:) 
+					   withObject:[[NSIndexPath indexPathForRow:0 inSection:0] retain]
+					   afterDelay:0.00001];
 			_setFirstResponderGroup = -1;
 		}
 
