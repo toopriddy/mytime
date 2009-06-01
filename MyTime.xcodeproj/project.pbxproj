@@ -279,8 +279,8 @@
 		90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewControllerDelegate.h; sourceTree = "<group>"; };
 		90D0F3C00FD3336100107ADB /* PSLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLocalization.h; sourceTree = "<group>"; };
 		90D0F3C10FD333D600107ADB /* PSLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLocalization.m; sourceTree = "<group>"; };
-		90D0F4860FD34A8500107ADB /* PSRemoveNSLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRemoveNSLocalizedString.h; sourceTree = "<group>"; };
-		90D0F4870FD34AB300107ADB /* PSAddNSLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAddNSLocalizedString.h; sourceTree = "<group>"; };
+		90D0F4860FD34A8500107ADB /* PSRemoveLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRemoveLocalizedString.h; sourceTree = "<group>"; };
+		90D0F4870FD34AB300107ADB /* PSAddLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAddLocalizedString.h; sourceTree = "<group>"; };
 		90D6A2AA0EA1A13400FA0252 /* SwitchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTableCell.h; sourceTree = "<group>"; };
 		90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -375,8 +375,8 @@
 				907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */,
 				90D0F3C00FD3336100107ADB /* PSLocalization.h */,
 				90D0F3C10FD333D600107ADB /* PSLocalization.m */,
-				90D0F4870FD34AB300107ADB /* PSAddNSLocalizedString.h */,
-				90D0F4860FD34A8500107ADB /* PSRemoveNSLocalizedString.h */,
+				90D0F4870FD34AB300107ADB /* PSAddLocalizedString.h */,
+				90D0F4860FD34A8500107ADB /* PSRemoveLocalizedString.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

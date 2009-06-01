@@ -19,14 +19,14 @@
 #import "UITableViewTextFieldCell.h"
 #import "PSLocalization.h"
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 static MetadataInformation commonInformation[] = {
 	{NSLocalizedString(@"Email", @"Call Metadata"), EMAIL}
 ,	{NSLocalizedString(@"Phone", @"Call Metadata"), PHONE}
 ,	{NSLocalizedString(@"Mobile Phone", @"Call Metadata"), PHONE}
 ,	{NSLocalizedString(@"Notes", @"Call Metadata"), NOTES}
 };
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
