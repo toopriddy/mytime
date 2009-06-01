@@ -54,7 +54,6 @@ typedef struct {
 	NSString * name;
 	NSString * type;
 } PublicationInformation;
-NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker");
 
 #include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
