@@ -16,7 +16,7 @@ Swedish.lproj \
 all: genstrings
 
 genstrings:
-	genstrings Classes/*.m Classes/*.h -o en_US.lproj/
+	genstrings Classes/*.m Classes/*.h -s AlternateLocalizedString -o en_US.lproj/
 	cp en_US.lproj/Localizable.strings English.lproj/
 
 merge:

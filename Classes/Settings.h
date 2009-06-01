@@ -63,16 +63,16 @@ extern NSString const * const BulkLiteratureArrayYear;
 extern NSString const * const BulkLiteratureArrayMonth;
 extern NSString const * const BulkLiteratureArrayDay;
 
-
+#define AlternateLocalizedString(key, comment) (key)
 #define PublicationTypeHeading			@""
-#define PublicationTypeDVDBible			NSLocalizedString(@"Bible DVD", @"Publication Type name")
-#define PublicationTypeDVDBook			NSLocalizedString(@"DVD", @"Publication Type name")
-#define PublicationTypeDVDNotCount		NSLocalizedString(@"DVD (not counted)", @"Publication Type name") 
-#define PublicationTypeBook				NSLocalizedString(@"Book", @"Publication Type name")
-#define PublicationTypeBrochure			NSLocalizedString(@"Brochure", @"Publication Type name")
-#define PublicationTypeMagazine			NSLocalizedString(@"Magazine", @"Publication Type name")
-#define PublicationTypeTract			NSLocalizedString(@"Tract", @"Publication Type name")
-#define PublicationTypeCampaignTract	NSLocalizedString(@"Campaign Tract", @"Publication Type name")
+#define PublicationTypeDVDBible			AlternateLocalizedString(@"Bible DVD", @"Publication Type name")
+#define PublicationTypeDVDBook			AlternateLocalizedString(@"DVD", @"Publication Type name")
+#define PublicationTypeDVDNotCount		AlternateLocalizedString(@"DVD (not counted)", @"Publication Type name") 
+#define PublicationTypeBook				AlternateLocalizedString(@"Book", @"Publication Type name")
+#define PublicationTypeBrochure			AlternateLocalizedString(@"Brochure", @"Publication Type name")
+#define PublicationTypeMagazine			AlternateLocalizedString(@"Magazine", @"Publication Type name")
+#define PublicationTypeTract			AlternateLocalizedString(@"Tract", @"Publication Type name")
+#define PublicationTypeCampaignTract	AlternateLocalizedString(@"Campaign Tract", @"Publication Type name")
 
 
 
