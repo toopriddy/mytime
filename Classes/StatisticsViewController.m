@@ -20,20 +20,22 @@
 
 
 
+#include "PSRemoveNSLocalizedString.h"
 static NSString *MONTHS[] = {
-	AlternateLocalizedString(@"January", @"Long month name"),
-	AlternateLocalizedString(@"February", @"Long month name"),
-	AlternateLocalizedString(@"March", @"Long month name"),
-	AlternateLocalizedString(@"April", @"Long month name"),
-	AlternateLocalizedString(@"May", @"Short/Long month name"),
-	AlternateLocalizedString(@"June", @"Long month name"),
-	AlternateLocalizedString(@"July", @"Long month name"),
-	AlternateLocalizedString(@"August", @"Long month name"),
-	AlternateLocalizedString(@"September", @"Long month name"),
-	AlternateLocalizedString(@"October", @"Long month name"),
-	AlternateLocalizedString(@"November", @"Long month name"),
-	AlternateLocalizedString(@"December", @"Long month name")
+	NSLocalizedString(@"January", @"Long month name"),
+	NSLocalizedString(@"February", @"Long month name"),
+	NSLocalizedString(@"March", @"Long month name"),
+	NSLocalizedString(@"April", @"Long month name"),
+	NSLocalizedString(@"May", @"Short/Long month name"),
+	NSLocalizedString(@"June", @"Long month name"),
+	NSLocalizedString(@"July", @"Long month name"),
+	NSLocalizedString(@"August", @"Long month name"),
+	NSLocalizedString(@"September", @"Long month name"),
+	NSLocalizedString(@"October", @"Long month name"),
+	NSLocalizedString(@"November", @"Long month name"),
+	NSLocalizedString(@"December", @"Long month name")
 };
+#include "PSAddNSLocalizedString.h"
 
 @implementation StatisticsViewController
 
