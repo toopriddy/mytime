@@ -28,11 +28,11 @@ NSString const * const CallState = @"state";
 NSString const * const CallLattitudeLongitude = @"latLong";
 NSString const * const CallLocationType = @"locationType";
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 NSString const * const CallLocationTypeManual = NSLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
 NSString const * const CallLocationTypeGoogleMaps = NSLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
 NSString const * const CallLocationTypeDoNotShow = NSLocalizedString(@"Do not show in map", @"Label for picking the location lookup type when they do not want the return visit to show up in the map");
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 NSString const * const CallMetadata = @"metadata";
 NSString const * const CallMetadataName = @"name";
@@ -55,14 +55,14 @@ extern NSString const * const CallReturnVisitTypeTransferedStudy;
 extern NSString const * const CallReturnVisitTypeTransferedNotAtHome;
 extern NSString const * const CallReturnVisitTypeTransferedReturnVisit;
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 NSString const * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
 NSString const * const CallReturnVisitTypeTransferedNotAtHome = NSLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
 NSString const * const CallReturnVisitTypeTransferedReturnVisit = NSLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
 NSString const * const CallReturnVisitTypeReturnVisit = NSLocalizedString(@"Return Visit", @"return visit type name");
 NSString const * const CallReturnVisitTypeStudy = NSLocalizedString(@"Study", @"return visit type name");
 NSString const * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home", @"return visit type name");
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 NSString const * const SettingsBulkLiterature = @"bulkLiterature";
 NSString const * const BulkLiteratureDate = @"date";
@@ -123,13 +123,13 @@ NSString const * const SettingsFourthView = @"fourthView";
 
 NSString const * const SettingsPublisherType = @"publisherType";
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 NSString const * const PublisherTypePublisher = NSLocalizedString(@"Publisher", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString const * const PublisherTypeAuxilliaryPioneer = NSLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString const * const PublisherTypePioneer = NSLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString const * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString const * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 
 @implementation Settings

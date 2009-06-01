@@ -13,7 +13,7 @@
 //
 
 extern NSBundle *psLocalizationBundle;
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 @interface PSLocalization : NSObject
 {

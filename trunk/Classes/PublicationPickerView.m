@@ -23,7 +23,7 @@
 #define YEAR_OFFSET 1900
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 static NSString *MONTHS[] = {
 	NSLocalizedString(@"Jan", @"Short month name"),
 	NSLocalizedString(@"Feb", @"Short month name"),
@@ -38,7 +38,7 @@ static NSString *MONTHS[] = {
 	NSLocalizedString(@"Nov", @"Short month name"),
 	NSLocalizedString(@"Dec", @"Short month name")
 };
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 
 @implementation PublicationPickerView
@@ -56,7 +56,7 @@ typedef struct {
 } PublicationInformation;
 NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker");
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
 	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
@@ -208,7 +208,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Will This World Survive?", @"Tracts Publication Name (T-19)"),   PublicationTypeTract}
 ,   {NSLocalizedString(@"Your Life", @"Tracts Publication Name (yi)"),   PublicationTypeTract}
 };
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 + (NSString *)watchtower
 {

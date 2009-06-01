@@ -20,7 +20,7 @@
 
 
 
-#include "PSRemoveNSLocalizedString.h"
+#include "PSRemoveLocalizedString.h"
 static NSString *MONTHS[] = {
 	NSLocalizedString(@"January", @"Long month name"),
 	NSLocalizedString(@"February", @"Long month name"),
@@ -35,7 +35,7 @@ static NSString *MONTHS[] = {
 	NSLocalizedString(@"November", @"Long month name"),
 	NSLocalizedString(@"December", @"Long month name")
 };
-#include "PSAddNSLocalizedString.h"
+#include "PSAddLocalizedString.h"
 
 @implementation StatisticsViewController
 
