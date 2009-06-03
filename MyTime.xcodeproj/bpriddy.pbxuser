@@ -21,9 +21,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Distribution;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator2.2;
+		activeSDKPreference = iphoneos2.2;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -328,6 +328,14 @@
 			9092F7200FD40E00005CB37A /* PBXTextBookmark */ = 9092F7200FD40E00005CB37A /* PBXTextBookmark */;
 			9092F7210FD40E00005CB37A /* PBXTextBookmark */ = 9092F7210FD40E00005CB37A /* PBXTextBookmark */;
 			9092F7220FD40E00005CB37A /* PBXTextBookmark */ = 9092F7220FD40E00005CB37A /* PBXTextBookmark */;
+			9092F72B0FD40EA1005CB37A /* PBXTextBookmark */ = 9092F72B0FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F72C0FD40EA1005CB37A /* PBXTextBookmark */ = 9092F72C0FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F72D0FD40EA1005CB37A /* PBXTextBookmark */ = 9092F72D0FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F72E0FD40EA1005CB37A /* PlistBookmark */ = 9092F72E0FD40EA1005CB37A /* PlistBookmark */;
+			9092F72F0FD40EA1005CB37A /* PBXTextBookmark */ = 9092F72F0FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F7300FD40EA1005CB37A /* PBXTextBookmark */ = 9092F7300FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F7310FD40EA1005CB37A /* PBXTextBookmark */ = 9092F7310FD40EA1005CB37A /* PBXTextBookmark */;
+			9092F7320FD40EA1005CB37A /* PlistBookmark */ = 9092F7320FD40EA1005CB37A /* PlistBookmark */;
 			90D0F4E60FD34E0600107ADB = 90D0F4E60FD34E0600107ADB /* PBXTextBookmark */;
 			90D0F4E70FD34E0600107ADB = 90D0F4E70FD34E0600107ADB /* PBXTextBookmark */;
 			90D0F4E90FD34E0600107ADB = 90D0F4E90FD34E0600107ADB /* PBXTextBookmark */;
@@ -417,9 +425,9 @@
 	};
 	900A21750F1461FF00BE1AF2 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1536, 14686}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1536, 14700}}";
 			sepNavSelRange = "{851, 0}";
-			sepNavVisRange = "{0, 1211}";
+			sepNavVisRange = "{0, 2858}";
 			sepNavWindowFrame = "{{62, -2}, {1185, 775}}";
 		};
 	};
@@ -940,7 +948,7 @@
 		fRef = 90B8F4170E7ECD300022A01F /* German */;
 		name = "Localizable.strings: 1075";
 		rLen = 0;
-		rLoc = 40761;
+		rLoc = 40779;
 		rType = 0;
 		vrLen = 3499;
 		vrLoc = 37262;
@@ -2343,6 +2351,89 @@
 		vrLen = 813;
 		vrLoc = 3208;
 	};
+	9092F72B0FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */;
+		name = "PublicationTypeViewController.m: 143";
+		rLen = 0;
+		rLoc = 3737;
+		rType = 0;
+		vrLen = 813;
+		vrLoc = 3208;
+	};
+	9092F72C0FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 1070";
+		rLen = 0;
+		rLoc = 40444;
+		rType = 0;
+		vrLen = 4021;
+		vrLoc = 36714;
+	};
+	9092F72D0FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 900A21750F1461FF00BE1AF2 /* English */;
+		name = "Localizable.strings: 25";
+		rLen = 0;
+		rLoc = 851;
+		rType = 0;
+		vrLen = 2858;
+		vrLoc = 0;
+	};
+	9092F72E0FD40EA1005CB37A /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	9092F72F0FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */;
+		name = "PublicationTypeViewController.m: 143";
+		rLen = 0;
+		rLoc = 3737;
+		rType = 0;
+		vrLen = 813;
+		vrLoc = 3208;
+	};
+	9092F7300FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 1070";
+		rLen = 0;
+		rLoc = 40444;
+		rType = 0;
+		vrLen = 4021;
+		vrLoc = 36714;
+	};
+	9092F7310FD40EA1005CB37A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 900A21750F1461FF00BE1AF2 /* English */;
+		name = "Localizable.strings: 25";
+		rLen = 0;
+		rLoc = 851;
+		rType = 0;
+		vrLen = 2858;
+		vrLoc = 0;
+	};
+	9092F7320FD40EA1005CB37A /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
 	90ADA7640F18757800C65E40 /* en_UK */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {5148, 13818}}";
@@ -2422,9 +2513,9 @@
 	};
 	90B8F4170E7ECD300022A01F /* German */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {4956, 13944}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1441}";
+			sepNavIntBoundsRect = "{{0, 0}, {4956, 14252}}";
+			sepNavSelRange = "{41282, 0}";
+			sepNavVisRange = "{37783, 3499}";
 		};
 	};
 	90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {
@@ -2748,9 +2839,9 @@
 	};
 	90DD733D0E925C1E007B1B71 /* Dutch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {5148, 13874}}";
+			sepNavIntBoundsRect = "{{0, 0}, {5148, 14000}}";
 			sepNavSelRange = "{40444, 0}";
-			sepNavVisRange = "{36994, 3450}";
+			sepNavVisRange = "{36714, 4021}";
 		};
 	};
 	90E6D1090EEC3D17008B4A9C /* Build ipa */ = {
@@ -2922,7 +3013,7 @@
 	};
 	90FF15580EB029F6001CE434 /* PublicationTypeViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1041, 4060}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1041, 4074}}";
 			sepNavSelRange = "{3737, 0}";
 			sepNavVisRange = "{3208, 813}";
 		};
