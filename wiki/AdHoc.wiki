@@ -23,7 +23,7 @@ Then you will not be able to install this version on top of this
   # Close down iTunes, and Xcode (if you are running them)
   # delete the files in ~/Library/MobileDevice/Provisioning Profiles/  on the Mac
   # plug in and sync your iphone/ipod
-  # look in General->Profiles-> and Select any that say "MyTime AdHoc" and hit the "Remove" button
+  # On your iPhone run the "Settings" application and look in General->Profiles-> and Select any that say "MyTime AdHoc" and hit the "Remove" button
   # Disconnect your iphone from your Mac/PC
   # Quit iTunes
   # Drag the MyTime AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
