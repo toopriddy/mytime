@@ -1988,7 +1988,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	}
 
 	[string appendString:[[NSString stringWithFormat:@"\n"] stringWithEscapedCharacters]];
-
+	
 
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
 	NSMutableDictionary *visit;
