@@ -839,17 +839,17 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 			if(latLong == nil || [latLong isEqualToString:@"nil"])
 				latLong = @"";
 			else
-				latLong = [NSString stringWithFormat:@"@%@", [[latLong stringByReplacingOccurrencesOfString:@" " withString:@"" ] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+				latLong = [NSString stringWithFormat:@"@%@", [[latLong stringByReplacingOccurrencesOfString:@" " withString:@"" ] stringWithEscapedCharacters]];
 #if 1		
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
 										 stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@+%@,+%@%@", 
 										                  NSLocalizedString(@"en", @"Google Localized Language Name"),
-														  [streetNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
-														  [apartmentNumber stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
-														  [street stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
-														  [city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], 
-														  [state stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+														  [streetNumber stringWithEscapedCharacters], 
+														  [apartmentNumber stringWithEscapedCharacters], 
+														  [street stringWithEscapedCharacters], 
+														  [city stringWithEscapedCharacters], 
+														  [state stringWithEscapedCharacters],
 														  latLong]];
 			DEBUG(NSLog(@"Trying to open url %@", url);)
 			// open up the google map page for this call
@@ -1987,7 +1987,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		}
 	}
 
-	[string appendString:[@"\n" stringWithEscapedCharacters]];
+	[string appendString:[[NSString stringWithFormat:@"\n"] stringWithEscapedCharacters]];
 
 
 	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];

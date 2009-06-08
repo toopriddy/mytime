@@ -416,6 +416,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				90161BF80FDAB99D001EDB6D /* NotAtHomes */,
 				90D02D7F0E538552001CEF0D /* map.html */,
 				90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */,
 				90ADA7AB0F1876C500C65E40 /* marker-blue.png */,
@@ -449,6 +450,13 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		90161BF80FDAB99D001EDB6D /* NotAtHomes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = NotAtHomes;
 			sourceTree = "<group>";
 		};
 		906143AA0E51310B0072BA7B /* HourView */ = {
@@ -582,7 +590,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
+		1D6058900D05DD3D006BFB54 /* MyTime */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -638,7 +646,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* SimpleMap */,
+				1D6058900D05DD3D006BFB54 /* MyTime */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -795,7 +803,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
+			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
