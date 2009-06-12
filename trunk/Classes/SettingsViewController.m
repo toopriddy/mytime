@@ -21,6 +21,17 @@
 #import "PSUrlString.h"
 #import "PSLocalization.h"
 
+enum {
+	DONATE_SECTION,
+#if USE_USER_SECTION
+	USER_SECTION,
+#endif	
+	SETTINGS_SECTION,
+	CONTACT_INFO_SECTION,
+	BACKUP_SECTION,
+	VERSION_SECTION,
+	SECTION_COUNT
+};
 
 @implementation SettingsViewController
 
@@ -95,25 +106,8 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-    int count = 0;
-
-	// Donate View
-	count++;
-	
-	// Settings
-	count++;
-
-	// mytime website
-	count++;
-
-	// backup
-	count++;
-	
-	// version
-	count++;
-	
-	VERBOSE(NSLog(@"count=%d", count);)
-    return(count);
+	VERBOSE(NSLog(@"count=%d", SECTION_COUNT);)
+    return(SECTION_COUNT);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
@@ -121,13 +115,19 @@
 	int count = 0;
     switch (section)
     { 
-        // Donate
-        case 0:
+			// Donate
+        case DONATE_SECTION:
 			count++; // always show hours
 			break;
 
-        // Settings
-        case 1:
+#if USE_USER_SECTION			
+			// User
+        case USER_SECTION:
+			count++; // one user selection
+			break;
+#endif			
+			// Settings
+        case SETTINGS_SECTION:
 		{
 			count++; // enable popups
 			count++; // number of months shown
@@ -139,20 +139,20 @@
 		}
 				
         // Website
-        case 2:
+        case CONTACT_INFO_SECTION:
 			count++; // mytime website
 			count++; // found a bug?
 			count++; // question comments? 
 			break;
 		
 		// bakup
-		case 3:
+		case BACKUP_SECTION:
 			count++; // email backup
 			count++; //Mytime backup
 			break;
 			
 		// version 
-		case 4:
+		case VERSION_SECTION:
 			count++; //version
 			count++; //build date
 			break;
@@ -168,26 +168,32 @@
 	switch(section)
 	{
         // Donate
-		case 0:
+		case DONATE_SECTION:
 			break;
 
-        // Settings
-		case 1:
+#if USE_USER_SECTION			
+		// User section
+		case USER_SECTION:
+			title = NSLocalizedString(@"Multiple User Settings", @"Settings section header for the current user");
+			break;
+#endif
+		// Settings
+		case SETTINGS_SECTION:
 			title = NSLocalizedString(@"Settings", @"'Settings' ButtonBar View text and Statistics View Title");
 			break;
 		
         // Website
-        case 2:
+        case CONTACT_INFO_SECTION:
 			title = NSLocalizedString(@"Contact Information", @"More View Table Group Title");
 			break;
 		
         // Backup
-        case 3:
+        case BACKUP_SECTION:
 			title = NSLocalizedString(@"Backup", @"More View Table Group Title");
 			break;
 		
 		// version 
-		case 4:
+		case VERSION_SECTION:
 			title = NSLocalizedString(@"Version", @"More View Table Group Title");
 			break;
     }
@@ -218,18 +224,37 @@
     switch (section) 
     {
         // Donate
-        case 0:
+        case DONATE_SECTION:
 			switch(row)
 			{
 				case 0:
-					// if we are not editing, then 
 					[cell setValue:NSLocalizedString(@"Please Donate, help me help you", @"More View Table Donation request")];
 					break;
 			}
             break;
 
+#if USE_USER_SECTION			
+		// Current User
+        case USER_SECTION:
+			switch(row)
+			{
+				case 0:
+				{
+					[cell setTitle:NSLocalizedString(@"Current User", @"Settings label for the current user")];
+					NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
+					if(currentUser == nil || currentUser.length == 0)
+					{
+						currentUser = NSLocalizedString(@"Default User", @"name for the default user if you have not enabled multiple users");
+					}
+					[cell setValue:currentUser];
+					break;
+				}
+			}
+            break;
+#endif			
+			
         // Settings
-		case 1:
+		case SETTINGS_SECTION:
 			switch(row)
 			{
 				case 0:
@@ -250,8 +275,8 @@
 					[cell setTitle:NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title")];
 					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
 					if(value == nil)
-						value = (NSString *)PublisherTypePioneer;
-					[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:(NSString *)value value:(NSString *)value table:@""]];
+						value = PublisherTypePioneer;
+					[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""]];
 					break;
 				}
 				case 3:
@@ -263,7 +288,7 @@
 			break;
 		
         // Website
-        case 2:
+        case CONTACT_INFO_SECTION:
 			switch(row)
 			{
 				case 0:
@@ -280,8 +305,8 @@
 			}
 			break;
 		
-        // Website
-        case 3:
+        // Backup
+        case BACKUP_SECTION:
 			switch(row)
 			{
 				case 0:
@@ -295,7 +320,7 @@
 			break;
 		
 		// version 
-		case 4:
+		case VERSION_SECTION:
 			switch(row)
 			{
 				case 0:
@@ -324,7 +349,7 @@
 
 	switch(section)
 	{
-		case 0:
+		case DONATE_SECTION:
 			switch(row)
 			{
 				// Donate
@@ -337,8 +362,19 @@
 				}
 			}
 			break;
-				
-		case 1:
+#if USE_USER_SECTION				
+		case USER_SECTION:
+			switch(row)
+			{
+				case 0:
+				{
+//
+					return;
+				}
+			}
+			break;
+#endif			
+		case SETTINGS_SECTION:
 			switch(row)
 			{
 				// Re-enable popups
@@ -381,7 +417,7 @@
 				{
 					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
 					if(value == nil)
-						value = (NSString *)PublisherTypePioneer;
+						value = PublisherTypePioneer;
 
 					PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
 					viewController.delegate = self;
@@ -407,7 +443,7 @@
 			}
 			break;
 
-		case 2:
+		case CONTACT_INFO_SECTION:
 			switch(row)
 			{
 				// website
@@ -447,7 +483,7 @@
 			}
 			break;
 
-		case 3:
+		case BACKUP_SECTION:
 			switch(row)
 			{
 				case 0:

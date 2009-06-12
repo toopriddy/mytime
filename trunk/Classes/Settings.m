@@ -19,116 +19,120 @@
 
 static Settings *instance = nil;
 
-NSString const * const CallName = @"name";
-NSString const * const CallStreetNumber = @"streetNumber";
-NSString const * const CallApartmentNumber = @"apartmentNumber";
-NSString const * const CallStreet = @"street";
-NSString const * const CallCity = @"city";
-NSString const * const CallState = @"state";
-NSString const * const CallLattitudeLongitude = @"latLong";
-NSString const * const CallLocationType = @"locationType";
+NSString * const CallName = @"name";
+NSString * const CallStreetNumber = @"streetNumber";
+NSString * const CallApartmentNumber = @"apartmentNumber";
+NSString * const CallStreet = @"street";
+NSString * const CallCity = @"city";
+NSString * const CallState = @"state";
+NSString * const CallLattitudeLongitude = @"latLong";
+NSString * const CallLocationType = @"locationType";
 
 #include "PSRemoveLocalizedString.h"
-NSString const * const CallLocationTypeManual = NSLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
-NSString const * const CallLocationTypeGoogleMaps = NSLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
-NSString const * const CallLocationTypeDoNotShow = NSLocalizedString(@"Do not show in map", @"Label for picking the location lookup type when they do not want the return visit to show up in the map");
+NSString * const CallLocationTypeManual = NSLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
+NSString * const CallLocationTypeGoogleMaps = NSLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
+NSString * const CallLocationTypeDoNotShow = NSLocalizedString(@"Do not show in map", @"Label for picking the location lookup type when they do not want the return visit to show up in the map");
 #include "PSAddLocalizedString.h"
 
-NSString const * const CallMetadata = @"metadata";
-NSString const * const CallMetadataName = @"name";
-NSString const * const CallMetadataType = @"type";
-NSString const * const CallMetadataData = @"data";
-NSString const * const CallMetadataValue = @"value";
-NSString const * const CallReturnVisits = @"returnVisits";
-NSString const * const CallReturnVisitNotes = @"notes";
-NSString const * const CallReturnVisitDate = @"date";
-NSString const * const CallReturnVisitType = @"type";
-NSString const * const CallReturnVisitPublications = @"publications";
-NSString const * const CallReturnVisitPublicationTitle = @"title";
-NSString const * const CallReturnVisitPublicationType = @"type";
-NSString const * const CallReturnVisitPublicationName = @"name";
-NSString const * const CallReturnVisitPublicationYear = @"year";
-NSString const * const CallReturnVisitPublicationMonth = @"month";
-NSString const * const CallReturnVisitPublicationDay = @"day";
+NSString * const CallMetadata = @"metadata";
+NSString * const CallMetadataName = @"name";
+NSString * const CallMetadataType = @"type";
+NSString * const CallMetadataData = @"data";
+NSString * const CallMetadataValue = @"value";
+NSString * const CallReturnVisits = @"returnVisits";
+NSString * const CallReturnVisitNotes = @"notes";
+NSString * const CallReturnVisitDate = @"date";
+NSString * const CallReturnVisitType = @"type";
+NSString * const CallReturnVisitPublications = @"publications";
+NSString * const CallReturnVisitPublicationTitle = @"title";
+NSString * const CallReturnVisitPublicationType = @"type";
+NSString * const CallReturnVisitPublicationName = @"name";
+NSString * const CallReturnVisitPublicationYear = @"year";
+NSString * const CallReturnVisitPublicationMonth = @"month";
+NSString * const CallReturnVisitPublicationDay = @"day";
 
-extern NSString const * const CallReturnVisitTypeTransferedStudy;
-extern NSString const * const CallReturnVisitTypeTransferedNotAtHome;
-extern NSString const * const CallReturnVisitTypeTransferedReturnVisit;
+extern NSString * const CallReturnVisitTypeTransferedStudy;
+extern NSString * const CallReturnVisitTypeTransferedNotAtHome;
+extern NSString * const CallReturnVisitTypeTransferedReturnVisit;
 
 #include "PSRemoveLocalizedString.h"
-NSString const * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
-NSString const * const CallReturnVisitTypeTransferedNotAtHome = NSLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
-NSString const * const CallReturnVisitTypeTransferedReturnVisit = NSLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
-NSString const * const CallReturnVisitTypeReturnVisit = NSLocalizedString(@"Return Visit", @"return visit type name");
-NSString const * const CallReturnVisitTypeStudy = NSLocalizedString(@"Study", @"return visit type name");
-NSString const * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home", @"return visit type name");
+NSString * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedNotAtHome = NSLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedReturnVisit = NSLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeReturnVisit = NSLocalizedString(@"Return Visit", @"return visit type name");
+NSString * const CallReturnVisitTypeStudy = NSLocalizedString(@"Study", @"return visit type name");
+NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home", @"return visit type name");
 #include "PSAddLocalizedString.h"
 
-NSString const * const SettingsBulkLiterature = @"bulkLiterature";
-NSString const * const BulkLiteratureDate = @"date";
-NSString const * const BulkLiteratureArray = @"literature";
-NSString const * const BulkLiteratureArrayCount = @"count";
-NSString const * const BulkLiteratureArrayTitle = @"title";
-NSString const * const BulkLiteratureArrayType = @"type";
-NSString const * const BulkLiteratureArrayName = @"name";
-NSString const * const BulkLiteratureArrayYear = @"year";
-NSString const * const BulkLiteratureArrayMonth = @"month";
-NSString const * const BulkLiteratureArrayDay = @"day";
+NSString * const SettingsBulkLiterature = @"bulkLiterature";
+NSString * const BulkLiteratureDate = @"date";
+NSString * const BulkLiteratureArray = @"literature";
+NSString * const BulkLiteratureArrayCount = @"count";
+NSString * const BulkLiteratureArrayTitle = @"title";
+NSString * const BulkLiteratureArrayType = @"type";
+NSString * const BulkLiteratureArrayName = @"name";
+NSString * const BulkLiteratureArrayYear = @"year";
+NSString * const BulkLiteratureArrayMonth = @"month";
+NSString * const BulkLiteratureArrayDay = @"day";
 
-NSString const * const SettingsLastLattitude = @"lastLattitude";
-NSString const * const SettingsLastLongitude = @"lastLongitude";
+NSString * const SettingsLastLattitude = @"lastLattitude";
+NSString * const SettingsLastLongitude = @"lastLongitude";
 
-NSString const * const SettingsCalls = @"calls";
-NSString const * const SettingsDeletedCalls = @"deletedCalls";
-NSString const * const SettingsMagazinePlacements = @"magazinePlacements";
+NSString * const SettingsCalls = @"calls";
+NSString * const SettingsDeletedCalls = @"deletedCalls";
+NSString * const SettingsMagazinePlacements = @"magazinePlacements";
 
-NSString const * const SettingsLastCallStreetNumber = @"lastStreetNumber";
-NSString const * const SettingsLastCallApartmentNumber = @"lastApartmentNumber";
-NSString const * const SettingsLastCallStreet = @"lastStreet";
-NSString const * const SettingsLastCallCity = @"lastCity";
-NSString const * const SettingsLastCallState = @"lastState";
-NSString const * const SettingsCurrentButtonBarIndex = @"currentButtonBarIndex";
+NSString * const SettingsLastCallStreetNumber = @"lastStreetNumber";
+NSString * const SettingsLastCallApartmentNumber = @"lastApartmentNumber";
+NSString * const SettingsLastCallStreet = @"lastStreet";
+NSString * const SettingsLastCallCity = @"lastCity";
+NSString * const SettingsLastCallState = @"lastState";
+NSString * const SettingsCurrentButtonBarIndex = @"currentButtonBarIndex";
 
-NSString const * const SettingsTimeAlertSheetShown = @"timeAlertShown";
-NSString const * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown2";
-NSString const * const SettingsSecretaryEmailAddress = @"secretaryEmail";
-NSString const * const SettingsSecretaryEmailNotes = @"secretaryNotes";
-NSString const * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
-NSString const * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
+NSString * const SettingsTimeAlertSheetShown = @"timeAlertShown";
+NSString * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown2";
+NSString * const SettingsSecretaryEmailAddress = @"secretaryEmail";
+NSString * const SettingsSecretaryEmailNotes = @"secretaryNotes";
+NSString * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
+NSString * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
 
-NSString const * const SettingsMetadata = @"metadata";
-NSString const * const SettingsMetadataName = @"name";
-NSString const * const SettingsMetadataType = @"type";
-NSString const * const SettingsMetadataValue = @"value";
-NSString const * const SettingsMetadataData = @"data";
-
-
-NSString const * const SettingsMainAlertSheetShown = @"mainAlertShown2";
-
-NSString const * const SettingsMonthDisplayCount = @"monthDisplaycount";
-
-NSString const * const SettingsTimeStartDate = @"timeStartDate";
-NSString const * const SettingsRBCTimeStartDate = @"rbcTimeStartDate";
-NSString const * const SettingsTimeEntries = @"timeEntries";
-NSString const * const SettingsRBCTimeEntries = @"quickBuildEntries";
-NSString const * const SettingsTimeEntryDate = @"date";
-NSString const * const SettingsTimeEntryMinutes = @"minutes";
+NSString * const SettingsMetadata = @"metadata";
+NSString * const SettingsMetadataName = @"name";
+NSString * const SettingsMetadataType = @"type";
+NSString * const SettingsMetadataValue = @"value";
+NSString * const SettingsMetadataData = @"data";
 
 
-NSString const * const SettingsDonated = @"donated";
-NSString const * const SettingsFirstView = @"firstView";
-NSString const * const SettingsSecondView = @"secondView";
-NSString const * const SettingsThirdView = @"thirdView";
-NSString const * const SettingsFourthView = @"fourthView";
+NSString * const SettingsMainAlertSheetShown = @"mainAlertShown2";
 
-NSString const * const SettingsPublisherType = @"publisherType";
+NSString * const SettingsMonthDisplayCount = @"monthDisplaycount";
+
+NSString * const SettingsMultipleUsersCurrentUser = @"currentUser";
+NSString * const SettingsMultipleUsers = @"multipleUsers";
+
+
+NSString * const SettingsTimeStartDate = @"timeStartDate";
+NSString * const SettingsRBCTimeStartDate = @"rbcTimeStartDate";
+NSString * const SettingsTimeEntries = @"timeEntries";
+NSString * const SettingsRBCTimeEntries = @"quickBuildEntries";
+NSString * const SettingsTimeEntryDate = @"date";
+NSString * const SettingsTimeEntryMinutes = @"minutes";
+
+
+NSString * const SettingsDonated = @"donated";
+NSString * const SettingsFirstView = @"firstView";
+NSString * const SettingsSecondView = @"secondView";
+NSString * const SettingsThirdView = @"thirdView";
+NSString * const SettingsFourthView = @"fourthView";
+
+NSString * const SettingsPublisherType = @"publisherType";
 
 #include "PSRemoveLocalizedString.h"
-NSString const * const PublisherTypePublisher = NSLocalizedString(@"Publisher", @"publisher type selected in the More->Settings->Publisher Type setting");
-NSString const * const PublisherTypeAuxilliaryPioneer = NSLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
-NSString const * const PublisherTypePioneer = NSLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
-NSString const * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
-NSString const * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypePublisher = NSLocalizedString(@"Publisher", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeAuxilliaryPioneer = NSLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypePioneer = NSLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
 #include "PSAddLocalizedString.h"
 
 

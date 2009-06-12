@@ -96,6 +96,8 @@
 		90D031F70E56944C001CEF0D /* LiteraturePlacementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */; };
 		90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D0F3C10FD333D600107ADB /* PSLocalization.m */; };
 		90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */; };
+		90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */; };
+		90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
@@ -285,6 +287,12 @@
 		90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90DD733D0E925C1E007B1B71 /* Dutch */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90E56ABB0FE199A200DF7393 /* TableViewCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellController.h; sourceTree = "<group>"; };
+		90E56ABC0FE199A200DF7393 /* GenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTableViewController.h; sourceTree = "<group>"; };
+		90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTableViewController.m; sourceTree = "<group>"; };
+		90E56ACA0FE1C18800DF7393 /* GenericTableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTableViewSectionController.h; sourceTree = "<group>"; };
+		90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTableViewSectionController.m; sourceTree = "<group>"; };
+		90E56ACD0FE1C4D500DF7393 /* TableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSectionController.h; sourceTree = "<group>"; };
 		90E6D1D30EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByStudyViewDataSource.h; sourceTree = "<group>"; };
 		90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByStudyViewDataSource.m; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -373,6 +381,12 @@
 				90059C8E0F3A2112006DF536 /* PSUrlString.h */,
 				90059C8F0F3A2112006DF536 /* PSUrlString.m */,
 				907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */,
+				90E56ABB0FE199A200DF7393 /* TableViewCellController.h */,
+				90E56ACD0FE1C4D500DF7393 /* TableViewSectionController.h */,
+				90E56ACA0FE1C18800DF7393 /* GenericTableViewSectionController.h */,
+				90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */,
+				90E56ABC0FE199A200DF7393 /* GenericTableViewController.h */,
+				90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */,
 				90D0F3C00FD3336100107ADB /* PSLocalization.h */,
 				90D0F3C10FD333D600107ADB /* PSLocalization.m */,
 				90D0F4870FD34AB300107ADB /* PSAddLocalizedString.h */,
@@ -590,7 +604,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MyTime */ = {
+		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -646,7 +660,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MyTime */,
+				1D6058900D05DD3D006BFB54 /* SimpleMap */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -790,6 +804,8 @@
 				904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */,
 				907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */,
 				90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */,
+				90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */,
+				90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,7 +819,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */

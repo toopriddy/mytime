@@ -69,9 +69,9 @@ static NSString *MONTHS[] = {
 {
 	NSString *type = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
 	return type == nil || 
-	       [type isEqualToString:(NSString *)PublisherTypePioneer] ||
-		   [type isEqualToString:(NSString *)PublisherTypeSpecialPioneer] ||
-		   [type isEqualToString:(NSString *)PublisherTypeTravelingServent];
+	       [type isEqualToString:PublisherTypePioneer] ||
+		   [type isEqualToString:PublisherTypeSpecialPioneer] ||
+		   [type isEqualToString:PublisherTypeTravelingServent];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -324,11 +324,11 @@ static NSString *MONTHS[] = {
 						continue;
 						
 					NSString *type = [visit objectForKey:CallReturnVisitType];
-					BOOL isStudy = [type isEqualToString:(NSString *)CallReturnVisitTypeStudy];
-					BOOL isNotAtHome = [type isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome];
-					BOOL isTransfer = [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedStudy] ||
-									  [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedReturnVisit] ||
-									  [type isEqualToString:(NSString *)CallReturnVisitTypeTransferedNotAtHome];
+					BOOL isStudy = [type isEqualToString:CallReturnVisitTypeStudy];
+					BOOL isNotAtHome = [type isEqualToString:CallReturnVisitTypeNotAtHome];
+					BOOL isTransfer = [type isEqualToString:CallReturnVisitTypeTransferedStudy] ||
+									  [type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
+									  [type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
 					
 					bool counted = NO;
 					if(returnVisitsCount > 1 && i != returnVisitsCount)

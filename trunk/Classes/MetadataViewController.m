@@ -181,7 +181,7 @@ static MetadataInformation commonInformation[] = {
 		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
 		if(row < ARRAY_SIZE(commonInformation))
 		{
-			NSString *name = (NSString *)commonInformation[row].name;
+			NSString *name = commonInformation[row].name;
 			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""]];
 		}
 		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)

@@ -72,24 +72,24 @@
 	[super dealloc];
 }
 
-- (void)updateSelection:(const NSString *)newType
+- (void)updateSelection:(NSString *)newType
 {
 	UITableViewCell *selected = nil;
 	UITableViewCell *unselected1 = manualCell;
 	UITableViewCell *unselected2 = googleMapsCell;
 	UITableViewCell *unselected3 = doNotShowCell;
 	
-	if([newType isEqualToString:(NSString *)CallLocationTypeGoogleMaps])
+	if([newType isEqualToString:CallLocationTypeGoogleMaps])
 	{
 		selected = googleMapsCell;
 		unselected2 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallLocationTypeManual])
+	else if([newType isEqualToString:CallLocationTypeManual])
 	{
 		selected = manualCell;
 		unselected1 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+	else if([newType isEqualToString:CallLocationTypeDoNotShow])
 	{
 		selected = doNotShowCell;
 		unselected3 = nil;
@@ -100,7 +100,7 @@
 	unselected3.accessoryType = UITableViewCellAccessoryNone;
 	selected.accessoryType = UITableViewCellAccessoryCheckmark;
 
-	self.type = [NSString stringWithString:(NSString *)newType];
+	self.type = [NSString stringWithString:newType];
 }
 
 - (void)loadView 
@@ -122,17 +122,17 @@
 	self.view = self.theTableView;
 
 	self.googleMapsCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"googleMapsCell"] autorelease];
-	googleMapsCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeGoogleMaps value:(NSString *)CallLocationTypeGoogleMaps table:@""];
+	googleMapsCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeGoogleMaps value:CallLocationTypeGoogleMaps table:@""];
 	googleMapsCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	googleMapsCell.selected = NO;
 	
 	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"manualCell"] autorelease];
-	manualCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeManual value:(NSString *)CallLocationTypeManual table:@""];
+	manualCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeManual value:CallLocationTypeManual table:@""];
 	manualCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	manualCell.selected = NO;
 	
 	self.doNotShowCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"doNotShowCell"] autorelease];
-	doNotShowCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallLocationTypeDoNotShow value:(NSString *)CallLocationTypeDoNotShow table:@""];
+	doNotShowCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeDoNotShow value:CallLocationTypeDoNotShow table:@""];
 	doNotShowCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	doNotShowCell.selected = NO;
 	

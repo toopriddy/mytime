@@ -591,7 +591,7 @@ static const PublicationInformation PUBLICATIONS[] = {
     return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day]);
 }
 
-- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter
+- (id) initWithFrame: (CGRect)rect filteredToType:(NSString *)filter
 {
     // initalize the data to the current date
 	NSDate *date = [NSDate date];

@@ -81,8 +81,8 @@ static Geocache *instance = nil;
 	for(NSMutableDictionary *call in calls)
 	{
 		if([call objectForKey:CallLattitudeLongitude] == nil &&
-		   ![[call objectForKey:CallLocationType] isEqualToString:(NSString *)CallLocationTypeManual] &&
-		   ![[call objectForKey:CallLocationType] isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+		   ![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual] &&
+		   ![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeDoNotShow])
 		{
 			[self lookupCall:call];
 		}
