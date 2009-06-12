@@ -30,7 +30,7 @@
 
 // from TableViewSectionController
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section;
-- (UITableViewCell *)tableView:(UITableView *)tableView cellControllerAtIndexPath:(NSIndexPath *)indexPath;
+- (NSObject<TableViewCellController> *)tableView:(UITableView *)tableView cellControllerAtIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;    // fixed font style. use custom view (UILabel) if you want something different
 
 @end

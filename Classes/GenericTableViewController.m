@@ -107,7 +107,7 @@
 	for(GenericTableViewSectionController *sectionController in self.sectionControllers)
 	{
 		// if this is a new section, see if it needs to be added, otherwise see what has changed
-		if(![sectionController isEqualTo:currentDisplaySectionController])
+		if(![sectionController isEqual:currentDisplaySectionController])
 		{
 			if([sectionController respondsToSelector:isViewableSelector] && 
 			   [sectionController performSelector:isViewableSelector])
@@ -127,7 +127,7 @@
 			for(NSObject<TableViewCellController> *cellController in sectionController.cellControllers)
 			{
 				// If this is not a row currently displayed check, otherwise just move onto the next one
-				if(![sectionController isEqualTo:currentDisplaySectionController])
+				if(![sectionController isEqual:currentDisplaySectionController])
 				{
 					if([sectionController respondsToSelector:isViewableSelector] && 
 					   [sectionController performSelector:isViewableSelector])
