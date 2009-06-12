@@ -65,7 +65,7 @@ static int sortByDate(id v1, id v2, void *context)
 	int i;
 	NSArray *sortedArray = [entries sortedArrayUsingFunction:sortByDate context:NULL];
 	[sortedArray retain];
-	[entries setArray:sortedArray];
+	[self.entries setArray:sortedArray];
 	[sortedArray release];
 	
 	// remove all entries that are older than 3 months
@@ -77,11 +77,11 @@ static int sortByDate(id v1, id v2, void *context)
 	for(i = 0; i < count; ++i)
 	{
 		DEBUG(NSLog(@"Comparing %d to %d", now, [[entries objectAtIndex:i] objectForKey:BulkLiteratureDate]);)
-		if([now compare:[[entries objectAtIndex:i] objectForKey:BulkLiteratureDate]] > 0)
+		if([now compare:[[self.entries objectAtIndex:i] objectForKey:BulkLiteratureDate]] > 0)
 		{
-			[entries removeObjectAtIndex:i];
+			[self.entries removeObjectAtIndex:i];
 			--i;
-			count = [entries count];
+			count = [self.entries count];
 		}
 	}
 	
@@ -92,14 +92,9 @@ static int sortByDate(id v1, id v2, void *context)
 {
 	if ([super init]) 
 	{
-		tableView = nil;
-		entries = nil;
-		selectedIndexPath = nil;
-
 		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-		self.entries = [[NSMutableArray alloc] initWithArray:[settings objectForKey:SettingsBulkLiterature]];
-		[settings setObject:entries forKey:SettingsBulkLiterature];
-		
+		self.entries = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsBulkLiterature]];
+		[settings setObject:self.entries forKey:SettingsBulkLiterature];
 		
 		// set the title, and tab bar images from the dataSource
 		// object. 
@@ -195,12 +190,12 @@ static int sortByDate(id v1, id v2, void *context)
 {
 	if(selectedIndexPath != nil)
 	{
-		[entries replaceObjectAtIndex:[selectedIndexPath row] withObject:[literaturePlacementController placements]];
+		[self.entries replaceObjectAtIndex:[selectedIndexPath row] withObject:[literaturePlacementController placements]];
 		
 	}
 	else
 	{
-		[entries addObject:[literaturePlacementController placements]];
+		[self.entries addObject:[literaturePlacementController placements]];
 		
 	}
 	[self reloadData];
@@ -217,7 +212,7 @@ static int sortByDate(id v1, id v2, void *context)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     DEBUG(NSLog(@"numberOfRowsInTable:");)
-	int count = [entries count];
+	int count = [self.entries count];
     DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
 	return(count);
 }
@@ -237,7 +232,7 @@ static int sortByDate(id v1, id v2, void *context)
 		[cell setTitle:@""];
 	}
 
-	NSMutableDictionary *entry = [entries objectAtIndex:row];
+	NSMutableDictionary *entry = [self.entries objectAtIndex:row];
 
 
 	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
@@ -281,7 +276,7 @@ static int sortByDate(id v1, id v2, void *context)
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
 	self.selectedIndexPath = indexPath;
 
-	LiteraturePlacementViewController *viewController = [[[LiteraturePlacementViewController alloc] initWithPlacements:[entries objectAtIndex:[indexPath row]]] autorelease];
+	LiteraturePlacementViewController *viewController = [[[LiteraturePlacementViewController alloc] initWithPlacements:[self.entries objectAtIndex:[indexPath row]]] autorelease];
 	viewController.delegate = self;
 
 	[[self navigationController] pushViewController:viewController animated:YES];
@@ -290,7 +285,7 @@ static int sortByDate(id v1, id v2, void *context)
 - (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-	[entries removeObjectAtIndex:[indexPath row]];
+	[self.entries removeObjectAtIndex:[indexPath row]];
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }

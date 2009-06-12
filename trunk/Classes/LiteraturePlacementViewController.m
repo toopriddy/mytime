@@ -50,12 +50,9 @@
 {
 	if ([super init]) 
 	{
-		tableView = nil;
-		placements = nil;
-		selectedIndexPath = nil;
-
-		self.placements = [[NSMutableDictionary alloc] initWithDictionary:thePlacements];
-		NSMutableArray *literature = [[[NSMutableArray alloc] initWithArray:[placements objectForKey:BulkLiteratureArray]] autorelease];
+		self.placements = [NSMutableDictionary dictionaryWithDictionary:thePlacements];
+		
+		NSMutableArray *literature = [NSMutableArray arrayWithArray:[placements objectForKey:BulkLiteratureArray]];
 		[placements setObject:literature forKey:BulkLiteratureArray];
 		
 		if([placements objectForKey:BulkLiteratureDate] == nil)
