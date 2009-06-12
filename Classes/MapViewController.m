@@ -119,7 +119,7 @@
 			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 
 			NSString *lookupType = [theCall objectForKey:CallLocationType];
-			if([lookupType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+			if([lookupType isEqualToString:CallLocationTypeDoNotShow])
 			{
 				// they dont want this displayed
 				continue;
@@ -187,7 +187,7 @@
 			NSMutableDictionary *theCall = (NSMutableDictionary *)marker.data;
 			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
 			NSString *lookupType = [theCall objectForKey:CallLocationType];
-			if([lookupType isEqualToString:(NSString *)CallLocationTypeDoNotShow])
+			if([lookupType isEqualToString:CallLocationTypeDoNotShow])
 			{
 				// make the detail view go away
 				[self tapOnMarker:selectedMarker onMap:mapView];

@@ -36,7 +36,7 @@
 	return [self initShowingCount:doShowCount filteredToType:nil];
 }
 
-- (id) initShowingCount:(BOOL)doShowCount filteredToType:(const NSString *)filter
+- (id) initShowingCount:(BOOL)doShowCount filteredToType:(NSString *)filter
 {
     // initalize the data to the current date
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
@@ -60,7 +60,7 @@
 	return [self initWithPublication:publication year:year month:month day:day showCount:doShowCount number:number filter:nil];
 }
 
-- (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number filter:(const NSString *)filter
+- (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number filter:(NSString *)filter
 {
 	if ([super init]) 
 	{
@@ -83,7 +83,7 @@
 		}
 		else
 		{
-			self.title = [NSString stringWithFormat:NSLocalizedString(@"Select %@", @"Title of the screen where you pick the publication type: Magazine, Book, tract..."), [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)filter value:(NSString *)filter table:@""]];
+			self.title = [NSString stringWithFormat:NSLocalizedString(@"Select %@", @"Title of the screen where you pick the publication type: Magazine, Book, tract..."), [[PSLocalization localizationBundle] localizedStringForKey:filter value:filter table:@""]];
 		}
 
 		self.publicationPicker = [[[PublicationPickerView alloc] initWithFrame:CGRectZero publication:publication year:year month:month day:day filter:filter] autorelease];

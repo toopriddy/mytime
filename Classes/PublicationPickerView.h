@@ -100,7 +100,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter;
+- (id) initWithFrame: (CGRect)rect filteredToType:(NSString *)filter;
 
 /**
  * initialize this view given the curent configuration
@@ -112,9 +112,9 @@
  * @param day - the day of the month for a watchtower or awake
  * @returns self
  */
-- (id) initWithFrame: (CGRect)rect filteredToType:(const NSString *)filter;
+- (id) initWithFrame: (CGRect)rect filteredToType:(NSString *)filter;
 - (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day;
-- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day filter:(const NSString *)filter;
+- (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day filter:(NSString *)filter;
 
 
 

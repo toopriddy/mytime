@@ -216,15 +216,15 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					for(NSMutableDictionary *visit in [newCall objectForKey:CallReturnVisits])
 					{
 						NSString *type = [visit objectForKey:CallReturnVisitType];
-						if(type == nil || [type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit])
+						if(type == nil || [type isEqualToString:CallReturnVisitTypeReturnVisit])
 						{
 							[visit setObject:CallReturnVisitTypeTransferedReturnVisit forKey:CallReturnVisitType];
 						}
-						else if([type isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome])
+						else if([type isEqualToString:CallReturnVisitTypeNotAtHome])
 						{
 							[visit setObject:CallReturnVisitTypeTransferedNotAtHome forKey:CallReturnVisitType];
 						}
-						else if([type isEqualToString:(NSString *)CallReturnVisitTypeStudy])
+						else if([type isEqualToString:CallReturnVisitTypeStudy])
 						{
 							[visit setObject:CallReturnVisitTypeTransferedStudy forKey:CallReturnVisitType];
 						}

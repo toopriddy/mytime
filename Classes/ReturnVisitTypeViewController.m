@@ -82,7 +82,7 @@
 	return(YES);
 }
 
-- (void)updateSelection:(const NSString *)newType
+- (void)updateSelection:(NSString *)newType
 {
 	UITableViewCell *selected = nil;
 	UITableViewCell *unselected1 = returnVisitCell;
@@ -92,32 +92,32 @@
 	UITableViewCell *unselected5 = transferedStudyCell;
 	UITableViewCell *unselected6 = transferedNotAtHomeCell;
 	
-	if([newType isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit])
+	if([newType isEqualToString:CallReturnVisitTypeReturnVisit])
 	{
 		selected = returnVisitCell;
 		unselected1 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallReturnVisitTypeStudy])
+	else if([newType isEqualToString:CallReturnVisitTypeStudy])
 	{
 		selected = studyCell;
 		unselected2 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallReturnVisitTypeNotAtHome])
+	else if([newType isEqualToString:CallReturnVisitTypeNotAtHome])
 	{
 		selected = notAtHomeCell;
 		unselected3 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallReturnVisitTypeTransferedReturnVisit])
+	else if([newType isEqualToString:CallReturnVisitTypeTransferedReturnVisit])
 	{
 		selected = transferedReturnVisitCell;
 		unselected4 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallReturnVisitTypeTransferedStudy])
+	else if([newType isEqualToString:CallReturnVisitTypeTransferedStudy])
 	{
 		selected = transferedStudyCell;
 		unselected5 = nil;
 	}
-	else if([newType isEqualToString:(NSString *)CallReturnVisitTypeTransferedNotAtHome])
+	else if([newType isEqualToString:CallReturnVisitTypeTransferedNotAtHome])
 	{
 		selected = transferedNotAtHomeCell;
 		unselected6 = nil;
@@ -131,7 +131,7 @@
 	unselected6.accessoryType = UITableViewCellAccessoryNone;
 	selected.accessoryType = UITableViewCellAccessoryCheckmark;
 
-	self.type = [NSString stringWithString:(NSString *)newType];
+	self.type = [NSString stringWithString:newType];
 }
 
 - (void)loadView 
@@ -155,32 +155,32 @@
 	if(isInitialVisit)
 		returnVisitCell.text = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
 	else
-		returnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeReturnVisit value:(NSString *)CallReturnVisitTypeReturnVisit table:@""];
+		returnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeReturnVisit value:CallReturnVisitTypeReturnVisit table:@""];
 	returnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	returnVisitCell.selected = NO;
 	
 	self.studyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	studyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeStudy value:(NSString *)CallReturnVisitTypeStudy table:@""];
+	studyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeStudy value:CallReturnVisitTypeStudy table:@""];
 	studyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	studyCell.selected = NO;
 	
 	self.notAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	notAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeNotAtHome value:(NSString *)CallReturnVisitTypeNotAtHome table:@""];
+	notAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeNotAtHome value:CallReturnVisitTypeNotAtHome table:@""];
 	notAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	notAtHomeCell.selected = NO;
 
 	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedReturnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedReturnVisit value:(NSString *)CallReturnVisitTypeTransferedReturnVisit table:@""];
+	transferedReturnVisitCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedReturnVisit value:CallReturnVisitTypeTransferedReturnVisit table:@""];
 	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedReturnVisitCell.selected = NO;
 
 	self.transferedStudyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedStudyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedStudy value:(NSString *)CallReturnVisitTypeTransferedStudy table:@""];
+	transferedStudyCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedStudy value:CallReturnVisitTypeTransferedStudy table:@""];
 	transferedStudyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedStudyCell.selected = NO;
 
 	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
-	transferedNotAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:(NSString *)CallReturnVisitTypeTransferedNotAtHome value:(NSString *)CallReturnVisitTypeTransferedNotAtHome table:@""];
+	transferedNotAtHomeCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedNotAtHome value:CallReturnVisitTypeTransferedNotAtHome table:@""];
 	transferedNotAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedNotAtHomeCell.selected = NO;
 

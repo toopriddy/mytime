@@ -284,7 +284,7 @@ int sortByDate(id v1, id v2, void *context)
 				{
 					// if this is a study, then add it to the new array which will hold the sorted
 					// by name list of all studies
-					if([[visit objectForKey:CallReturnVisitType] isEqualToString:(NSString *)CallReturnVisitTypeStudy])
+					if([[visit objectForKey:CallReturnVisitType] isEqualToString:CallReturnVisitTypeStudy])
 					{
 						[_displayArray addObject:[NSNumber numberWithInt:i]];
 						break;
@@ -361,7 +361,7 @@ int sortByDate(id v1, id v2, void *context)
 			case CALLS_SORTED_BY_NAME:
 			case CALLS_SORTED_BY_STUDY:
 			{
-				const NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
+				NSString *key = sortedBy == CALLS_SORTED_BY_STREET ? CallStreet : CallName;
 				self.sectionIndexNames = [NSMutableArray arrayWithObjects:@"{search}", @"#", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil]; 
 				
 				VERY_VERBOSE(NSLog(@"street count=%d", count);)

@@ -34,15 +34,15 @@
 
 #define USE_TEXT_VIEW 0
 
-const NSString *CallViewRowHeight = @"rowHeight";
-const NSString *CallViewGroupText = @"group";
-const NSString *CallViewType = @"type";
-const NSString *CallViewRows = @"rows";
-const NSString *CallViewNames = @"names";
-const NSString *CallViewSelectedInvocations = @"select";
-const NSString *CallViewDeleteInvocations = @"delete";
-const NSString *CallViewInsertDelete = @"insertdelete";
-const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
+NSString * const CallViewRowHeight = @"rowHeight";
+NSString * const CallViewGroupText = @"group";
+NSString * const CallViewType = @"type";
+NSString * const CallViewRows = @"rows";
+NSString * const CallViewNames = @"names";
+NSString * const CallViewSelectedInvocations = @"select";
+NSString * const CallViewDeleteInvocations = @"delete";
+NSString * const CallViewInsertDelete = @"insertdelete";
+NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 
 @interface SelectAddressView : UIResponder <UITextFieldDelegate>
 {
@@ -1031,7 +1031,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	_editingReturnVisit = [returnVisits objectAtIndex:index];
 	NSString *type = [_editingReturnVisit objectForKey:CallReturnVisitType];
 	if(type == nil)
-		type = (NSString *)CallReturnVisitTypeReturnVisit;
+		type = CallReturnVisitTypeReturnVisit;
 		
 	// make the new call view 
 	ReturnVisitTypeViewController *p = [[[ReturnVisitTypeViewController alloc] initWithType:type isInitialVisit:(returnVisits.count == index + 1)] autorelease];
@@ -1186,13 +1186,13 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSString *locationType = [_call objectForKey:CallLocationType];
 	if(locationType == nil)
 	{
-		locationType = (NSString *)CallLocationTypeGoogleMaps;
+		locationType = CallLocationTypeGoogleMaps;
 	}
 	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
 
 	
 	// if this does not have a latitude/longitude then look it up
-	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
+	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
 	   [_call objectForKey:CallLattitudeLongitude] != nil)
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -1203,7 +1203,7 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	
 	// if this does not have a latitude/longitude then look it up
-	if([locationType isEqualToString:(NSString *)CallLocationTypeGoogleMaps] &&
+	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
 	   [_call objectForKey:CallLattitudeLongitude] == nil)
 	{
 		// TODO: Need to have a spinnie show up here
@@ -1346,12 +1346,12 @@ const NSString *CallViewIndentWhenEditing = @"indentWhenEditing";
 	NSArray *returnVisits = [_call objectForKey:CallReturnVisits];
 	NSString *type = [[returnVisits objectAtIndex:returnVisitIndex] objectForKey:CallReturnVisitType];
 	if(type == nil)
-		type = (NSString *)CallReturnVisitTypeReturnVisit;
+		type = CallReturnVisitTypeReturnVisit;
 
 
 	[cell setTitle:NSLocalizedString(@"Type", @"Return visit type label")];
 	// if this is the initial visit, then just say that it is the initial visit
-	if([type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit] && returnVisits.count == (returnVisitIndex + 1))
+	if([type isEqualToString:CallReturnVisitTypeReturnVisit] && returnVisits.count == (returnVisitIndex + 1))
 	{
 		[cell setValue:NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type")];
 	}
@@ -1639,9 +1639,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			// STUDY (only show if you are editing or this is a study)
 			NSString *type = [visit objectForKey:CallReturnVisitType];
 			if(type == nil)
-				type = (NSString *)CallReturnVisitTypeReturnVisit;
+				type = CallReturnVisitTypeReturnVisit;
 				
-			if(_editing || ![type isEqualToString:(NSString *)CallReturnVisitTypeReturnVisit])
+			if(_editing || ![type isEqualToString:CallReturnVisitTypeReturnVisit])
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getTypeCellForReturnVisitIndex:) withArgument:(void *)i]
 						   cellName:@"Return Visit Type"
@@ -1729,13 +1729,13 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 - (void)locationPickerViewControllerDone:(LocationPickerViewController *)locationPickerViewController
 {
 	[_call setObject:locationPickerViewController.type forKey:CallLocationType];
-	if([locationPickerViewController.type isEqualToString:(NSString *)CallLocationTypeManual])
+	if([locationPickerViewController.type isEqualToString:CallLocationTypeManual])
 	{
 		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:[_call objectForKey:CallLattitudeLongitude]] autorelease];
 		controller.delegate = self;
 		[[self navigationController] pushViewController:controller animated:YES];
 	}
-	else if([locationPickerViewController.type isEqualToString:(NSString *)CallLocationTypeGoogleMaps])
+	else if([locationPickerViewController.type isEqualToString:CallLocationTypeGoogleMaps])
 	{
 		// they are using google maps so kick off a lookup
 		[[Geocache sharedInstance] lookupCall:_call];
@@ -1867,7 +1867,7 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 	[self reloadData];
 	[self save];
-	if(![[_call objectForKey:CallLocationType] isEqualToString:(NSString *)CallLocationTypeManual])
+	if(![[_call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual])
 	{
 		[[Geocache sharedInstance] lookupCall:_call];
 	}
