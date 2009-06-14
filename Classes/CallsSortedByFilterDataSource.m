@@ -26,22 +26,22 @@
 
 - (NSString *)name 
 {
-	return NSLocalizedString(@"Call Sorter", @"View title");
+	return NSLocalizedString(@"Info Sorted", @"View title");
 }
 
 - (NSString *)title
 {
-	return NSLocalizedString(@"Call Sorter", @"View title");
+	return NSLocalizedString(@"Info Sorted", @"View title");
 }
 
 - (BOOL) showAddNewCall
 {
-	return NO;
+	return YES;
 }
 
 - (BOOL) useNameAsMainLabel
 {
-	return YES;
+	return NO;
 }
 
 - (UIImage *)tabBarImage 
@@ -57,7 +57,12 @@
 
 - (id)init
 {
-	[super initSortedBy:CALLS_SORTED_BY_STUDY];
+	NSString *preferredMetadata = [[[Settings sharedInstance] settings] objectForKey:SettingsPreferredMetadata];
+	if(preferredMetadata == nil)
+	{
+		preferredMetadata = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata] objectAtIndex:0] objectForKey:SettingsMetadataName];
+	}
+	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:preferredMetadata];
 	return self;
 }
 
