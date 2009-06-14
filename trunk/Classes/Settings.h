@@ -102,6 +102,7 @@ extern NSString * const SettingsMonthDisplayCount;
 
 extern NSString * const SettingsMultipleUsersCurrentUser;
 extern NSString * const SettingsMultipleUsers;
+extern NSString * const SettingsMultipleUsersName;
 
 extern NSString * const SettingsTimeAlertSheetShown;
 extern NSString * const SettingsStatisticsAlertSheetShown;

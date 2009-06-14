@@ -39,10 +39,9 @@
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
-		self.selected = NO;
 
-//		_multiTextFields = [[NSMutableArray array] retain];
-		NSLog(@"it is %p", _multiTextFields);
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		
 		self.multiTextFields = [NSMutableArray array];
 		NSLog(@"it is %p", self.multiTextFields);
 		int i;
@@ -69,8 +68,6 @@
 	
 	self.nextKeyboardResponder = nil;
 	self.multiTextFields = nil;
-//	self.tableView = nil;
-//	self.indexPath = nil;
 	self.delegate = nil;
 	[super dealloc];
 }
@@ -112,18 +109,6 @@
 	}
 	
 	return YES;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-	if(selected)
-	{
-		[[self.multiTextFields objectAtIndex:0] becomeFirstResponder];
-	}
-	else
-	{
-		[[self.multiTextFields objectAtIndex:0] resignFirstResponder];
-	}
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField

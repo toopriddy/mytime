@@ -1,0 +1,975 @@
+/* Publication Type and Seperator in the Publication Picker */
+"   BIBLE DVD" = "   DVD BIBLIA";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BOOKS" = "   KNIHY";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   BROCHURES" = "   BROŽÚRY";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   CAMPAIGN TRACTS" = "   KAMPAŇOVÉ TRAKTÁTY";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   DVD" = "   DVD";
+
+/* Publication Type and Seperator in the Publication Picker */
+"   TRACTS" = "   TRAKTÁTY";
+
+/* Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name */
+"#%@ %@" = "#%1$@ %2$@";
+
+/* House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number */
+"%@ #%@" = "%1$@ #%2$@";
+
+/* House number, apartment number and Street represented by %1$@ as the house number, %2$@ as the apartment number, notice the # before it that will be there as 'number ...' and then %3$@ as the street name */
+"%@ #%@ %@ " = "%1$@ #%2$@ %3$@ ";
+
+/* House number and Street represented by %1$@ as the house number and %2$@ as the street name */
+"%@ %@" = "%2$@ %1$@";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year */
+"%@ %@ %d" = "%1$@ %2$@ %3$d.";
+
+/* This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year */
+"%@ %@ %d, %d" = "%1$@ %3$d. %2$@ %4$d.";
+
+/* Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother */
+"%@ Field Service Activity Report:\n" = "%@ Field Service Activity Report:\n";
+
+/* You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s) */
+"%d %@ %d %@" = "%1$d %2$@ %3$d %4$@";
+
+/* Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@: %@" = "%1$d %2$@: %3$@";
+
+/* Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications */
+"%d %@s: %@" = "%1$d %2$@: %3$@";
+
+/* Number of months shown in the statistics view, setting title */
+"%d Months Displayed" = "%d ZOBRAZENÝ(h) MESIAC";
+
+/* 1, singular publication, shown as '%d publication' */
+"%d publication" = "%d publikácia";
+
+/* more than one publications, shown as '%d publications' */
+"%d publications" = "%d publikácie";
+
+/* Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@' */
+"%d: %@" = "%1$d: %2$@";
+
+/* (unknown street) Placeholder Section title in the Sorted By Calls view */
+"(unknown street)" = "(neznáma ulica)";
+
+/* Tracts Publication Name (T-17) */
+"A Peaceful New World-Will It Come?" = "Koniec vojen";
+
+/* title for the marker when you have to manually set the location for a call */
+"Acquiring Location..." = "Získavam lokalizáciu...";
+
+/* Add a initial visit action buton */
+"Add a initial visit" = "Pridať opätovnú návštevu";
+
+/* Add a placed publication action button in call view */
+"Add a placed publication" = "Pridať zanechané publikácie";
+
+/* Add a return visit action button */
+"Add a return visit" = "Pridať oätovnú návštevu";
+
+/* Button to click to add more information like phone number and email address */
+"Add Additional Information" = "Pridať doplňujúce informácie";
+
+/* Add Information title */
+"Add Info" = "Pridať informáciu";
+
+/* Return Visit Notes Placeholder text */
+"Add Notes" = "Pridať poznámku";
+
+/* Action Button in the Day's Bulk Literature Placement View called 'Add placed publications' */
+"Add placed publications" = "Pridať zanechané publikácie";
+
+/* Address label for call */
+"Address" = "Adresa";
+
+/* cancel button */
+"All Calls" = "Všetky opätovky";
+
+/* all publicaitons label for publication type */
+"All Publications" = "Všetky publikácie";
+
+/* Book Publication Name (si) */
+"All Scripture is Inspired" = "Celé písmo je inšpirované";
+
+/* Tracts Publication Name (T-27) */
+"All Suffering Soon to End" = "Koniec všetkého utrpenia je blízko";
+
+/* Short month name */
+"Apr" = "Apr";
+
+/* Long month name */
+"April" = "Apríl";
+
+/* Apartment/Floor Number */
+"Apt/Floor" = "Apartmán/Poschodie";
+
+/* Statement to make the user realize that this will still save information, and acknowledge they are deleting a call */
+"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?" = "Ste si istý, že chcete vymazať všetky opätovné návštevy?";
+
+/* Short month name */
+"Aug" = "Aug";
+
+/* Long month name */
+"August" = "August";
+
+/* publisher type selected in the More->Settings->Publisher Type setting */
+"Auxilliary Pioneer" = "Pomocný priekopník";
+
+/* Magizine Publication Name (g) */
+"Awake" = "Prebuďte sa!";
+
+/* More View Table Group Title */
+"Backup" = "Záloha";
+
+/* More View Table backup your data */
+"Backup using 'MyTime Backup'" = "Záloha používa 'MyTime Zálohu'";
+
+/* message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question */
+"Because I might have received > 200 emails about a question, please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature." = "Keďže dostávam viac, ako 200 emailov s otázkami, prosím prečítajte si FAQ a až keď nenájdete odpoveď na otázku, potom sa opýtajte.";
+
+/* Book Publication Name */
+"Bible" = "Biblia";
+
+/* Publication Type name */
+"Bible DVD" = "Biblia DVD";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Acts" = "Biblia DVD: Skutky apoštolov";
+
+/* Bible DVD Publication Name (1543) */
+"Bible DVD: John" = "Biblia DVD: Ján";
+
+/* Bible DVD Publication Name (1542) */
+"Bible DVD: Luke" = "Biblia DVD: Lukáš";
+
+/* Bible DVD Publication Name (1541) */
+"Bible DVD: Mark" = "Biblia DVD: Marek";
+
+/* Bible DVD Publication Name (1540) */
+"Bible DVD: Matthew" = "Biblia DVD: Matúš";
+
+/* Bible DVD Publication Name */
+"Bible DVD: Romans" = "Biblia DVD: Rimanom";
+
+/* Bible Studies label on the Statistics View */
+"Bible Studies" = "Bibličké štúdia";
+
+/* Brochures Publication Name (hb) */
+"Blood" = "Krv";
+
+/* Publication Type name */
+"Book" = "Kniha";
+
+/* Brochures Publication Name (ba) */
+"Book for All" = "Kniha pre všetkých ľudí";
+
+/* Publication Type name */
+"Books" = "Knihy";
+
+/* Publication Type name */
+"Brochure" = "Brožúra";
+
+/* Publication Type name */
+"Brochures" = "Brožúry";
+
+/* More View Table Build Date */
+"Build Date" = "Dátum vytvorenia";
+
+/* Title for Bulk Placements view */
+"Bulk Placements" = "Zanechané publikácie";
+
+/* Call main title when editing an existing call */
+"Call" = "ON";
+
+/* Address title for address form */
+"Call Address" = "Adresa ON";
+
+/* View title */
+"Call Sorter" = "Zotriediť ON";
+
+/* View title */
+"Calls Sorted by City" = "Zotriediť ON podľa mesta";
+
+/* view title */
+"Calls Sorted by Date" = "Zotriediť ON podľa dátumu";
+
+/* View title */
+"Calls Sorted by Name" = "Zotriediť ON podľa mena";
+
+/* view title */
+"Calls Sorted by Street" = "Zotriediť ON podľa ulice";
+
+/* Publication Type name */
+"Campaign Tract" = "Kampaňové traktáty";
+
+/* Publication Type name */
+"Campaign Tracts" = "Campaign Tracts";
+
+/* Cancel button */
+"Cancel" = "Zrušiť";
+
+/* Change Date action button for visit in call view */
+"Change Date" = "Zmeniť dátum";
+
+/* City */
+"City" = "Mesto";
+
+/* button bar title */
+"City Sorted" = "Zotriediť podľa mesta";
+
+/* This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime */
+"Click on this link from your iPhone/iTouch" = "Klikni na tento link z iPhone/iTouch";
+
+/* Tracts Publication Name (T-20) */
+"Comfort for the Depressed" = "Útecha pre skľúčených";
+
+/* Book Publication Name (cn) */
+"Concordance" = "Konkordancia";
+
+/* backup connected message */
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Pripojené na zálohu.\n\nPoužite to na importovanie, alebo exportovanie zálohy";
+
+/* More View Table Group Title */
+"Contact Information" = "IKontaktné informácie";
+
+/* initial message when trying to transfer backup files */
+"Could not create %@ directory" = "Nie je možné vytvoriť %@ priečinok";
+
+/* 'Count' label for Number Picker; this is the label that is beside the number in the picker */
+"Count:" = "Spolu:";
+
+/* Title for field in the Additional Information for the user to create their own additional information field */
+"Custom" = "Vlastné";
+
+/* Book Publication Name (dp) */
+"Daniel's Prophecy" = "Danielovo proroctvo";
+
+/* button bar title */
+"Date Sorted" = "Zotriďte podľa dátumu";
+
+/* Call Metadata */
+"Date/Time" = "Dátum/Čas";
+
+/* Short month name */
+"Dec" = "Dec";
+
+/* Long month name */
+"December" = "December";
+
+/* Yes delete the call and the data */
+"Delete and don't keep info" = "Vymazať informácie";
+
+/* Delete Call button in editing mode of call view */
+"Delete Call" = "Vymažte ON";
+
+/* backup connected message */
+"Disconnected from the Backup Application" = "Odpojené od záložnej aplikácie";
+
+/* Brochures Publication Name (na) */
+"Divine Name" = "Božie meno";
+
+/* Tracts Publication Name (T-25) */
+"Do You Have an Immortal Spirit" = "Do You Have an Immortal Spirit";
+
+/* Tracts Publication Name (T-71) */
+"Does Fate Rule Our Lives" = "Je náš život daný osudom?";
+
+/* Brochures Publication Name (dg) */
+"Does God Care" = "Skutočne sa Boh o nás stará";
+
+/* Book Publication Name (cl) */
+"Draw Close to Jehovah" = "Priblížte sa k Bohu";
+
+/* Publication Type name */
+"DVD" = "DVD";
+
+/* Publication Type name */
+"DVD (not counted)" = "DVD (nepočujúci)";
+
+/* DVD Publication Name (9224) */
+"DVD Drama: Bore Witness" = "DVD Drama: Svedectvo";
+
+/* DVD Publication Name  (9215) */
+"DVD Drama: Noah/David" = "DVD: Noach/Dávid";
+
+/* DVD Publication Name (9215) */
+"DVD Drama: Pursue Goals" = "DVD Drama: Čomu zasvetiť život";
+
+/* DVD Publication Name  */
+"DVD Drama: Respect Authority" = "DVD Drama: Rešpektuj Autoritu";
+
+/* DVD Publication Name (9241) */
+"DVD Drama: Submit to Authority" = "DVD Drama: Rešpektuj autoritu";
+
+/* DVD Publication Name (9241) */
+"DVD Drama: Troublesome Times/Boldly Witnessing" = "DVD Drama: Troublesome Times/Boldly Witnessing";
+
+/* DVD Publication Name */
+"DVD: Bible Stories" = "DVD: Biblické príbehy";
+
+/* DVD Publication Name (9232) */
+"DVD: Bible Teach" = "DVD: Čo učí Biblia";
+
+/* DVD Publication Name (9220) */
+"DVD: Family Happiness" = "DVD: Šťastná rodina";
+
+/* DVD Publication Name (9211) */
+"DVD: God's Friend" = "DVD: Boží priateľ";
+
+/* DVD Publication Name (9202) */
+"DVD: Greatest Man" = "DVD: Najväčší človek";
+
+/* DVD Publication Name (9218) */
+"DVD: Keep on the Watch" = "DVD: Zostante bdelý!";
+
+/* DVD Publication Name (1297) */
+"DVD: Knowledge" = "DVD: Poznanie";
+
+/* DVD Publication Name (9201) */
+"DVD: Require" = "DVD: Požiadavky";
+
+/* DVD Publication Name (9203) */
+"DVD: Sing Praises Vol 1&2" = "DVD: Chváľte Jehovu spevom 1&2";
+
+/* DVD Publication Name (9229) */
+"DVD: Sing Praises Vol 3" = "DVD: Chváľte Jehovu spevom Vol 3";
+
+/* DVD Publication Name (9216) */
+"DVD: Spirits of the dead" = "DVD: Duchovia mŕtvych";
+
+/* DVD Publication Name (9221) */
+"DVD: When someone you love dies" = "DVD: Keď umrie niekto milovaný";
+
+/* DVD Publication Name (9213) */
+"DVD: Worship God" = "DVD: Uctievaj Boha";
+
+/* Brochures Publication Name (ed) */
+"Education" = "Vzdelanie";
+
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy" = "EEE, M/d/yyy";
+
+/* localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date */
+"EEE, M/d/yyy h:mma" = "EEE, M/d/yyy h:mma";
+
+/* Call Metadata */
+"Email" = "Email";
+
+/* This is text used in the statistics view where you click on the 'ActionSheet' button and it asks you what you want to do to email your congregation secretary your statistics where %@ is the placeholder for the month */
+"Email %@ Report" = "Email %@ Report";
+
+/* More View Table backup your data by emailing the data */
+"Email backup" = "Záloha na Email";
+
+/* Email the call details to another MyTime user */
+"Email Details" = "Detaily Emailu";
+
+/* Months to email Information title */
+"Email Report" = "Emailové reporty";
+
+/* Google Localized Language Name */
+"en" = "sk";
+
+/* More View Table Enable shown popups */
+"Enable shown popups" = "Povoliť vyskakovacie okná";
+
+/* Tracts Publication Name (T-21) */
+"Enjoy Family Life" = "Šťastný rodinný život";
+
+/* Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever */
+"Enter Name Here" = "Vložte tu meno";
+
+/* Book Publication Name (ce) */
+"Evolution or Creation" = "Evolúcia, alebo stvorenie";
+
+/* backup failed string */
+"Failed advertising server" = "Nemožno synchronizovať verziu";
+
+/* failure message for starting the backup service */
+"Failed creating server" = "Nemožno vytvoriť server";
+
+/* Book Publication Name (fy) */
+"Family Happiness" = "Rodinné šťastie";
+
+/* Short month name */
+"Feb" = "Feb";
+
+/* Long month name */
+"February" = "Február";
+
+/* Subject text for the email that is sent for the Field Service Activity report */
+"Field Service Activity Report" = "Nepodarilo sa vytvoriť report";
+
+/* Button in More->settings that points the user to the bug tracking system */
+"Found a bug?" = "Našli ste chybu?";
+
+/* Brochures Publication Name (gf) */
+"God's Friend" = "Boží priateľ";
+
+/* Book Publication Name (gm) */
+"God's Word" = "Božie slovo";
+
+/* Brochures Publication Name (gl) */
+"Good Land" = "Dobrá krajina";
+
+/* Brochures Publication Name  */
+"Good News for People of All Nations" = "Dobré posolstvo pre ľudí každej národnosti";
+
+/* Brochures Publication Name (hp) */
+"Government" = "Šťastie";
+
+/* Book Publication Name (te) */
+"Great Teacher" = "Veľký učiteľ";
+
+/* Book Publication Name (gt) */
+"Greatest Man" = "Najväčší človek";
+
+/* Brochures Publication Name (gu) */
+"Guidance of God" = "Božia vláda";
+
+/* Tracts Publication Name (T-74) */
+"Hellfire-Is It Part of Divine Justice?" = "Peklo - existuje?";
+
+/* Singular form of the word hour */
+"hour" = "hodina";
+
+/* 'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view */
+"Hours" = "hodiny";
+
+/* Plural form of the word hours */
+"hours" = "hodiny";
+
+/* House Number */
+"House Number" = "Číslo domu";
+
+/* Tracts Publication Name (rp) */
+"How to Find the Road to Paradise" = "ako nájsť cestu do raja";
+
+/* button that the user clicks when they have let their Yes mean Yes that they have read the website */
+"I have read the webpage" = "Prečítal som stránku";
+
+/* This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime */
+"If you want to restore from your backup, click on this link from your iPhone/iTouch" = "Ak chcete obnoviť zálohu, kliknite na tento link z iPhone/iTouch";
+
+/* This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type */
+"Initial Visit" = "Štúdium";
+
+/* Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Initial Visit Notes" = "Poznámka ku štúdiu";
+
+/* Book Publication Name (it) */
+"Insight" = "Hlbšie pochopenie písma";
+
+/* Book Publication Name (ct) */
+"Is there a Creator Who Cares About You?" = "Stvoriteľ";
+
+/* Book Publication Name (ip-1) */
+"Isaiah's Prophecy I" = "Izajášovo proroctvo I";
+
+/* Book Publication Name (ip-2) */
+"Isaiah's Prophecy II" = "Izajášovo proroctvo  II";
+
+/* Short month name */
+"Jan" = "Jan";
+
+/* Long month name */
+"January" = "Január";
+
+/* Book Publication Name (jd) */
+"Jehovah's Day" = "Jehovov deň";
+
+/* Brochures Publication Name (jt) */
+"Jehovah's Witnesses" = "Jehovový svedkovia";
+
+/* Tracts Publication Name (T-18) */
+"Jehovah's Witnesses-What Do They Believe?" = "čomu veria Jehovoví svedkovia";
+
+/* Tracts Publication Name (T-23) */
+"Jehovah-Who Is He?" = "kto je Jehova?";
+
+/* Tracts Publication Name (T-24) */
+"Jesus Christ-Who Is He?" = "Kto je Ježiš Kristus?";
+
+/* Short month name */
+"Jul" = "Júl";
+
+/* Long month name */
+"July" = "Júl";
+
+/* Short month name */
+"Jun" = "Jún";
+
+/* Long month name */
+"June" = "Jún";
+
+/* Brochures Publication Name (kp) */
+"Keep on the Watch!" = "Zostaňte bdelí!";
+
+/* Tracts Publication Name (T-26) */
+"Know the Bible" = "Spoznaj Bibliu";
+
+/* Book Publication Name (kl) */
+"Knowledge That Leads to Everlasting Life" = "Poznanie";
+
+/* Brochures Publication Name (pc) */
+"Lasting Peace" = "Lasting Peace";
+
+/* Tracts Publication Name (T-15) */
+"Life in a Peaceful New World" = "Život v pokojnom novom svete";
+
+/* Brochures Publication Name (le) */
+"Life on Earth" = "Život na Zemi";
+
+/* Label for picking the location lookup type */
+"Locate using google Maps" = "Lokalizujem pomocou google Maps";
+
+/* Select Location informatio type Type title */
+"Location" = "Lokalizácia";
+
+/* title for the marker when you have to manually set the location for a call */
+"Location Unavaliable, please move me" = "Lokalizácia neúspešná, prosím nastavte ma manuálne";
+
+/* Brochures Publication Name (mn) */
+"Look!" = "Hľa robím všetky veci nové!";
+
+/* Publication Type name */
+"Magazine" = "Časopis";
+
+/* Publication Type name */
+"Magazines" = "Časopisy";
+
+/* Book Publication Name (sh) */
+"Mankind's Search for God" = "Ľudstvo hľadá Boha";
+
+/* Label for picking the location lookup type */
+"Manually pick Location" = "Manuálne označiť lokalizáciu";
+
+/* Mapped calls view title */
+"Mapped Calls" = "Mapa ON";
+
+/* Short month name */
+"Mar" = "Mar";
+
+/* Long month name */
+"March" = "Marec";
+
+/* Short/Long month name */
+"May" = "Máj";
+
+/* Campaign Tract Publication Name (mi yearly tract) */
+"Memorial Tract" = "Memorial Tract";
+
+/* Book Publication Name (sg) */
+"Ministry School" = "Teokratická Škola";
+
+/* Singular form of the word minute */
+"minute" = "minúta";
+
+/* Plural form of the word minutes */
+"minutes" = "minúty";
+
+/* Call Metadata */
+"Mobile Phone" = "Mobilný telefón";
+
+/* Month singular */
+"Month" = "Mesiac";
+
+/* Title for selecting the number of months shown in the statistics view */
+"Month Count" = "Mesiac spolu";
+
+/* Months plural */
+"Months" = "Mesiace";
+
+/* title for the marker when you have to manually set the location for a call */
+"Move me" = "Posuň ma";
+
+/* Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes */
+"Move to next month" = "Posunúť na ďaľší mesiac";
+
+/* Book Publication Name (my) */
+"My Book of Bible Stories" = "Moja kniha Biblických príbehov";
+
+/* Email subject line for the email that has your backup data in it */
+"MyTime Application Data Backup" = "MyTime záloha dát";
+
+/* Subject text for the email that is sent for sending the details of a call to another witness */
+"MyTime Call, open this on your iPhone/iTouch" = "MyTime ON, otvorte to vo vašom iPhone/iTouch";
+
+/* This message is displayed when someone clicks on a link in an email or a webpage which will open up mytime to either add a transfered call or restore from a backup */
+"MyTime opened with invalid URL" = "MyTime otvorený cez nesprávnu URL";
+
+/* More View Table MyTime Version */
+"MyTime Version" = "MyTime Verzia";
+
+/* More View Table MyTime Website */
+"MyTime Website" = "MyTime webová stránka";
+
+/* Name label for Call in editing mode */
+"Name" = "Meno";
+
+/* button bar title */
+"Name Sorted" = "Zoradiť podľa mena";
+
+/* Call main title when you are adding a new call */
+"New Call" = "Nové štúdia";
+
+/* No dont delete the call */
+"No" = "Nie";
+
+/* return visit type name */
+"Not At Home" = "ND";
+
+/* Call Metadata */
+"Notes" = "Poznámka";
+
+/* Short month name */
+"Nov" = "Nov";
+
+/* Long month name */
+"November" = "November";
+
+/* Call Metadata */
+"Number" = "Číslo";
+
+/* Number Placed label for the Number Picker for the number of publications placed */
+"Number Placed:" = "Zanechaná literatúra:";
+
+/* Short month name */
+"Oct" = "Oct";
+
+/* Long month name */
+"October" = "Október";
+
+/* OK button */
+"OK" = "OK";
+
+/* Section Title for Date Sorted Calls 'Oldest Return Visits First' */
+"Oldest Return Visits First" = "Najstaršia ON, ako prvá";
+
+/* Book Publication Name (od) */
+"Organized To Do Jehovah's Will" = "Organizovaný";
+
+/* Brochures Publication Name (op) */
+"Our Problems" = "Naše problémy";
+
+/* Call Metadata */
+"Phone" = "Telefón";
+
+/* Statistics button to allow you to pick months to email to the congregation secretary */
+"Pick Months To Email" = "Vybrať mesiace do emailu";
+
+/* publisher type selected in the More->Settings->Publisher Type setting */
+"Pioneer" = "Priekopník";
+
+/* View Title and ButtonBar Title for the Day's Bulk Placed Publications */
+"Placements" = "Umiestnenie";
+
+/* Placements Group title for the Day's Bulk Literature Placements */
+"Placements:" = "Zanechané:";
+
+/* More View Table Donation request */
+"Please Donate, help me help you" = "Darujte, pomôžte";
+
+/* This message is displayed after a successful import of a call or a restore of a backup */
+"Please quit mytime to complete the import/restore." = "Plrosím zatvorte MyTime na dokončenie importu/načítaniu zálohy.";
+
+/* Information for the user to know what is going on with this and new releases */
+"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)" = "Prosím navštívte mytime.googlecode.com  FAQ pre informácie o budúcich vylepšeniach.\nAk Slovenčina nie je Váš rodný jazyk, môžete sa podieľať na jej preklade.";
+
+/* initial setup message beore we have advertized the backup service (this message needs to be a bit long because the alertView can not resize when first shown) */
+"Please wait for the Backup Service to initalize...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Počkajte na inicializáciu zálohy ...\n\nNavštívte mytime.googlecode.com pre viac informácii o zálohovaní.";
+
+/* Confirmation message about enabling popup messages */
+"Popup messages like this are now enabled to be shown once all throughout MyTime" = "Popoup správy, ako táto sú teraz povolené v celej aplikácii MyTime";
+
+/* Book Publication Name (jv) */
+"Proclaimers" = "Hlásatelia";
+
+/* singular 'Publication' label for Number Picker; this is the label that is beside the number in the picker */
+"Publication" = "Publikácia";
+
+/* 'Publications' label for Number Picker; this is the label that is beside the number in the picker */
+"Publications" = "Publikácie";
+
+/* publisher type selected in the More->Settings->Publisher Type setting */
+"Publisher" = "Zvestovateľ";
+
+/* More->Settings view publisher type setting title */
+"Publisher Type" = "Typ zvestovateľa";
+
+/* Brochures Publication Name (pr) */
+"Purpose of Life" = "Zmysel života";
+
+/* initial message when trying to transfer backup files */
+"Pushed %@ translation file, restart MyTime to see the changes." = "Tlač %@ prekladaného súboru, reštartujte aplikáciu pre zobrazenie zmien.";
+
+/* More View Table Questions, Comments? Email me */
+"Questions, Comments? Email me" = "Otázky, Komentáre? pošli emailom";
+
+/* 'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"RBC" = "Štúdia";
+
+/* 'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds */
+"RBC Hours" = "Čas zo štúdii";
+
+/* Book Publication Name (rs) */
+"Reasoning" = "Rozhovory";
+
+/* 'Reload' navigation bar action button for the Mapped Calls view */
+"Reload" = "Znovu načítaj";
+
+/* Brochures Publication Name (rq) */
+"Require" = "Vyžaduje";
+
+/* Yes restore from the backup please */
+"Restore from Backup" = "Načítať zo zálohy";
+
+/* initial message when trying to transfer backup files */
+"Restored Backup, restart MyTime to see the changes" = "Záloha bola načítana, reštartujte MyTime pre uplatnenie zmien";
+
+/* return visit type name */
+"Return Visit" = "ON";
+
+/* Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view */
+"Return Visit Notes" = "Poznámka z ON";
+
+/* Return Visits label on the Statistics View */
+"Return Visits" = "Opätovné návštevy";
+
+/* Book Publication Name (re) */
+"Revelation Climax" = "Zjavenie";
+
+/* Yes round up where %d is a placeholder for the number of hours */
+"Round Up to %d hours" = "Zaokrúhliť na %d hodiny";
+
+/* Brochures Publication Name (la) */
+"Satisfying Life" = "Zmysel života";
+
+/* email address for the congregation secretary */
+"Secretary's email address" = "Emailová adresa tajomníka";
+
+/* Title of the screen where you pick the publication type: Magazine, Book, tract... */
+"Select %@" = "Vyber %@";
+
+/* Title for the view where you Pick A Date */
+"Select Date" = "Vyber dátum";
+
+/* Title for the view where you manually select the location for the call */
+"Select Location" = "Vyber lokalizáciu";
+
+/* 'Select Publication' Publication Picker title */
+"Select Publication" = "Vyber publikáciu";
+
+/* Select Time Title for adding hours of field service to a particular day */
+"Select Time" = "Vyber čas";
+
+/* Publication Type title */
+"Select Type" = "Vyber typ";
+
+/* Send button like the send button in the email program, to send your field service activity report to the congregation secretary */
+"Send" = "Pošli";
+
+/* initial message when trying to transfer backup files */
+"Sending Settings to the Backup Application" = "Pošli nastavenia aplikácie";
+
+/* Short month name */
+"Sep" = "Sep";
+
+/* Long month name */
+"September" = "September";
+
+/* Service year total hours label */
+"Service Year Total" = "Služba spolu za rok";
+
+/* 'Settings' ButtonBar View text and Statistics View Title */
+"Settings" = "Nastavenia";
+
+/* button that the user clicks when they have not read the FAQ or feature request list */
+"Show me the webpage" = "Zobraz moju stránku";
+
+/* Book Publication Name (Ssb) */
+"Sing Praises" = "Chváľte Jehovu spevom";
+
+/* publisher type selected in the More->Settings->Publisher Type setting */
+"Special Pioneer" = "Priekopník celým časom";
+
+/* Brochures Publication Name (sp) */
+"Spirits of the Dead" = "Duchovia mŕtvych";
+
+/* 'Start Time' navigation bar action button */
+"Start Time" = "Začiatok služby";
+
+/* State */
+"State" = "Štát";
+
+/* Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0 */
+"State in all caps" = "1";
+
+/* 'Statistics' ButtonBar View text and Statistics View Title */
+"Statistics" = "Štatistiky";
+
+/* 'Stop Time' navigation bar action button */
+"Stop Time" = "Koniec služby";
+
+/* Street */
+"Street" = "Ulica";
+
+/* Street Sorted button title */
+"Street Sorted" = "Zoraď podľa Ulice";
+
+/* Call Metadata */
+"String" = "String";
+
+/* View title */
+"Studies" = "Štúdia";
+
+/* return visit type name */
+"Study" = "Štúdium";
+
+/* Tracts Publication Name (T-72) */
+"The Greatest Name" = "Najväčšie meno";
+
+/* This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details */
+"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n" = "informácie o ON.  ak ste užívateľ MyTime , pProsím pozrite email na iPhone/iTouch a na konci emailu kliknite na link importovať do MyTime.\n\nON info:\n";
+
+/* This is a note displayed when they first see the Statistics View */
+"This will show you your tabulated end of the month field service activity including:\nHours\nBooks\nBrochures\nMagazines\nStudies\n Please note that you will only see items that you have counts for." = "Zobrazí tabuľku s informáciami o:\Hodinách\nKnihách\nBrožúrach\nČasopisoch\nŠtúdiach\n Pamätajte, že zobrazuje len informácie, ktoré sa reportujú.";
+
+/* Time for %@ Group title on the Statistics View where %@ is the month of the year */
+"Time for %@" = "Čas za %@";
+
+/* Hours view prompt when you press the start time button */
+"Time started at: %@" = "Začiatok času od: %@";
+
+/* This is a note displayed when they first see the non editable call view */
+"Touch the Edit button to add a return visit or you can see where your call is located by touching the address of your call" = "Zatlačte pridať pre pridanie ON, alebo kliknite na adresu pre zobrajenie mapy.";
+
+/* Publication Type name */
+"Tract" = "Traktát";
+
+/* Transferr this call to another MyTime user and delete it off of this iphone, but keep the data */
+"Transfer, and Delete" = "Prenesie a vymaže";
+
+/* return visit type name when this call is transfered from another witness */
+"Transfered Not At Home" = "Prenes info o ND";
+
+/* return visit type name when this call is transfered from another witness */
+"Transfered Return Visit" = "Prenes info o ON";
+
+/* return visit type name when this call is transfered from another witness */
+"Transfered Study" = "Prenes info o štúdiach";
+
+/* publisher type selected in the More->Settings->Publisher Type setting */
+"Traveling Servent" = "Cestujúci dozorca";
+
+/* Brochures Publication Name (ti) */
+"Trinity" = "Trojica";
+
+/* Return visit type label */
+"Type" = "typ";
+
+/* Sorted by Street Calls view section title for an unknown street */
+"Unknown" = "Neznáme";
+
+/* Call Metadata */
+"URL" = "URL";
+
+/* This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :( */
+"VERIFICATION CHECK: all data was contained in this email" = "KONTROLA VERIFIKÁCIE: všetky dáta boli pripojené do emailu";
+
+/* More View Table Group Title */
+"Version" = "Verzia";
+
+/* Title for the view where you write notes for a call */
+"Visit Notes" = "Podrobnosti o návšteve";
+
+/* Return Visit Type title */
+"Visit Type" = "Typ návštevy";
+
+/* initial message when trying to transfer backup files */
+"Waiting for the Backup Application to connect...\n\nGo to mytime.googlecode.com for more information about the Backup Application" = "Čakám na pripojenie zálohy...\n\nNavštívte  mytime.googlecode.com pre viac informácii o zálohe";
+
+/* Magizine Publication Name (w) */
+"Watchtower" = "Stražna veža";
+
+/* Tracts Publication Name (T-14) */
+"What Do Jehovah's Witnesses Believe?" = "Čomu veria Jehovoví svedkovia?";
+
+/* Book Publication Name (bh) */
+"What Does the Bible Teach?" = "Čo učí Biblia?";
+
+/* Tracts Publication Name (T-16) */
+"What Hope for Dead Loved Ones?" = "Nádej pre mŕtvych?";
+
+/* Brochures Publication Name (we) */
+"When Someone Dies" = "Keď nám zomrie niekto milovaný";
+
+/* This is the section title for transferred calls in the view that allows you to select a visit type for your call */
+"When Transfered To You:" = "Prenesené na:";
+
+/* Brochures Publication Name (ie) */
+"When We Die" = "Keď zomrieme";
+
+/* Tracts Publication Name (T-73) */
+"Who Are Jehovah's Witnesses?" = "Kto sú Jehovoví svedkovia?";
+
+/* Tracts Publication Name (T-22) */
+"Who Really Rules the World?" = "Kto skutočne vládne svetu?";
+
+/* Brochures Publication Name (wj) */
+"Why Worship God" = "Uctievaj Boha";
+
+/* Tracts Publication Name (T-13) */
+"Why You Can Trust the Bible" = "Prečo možno dôverovať Biblii";
+
+/* Tracts Publication Name (T-19) */
+"Will This World Survive?" = "Kto prežije??";
+
+/* Brochures Publication Name (wi) */
+"World Without War" = "Svet bez vojen?";
+
+/* Book Publication Name (wj) */
+"Worship God" = "Uctievaj boha";
+
+/* Campaign Tract Publication Name (kt) */
+"Would You Like To Know the Truth?" = "Chceli by ste vedieť pravdu?";
+
+/* If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes */
+"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)" = "Chcete presunúť %1$d minút z mesiaca %2$@ do ďaľšieho mesiaca? alebo,zaokrúhliť na %3$d hodín pre mesiac %4$@?\n(Toto zmení čas, ale môžete ho neskôr upraviť manuálne)";
+
+/* Yes delete the call */
+"Yes" = "Áno";
+
+/* Transferr this call from another user */
+"Yes, add call" = "ˇano pridať ON";
+
+/* This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details */
+"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n" = "Odtiaľto môžete importovať ON do MyTime keď kliknete na link pod týmto emailom vo vašom iPhone/iTouch.  Prosím skontrolujte \"KONTROLU VERIFIKÁCIE:\" ak sú tu všetky informácie až potom importujte\n";
+
+/* This is the body of the email that is sent when you go to More->Settings->Email Backup */
+"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n\nWARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP\n\n" = "Tu môžete obnoviť všetky dáta v MyTime z emailu kliknutím v iPhone/iTouch. Skontrolujte a \"KONTROLU VERIFIKÁCIE:\" či email obsahuje všetky dáta\n\nPOZOR!: KLIKNUTÍM SA VYMAŽÚ VAŠE TERAJŠIE DÁTA A NAHRADIA SA ZÁLOHOU Z EMAILU.\n\n";
+
+/* This message gets displayed when the user is trying to add a call from an email when the call was transferred from another iphone/itouch */
+"You are trying to import a call into MyTime, are you sure you want to do this?" = "Pokúšate sa importovaťON do MyTime, ste si tým istý?";
+
+/* This message gets displayed when the user is trying to restore from a backup from the email program */
+"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA" = "Snažíte sa obnoviť všetky dáta v MyTime zo zálohy. Ste si tým istý?  TÝM VYMAŽETE VŠETKY TERAJŠIE DÁTA";
+
+/* This message is displayed when the user clicks on a Call then clicks on Edit and clicks on the \"Action\" button at the top left of the screen */
+"You can transfer this call to someone else. Transferring will delete this call from your data, but your statistics from this call will stay. The witness who gets this email will be able to click on a link in the email and add the call to MyTime." = "Môžete preposlať ON z vášho MyTime niekomu inému na MyTime. Prenosom sa vymaže ON, ale čas a zanechané publikácie ostnú započítané. Svedok, ktorý dostane email bude môcť importovať ON do svojho MyTime.";
+
+/* Book Publication Name (ype-1) */
+"Young People Ask 1" = "Mladý ľudia sa pýtajú";
+
+/* Book Publication Name (ype-2) */
+"Young People Ask 2" = "Pladí ľudia sa pýtajú 2";
+

@@ -99,6 +99,7 @@
 		90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */; };
 		90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
+		90E756B30FE2E97F00690CEE /* MultipleUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E756B20FE2E97F00690CEE /* MultipleUsersViewController.m */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
 		90FBE8780E39887300FD8014 /* SortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */; };
@@ -295,6 +296,9 @@
 		90E56ACD0FE1C4D500DF7393 /* TableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSectionController.h; sourceTree = "<group>"; };
 		90E6D1D30EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByStudyViewDataSource.h; sourceTree = "<group>"; };
 		90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByStudyViewDataSource.m; sourceTree = "<group>"; };
+		90E756B10FE2E97F00690CEE /* MultipleUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleUsersViewController.h; sourceTree = "<group>"; };
+		90E756B20FE2E97F00690CEE /* MultipleUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleUsersViewController.m; sourceTree = "<group>"; };
+		90E759350FE4426900690CEE /* Slovak */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Slovak; path = Slovak.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
@@ -488,6 +492,7 @@
 		9064A98C0E5891E300CE6F3F /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
+				90E756B00FE2E3D200690CEE /* Multiple Users */,
 				9045A9FE0E7D99A4001B439C /* EventAgent.h */,
 				9045A9FF0E7D99A4001B439C /* EventAgent.m */,
 				9045A7240E7C1423001B439C /* TCPServer.h */,
@@ -543,6 +548,15 @@
 				90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */,
 			);
 			name = BulkPlacementsView;
+			sourceTree = "<group>";
+		};
+		90E756B00FE2E3D200690CEE /* Multiple Users */ = {
+			isa = PBXGroup;
+			children = (
+				90E756B10FE2E97F00690CEE /* MultipleUsersViewController.h */,
+				90E756B20FE2E97F00690CEE /* MultipleUsersViewController.m */,
+			);
+			name = "Multiple Users";
 			sourceTree = "<group>";
 		};
 		90FBE8720E39882600FD8014 /* CallViews */ = {
@@ -649,6 +663,7 @@
 				Danish,
 				en_GB,
 				Greek,
+				Slovak,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -806,6 +821,7 @@
 				90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */,
 				90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */,
 				90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */,
+				90E756B30FE2E97F00690CEE /* MultipleUsersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +858,7 @@
 				9064D8B40ED11A4900A0FBBB /* Portuguese */,
 				9053E06F0E8DDDD400BA35F7 /* Spanish */,
 				903477630E8CAA0100BB6F2D /* Swedish */,
+				90E759350FE4426900690CEE /* Slovak */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -32,14 +32,21 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	self.cellControllers = nil;
+	self.displayCellControllers = nil;
+	[super dealloc];
+}
+
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
-	return [self.cellControllers count];
+	return [self.displayCellControllers count];
 }
 
 - (NSObject<TableViewCellController> *)tableView:(UITableView *)tableView cellControllerAtIndexPath:(NSIndexPath *)indexPath
 {
-	return [self.cellControllers objectAtIndex:indexPath.row];
+	return [self.displayCellControllers objectAtIndex:indexPath.row];
 }
 
 // UITableViewDataSource functions

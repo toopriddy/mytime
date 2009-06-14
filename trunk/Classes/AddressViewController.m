@@ -253,11 +253,13 @@
 
 - (void)viewDidLoad
 {
-	[self.theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+	[[self.streetNumberAndApartmentCell textFieldAtIndex:0] becomeFirstResponder];
+//	[self.theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
 }
 
 // UITableViewDataSource methods
 
+#if 0
 - (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -265,7 +267,7 @@
 	{
 		if(cell == self.streetNumberAndApartmentCell)
 		{
-			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
 		}
 	}
 }
@@ -277,18 +279,19 @@
 	{
 		if(cell == self.streetCell)
 		{
-			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
 		}
 		else if(cell == self.cityCell)
 		{
-			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
 		}
 		else if(cell == self.stateCell)
 		{
-			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
 		}
 	}
 }
+#endif
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {

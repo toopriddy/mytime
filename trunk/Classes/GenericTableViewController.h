@@ -26,5 +26,8 @@
 
 - (void)constructSectionControllers;
 - (void)updateAndReload;
+- (void)updateWithoutReload;
+
+- (void)deleteDisplayRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

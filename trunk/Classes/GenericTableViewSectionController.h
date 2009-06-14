@@ -19,12 +19,12 @@
 {
 @private	
 	NSString *_title;
-	NSArray *_cellControllers;
-	NSArray *_displayCellControllers;
+	NSMutableArray *_cellControllers;
+	NSMutableArray *_displayCellControllers;
 }
 @property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSArray *cellControllers;
-@property (nonatomic, retain) NSArray *displayCellControllers;
+@property (nonatomic, retain) NSMutableArray *cellControllers;
+@property (nonatomic, retain) NSMutableArray *displayCellControllers;
 
 - (id)init;
 

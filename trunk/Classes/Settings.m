@@ -109,7 +109,7 @@ NSString * const SettingsMonthDisplayCount = @"monthDisplaycount";
 
 NSString * const SettingsMultipleUsersCurrentUser = @"currentUser";
 NSString * const SettingsMultipleUsers = @"multipleUsers";
-
+NSString * const SettingsMultipleUsersName = @"name";
 
 NSString * const SettingsTimeStartDate = @"timeStartDate";
 NSString * const SettingsRBCTimeStartDate = @"rbcTimeStartDate";
