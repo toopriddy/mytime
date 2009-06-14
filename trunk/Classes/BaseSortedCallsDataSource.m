@@ -85,8 +85,13 @@
 
 - (id)initSortedBy:(SortCallsType)sortedBy
 {
+	return [self initSortedBy:sortedBy withMetadata:nil];
+}
+
+- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata
+{
 	[super init];
-	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy];
+	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy withMetadata:metadata];
 	return(self);
 }
 

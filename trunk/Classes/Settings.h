@@ -98,6 +98,8 @@ extern NSString * const SettingsMetadataType;
 extern NSString * const SettingsMetadataValue;
 extern NSString * const SettingsMetadataData;
 
+extern NSString * const SettingsPreferredMetadata;
+
 extern NSString * const SettingsMonthDisplayCount;
 
 extern NSString * const SettingsMultipleUsersCurrentUser;

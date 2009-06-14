@@ -20,6 +20,7 @@
 #import "CallsSortedByDateViewDataSource.h"
 #import "CallsSortedByNameViewDataSource.h"
 #import "CallsSortedByStudyViewDataSource.h"
+#import "CallsSortedByFilterDataSource.h"
 #import "SortedCallsViewController.h"
 #import "StatisticsViewController.h"
 #import "HourViewController.h"
@@ -354,12 +355,17 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	SortedCallsViewController *cityViewController = [[[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:cityViewController] autorelease]];
 
+	// CALLS SORTED BY METADATA
+	CallsSortedByFilterDataSource *filterSortedDataSource = [[[CallsSortedByFilterDataSource alloc] init] autorelease];
+	SortedCallsViewController *filterViewController = [[[SortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease]];
+	
 	// CALLS SORTED BY NAME
 	CallsSortedByNameViewDataSource *nameSortedDataSource = [[[CallsSortedByNameViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *nameViewController = [[[SortedCallsViewController alloc] initWithDataSource:nameSortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:nameViewController] autorelease]];
-
-	// CALLS SORTED BY NAME
+	
+	// CALLS SORTED BY STUDY
 	CallsSortedByStudyViewDataSource *studySortedDataSource = [[[CallsSortedByStudyViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *studyViewController = [[[SortedCallsViewController alloc] initWithDataSource:studySortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:studyViewController] autorelease]];

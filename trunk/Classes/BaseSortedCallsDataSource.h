@@ -24,6 +24,7 @@
 }
 @property (nonatomic, retain) CallsSorter *callsSorter;
 
+- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata;
 - (id)initSortedBy:(SortCallsType)sortedBy;
 - (void)dealloc;
 

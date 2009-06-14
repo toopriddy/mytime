@@ -37,7 +37,7 @@
 @synthesize sortedBy;
 @synthesize displayArray = _displayArray;
 @synthesize searchText = _searchText;
-
+@synthesize metadata = _metadata;
 int sortByName(id v1, id v2, void *context)
 {
 	NSString *name1 = [v1 objectForKey:CallName];
@@ -124,8 +124,6 @@ int sortByCity(id v1, id v2, void *context)
 	return(compare);
 }
 
-
-
 // sort by date where the earlier dates come first
 int sortByDate(id v1, id v2, void *context)
 {
@@ -156,6 +154,55 @@ int sortByDate(id v1, id v2, void *context)
 	}
 }
 
+// sort by date where the earlier dates come first
+int sortByMetadata(id v1, id v2, void *context)
+{
+	NSString *metadataName = (NSString *)context;
+	// for speed sake we are going to assume that the first entry in the array
+	// is the most recent entry	
+	NSArray *metadata1 = [v1 objectForKey:CallMetadata];
+	NSArray *metadata2 = [v2 objectForKey:CallMetadata];
+	NSString *value1 = nil;
+	NSString *value2 = nil;
+	
+	for(NSDictionary *metadata in metadata1)
+	{
+		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
+		{
+			value1 = [metadata objectForKey:CallMetadataData];
+		}
+	}
+	for(NSDictionary *metadata in metadata2)
+	{
+		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
+		{
+			value2 = [metadata objectForKey:CallMetadataData];
+		}
+	}
+	
+	if(value1 == nil)
+	{
+		// if there are no calls, then just sort by the street since there
+		// are no dates to sort by
+		if(value2 == nil)
+			return(sortByStreet(v1, v2, context));
+		else
+			return(-1); // v1 is less since there is no date
+	}
+	else if(value2 == nil)
+	{
+		return(1); // v1 is greater than v2
+	}
+	else
+	{
+		// ok, we need to compare the dates of the calls since we have
+		// at least one piece of metadata each
+		return [value1 compare:value2];
+	}
+}
+
+
+
 - (void)dealloc
 {
     DEBUG(NSLog(@"%s: dealloc", __FILE__);)
@@ -168,11 +215,12 @@ int sortByDate(id v1, id v2, void *context)
 	[super dealloc];
 }
 
-- (id)initSortedBy:(SortCallsType)theSortedBy
+- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata;
 {
 	[super init];
 	sortedBy = theSortedBy;
 	
+	self.metadata = metadata;
 	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
 	if(calls == nil)
 	{
@@ -261,6 +309,10 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 		case CALLS_SORTED_BY_CITY:
 			sortedArray = [calls sortedArrayUsingFunction:sortByCity context:NULL];
+			self.displayArray = nil;
+			break;
+		case CALLS_SORTED_BY_METADATA:
+			sortedArray = [calls sortedArrayUsingFunction:sortByMetadata context:self.metadata];
 			self.displayArray = nil;
 			break;
 		case CALLS_SORTED_BY_NAME:
@@ -434,7 +486,7 @@ int sortByDate(id v1, id v2, void *context)
 				VERY_VERBOSE(NSLog(@"city count=%d", count);)
 				NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
 				int rowCount = 0;
-
+				[sectionIndexNames addObject:@"{search}"];
 				[sectionRowCount addObject:[NSNumber numberWithInt:0]];
 				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 
@@ -444,20 +496,30 @@ int sortByDate(id v1, id v2, void *context)
 				}
 				else
 				{
-					NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
+					NSString *city;
+					if(_displayArray)
+						city = [[calls objectAtIndex:[[_displayArray objectAtIndex:0] intValue]] objectForKey:CallCity];
+					else
+						city = [[calls objectAtIndex:0] objectForKey:CallCity];
+
 					if([city length] == 0)
 					{
 						[sectionNames addObject:lastSectionTitle];
+						[sectionIndexNames addObject:@"?"];
 					}
 					else
 					{
 						[sectionNames addObject:@""];
+						[sectionIndexNames addObject:@"?"];
 					}
 
 					for(i = 0; i < count; ++i)
 					{
 						NSString *sectionTitle;
-						NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
+						if(_displayArray)
+							city = [[calls objectAtIndex:[[_displayArray objectAtIndex:i] intValue]] objectForKey:CallCity];
+						else
+							city = [[calls objectAtIndex:i] objectForKey:CallCity];
 						
 						rowCount++;
 						
@@ -479,59 +541,82 @@ int sortByDate(id v1, id v2, void *context)
 							[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
 							[sectionOffsets addObject:[NSNumber numberWithInt:i]];
 							[sectionNames addObject:sectionTitle];
+							[sectionIndexNames addObject:sectionTitle];
 							rowCount = 0;
 						}
 					}
 				}
-				// the index is the same as the section names
-				[sectionIndexNames setArray:sectionNames];
 				break;
 			}
 			case CALLS_SORTED_BY_METADATA:
 			{
-				self.sectionRowCount = [NSMutableArray array];
-				self.sectionOffsets = [NSMutableArray array];
-				self.sectionNames = [NSMutableArray array];
-
-				VERY_VERBOSE(NSLog(@"city count=%d", count);)
+				VERY_VERBOSE(NSLog(@"metadata count=%d", count);)
 				NSString *lastSectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
 				int rowCount = 0;
 
+				[sectionIndexNames addObject:@"{search}"];
 				[sectionRowCount addObject:[NSNumber numberWithInt:0]];
 				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 
 				if(count == 0)
 				{
 					[sectionNames addObject:@""];
+					[sectionIndexNames addObject:@"?"];
 				}
 				else
 				{
-					NSString *city = [[calls objectAtIndex:0] objectForKey:CallCity];
-					if([city length] == 0)
+					NSArray *metadataArray;
+					if(_displayArray)
+						metadataArray = [[calls objectAtIndex:[[_displayArray objectAtIndex:0] intValue]] objectForKey:CallMetadata];
+					else
+						metadataArray = [[calls objectAtIndex:0] objectForKey:CallMetadata];
+					NSString *value = nil;
+					for(NSDictionary *metadata in metadataArray)
 					{
-						[sectionNames addObject:lastSectionTitle];
+						if([[metadata objectForKey:CallMetadataName] isEqualToString:self.metadata])
+						{
+							value = [metadata objectForKey:CallMetadataValue];
+						}
+					}
+					
+					if(value.length == 0)
+					{
+						[sectionNames addObject:[NSString stringWithFormat:@"%@: %@", self.metadata, lastSectionTitle]];
+						[sectionIndexNames addObject:@"?"];
 					}
 					else
 					{
 						[sectionNames addObject:@""];
+						[sectionIndexNames addObject:@"?"];
 					}
 
 					for(i = 0; i < count; ++i)
 					{
 						NSString *sectionTitle;
-						NSString *city = [[calls objectAtIndex:i] objectForKey:CallCity];
+						if(_displayArray)
+							metadataArray = [[calls objectAtIndex:[[_displayArray objectAtIndex:i] intValue]] objectForKey:CallMetadata];
+						else
+							metadataArray = [[calls objectAtIndex:i] objectForKey:CallMetadata];
+						value = nil;
+						for(NSDictionary *metadata in metadataArray)
+						{
+							if([[metadata objectForKey:CallMetadataName] isEqualToString:self.metadata])
+							{
+								value = [metadata objectForKey:CallMetadataValue];
+							}
+						}
 						
 						rowCount++;
 						
-						if([city length] == 0)
+						if(value.length == 0)
 						{
 							sectionTitle = NSLocalizedString(@"Unknown", @"Sorted by Street Calls view section title for an unknown street");
 						}
 						else
 						{
-							sectionTitle = city;
+							sectionTitle = value;
 						}
-						VERY_VERBOSE(NSLog(@"title=%@ city=%@", sectionTitle, city);)
+						VERY_VERBOSE(NSLog(@"title=%@ metadata=%@", sectionTitle, value);)
 						// lets see if the new section has a different letter than the previous or if
 						// this is the first entry add it to the sections
 						if(![sectionTitle isEqualToString:lastSectionTitle])
@@ -540,7 +625,8 @@ int sortByDate(id v1, id v2, void *context)
 							VERY_VERBOSE(NSLog(@"added");)
 							[sectionRowCount addObject:[NSNumber numberWithInt:rowCount]];
 							[sectionOffsets addObject:[NSNumber numberWithInt:i]];
-							[sectionNames addObject:sectionTitle];
+							[sectionNames addObject:[NSString stringWithFormat:@"%@: %@", self.metadata, sectionTitle]];
+							[sectionIndexNames addObject:sectionTitle];
 							rowCount = 0;
 						}
 					}
@@ -591,7 +677,8 @@ int sortByDate(id v1, id v2, void *context)
 			break;
 			
 		case CALLS_SORTED_BY_CITY:
-			ret = index;
+		case CALLS_SORTED_BY_METADATA:
+			ret = index - 1; // subtract out the search field
 			break;
 			
 		case CALLS_SORTED_BY_STREET:

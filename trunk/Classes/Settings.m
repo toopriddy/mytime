@@ -102,6 +102,8 @@ NSString * const SettingsMetadataType = @"type";
 NSString * const SettingsMetadataValue = @"value";
 NSString * const SettingsMetadataData = @"data";
 
+NSString * const SettingsPreferredMetadata = @"preferredMetadata";
+
 
 NSString * const SettingsMainAlertSheetShown = @"mainAlertShown2";
 

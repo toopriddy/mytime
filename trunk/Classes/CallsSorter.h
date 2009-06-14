@@ -37,6 +37,7 @@ typedef enum {
 	
 	NSString *_searchText;
 	SortCallsType sortedBy;
+	NSString *_metadata;
 }
 
 @property (nonatomic, retain) NSMutableArray *calls;
@@ -47,8 +48,9 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *displayArray;
 @property (nonatomic, assign) SortCallsType sortedBy;
 @property (nonatomic, retain) NSString *searchText;
+@property (nonatomic, retain) NSString *metadata;
 
-- (id)initSortedBy:(SortCallsType)theSortedBy;
+- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata;
 - (void)filterUsingSearchText:(NSString *)searchText;
 - (NSInteger)numberOfSections;
 - (NSArray *)sectionIndexTitles;
