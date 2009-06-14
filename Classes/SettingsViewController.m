@@ -20,6 +20,9 @@
 #import "NumberViewController.h"
 #import "PSUrlString.h"
 #import "PSLocalization.h"
+#import "MultipleUsersViewController.h"
+
+#define USE_USER_SECTION 1
 
 enum {
 	DONATE_SECTION,
@@ -368,7 +371,9 @@ enum {
 			{
 				case 0:
 				{
-//
+					MultipleUsersViewController *viewController = [[[MultipleUsersViewController alloc] init] autorelease];
+//					viewController.delegate = self;
+					[[self navigationController] pushViewController:viewController animated:YES];
 					return;
 				}
 			}

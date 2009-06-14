@@ -66,6 +66,7 @@
 @end
 
 @implementation MetadataEditorViewController
+@synthesize tag = _tag;
 @synthesize textFieldCell = _textFieldCell;
 @synthesize delegate = _delegate;
 @synthesize datePicker = _datePicker;

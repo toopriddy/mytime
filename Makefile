@@ -12,6 +12,7 @@ Japanese.lproj \
 Portuguese.lproj \
 Spanish.lproj \
 Swedish.lproj \
+Slovak.lproj \
 
 all: genstrings
 

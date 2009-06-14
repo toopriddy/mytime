@@ -16,7 +16,6 @@
 #import "PublicationTypeViewController.h"
 #import "PublicationViewController.h"
 #import "Settings.h"
-#import "UITableViewTextFieldCell.h"
 #import "PSLocalization.h"
 
 @interface PublicationTypeViewController ()

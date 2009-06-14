@@ -36,6 +36,7 @@
 @private
 	MetadataType _type;
 
+	int _tag;
 	UITableViewTextFieldCell *_textFieldCell;
 	UITextView *_textView;
     UIDatePicker *_datePicker;
@@ -46,6 +47,7 @@
 	
 	id<MetadataEditorViewControllerDelegate> _delegate;
 }
+@property (nonatomic, assign) int tag;
 @property (nonatomic, assign) id<MetadataEditorViewControllerDelegate> delegate;
 
 

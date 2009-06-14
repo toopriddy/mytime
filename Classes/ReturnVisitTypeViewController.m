@@ -15,7 +15,6 @@
 
 #import "ReturnVisitTypeViewController.h"
 #import "Settings.h"
-#import "UITableViewTextFieldCell.h"
 #import "PSLocalization.h"
 
 @interface ReturnVisitTypeViewController ()

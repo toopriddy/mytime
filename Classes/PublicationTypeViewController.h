@@ -14,7 +14,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UITableViewTextFieldCell.h"
 #import "PublicationViewControllerDelegate.h"
 
 @class PublicationViewController;

@@ -89,7 +89,6 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 
 @synthesize theTableView;
 @synthesize delegate;
-@synthesize currentFirstResponder;
 @synthesize currentIndexPath;
 
 /******************************************************************
@@ -112,7 +111,6 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 		theTableView = nil;
 		_initialView = YES;
 		delegate = nil;
-		currentFirstResponder = nil;
 		currentIndexPath = nil;
 		
 		self.hidesBottomBarWhenPushed = YES;
@@ -547,7 +545,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 #endif	
 }
 
-
+#if 0
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -568,6 +566,8 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 		self.currentFirstResponder = nil;
 	}
 }
+#endif
+
 - (void)scrollToSelected:(id)unused
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -613,11 +613,8 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 - (void)viewWillDisappear:(BOOL)animated
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if(currentFirstResponder)
-	{
-		[currentFirstResponder resignFirstResponder];
-		self.currentFirstResponder = nil;
-	}
+	if([_name isFirstResponder])
+		[_name resignFirstResponder];
 }
 
 - (void)loadView 
@@ -709,6 +706,12 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	[invocation setArgument:&anotherArgument atIndex:3];
 	
 	return(invocation);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if([_name isFirstResponder])
+		[_name resignFirstResponder];
 }
 
 
@@ -1143,15 +1146,20 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		if(_setFirstResponderGroup == 0)
 		{
-			
+#if 1
+			[cell.textField performSelector:@selector(becomeFirstResponder)
+								 withObject:nil
+			                     afterDelay:0.0000001];
+#else			
 			[self performSelector:@selector(selectRow:) 
 					   withObject:[[NSIndexPath indexPathForRow:0 inSection:0] retain]
 					   afterDelay:0.00001];
+#endif
 			_setFirstResponderGroup = -1;
 		}
 
 		//  make it where they can hit hext and go into the address view to setup the address
-		cell.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
+		cell.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[NSIndexPath indexPathForRow:0 inSection:1]] autorelease];
 	}
 	
 	return(cell);
@@ -1190,6 +1198,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	}
 	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
 
+	cell.hidesAccessoryWhenEditing = NO;
 	
 	// if this does not have a latitude/longitude then look it up
 	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
@@ -1495,9 +1504,6 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 			  selectInvocation:[self invocationForSelector:@selector(addressSelected)]
 			  deleteInvocation:nil];
 
-			//  make it where they can hit hext and go into the address view to setup the address
-//			_name.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:theTableView indexPath:[self lastIndexPath]] autorelease];
-				
 			if(_editing)
 			{
 				[self  addRowInvocation:[self invocationForSelector:@selector(getLocationTypeCell)]

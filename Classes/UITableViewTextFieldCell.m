@@ -41,14 +41,14 @@
 		observeEditing = NO;
 		
 		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		titleLabel.backgroundColor = [UIColor clearColor];
+		titleLabel.backgroundColor = [UIColor whiteColor];
 		titleLabel.textColor = [UIColor blackColor];
 		titleLabel.textAlignment = UITextAlignmentLeft;
 		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		[self.contentView addSubview:titleLabel];
 		
 		self.textField = field;
-		textField.backgroundColor = [UIColor clearColor];
+		textField.backgroundColor = [UIColor whiteColor];
 		textField.textColor = [UIColor darkGrayColor];
 		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		textField.font = [UIFont systemFontOfSize:16];
@@ -56,7 +56,7 @@
 		[self.contentView addSubview:self.textField];
 		
 		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		valueLabel.backgroundColor = [UIColor clearColor];
+		valueLabel.backgroundColor = [UIColor whiteColor];
 		valueLabel.font = [UIFont systemFontOfSize:16];
 		valueLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		valueLabel.highlightedTextColor = [UIColor whiteColor];
@@ -127,19 +127,6 @@
 	titleLabel.backgroundColor = backgroundColor;
 	titleLabel.highlighted = selected;
 	titleLabel.opaque = !selected;
-	
-	if(selected)
-	{
-		if(self.editing || !observeEditing)
-		{
-			[self.textField becomeFirstResponder];
-		}
-	}
-	else
-	{
-		[self.textField resignFirstResponder];
-	}
-		
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -162,6 +149,8 @@
 {
 	valueLabel.text = textField.text;
 	[super setEditing:editing animated:animated];
+	if(!editing)
+		[self.textField resignFirstResponder];
 }
 
 - (void)layoutSubviews 
@@ -209,12 +198,14 @@
 
 	if(self.editing || !observeEditing)
 	{
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		textField.hidden = NO;
 		textField.enabled = YES;
 		valueLabel.hidden = YES;
 	}
 	else
 	{
+		self.selectionStyle = UITableViewCellSelectionStyleBlue;
 		textField.hidden = YES;
 		textField.enabled = NO;
 		valueLabel.hidden = NO;
