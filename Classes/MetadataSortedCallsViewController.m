@@ -22,6 +22,7 @@
 	[UIView setAnimationDuration:0.30];
 	self.picker.view.frame = frame;
 	[UIView commitAnimations];
+	_myOverlay = NO;
 	
 	[_overlay.view removeFromSuperview];
 	[_overlay release];
@@ -75,6 +76,9 @@
 	
 	frame = self.picker.view.frame;
 	frame.origin.y = self.navigationController.navigationBar.frame.origin.y;
+	// correct for 2.X software
+	if(frame.origin.y == 0)
+		frame.origin.y = 20;
 
 	[self.picker.view removeFromSuperview];
 	if(![self.picker.view isDescendantOfView:window])

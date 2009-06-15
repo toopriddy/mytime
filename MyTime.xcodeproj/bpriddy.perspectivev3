@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>90E75F5D0FE6AEF600690CEE</string>
+						<string>90E75F820FE6BC4100690CEE</string>
 						<key>history</key>
 						<array>
 							<string>90E75F250FE6ACFB00690CEE</string>
@@ -342,7 +342,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 649}, {310, 731}}</string>
+							<string>{{0, 1301}, {310, 731}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -379,7 +379,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MetadataPickerViewController.m</string>
+								<string>MetadataSortedCallsViewController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -387,11 +387,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MetadataPickerViewController.m</string>
+										<string>MetadataSortedCallsViewController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90E75F5C0FE6AEF600690CEE</string>
+										<string>90E75F810FE6BC4100690CEE</string>
 										<key>history</key>
 										<array>
 											<string>90E56C190FE2CE6400DF7393</string>
@@ -475,10 +475,10 @@
 											<string>90E75ECC0FE6AA0000690CEE</string>
 											<string>90E75ECE0FE6AA0000690CEE</string>
 											<string>90E75F410FE6AE7D00690CEE</string>
-											<string>90E75F420FE6AE7D00690CEE</string>
 											<string>90E75F510FE6AED800690CEE</string>
 											<string>90E75F590FE6AEF600690CEE</string>
-											<string>90E75F5A0FE6AEF600690CEE</string>
+											<string>90E75F690FE6B5EB00690CEE</string>
+											<string>90E75F710FE6B64B00690CEE</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -730,6 +730,7 @@
 											<string>90E75F530FE6AED800690CEE</string>
 											<string>90E75F540FE6AED800690CEE</string>
 											<string>90E75F5B0FE6AEF600690CEE</string>
+											<string>90E75F6B0FE6B5EB00690CEE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -1066,7 +1067,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>90E75F570FE6AED800690CEE</string>
+		<string>90E75F7E0FE6BC1C00690CEE</string>
 		<string>90E75A5B0FE4AA3E00690CEE</string>
 		<string>90E757EA0FE36EED00690CEE</string>
 		<string>90E757E70FE36EE400690CEE</string>
