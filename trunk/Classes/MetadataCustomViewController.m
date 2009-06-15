@@ -47,8 +47,6 @@ static MetadataInformation commonInformation[] = {
 {
 	if ([super init]) 
 	{
-		_name = nil;
-
 		_selected = -1;
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
@@ -97,11 +95,10 @@ static MetadataInformation commonInformation[] = {
 	theTableView.delegate = self;
 	theTableView.dataSource = self;
 
-	self.name = [[[UITableViewTextFieldCell alloc] init] autorelease];
-	_name.delegate = self;
-	_name.textField.keyboardType = UIKeyboardTypeEmailAddress;
-	_name.textField.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
-	_name.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+	_name.keyboardType = UIKeyboardTypeEmailAddress;
+	_name.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
+	_name.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -120,7 +117,6 @@ static MetadataInformation commonInformation[] = {
 	[super viewWillAppear:animated];
 	// force the tableview to load
 	[self.theTableView reloadData];
-	
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -129,6 +125,11 @@ static MetadataInformation commonInformation[] = {
 	[theTableView flashScrollIndicators];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if([_name isFirstResponder])
+		[_name resignFirstResponder];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -138,7 +139,7 @@ static MetadataInformation commonInformation[] = {
 	
 	if(section == 1)
 	{
-		[_name.textField resignFirstResponder];
+		[_name resignFirstResponder];
 		
 		if(_selected >= 0 && _selected != row)
 		{
@@ -147,7 +148,7 @@ static MetadataInformation commonInformation[] = {
 		
 		_selected = row;
 		
-		self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && _name.value.length;
+		self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && _name.text.length;
 		
 		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:(_selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone)];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -156,7 +157,7 @@ static MetadataInformation commonInformation[] = {
 
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	int length = _name.value.length;
+	int length = _name.text.length;
 	if(string.length == 0)
 	{
 		length -= range.length;
@@ -201,7 +202,14 @@ static MetadataInformation commonInformation[] = {
 	{
 		case 0:
 		{
-			return(self.name);
+			UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
+			if(cell == nil)
+			{
+				cell = [[[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
+			}
+			cell.delegate = self;
+			
+			return cell;
 		}
 		
 		case 1:

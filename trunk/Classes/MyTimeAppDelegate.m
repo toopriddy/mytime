@@ -22,6 +22,7 @@
 #import "CallsSortedByStudyViewDataSource.h"
 #import "CallsSortedByFilterDataSource.h"
 #import "SortedCallsViewController.h"
+#import "MetadataSortedCallsViewController.h"
 #import "StatisticsViewController.h"
 #import "HourViewController.h"
 #import "SettingsViewController.h"
@@ -39,7 +40,12 @@
 @synthesize callToImport;
 @synthesize settingsToRestore;
 
-- init 
++ (MyTimeAppDelegate *)sharedInstance
+{
+	return (MyTimeAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+- (id)init 
 {
 	if(self = [super init]) 
 	{
@@ -357,7 +363,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 	// CALLS SORTED BY METADATA
 	CallsSortedByFilterDataSource *filterSortedDataSource = [[[CallsSortedByFilterDataSource alloc] init] autorelease];
-	SortedCallsViewController *filterViewController = [[[SortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
+	MetadataSortedCallsViewController *filterViewController = [[[MetadataSortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease]];
 	
 	// CALLS SORTED BY NAME

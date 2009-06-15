@@ -47,12 +47,12 @@ typedef struct
 	id<MetadataCustomViewControllerDelegate> delegate;
 @private
 	UITableView *theTableView;
-	UITableViewTextFieldCell *_name;
+	UITextField *_name;
 	int _selected;
 }
 
 @property (nonatomic, assign) id<MetadataCustomViewControllerDelegate> delegate;
-@property (nonatomic, retain) UITableViewTextFieldCell *name;
+@property (nonatomic, retain) UITextField *name;
 @property (readonly, getter = type) MetadataType type;
 
 /**

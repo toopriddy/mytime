@@ -38,6 +38,18 @@ static MetadataInformation commonInformation[] = {
 @synthesize delegate;
 @synthesize theTableView;
 
++ (NSArray *)metadataNames
+{
+	NSMutableArray *array = [NSMutableArray array];
+	for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
+	{
+		[array addObject:commonInformation[i].name];
+	}
+	NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
+	return array;
+}
+
 - (id) init;
 {
 	if ([super init]) 
@@ -262,7 +274,7 @@ static MetadataInformation commonInformation[] = {
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
 	MetadataInformation localMetadata;
-	localMetadata.name = metadataCustomViewController.name.textField.text;
+	localMetadata.name = metadataCustomViewController.name.text;
 	localMetadata.type = metadataCustomViewController.type;
 	
 	NSMutableArray *array = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata]];

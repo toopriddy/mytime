@@ -29,6 +29,8 @@
 	NSIndexPath *indexPath;
 	BOOL searching;
 	OverlayViewController *ovController;
+	UIBarButtonItem *savedLeftButton;
+	BOOL savedHidesBackButton;
 }
 
 @property (nonatomic,retain) UITableView *tableView;

@@ -42,5 +42,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableDictionary *callToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
 
++ (MyTimeAppDelegate *)sharedInstance;
+
 @end
 

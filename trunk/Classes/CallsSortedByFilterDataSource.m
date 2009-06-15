@@ -18,7 +18,7 @@
 #import "CallTableCell.h"
 #import "Settings.h"
 #import "PSLocalization.h"
-
+#import "MetadataViewController.h"
 
 @implementation CallsSortedByFilterDataSource
 
@@ -26,12 +26,12 @@
 
 - (NSString *)name 
 {
-	return NSLocalizedString(@"Info Sorted", @"View title");
+	return NSLocalizedString(@"Sorted By ...", @"View title");
 }
 
 - (NSString *)title
 {
-	return NSLocalizedString(@"Info Sorted", @"View title");
+	return NSLocalizedString(@"Sorted By ...", @"View title");
 }
 
 - (BOOL) showAddNewCall
@@ -57,16 +57,28 @@
 
 - (id)init
 {
-	NSString *preferredMetadata = [[[Settings sharedInstance] settings] objectForKey:SettingsPreferredMetadata];
-	if(preferredMetadata == nil)
-	{
-		preferredMetadata = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata] objectAtIndex:0] objectForKey:SettingsMetadataName];
-	}
-	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:preferredMetadata];
+	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:self.preferredMetadata];
 	return self;
 }
 
+- (NSString *)preferredMetadata
+{
+	NSString *preferredMetadata = [[[Settings sharedInstance] settings] objectForKey:SettingsPreferredMetadata];
+	if(preferredMetadata == nil)
+	{
+		NSArray *array = [MetadataViewController metadataNames];
+		preferredMetadata = [array objectAtIndex:0];
+	}
+	return [[preferredMetadata retain] autorelease];
+}
 
+- (void)setPreferredMetadata:(NSString *)metadata
+{
+	[[[Settings sharedInstance] settings] setObject:metadata forKey:SettingsPreferredMetadata];
+	[[Settings sharedInstance] saveData];
+	callsSorter.metadata = metadata;
+	[self refreshData];
+}
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
