@@ -83,7 +83,6 @@
 	[super dealloc];
 }
 
-
 - (void)loadView 
 {	
 	// create a new table using the full application frame
@@ -154,7 +153,7 @@
 	//Parameters x = origion on x-axis, y = origon on y-axis.
 	CGRect frame = CGRectMake(0, yaxis, width, height);
 	ovController.view.frame = frame;	
-	ovController.view.backgroundColor = [UIColor grayColor];
+	ovController.view.backgroundColor = [UIColor blackColor];
 	ovController.view.alpha = 0.5;
 	
 	ovController.delegate = self;
@@ -165,6 +164,10 @@
 	searching = YES;
 	tableView.scrollEnabled = NO;
 
+	savedLeftButton = [self.navigationItem.leftBarButtonItem retain];
+	self.navigationItem.leftBarButtonItem = nil;
+	savedHidesBackButton = self.navigationItem.hidesBackButton;
+	self.navigationItem.hidesBackButton = YES;
 	//Add the done button.
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
 											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
@@ -217,6 +220,14 @@
 																				 action:@selector(navigationControlAdd:)] autorelease];
 		[self.navigationItem setRightBarButtonItem:button animated:NO];
 	}
+	if(savedLeftButton)
+	{
+		self.navigationItem.leftBarButtonItem = savedLeftButton;
+		[savedLeftButton release];
+		savedLeftButton = nil;
+	}
+	self.navigationItem.hidesBackButton = savedHidesBackButton;
+
 	
 	tableView.sectionIndexMinimumDisplayRowCount = 6;
 	[ovController.view removeFromSuperview];
@@ -237,10 +248,16 @@
 	return([CallTableCell height]);
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+//	self.title = [dataSource name];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 
+//	self.title = [dataSource title];
 	self.indexPath = nil;
 	
 	// force the tableview to load

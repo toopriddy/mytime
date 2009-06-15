@@ -129,6 +129,11 @@
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if([_emailAddress.textField isFirstResponder])
+		[_emailAddress.textField resignFirstResponder];
+}
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
