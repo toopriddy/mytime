@@ -108,10 +108,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     if([super init]) 
     {
-		theTableView = nil;
 		_initialView = YES;
-		delegate = nil;
-		currentIndexPath = nil;
 		
 		self.hidesBottomBarWhenPushed = YES;
 		
@@ -262,9 +259,9 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 - (void)dealloc 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	theTableView.delegate = nil;
-	theTableView.dataSource = nil;
-	[theTableView release];
+	self.theTableView.delegate = nil;
+	self.theTableView.dataSource = nil;
+	self.theTableView = nil;
 
     [_name release];
     [_call release];
@@ -545,29 +542,6 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 #endif	
 }
 
-#if 0
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if(selected)
-	{
-		if(cell.textField == _name)
-		{
-			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-			self.currentFirstResponder = _name;
-		}
-	}
-	else
-	{
-		if(self.currentFirstResponder)
-		{
-			[self.currentFirstResponder resignFirstResponder];
-		}
-		self.currentFirstResponder = nil;
-	}
-}
-#endif
-
 - (void)scrollToSelected:(id)unused
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -613,10 +587,21 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 - (void)viewWillDisappear:(BOOL)animated
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if([_name isFirstResponder])
-		[_name resignFirstResponder];
+	[_name resignFirstResponder];
 }
 
+- (void)didReceiveMemoryWarning
+{
+	self.theTableView = nil;
+	[super didReceiveMemoryWarning];
+}
+#if 0
+- (void)viewDidUnload
+{
+	self.theTableView = nil;
+	[super viewDidUnload];
+}
+#endif
 - (void)loadView 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
@@ -710,8 +695,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	if([_name isFirstResponder])
-		[_name resignFirstResponder];
+	[_name resignFirstResponder];
 }
 
 
@@ -1139,6 +1123,10 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	if(cell == nil)
 	{
 		cell = [[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"NameCell"];
+	}
+	else
+	{
+		cell.textField = _name;
 	}
 	cell.delegate = self;
 	cell.observeEditing = YES;
@@ -1918,7 +1906,18 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 	
 	if(newPublication)
 	{
-		[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+		// if the view was being rebuilt because it went away in the didRecieveMemoryWarning, then we need to make sure that we
+		// are not inserting incorrectly into the table
+		if([theTableView cellForRowAtIndexPath:currentIndexPath])
+		{
+			[theTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+		}
+		else
+		{
+			[theTableView reloadData];
+			[theTableView selectRowAtIndexPath:currentIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+			[theTableView deselectRowAtIndexPath:currentIndexPath animated:YES];
+		}
 	}
 	else
 	{
