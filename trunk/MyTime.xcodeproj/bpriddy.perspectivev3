@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>906838BB0FE76C15004AB25C</string>
+						<string>906838C30FE76CA6004AB25C</string>
 						<key>history</key>
 						<array>
 							<string>90E7606E0FE7675300690CEE</string>
@@ -335,14 +335,12 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>69</integer>
-									<integer>39</integer>
-									<integer>2</integer>
-									<integer>0</integer>
+									<integer>196</integer>
+									<integer>194</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 783}, {310, 731}}</string>
+							<string>{{0, 2779}, {310, 731}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -391,7 +389,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>906838BA0FE76C15004AB25C</string>
+										<string>906838C20FE76CA6004AB25C</string>
 										<key>history</key>
 										<array>
 											<string>90E56C190FE2CE6400DF7393</string>
@@ -577,18 +575,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {742, 744}}</string>
+								<string>{{0, 0}, {742, 521}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 88 1074 790 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>744pt</string>
+							<string>521pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>0pt</string>
+							<string>223pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -602,7 +600,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {742, -27}}</string>
+										<string>{{10, 27}, {742, 196}}</string>
 										<key>RubberWindowFrame</key>
 										<string>0 88 1074 790 0 0 1440 878 </string>
 									</dict>
