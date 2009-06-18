@@ -22,4 +22,6 @@
 @property (nonatomic, assign) NSString *metadata;
 - (IBAction)done;
 - (id) initWithMetadata:(NSString *)metadata;
+- (void)reloadData;
+
 @end

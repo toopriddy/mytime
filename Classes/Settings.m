@@ -96,6 +96,7 @@ NSString * const SettingsSecretaryEmailNotes = @"secretaryNotes";
 NSString * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
 NSString * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
 
+NSString * const SettingsMetadataAlwaysShown = @"alwaysShownMetadata";
 NSString * const SettingsMetadata = @"metadata";
 NSString * const SettingsMetadataName = @"name";
 NSString * const SettingsMetadataType = @"type";

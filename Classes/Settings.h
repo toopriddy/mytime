@@ -92,6 +92,7 @@ extern NSString * const SettingsLastCallCity;
 extern NSString * const SettingsLastCallState;
 extern NSString * const SettingsCurrentButtonBarIndex;
 
+extern NSString * const SettingsMetadataAlwaysShown;
 extern NSString * const SettingsMetadata;
 extern NSString * const SettingsMetadataName;
 extern NSString * const SettingsMetadataType;
