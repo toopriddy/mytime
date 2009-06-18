@@ -110,13 +110,12 @@ static MetadataInformation commonInformation[] = {
 	self.view = self.theTableView;
 
 	[self.theTableView reloadData];
+	[_name performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.1];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	// force the tableview to load
-	[self.theTableView reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -127,8 +126,7 @@ static MetadataInformation commonInformation[] = {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	if([_name isFirstResponder])
-		[_name resignFirstResponder];
+	[_name resignFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

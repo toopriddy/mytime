@@ -38,12 +38,31 @@
 @synthesize displayArray = _displayArray;
 @synthesize searchText = _searchText;
 @synthesize metadata = _metadata;
+
+int sortByStreet(id v1, id v2, void *context);
+
 int sortByName(id v1, id v2, void *context)
 {
 	NSString *name1 = [v1 objectForKey:CallName];
 	NSString *name2 = [v2 objectForKey:CallName];
 	
-	return([name1 localizedCaseInsensitiveCompare:name2]);
+	int compare = [name1 localizedCaseInsensitiveCompare:name2];
+	if(compare == 0 && context != nil)
+	{
+		return sortByStreet(v1, v2, nil);
+	}
+	else
+	{
+		return compare;
+	}
+}
+
+int sortByNameNoRecursion(id v1, id v2, void *context)
+{
+	NSString *name1 = [v1 objectForKey:CallName];
+	NSString *name2 = [v2 objectForKey:CallName];
+	
+	return [name1 localizedCaseInsensitiveCompare:name2];
 }
 
 int sortByStreet(id v1, id v2, void *context)
@@ -54,7 +73,7 @@ int sortByStreet(id v1, id v2, void *context)
 	NSString *house2 = [v2 objectForKey:CallStreetNumber];
 	NSString *apartment1 = [v1 objectForKey:CallApartmentNumber];
 	NSString *apartment2 = [v2 objectForKey:CallApartmentNumber];
-	
+
 	int compare = [street1 localizedCaseInsensitiveCompare:street2];
 	if(compare == 0)
 	{
@@ -104,7 +123,8 @@ int sortByStreet(id v1, id v2, void *context)
 			}
 			if(compare == NSOrderedSame)
 			{
-				compare = sortByName(v1, v2, context);
+				// use the compare where we just compare the names and do not look elsewhere
+				compare = sortByNameNoRecursion(v1, v2, context);
 			}
 		}
 	}
@@ -131,18 +151,19 @@ int sortByDate(id v1, id v2, void *context)
 	// is the most recent entry	
 	NSArray *returnVisits1 = [v1 objectForKey:CallReturnVisits];
 	NSArray *returnVisits2 = [v2 objectForKey:CallReturnVisits];
+	int compare;
 	if([returnVisits1 count] == 0)
 	{
 		// if there are no calls, then just sort by the street since there
 		// are no dates to sort by
 		if([returnVisits2 count] == 0)
-			return(sortByStreet(v1, v2, context));
+			compare = sortByStreet(v1, v2, context);
 		else
-			return(-1); // v1 is less since there is no date
+			compare = -1; // v1 is less since there is no date
 	}
 	else if([returnVisits2 count] == 0)
 	{
-		return(1); // v1 is greater than v2
+		compare = 1; // v1 is greater than v2
 	}
 	else
 	{
@@ -150,8 +171,13 @@ int sortByDate(id v1, id v2, void *context)
 		// at least one call for each of 
 		NSDate *date1 = [[returnVisits1 objectAtIndex:0] objectForKey:CallReturnVisitDate];
 		NSDate *date2 = [[returnVisits2 objectAtIndex:0] objectForKey:CallReturnVisitDate];
-		return([date1 compare:date2]);
+		int compare = [date1 compare:date2];
+		if(compare == 0)
+		{
+			compare = sortByStreet(v1, v2, context);
+		}
 	}
+	return compare;
 }
 
 // sort by date where the earlier dates come first
@@ -179,26 +205,31 @@ int sortByMetadata(id v1, id v2, void *context)
 			value2 = [metadata objectForKey:CallMetadataData];
 		}
 	}
-	
+	int compare;
 	if(value1 == nil)
 	{
 		// if there are no calls, then just sort by the street since there
 		// are no dates to sort by
 		if(value2 == nil)
-			return(sortByStreet(v1, v2, context));
+			compare = sortByStreet(v1, v2, context);
 		else
-			return(-1); // v1 is less since there is no date
+			compare = -1; // v1 is less since there is no date
 	}
 	else if(value2 == nil)
 	{
-		return(1); // v1 is greater than v2
+		compare = 1 ; // v1 is greater than v2
 	}
 	else
 	{
 		// ok, we need to compare the dates of the calls since we have
 		// at least one piece of metadata each
-		return [value1 compare:value2];
+		int compare = [value1 compare:value2];
+		if(compare == 0)
+		{
+			compare = sortByStreet(v1, v2, context);
+		}
 	}
+	return compare;
 }
 
 

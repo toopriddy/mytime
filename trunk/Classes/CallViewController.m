@@ -1134,15 +1134,9 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	{
 		if(_setFirstResponderGroup == 0)
 		{
-#if 1
 			[cell.textField performSelector:@selector(becomeFirstResponder)
 								 withObject:nil
 			                     afterDelay:0.0000001];
-#else			
-			[self performSelector:@selector(selectRow:) 
-					   withObject:[[NSIndexPath indexPathForRow:0 inSection:0] retain]
-					   afterDelay:0.00001];
-#endif
 			_setFirstResponderGroup = -1;
 		}
 
@@ -1523,13 +1517,13 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 					int height = -1;
 					NSMutableDictionary *entry = [metadata objectAtIndex:j];
 					// if the entry is a notes entry then we need to adjust the height of the cell
-					if([[entry objectForKey:SettingsMetadataType] intValue] == NOTES &&
-					   [[entry objectForKey:SettingsMetadataValue] length])
+					if([[entry objectForKey:CallMetadataType] intValue] == NOTES &&
+					   [[entry objectForKey:CallMetadataValue] length])
 					{
-						height = [UITableViewMultilineTextCell heightForWidth:250 withText:[entry objectForKey:SettingsMetadataValue]];
+						height = [UITableViewMultilineTextCell heightForWidth:250 withText:[entry objectForKey:CallMetadataValue]];
 					}
 					[self  addRowInvocation:[self invocationForSelector:@selector(getMetadataCellAtIndex:) withArgument:(void *)j]
-							   cellName:[entry objectForKey:SettingsMetadataName]
+							   cellName:[entry objectForKey:CallMetadataName]
 								 rowHeight:height
 							insertOrDelete:(_editing ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone)
 						indentWhenEditing:YES
@@ -1986,8 +1980,8 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 		{
 			// METADATA
 			NSMutableDictionary *entry = [metadata objectAtIndex:j];
-			NSString *name = [entry objectForKey:SettingsMetadataName];
-			value = [entry objectForKey:SettingsMetadataValue];
+			NSString *name = [entry objectForKey:CallMetadataName];
+			value = [entry objectForKey:CallMetadataValue];
 			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
 		}
 	}

@@ -82,13 +82,33 @@
     return(self);
 }
 
+- (void)reloadData
+{
+	NSString *selectedName = [[_metadataArray objectAtIndex:_selection] retain];
+	[_metadataArray release];
+	_metadataArray = [[MetadataViewController metadataNames] copy];
+	
+	// try to find the selection in the new array
+	_selection = [_metadataArray indexOfObject:selectedName];
+	[selectedName release];
+	if(_selection == NSNotFound)
+	{
+		_selection = 0;
+	}
+	[pickerView reloadAllComponents];
+	[pickerView selectRow:_selection inComponent:0 animated:NO];
+}
+
 - (void)setMetadata:(NSString *)metadata
 {
+	[_metadataArray release];
+	_metadataArray = [[MetadataViewController metadataNames] copy];
 	int i = [_metadataArray indexOfObject:metadata];
 	if(i !=  NSNotFound)
 	{
 		_selection = i;
 	}
+	[pickerView reloadAllComponents];
 	[pickerView selectRow:_selection inComponent:0 animated:NO];
 }
 

@@ -131,8 +131,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	if([_emailAddress.textField isFirstResponder])
-		[_emailAddress.textField resignFirstResponder];
+	[_emailAddress.textField resignFirstResponder];
 }
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController

@@ -135,7 +135,6 @@
 				_textFieldCell.textField.text = value;
 				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
 				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
-				_firstResponder = _textFieldCell;
 				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
 				_firstResponder = _textFieldCell.textField;
 				break;
