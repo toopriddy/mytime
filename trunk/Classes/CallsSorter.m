@@ -75,7 +75,7 @@ int sortByStreet(id v1, id v2, void *context)
 	NSString *apartment2 = [v2 objectForKey:CallApartmentNumber];
 
 	int compare = [street1 localizedCaseInsensitiveCompare:street2];
-	if(compare == 0)
+	if(compare == NSOrderedSame)
 	{
 		NSInteger house1Number = [house1 integerValue];
 		NSInteger house2Number = [house2 integerValue];
@@ -171,7 +171,7 @@ int sortByDate(id v1, id v2, void *context)
 		// at least one call for each of 
 		NSDate *date1 = [[returnVisits1 objectAtIndex:0] objectForKey:CallReturnVisitDate];
 		NSDate *date2 = [[returnVisits2 objectAtIndex:0] objectForKey:CallReturnVisitDate];
-		int compare = [date1 compare:date2];
+		compare = [date1 compare:date2];
 		if(compare == 0)
 		{
 			compare = sortByStreet(v1, v2, context);
@@ -190,6 +190,7 @@ int sortByMetadata(id v1, id v2, void *context)
 	NSArray *metadata2 = [v2 objectForKey:CallMetadata];
 	NSString *value1 = nil;
 	NSString *value2 = nil;
+	int compare;
 	
 	for(NSDictionary *metadata in metadata1)
 	{
@@ -205,15 +206,14 @@ int sortByMetadata(id v1, id v2, void *context)
 			value2 = [metadata objectForKey:CallMetadataData];
 		}
 	}
-	int compare;
 	if(value1 == nil)
 	{
 		// if there are no calls, then just sort by the street since there
-		// are no dates to sort by
+		// is no metadata to sort by
 		if(value2 == nil)
 			compare = sortByStreet(v1, v2, context);
 		else
-			compare = -1; // v1 is less since there is no date
+			compare = -1; // v1 is less since there is no metadata
 	}
 	else if(value2 == nil)
 	{
@@ -223,7 +223,7 @@ int sortByMetadata(id v1, id v2, void *context)
 	{
 		// ok, we need to compare the dates of the calls since we have
 		// at least one piece of metadata each
-		int compare = [value1 compare:value2];
+		compare = [value1 compare:value2];
 		if(compare == 0)
 		{
 			compare = sortByStreet(v1, v2, context);
