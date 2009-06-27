@@ -218,7 +218,7 @@ static MetadataInformation commonInformation[] = {
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
 			}
 			
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""];
 			cell.accessoryType = _selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			
 			return cell;

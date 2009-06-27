@@ -59,7 +59,6 @@
 // Accessories (disclosures). 
 
 // When the editing state changes, these methods will be called again to allow the accessory to be hidden when editing, if required.
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath;
 
 // Selection

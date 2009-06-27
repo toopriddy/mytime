@@ -252,11 +252,11 @@ int sortByMetadata(id v1, id v2, void *context)
 	sortedBy = theSortedBy;
 	
 	self.metadata = metadata;
-	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 	if(calls == nil)
 	{
 		self.calls = [NSMutableArray array];
-		[[[Settings sharedInstance] settings] setObject:self.calls forKey:SettingsCalls];
+		[[[Settings sharedInstance] userSettings] setObject:self.calls forKey:SettingsCalls];
 	}
 	[self refreshData];
 	return(self);
@@ -323,7 +323,7 @@ int sortByMetadata(id v1, id v2, void *context)
 - (void)refreshData
 {
 	VERY_VERBOSE(NSLog(@"refreshData:");)
-	self.calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 
 	// sort the data
 	// we should sort by the house number too

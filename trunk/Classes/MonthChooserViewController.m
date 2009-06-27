@@ -283,7 +283,7 @@
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
 			}
 			
-			[cell setText:[_months objectAtIndex:row]];
+			cell.textLabel.text = [_months objectAtIndex:row];
 			cell.accessoryType = [[_selected objectAtIndex:row] boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			
 			return cell;

@@ -27,6 +27,8 @@
 {
 	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 	NSMutableDictionary *user = [users objectAtIndex:indexPath.row];
+	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
+	NSString *name = [user objectForKey:SettingsMultipleUsersName];
 	
 	NSString *commonIdentifier = @"MultipleUserCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
@@ -35,8 +37,11 @@
 		cell = [[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:commonIdentifier];
 	}
 	
-	cell.text = [user objectForKey:SettingsMultipleUsersName];
-	cell.hidesAccessoryWhenEditing = NO;
+	cell.textLabel.text = name;
+	
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.accessoryType = [currentUser isEqualToString:name] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	
 	return cell;
 }
 
@@ -47,19 +52,6 @@
 	{
 		[self.delegate deleteUser:indexPath.row];
 	}
-}
-
-// When the editing state changes, these methods will be called again to allow the accessory to be hidden when editing, if required.
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSMutableDictionary *user = [users objectAtIndex:indexPath.row];
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-
-	if(tableView.editing)
-		return UITableViewCellAccessoryDisclosureIndicator;
-	else
-		return [currentUser isEqualToString:[user objectForKey:SettingsMultipleUsersName]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
@@ -89,8 +81,8 @@
 	else
 	{
 		[self.delegate changeToUser:indexPath.row];
-		[self.delegate updateAndReload];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[self.delegate updateAndReload];
 	}
 }
 
@@ -288,8 +280,8 @@
 {
 	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 	NSMutableDictionary *user = [users objectAtIndex:index];
-	[[[Settings sharedInstance] settings] setObject:[user objectForKey:SettingsMultipleUsersName] forKey:SettingsMultipleUsersCurrentUser];
-#warning need to set the user here
+	
+	[[Settings sharedInstance] changeSettingsToUser:[user objectForKey:SettingsMultipleUsersName] save:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
@@ -303,7 +295,7 @@
 			NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 			NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 			NSMutableDictionary *user = [users objectAtIndex:actionSheet.tag];
-			BOOL changeUser = [currentUser isEqualTo:[user objectForKey:SettingsMultipleUsersName]];
+			BOOL changeUser = [currentUser isEqualToString:[user objectForKey:SettingsMultipleUsersName]];
 			
 			[users removeObjectAtIndex:actionSheet.tag];
 			[self deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
@@ -314,6 +306,7 @@
 			if(changeUser)
 			{
 				[self changeToUser:0];
+				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 			}
 			[[Settings sharedInstance] saveData];
 			break;

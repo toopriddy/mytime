@@ -77,7 +77,7 @@ static Geocache *instance = nil;
 - (void)setWindow:(UIWindow*)window
 {
 	_window = [window retain];
-	NSMutableArray *calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 	for(NSMutableDictionary *call in calls)
 	{
 		if([call objectForKey:CallLattitudeLongitude] == nil &&

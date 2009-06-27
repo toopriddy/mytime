@@ -96,6 +96,7 @@
 		90D031F70E56944C001CEF0D /* LiteraturePlacementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */; };
 		90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D0F3C10FD333D600107ADB /* PSLocalization.m */; };
 		90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */; };
+		90E157AC0FF438F3001BD69B /* sort4.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E157AB0FF438F3001BD69B /* sort4.png */; };
 		90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */; };
 		90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
@@ -291,6 +292,7 @@
 		90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90DD733D0E925C1E007B1B71 /* Dutch */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90E157AB0FF438F3001BD69B /* sort4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort4.png; sourceTree = "<group>"; };
 		90E56ABB0FE199A200DF7393 /* TableViewCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellController.h; sourceTree = "<group>"; };
 		90E56ABC0FE199A200DF7393 /* GenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTableViewController.h; sourceTree = "<group>"; };
 		90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTableViewController.m; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				90C148C90E3B923C00C6EDAF /* statistics.png */,
 				90C148CA0E3B923C00C6EDAF /* street.png */,
 				90C148CB0E3B923C00C6EDAF /* studies.png */,
+				90E157AB0FF438F3001BD69B /* sort4.png */,
 				90C148CC0E3B923C00C6EDAF /* time.png */,
 				90C148CD0E3B923C00C6EDAF /* timer.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -737,6 +740,7 @@
 				90ADA7AD0F1876C500C65E40 /* marker-blue.png in Resources */,
 				90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */,
 				90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */,
+				90E157AC0FF438F3001BD69B /* sort4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

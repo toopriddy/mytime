@@ -1173,24 +1173,20 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
 	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	NSString *locationType = [_call objectForKey:CallLocationType];
 	if(locationType == nil)
 	{
 		locationType = CallLocationTypeGoogleMaps;
 	}
 	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
-
-	cell.hidesAccessoryWhenEditing = NO;
 	
 	// if this does not have a latitude/longitude then look it up
 	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
 	   [_call objectForKey:CallLattitudeLongitude] != nil)
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
-	}
-	else
-	{
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.editingAccessoryType = UITableViewCellAccessoryCheckmark;
 	}
 	
 	// if this does not have a latitude/longitude then look it up
@@ -1408,7 +1404,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 	button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	
 	[button setTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view") forState:UIControlStateNormal];	
-	[button setFont:[UIFont boldSystemFontOfSize:16]];
+	[button.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
 	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	
 	UIImage *newImage = [[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];

@@ -202,39 +202,39 @@
     switch(row)
     {
 		case 0:
-			[cell setText:NSLocalizedString(@"All Publications", @"all publicaitons label for publication type")];
+			cell.textLabel.text = NSLocalizedString(@"All Publications", @"all publicaitons label for publication type");
 			break;
 		// PublicationTypeMagazine @"Magazine"
 		case 1:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeMagazine value:PublicationTypeMagazine table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeMagazine value:PublicationTypeMagazine table:@""];
 			break;
 		// PublicationTypeBook @"Book"
 		case 2:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBook value:PublicationTypeBook table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBook value:PublicationTypeBook table:@""];
 			break;
 		// PublicationTypeCampaignTract @"Campaign Tract"
 		case 3:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeCampaignTract value:PublicationTypeCampaignTract table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeCampaignTract value:PublicationTypeCampaignTract table:@""];
 			break;
 		// PublicationTypeBrochure @"Brochure"
 		case 4:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBrochure value:PublicationTypeBrochure table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeBrochure value:PublicationTypeBrochure table:@""];
 			break;
 		// PublicationTypeDVDBible @"Bible DVD"
 		case 5:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBible value:PublicationTypeDVDBible table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBible value:PublicationTypeDVDBible table:@""];
 			break;
 		// PublicationTypeDVDBook @"DVD"
 		case 6:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""];
 			break;
 		// PublicationTypeDVDNotCount @"DVD Not Counted"
 		case 7:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""];
 			break;
 		// PublicationTypeTract @"Tract"
 		case 8:
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""];
 			break;
     }
 	return(cell);

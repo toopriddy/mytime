@@ -92,7 +92,7 @@ static int sortByDate(id v1, id v2, void *context)
 {
 	if ([super init]) 
 	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+		NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
 		self.entries = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsBulkLiterature]];
 		[settings setObject:self.entries forKey:SettingsBulkLiterature];
 		
@@ -171,7 +171,7 @@ static int sortByDate(id v1, id v2, void *context)
 	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
 
 #if 0
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
 	if([settings objectForKey:SettingsBulkLiteratureAlertSheetShown] == nil)
 	{
 		[settings setObject:@"" forKey:SettingsBulkLiteratureAlertSheetShown];
@@ -265,7 +265,9 @@ static int sortByDate(id v1, id v2, void *context)
 	{
 		[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d publications", @"more than one publications, shown as '%d publications'"), number]];
 	}
-
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
 	return cell;
 }
 
@@ -298,11 +300,6 @@ static int sortByDate(id v1, id v2, void *context)
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return(UITableViewCellEditingStyleDelete);
-}
-
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	return(UITableViewCellAccessoryDisclosureIndicator);
 }
 
 

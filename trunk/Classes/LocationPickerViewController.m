@@ -121,17 +121,17 @@
 	self.view = self.theTableView;
 
 	self.googleMapsCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"googleMapsCell"] autorelease];
-	googleMapsCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeGoogleMaps value:CallLocationTypeGoogleMaps table:@""];
+	googleMapsCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeGoogleMaps value:CallLocationTypeGoogleMaps table:@""];
 	googleMapsCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	googleMapsCell.selected = NO;
 	
 	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"manualCell"] autorelease];
-	manualCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeManual value:CallLocationTypeManual table:@""];
+	manualCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeManual value:CallLocationTypeManual table:@""];
 	manualCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	manualCell.selected = NO;
 	
 	self.doNotShowCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"doNotShowCell"] autorelease];
-	doNotShowCell.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeDoNotShow value:CallLocationTypeDoNotShow table:@""];
+	doNotShowCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeDoNotShow value:CallLocationTypeDoNotShow table:@""];
 	doNotShowCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	doNotShowCell.selected = NO;
 	

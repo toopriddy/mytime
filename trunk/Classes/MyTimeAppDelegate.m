@@ -216,7 +216,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				//import
 				case 0:
 				{
-					NSMutableArray *calls = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+					NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 					NSMutableDictionary *newCall = [NSMutableDictionary dictionaryWithDictionary:callToImport];
 					
 					// change all return visits to be transferrs so that we dont count the other person's work
@@ -326,7 +326,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 	
 
-	[[Settings sharedInstance] readData];
 	[[Settings sharedInstance] saveData];
 
     // Set up the portraitWindow and content view
