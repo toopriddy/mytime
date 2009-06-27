@@ -165,7 +165,7 @@
 	// remove the call from the array
 	if(keepInformation)
 	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+		NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
 		NSMutableDictionary *call = [callsSorter callForRowAtIndexPath:indexPath];
 		NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsDeletedCalls]];
 		[settings setObject:deletedCalls forKey:SettingsDeletedCalls];

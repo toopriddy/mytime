@@ -358,24 +358,6 @@
 // Accessories (disclosures). 
 
 // When the editing state changes, these methods will be called again to allow the accessory to be hidden when editing, if required.
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
-	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
-	if ([cellData respondsToSelector:@selector(tableView:accessoryTypeForRowWithIndexPath:)])
-	{
-		return [cellData tableView:tableView accessoryTypeForRowWithIndexPath:indexPath];
-	}
-	
-	return UITableViewCellAccessoryNone;
-}
-
-
-// When the editing state changes, these methods will be called again to allow the accessory to be hidden when editing, if required.
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	if (!self.displaySectionControllers)

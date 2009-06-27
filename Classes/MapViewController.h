@@ -31,7 +31,8 @@
 	UIActivityIndicatorView *progView;
 	MapViewCallDetailController *detailView;
 	BOOL _shouldReloadMarkers;
-
+	NSString *_currentUser;
+	
 	RMMarker *selectedMarker;
 }
 

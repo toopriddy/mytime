@@ -193,16 +193,16 @@ static MetadataInformation commonInformation[] = {
 		if(row < ARRAY_SIZE(commonInformation))
 		{
 			NSString *name = commonInformation[row].name;
-			[cell setText:[[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""]];
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
 		}
 		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
 		{
 			row -= ARRAY_SIZE(commonInformation);
-			[cell setText:[[metadata objectAtIndex:row] objectForKey:SettingsMetadataName]];
+			cell.textLabel.text = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
 		}
 		else
 		{
-			[cell setText:NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field")];
+			cell.textLabel.text = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
 		}
 	}
 	return(cell);

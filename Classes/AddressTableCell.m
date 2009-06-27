@@ -28,19 +28,19 @@
 {
 	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
 	{
-		[self setText:NSLocalizedString(@"Address", @"Address label for call") ];
+		self.textLabel.text = NSLocalizedString(@"Address", @"Address label for call");
 
 		UIView *view = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
 		[self.contentView addSubview:view];
 		
 		self.topLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		topLabel.highlightedTextColor = self.selectedTextColor;
+		topLabel.highlightedTextColor = self.textLabel.highlightedTextColor;
 		topLabel.backgroundColor = [UIColor clearColor];
 		[view addSubview:topLabel];
 		[topLabel setText:@""];
 
 		self.bottomLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		bottomLabel.highlightedTextColor = self.selectedTextColor;
+		bottomLabel.highlightedTextColor = self.textLabel.highlightedTextColor;
 		bottomLabel.backgroundColor = [UIColor clearColor];
 		[bottomLabel setText:@""];
 		[view addSubview:bottomLabel];

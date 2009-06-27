@@ -250,6 +250,7 @@ enum {
 						currentUser = NSLocalizedString(@"Default User", @"name for the default user if you have not enabled multiple users");
 					}
 					[cell setValue:currentUser];
+					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 					break;
 				}
 			}
@@ -266,7 +267,7 @@ enum {
 				case 1:
 				{
 					int number = 2;
-					NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+					NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
 					if(value)
 						number = [value intValue];
 					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Months Displayed", @"Number of months shown in the statistics view, setting title"), number]];
@@ -276,10 +277,11 @@ enum {
 				case 2:
 				{
 					[cell setTitle:NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title")];
-					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+					NSString *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
 					if(value == nil)
 						value = PublisherTypePioneer;
 					[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""]];
+					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 					break;
 				}
 				case 3:
@@ -404,7 +406,7 @@ enum {
 				case 1:
 				{
 					int number = 2;
-					NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+					NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
 					if(value)
 						number = [value intValue];
 					// open up the edit address view 
@@ -420,7 +422,7 @@ enum {
 				}
 				case 2:
 				{
-					NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+					NSString *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
 					if(value == nil)
 						value = PublisherTypePioneer;
 
@@ -550,7 +552,7 @@ enum {
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
 {
 	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsMonthDisplayCount];
+	[[[Settings sharedInstance] userSettings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsMonthDisplayCount];
 	[[Settings sharedInstance] saveData];
 }
 
@@ -580,7 +582,7 @@ enum {
 
 - (void)publisherTypeViewControllerDone:(PublisherTypeViewController *)publisherTypeViewController
 {
-	[[[Settings sharedInstance] settings] setObject:publisherTypeViewController.type forKey:SettingsPublisherType];
+	[[[Settings sharedInstance] userSettings] setObject:publisherTypeViewController.type forKey:SettingsPublisherType];
 	[[Settings sharedInstance] saveData];
 }
 

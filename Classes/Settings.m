@@ -138,11 +138,10 @@ NSString * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pione
 NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
 #include "PSAddLocalizedString.h"
 
-
 @implementation Settings
 
 @synthesize settings;
-
+@synthesize userSettings;
 
 + (Settings *)sharedInstance
 {
@@ -151,7 +150,6 @@ NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling S
         if(instance == nil) 
 		{
             instance = [[self alloc] init]; // assignment not done here
-			instance.settings = nil;
 			[instance readData];
         }
     }
@@ -163,8 +161,6 @@ NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling S
 {
 	[super dealloc];
 }
-
-
 
 + (id)initWithZone:(NSZone *)zone
 {
@@ -185,25 +181,152 @@ NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling S
 	return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"records.plist"];
 }
 
+- (void)moveSettingsForKey:(NSString *)item user:(NSMutableDictionary *)user
+{
+	NSObject *object = [self.settings objectForKey:item];
+	if(object)
+	{
+		// move the calls to the user account;
+		NSObject *userObject = [user objectForKey:item];
+		if(userObject)
+		{
+			// if the user has an array type, then add to it, otherwise replace it... :(
+			if([userObject isKindOfClass:[NSArray class]] && [object isKindOfClass:[NSArray class]])
+			{
+				NSMutableArray *userArray = (NSMutableArray *)userObject;
+				NSMutableArray *array = (NSMutableArray *)object;
+				[userArray addObjectsFromArray:array];
+			}
+			else
+			{
+				[user setObject:object forKey:item];
+			}
+		}
+		else
+		{
+			[user setObject:object forKey:item];
+		}
+		
+		// remove the object from the main settings
+		[self.settings removeObjectForKey:item];
+	}
+}
+
+- (NSMutableDictionary *)findUserNamed:(NSString *)username
+{
+	NSMutableArray *users = [self.settings objectForKey:SettingsMultipleUsers];
+	
+	for(NSMutableDictionary *user in users)
+	{
+		if([[user objectForKey:SettingsMultipleUsersName] isEqualToString:username])
+		{
+			return user;
+		}
+	}
+	
+	return nil;
+}
+	
+- (NSMutableDictionary *)findOrCreateUserNamed:(NSString *)username
+{
+	NSMutableDictionary *user = [self findUserNamed:username];
+	if(user)
+		return user;
+	
+	// we did not find one, so create a user for this username
+	user = [NSMutableDictionary dictionaryWithObjectsAndKeys:username, SettingsMultipleUsersName, nil];
+	NSMutableArray *users = [self.settings objectForKey:SettingsMultipleUsers];
+	[users addObject:user];
+	return user;
+}
+
+- (void)changeSettingsToUser:(NSString *)username save:(BOOL)save
+{
+	NSMutableDictionary *user = [self findOrCreateUserNamed:username];
+	
+	self.userSettings = user;
+	[self.settings setObject:username forKey:SettingsMultipleUsersCurrentUser];
+	if(save)
+		[self saveData];
+}
+
+- (BOOL)hasOldData
+{
+	return	[self.settings objectForKey:SettingsCalls] ||
+			[self.settings objectForKey:SettingsDeletedCalls] ||
+			[self.settings objectForKey:SettingsBulkLiterature] ||
+			[self.settings objectForKey:SettingsPreferredMetadata] ||
+			[self.settings objectForKey:SettingsMonthDisplayCount] ||
+			[self.settings objectForKey:SettingsTimeStartDate] ||
+			[self.settings objectForKey:SettingsRBCTimeStartDate] ||
+			[self.settings objectForKey:SettingsTimeEntries] ||
+			[self.settings objectForKey:SettingsRBCTimeEntries] ||
+			[self.settings objectForKey:SettingsPublisherType];
+}
+
 - (void)readData
 {
 	VERY_VERBOSE(NSLog(@"readData");)
-	[settings release];
-	settings = [[NSMutableDictionary alloc] initWithContentsOfFile:[self filename]];
-	if(settings == nil)
+	self.settings = [[[NSMutableDictionary alloc] initWithContentsOfFile:[self filename]] autorelease];
+	if(self.settings == nil)
 	{
-		settings = [[NSMutableDictionary alloc] init];
+		self.settings = [[[NSMutableDictionary alloc] init] autorelease];
 	}
 	else
 	{
-//		VERBOSE(NSLog(@"restored data from file:\n%@", settings);)
+//		VERBOSE(NSLog(@"restored data from file:\n%@", self.settings);)
 	}
+
+	
+	NSArray *users = [self.settings objectForKey:SettingsMultipleUsers];
+	NSString *currentUser = [self.settings objectForKey:SettingsMultipleUsersCurrentUser];
+	NSMutableDictionary *user;
+	BOOL save = NO;
+	
+	if(currentUser == nil || users == nil || [self hasOldData])
+	{
+		save = YES;
+		if(currentUser == nil)
+		{
+			currentUser = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
+			int i = 0;
+			// if this user exists, make another one.
+			while([self findUserNamed:currentUser] != nil)
+			{
+				currentUser = [NSString stringWithFormat:@"%@ %u", currentUser, i];
+				i++;
+			}
+			[self.settings setObject:currentUser forKey:SettingsMultipleUsersCurrentUser];
+		}
+		
+		if(users == nil)
+		{
+			users = [NSMutableArray array];
+			[self.settings setObject:users forKey:SettingsMultipleUsers];
+		}
+		user = [self findOrCreateUserNamed:currentUser];
+
+		// this is the old storage method, 
+		//move settings around...
+		[self moveSettingsForKey:SettingsCalls user:user];
+		[self moveSettingsForKey:SettingsDeletedCalls user:user];
+		[self moveSettingsForKey:SettingsBulkLiterature user:user];
+		[self moveSettingsForKey:SettingsPreferredMetadata user:user];
+		[self moveSettingsForKey:SettingsMonthDisplayCount user:user];
+		[self moveSettingsForKey:SettingsTimeStartDate user:user];
+		[self moveSettingsForKey:SettingsRBCTimeStartDate user:user];
+		[self moveSettingsForKey:SettingsTimeEntries user:user];
+		[self moveSettingsForKey:SettingsRBCTimeEntries user:user];
+		[self moveSettingsForKey:SettingsPublisherType user:user];
+	}
+	
+	[self changeSettingsToUser:currentUser save:save];
 }
 
 - (void)saveData
 {
 	VERY_VERBOSE(NSLog(@"saveData");)
-	[settings writeToFile:[self filename] atomically: YES];
+	[self.settings writeToFile:[self filename] atomically: YES];
 }
 
 - (id)copyWithZone:(NSZone *)zone

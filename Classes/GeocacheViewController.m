@@ -158,7 +158,7 @@
 		NSMutableDictionary *foundCall = call;
 		if(foundCall == nil)
 		{
-			NSEnumerator *e = [[[[Settings sharedInstance] settings] objectForKey:SettingsCalls] objectEnumerator];
+			NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
 			
 			while ( (foundCall = [e nextObject]) ) 
 			{
@@ -213,7 +213,7 @@
 	}
 	else
 	{
-		NSEnumerator *e = [[[[Settings sharedInstance] settings] objectForKey:SettingsCalls] objectEnumerator];
+		NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
 		NSMutableDictionary *theCall;
 		
 		while ( (theCall = [e nextObject]) ) 

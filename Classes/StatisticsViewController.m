@@ -67,7 +67,7 @@ static NSString *MONTHS[] = {
 
 - (BOOL)showYearInformation
 {
-	NSString *type = [[[Settings sharedInstance] settings] objectForKey:SettingsPublisherType];
+	NSString *type = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
 	return type == nil || 
 	       [type isEqualToString:PublisherTypePioneer] ||
 		   [type isEqualToString:PublisherTypeSpecialPioneer] ||
@@ -420,7 +420,7 @@ static NSString *MONTHS[] = {
 
 - (void)reloadData
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	
 	memset(_books, 0, sizeof(_books));
 	memset(_brochures, 0, sizeof(_brochures));
@@ -443,7 +443,7 @@ static NSString *MONTHS[] = {
 	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
 
 	BOOL newServiceYear = _thisMonth >= 9;
-	NSArray *timeEntries = [settings objectForKey:SettingsTimeEntries];
+	NSArray *timeEntries = [userSettings objectForKey:SettingsTimeEntries];
 	int timeIndex;
 	int timeCount = [timeEntries count];
 	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
@@ -490,7 +490,7 @@ static NSString *MONTHS[] = {
 
 	// QUICK BUILD
 	
-	timeEntries = [settings objectForKey:SettingsRBCTimeEntries];
+	timeEntries = [userSettings objectForKey:SettingsRBCTimeEntries];
 	timeCount = [timeEntries count];
 	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
 	{
@@ -536,7 +536,7 @@ static NSString *MONTHS[] = {
 
 
 	// go through all of the bulk publications
-	NSArray *bulkArray = [settings objectForKey:SettingsBulkLiterature];
+	NSArray *bulkArray = [userSettings objectForKey:SettingsBulkLiterature];
 	NSEnumerator *bulkArrayEnumerator = [bulkArray objectEnumerator];
 	NSDictionary *entry;
 	
@@ -613,8 +613,8 @@ static NSString *MONTHS[] = {
 		}
 	}
 
-	[self countCalls:[settings objectForKey:SettingsCalls] removeOld:NO];
-	[self countCalls:[settings objectForKey:SettingsDeletedCalls] removeOld:YES];
+	[self countCalls:[userSettings objectForKey:SettingsCalls] removeOld:NO];
+	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls] removeOld:YES];
 	[theTableView reloadData];
 }
 
@@ -630,7 +630,7 @@ static NSString *MONTHS[] = {
 	if([self showYearInformation])
 		count++;
 	
-	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsMonthDisplayCount];
+	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
 	if(value)
 		count += [value intValue];
 	else
@@ -812,7 +812,7 @@ static NSString *MONTHS[] = {
 				NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
 				[timeEntry setObject:date forKey:SettingsTimeEntryDate];
 				[timeEntry setObject:[NSNumber numberWithInt:(60 - minutes)] forKey:SettingsTimeEntryMinutes];
-				[[[[Settings sharedInstance] settings] objectForKey:SettingsTimeEntries] addObject:timeEntry];
+				[[[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries] addObject:timeEntry];
 				[[Settings sharedInstance] saveData];
 				[self reloadData];
 				break;
@@ -827,8 +827,8 @@ static NSString *MONTHS[] = {
 				NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
 
 				//make the time entries editable
-				NSMutableArray *timeEntries = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsTimeEntries]];
-				[[[Settings sharedInstance] settings] setObject:timeEntries forKey:SettingsTimeEntries];
+				NSMutableArray *timeEntries = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries]];
+				[[[Settings sharedInstance] userSettings] setObject:timeEntries forKey:SettingsTimeEntries];
 
 				// now go and add the entry
 				NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];

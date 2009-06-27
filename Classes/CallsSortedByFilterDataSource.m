@@ -46,7 +46,7 @@
 
 - (UIImage *)tabBarImage 
 {
-	return [UIImage imageNamed:@"studies.png"];
+	return [UIImage imageNamed:@"sort4.png"];
 }
 
 - (void)dealloc
@@ -63,7 +63,7 @@
 
 - (NSString *)preferredMetadata
 {
-	NSString *preferredMetadata = [[[Settings sharedInstance] settings] objectForKey:SettingsPreferredMetadata];
+	NSString *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
 	if(preferredMetadata == nil)
 	{
 		NSArray *array = [MetadataViewController metadataNames];
@@ -74,7 +74,7 @@
 
 - (void)setPreferredMetadata:(NSString *)metadata
 {
-	[[[Settings sharedInstance] settings] setObject:metadata forKey:SettingsPreferredMetadata];
+	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsPreferredMetadata];
 	[[Settings sharedInstance] saveData];
 	callsSorter.metadata = metadata;
 	[self refreshData];

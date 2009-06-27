@@ -21,10 +21,15 @@
 #import "RMCloudMadeMapSource.h"
 #import "CallViewController.h"
 
+@interface MapViewController ()
+@property (nonatomic, retain) NSString *currentUser;
+@end
+
 @implementation MapViewController
 @synthesize detailView;
 @synthesize mapView;
 @synthesize call;
+@synthesize currentUser = _currentUser;
 
 - (id)initWithTitle:(NSString *)theTitle call:(NSMutableDictionary *)theCall
 {
@@ -35,6 +40,7 @@
 		// this title will appear in the navigation bar
 		self.title = theTitle;
 		self.call = theCall;
+		self.currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
 	}
@@ -43,25 +49,16 @@
 
 - (id)initWithTitle:(NSString *)theTitle
 {
-	self = [super init];
-	if (self)
-	{
-		_shouldReloadMarkers = NO;
-		// this title will appear in the navigation bar
-		self.title = theTitle;
-		self.call = nil;
-
-		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
-		[[Geocache sharedInstance] addDelegate:self];
-	}
-	return self;
+	return [self initWithTitle:theTitle call:nil];
 }
 
 - (void)dealloc
 {
 	[[Geocache sharedInstance] removeDelegate:self];
+	self.currentUser = nil;
 	self.mapView = nil;
 	self.call = nil;
+	self.detailView = nil;
 		
 	[super dealloc];
 }
@@ -110,7 +107,7 @@
 	}
 	else
 	{
-		NSEnumerator *e = [[[[Settings sharedInstance] settings] objectForKey:SettingsCalls] objectEnumerator];
+		NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
 		NSMutableDictionary *theCall;
 		
 		while ( (theCall = [e nextObject]) ) 
@@ -172,6 +169,21 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	_shouldReloadMarkers = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
+	
+	if(![currentUser isEqualToString:self.currentUser])
+	{
+		self.currentUser = currentUser;
+		// we should blow away all markers and recreate them
+		[self.mapView removeFromSuperview];
+		[self performSelector:@selector(loadMapView) withObject:nil afterDelay:0.3];
+
+		_shouldReloadMarkers = NO;
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -363,15 +375,15 @@
 //
 - (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)thisCall keepInformation:(BOOL)keepInformation
 {
+	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
 	if(keepInformation)
 	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 		NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsDeletedCalls]];
 		[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
 		[deletedCalls addObject:thisCall];
 	}
 
-	NSMutableArray *array = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	NSMutableArray *array = [settings objectForKey:SettingsCalls];
 	[array removeObject:detailView.call];
 	[[Settings sharedInstance] saveData];
 
@@ -382,7 +394,7 @@
 
 - (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)newCall
 {
-	NSMutableArray *array = [[[Settings sharedInstance] settings] objectForKey:SettingsCalls];
+	NSMutableArray *array = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 	int index = [array indexOfObject:detailView.call];
 	[array replaceObjectAtIndex:index withObject:newCall];
 	
