@@ -130,6 +130,8 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 
 			NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
 			[_call setObject:returnVisits forKey:CallReturnVisits];
+			// make the preferred metadata show up
+			[_call setObject:[NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata]] forKey:CallMetadata];
 			
 			NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
 

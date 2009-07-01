@@ -58,6 +58,22 @@ int main (int argc, const char * argv[])
 	entry = nil;
 	
 	NSString *mergeToFilename = [NSString stringWithCString:argv[2]];
+	if([mergeToFilename isEqualToString:@"-check"])
+	{
+		CFShow(@"The following have not been translated:\n\n");
+		for(NSDictionary *entry in baseArray)
+		{
+//			CFShow([entry description]);
+			if([[entry objectForKey:@"second"] hasPrefix:[entry objectForKey:@"first"]])
+			{
+				CFShow([entry objectForKey:@"first"]);
+				CFShow(@"\n");
+			}
+		}
+		
+		return 0;
+	}
+	
 	NSString *mergeToFile = [NSString stringWithContentsOfFile:mergeToFilename];
 	if(mergeToFile == nil || mergeToFile.length == 0)
 	{

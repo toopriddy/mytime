@@ -29,49 +29,280 @@ static MetadataInformation commonInformation[] = {
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-@interface MetadataViewController ()
-@property (nonatomic,retain) UITableView *theTableView;
+#import "TableViewCellController.h"
+#import "Settings.h"
+#import "UITableViewTitleAndValueCell.h"
+#import "GenericTableViewSectionController.h"
+#import "MetadataEditorViewController.h"
+#import "MetadataCustomViewController.h"
+
+@interface MetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate>
+{
+	MetadataViewController *delegate;
+	NSIndexPath *_indexPath;
+}
+@property (nonatomic, assign) MetadataViewController *delegate;
+@property (nonatomic, retain) NSIndexPath *indexPath;
 @end
+@implementation MetadataCellController
+@synthesize delegate;
+@synthesize indexPath = _indexPath;
+
+- (void)dealloc
+{
+	self.indexPath = nil;
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"MetadataCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:commonIdentifier];
+	}
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+
+	cell.textLabel.text = [[metadata objectAtIndex:indexPath.row] objectForKey:SettingsMetadataName];
+
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	
+	return cell;
+}
+
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(editingStyle == UITableViewCellEditingStyleDelete)
+	{
+		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+		int row = [indexPath row];
+		DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", indexPath.section, row);)
+
+		if(indexPath.section == 0)
+		{
+			// remove something from shown metadata
+#warning fix me			
+		}
+		
+		[metadata removeObjectAtIndex:row];
+		[[Settings sharedInstance] saveData];
+
+		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+	}
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
+{
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name.text, SettingsMetadataName,
+								  [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType, nil];
+	[metadata replaceObjectAtIndex:self.indexPath.row withObject:entry];
+	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(tableView.editing)
+	{
+		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+		self.indexPath = [[indexPath copy] autorelease];
+		int row = indexPath.row;
+		MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithName:[[metadata objectAtIndex:row] objectForKey:SettingsMetadataName] 
+																						 type:[[[metadata objectAtIndex:row] objectForKey:SettingsMetadataType] intValue]] autorelease];
+		p.delegate = self;
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+	}
+	else
+	{
+		MetadataInformation localMetadata;
+		
+		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+		int row = indexPath.row;
+		localMetadata.name = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
+		localMetadata.type = [[[metadata objectAtIndex:row] objectForKey:SettingsMetadataType] intValue];
+		
+		if(self.delegate.delegate)
+		{
+			[self.delegate.delegate metadataViewControllerAdd:self.delegate metadataInformation:&localMetadata];
+		}
+		[[self.delegate navigationController] popViewControllerAnimated:YES];
+	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	NSMutableArray *fromMetadata;
+	NSMutableArray *toMetadata;
+	// move the row
+	fromMetadata = [[[Settings sharedInstance] userSettings] objectForKey:(fromIndexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	toMetadata = [[[Settings sharedInstance] userSettings] objectForKey:(toIndexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	NSMutableDictionary *entry = [[fromMetadata objectAtIndex:fromIndexPath.row] retain];
+	[fromMetadata removeObjectAtIndex:fromIndexPath.row];
+	[toMetadata insertObject:entry atIndex:toIndexPath.row];
+
+	if(fromIndexPath.section != toIndexPath.section)
+	{
+		if(toIndexPath.section == 0)
+		{
+			// adding something to shown metadata
+#warning fix me			
+		}
+		else
+		{
+			// remove something from shown metadata
+#warning fix me			
+		}
+	}
+	
+	[entry release];
+	[[Settings sharedInstance] saveData];																	
+	
+	// move the cellController
+	GenericTableViewSectionController *fromSectionController = [self.delegate.sectionControllers objectAtIndex:fromIndexPath.section];
+	GenericTableViewSectionController *toSectionController = [self.delegate.sectionControllers objectAtIndex:toIndexPath.section];
+	NSObject *cellController = [[fromSectionController.cellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.cellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.cellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+
+	// move the cellController in the displayList (the main list and the display list are the same)
+	cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+}
+@end
+
+
+
+@interface AddMetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate>
+{
+	MetadataViewController *delegate;
+	NSIndexPath *_indexPath;
+}
+@property (nonatomic, assign) MetadataViewController *delegate;
+@property (nonatomic, retain) NSIndexPath *indexPath;
+@end
+@implementation AddMetadataCellController
+@synthesize delegate;
+@synthesize indexPath = _indexPath;
+
+- (void)dealloc
+{
+	self.indexPath = nil;
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"AddAdditionalInfo";
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:commonIdentifier] autorelease];
+	}
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	
+	[cell setValue:NSLocalizedString(@"Add Custom Information", @"Button to click to add an 'Additional Information' to calls")];
+	return cell;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleInsert;
+}
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return NO;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
+{
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name.text, SettingsMetadataName,
+	         							                                           [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType, nil];
+	[metadata addObject:entry];
+	[[Settings sharedInstance] saveData];																	
+	
+	MetadataCellController *cellController = [[MetadataCellController alloc] init];
+	cellController.delegate = self.delegate;
+
+	GenericTableViewSectionController *sectionController = [self.delegate.sectionControllers objectAtIndex:self.indexPath.section];
+	[sectionController.cellControllers insertObject:cellController atIndex:(sectionController.cellControllers.count - 1)];
+	[self.delegate updateWithoutReload];
+}
+
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// open up the custom metadata type
+	self.indexPath = [[indexPath copy] autorelease];
+	MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] init] autorelease];
+	p.delegate = self;
+	
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	return;
+}
+
+
+@end
+
+
 
 @implementation MetadataViewController
 
 @synthesize delegate;
-@synthesize theTableView;
 
 + (NSArray *)metadataNames
 {
 	NSMutableArray *array = [NSMutableArray array];
-	for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
-	{
-		[array addObject:commonInformation[i].name];
-	}
-	NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
+	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
+	metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
 	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
 	return array;
 }
 
 - (id) init;
 {
-	if ([super init]) 
+	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
-		theTableView = nil;
-		delegate = nil;
-		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Add Info", @"Add Information title");
+		
+		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
 }
 
 - (void)dealloc 
 {
-	self.theTableView.delegate = nil;
-	self.theTableView.dataSource = nil;
-
-	self.theTableView = nil;
-
-	self.delegate = nil;
+	self.tableView.delegate = nil;
+	self.tableView.dataSource = nil;
+	
+	self.tableView = nil;
 	
 	[super dealloc];
 }
@@ -81,224 +312,113 @@ static MetadataInformation commonInformation[] = {
 	return(YES);
 }
 
+- (void)navigationControlEdit:(id)sender 
+{
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+	[self.tableView flashScrollIndicators];
+	
+	// update the button in the nav bar
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																			 target:self
+																			 action:@selector(navigationControlDone:)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:YES];
+	
+	self.navigationItem.hidesBackButton = YES;
+	
+	self.editing = YES;
+}	
+
+- (void)navigationControlDone:(id)sender 
+{
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+	[self.tableView flashScrollIndicators];
+	
+	// update the button in the nav bar
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+																			 target:self
+																			 action:@selector(navigationControlEdit:)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:YES];
+	
+	self.navigationItem.hidesBackButton = NO;
+	
+	self.editing = NO;
+}	
+
 - (void)loadView 
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:UITableViewStyleGrouped] autorelease];
-	theTableView.editing = YES;
-	theTableView.allowsSelectionDuringEditing = YES;
+	[super loadView];
 	
-	// set the autoresizing mask so that the table will always fill the view
-	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	[self updateAndReload];
 	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	theTableView.delegate = self;
-	theTableView.dataSource = self;
-	
-	// set the tableview as the controller view
-	self.view = self.theTableView;
-
-	[self.theTableView reloadData];
+	[self navigationControlDone:nil];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)constructSectionControllers
 {
-	[super viewWillAppear:animated];
-	// force the tableview to load
-	[self.theTableView reloadData];
-	
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	[theTableView flashScrollIndicators];
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row=%d", section, row);)
-	
-	if(section == 0)
+	// we have to convert from the old style Metadata to the new one
+	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
+	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMetadata];
+	if(metadata != nil || otherMetadata == nil)
 	{
-		MetadataInformation localMetadata;
-		MetadataInformation *returnedMetadata = &localMetadata;
-		
-		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
-		if(row < ARRAY_SIZE(commonInformation))
+		otherMetadata = [NSMutableArray array];
+		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
 		{
-			returnedMetadata = &commonInformation[row];
+			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:commonInformation[i].name, SettingsMetadataName, 
+																			   [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
+	                                                                           nil]];
 		}
-		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
-		{
-			row -= ARRAY_SIZE(commonInformation);
-			localMetadata.name = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
-			localMetadata.type = [[[metadata objectAtIndex:row] objectForKey:SettingsMetadataType] intValue];
-		}
-		else
-		{
-			// open up the custom metadata type
-			MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] init] autorelease];
-			p.delegate = self;
-
-			[[self navigationController] pushViewController:p animated:YES];		
-			return;
-		}
-
-		if(delegate)
-		{
-			[delegate metadataViewControllerAdd:self metadataInformation:returnedMetadata];
-		}
-		[[self navigationController] popViewControllerAnimated:YES];
+		[[[Settings sharedInstance] userSettings] setObject:otherMetadata forKey:SettingsOtherMetadata];
+		[[[Settings sharedInstance] userSettings] removeObjectForKey:SettingsMetadata];
 	}
-}
-
-
-// UITableViewDataSource methods
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
-{
-	return 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
-{
-	NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
-	return ARRAY_SIZE(commonInformation) + metadata.count + 1; // additional 1 for custom
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
-	
-	UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
-	if(cell == nil)
+	if(preferredMetadata == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
+		preferredMetadata = [NSMutableArray array];
+		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsPreferredMetadata];
 	}
 	
-	if(section == 0)
+	GenericTableViewSectionController *sectionController;
+	self.sectionControllers = [NSMutableArray array];
+
+	// preferred Metadata
+	sectionController = [[GenericTableViewSectionController alloc] init];
+	sectionController.title = NSLocalizedString(@"Information Always Shown", @"Title in the 'Additional Information' for the entries that will always show in every call");
+	[self.sectionControllers addObject:sectionController];
+	[sectionController release];
+
+	for(NSMutableDictionary *entry in preferredMetadata)
 	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
-		if(row < ARRAY_SIZE(commonInformation))
-		{
-			NSString *name = commonInformation[row].name;
-			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
-		}
-		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
-		{
-			row -= ARRAY_SIZE(commonInformation);
-			cell.textLabel.text = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
-		}
-		else
-		{
-			cell.textLabel.text = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
-		}
+		MetadataCellController *cellController = [[MetadataCellController alloc] init];
+		cellController.delegate = self;
+		[sectionController.cellControllers addObject:cellController];
+		[cellController release];
 	}
-	return(cell);
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return(YES);
-}
-
-- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return(0);
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", section, row);)
-
-	if(section == 0)
-	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
-		if(row < ARRAY_SIZE(commonInformation))
-		{
-		}
-		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
-		{
-			return UITableViewCellEditingStyleDelete;
-		}
-		else
-		{
-			return UITableViewCellEditingStyleInsert;
-		}
-	}
-	return UITableViewCellEditingStyleNone;
-}
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", section, row);)
-
-	if(section == 0)
-	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] settings] objectForKey:SettingsMetadata];
-		if(row < ARRAY_SIZE(commonInformation))
-		{
-		}
-		else if(row - ARRAY_SIZE(commonInformation) < metadata.count)
-		{
-			row -= ARRAY_SIZE(commonInformation);
-			NSMutableArray *array = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata]];
-			[array removeObjectAtIndex:row];
-			[[[Settings sharedInstance] settings] setObject:array forKey:SettingsMetadata];
-			[[Settings sharedInstance] saveData];
-			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-		}
-		else
-		{
-			[self tableView:tableView didSelectRowAtIndexPath:indexPath];
-		}
-	}
-}
-
-- (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
-{
-	MetadataInformation localMetadata;
-	localMetadata.name = metadataCustomViewController.name.text;
-	localMetadata.type = metadataCustomViewController.type;
 	
-	NSMutableArray *array = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] settings] objectForKey:SettingsMetadata]];
-	[[[Settings sharedInstance] settings] setObject:array forKey:SettingsMetadata];
-	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:localMetadata.name, SettingsMetadataName,
-																			      [NSNumber numberWithInt:localMetadata.type], SettingsMetadataType, nil];
-	[array addObject:entry];
+	// other Metadata
+	sectionController = [[GenericTableViewSectionController alloc] init];
+	sectionController.title = NSLocalizedString(@"Other Information", @"Title in the 'Additional Information' for the entries that can be added per call");
+	[self.sectionControllers addObject:sectionController];
+	[sectionController release];
 
-	[[Settings sharedInstance] saveData];																	
-
-	if(delegate)
+	for(NSMutableDictionary *entry in otherMetadata)
 	{
-		[delegate metadataViewControllerAdd:self metadataInformation:&localMetadata];
+		MetadataCellController *cellController = [[MetadataCellController alloc] init];
+		cellController.delegate = self;
+		[sectionController.cellControllers addObject:cellController];
+		[cellController release];
 	}
-	[[self navigationController] popToViewController:(UIViewController *)delegate animated:YES];
+	// add the "Add Additional User" cell at the end
+	AddMetadataCellController *addCellController = [[AddMetadataCellController alloc] init];
+	addCellController.delegate = self;
+	[sectionController.cellControllers addObject:addCellController];
+	[addCellController release];
 }
 
-//
-//
-// UITableViewDelegate methods
-//
-//
 
-// NONE
 
 - (BOOL)respondsToSelector:(SEL)selector
 {
@@ -318,9 +438,3 @@ static MetadataInformation commonInformation[] = {
     [super forwardInvocation:invocation];
 }
 @end
-
-
-
-
-
-

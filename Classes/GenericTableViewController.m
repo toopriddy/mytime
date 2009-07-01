@@ -211,12 +211,45 @@
 			sectionController.displayCellControllers = viewableRows;
 			[viewableRows release];
 			
+			currentDisplaySectionController = [currentDisplaySectionEnumerator nextObject];
 			sectionNumber++;
 		}
 	}		
 	self.displaySectionControllers = viewableSections;
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 	[self.tableView endUpdates];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	if (!self.displaySectionControllers)
+	{
+		[self constructDisplaySectionControllers];
+	}
+	
+	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
+	if ([sectionController respondsToSelector:@selector(tableView:titleForHeaderInSection:)])
+	{
+		return [sectionController tableView:tableView titleForHeaderInSection:section];
+	}
+	
+	return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if (!self.displaySectionControllers)
+	{
+		[self constructDisplaySectionControllers];
+	}
+	
+	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
+	if ([sectionController respondsToSelector:@selector(tableView:titleForFooterInSection:)])
+	{
+		return [sectionController tableView:tableView titleForFooterInSection:section];
+	}
+	
+	return nil;
 }
 
 //////////////////////////////////
@@ -300,6 +333,21 @@
 	return NO;
 }
 
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	if (!self.displaySectionControllers)
+	{
+		[self constructDisplaySectionControllers];
+	}
+	
+	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:fromIndexPath.section] tableView:tableView cellControllerAtIndexPath:fromIndexPath];
+	if ([cellData respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)])
+	{
+		return [cellData tableView:tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+	}
+}
+
+
 // Data manipulation - insert and delete support
 
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
@@ -370,6 +418,13 @@
 	{
 		[cellData tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
 	}
+#if 0	
+	else if ([cellData respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)])
+	{
+		// go ahead and make the default behaviour of the accessory click be like you clicked the row
+		[cellData tableView:tableView didSelectRowAtIndexPath:indexPath];
+	}
+#endif
 }
 
 // Selection
@@ -515,6 +570,22 @@
 	
 	self.displaySectionControllers = nil;
 }
+
+- (void)loadView 
+{
+	[super loadView];
+	
+	self.tableView.editing = NO;
+	self.tableView.allowsSelectionDuringEditing = YES;
+	
+	// set the autoresizing mask so that the table will always fill the view
+	self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	
+	// set the tableview as the controller view
+	//	self.view = self.tableView;
+}
+
+
 //
 // dealloc
 //
