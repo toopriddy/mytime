@@ -23,16 +23,12 @@
 - (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadataInformation:(MetadataInformation *)metadataInformation;
 @end
 
-@interface MetadataViewController : UIViewController <UITableViewDelegate, 
-													  UITableViewDataSource,
-													  MetadataCustomViewControllerDelegate> 
+#import "GenericTableViewController.h"
+
+@interface MetadataViewController : GenericTableViewController
 {
 	id<MetadataViewControllerDelegate> delegate;
-@private
-	UITableView *theTableView;
-
 }
-
 @property (nonatomic,assign) id<MetadataViewControllerDelegate> delegate;
 
 + (NSArray *)metadataNames;
@@ -44,9 +40,6 @@
  * @returns self
  */
 - (id) init;
-
 @end
-
-
 
 

@@ -25,7 +25,7 @@
 {
 	if(self = [super init])
 	{
-		self.cellControllers = [[NSArray alloc] init];
+		self.cellControllers = [[NSMutableArray alloc] init];
 		[self.cellControllers release]; // get rid of the extra reference count
 	}
 	

@@ -45,9 +45,16 @@ static MetadataInformation commonInformation[] = {
 
 - (id) init
 {
+	return [self initWithName:nil type:-1];
+}
+
+- (id) initWithName:(NSString *)name type:(MetadataType)type;
+{
 	if ([super init]) 
 	{
-		_selected = -1;
+		self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+		self.name.text = name;
+		_selected = type;
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
 	}
@@ -95,7 +102,7 @@ static MetadataInformation commonInformation[] = {
 	theTableView.delegate = self;
 	theTableView.dataSource = self;
 
-	self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+//	self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
 	_name.keyboardType = UIKeyboardTypeEmailAddress;
 	_name.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
 	_name.autocapitalizationType = UITextAutocapitalizationTypeNone;

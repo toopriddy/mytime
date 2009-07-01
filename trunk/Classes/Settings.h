@@ -92,14 +92,19 @@ extern NSString * const SettingsLastCallCity;
 extern NSString * const SettingsLastCallState;
 extern NSString * const SettingsCurrentButtonBarIndex;
 
+//multiple users
+extern NSString * const SettingsPreferredMetadata;
+//multiple users
+extern NSString * const SettingsSortedByMetadata;
+
 extern NSString * const SettingsMetadata;
+//multiple users
+extern NSString * const SettingsOtherMetadata;
 	extern NSString * const SettingsMetadataName;
 	extern NSString * const SettingsMetadataType;
 	extern NSString * const SettingsMetadataValue;
 	extern NSString * const SettingsMetadataData;
 
-//multiple users
-extern NSString * const SettingsPreferredMetadata;
 
 //multiple users
 extern NSString * const SettingsMonthDisplayCount;

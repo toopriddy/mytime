@@ -155,7 +155,7 @@
 
 - (id) init;
 {
-	if ([super init]) 
+	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
@@ -366,49 +366,19 @@
 	{
 		[self initalizeDefaultUser];
 	}
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-												   style:UITableViewStyleGrouped] autorelease];
-	self.tableView.editing = NO;
-	self.tableView.allowsSelectionDuringEditing = YES;
-	
-	// set the autoresizing mask so that the table will always fill the view
-	self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
-	// set the tableview as the controller view
-	self.view = self.tableView;
-	
+	[super loadView];
+
 	[self updateAndReload];
 	
 	[self navigationControlDone:nil];
 }
 
-#if 0
--(void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	// force the tableview to load
-	[self.theTableView reloadData];
-	
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	[theTableView flashScrollIndicators];
-}
-#endif
-
-
 - (void)constructSectionControllers
 {
-	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
-
 	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 
-	sectionController.cellControllers = [NSMutableArray array];
-	for(int i = users.count; i > 0; --i)
+	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+	for(NSMutableDictionary *entry in users)
 	{
 		MultipleUsersCellController *cellController = [[MultipleUsersCellController alloc] init];
 		cellController.delegate = self;

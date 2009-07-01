@@ -31,7 +31,7 @@
 - (void)metadataPickerViewControllerChanged:(MetadataPickerViewController *)metadataPickerViewController
 {
 	CallsSortedByFilterDataSource *source = self.dataSource;
-	source.preferredMetadata = metadataPickerViewController.metadata;
+	source.sortedByMetadata = metadataPickerViewController.metadata;
 	[self.tableView reloadData];
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:metadataPickerViewController.metadata
 																style:UIBarButtonItemStyleBordered 
@@ -72,7 +72,7 @@
 	
 	
 	CallsSortedByFilterDataSource *source = self.dataSource;
-	self.picker.metadata = source.preferredMetadata;
+	self.picker.metadata = source.sortedByMetadata;
 	
 	frame = self.picker.view.frame;
 	frame.origin.y = self.navigationController.navigationBar.frame.origin.y;
@@ -98,7 +98,7 @@
 	[super loadView];
 	
 	CallsSortedByFilterDataSource *source = self.dataSource;
-	self.picker = [[MetadataPickerViewController alloc] initWithMetadata:source.preferredMetadata];
+	self.picker = [[MetadataPickerViewController alloc] initWithMetadata:source.sortedByMetadata];
 	self.picker.delegate = self;
 	[self.picker release];
 	// hide the picker view above the screen
@@ -107,7 +107,7 @@
 	self.picker.view.frame = frame;
 	
 	// update the button in the nav bar
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:source.preferredMetadata
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:source.sortedByMetadata
 																style:UIBarButtonItemStyleBordered 
 															   target:self 
 															   action:@selector(changeMetadata)] autorelease];

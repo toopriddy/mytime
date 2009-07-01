@@ -19,7 +19,7 @@
 @interface CallsSortedByFilterDataSource : BaseSortedCallsDataSource  
 {
 }
-@property (nonatomic, assign) NSString *preferredMetadata;
+@property (nonatomic, assign) NSString *sortedByMetadata;
 
 - (id)init;
 - (void)dealloc;

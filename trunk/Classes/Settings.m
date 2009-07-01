@@ -96,14 +96,15 @@ NSString * const SettingsSecretaryEmailNotes = @"secretaryNotes";
 NSString * const SettingsBulkLiteratureAlertSheetShown = @"bulkLiteratureAlertShown";
 NSString * const SettingsExistingCallAlertSheetShown = @"existingCallAlertShown";
 
-NSString * const SettingsMetadataAlwaysShown = @"alwaysShownMetadata";
 NSString * const SettingsMetadata = @"metadata";
+NSString * const SettingsOtherMetadata = @"otherMetadata";
 NSString * const SettingsMetadataName = @"name";
 NSString * const SettingsMetadataType = @"type";
 NSString * const SettingsMetadataValue = @"value";
 NSString * const SettingsMetadataData = @"data";
 
 NSString * const SettingsPreferredMetadata = @"preferredMetadata";
+NSString * const SettingsSortedByMetadata = @"sortedByMetadata";
 
 
 NSString * const SettingsMainAlertSheetShown = @"mainAlertShown2";
@@ -255,6 +256,8 @@ NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling S
 	return	[self.settings objectForKey:SettingsCalls] ||
 			[self.settings objectForKey:SettingsDeletedCalls] ||
 			[self.settings objectForKey:SettingsBulkLiterature] ||
+			[self.settings objectForKey:SettingsOtherMetadata] ||
+			[self.settings objectForKey:SettingsMetadata] ||
 			[self.settings objectForKey:SettingsPreferredMetadata] ||
 			[self.settings objectForKey:SettingsMonthDisplayCount] ||
 			[self.settings objectForKey:SettingsTimeStartDate] ||
@@ -308,10 +311,14 @@ NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling S
 
 		// this is the old storage method, 
 		//move settings around...
+		[self moveSettingsForKey:SettingsMetadata user:user];
+		[self moveSettingsForKey:SettingsPreferredMetadata user:user];
+		[self moveSettingsForKey:SettingsOtherMetadata user:user];
+		[self moveSettingsForKey:SettingsSortedByMetadata user:user];
+		
 		[self moveSettingsForKey:SettingsCalls user:user];
 		[self moveSettingsForKey:SettingsDeletedCalls user:user];
 		[self moveSettingsForKey:SettingsBulkLiterature user:user];
-		[self moveSettingsForKey:SettingsPreferredMetadata user:user];
 		[self moveSettingsForKey:SettingsMonthDisplayCount user:user];
 		[self moveSettingsForKey:SettingsTimeStartDate user:user];
 		[self moveSettingsForKey:SettingsRBCTimeStartDate user:user];

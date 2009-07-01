@@ -57,13 +57,13 @@
 
 - (id)init
 {
-	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:self.preferredMetadata];
+	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:self.sortedByMetadata];
 	return self;
 }
 
-- (NSString *)preferredMetadata
+- (NSString *)sortedByMetadata
 {
-	NSString *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
+	NSString *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsSortedByMetadata];
 	if(preferredMetadata == nil)
 	{
 		NSArray *array = [MetadataViewController metadataNames];
@@ -72,9 +72,9 @@
 	return [[preferredMetadata retain] autorelease];
 }
 
-- (void)setPreferredMetadata:(NSString *)metadata
+- (void)setSortedByMetadata:(NSString *)metadata
 {
-	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsPreferredMetadata];
+	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsSortedByMetadata];
 	[[Settings sharedInstance] saveData];
 	callsSorter.metadata = metadata;
 	[self refreshData];

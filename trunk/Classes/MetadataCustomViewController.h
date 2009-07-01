@@ -62,6 +62,7 @@ typedef struct
  * @returns self
  */
 - (id) init;
+- (id) initWithName:(NSString *)name type:(MetadataType)type;
 
 @end
 
