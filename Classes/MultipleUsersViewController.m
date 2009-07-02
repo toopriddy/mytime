@@ -13,6 +13,7 @@
 #import "GenericTableViewSectionController.h"
 #import "MetadataEditorViewController.h"
 #import "MetadataCustomViewController.h"
+#import "PSLocalization.h"
 
 @interface MultipleUsersCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
 {

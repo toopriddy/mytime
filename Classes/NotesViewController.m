@@ -36,6 +36,7 @@
 		self.title = NSLocalizedString(@"Visit Notes", @"Title for the view where you write notes for a call");
 		
 		self.textView = [[[UITextView alloc] initWithFrame:CGRectZero] autorelease];
+		textView.font = [UIFont systemFontOfSize:16];
 		textView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 		textView.text = notes;
 	}
