@@ -34,7 +34,7 @@
     UITableViewCell *auxiliaryPioneer;
     UITableViewCell *pioneer;
     UITableViewCell *specialPioneer;
-    UITableViewCell *travelingServent;
+    UITableViewCell *travelingServant;
 }
 
 @property (nonatomic,assign) id<PublisherTypeViewControllerDelegate> delegate;

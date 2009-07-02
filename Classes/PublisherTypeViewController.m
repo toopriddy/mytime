@@ -23,7 +23,7 @@
 @property (nonatomic,retain) UITableViewCell *auxiliaryPioneer;
 @property (nonatomic,retain) UITableViewCell *pioneer;
 @property (nonatomic,retain) UITableViewCell *specialPioneer;
-@property (nonatomic,retain) UITableViewCell *travelingServent;
+@property (nonatomic,retain) UITableViewCell *travelingServant;
 @end
 
 @implementation PublisherTypeViewController
@@ -35,7 +35,7 @@
 @synthesize auxiliaryPioneer;
 @synthesize pioneer;
 @synthesize specialPioneer;
-@synthesize travelingServent;
+@synthesize travelingServant;
 
 
 - (id) initWithType:(NSString *)publisherType
@@ -62,7 +62,7 @@
     self.auxiliaryPioneer = nil;
     self.pioneer = nil;
     self.specialPioneer = nil;
-    self.travelingServent = nil;
+    self.travelingServant = nil;
 
     self.type = nil;
 
@@ -83,7 +83,7 @@
 	UITableViewCell *unselected2 = auxiliaryPioneer;
 	UITableViewCell *unselected3 = pioneer;
 	UITableViewCell *unselected4 = specialPioneer;
-	UITableViewCell *unselected5 = travelingServent;
+	UITableViewCell *unselected5 = travelingServant;
 	
 	if([newType isEqualToString:PublisherTypePublisher])
 	{
@@ -105,9 +105,9 @@
 		selected = specialPioneer;
 		unselected4 = nil;
 	}
-	else if([newType isEqualToString:PublisherTypeTravelingServent])
+	else if([newType isEqualToString:PublisherTypeTravelingServant])
 	{
-		selected = travelingServent;
+		selected = travelingServant;
 		unselected5 = nil;
 	}
 
@@ -158,10 +158,10 @@
 	specialPioneer.accessoryType = UITableViewCellAccessoryCheckmark;
 	specialPioneer.selected = NO;
 
-	self.travelingServent = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
-	travelingServent.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublisherTypeTravelingServent value:PublisherTypeTravelingServent table:@""];
-	travelingServent.accessoryType = UITableViewCellAccessoryCheckmark;
-	travelingServent.selected = NO;
+	self.travelingServant = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"publicationTypeCell"] autorelease];
+	travelingServant.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublisherTypeTravelingServant value:PublisherTypeTravelingServant table:@""];
+	travelingServant.accessoryType = UITableViewCellAccessoryCheckmark;
+	travelingServant.selected = NO;
 
 	//make one be selected
 	[self updateSelection:self.type];
@@ -203,7 +203,7 @@
 			[self updateSelection:PublisherTypeSpecialPioneer];
 			break;
 		case 4:
-			[self updateSelection:PublisherTypeTravelingServent];
+			[self updateSelection:PublisherTypeTravelingServant];
 			break;
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -246,7 +246,7 @@
 		case 3:
 			return specialPioneer;
 		case 4:
-			return travelingServent;
+			return travelingServant;
     }
 	return nil;
 }

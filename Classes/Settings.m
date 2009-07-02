@@ -136,7 +136,7 @@ NSString * const PublisherTypePublisher = NSLocalizedString(@"Publisher", @"publ
 NSString * const PublisherTypeAuxilliaryPioneer = NSLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString * const PublisherTypePioneer = NSLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
 NSString * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
-NSString * const PublisherTypeTravelingServent = NSLocalizedString(@"Traveling Servent", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling Servant", @"publisher type selected in the More->Settings->Publisher Type setting");
 #include "PSAddLocalizedString.h"
 
 @implementation Settings

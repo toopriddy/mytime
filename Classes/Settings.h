@@ -146,7 +146,7 @@ extern NSString * const SettingsPublisherType;
 	extern NSString * const PublisherTypeAuxilliaryPioneer;
 	extern NSString * const PublisherTypePioneer;
 	extern NSString * const PublisherTypeSpecialPioneer;
-	extern NSString * const PublisherTypeTravelingServent;
+	extern NSString * const PublisherTypeTravelingServant;
 
 extern int debugging;
 
