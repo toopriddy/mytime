@@ -144,6 +144,7 @@
 				self.title = name;
 				
 				self.textView = [[[UITextView alloc] init] autorelease];
+				self.textView.font = [UIFont systemFontOfSize:16];
 				[_textView setKeyboardType:UIKeyboardTypeDefault];
 				_textView.text = value;
 				_firstResponder = _textView;
