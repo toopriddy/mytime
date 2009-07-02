@@ -71,7 +71,7 @@ static NSString *MONTHS[] = {
 	return type == nil || 
 	       [type isEqualToString:PublisherTypePioneer] ||
 		   [type isEqualToString:PublisherTypeSpecialPioneer] ||
-		   [type isEqualToString:PublisherTypeTravelingServent];
+		   [type isEqualToString:PublisherTypeTravelingServant];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

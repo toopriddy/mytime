@@ -1151,9 +1151,9 @@
 	};
 	905C36DA0E3BBD4600C8DB27 /* CallViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {996, 32564}}";
-			sepNavSelRange = "{55456, 0}";
-			sepNavVisRange = "{53852, 1576}";
+			sepNavIntBoundsRect = "{{0, 0}, {1181, 32578}}";
+			sepNavSelRange = "{3823, 0}";
+			sepNavVisRange = "{3344, 1074}";
 			sepNavWindowFrame = "{{58, -2}, {1185, 775}}";
 		};
 	};
@@ -1421,9 +1421,9 @@
 	};
 	907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1116, 5866}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1116, 5838}}";
 			sepNavSelRange = "{3266, 0}";
-			sepNavVisRange = "{1947, 2285}";
+			sepNavVisRange = "{2055, 2365}";
 		};
 	};
 	907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {
@@ -1564,9 +1564,9 @@
 	};
 	90B8F4170E7ECD300022A01F /* German */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {4956, 13860}}";
-			sepNavSelRange = "{41282, 0}";
-			sepNavVisRange = "{36664, 4618}";
+			sepNavIntBoundsRect = "{{0, 0}, {4956, 14322}}";
+			sepNavSelRange = "{35567, 17}";
+			sepNavVisRange = "{34319, 1562}";
 		};
 	};
 	90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {
@@ -2152,7 +2152,7 @@
 		fRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */;
 		name = "PublisherTypeViewController.m: 152";
 		rLen = 0;
-		rLoc = 5010;
+		rLoc = 1071;
 		rType = 0;
 		vrLen = 1854;
 		vrLoc = 4428;
@@ -2699,7 +2699,7 @@
 		fRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */;
 		name = "PublisherTypeViewController.m: 152";
 		rLen = 0;
-		rLoc = 5010;
+		rLoc = 1071;
 		rType = 0;
 		vrLen = 1854;
 		vrLoc = 4428;
@@ -6508,8 +6508,8 @@
 		isa = PBXTextBookmark;
 		fRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */;
 		name = "PublisherTypeViewController.m: 142";
-		rLen = 11;
-		rLoc = 4129;
+		rLen = 0;
+		rLoc = 1071;
 		rType = 0;
 		vrLen = 1845;
 		vrLoc = 3034;
@@ -7044,7 +7044,7 @@
 		fRef = 90B8F4170E7ECD300022A01F /* German */;
 		name = "Localizable.strings: 1084";
 		rLen = 0;
-		rLoc = 41282;
+		rLoc = 41301;
 		rType = 0;
 		vrLen = 4618;
 		vrLoc = 36664;
@@ -7154,7 +7154,7 @@
 		fRef = 90B8F4170E7ECD300022A01F /* German */;
 		name = "Localizable.strings: 1084";
 		rLen = 0;
-		rLoc = 41282;
+		rLoc = 41301;
 		rType = 0;
 		vrLen = 4618;
 		vrLoc = 36664;
