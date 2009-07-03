@@ -67,7 +67,8 @@
 	if(preferredMetadata == nil)
 	{
 		NSArray *array = [MetadataViewController metadataNames];
-		preferredMetadata = [array objectAtIndex:0];
+		if(array.count)
+			preferredMetadata = [array objectAtIndex:0];
 	}
 	return [[preferredMetadata retain] autorelease];
 }
