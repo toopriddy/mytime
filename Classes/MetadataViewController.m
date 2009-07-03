@@ -84,7 +84,11 @@ static MetadataInformation commonInformation[] = {
 		if(indexPath.section == 0)
 		{
 			// remove something from shown metadata
-#warning fix me			
+#warning should ask them if they want to remove all the metadata like this
+			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemovePreferredMetadata:metadata:removeAll:)])
+			{
+				[self.delegate.delegate metadataViewControllerRemovePreferredMetadata:self.delegate metadata:[metadata objectAtIndex:row] removeAll:NO];
+			}
 		}
 		
 		[metadata removeObjectAtIndex:row];
@@ -123,16 +127,10 @@ static MetadataInformation commonInformation[] = {
 	}
 	else
 	{
-		MetadataInformation localMetadata;
-		
 		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-		int row = indexPath.row;
-		localMetadata.name = [[metadata objectAtIndex:row] objectForKey:SettingsMetadataName];
-		localMetadata.type = [[[metadata objectAtIndex:row] objectForKey:SettingsMetadataType] intValue];
-		
 		if(self.delegate.delegate)
 		{
-			[self.delegate.delegate metadataViewControllerAdd:self.delegate metadataInformation:&localMetadata];
+			[self.delegate.delegate metadataViewControllerAdd:self.delegate metadata:[metadata objectAtIndex:indexPath.row]];
 		}
 		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
@@ -158,13 +156,20 @@ static MetadataInformation commonInformation[] = {
 	{
 		if(toIndexPath.section == 0)
 		{
-			// adding something to shown metadata
-#warning fix me			
+			// add the metadata to all of the calls
+			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerAddPreferredMetadata:metadata:)])
+			{
+				[self.delegate.delegate metadataViewControllerAddPreferredMetadata:self.delegate metadata:entry];
+			}
 		}
 		else
 		{
-			// remove something from shown metadata
-#warning fix me			
+			// remove the metadata
+# warning we really should ask them if they want to remove all instances of the metadata from the calls			
+			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemovePreferredMetadata:metadata:removeAll:)])
+			{
+				[self.delegate.delegate metadataViewControllerRemovePreferredMetadata:self.delegate metadata:entry removeAll:NO];
+			}
 		}
 	}
 	
@@ -388,6 +393,22 @@ static MetadataInformation commonInformation[] = {
 	
 	[self navigationControlDone:nil];
 }
+
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath 
+{
+	GenericTableViewSectionController *sectionController = [self.displaySectionControllers objectAtIndex:proposedDestinationIndexPath.section];
+	// check to see if they are moving it beyond the "Add custom information", the last entry and there are no entries in the list
+	if(proposedDestinationIndexPath.section == 1 && 
+	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
+		sectionController.displayCellControllers.count > 1)
+	{
+		// if there is only one section controller in this section then put the entry 
+		return [NSIndexPath indexPathForRow:(proposedDestinationIndexPath.row - 1) inSection:1];
+	}
+    // Allow the proposed destination.
+    return proposedDestinationIndexPath;
+}
+
 
 - (void)constructSectionControllers
 {

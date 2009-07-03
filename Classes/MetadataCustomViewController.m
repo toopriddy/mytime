@@ -27,7 +27,8 @@ static MetadataInformation commonInformation[] = {
 ,	{NSLocalizedString(@"Notes", @"Call Metadata"), NOTES}
 ,	{NSLocalizedString(@"Number", @"Call Metadata"), NUMBER}
 ,	{NSLocalizedString(@"Date/Time", @"Call Metadata"), DATE}
-//,	{NSLocalizedString(@"URL", @"Call Metadata"), URL}
+,	{NSLocalizedString(@"YES/NO Switch", @"Call Metadata"), SWITCH}
+,	{NSLocalizedString(@"URL", @"Call Metadata"), URL}
 };
 #include "PSAddLocalizedString.h"
 

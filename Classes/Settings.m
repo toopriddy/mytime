@@ -270,7 +270,19 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 - (void)readData
 {
 	VERY_VERBOSE(NSLog(@"readData");)
+#if 1
+	NSData *data = [[NSData alloc] initWithContentsOfFile:[self filename]];
+	NSString *err = nil;
+	NSPropertyListFormat format;
+	self.settings = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&err];
+	[data release];
+	if(err)
+	{
+		NSLog(@"%@", err);
+	}
+#else
 	self.settings = [[[NSMutableDictionary alloc] initWithContentsOfFile:[self filename]] autorelease];
+#endif
 	if(self.settings == nil)
 	{
 		self.settings = [[[NSMutableDictionary alloc] init] autorelease];

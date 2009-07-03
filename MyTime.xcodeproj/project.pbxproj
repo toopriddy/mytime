@@ -104,6 +104,8 @@
 		90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E75D1A0FE5D0AB00690CEE /* MetadataPickerView.xib */; };
 		90E75D1E0FE5D0BC00690CEE /* MetadataPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E75D1D0FE5D0BC00690CEE /* MetadataPickerViewController.m */; };
 		90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E75D260FE5E2B800690CEE /* MetadataSortedCallsViewController.m */; };
+		90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */; };
+		90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
 		90FBE8780E39887300FD8014 /* SortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */; };
@@ -309,6 +311,9 @@
 		90E75D1D0FE5D0BC00690CEE /* MetadataPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataPickerViewController.m; sourceTree = "<group>"; };
 		90E75D250FE5E2B800690CEE /* MetadataSortedCallsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataSortedCallsViewController.h; sourceTree = "<group>"; };
 		90E75D260FE5E2B800690CEE /* MetadataSortedCallsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataSortedCallsViewController.m; sourceTree = "<group>"; };
+		90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewSwitchCell.h; sourceTree = "<group>"; };
+		90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewSwitchCell.m; sourceTree = "<group>"; };
+		90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UITableViewSwitchCell.xib; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
@@ -367,6 +372,8 @@
 				9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */,
 				90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */,
 				90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */,
+				90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */,
+				90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
 				906140390E4ABBBC0072BA7B /* PublicationPickerView.m */,
 				9061409A0E4D6EC80072BA7B /* PublicationViewController.h */,
@@ -470,6 +477,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				9045A8F80E7D6F86001B439C /* Localizable.strings */,
 				90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */,
+				90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -741,6 +749,7 @@
 				90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */,
 				90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */,
 				90E157AC0FF438F3001BD69B /* sort4.png in Resources */,
+				90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +851,7 @@
 				90E756B30FE2E97F00690CEE /* MultipleUsersViewController.m in Sources */,
 				90E75D1E0FE5D0BC00690CEE /* MetadataPickerViewController.m in Sources */,
 				90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */,
+				90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
