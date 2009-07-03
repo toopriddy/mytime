@@ -274,8 +274,40 @@ static MetadataInformation commonInformation[] = {
 
 @synthesize delegate;
 
++ (void)fixMetadata
+{
+	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
+#warning so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
+	if([preferredMetadata isKindOfClass:[NSString class]])
+	{
+		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsSortedByMetadata];
+		preferredMetadata = nil;
+	}
+// end remove	
+	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
+	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMetadata];
+	if(metadata != nil || otherMetadata == nil)
+	{
+		otherMetadata = [NSMutableArray array];
+		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
+		{
+			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:commonInformation[i].name, SettingsMetadataName, 
+									  [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
+									  nil]];
+		}
+		[[[Settings sharedInstance] userSettings] setObject:otherMetadata forKey:SettingsOtherMetadata];
+		[[[Settings sharedInstance] userSettings] removeObjectForKey:SettingsMetadata];
+	}
+	if(preferredMetadata == nil)
+	{
+		preferredMetadata = [NSMutableArray array];
+		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsPreferredMetadata];
+	}
+}
+
 + (NSArray *)metadataNames
 {
+	[[self class] fixMetadata];
 	NSMutableArray *array = [NSMutableArray array];
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
 	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
@@ -359,27 +391,11 @@ static MetadataInformation commonInformation[] = {
 
 - (void)constructSectionControllers
 {
+	[[self class] fixMetadata];
+
 	// we have to convert from the old style Metadata to the new one
 	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
 	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMetadata];
-	if(metadata != nil || otherMetadata == nil)
-	{
-		otherMetadata = [NSMutableArray array];
-		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
-		{
-			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:commonInformation[i].name, SettingsMetadataName, 
-																			   [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
-	                                                                           nil]];
-		}
-		[[[Settings sharedInstance] userSettings] setObject:otherMetadata forKey:SettingsOtherMetadata];
-		[[[Settings sharedInstance] userSettings] removeObjectForKey:SettingsMetadata];
-	}
-	if(preferredMetadata == nil)
-	{
-		preferredMetadata = [NSMutableArray array];
-		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsPreferredMetadata];
-	}
 	
 	GenericTableViewSectionController *sectionController;
 	self.sectionControllers = [NSMutableArray array];
