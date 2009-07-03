@@ -221,12 +221,19 @@ int sortByMetadata(id v1, id v2, void *context)
 	}
 	else
 	{
-		// ok, we need to compare the dates of the calls since we have
-		// at least one piece of metadata each
-		compare = [value1 compare:value2];
-		if(compare == 0)
+		if(![value1 isKindOfClass:[value2 class]])
 		{
-			compare = sortByStreet(v1, v2, context);
+			compare = -1;
+		}
+		else
+		{
+			// ok, we need to compare the dates of the calls since we have
+			// at least one piece of metadata each
+			compare = [value1 compare:value2];
+			if(compare == 0)
+			{
+				compare = sortByStreet(v1, v2, context);
+			}
 		}
 	}
 	return compare;

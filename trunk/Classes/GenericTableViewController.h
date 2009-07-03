@@ -23,6 +23,7 @@
 }
 @property (nonatomic, retain) NSMutableArray *sectionControllers;
 @property (nonatomic, assign) BOOL editing;
+@property (nonatomic, readonly, retain) NSMutableArray *displaySectionControllers;
 
 - (void)constructSectionControllers;
 - (void)updateAndReload;

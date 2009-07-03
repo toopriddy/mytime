@@ -131,7 +131,9 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 			NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
 			[_call setObject:returnVisits forKey:CallReturnVisits];
 			// make the preferred metadata show up
-			[_call setObject:[NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata]] forKey:CallMetadata];
+			NSMutableArray *metadata = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata] mutableCopy];
+			[_call setObject:metadata forKey:CallMetadata];
+			[metadata release];
 			
 			NSMutableDictionary *visit = [[[NSMutableDictionary alloc] init] autorelease];
 
@@ -145,7 +147,7 @@ NSString * const CallViewIndentWhenEditing = @"indentWhenEditing";
 		{
 			_showAddCall = YES;
 
-			_call = [[NSMutableDictionary alloc] initWithDictionary:call copyItems:YES];
+			_call = [call mutableCopy];
 		}
 
 		_name = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -1741,17 +1743,124 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
  *
  ******************************************************************/
 #pragma mark Metadata Delegate
-- (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadataInformation:(MetadataInformation *)metadataInformation
+- (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
+{
+	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
+	for(NSMutableDictionary *call in calls)
+	{
+		NSMutableArray *metadataArray = [call objectForKey:CallMetadata];
+		bool found = NO;
+		
+		// look for this metadata in the call already.
+		for(NSMutableDictionary *entry in metadataArray)
+		{
+			NSString *name = [entry objectForKey:CallMetadataName];
+			NSNumber *type = [entry objectForKey:CallMetadataType];
+			if([name isEqualToString:[metadata objectForKey:SettingsMetadataName]] && 
+			   [type isEqualToNumber:[metadata objectForKey:SettingsMetadataType]])
+			{
+				found = YES;
+			}
+		}
+		if(metadataArray == nil)
+		{
+			metadataArray = [NSMutableArray array];
+			[call setObject:metadataArray forKey:CallMetadata];
+		}
+		// if not found then add it
+		if(!found)
+		{
+			NSMutableDictionary *addMetadata = [metadata mutableCopy];
+			[metadataArray addObject:addMetadata];
+			[addMetadata release];
+		}
+	}
+	NSMutableArray *metadataArray = [_call objectForKey:CallMetadata];
+	bool found = NO;
+	
+	// look for this metadata in the call already.
+	for(NSMutableDictionary *entry in metadataArray)
+	{
+		NSString *name = [entry objectForKey:CallMetadataName];
+		NSNumber *type = [entry objectForKey:CallMetadataType];
+		if([name isEqualToString:[metadata objectForKey:SettingsMetadataName]] && 
+		   [type isEqualToNumber:[metadata objectForKey:SettingsMetadataType]])
+		{
+			found = YES;
+		}
+	}
+	if(metadataArray == nil)
+	{
+		metadataArray = [NSMutableArray array];
+		[_call setObject:metadataArray forKey:CallMetadata];
+	}
+	// if not found then add it
+	if(!found)
+	{
+		NSMutableDictionary *addedEntry = [metadata mutableCopy];
+		[metadataArray addObject:addedEntry];
+		[addedEntry release];
+	}
+	
+	
+	[self save];
+	[theTableView reloadData];
+}
+
+- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata removeAll:(BOOL)removeAll
+{
+	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
+	for(NSMutableDictionary *call in calls)
+	{
+		NSMutableArray *metadataArray = [call objectForKey:CallMetadata];
+		NSMutableArray *discardedMetadata = [NSMutableArray array];
+		for(NSMutableDictionary *entry in metadataArray)
+		{
+			NSString *name = [entry objectForKey:CallMetadataName];
+			NSNumber *type = [entry objectForKey:CallMetadataType];
+			if([name isEqualToString:[metadata objectForKey:SettingsMetadataName]] && 
+			   [type isEqualToNumber:[metadata objectForKey:SettingsMetadataType]])
+			{
+				NSString *value = [entry objectForKey:CallMetadataValue];
+				if(value == nil || value.length == 0 || removeAll)
+				{
+					[discardedMetadata addObject:entry];
+				}
+			}
+		}
+		[metadataArray removeObjectsInArray:discardedMetadata];
+	}
+	NSMutableArray *metadataArray = [_call objectForKey:CallMetadata];
+	NSMutableArray *discardedMetadata = [NSMutableArray array];
+	for(NSMutableDictionary *entry in metadataArray)
+	{
+		NSString *name = [entry objectForKey:CallMetadataName];
+		NSNumber *type = [entry objectForKey:CallMetadataType];
+		if([name isEqualToString:[metadata objectForKey:SettingsMetadataName]] && 
+		   [type isEqualToNumber:[metadata objectForKey:SettingsMetadataType]])
+		{
+			NSString *value = [entry objectForKey:CallMetadataValue];
+			if(value == nil || value.length == 0 || removeAll)
+			{
+				[discardedMetadata addObject:entry];
+			}
+		}
+	}
+	[metadataArray removeObjectsInArray:discardedMetadata];
+	
+	[self save];
+	[theTableView reloadData];
+}
+
+- (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	NSMutableArray *metadata = [NSMutableArray arrayWithArray:[_call objectForKey:CallMetadata]];
-	[_call setObject:metadata forKey:CallMetadata];
+	NSMutableArray *metadataArray = [NSMutableArray arrayWithArray:[_call objectForKey:CallMetadata]];
+	[_call setObject:metadataArray forKey:CallMetadata];
 
-	NSMutableDictionary *newData = [[[NSMutableDictionary alloc] init] autorelease];
-	[metadata addObject:newData];
-	[newData setObject:metadataInformation->name forKey:CallMetadataName];
-	[newData setObject:[NSNumber numberWithInt:metadataInformation->type] forKey:CallMetadataType];
-	switch(metadataInformation->type)
+	NSMutableDictionary *newData = [NSMutableDictionary dictionaryWithDictionary:metadata];
+	[metadataArray addObject:newData];
+	switch([[metadata objectForKey:CallMetadata] intValue])
 	{
 		case PHONE:
 		case EMAIL:
@@ -1761,6 +1870,9 @@ DEBUG(NSLog(@"CallView %s:%d", __FILE__, __LINE__);)
 			[newData setObject:@"" forKey:CallMetadataValue];
 			[newData setObject:@"" forKey:CallMetadataData];
 			break;
+		case SWITCH:
+			[newData setObject:@"" forKey:CallMetadataValue];
+			[newData setObject:[NSNumber numberWithBool:NO] forKey:CallMetadataData];
 		case DATE:
 		{
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];

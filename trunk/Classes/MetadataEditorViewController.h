@@ -37,7 +37,8 @@
 	MetadataType _type;
 
 	int _tag;
-	UITableViewTextFieldCell *_textFieldCell;
+	UITableViewCell *_textFieldCell;
+	UIViewController *_cellViewController;
 	UITextView *_textView;
     UIDatePicker *_datePicker;
     NumberedPickerView *_numberPicker;

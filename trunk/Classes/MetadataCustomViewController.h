@@ -24,7 +24,8 @@ typedef enum {
 	NUMBER,
 	DATE,
 	URL,
-	CHOICE
+	CHOICE,
+	SWITCH
 } MetadataType;
 
 typedef struct 

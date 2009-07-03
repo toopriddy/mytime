@@ -178,9 +178,8 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
 {
-	return([callsSorter titleForHeaderInSection:section]);
+	return [callsSorter titleForHeaderInSection:section];
 }
-
 
 - (BOOL)respondsToSelector:(SEL)selector
 {

@@ -16,6 +16,7 @@
 #import "MetadataEditorViewController.h"
 #import "Settings.h"
 #import "PSLocalization.h"
+#import "UITableViewSwitchCell.h"
 
 @interface UIPickerView (soundsEnabled)
 - (void)setSoundsEnabled:(BOOL)fp8;
@@ -56,12 +57,13 @@
 
 
 @interface MetadataEditorViewController ()
-@property (nonatomic, retain) UITableViewTextFieldCell *textFieldCell;
+@property (nonatomic, retain) UITableViewCell *textFieldCell;
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, retain) UITableView *theTableView;
-@property (nonatomic, assign) UIDatePicker *datePicker;
-@property (nonatomic, assign) NumberedPickerView *numberPicker;
-@property (nonatomic, assign) UITextView *textView;
+@property (nonatomic, retain) UIDatePicker *datePicker;
+@property (nonatomic, retain) NumberedPickerView *numberPicker;
+@property (nonatomic, retain) UITextView *textView;
+@property (nonatomic, retain) UIViewController *cellViewController;
 
 @end
 
@@ -74,6 +76,7 @@
 @synthesize containerView = _containerView;
 @synthesize theTableView = _theTableView;
 @synthesize textView = _textView;
+@synthesize cellViewController = _cellViewController;
 
 - (id) initWithName:(NSString *)name type:(MetadataType)type data:(NSObject *)data value:(NSString *)value;
 {
@@ -87,14 +90,14 @@
 			case PHONE:
 			{
 				self.title = name;
-				
-				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
-				[_textFieldCell.textField setKeyboardType:UIKeyboardTypePhonePad];
-				_textFieldCell.textField.text = value;
-				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
-				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
-				_firstResponder = _textFieldCell.textField;
+				UITableViewTextFieldCell *cell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				self.textFieldCell = cell;
+				[cell.textField setKeyboardType:UIKeyboardTypePhonePad];
+				cell.textField.text = value;
+				cell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+				cell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				cell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = cell.textField;
 				break;
 			}
 			
@@ -102,27 +105,29 @@
 			{
 				self.title = name;
 				
-				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
-				[_textFieldCell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
-				_textFieldCell.textField.text = value;
-				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
-				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
-				_firstResponder = _textFieldCell.textField;
+				UITableViewTextFieldCell *cell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				self.textFieldCell = cell;
+				[cell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+				cell.textField.text = value;
+				cell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+				cell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				cell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = cell.textField;
 				break;
 			}
-
+				
 			case URL:
 			{
 				self.title = name;
 				
-				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
-				[_textFieldCell.textField setKeyboardType:UIKeyboardTypeURL];
-				_textFieldCell.textField.text = value;
-				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
-				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
-				_firstResponder = _textFieldCell.textField;
+				UITableViewTextFieldCell *cell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				self.textFieldCell = cell;
+				[cell.textField setKeyboardType:UIKeyboardTypeURL];
+				cell.textField.text = value;
+				cell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+				cell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				cell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = cell.textField;
 				break;
 			}
 
@@ -130,15 +135,28 @@
 			{
 				self.title = name;
 				
-				self.textFieldCell = [[[UITableViewTextFieldCell alloc] init] autorelease];
-				[_textFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
-				_textFieldCell.textField.text = value;
-				_textFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-				_textFieldCell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
-				_textFieldCell.textField.returnKeyType = UIReturnKeyDone;
-				_firstResponder = _textFieldCell.textField;
+				UITableViewTextFieldCell *cell = [[[UITableViewTextFieldCell alloc] init] autorelease];
+				self.textFieldCell = cell;
+				[cell.textField setKeyboardType:UIKeyboardTypeDefault];
+				cell.textField.text = value;
+				cell.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+				cell.nextKeyboardResponder = [[[MetadataSaveAndDone alloc] initWithController:self] autorelease];
+				cell.textField.returnKeyType = UIReturnKeyDone;
+				_firstResponder = cell.textField;
 				break;
 			}
+			case SWITCH:
+			{
+				self.title = name;
+				self.cellViewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
+				UITableViewSwitchCell *cell = (UITableViewSwitchCell *)self.cellViewController.view;
+				self.textFieldCell = cell;
+				[cell bringSubviewToFront:cell.booleanSwitch];
+				cell.booleanSwitch.on = [value boolValue];
+				cell.otherTextLabel.text = name;
+				break;
+			}
+				
 			case NOTES:
 			{
 				self.title = name;
@@ -181,10 +199,14 @@
 
 - (void)dealloc 
 {
-	self.containerView = nil;
-	self.datePicker = nil;
 	self.delegate = nil;
-
+	self.textFieldCell = nil;
+	self.containerView = nil;
+	self.theTableView = nil;
+	self.datePicker = nil;
+	self.numberPicker = nil;
+	self.textView = nil;
+	self.cellViewController = nil;
 	[super dealloc];
 }
 
@@ -339,7 +361,7 @@
 	int section = [indexPath section];
     VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
 	
-	return(_textFieldCell);
+	return _textFieldCell;
 }
 
 
@@ -351,7 +373,9 @@
 		case EMAIL:
 		case URL:
 		case STRING:
-			return _textFieldCell.textField.text;
+			return ((UITableViewTextFieldCell *)_textFieldCell).textField.text;
+		case SWITCH:
+			return [NSNumber numberWithBool:((UITableViewSwitchCell *)_textFieldCell).booleanSwitch.on];
 		case NOTES:
 			return _textView.text;
 		case DATE:
@@ -370,7 +394,9 @@
 		case EMAIL:
 		case URL:
 		case STRING:
-			return _textFieldCell.textField.text;
+			return ((UITableViewTextFieldCell *)_textFieldCell).textField.text;
+		case SWITCH:
+			return ((UITableViewSwitchCell *)_textFieldCell).booleanSwitch.on ? NSLocalizedString(@"YES", @"YES for boolean switch in additional information") : NSLocalizedString(@"NO", @"NO for boolean switch in additional information"); 
 		case NOTES:
 			return _textView.text;
 		case DATE:
