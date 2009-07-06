@@ -377,7 +377,7 @@ void PrintPacket(char *banner, uint16_t type, uint32_t flags, NSArray *payload)
 			{
                 EventAgentWriteBuffer *writeBuffer;
 				
-                while( (writeBuffer = [_writeList objectAtIndex:0]) )
+                while([_writeList count] && (writeBuffer = [_writeList objectAtIndex:0]) )
                 {
 					while(writeBuffer.offset != writeBuffer.data.length && 
 						  [_outStream hasSpaceAvailable])
