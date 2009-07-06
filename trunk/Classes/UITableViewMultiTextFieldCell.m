@@ -48,7 +48,7 @@
 		for(i = 0; i < textFieldCount; i++)
 		{
 			UITextField *textField = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-			textField.backgroundColor = [UIColor clearColor];
+			textField.backgroundColor = [UIColor whiteColor];
 			textField.font = [UIFont systemFontOfSize:16];
 			textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 			textField.delegate = self;

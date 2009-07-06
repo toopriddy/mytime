@@ -37,7 +37,7 @@
 		titleLabel = nil;
 		valueLabel = nil;
 		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		titleLabel.backgroundColor = [UIColor clearColor];
+		titleLabel.backgroundColor = [UIColor whiteColor];
 		titleLabel.font = [UIFont boldSystemFontOfSize:16];
 		titleLabel.textColor = [UIColor blackColor];
 		titleLabel.highlightedTextColor = [UIColor whiteColor];
@@ -45,7 +45,7 @@
 		[self.contentView addSubview: titleLabel];
 
 		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		valueLabel.backgroundColor = [UIColor clearColor];
+		valueLabel.backgroundColor = [UIColor whiteColor];
 		valueLabel.font = [UIFont systemFontOfSize:16];
 		valueLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		valueLabel.highlightedTextColor = [UIColor whiteColor];
