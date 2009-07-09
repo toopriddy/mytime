@@ -378,8 +378,13 @@
 	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
 	if(keepInformation)
 	{
-		NSMutableArray *deletedCalls = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsDeletedCalls]];
-		[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
+		
+		NSMutableArray *deletedCalls = [settings objectForKey:SettingsDeletedCalls];
+		if(deletedCalls == nil)
+		{
+			deletedCalls = [NSMutableArray array];
+			[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
+		}
 		[deletedCalls addObject:thisCall];
 	}
 

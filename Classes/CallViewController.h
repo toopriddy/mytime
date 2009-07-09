@@ -14,6 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GenericTableViewController.h"
 #import "UITableViewTextFieldCell.h"
 #import "AddressViewController.h"
 #import "AddressViewControllerDelegate.h"
@@ -30,38 +31,19 @@
 #import "SelectPositionMapViewController.h"
 #import "GeocacheViewController.h"
 
-@interface CallViewController : UIViewController <UITableViewDelegate, 
-                                                  UITableViewDataSource, 
-												  UIActionSheetDelegate, 
-												  PublicationViewControllerDelegate,
-												  PublicationTypeViewControllerDelegate,
-												  AddressViewControllerDelegate,
-												  DatePickerViewControllerDelegate,
-												  UITableViewTextFieldCellDelegate,
-												  NotesViewControllerDelegate,
-												  MetadataViewControllerDelegate,
-												  MetadataEditorViewControllerDelegate,
-												  ReturnVisitTypeViewControllerDelegate,
-												  LocationPickerViewControllerDelegate,
-												  SelectPositionMapViewControllerDelegate> 
+@interface CallViewController : GenericTableViewController <UIActionSheetDelegate> 
 {
-	UITableView *theTableView;
-	
 	BOOL _initialView;
 	
     UITextField *_name;
 
     NSMutableDictionary *_call;
 	
-	NSMutableArray *_displayInformation;
-	NSMutableDictionary *_currentGroup;
-	
 	NSIndexPath *currentIndexPath;
 	
-	BOOL _showAddCall;
+	BOOL _showAddReturnVisit;
 	BOOL _showDeleteButton;
 	BOOL _newCall;
-	BOOL _editing;
 	BOOL _shouldReloadAll;
 	
 	BOOL _actionSheetSource;
@@ -69,19 +51,10 @@
 	int _selectedRow;
 	int _setFirstResponderGroup;
 
-	NSMutableDictionary *_editingMetadata;
-    // this will be set to the publication that we are changing
-    // or nil when we are adding a publication
-    NSMutableDictionary *_editingPublication;
-    // this will be set to the particular returnvisit that we are modifying
-    NSMutableDictionary *_editingReturnVisit;
-
 	id<CallViewControllerDelegate> delegate;
 }
-@property (nonatomic,retain) UITableView *theTableView;
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
-
 
 /**
  * @returns the call we are editing
@@ -118,8 +91,9 @@
 - (id) init;
 - (void)dealloc;
 
-// dont use this
-- (void)reloadData;
+- (void)save;
+
+- (GenericTableViewSectionController *)genericTableViewSectionControllerForReturnVisit:(NSMutableDictionary *)returnVisit;
 
 @end
 

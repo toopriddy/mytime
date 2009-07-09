@@ -376,9 +376,14 @@
 
 - (void)constructSectionControllers
 {
+	[super constructSectionControllers];
+
 	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 
 	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+	[self.sectionControllers addObject:sectionController];
+	[sectionController release];
+
 	for(NSMutableDictionary *entry in users)
 	{
 		MultipleUsersCellController *cellController = [[MultipleUsersCellController alloc] init];
@@ -393,8 +398,6 @@
 	[sectionController.cellControllers addObject:addCellController];
 	[addCellController release];
 	
-	self.sectionControllers = [NSMutableArray arrayWithObject:sectionController];
-	[sectionController release];
 }
 
 

@@ -14,21 +14,29 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GenericTableViewSectionController.h"
 
 @interface GenericTableViewController : UITableViewController
 {
 @private	
 	NSMutableArray *_sectionControllers;
 	NSMutableArray *_displaySectionControllers;
+	BOOL _editing;
 }
 @property (nonatomic, retain) NSMutableArray *sectionControllers;
 @property (nonatomic, assign) BOOL editing;
 @property (nonatomic, readonly, retain) NSMutableArray *displaySectionControllers;
 
+- (id)initWithStyle:(UITableViewStyle)style;
+
 - (void)constructSectionControllers;
 - (void)updateAndReload;
 - (void)updateWithoutReload;
+- (void)updateTableViewInsideUpdateBlockWithDeleteRowAnimation:(UITableViewRowAnimation)deleteAnimation insertAnimation:(UITableViewRowAnimation)insertAnimation;
 
 - (void)deleteDisplayRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)deleteDisplaySectionAtIndexPath:(NSIndexPath *)indexPath;
+- (void)replaceDisplaySectionAtIndexPath:(NSIndexPath *)indexPath withSection:(GenericTableViewSectionController *)newSectionController;
+- (void)addSectionAfterSection:(GenericTableViewSectionController *)sectionController newSection:(GenericTableViewSectionController *)newSectionController;
 
 @end

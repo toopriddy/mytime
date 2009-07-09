@@ -106,6 +106,9 @@
 		90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E75D260FE5E2B800690CEE /* MetadataSortedCallsViewController.m */; };
 		90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */; };
 		90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */; };
+		90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */; };
+		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
+		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
 		90FBE8780E39887300FD8014 /* SortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */; };
@@ -314,6 +317,10 @@
 		90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewSwitchCell.h; sourceTree = "<group>"; };
 		90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewSwitchCell.m; sourceTree = "<group>"; };
 		90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UITableViewSwitchCell.xib; sourceTree = "<group>"; };
+		90EA4F111002709E0046A2E4 /* UITableViewButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewButtonCell.h; sourceTree = "<group>"; };
+		90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewButtonCell.m; sourceTree = "<group>"; };
+		90EA4F35100275590046A2E4 /* whiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButton.png; sourceTree = "<group>"; };
+		90EA4F36100275590046A2E4 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
@@ -372,6 +379,8 @@
 				9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */,
 				90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */,
 				90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */,
+				90EA4F111002709E0046A2E4 /* UITableViewButtonCell.h */,
+				90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */,
 				90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */,
 				90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
@@ -464,6 +473,8 @@
 				90C148EC0E3B937300C6EDAF /* city.png */,
 				90C4D4F30E8564DD00E202E2 /* map.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
+				90EA4F35100275590046A2E4 /* whiteButton.png */,
+				90EA4F36100275590046A2E4 /* blueButton.png */,
 				9007C1FE0EE0657C00FE19D5 /* redButton.png */,
 				90C148EF0E3B937300C6EDAF /* Icon.png */,
 				90A7AE820EA5A62100EBEF2D /* build.png */,
@@ -750,6 +761,8 @@
 				90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */,
 				90E157AC0FF438F3001BD69B /* sort4.png in Resources */,
 				90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */,
+				90EA4F37100275590046A2E4 /* whiteButton.png in Resources */,
+				90EA4F38100275590046A2E4 /* blueButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +865,7 @@
 				90E75D1E0FE5D0BC00690CEE /* MetadataPickerViewController.m in Sources */,
 				90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */,
 				90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */,
+				90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

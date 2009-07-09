@@ -93,8 +93,12 @@ static int sortByDate(id v1, id v2, void *context)
 	if ([super init]) 
 	{
 		NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-		self.entries = [NSMutableArray arrayWithArray:[settings objectForKey:SettingsBulkLiterature]];
-		[settings setObject:self.entries forKey:SettingsBulkLiterature];
+		self.entries = [settings objectForKey:SettingsBulkLiterature];
+		if(self.entries == nil)
+		{
+			self.entries = [NSMutableArray array];
+			[settings setObject:self.entries forKey:SettingsBulkLiterature];
+		}
 		
 		// set the title, and tab bar images from the dataSource
 		// object. 

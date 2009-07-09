@@ -20,11 +20,15 @@
 @synthesize title = _title;
 @synthesize cellControllers = _cellControllers;
 @synthesize displayCellControllers = _displayCellControllers;
+@synthesize isViewableWhenEditing;
+@synthesize isViewableWhenNotEditing;
 
 - (id)init
 {
 	if(self = [super init])
 	{
+		isViewableWhenEditing = YES;
+		isViewableWhenNotEditing = YES;
 		self.cellControllers = [[NSMutableArray alloc] init];
 		[self.cellControllers release]; // get rid of the extra reference count
 	}
