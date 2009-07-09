@@ -412,6 +412,8 @@ static MetadataInformation commonInformation[] = {
 
 - (void)constructSectionControllers
 {
+	[super constructSectionControllers];
+
 	[[self class] fixMetadata];
 
 	// we have to convert from the old style Metadata to the new one
@@ -419,7 +421,6 @@ static MetadataInformation commonInformation[] = {
 	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
 	
 	GenericTableViewSectionController *sectionController;
-	self.sectionControllers = [NSMutableArray array];
 
 	// preferred Metadata
 	sectionController = [[GenericTableViewSectionController alloc] init];

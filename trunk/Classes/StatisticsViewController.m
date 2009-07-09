@@ -827,9 +827,12 @@ static NSString *MONTHS[] = {
 				NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
 
 				//make the time entries editable
-				NSMutableArray *timeEntries = [NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries]];
-				[[[Settings sharedInstance] userSettings] setObject:timeEntries forKey:SettingsTimeEntries];
-
+				NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries];
+				if(timeEntries == nil)
+				{
+					timeEntries = [NSMutableArray array];
+					[[[Settings sharedInstance] userSettings] setObject:timeEntries forKey:SettingsTimeEntries];
+				}
 				// now go and add the entry
 				NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
 				[timeEntry setObject:date forKey:SettingsTimeEntryDate];

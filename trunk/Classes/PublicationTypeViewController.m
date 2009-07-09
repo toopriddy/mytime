@@ -158,8 +158,10 @@
 	{
 		[delegate publicationViewControllerDone:publicationViewController];
 	}
-
-	[[self navigationController] popToViewController:(UIViewController *)delegate animated:YES];
+	else
+	{
+		[[self navigationController] popToViewController:(UIViewController *)delegate animated:YES];
+	}
 }
 
 // UITableViewDataSource methods

@@ -21,10 +21,14 @@
 	NSString *_title;
 	NSMutableArray *_cellControllers;
 	NSMutableArray *_displayCellControllers;
+	BOOL isViewableWhenEditing;
+	BOOL isViewableWhenNotEditing;
 }
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSMutableArray *cellControllers;
 @property (nonatomic, retain) NSMutableArray *displayCellControllers;
+@property (nonatomic, assign) BOOL isViewableWhenEditing;
+@property (nonatomic, assign) BOOL isViewableWhenNotEditing;
 
 - (id)init;
 

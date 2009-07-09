@@ -46,14 +46,19 @@
 {
 	return([self initWithPlacements:nil]);
 }
+
 - (id)initWithPlacements:(NSMutableDictionary *)thePlacements
 {
 	if ([super init]) 
 	{
 		self.placements = [NSMutableDictionary dictionaryWithDictionary:thePlacements];
 		
-		NSMutableArray *literature = [NSMutableArray arrayWithArray:[placements objectForKey:BulkLiteratureArray]];
-		[placements setObject:literature forKey:BulkLiteratureArray];
+		NSMutableArray *literature = [placements objectForKey:BulkLiteratureArray];
+		if(literature == nil)
+		{
+			literature = [NSMutableArray array];
+			[placements setObject:literature forKey:BulkLiteratureArray];
+		}
 		
 		if([placements objectForKey:BulkLiteratureDate] == nil)
 			[placements setObject:[NSDate date] forKey:BulkLiteratureDate];
