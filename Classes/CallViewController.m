@@ -2053,7 +2053,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	if(_showAddReturnVisit)
 	{
 		ShowAddReturnVisitViewSectionController *sectionController = [[[ShowAddReturnVisitViewSectionController alloc] init] autorelease];
-		sectionController.title = @"show add return visit";
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 
