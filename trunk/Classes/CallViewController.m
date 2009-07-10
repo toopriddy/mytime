@@ -745,16 +745,14 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			break;
 		}
 	}
+	CallMetadataCellController *cellController = [[[CallMetadataCellController alloc] init] autorelease];
+	cellController.metadata = newData;
+	cellController.delegate = self.delegate;
+	[[[self.delegate.displaySectionControllers objectAtIndex:self.indexPath.section] cellControllers] insertObject:cellController atIndex:self.indexPath.row];
+	
 	[self.delegate save];
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		[self.delegate updateAndReload];
-	}
+
+	[self.delegate updateWithoutReload];
 }
 
 - (BOOL)isViewableWhenNotEditing
@@ -883,6 +881,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	self.indexPath = [[indexPath copy] autorelease];
 	if(add)
 	{
 		// make the new call view 
