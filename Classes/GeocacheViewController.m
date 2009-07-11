@@ -148,7 +148,7 @@
 		{
 			[_delegate geocacheViewControllerDone:self];
 		}
-		
+
 		return;
 	}
 	else
