@@ -24,7 +24,6 @@
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 - (NSObject<TableViewCellController> *)tableView:(UITableView *)tableView cellControllerAtIndexPath:(NSIndexPath *)indexPath;
 
-@optional
 - (BOOL)isViewableWhenEditing;
 - (BOOL)isViewableWhenNotEditing;
 

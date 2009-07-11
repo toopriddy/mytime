@@ -22,10 +22,12 @@
 	NSMutableArray *_sectionControllers;
 	NSMutableArray *_displaySectionControllers;
 	BOOL _editing;
+	BOOL _forceReload;
 }
 @property (nonatomic, retain) NSMutableArray *sectionControllers;
 @property (nonatomic, assign) BOOL editing;
 @property (nonatomic, readonly, retain) NSMutableArray *displaySectionControllers;
+@property (nonatomic, assign) BOOL forceReload;
 
 - (id)initWithStyle:(UITableViewStyle)style;
 

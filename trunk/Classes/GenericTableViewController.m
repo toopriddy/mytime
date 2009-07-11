@@ -16,8 +16,11 @@
 #import "GenericTableViewController.h"
 #import "TableViewCellController.h"
 
+#if __DEBUGGING__
 #define DEBUG(a) a
-//#define DEBUG()
+#else
+#define DEBUG(a)
+#endif
 
 @interface GenericTableViewController ()
 @property (nonatomic, retain) NSMutableArray *displaySectionControllers;
@@ -28,12 +31,14 @@
 @implementation GenericTableViewController
 @synthesize sectionControllers = _sectionControllers;
 @synthesize displaySectionControllers = _displaySectionControllers;
+@synthesize forceReload = _forceReload;
 
 // Creates/updates cell data. This method should only be invoked directly if
 // a "reloadData" needs to be avoided. Otherwise, updateAndReload should be used.
 - (void)constructSectionControllers
 {
 	self.sectionControllers = [NSMutableArray array];
+	self.displaySectionControllers = nil;
 }
 
 // make sure that if anyone tries to get these that these are initalized
@@ -54,8 +59,7 @@
 	
 	for(GenericTableViewSectionController *sectionController in self.sectionControllers)
 	{
-		if(![sectionController respondsToSelector:isViewableSelector] || 
-		   [sectionController performSelector:isViewableSelector])
+		if([sectionController performSelector:isViewableSelector])
 		{
 			[self.displaySectionControllers addObject:sectionController];
 			
@@ -154,8 +158,7 @@
 // updateAndReload
 - (void)updateAndReload
 {
-	self.sectionControllers = nil;
-	[self constructDisplaySectionControllers];
+	[self constructSectionControllers];
 	[self.tableView reloadData];
 }
 
@@ -235,8 +238,7 @@
 		--sectionNumber;
 		// we first blow away any sections that need to be deleted, we dont need to 
 		// bother deleting the rows from these
-		if([sectionController respondsToSelector:isViewableSelector] && 
-		   ![sectionController performSelector:isViewableSelector])
+		if(![sectionController performSelector:isViewableSelector])
 		{
 			DEBUG(NSLog(@"Section #%d %@ removed", sectionNumber, sectionController.title));
 			[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionNumber] withRowAnimation:deleteAnimation];
@@ -281,8 +283,7 @@
 		// if this is a new section, see if it needs to be added, otherwise see what has changed
 		if(![sectionController isEqual:currentDisplaySectionController])
 		{
-			if(![sectionController respondsToSelector:isViewableSelector] ||
-			   [sectionController performSelector:isViewableSelector])
+			if([sectionController performSelector:isViewableSelector])
 			{
 				DEBUG(NSLog(@"Section #%d %@ added", sectionNumber, sectionController.title));
 				[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionNumber] withRowAnimation:insertAnimation];
@@ -332,12 +333,7 @@
 	}
 	
 	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
-	if ([sectionController respondsToSelector:@selector(tableView:titleForHeaderInSection:)])
-	{
-		return [sectionController tableView:tableView titleForHeaderInSection:section];
-	}
-	
-	return nil;
+	return [sectionController tableView:tableView titleForHeaderInSection:section];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
@@ -350,12 +346,7 @@
 	}
 	
 	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
-	if ([sectionController respondsToSelector:@selector(tableView:titleForFooterInSection:)])
-	{
-		return [sectionController tableView:tableView titleForFooterInSection:section];
-	}
-	
-	return nil;
+	return [sectionController tableView:tableView titleForFooterInSection:section];
 }
 
 //////////////////////////////////
@@ -700,8 +691,19 @@
 - (void)viewDidAppear:(BOOL)animated 
 {
 	[super viewDidAppear:animated];
-
+	
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}	
+
+- (void)viewWillAppear:(BOOL)animated 
+{
+	[super viewWillAppear:animated];
+
+	if(self.forceReload)
+	{
+		self.forceReload = NO;
+		[self updateAndReload];
+	}
 }	
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -739,6 +741,7 @@
 //
 - (void)dealloc
 {
+	self.sectionControllers = nil;
 	self.displaySectionControllers = nil;
 	[super dealloc];
 }
