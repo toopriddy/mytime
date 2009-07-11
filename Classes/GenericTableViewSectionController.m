@@ -18,6 +18,7 @@
 @implementation GenericTableViewSectionController
 
 @synthesize title = _title;
+@synthesize footer = _footer;
 @synthesize cellControllers = _cellControllers;
 @synthesize displayCellControllers = _displayCellControllers;
 @synthesize isViewableWhenEditing;
@@ -38,6 +39,8 @@
 
 - (void)dealloc
 {
+	self.title = nil;
+	self.footer = nil;
 	self.cellControllers = nil;
 	self.displayCellControllers = nil;
 	[super dealloc];
@@ -57,5 +60,10 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	return self.title;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	return self.footer;
 }
 @end

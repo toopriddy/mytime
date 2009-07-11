@@ -19,12 +19,14 @@
 {
 @private	
 	NSString *_title;
+	NSString *_footer;
 	NSMutableArray *_cellControllers;
 	NSMutableArray *_displayCellControllers;
 	BOOL isViewableWhenEditing;
 	BOOL isViewableWhenNotEditing;
 }
 @property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *footer;
 @property (nonatomic, retain) NSMutableArray *cellControllers;
 @property (nonatomic, retain) NSMutableArray *displayCellControllers;
 @property (nonatomic, assign) BOOL isViewableWhenEditing;
