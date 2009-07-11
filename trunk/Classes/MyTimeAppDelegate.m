@@ -325,6 +325,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
 	}
 	
+	application.networkActivityIndicatorVisible = YES;
 
 	[[Settings sharedInstance] saveData];
 

@@ -63,7 +63,7 @@
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
 	[self.delegate renameUser:metadataEditorViewController.tag toName:metadataEditorViewController.value];
-	[self.delegate updateAndReload];
+	self.delegate.forceReload = YES;
 }
 
 // Called after the user changes the selection.
@@ -83,7 +83,8 @@
 	{
 		[self.delegate changeToUser:indexPath.row];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[self.delegate updateAndReload];
+		[self.delegate updateWithoutReload];
+		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
 }
 
@@ -149,6 +150,20 @@
 @end
 
 
+@interface MultipleUsersSectionController : GenericTableViewSectionController
+{
+}
+@end
+@implementation MultipleUsersSectionController
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if(tableView.editing)
+		return NSLocalizedString(@"Please note that if you delete a user ALL of your data will be DELETED for that user, this includes calls, return visits, hours, EVERYTHING!", @"This is the warning message that shows up in the More->Settings->Multiple Users when you are editing the user");
+	else
+		return nil;
+}
+@end
 
 
 
@@ -380,7 +395,7 @@
 
 	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
 
-	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+	GenericTableViewSectionController *sectionController = [[MultipleUsersSectionController alloc] init];
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 

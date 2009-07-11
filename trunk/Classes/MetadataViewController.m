@@ -273,6 +273,20 @@ static MetadataInformation commonInformation[] = {
 
 @end
 
+@interface AlwaysShownSectionController : GenericTableViewSectionController
+{
+}
+@end
+@implementation AlwaysShownSectionController
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if(tableView.editing)
+		return self.footer;
+	else
+		return nil;
+}
+@end
 
 
 @implementation MetadataViewController
@@ -332,16 +346,6 @@ static MetadataInformation commonInformation[] = {
 		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
-}
-
-- (void)dealloc 
-{
-	self.tableView.delegate = nil;
-	self.tableView.dataSource = nil;
-	
-	self.tableView = nil;
-	
-	[super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -423,8 +427,9 @@ static MetadataInformation commonInformation[] = {
 	GenericTableViewSectionController *sectionController;
 
 	// preferred Metadata
-	sectionController = [[GenericTableViewSectionController alloc] init];
+	sectionController = [[AlwaysShownSectionController alloc] init];
 	sectionController.title = NSLocalizedString(@"Information Always Shown", @"Title in the 'Additional Information' for the entries that will always show in every call");
+	sectionController.footer = NSLocalizedString(@"Any rows below that you move up here will always show up in your calls", @"Footer in the 'Additional Information' for the entries that will always show in every call");
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 

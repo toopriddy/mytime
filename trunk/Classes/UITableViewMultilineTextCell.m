@@ -35,7 +35,7 @@
 		textView = nil;
 		
 		self.textView = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-		textView.backgroundColor = [UIColor clearColor];
+		textView.backgroundColor = [UIColor whiteColor];
 		textView.font = [UIFont systemFontOfSize:16];
 #if 1
 		textView.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
@@ -98,7 +98,6 @@
 {
     [super layoutSubviews];
     CGRect contentRect = [self.contentView bounds];
-	CGRect originalContentRect = contentRect;
 	
 	float boundsX = contentRect.origin.x;
 	float width = contentRect.size.width;
@@ -123,12 +122,6 @@
 	}
 	frame = CGRectMake(boundsX, (contentRect.size.height - size.height)/2, width, size.height);
 	[textView setFrame:frame];
-
-	[self.contentView setBounds:contentRect];
-	frame = self.frame;
-	frame.size.height += contentRect.size.height - originalContentRect.size.height;
-	self.frame = frame;
-	[super layoutSubviews];
 }
 
 

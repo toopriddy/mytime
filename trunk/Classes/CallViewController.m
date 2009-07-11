@@ -315,7 +315,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		[self.delegate updateAndReload];
+		self.delegate.forceReload = YES;
 	}
 	if(![[self.delegate.call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual])
 	{
@@ -496,7 +496,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		[self.delegate updateAndReload];
+		self.delegate.forceReload = YES;
 	}
 }
 
@@ -586,6 +586,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @synthesize add;
 @synthesize metadata = _metadata;
 
+- (void)dealloc
+{
+	self.metadata = nil;
+	[super dealloc];
+}
+
 - (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
 {
 	[[self retain] autorelease];
@@ -649,7 +655,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	
 	[self.delegate save];
-	[self.delegate updateAndReload];
+	self.delegate.forceReload = YES;
 }
 
 - (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata removeAll:(BOOL)removeAll
@@ -696,7 +702,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[metadataArray removeObjectsInArray:discardedMetadata];
 	
 	[self.delegate save];
-	[self.delegate updateAndReload];
+	self.delegate.forceReload = YES;
 }
 
 - (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
@@ -776,7 +782,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		[self.delegate updateAndReload];
+		self.delegate.forceReload = YES;
 	}
 }
 
@@ -919,8 +925,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				case EMAIL:
 					if(value)
 					{
-						[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto://%@", value]]];
+						[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", value]]];
 					}
+					break;
 				case URL:
 					if(value)
 					{
@@ -976,6 +983,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @implementation ShowAddReturnVisitViewSectionController
 @synthesize delegate;
 
+- (void)dealloc
+{
+	[super dealloc];
+}
 -(BOOL)isViewableWhenNotEditing
 {
 	return NO;
@@ -992,6 +1003,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 }
 @end
 @implementation AddReturnVisitCellController
+- (void)dealloc
+{
+	[super dealloc];
+}
 
 - (BOOL)isViewableWhenNotEditing
 {
@@ -1093,7 +1108,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		[self.delegate updateAndReload];
+		self.delegate.forceReload = YES;
 	}
 }
 
@@ -1206,7 +1221,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[self.delegate.call setObject:returnVisits forKey:CallReturnVisits];
     
 	[self.delegate save];
-	[self.delegate updateAndReload];
+	self.delegate.forceReload = YES;
 }
 
 - (BOOL)isViewableWhenNotEditing
@@ -1276,7 +1291,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		[self.delegate updateAndReload];
+		self.delegate.forceReload = YES;
 	}
 }
 
@@ -1365,6 +1380,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @implementation ReturnVisitPublicationCellController
 @synthesize publication;
 
+- (void)dealloc
+{
+	self.publication = nil;
+	[super dealloc];
+}
+
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1432,7 +1453,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		}
 		else
 		{
-			[self.delegate updateAndReload];
+			self.delegate.forceReload = YES;
 		}
 	}		
 	[[self.delegate navigationController] popToViewController:self.delegate animated:YES];
@@ -1653,7 +1674,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
 			[_call setObject:returnVisits forKey:CallReturnVisits];
 			// make the preferred metadata show up
-			NSMutableArray *metadata = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata] mutableCopy];
+			NSMutableArray *metadata = [[NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata]] mutableCopy];
 			[_call setObject:metadata forKey:CallMetadata];
 			[metadata release];
 			
@@ -2050,7 +2071,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 
 	// Add new Return Visit
-	if(_showAddReturnVisit)
 	{
 		ShowAddReturnVisitViewSectionController *sectionController = [[[ShowAddReturnVisitViewSectionController alloc] init] autorelease];
 		sectionController.delegate = self;
