@@ -55,11 +55,6 @@
 	}
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
-}
-
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
 	[self.delegate renameUser:metadataEditorViewController.tag toName:metadataEditorViewController.value];
@@ -125,7 +120,7 @@
 	return NO;
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }

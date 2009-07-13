@@ -15,11 +15,20 @@
 
 #import "CallViewController.h"
 #import "Settings.h"
+#import "UITableViewTextFieldCell.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "AddressViewController.h"
 #import "PublicationViewController.h"
 #import "PublicationTypeViewController.h"
 #import "DatePickerViewController.h"
+#import "UITableViewTextFieldCell.h"
+#import "NotesViewControllerDelegate.h"
+#import "ReturnVisitTypeViewController.h"
+#import "MetadataViewController.h"
+#import "MetadataEditorViewController.h"
+#import "LocationPickerViewController.h"
+#import "SelectPositionMapViewController.h"
+#import "GeocacheViewController.h"
 #import "UITableViewMultilineTextCell.h"
 #import "NotesViewController.h"
 #import "AddressTableCell.h"
@@ -30,6 +39,7 @@
 #import "PSUrlString.h"
 #import "PSLocalization.h"
 #import "UITableViewButtonCell.h"
+#import "UITableViewSwitchCell.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -140,6 +150,23 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
  *
  ******************************************************************/
 #pragma mark NameCellController
+
+@interface NameViewSectionController : GenericTableViewSectionController
+{
+	CallViewController *delegate;
+}
+@property (nonatomic, assign) CallViewController *delegate;
+@end
+@implementation NameViewSectionController
+@synthesize delegate;
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return [[self.delegate.call objectForKey:CallName] length];
+}
+@end
+
+
 @interface NameCellController : CallViewCellController<UITableViewTextFieldCellDelegate>
 {
 	UITextField *_name;
@@ -479,15 +506,39 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[self.delegate.call setObject:locationPickerViewController.type forKey:CallLocationType];
 	if([locationPickerViewController.type isEqualToString:CallLocationTypeManual])
 	{
+		[[Settings sharedInstance] saveData];
+		[[self.delegate navigationController] popViewControllerAnimated:NO];
+		
 		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:[self.delegate.call objectForKey:CallLattitudeLongitude]] autorelease];
 		controller.delegate = self;
 		[[self.delegate navigationController] pushViewController:controller animated:YES];
+		return;
 	}
-	else if([locationPickerViewController.type isEqualToString:CallLocationTypeGoogleMaps])
+	else
 	{
-		// they are using google maps so kick off a lookup
-		[[Geocache sharedInstance] lookupCall:self.delegate.call];
+		if([locationPickerViewController.type isEqualToString:CallLocationTypeGoogleMaps])
+		{
+			// they are using google maps so kick off a lookup
+			[[Geocache sharedInstance] lookupCall:self.delegate.call];
+		}
+		NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+		if(selectedRow)
+		{
+			[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+		}
+		else
+		{
+			self.delegate.forceReload = YES;
+		}
+		[[Settings sharedInstance] saveData];
+
+		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
+}
+
+- (void)selectPositionMapViewControllerDone:(SelectPositionMapViewController *)selectPositionMapViewController
+{
+	[self.delegate.call setObject:[NSString stringWithFormat:@"%f, %f", selectPositionMapViewController.point.latitude, selectPositionMapViewController.point.longitude] forKey:CallLattitudeLongitude];
 	[[Settings sharedInstance] saveData];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -498,12 +549,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		self.delegate.forceReload = YES;
 	}
-}
-
-- (void)selectPositionMapViewControllerDone:(SelectPositionMapViewController *)selectPositionMapViewController
-{
-	[self.delegate.call setObject:[NSString stringWithFormat:@"%f, %f", selectPositionMapViewController.point.latitude, selectPositionMapViewController.point.longitude] forKey:CallLattitudeLongitude];
-	[[Settings sharedInstance] saveData];
 }
 
 
@@ -528,9 +573,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	if(cell == nil)
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
 	NSMutableDictionary *call = self.delegate.call;
 	NSString *locationType = [call objectForKey:CallLocationType];
 	if(locationType == nil)
@@ -574,20 +620,41 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
  ******************************************************************/
 #pragma mark CallMetadataCellController
 
-@interface CallMetadataCellController : CallViewCellController<MetadataViewControllerDelegate, MetadataEditorViewControllerDelegate>
+@interface MetadataViewSectionController : GenericTableViewSectionController
+{
+	CallViewController *delegate;
+}
+@property (nonatomic, assign) CallViewController *delegate;
+@end
+@implementation MetadataViewSectionController
+@synthesize delegate;
+
+- (BOOL)isViewableWhenNotEditing
+{
+	NSArray *metadata = [self.delegate.call objectForKey:CallMetadata];
+	return metadata && [metadata count];
+}
+@end
+
+
+@interface CallMetadataCellController : CallViewCellController<MetadataViewControllerDelegate, MetadataEditorViewControllerDelegate, UITableViewSwitchCellDelegate>
 {
 	BOOL add;
 	NSMutableDictionary *_metadata;
+	UIViewController *_viewController;
 }
 @property (nonatomic, assign) BOOL add;
 @property (nonatomic, retain) NSMutableDictionary *metadata;
+@property (nonatomic, retain) UIViewController *viewController;
 @end
 @implementation CallMetadataCellController
 @synthesize add;
 @synthesize metadata = _metadata;
+@synthesize viewController = _viewController;
 
 - (void)dealloc
 {
+	self.viewController = nil;
 	self.metadata = nil;
 	[super dealloc];
 }
@@ -807,6 +874,15 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 }
 
+- (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell
+{
+	NSString *str = uiTableViewSwitchCell.booleanSwitch.on ? NSLocalizedString(@"YES", @"YES for boolean switch in additional information") : NSLocalizedString(@"NO", @"NO for boolean switch in additional information"); 
+	[self.metadata setObject:[NSNumber numberWithBool:uiTableViewSwitchCell.booleanSwitch.on] forKey:CallMetadataData];
+	[self.metadata setObject:str forKey:CallMetadataValue];
+	
+	[self.delegate save];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if(add)
@@ -838,6 +914,25 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[cell setText:value.length ? value : name];
 			return(cell);
 		}
+#if 0
+		else if([type intValue] == SWITCH)
+		{
+			UITableViewSwitchCell *cell = (UITableViewSwitchCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataSwitchCell"];
+			if(cell == nil)
+			{
+				self.viewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
+				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			}
+			cell = (UITableViewSwitchCell *)self.viewController.view;
+			[cell bringSubviewToFront:cell.booleanSwitch];
+			
+			cell.otherTextLabel.text = name;
+			cell.delegate = self;
+			cell.booleanSwitch.enabled = tableView.editing;
+			cell.booleanSwitch.on = [value boolValue];
+			return(cell);
+		}
+#endif
 		else
 		{
 			UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataCell"];
@@ -2021,7 +2116,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	// Name
 	{
-		GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
+		NameViewSectionController *sectionController = [[[NameViewSectionController alloc] init] autorelease];
+		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 		
 		NameCellController *cellController = [[[NameCellController alloc] init] autorelease];
@@ -2053,7 +2149,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	// Add Metadata
 	{
-		GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
+		MetadataViewSectionController *sectionController = [[[MetadataViewSectionController alloc] init] autorelease];
+		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 			
 		NSMutableArray *metadata = [_call objectForKey:CallMetadata];

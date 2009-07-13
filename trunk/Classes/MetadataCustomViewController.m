@@ -55,7 +55,15 @@ static MetadataInformation commonInformation[] = {
 	{
 		self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
 		self.name.text = name;
-		_selected = type;
+		_selected = -1;
+		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
+		{
+			if(type == commonInformation[i].type)
+			{
+				_selected = i;
+				break;
+			}
+		}
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
 	}
@@ -104,7 +112,7 @@ static MetadataInformation commonInformation[] = {
 	theTableView.dataSource = self;
 
 //	self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-	_name.keyboardType = UIKeyboardTypeEmailAddress;
+	_name.keyboardType = UIKeyboardTypeDefault;
 	_name.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
 	_name.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	
@@ -208,10 +216,10 @@ static MetadataInformation commonInformation[] = {
 	{
 		case 0:
 		{
-			UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
+			UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"nameCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
+				cell = [[[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"nameCell"] autorelease];
 			}
 			cell.delegate = self;
 			
