@@ -15,21 +15,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GenericTableViewController.h"
-#import "UITableViewTextFieldCell.h"
-#import "AddressViewController.h"
-#import "AddressViewControllerDelegate.h"
-#import "PublicationViewControllerDelegate.h"
-#import "PublicationTypeViewController.h"
 #import "CallViewControllerDelegate.h"
-#import "DatePickerViewControllerDelegate.h"
-#import "UITableViewTextFieldCellDelegate.h"
-#import "NotesViewControllerDelegate.h"
-#import "ReturnVisitTypeViewController.h"
-#import "MetadataViewController.h"
-#import "MetadataEditorViewController.h"
-#import "LocationPickerViewController.h"
-#import "SelectPositionMapViewController.h"
-#import "GeocacheViewController.h"
 
 @interface CallViewController : GenericTableViewController <UIActionSheetDelegate> 
 {

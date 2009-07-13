@@ -98,11 +98,6 @@ static MetadataInformation commonInformation[] = {
 	}
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
-}
-
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
@@ -236,7 +231,7 @@ static MetadataInformation commonInformation[] = {
 	return NO;
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
@@ -310,7 +305,7 @@ static MetadataInformation commonInformation[] = {
 		otherMetadata = [NSMutableArray array];
 		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
 		{
-			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:commonInformation[i].name, SettingsMetadataName, 
+			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[[PSLocalization localizationBundle] localizedStringForKey:commonInformation[i].name value:commonInformation[i].name table:@""], SettingsMetadataName, 
 									  [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
 									  nil]];
 		}
@@ -406,8 +401,10 @@ static MetadataInformation commonInformation[] = {
 	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
 		sectionController.displayCellControllers.count > 1)
 	{
+		// only subtract 1 off of the row if the source row is in the same section (cause the row count is not increasing just getting shuffled)
+		int offset = proposedDestinationIndexPath.section == sourceIndexPath.section ? 1 : 0;
 		// if there is only one section controller in this section then put the entry 
-		return [NSIndexPath indexPathForRow:(proposedDestinationIndexPath.row - 1) inSection:1];
+		return [NSIndexPath indexPathForRow:(proposedDestinationIndexPath.row - offset) inSection:1];
 	}
     // Allow the proposed destination.
     return proposedDestinationIndexPath;

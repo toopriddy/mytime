@@ -17,6 +17,7 @@
 #import "UITableViewTextFieldCell.h"
 
 typedef enum {
+	// do not reorder!!! dont add in the middle!!!
 	EMAIL,
 	PHONE,
 	STRING,
