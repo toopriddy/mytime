@@ -914,23 +914,26 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[cell setText:value.length ? value : name];
 			return(cell);
 		}
-#if 0
+#if 1
 		else if([type intValue] == SWITCH)
 		{
-			UITableViewSwitchCell *cell = (UITableViewSwitchCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataSwitchCell"];
+			UITableViewSwitchCell *cell = (UITableViewSwitchCell *)[tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
 			if(cell == nil)
 			{
 				self.viewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
-				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+				cell = (UITableViewSwitchCell *)self.viewController.view;
+				cell.observeEditing = YES;
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			}
-			cell = (UITableViewSwitchCell *)self.viewController.view;
-			[cell bringSubviewToFront:cell.booleanSwitch];
+			else
+			{
+				cell = (UITableViewSwitchCell *)self.viewController.view;
+			}
 			
 			cell.otherTextLabel.text = name;
 			cell.delegate = self;
-			cell.booleanSwitch.enabled = tableView.editing;
 			cell.booleanSwitch.on = [value boolValue];
-			return(cell);
+			return cell;
 		}
 #endif
 		else
@@ -998,46 +1001,50 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		NSString *value = [self.metadata objectForKey:CallMetadataValue];
 		NSObject *data = [self.metadata objectForKey:CallMetadataData];
 		
-		if(tableView.editing)
+		if([type intValue] != SWITCH)
 		{
-			// make the new call view 
-			MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:[type intValue] data:data value:value] autorelease];
-			p.delegate = self;
-			p.tag = indexPath.row;
-			
-			[[self.delegate navigationController] pushViewController:p animated:YES];		
-		}
-		else
-		{
-			switch([type intValue])
+			if(tableView.editing)
 			{
-				case PHONE:
-					if(value)
-					{
-						[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
-					}
-					break;
-				case EMAIL:
-					if(value)
-					{
-						[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", value]]];
-					}
-					break;
-				case URL:
-					if(value)
-					{
-						NSString *url;
-						if([value hasPrefix:@"http://"])
-							url = value;
-						else
-							url = [NSString stringWithFormat:@"http://%@", value];
-						[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-					}
-					break;
+				// make the new call view 
+				MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:[type intValue] data:data value:value] autorelease];
+				p.delegate = self;
+				p.tag = indexPath.row;
+				
+				[[self.delegate navigationController] pushViewController:p animated:YES];		
+			}
+			else
+			{
+				switch([type intValue])
+				{
+					case PHONE:
+						if(value)
+						{
+							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+						}
+						break;
+					case EMAIL:
+						if(value)
+						{
+							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", value]]];
+						}
+						break;
+					case URL:
+						if(value)
+						{
+							NSString *url;
+							if([value hasPrefix:@"http://"])
+								url = value;
+							else
+								url = [NSString stringWithFormat:@"http://%@", value];
+							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+						}
+						break;
+				}
 			}
 		}
 	}
 }
+
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1498,6 +1505,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
 	}
+	else if(editingStyle == UITableViewCellEditingStyleInsert)
+	{
+		[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+	}
 }
 
 
@@ -1677,16 +1688,17 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewButtonCell *cell = (UITableViewButtonCell *)[tableView dequeueReusableCellWithIdentifier:@"DeleteCallCell"];
-	if(cell == nil)
+	UITableViewButtonCell *cell;
+//	cell = (UITableViewButtonCell *)[tableView dequeueReusableCellWithIdentifier:@"DeleteCallCell"];
+//	if(cell == nil)
 	{
 		cell = [[[UITableViewButtonCell alloc ] initWithTitle:NSLocalizedString(@"Delete Call", @"Delete Call button in editing mode of call view") 
 														image:[UIImage imageNamed:@"redButton.png"]
 												 imagePressed:[UIImage imageNamed:@"redButton.png"]
 												darkTextColor:NO
-											  reuseIdentifier:@"DeleteCallCell"] autorelease];
-		[cell.button addTarget:self action:@selector(deleteCall) forControlEvents:UIControlEventTouchUpInside];
+											  reuseIdentifier:nil /*@"DeleteCallCell"*/] autorelease];
 	}
+	[cell.button addTarget:self action:@selector(deleteCall) forControlEvents:UIControlEventTouchUpInside];
 	return cell;
 }
 
