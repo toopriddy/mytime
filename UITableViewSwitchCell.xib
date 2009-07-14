@@ -44,7 +44,7 @@
 							<object class="IBUISwitch" id="295350790">
 								<reference key="NSNextResponder" ref="817872856"/>
 								<int key="NSvFlags">257</int>
-								<string key="NSFrame">{{201, 8}, {94, 27}}</string>
+								<string key="NSFrame">{{211, 8}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="817872856"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -55,7 +55,7 @@
 							<object class="IBUILabel" id="789500754">
 								<reference key="NSNextResponder" ref="817872856"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{10, 11}, {183, 21}}</string>
+								<string key="NSFrame">{{10, 11}, {193, 21}}</string>
 								<reference key="NSSuperview" ref="817872856"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -96,6 +96,11 @@
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<int key="IBUISeparatorStyle">1</int>
 				<reference key="IBUIContentView" ref="817872856"/>
+				<object class="NSFont" key="IBUIFont">
+					<string key="NSName">Helvetica-Oblique</string>
+					<double key="NSSize">1.700000e+01</double>
+					<int key="NSfFlags">16</int>
+				</object>
 				<int key="IBUITextAlignment">1</int>
 			</object>
 		</object>

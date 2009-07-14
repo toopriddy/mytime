@@ -14,11 +14,13 @@
     UISwitch *booleanSwitch;
 	UILabel *otherTextLabel;
 	NSObject<UITableViewSwitchCellDelegate> *_delegate;
+	BOOL observeEditing;
 }
 
 @property (nonatomic, assign) NSObject<UITableViewSwitchCellDelegate> *delegate;
 @property (nonatomic, assign) IBOutlet UISwitch *booleanSwitch;
 @property (nonatomic, assign) IBOutlet UILabel *otherTextLabel;
+@property (nonatomic, assign) BOOL observeEditing;
 
 - (IBAction)switchChanged;
 
