@@ -78,6 +78,15 @@
 @synthesize textView = _textView;
 @synthesize cellViewController = _cellViewController;
 
+- (void)setAutocapitalizationType:(UITextAutocapitalizationType)type
+{
+	if([self.textFieldCell isKindOfClass:[UITableViewTextFieldCell class]])
+	{
+		UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)self.textFieldCell;
+		[cell.textField setAutocapitalizationType:type];
+	}
+}
+
 - (id) initWithName:(NSString *)name type:(MetadataType)type data:(NSObject *)data value:(NSString *)value;
 {
 	if ([super init]) 

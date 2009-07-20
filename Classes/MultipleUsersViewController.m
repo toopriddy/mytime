@@ -70,6 +70,7 @@
 	if(tableView.editing)
 	{
 		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:@"Your Name" type:STRING data:username value:username] autorelease];
+		[p setAutocapitalizationType:UITextAutocapitalizationTypeWords];
 		p.delegate = self;
 		p.tag = indexPath.row;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
