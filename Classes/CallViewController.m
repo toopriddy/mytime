@@ -786,7 +786,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	NSMutableDictionary *newData = [NSMutableDictionary dictionaryWithDictionary:metadata];
 	[metadataArray addObject:newData];
-	switch([[metadata objectForKey:CallMetadata] intValue])
+	switch([[metadata objectForKey:CallMetadataType] intValue])
 	{
 		case PHONE:
 		case EMAIL:
@@ -796,9 +796,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[newData setObject:@"" forKey:CallMetadataValue];
 			[newData setObject:@"" forKey:CallMetadataData];
 			break;
+			
 		case SWITCH:
 			[newData setObject:@"" forKey:CallMetadataValue];
 			[newData setObject:[NSNumber numberWithBool:NO] forKey:CallMetadataData];
+			break;
+			
 		case DATE:
 		{
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
