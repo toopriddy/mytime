@@ -76,13 +76,6 @@ static int sortByDate(id v1, id v2, void *context)
 		selectedIndexPath = nil;
 
 		_quickBuild = quickBuild;
-		NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-
-		NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-		NSMutableArray *timeEntries = [[[NSMutableArray alloc] initWithArray:[userSettings objectForKey:timeEntriesName]] autorelease];
-		[userSettings setObject:timeEntries forKey:timeEntriesName];
-		
-		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		if(quickBuild)
@@ -224,6 +217,17 @@ static int sortByDate(id v1, id v2, void *context)
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
+	
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	NSMutableArray *timeEntries = [userSettings objectForKey:timeEntriesName];
+	if(timeEntries == nil)
+	{
+		timeEntries = [NSMutableArray array];
+		[userSettings setObject:timeEntries forKey:timeEntriesName];
+	}		
+	
+	
 	[super viewWillAppear:animated];
 	if(selectedIndexPath)
 	{
