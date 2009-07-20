@@ -62,6 +62,14 @@ static int sortByDate(id v1, id v2, void *context)
 // sort the time entries and remove the 3 month old entries
 - (void)reloadData
 {
+	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
+	self.entries = [settings objectForKey:SettingsBulkLiterature];
+	if(self.entries == nil)
+	{
+		self.entries = [NSMutableArray array];
+		[settings setObject:self.entries forKey:SettingsBulkLiterature];
+	}
+	
 	int i;
 	NSArray *sortedArray = [entries sortedArrayUsingFunction:sortByDate context:NULL];
 	[sortedArray retain];
@@ -92,14 +100,6 @@ static int sortByDate(id v1, id v2, void *context)
 {
 	if ([super init]) 
 	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-		self.entries = [settings objectForKey:SettingsBulkLiterature];
-		if(self.entries == nil)
-		{
-			self.entries = [NSMutableArray array];
-			[settings setObject:self.entries forKey:SettingsBulkLiterature];
-		}
-		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Bulk Placements", @"Title for Bulk Placements view");
