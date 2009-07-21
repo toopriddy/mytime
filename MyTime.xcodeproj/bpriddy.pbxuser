@@ -682,7 +682,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 269822538.473945;
+		modificationTime = 269847584.311066;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -697,7 +697,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 269822538.48708;
+		modificationTime = 269847584.32822;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -743,7 +743,7 @@
 		ignoreCount = 0;
 		lineNumber = 226;
 		location = MyTime;
-		modificationTime = 269822537.528805;
+		modificationTime = 269847581.78239;
 		state = 2;
 	};
 	9032C7520F30DACA005FA8D0 /* Geocache.h */ = {
@@ -956,7 +956,7 @@
 		ignoreCount = 0;
 		lineNumber = 933;
 		location = MyTime;
-		modificationTime = 269822538.714213;
+		modificationTime = 269847584.478504;
 		state = 1;
 	};
 	90472716100C1ED30065C776 /* PBXTextBookmark */ = {
@@ -1032,9 +1032,9 @@
 	};
 	9053E0580E8DDD7100BA35F7 /* Italian */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {5202, 13944}}";
-			sepNavSelRange = "{40804, 0}";
-			sepNavVisRange = "{36593, 4651}";
+			sepNavIntBoundsRect = "{{0, 0}, {5196, 14756}}";
+			sepNavSelRange = "{44226, 0}";
+			sepNavVisRange = "{39679, 4547}";
 		};
 	};
 	9053E06F0E8DDDD400BA35F7 /* Spanish */ = {
@@ -1054,11 +1054,11 @@
 		delayBeforeContinue = 0;
 		fileReference = 906143AC0E51312E0072BA7B /* HourViewController.m */;
 		functionName = "-navigationControlStopTime:";
-		hitCount = 2;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 159;
 		location = MyTime;
-		modificationTime = 269823650.627859;
+		modificationTime = 269847584.508589;
 		state = 1;
 	};
 	905509331015275E00148956 /* PBXTextBookmark */ = {
@@ -1338,7 +1338,7 @@
 		ignoreCount = 0;
 		lineNumber = 118;
 		location = MyTime;
-		modificationTime = 269822538.681984;
+		modificationTime = 269847584.470919;
 		state = 1;
 	};
 	905990271005C0B20030A482 /* PBXTextBookmark */ = {
@@ -1385,7 +1385,7 @@
 		ignoreCount = 0;
 		lineNumber = 124;
 		location = MyTime;
-		modificationTime = 269822537.529032;
+		modificationTime = 269847581.782571;
 		state = 2;
 	};
 	905991671005D93E0030A482 /* PBXTextBookmark */ = {
@@ -1884,7 +1884,7 @@
 		ignoreCount = 0;
 		lineNumber = 232;
 		location = MyTime;
-		modificationTime = 269822538.539917;
+		modificationTime = 269847584.367533;
 		state = 1;
 	};
 	90674F120F1B00EA00D524C0 /* MyTimeAppDelegate.m:133 */ = {
@@ -1901,7 +1901,7 @@
 		ignoreCount = 0;
 		lineNumber = 133;
 		location = MyTime;
-		modificationTime = 269822538.569745;
+		modificationTime = 269847584.383634;
 		state = 1;
 	};
 	90674F180F1B013100D524C0 /* MyTimeAppDelegate.m:145 */ = {
@@ -1918,7 +1918,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 269822538.595133;
+		modificationTime = 269847584.39557;
 		state = 1;
 	};
 	90674F1A0F1B013300D524C0 /* MyTimeAppDelegate.m:145 */ = {
@@ -1935,7 +1935,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 269822538.632709;
+		modificationTime = 269847584.413135;
 		state = 1;
 	};
 	90674F1C0F1B013600D524C0 /* MyTimeAppDelegate.m:145 */ = {
@@ -1952,7 +1952,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 269822538.647442;
+		modificationTime = 269847584.43069;
 		state = 1;
 	};
 	90674F1E0F1B013700D524C0 /* MyTimeAppDelegate.m:145 */ = {
@@ -1969,7 +1969,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 269822538.664703;
+		modificationTime = 269847584.439978;
 		state = 1;
 	};
 	906AE7FC100864FF00226CA0 /* PBXTextBookmark */ = {
@@ -2036,7 +2036,7 @@
 		ignoreCount = 0;
 		lineNumber = 407;
 		location = MyTime;
-		modificationTime = 269822537.529145;
+		modificationTime = 269847581.782666;
 		state = 2;
 	};
 	906AE822100BABB800226CA0 /* PBXTextBookmark */ = {
@@ -2133,7 +2133,7 @@
 		ignoreCount = 0;
 		lineNumber = 237;
 		location = MyTime;
-		modificationTime = 269822537.529259;
+		modificationTime = 269847581.782759;
 		state = 2;
 	};
 	906AE8F0100BBBF400226CA0 /* PBXTextBookmark */ = {
@@ -2512,7 +2512,7 @@
 		ignoreCount = 0;
 		lineNumber = 817;
 		location = MyTime;
-		modificationTime = 269822538.73096;
+		modificationTime = 269847584.501686;
 		state = 1;
 	};
 	9096C3F110142E4300B9A000 /* PBXTextBookmark */ = {
@@ -3346,7 +3346,7 @@
 		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
 		name = "SettingsViewController.m: 254";
 		rLen = 0;
-		rLoc = 6741;
+		rLoc = 6770;
 		rType = 0;
 		vrLen = 1426;
 		vrLoc = 5552;
@@ -3743,7 +3743,7 @@
 		fRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */;
 		name = "SettingsViewController.m: 563";
 		rLen = 0;
-		rLoc = 6381;
+		rLoc = 6410;
 		rType = 0;
 		vrLen = 716;
 		vrLoc = 19235;
@@ -4187,7 +4187,7 @@
 		fRef = 9053E0580E8DDD7100BA35F7 /* Italian */;
 		name = "Localizable.strings: 1070";
 		rLen = 0;
-		rLoc = 40804;
+		rLoc = 697;
 		rType = 0;
 		vrLen = 4651;
 		vrLoc = 36593;
@@ -4287,7 +4287,7 @@
 		fRef = 9053E0580E8DDD7100BA35F7 /* Italian */;
 		name = "Localizable.strings: 1070";
 		rLen = 0;
-		rLoc = 40804;
+		rLoc = 697;
 		rType = 0;
 		vrLen = 4651;
 		vrLoc = 36593;
