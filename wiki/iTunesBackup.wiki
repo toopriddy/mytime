@@ -1,0 +1,19 @@
+#summary Extract your MyTime data from your iTunes backups
+
+= On Windows =
+  # download 
+  # open "My Computer"
+
+
+= On OSX =
+  # download http://mobilesync-inspect.googlecode.com/files/mobilesync-inspect-OSX-r10.zip
+  # extract and copy the mobilesync-inspect file to your user's home directory
+  # run /Applications/Utilities/Terminal
+  # in the terminal type in "./mobilesync-inspect list Documents/records.plist"
+  # you should see several lines listed like: 2008-09-16 22:02:24 - 8c67ee34fdc4fc7a6f66e72d5f15f47d6d704976/00064d7fd97c54526a137a703724c8d603f3bb70.mdbackup : Documents/records.plist (557)
+  # You are interested in the latest dated version of the output (see the date at the beginning of the output).  In my case it was the 2008-11-25 entry
+  # type in "./mobilesync-inspect extract cffc3e94279ae75f05c0093db3312c6ba629625a/e24993bfb82fcfeaed113577f7ab4fe5865934f4.mdbackup mytimedata.plist" YOU NEED TO REPLACE THE cffc3e94279ae75f05c0093db3312c6ba629625a/e24993bfb82fcfeaed113577f7ab4fe5865934f4.mdbackup WITH WHAT SHOWS UP IN THE LINE IN YOUR OUTPUT.
+  # you should have a file in your user directory called "mytimedata.plist"
+  # run the "MyTime Backup" application and make sure that your iPhone is on the same wireless network as your Mac.
+  # on the iPhone, start MyTime and go to More->Settings->Backup using 'MyTime Backup'
+  # on the Mac in the MyTime Backup program, select "Restore Backup" and then select the ~/mytimedata.plist file that is in your user directory
