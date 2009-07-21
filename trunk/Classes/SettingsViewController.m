@@ -144,6 +144,7 @@ enum {
         // Website
         case CONTACT_INFO_SECTION:
 			count++; // mytime website
+			count++; // documentation
 			count++; // found a bug?
 			count++; // question comments? 
 			break;
@@ -301,10 +302,14 @@ enum {
 					break;
 					
 				case 1:
-					[cell setTitle:NSLocalizedString(@"Found a bug?", @"Button in More->settings that points the user to the bug tracking system")];
+					[cell setTitle:NSLocalizedString(@"Documentation", @"More View Table Link to Documentation")];
 					break;
 					
 				case 2:
+					[cell setTitle:NSLocalizedString(@"Found a bug?", @"Button in More->settings that points the user to the bug tracking system")];
+					break;
+					
+				case 3:
 					[cell setTitle:NSLocalizedString(@"Questions, Comments? Email me", @"More View Table Questions, Comments? Email me")];
 					break;
 			}
@@ -461,9 +466,18 @@ enum {
 					[[UIApplication sharedApplication] openURL:url];
 					return;
 				}
-
-				// found a bug?
+					
+				// Documentation
 				case 1:
+				{
+					// open up a url to mytime.googlecode.com
+					NSURL *url = [NSURL URLWithString:@"http://code.google.com/p/mytime/wiki/youtubeDocumentation"];
+					[[UIApplication sharedApplication] openURL:url];
+					return;
+				}
+					
+				// found a bug?
+				case 2:
 				{
 					// open up a url to mytime.googlecode.com
 					NSURL *url = [NSURL URLWithString:@"http://code.google.com/p/mytime/issues/list"];
@@ -472,7 +486,7 @@ enum {
 				}
 
 				// email me
-				case 2:
+				case 3:
 				{
 					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Because I might have received > 200 emails about a question, please read the Frequently Asked Questions section of the MyTime website before emailing me to ask a question.  Also, please read the existing feature request list before requesting a feature.", @"message displayed when someone wants to email me, I just want to make sure that they have read the website before asking a question")
 																			 delegate:self
