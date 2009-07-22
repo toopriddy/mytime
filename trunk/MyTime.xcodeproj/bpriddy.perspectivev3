@@ -234,8 +234,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -295,14 +293,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>86</integer>
-									<integer>39</integer>
+									<integer>117</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1166}, {310, 731}}</string>
+							<string>{{0, 1617}, {310, 731}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -332,12 +329,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90FBE82F0E36D02300FD8014</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MetadataEditorViewController.m</string>
+								<string>MyTimeAppDelegate.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -345,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90FBE8300E36D02300FD8014</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MetadataEditorViewController.m</string>
+										<string>MyTimeAppDelegate.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9055095E10152F0800148956</string>
+										<string>9055099C1016B78B00148956</string>
 										<key>history</key>
 										<array>
 											<string>90E756960FE2D70200690CEE</string>
@@ -362,7 +361,6 @@
 											<string>90E75C1A0FE5960700690CEE</string>
 											<string>90E75C290FE5985C00690CEE</string>
 											<string>90E75C2A0FE5985C00690CEE</string>
-											<string>90E75C2D0FE5985C00690CEE</string>
 											<string>90E75C2F0FE5985C00690CEE</string>
 											<string>90E75C300FE5985C00690CEE</string>
 											<string>90E75C460FE5986E00690CEE</string>
@@ -389,7 +387,6 @@
 											<string>90E158320FF5C9B5001BD69B</string>
 											<string>90E158340FF5C9B5001BD69B</string>
 											<string>90E158350FF5C9B5001BD69B</string>
-											<string>90E158DF0FF5D073001BD69B</string>
 											<string>90E159000FF5D2E2001BD69B</string>
 											<string>90E159980FF71DF2001BD69B</string>
 											<string>90E1599A0FF71DF2001BD69B</string>
@@ -430,7 +427,6 @@
 											<string>90EA4F501002B6590046A2E4</string>
 											<string>90EA4F511002B6590046A2E4</string>
 											<string>90EA4F521002B6590046A2E4</string>
-											<string>90EA4F531002B6590046A2E4</string>
 											<string>90EA4F541002B6590046A2E4</string>
 											<string>90EA4F551002B6590046A2E4</string>
 											<string>90EA4F561002B6590046A2E4</string>
@@ -456,8 +452,6 @@
 											<string>9059941C100853E10030A482</string>
 											<string>9059941D100853E10030A482</string>
 											<string>9059941E100853E10030A482</string>
-											<string>90599420100853E10030A482</string>
-											<string>90599421100853E10030A482</string>
 											<string>90599436100854B30030A482</string>
 											<string>90599441100854E00030A482</string>
 											<string>9059947C100858680030A482</string>
@@ -493,7 +487,6 @@
 											<string>90472718100C1ED30065C776</string>
 											<string>9047273E100C20B80065C776</string>
 											<string>90468143100CFAF8007D852B</string>
-											<string>9096C40C10142FC600B9A000</string>
 											<string>9096C414101433F900B9A000</string>
 											<string>9096C415101433F900B9A000</string>
 											<string>905509331015275E00148956</string>
@@ -502,13 +495,21 @@
 											<string>905509361015275E00148956</string>
 											<string>905509381015275E00148956</string>
 											<string>9055093A1015275E00148956</string>
-											<string>9055095B10152F0800148956</string>
-											<string>9055095C10152F0800148956</string>
+											<string>9055096B1016B4E400148956</string>
+											<string>9055096C1016B4E400148956</string>
+											<string>9055096E1016B4E400148956</string>
+											<string>9055096F1016B4E400148956</string>
+											<string>905509711016B4E400148956</string>
+											<string>905509721016B4E400148956</string>
+											<string>905509731016B4E400148956</string>
+											<string>905509901016B6CC00148956</string>
+											<string>905509911016B6CC00148956</string>
+											<string>905509931016B6CC00148956</string>
+											<string>9055099B1016B78A00148956</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>90E56C1E0FE2CE6400DF7393</string>
-											<string>90E56C1F0FE2CE6400DF7393</string>
 											<string>90E7568E0FE2D4AD00690CEE</string>
 											<string>90E756A10FE2D70200690CEE</string>
 											<string>90E756A20FE2D70200690CEE</string>
@@ -648,6 +649,24 @@
 											<string>905509411015275E00148956</string>
 											<string>905509421015275E00148956</string>
 											<string>9055095D10152F0800148956</string>
+											<string>905509761016B4E400148956</string>
+											<string>905509771016B4E400148956</string>
+											<string>905509791016B4E400148956</string>
+											<string>9055097A1016B4E400148956</string>
+											<string>9055097C1016B4E400148956</string>
+											<string>9055097E1016B4E400148956</string>
+											<string>9055097F1016B4E400148956</string>
+											<string>905509801016B4E400148956</string>
+											<string>905509811016B4E400148956</string>
+											<string>905509821016B4E400148956</string>
+											<string>905509831016B4E400148956</string>
+											<string>905509841016B4E400148956</string>
+											<string>905509851016B4E400148956</string>
+											<string>905509861016B4E400148956</string>
+											<string>905509871016B4E400148956</string>
+											<string>905509881016B4E400148956</string>
+											<string>905509891016B4E400148956</string>
+											<string>905509951016B6CC00148956</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

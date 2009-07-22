@@ -22,13 +22,9 @@
 #import "PSLocalization.h"
 #import "MultipleUsersViewController.h"
 
-#define USE_USER_SECTION 1
-
 enum {
 	DONATE_SECTION,
-#if USE_USER_SECTION
 	USER_SECTION,
-#endif	
 	SETTINGS_SECTION,
 	CONTACT_INFO_SECTION,
 	BACKUP_SECTION,
@@ -123,18 +119,18 @@ enum {
 			count++; // always show hours
 			break;
 
-#if USE_USER_SECTION			
 			// User
         case USER_SECTION:
 			count++; // one user selection
 			break;
-#endif			
+
 			// Settings
         case SETTINGS_SECTION:
 		{
 			count++; // enable popups
 			count++; // number of months shown
 			count++; // publisher type
+			count++; // erase map cache
 			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 			if([fileManager fileExistsAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath]])
 				count++;
@@ -175,12 +171,11 @@ enum {
 		case DONATE_SECTION:
 			break;
 
-#if USE_USER_SECTION			
 		// User section
 		case USER_SECTION:
 			title = NSLocalizedString(@"Multiple User Settings", @"Settings section header for the current user");
 			break;
-#endif
+
 		// Settings
 		case SETTINGS_SECTION:
 			title = NSLocalizedString(@"Settings", @"'Settings' ButtonBar View text and Statistics View Title");
@@ -237,7 +232,6 @@ enum {
 			}
             break;
 
-#if USE_USER_SECTION			
 		// Current User
         case USER_SECTION:
 			switch(row)
@@ -256,7 +250,6 @@ enum {
 				}
 			}
             break;
-#endif			
 			
         // Settings
 		case SETTINGS_SECTION:
@@ -286,6 +279,11 @@ enum {
 					break;
 				}
 				case 3:
+				{
+					[cell setTitle:NSLocalizedString(@"Erase map cache", @"More->Settings view title for erasing the map cache")];
+					break;
+				}
+				case 4:
 				{
 					[cell setTitle:NSLocalizedString(@"Remove Custom Translation", @"More->Settings custom translation title")];
 					break;
@@ -372,7 +370,7 @@ enum {
 				}
 			}
 			break;
-#if USE_USER_SECTION				
+
 		case USER_SECTION:
 			switch(row)
 			{
@@ -385,7 +383,7 @@ enum {
 				}
 			}
 			break;
-#endif			
+
 		case SETTINGS_SECTION:
 			switch(row)
 			{
@@ -430,7 +428,7 @@ enum {
 					NSString *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
 					if(value == nil)
 						value = PublisherTypePioneer;
-
+					
 					PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
 					viewController.delegate = self;
 					[[self navigationController] pushViewController:viewController animated:YES];
@@ -439,18 +437,38 @@ enum {
 				case 3:
 				{
 					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+					if([fileManager fileExistsAtPath:@"~/Documents/MapMicrosoft VirtualEarth.sqlite"] &&
+					   ![fileManager removeItemAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath] error:nil])
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+						alertSheet.title = NSLocalizedString(@"Could not delete map cache", @"More->Settings->Delete map cache: error message if the map cache could not be deleted");
+						[alertSheet show];
+						break;
+					}
+					
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Map cache has been deleted", @"Confirmation message about the map data being deleted");
+					[alertSheet show];
+					break;
+				}
+				case 4:
+				{
+					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 					if(![fileManager removeItemAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath] error:nil])
 					{
 						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 						alertSheet.title = NSLocalizedString(@"Could not remove custom translation", @"More->Settings->Remove Custom Translation: error message if the custom translation file could not be removed");
 						[alertSheet show];
+						break;
 					}
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 					alertSheet.title = NSLocalizedString(@"Please quit MyTime to apply change", @"More->Settings->Remove Custom Translation: confirmaiton message when you have applied the 'Remove Custom Translation'");
 					[alertSheet show];
-					return;
+					break;
 				}
 			}
 			break;

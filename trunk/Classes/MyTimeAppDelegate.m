@@ -303,7 +303,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	return(nil);
 }
 
-
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
 	// dynamically add a method to UITableViewIndex that lets us move around the index
@@ -324,7 +323,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
 	}
-	
+
+
 //	application.networkActivityIndicatorVisible = NO;
 
 	[[Settings sharedInstance] saveData];
@@ -421,7 +421,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	controller = [array objectAtIndex:3];
 	[settings setObject:controller.title forKey:SettingsFourthView];
 	[[Settings sharedInstance] saveData];
-
 
 	// set the tab bar controller view controller array to the localViewControllersArray
 	tabBarController.viewControllers = array;
