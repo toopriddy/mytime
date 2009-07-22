@@ -437,8 +437,8 @@ enum {
 				case 3:
 				{
 					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-					if([fileManager fileExistsAtPath:@"~/Documents/MapMicrosoft VirtualEarth.sqlite"] &&
-					   ![fileManager removeItemAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath] error:nil])
+					BOOL exists = [fileManager fileExistsAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath]];
+					if(exists && ![fileManager removeItemAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath] error:nil])
 					{
 						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
