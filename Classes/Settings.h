@@ -148,6 +148,16 @@ extern NSString * const SettingsPublisherType;
 	extern NSString * const PublisherTypeSpecialPioneer;
 	extern NSString * const PublisherTypeTravelingServant;
 
+
+// these are in the UserDefaults
+
+extern NSString *const UserDefaultsClearMapCache;
+extern NSString *const UserDefaultsEmailBackupInstantly;
+
+
+
+
+
 extern int debugging;
 
 #define DEBUG(a) if(debugging) { a }
@@ -161,6 +171,7 @@ extern int debugging;
 }
 + (Settings *)sharedInstance;
 + (id)initWithZone:(NSZone *)zone;
++ (void)sendEmailBackup;
 
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 

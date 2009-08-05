@@ -329,6 +329,33 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 	[[Settings sharedInstance] saveData];
 
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if([defaults boolForKey:UserDefaultsClearMapCache])
+	{
+		[defaults setBool:NO forKey:UserDefaultsClearMapCache];
+		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+		BOOL exists = [fileManager fileExistsAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath]];
+		if(exists && ![fileManager removeItemAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath] error:nil])
+		{
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"Could not delete map cache", @"More->Settings->Delete map cache: error message if the map cache could not be deleted");
+			[alertSheet show];
+		}
+		else
+		{
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"Map cache has been deleted", @"Confirmation message about the map data being deleted");
+			[alertSheet show];
+		}
+	}
+	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
+	{
+		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
+		[Settings sendEmailBackup];
+	}
+		
     // Set up the portraitWindow and content view
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
