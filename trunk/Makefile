@@ -14,6 +14,8 @@ Spanish.lproj \
 Swedish.lproj \
 Slovak.lproj \
 
+
+
 all: genstrings
 
 genstrings:
@@ -21,11 +23,18 @@ genstrings:
 	cp en_US.lproj/Localizable.strings English.lproj/
 
 merge:
+	echo "Working on Localizable.strings"
 	for x in $(LANGUAGES); do $(LOCALIZABLE_MERGE) English.lproj/Localizable.strings $$x/Localizable.strings; done
+	echo "Working on Settings.bundle Root.strings"
+	for x in $(LANGUAGES); do $(LOCALIZABLE_MERGE) Classes/Settings.bundle/English.lproj/Root.strings Classes/Settings.bundle/$$x/Root.strings; done
 
 zip:
 	rm -rf translations.zip
-	zip translations.zip $(patsubst %,%/Localizable.strings,$(LANGUAGES))
+	rm -rf SettingsTranslations
+	mkdir SettingsTranslations
+	cp -rf Classes/Settings.bundle/*.lproj SettingsTranslations/
+	zip translations.zip $(patsubst %,%/Localizable.strings,$(LANGUAGES)) $(patsubst %,SettingsTranslations/%/Root.strings,$(LANGUAGES))
+	rm -rf SettingsTranslations
 
 clang:
 	scan-build xcodebuild
