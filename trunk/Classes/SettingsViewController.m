@@ -21,6 +21,7 @@
 #import "PSUrlString.h"
 #import "PSLocalization.h"
 #import "MultipleUsersViewController.h"
+#import "MyTimeWebServerView.h"
 
 enum {
 	DONATE_SECTION,
@@ -149,6 +150,7 @@ enum {
 		case BACKUP_SECTION:
 			count++; // email backup
 			count++; //Mytime backup
+			count++; //Mytime webserver
 			break;
 			
 		// version 
@@ -323,6 +325,10 @@ enum {
 					
 				case 1:
 					[cell setTitle:NSLocalizedString(@"Backup using 'MyTime Backup'", @"More View Table backup your data")];
+					break;
+
+				case 2:
+					[cell setTitle:NSLocalizedString(@"Start MyTime Webserver", @"Settings View button to start the webserver that allows you to type in your calls, import/export data, add translations, and import hours")];
 					break;
 			}
 			break;
@@ -530,13 +536,20 @@ enum {
 					[Settings sendEmailBackup];
 					return;
 				}
-				// Backup your data
+					// MyTime Backup program
 				case 1:
 				{
 					backupView = [[BackupView alloc] init];
 					[backupView setDelegate:self];
 					[backupView show];
-					[tableView deselectRowAtIndexPath:indexPath animated:YES];
+					break;
+				}
+					// MyTime Webserver
+				case 2:
+				{
+					MyTimeWebServerView *view = [[[MyTimeWebServerView alloc] init] autorelease];
+					[view show];
+					break;
 				}
 			}
 			break;

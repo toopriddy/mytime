@@ -33,11 +33,23 @@
 		90059C900F3A2112006DF536 /* PSUrlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 90059C8F0F3A2112006DF536 /* PSUrlString.m */; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
+		90226AFF1030B56500A94FEC /* SubmitDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226AFE1030B56500A94FEC /* SubmitDataFile.m */; };
+		90226B021030B87600A94FEC /* DownloadDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226B011030B87600A94FEC /* DownloadDataFile.m */; };
+		90226B981030C1B900A94FEC /* SubmitHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226B971030C1B900A94FEC /* SubmitHours.m */; };
+		90226BDA1030CFC800A94FEC /* SubmitNewCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226BD91030CFC800A94FEC /* SubmitNewCall.m */; };
+		90226C581030DB5900A94FEC /* MyTimeWebServerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226C571030DB5900A94FEC /* MyTimeWebServerView.m */; };
 		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
 		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
 		902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902866600ECF757A0076BCBD /* MonthChooserViewController.m */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
+		903FF237102A049900CC60B8 /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF231102A049900CC60B8 /* HTTPServer.m */; };
+		903FF238102A049900CC60B8 /* HTTPResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF233102A049900CC60B8 /* HTTPResponseHandler.m */; };
+		903FF239102A049900CC60B8 /* HttpMultipartResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF235102A049900CC60B8 /* HttpMultipartResponseHandler.m */; };
+		903FF23C102A04C100CC60B8 /* SubmitTranslationFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF23A102A04C100CC60B8 /* SubmitTranslationFile.m */; };
+		903FF23F102A050B00CC60B8 /* CSRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF23D102A050B00CC60B8 /* CSRegex.m */; };
+		903FF249102A058000CC60B8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903FF248102A058000CC60B8 /* CFNetwork.framework */; };
+		903FF2E6102FDAF100CC60B8 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 903FF2E5102FDAF100CC60B8 /* index.html */; };
 		9045A7260E7C1423001B439C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7250E7C1423001B439C /* TCPServer.m */; };
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
 		9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9045A8F80E7D6F86001B439C /* Localizable.strings */; };
@@ -174,6 +186,16 @@
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
 		9013137F0EA0773A0055D890 /* NumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberViewController.m; sourceTree = "<group>"; };
 		901313810EA078780055D890 /* NumberViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewControllerDelegate.h; sourceTree = "<group>"; };
+		90226AFD1030B56500A94FEC /* SubmitDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitDataFile.h; sourceTree = "<group>"; };
+		90226AFE1030B56500A94FEC /* SubmitDataFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitDataFile.m; sourceTree = "<group>"; };
+		90226B001030B87600A94FEC /* DownloadDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadDataFile.h; sourceTree = "<group>"; };
+		90226B011030B87600A94FEC /* DownloadDataFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadDataFile.m; sourceTree = "<group>"; };
+		90226B961030C1B900A94FEC /* SubmitHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitHours.h; sourceTree = "<group>"; };
+		90226B971030C1B900A94FEC /* SubmitHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitHours.m; sourceTree = "<group>"; };
+		90226BD81030CFC800A94FEC /* SubmitNewCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitNewCall.h; sourceTree = "<group>"; };
+		90226BD91030CFC800A94FEC /* SubmitNewCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitNewCall.m; sourceTree = "<group>"; };
+		90226C561030DB5900A94FEC /* MyTimeWebServerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTimeWebServerView.h; sourceTree = "<group>"; };
+		90226C571030DB5900A94FEC /* MyTimeWebServerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTimeWebServerView.m; sourceTree = "<group>"; };
 		9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByNameViewDataSource.h; sourceTree = "<group>"; };
 		9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByNameViewDataSource.m; sourceTree = "<group>"; };
 		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
@@ -183,6 +205,19 @@
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
 		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
+		903FF231102A049900CC60B8 /* HTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPServer.m; sourceTree = "<group>"; };
+		903FF232102A049900CC60B8 /* HTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
+		903FF233102A049900CC60B8 /* HTTPResponseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPResponseHandler.m; sourceTree = "<group>"; };
+		903FF234102A049900CC60B8 /* HTTPResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPResponseHandler.h; sourceTree = "<group>"; };
+		903FF235102A049900CC60B8 /* HttpMultipartResponseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpMultipartResponseHandler.m; sourceTree = "<group>"; };
+		903FF236102A049900CC60B8 /* HttpMultipartResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpMultipartResponseHandler.h; sourceTree = "<group>"; };
+		903FF23A102A04C100CC60B8 /* SubmitTranslationFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitTranslationFile.m; sourceTree = "<group>"; };
+		903FF23B102A04C100CC60B8 /* SubmitTranslationFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitTranslationFile.h; sourceTree = "<group>"; };
+		903FF23D102A050B00CC60B8 /* CSRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRegex.m; sourceTree = "<group>"; };
+		903FF23E102A050B00CC60B8 /* CSRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRegex.h; sourceTree = "<group>"; };
+		903FF240102A052A00CC60B8 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		903FF248102A058000CC60B8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		903FF2E5102FDAF100CC60B8 /* index.html */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		90417EAB0F0EDE96007CBA7E /* Danish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Danish; path = Danish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		9045A7250E7C1423001B439C /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
@@ -353,6 +388,7 @@
 				90ADA7CB0F1877AB00C65E40 /* CoreLocation.framework in Frameworks */,
 				90ADA7CF0F1877B300C65E40 /* QuartzCore.framework in Frameworks */,
 				90ADA7D30F1877C100C65E40 /* libsqlite3.dylib in Frameworks */,
+				903FF249102A058000CC60B8 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +501,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				903FF2E5102FDAF100CC60B8 /* index.html */,
 				90161BF80FDAB99D001EDB6D /* NotAtHomes */,
 				90D02D7F0E538552001CEF0D /* map.html */,
 				90E75D1A0FE5D0AB00690CEE /* MetadataPickerView.xib */,
@@ -499,6 +536,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				903FF248102A058000CC60B8 /* CFNetwork.framework */,
 				90FBE8F80E39AD7100FD8014 /* CoreGraphics.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -511,6 +549,32 @@
 			children = (
 			);
 			name = NotAtHomes;
+			sourceTree = "<group>";
+		};
+		903FF22C102A046E00CC60B8 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				903FF240102A052A00CC60B8 /* SynthesizeSingleton.h */,
+				903FF231102A049900CC60B8 /* HTTPServer.m */,
+				903FF232102A049900CC60B8 /* HTTPServer.h */,
+				903FF233102A049900CC60B8 /* HTTPResponseHandler.m */,
+				903FF234102A049900CC60B8 /* HTTPResponseHandler.h */,
+				903FF235102A049900CC60B8 /* HttpMultipartResponseHandler.m */,
+				903FF236102A049900CC60B8 /* HttpMultipartResponseHandler.h */,
+				903FF23D102A050B00CC60B8 /* CSRegex.m */,
+				903FF23E102A050B00CC60B8 /* CSRegex.h */,
+				903FF23A102A04C100CC60B8 /* SubmitTranslationFile.m */,
+				903FF23B102A04C100CC60B8 /* SubmitTranslationFile.h */,
+				90226AFE1030B56500A94FEC /* SubmitDataFile.m */,
+				90226AFD1030B56500A94FEC /* SubmitDataFile.h */,
+				90226B011030B87600A94FEC /* DownloadDataFile.m */,
+				90226B001030B87600A94FEC /* DownloadDataFile.h */,
+				90226B971030C1B900A94FEC /* SubmitHours.m */,
+				90226B961030C1B900A94FEC /* SubmitHours.h */,
+				90226BD91030CFC800A94FEC /* SubmitNewCall.m */,
+				90226BD81030CFC800A94FEC /* SubmitNewCall.h */,
+			);
+			name = Server;
 			sourceTree = "<group>";
 		};
 		906143AA0E51310B0072BA7B /* HourView */ = {
@@ -528,6 +592,7 @@
 		9064A98C0E5891E300CE6F3F /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
+				903FF22C102A046E00CC60B8 /* Server */,
 				90E756B00FE2E3D200690CEE /* Multiple Users */,
 				9045A9FE0E7D99A4001B439C /* EventAgent.h */,
 				9045A9FF0E7D99A4001B439C /* EventAgent.m */,
@@ -539,6 +604,8 @@
 				9045A7280E7C1590001B439C /* BackupView.m */,
 				904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */,
 				904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */,
+				90226C561030DB5900A94FEC /* MyTimeWebServerView.h */,
+				90226C571030DB5900A94FEC /* MyTimeWebServerView.m */,
 			);
 			name = SettingsView;
 			sourceTree = "<group>";
@@ -656,7 +723,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
+		1D6058900D05DD3D006BFB54 /* MyTime */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -713,7 +780,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* SimpleMap */,
+				1D6058900D05DD3D006BFB54 /* MyTime */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -767,6 +834,7 @@
 				90EA4F37100275590046A2E4 /* whiteButton.png in Resources */,
 				90EA4F38100275590046A2E4 /* blueButton.png in Resources */,
 				905A0E741029213B00875539 /* Settings.bundle in Resources */,
+				903FF2E6102FDAF100CC60B8 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +938,16 @@
 				90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */,
 				90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */,
 				90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */,
+				903FF237102A049900CC60B8 /* HTTPServer.m in Sources */,
+				903FF238102A049900CC60B8 /* HTTPResponseHandler.m in Sources */,
+				903FF239102A049900CC60B8 /* HttpMultipartResponseHandler.m in Sources */,
+				903FF23C102A04C100CC60B8 /* SubmitTranslationFile.m in Sources */,
+				903FF23F102A050B00CC60B8 /* CSRegex.m in Sources */,
+				90226AFF1030B56500A94FEC /* SubmitDataFile.m in Sources */,
+				90226B021030B87600A94FEC /* DownloadDataFile.m in Sources */,
+				90226B981030C1B900A94FEC /* SubmitHours.m in Sources */,
+				90226BDA1030CFC800A94FEC /* SubmitNewCall.m in Sources */,
+				90226C581030DB5900A94FEC /* MyTimeWebServerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,7 +961,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
+			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
