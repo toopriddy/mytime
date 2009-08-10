@@ -476,6 +476,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
+	
 }
 
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController

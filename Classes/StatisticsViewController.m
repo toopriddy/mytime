@@ -378,31 +378,37 @@ static NSString *MONTHS[] = {
 							{
 								if([type isEqualToString:PublicationTypeBook])
 								{
-									_books[offset]++;
+									if(!isTransfer)
+										_books[offset]++;
 								}
 								else if([type isEqualToString:PublicationTypeBrochure])
 								{
-									_brochures[offset]++;
+									if(!isTransfer)
+										_brochures[offset]++;
 								}
 								else if([type isEqualToString:PublicationTypeMagazine])
 								{
-									_magazines[offset]++;
+									if(!isTransfer)
+										_magazines[offset]++;
 								}
 								else if([type isEqualToString:PublicationTypeDVDBible])
 								{
 									if(!foundBibleDVD)
 									{
-										_books[offset]++;
+										if(!isTransfer)
+											_books[offset]++;
 										foundBibleDVD = TRUE;
 									}
 								}
 								else if([type isEqualToString:PublicationTypeDVDBook])
 								{
-									_books[offset]++;
+									if(!isTransfer)
+										_books[offset]++;
 								}
 								else if([type isEqualToString:PublicationTypeCampaignTract])
 								{
-									_campaignTracts[offset]++;
+									if(!isTransfer)
+										_campaignTracts[offset]++;
 								}
 							}
 						}
