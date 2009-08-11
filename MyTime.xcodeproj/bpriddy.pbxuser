@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator3.0;
+		activeSDKPreference = iphoneos3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -179,7 +179,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					631,
+					679,
 					60,
 					20,
 					48,
@@ -327,6 +327,8 @@
 			90226D041030E57600A94FEC = 90226D041030E57600A94FEC /* PBXTextBookmark */;
 			90226D051030E57600A94FEC = 90226D051030E57600A94FEC /* PBXTextBookmark */;
 			90226D071030E5AA00A94FEC = 90226D071030E5AA00A94FEC /* PBXTextBookmark */;
+			90226D5D1030FD3500A94FEC /* PlistBookmark */ = 90226D5D1030FD3500A94FEC /* PlistBookmark */;
+			90226D5E1030FD3500A94FEC /* PlistBookmark */ = 90226D5E1030FD3500A94FEC /* PlistBookmark */;
 			903FF268102CDD8400CC60B8 = 903FF268102CDD8400CC60B8 /* PBXTextBookmark */;
 			903FF26C102CDD8400CC60B8 = 903FF26C102CDD8400CC60B8 /* PBXTextBookmark */;
 			903FF27D102FD8F800CC60B8 = 903FF27D102FD8F800CC60B8 /* PBXTextBookmark */;
@@ -1139,7 +1141,7 @@
 		ignoreCount = 0;
 		lineNumber = 61;
 		location = MyTime;
-		modificationTime = 271639865.0889701;
+		modificationTime = 271645784.567252;
 		state = 1;
 	};
 	90226BFD1030D62D00A94FEC /* PBXTextBookmark */ = {
@@ -1176,7 +1178,7 @@
 		ignoreCount = 0;
 		lineNumber = 95;
 		location = MyTime;
-		modificationTime = 271639865.112774;
+		modificationTime = 271645784.567361;
 		state = 1;
 	};
 	90226C0A1030D6CE00A94FEC /* SubmitNewCall.m:128 */ = {
@@ -1193,7 +1195,7 @@
 		ignoreCount = 0;
 		lineNumber = 128;
 		location = MyTime;
-		modificationTime = 271639865.12542;
+		modificationTime = 271645784.567472;
 		state = 1;
 	};
 	90226C0F1030D74000A94FEC /* PBXTextBookmark */ = {
@@ -1860,6 +1862,29 @@
 		vrLen = 1975;
 		vrLoc = 382;
 	};
+	90226D5D1030FD3500A94FEC /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	90226D5E1030FD3500A94FEC /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
 	9022EC990E8AF207007DCD2D /* malloc_error_break */ = {
 		isa = PBXSymbolicBreakpoint;
 		actions = (
@@ -1871,7 +1896,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 271639864.829092;
+		modificationTime = 271645784.569811;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -1886,7 +1911,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 271639864.86216;
+		modificationTime = 271645784.569983;
 		state = 1;
 		symbolName = malloc_error_break;
 	};
@@ -1932,7 +1957,7 @@
 		ignoreCount = 0;
 		lineNumber = 226;
 		location = MyTime;
-		modificationTime = 271639863.839278;
+		modificationTime = 271645784.566544;
 		state = 2;
 	};
 	9032C7520F30DACA005FA8D0 /* Geocache.h */ = {
@@ -2172,7 +2197,7 @@
 		ignoreCount = 0;
 		lineNumber = 933;
 		location = MyTime;
-		modificationTime = 271639865.059347;
+		modificationTime = 271645784.56705;
 		state = 1;
 	};
 	904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {
@@ -2224,7 +2249,7 @@
 		ignoreCount = 0;
 		lineNumber = 118;
 		location = MyTime;
-		modificationTime = 271639865.051707;
+		modificationTime = 271645784.566649;
 		state = 1;
 	};
 	905991491005D6C20030A482 /* CallViewController.m:124 */ = {
@@ -2241,7 +2266,7 @@
 		ignoreCount = 0;
 		lineNumber = 124;
 		location = MyTime;
-		modificationTime = 271639863.839444;
+		modificationTime = 271645784.566734;
 		state = 2;
 	};
 	905C36D90E3BBD4600C8DB27 /* CallViewController.h */ = {
@@ -2426,7 +2451,7 @@
 		ignoreCount = 0;
 		lineNumber = 232;
 		location = MyTime;
-		modificationTime = 271639864.911394;
+		modificationTime = 271645784.565902;
 		state = 1;
 	};
 	90674F120F1B00EA00D524C0 /* MyTimeAppDelegate.m:132 */ = {
@@ -2443,7 +2468,7 @@
 		ignoreCount = 0;
 		lineNumber = 132;
 		location = MyTime;
-		modificationTime = 271639864.930812;
+		modificationTime = 271645784.566018;
 		state = 1;
 	};
 	90674F180F1B013100D524C0 /* MyTimeAppDelegate.m:144 */ = {
@@ -2460,7 +2485,7 @@
 		ignoreCount = 0;
 		lineNumber = 144;
 		location = MyTime;
-		modificationTime = 271639864.940819;
+		modificationTime = 271645784.566123;
 		state = 1;
 	};
 	90674F1A0F1B013300D524C0 /* MyTimeAppDelegate.m:144 */ = {
@@ -2477,7 +2502,7 @@
 		ignoreCount = 0;
 		lineNumber = 144;
 		location = MyTime;
-		modificationTime = 271639864.979264;
+		modificationTime = 271645784.566231;
 		state = 1;
 	};
 	90674F1C0F1B013600D524C0 /* MyTimeAppDelegate.m:144 */ = {
@@ -2494,7 +2519,7 @@
 		ignoreCount = 0;
 		lineNumber = 144;
 		location = MyTime;
-		modificationTime = 271639864.988115;
+		modificationTime = 271645784.566335;
 		state = 1;
 	};
 	90674F1E0F1B013700D524C0 /* MyTimeAppDelegate.m:144 */ = {
@@ -2511,7 +2536,7 @@
 		ignoreCount = 0;
 		lineNumber = 144;
 		location = MyTime;
-		modificationTime = 271639865.026034;
+		modificationTime = 271645784.566435;
 		state = 1;
 	};
 	906AE820100BABB700226CA0 /* MetadataViewController.m:407 */ = {
@@ -2528,7 +2553,7 @@
 		ignoreCount = 0;
 		lineNumber = 407;
 		location = MyTime;
-		modificationTime = 271639863.839521;
+		modificationTime = 271645784.566835;
 		state = 2;
 	};
 	906AE8CC100BB80A00226CA0 /* MetadataCustomViewController.m:237 */ = {
@@ -2545,7 +2570,7 @@
 		ignoreCount = 0;
 		lineNumber = 237;
 		location = MyTime;
-		modificationTime = 271639863.839612;
+		modificationTime = 271645784.566941;
 		state = 2;
 	};
 	907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {
@@ -2618,7 +2643,7 @@
 		ignoreCount = 0;
 		lineNumber = 817;
 		location = MyTime;
-		modificationTime = 271639865.079503;
+		modificationTime = 271645784.567144;
 		state = 1;
 	};
 	90ADA7640F18757800C65E40 /* en_UK */ = {
