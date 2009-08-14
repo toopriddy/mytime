@@ -328,10 +328,10 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90E159CE0FF859C8001BD69B</string>
+										<string>90C611FF103288010054C822</string>
 										<key>history</key>
 										<array>
-											<string>900303EB0F36CF7B00F2B68F</string>
+											<string>90E159CE0FF859C8001BD69B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -415,7 +415,7 @@
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXBuildLogShowsTranscriptDefaultKey</key>
-										<string>{{0, 50}, {943, 0}}</string>
+										<string>{{0, -46}, {943, 96}}</string>
 										<key>PBXProjectModuleGUID</key>
 										<string>XCMainBuildResultsModuleGUID</string>
 										<key>PBXProjectModuleLabel</key>
@@ -456,11 +456,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>90E159CF0FF859C8001BD69B</string>
+				<string>90C61200103288010054C822</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>90E159D00FF859C8001BD69B</string>
+				<string>90C61201103288010054C822</string>
 				<string>90A799F80F22C08500365D96</string>
-				<string>90E159D10FF859C8001BD69B</string>
+				<string>90C61202103288010054C822</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -481,6 +481,7 @@
 				<string>debugger-restart-executable</string>
 				<string>debugger-pause</string>
 				<string>debugger-step-over</string>
+				<string>debugger-next-instruction</string>
 				<string>debugger-step-into</string>
 				<string>debugger-step-out</string>
 				<string>debugger-step-instruction</string>
@@ -608,14 +609,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>90A799FF0F22C08500365D96</string>
+				<string>90C61203103288010054C822</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>90A79A000F22C08500365D96</string>
-				<string>90A79A010F22C08500365D96</string>
-				<string>90A79A020F22C08500365D96</string>
-				<string>90A79A030F22C08500365D96</string>
-				<string>90A79A040F22C08500365D96</string>
+				<string>90C61204103288010054C822</string>
+				<string>90C61205103288010054C822</string>
+				<string>90C61206103288010054C822</string>
+				<string>90C61207103288010054C822</string>
+				<string>90C61208103288010054C822</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>

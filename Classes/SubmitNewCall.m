@@ -104,19 +104,28 @@
 			if([[NSString stringWithFormat:@"day%u", index] isEqualToString:[entry objectForKey:MultipartVariableName]])
 			{
 				day = [entry objectForKey:MultipartVariableValue];
-				[comps setDay:[day intValue]];
+				int value = [day intValue];
+				if(!value)
+					day = nil;
+				[comps setDay:value];
 				found++;
 			}
 			else if([[NSString stringWithFormat:@"month%u", index] isEqualToString:[entry objectForKey:MultipartVariableName]])
 			{
 				month = [entry objectForKey:MultipartVariableValue];
-				[comps setMonth:[month intValue]];
+				int value = [month intValue];
+				if(!value)
+					month = nil;
+				[comps setMonth:value];
 				found++;
 			}
 			else if([[NSString stringWithFormat:@"year%u", index] isEqualToString:[entry objectForKey:MultipartVariableName]])
 			{
 				year = [entry objectForKey:MultipartVariableValue];
-				[comps setYear:[[entry objectForKey:MultipartVariableValue] intValue]];
+				int value = [year intValue];
+				if(!value)
+					year = nil;
+				[comps setYear:value];
 				found++;
 			}
 			else if([[NSString stringWithFormat:@"notes%u", index] isEqualToString:[entry objectForKey:MultipartVariableName]])
