@@ -21,7 +21,11 @@
 #endif
 #import "HTTPResponseHandler.h"
 
+#if TARGET_IPHONE_SIMULATOR
 #define HTTP_SERVER_PORT 8080
+#else
+#define HTTP_SERVER_PORT 80
+#endif
 
 NSString * const HTTPServerNotificationStateChanged = @"ServerNotificationStateChanged";
 

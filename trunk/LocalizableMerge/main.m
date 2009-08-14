@@ -121,7 +121,8 @@ int main (int argc, const char * argv[])
 	NSMutableString *newEntry = [[NSMutableString alloc] init];
 	for(entry in baseArray)
 	{
-		[newEntry appendFormat:@"%@\n", [entry objectForKey:@"comment"]];
+		NSString *comment = [entry objectForKey:@"comment"];
+		[newEntry appendFormat:@"%@\n", (comment ? comment : @"/* */")];
 		[newEntry appendFormat:@"%@ = %@\n\n", [entry objectForKey:@"first"], [entry objectForKey:@"second"]];
 		[output appendString:newEntry];
 		if([entry objectForKey:@"found"] == nil)

@@ -10,6 +10,7 @@
 #import "HTTPServer.h"
 #include <ifaddrs.h> 
 #include <arpa/inet.h>
+#import "PSLocalization.h"
 
 @implementation MyTimeWebServerView
 
@@ -51,11 +52,11 @@
 		NSString *address = [self getIPAddress];
 		if(address == nil)
 		{
-			self.title = NSLocalizedString(@"You need ot be on a Wifi Network for the MyTime Webserver to work", @"these are the instructions for connecting to the MyTime web server from the Settings View");
+			self.title = NSLocalizedString(@"You need to be on a WiFi Network for the MyTime Webserver to work", @"these are the instructions for connecting to the MyTime web server from the Settings View");
 		}
 		else
 		{
-			self.title = [NSString stringWithFormat:NSLocalizedString(@"Make sure you are on the same network as your iPhone/iPod then open a web browser and type in \"http://%@:8080\" as the location.", @"these are the instructions for connecting to the MyTime web server from the Settings View"), address];
+			self.title = [NSString stringWithFormat:NSLocalizedString(@"Make sure you are on the same network as your iPhone/iPod then open a web browser and type in \"http://%@\" as the location.", @"these are the instructions for connecting to the MyTime web server from the Settings View"), address];
 		}
 		self.delegate = self;
 	}
