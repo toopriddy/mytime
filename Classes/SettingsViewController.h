@@ -17,12 +17,14 @@
 #import "BackupView.h"
 #import "NumberViewControllerDelegate.h"
 #import "PublisherTypeViewController.h"
+#import "SecurityViewController.h"
 
 @interface SettingsViewController : UIViewController <UITableViewDelegate, 
                                                       UITableViewDataSource,
 													  NumberViewControllerDelegate,
 													  UIActionSheetDelegate,
-													  PublisherTypeViewControllerDelegate> 
+													  PublisherTypeViewControllerDelegate,
+                                                      SecurityViewControllerDelegate> 
 {
 	UITableView *theTableView;
 	BackupView *backupView;

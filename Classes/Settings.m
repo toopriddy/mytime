@@ -122,6 +122,8 @@ NSString * const SettingsRBCTimeEntries = @"quickBuildEntries";
 NSString * const SettingsTimeEntryDate = @"date";
 NSString * const SettingsTimeEntryMinutes = @"minutes";
 
+NSString * const SettingsPasscode = @"passcode";
+
 
 NSString * const SettingsDonated = @"donated";
 NSString * const SettingsFirstView = @"firstView";

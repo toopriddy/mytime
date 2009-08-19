@@ -14,6 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SecurityViewController.h"
 
 // for moving around the UITableViewIndex
 static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
@@ -28,7 +29,8 @@ typedef enum {
 
 @interface MyTimeAppDelegate : NSObject <UIApplicationDelegate, 
                                          UITabBarControllerDelegate,
-										 UIActionSheetDelegate> 
+										 UIActionSheetDelegate,
+										 SecurityViewControllerDelegate> 
 {
 	UIWindow *window;
 	UITabBarController *tabBarController;

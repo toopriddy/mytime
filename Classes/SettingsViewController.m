@@ -132,6 +132,7 @@ enum {
 			count++; // number of months shown
 			count++; // publisher type
 			count++; // erase map cache
+			count++; // passcode
 			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 			if([fileManager fileExistsAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath]])
 				count++;
@@ -286,6 +287,21 @@ enum {
 					break;
 				}
 				case 4:
+				{
+					NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+					[cell setTitle:NSLocalizedString(@"Passcode Lock", @"More->Settings view name for the Passcode Setting")];
+					if(passcode.length == 0)
+					{
+						[cell setValue:NSLocalizedString(@"Off", @"Off or disabled (used in the More->Settings->Passcode Lock Setting")];
+					}
+					else
+					{
+						[cell setValue:NSLocalizedString(@"On", @"On or enabled (used in the More->Settings->Passcode Lock Setting")];
+					}
+					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+					break;
+				}
+				case 5:
 				{
 					[cell setTitle:NSLocalizedString(@"Remove Custom Translation", @"More->Settings custom translation title")];
 					break;
@@ -461,6 +477,32 @@ enum {
 				}
 				case 4:
 				{
+					NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+					if(passcode.length == 0)
+					{
+						SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
+						securityView.promptText = NSLocalizedString(@"Enter a passcode", @"First Prompt to enter a passcode to limit access to MyTime");
+						securityView.confirmText = NSLocalizedString(@"Re-enter your passcode", @"First Prompt to enter a passcode to limit access to MyTime");
+						securityView.secondaryPromptText = NSLocalizedString(@"Please remember your passcode. You will not be able to recover this passcode if you forget it.", @"warning to the user that they should remember their passcode");
+						securityView.shouldConfirm = YES;
+						securityView.delegate = self;
+						securityView.title = NSLocalizedString(@"Set Passcode", @"Title of the view you are presented from Settings->Passcode when you are enabling the passcode");
+						[[self navigationController] pushViewController:securityView animated:YES];
+					}
+					else
+					{
+						SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
+						securityView.promptText = NSLocalizedString(@"Enter your passcode to disable", @"Prompt to enter a passcode turn off the passcode in MyTime");
+						securityView.shouldConfirm = NO;
+						securityView.passcode = passcode;
+						securityView.delegate = self;
+						securityView.title = NSLocalizedString(@"Disable Passcode", @"Title of the view you are presented from Settings->Passcode when you are disabling the passcode");
+						[[self navigationController] pushViewController:securityView animated:YES];
+					}
+					return;
+				}
+				case 5:
+				{
 					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 					if(![fileManager removeItemAtPath:[@"~/Documents/translation.bundle" stringByExpandingTildeInPath] error:nil])
 					{
@@ -566,6 +608,28 @@ enum {
 		[backupView release];
 	}
 }
+
+- (void)securityViewControllerDone:(SecurityViewController *)viewController authenticated:(BOOL)authenticated
+{
+	[self.navigationController popViewControllerAnimated:YES];
+	if(authenticated)
+	{
+		NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+		if(passcode.length == 0)
+		{
+			// enabling the passcode
+			[[[Settings sharedInstance] settings] setObject:viewController.passcode forKey:SettingsPasscode];
+			[[Settings sharedInstance] saveData];
+		}
+		else
+		{
+			// disabling the passcode
+			[[[Settings sharedInstance] settings] removeObjectForKey:SettingsPasscode];
+			[[Settings sharedInstance] saveData];
+		}
+	}
+}
+
 
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
 {

@@ -25,9 +25,15 @@
 {
 	UITableView *theTableView;
 
+	int _serviceYearBooks;
+	int _serviceYearBrochures;
 	int _serviceYearMinutes;
 	int _serviceYearQuickBuildMinutes;
-	
+	int _serviceYearMagazines;
+	int _serviceYearReturnVisits;
+	int _serviceYearBibleStudies;
+	int _serviceYearCampaignTracts;
+
 	int _thisMonth;
 	int _lastMonth;
 	int _thisYear;

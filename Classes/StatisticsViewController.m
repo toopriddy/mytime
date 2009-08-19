@@ -274,6 +274,7 @@ static NSString *MONTHS[] = {
 {
 	BOOL found;
 	int callIndex;
+	BOOL newServiceYear = _thisMonth >= 9;
 
 	// go through all of the calls and see what the counts are for this month and last month
 	for(callIndex = 0; callIndex < [calls count]; ++callIndex)
@@ -339,6 +340,11 @@ static NSString *MONTHS[] = {
 						if(!isNotAtHome && !isTransfer)
 						{
 							_returnVisits[offset]++;
+							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+							   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+							{
+								_serviceYearReturnVisits++;
+							}
 							counted = YES;
 						}
 					}
@@ -348,6 +354,11 @@ static NSString *MONTHS[] = {
 						if(!counted)
 						{
 							_returnVisits[offset]++;
+							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+							   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+							{
+								_serviceYearReturnVisits++;
+							}
 							counted = YES;
 						}
 					}
@@ -359,6 +370,11 @@ static NSString *MONTHS[] = {
 					{
 						studyAlreadyConducted[offset] = YES;
 						_bibleStudies[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBibleStudies++;
+						}
 					}
 
 					// we only care about counting this month's or last month's returnVisits' calls
@@ -379,36 +395,78 @@ static NSString *MONTHS[] = {
 								if([type isEqualToString:PublicationTypeBook])
 								{
 									if(!isTransfer)
+									{
 										_books[offset]++;
+										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										{
+											_serviceYearBooks++;
+										}
+									}
 								}
 								else if([type isEqualToString:PublicationTypeBrochure])
 								{
 									if(!isTransfer)
+									{
 										_brochures[offset]++;
+										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										{
+											_serviceYearBrochures++;
+										}
+									}
 								}
 								else if([type isEqualToString:PublicationTypeMagazine])
 								{
 									if(!isTransfer)
+									{
 										_magazines[offset]++;
+										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										{
+											_serviceYearMagazines++;
+										}
+									}
 								}
 								else if([type isEqualToString:PublicationTypeDVDBible])
 								{
 									if(!foundBibleDVD)
 									{
 										if(!isTransfer)
+										{
 											_books[offset]++;
+											if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+											   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+											{
+												_serviceYearBooks++;
+											}
+										}
 										foundBibleDVD = TRUE;
 									}
 								}
 								else if([type isEqualToString:PublicationTypeDVDBook])
 								{
 									if(!isTransfer)
+									{
 										_books[offset]++;
+										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										{
+											_serviceYearBooks++;
+										}
+									}
 								}
 								else if([type isEqualToString:PublicationTypeCampaignTract])
 								{
 									if(!isTransfer)
+									{
 										_campaignTracts[offset]++;
+										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										{
+											_serviceYearCampaignTracts++;
+										}
+									}
 								}
 							}
 						}
@@ -437,9 +495,15 @@ static NSString *MONTHS[] = {
 	memset(_campaignTracts, 0, sizeof(_campaignTracts));
 	memset(_quickBuildMinutes, 0, sizeof(_quickBuildMinutes));
 
+	_serviceYearBooks = 0;
+	_serviceYearBrochures = 0;
 	_serviceYearMinutes = 0;
 	_serviceYearQuickBuildMinutes = 0;
-
+	_serviceYearMagazines = 0;
+	_serviceYearReturnVisits = 0;
+	_serviceYearBibleStudies = 0;
+	_serviceYearCampaignTracts = 0;
+	
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
 	_thisMonth = [dateComponents month];
@@ -481,13 +545,8 @@ static NSString *MONTHS[] = {
 			// we found a valid month
 			_minutes[offset] += [minutes intValue];
 
-			// newServiceYear means that the months that are added are above the current month
-			if(newServiceYear && offset <= (_thisMonth - 9))
-			{
-				_serviceYearMinutes += [minutes intValue];
-			}
-			// !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-			else if(!newServiceYear && _thisMonth + 4 > offset)
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
 				_serviceYearMinutes += [minutes intValue];
 			}
@@ -528,12 +587,8 @@ static NSString *MONTHS[] = {
 			_quickBuildMinutes[offset] += [minutes intValue];
 
 			// newServiceYear means that the months that are added are above the current month
-			if(newServiceYear && offset <= (_thisMonth - 9))
-			{
-				_serviceYearQuickBuildMinutes += [minutes intValue];
-			}
-			// !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-			else if(!newServiceYear && _thisMonth + 4 > offset)
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
 				_serviceYearQuickBuildMinutes += [minutes intValue];
 			}
@@ -592,26 +647,56 @@ static NSString *MONTHS[] = {
 					if([type isEqualToString:PublicationTypeBook])
 					{
 						_books[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+							(!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBooks += number;
+						}
 					}
 					else if([type isEqualToString:PublicationTypeBrochure])
 					{
 						_brochures[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBrochures += number;
+						}
 					}
 					else if([type isEqualToString:PublicationTypeMagazine])
 					{
 						_magazines[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearMagazines += number;
+						}
 					}
 					else if([type isEqualToString:PublicationTypeDVDBible])
 					{
 						_books[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBooks += number;
+						}
 					}
 					else if([type isEqualToString:PublicationTypeDVDBook])
 					{
 						_books[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBooks += number;
+						}
 					}
 					else if([type isEqualToString:PublicationTypeCampaignTract])
 					{
 						_campaignTracts[offset] += number;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearCampaignTracts += number;
+						}
 					}
 				}
 				
@@ -653,7 +738,24 @@ static NSString *MONTHS[] = {
 	{
 		if(section == 0)
 		{
-			return(_serviceYearQuickBuildMinutes ? 2 : 1);
+			int count = 0;
+			count++; // always show hours
+			if(_serviceYearBooks)
+				count++;
+			if(_serviceYearBrochures)
+				count++;
+			if(_serviceYearMagazines)
+				count++;
+			if(_serviceYearReturnVisits)
+				count++;
+			if(_serviceYearBibleStudies)
+				count++;
+			if(_serviceYearCampaignTracts)
+				count++;
+			if(_serviceYearQuickBuildMinutes)
+				count++;
+			
+			return count;
 		}
 		section--;
 	}
@@ -922,42 +1024,77 @@ static NSString *MONTHS[] = {
 	{
 		if(section == 0)
 		{
-			switch(row)
+			if(row-- == 0)
 			{
-				case 0:
-				{
-					[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-					int hours = _serviceYearMinutes / 60;
-					int minutes = _serviceYearMinutes % 60;
-					if(hours && minutes)
-						[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-					else if(hours)
-						[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-					else if(minutes)
-						[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-					else
-						[cell setValue:@"0"];
-
-					return cell;
-				}
-				case 1:
-				{
-					[cell setTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
-					int hours = _serviceYearQuickBuildMinutes / 60;
-					int minutes = _serviceYearQuickBuildMinutes % 60;
-					if(hours && minutes)
-						[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-					else if(hours)
-						[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
-					else if(minutes)
-						[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-					else
-						[cell setValue:@"0"];
-
-					return cell;
-				}
+				[cell setTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
+				int hours = _serviceYearMinutes / 60;
+				int minutes = _serviceYearMinutes % 60;
+				if(hours && minutes)
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+				else if(hours)
+					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+				else if(minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+				else
+					[cell setValue:@"0"];
 			}
-			return nil;
+			else if(_serviceYearBooks && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Books", @"Publication Type name")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearBooks]];
+			}
+			else if(_serviceYearBrochures && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Brochures", @"Publication Type name")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearBrochures]];
+			}
+			else if(_serviceYearMagazines && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Magazines", @"Publication Type name")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearMagazines]];
+			}
+			else if(_serviceYearReturnVisits && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearReturnVisits]];
+			}
+			else if(_serviceYearBibleStudies && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearBibleStudies]];
+			}
+			else if(_serviceYearCampaignTracts && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name")];
+				[cell setValue:[NSString stringWithFormat:@"%d", _serviceYearCampaignTracts]];
+			}
+			else if(_serviceYearQuickBuildMinutes && row-- == 0)
+			{
+				// if we are not editing, then 
+				[cell setTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
+				int hours = _serviceYearQuickBuildMinutes / 60;
+				int minutes = _serviceYearQuickBuildMinutes % 60;
+				if(hours && minutes)
+					[cell setValue:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+				else if(hours)
+					[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+				else if(minutes)
+					[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+				else
+					[cell setValue:@"0"];
+			}				
+			else
+			{
+				return nil;
+			}
+			
+			return cell;
 		}
 		
 		section--;
