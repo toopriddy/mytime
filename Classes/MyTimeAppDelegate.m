@@ -476,7 +476,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabBarController];
 	nav.navigationBarHidden = YES;
 	// set the window subview as the tab bar controller
-//	[window addSubview:tabBarController.view];
 	[window addSubview:nav.view];
 	
 	// make the window visible
