@@ -32,6 +32,7 @@
 #import "Geocache.h"
 #import <objc/runtime.h>
 #import "PSLocalization.h"
+#import "SecurityViewController.h"
 
 @implementation MyTimeAppDelegate
 
@@ -129,7 +130,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{  
 		return NO; 
 	}
-//	sleep(20);
+	sleep(20);
 
     NSString *URLString = [url absoluteString];
 	NSLog(@"%@", URLString);
@@ -146,8 +147,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				NSData *dataStore = allocNSDataFromNSStringByteString(data);
 				if(dataStore == nil)
 					break;
-
-				self.callToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				@try
+				{
+					self.callToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				}
+				@catch (NSException *e) 
+				{
+					NSLog(@"%@", e);
+				}
 				[dataStore release];
 				DEBUG(NSLog(@"%@", callToImport);)
 
@@ -174,7 +181,17 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				if(dataStore == nil)
 					break;
 
-				self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				@try
+				{
+					self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				}
+				@catch (NSException *e) 
+				{
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					alertSheet.title = [NSString stringWithFormat:@"%@", e];
+					[alertSheet show];
+					
+				}
 				[dataStore release];
 				DEBUG(NSLog(@"%@", self.settingsToRestore);)
 
@@ -456,9 +473,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		tabBarController.selectedIndex = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
 	}
-	
+	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabBarController];
+	nav.navigationBarHidden = YES;
 	// set the window subview as the tab bar controller
-	[window addSubview:tabBarController.view];
+//	[window addSubview:tabBarController.view];
+	[window addSubview:nav.view];
 	
 	// make the window visible
 	[window makeKeyAndVisible];
@@ -477,6 +496,28 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
 	
+	NSString *passcode = [settings objectForKey:SettingsPasscode];
+	if(passcode.length)
+	{
+		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
+		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
+		securityView.shouldConfirm = NO;
+		securityView.passcode = passcode;
+		securityView.delegate = self;
+		[nav presentModalViewController:securityView animated:NO];
+	}
+}
+
+- (void)securityViewControllerDone:(SecurityViewController *)viewController authenticated:(BOOL)authenticated
+{
+	if(authenticated)
+	{
+		[[tabBarController selectedViewController] dismissModalViewControllerAnimated:YES];
+	}
+	else
+	{
+		exit(0);
+	}
 }
 
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController

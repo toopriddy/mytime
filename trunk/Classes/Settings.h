@@ -133,6 +133,9 @@ extern NSString * const SettingsRBCTimeEntries;
 	extern NSString * const SettingsTimeEntryDate;
 	extern NSString * const SettingsTimeEntryMinutes;
 
+
+extern NSString * const SettingsPasscode;
+
 extern NSString * const SettingsDonated;
 extern NSString * const SettingsFirstView;
 extern NSString * const SettingsSecondView;

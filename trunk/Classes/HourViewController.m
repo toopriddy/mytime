@@ -50,7 +50,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 	// remove all entries that are older than 13 months
 	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	[comps setMonth:-13];
+	[comps setMonth:-25];
 	NSDate *now = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
 	int count = [timeEntries count];
 	int i;
