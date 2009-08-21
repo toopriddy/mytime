@@ -130,7 +130,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{  
 		return NO; 
 	}
-	sleep(20);
+//	sleep(20); #warning this should not be released!!!
 
     NSString *URLString = [url absoluteString];
 	NSLog(@"%@", URLString);

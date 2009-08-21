@@ -50,6 +50,7 @@
 	
 	int _selectedMonth;
 	BOOL _emailActionSheet;
+	NSString *_serviceYearText;
 }
 @property (nonatomic,retain) UITableView *theTableView;
 

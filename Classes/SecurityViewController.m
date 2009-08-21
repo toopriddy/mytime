@@ -105,6 +105,7 @@
 				mainFrame.origin.x = -frame.size.width;
 				currentView = self.confirmView;
 				[UIView beginAnimations:nil context:nil];
+					[UIView setAnimationDuration:0.3];
 					self.mainView.frame = mainFrame;
 					self.confirmView.frame = frame;
 				[UIView commitAnimations];
@@ -135,8 +136,9 @@
 					currentView = self.mainView;
 					currentView.secondaryLabel.text = NSLocalizedString(@"Passcodes did not match. Try again.", @"text that appears if the passcodes dont match, this should match what is in the iphone's Settings->General->Passcode when you messup the passcode confirm");
 					[UIView beginAnimations:nil context:nil];
-					self.mainView.frame = mainFrame;
-					self.confirmView.frame = frame;
+						[UIView setAnimationDuration:0.3];
+						self.mainView.frame = mainFrame;
+						self.confirmView.frame = frame;
 					[UIView commitAnimations];
 					
 					return NO;

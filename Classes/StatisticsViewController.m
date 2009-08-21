@@ -52,6 +52,8 @@ static NSString *MONTHS[] = {
 		// object. 
 		self.title = NSLocalizedString(@"Statistics", @"'Statistics' ButtonBar View text and Statistics View Title");
 		self.tabBarItem.image = [UIImage imageNamed:@"statistics.png"];
+		
+		_serviceYearText = NSLocalizedString(@"Service Year Total", @"Service year total hours label");
 	}
 	return self;
 }
@@ -482,10 +484,8 @@ static NSString *MONTHS[] = {
 	}
 }
 
-- (void)reloadData
+- (void)computeStatistics
 {
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	
 	memset(_books, 0, sizeof(_books));
 	memset(_brochures, 0, sizeof(_brochures));
 	memset(_minutes, 0, sizeof(_minutes));
@@ -494,7 +494,7 @@ static NSString *MONTHS[] = {
 	memset(_bibleStudies, 0, sizeof(_bibleStudies));
 	memset(_campaignTracts, 0, sizeof(_campaignTracts));
 	memset(_quickBuildMinutes, 0, sizeof(_quickBuildMinutes));
-
+	
 	_serviceYearBooks = 0;
 	_serviceYearBrochures = 0;
 	_serviceYearMinutes = 0;
@@ -504,14 +504,8 @@ static NSString *MONTHS[] = {
 	_serviceYearBibleStudies = 0;
 	_serviceYearCampaignTracts = 0;
 	
-	// save off this month and last month for quick compares
-	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
-	_thisMonth = [dateComponents month];
-	_thisYear = [dateComponents year];
-
-	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
-	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
-
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	
 	BOOL newServiceYear = _thisMonth >= 9;
 	NSArray *timeEntries = [userSettings objectForKey:SettingsTimeEntries];
 	int timeIndex;
@@ -706,6 +700,57 @@ static NSString *MONTHS[] = {
 
 	[self countCalls:[userSettings objectForKey:SettingsCalls] removeOld:NO];
 	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls] removeOld:YES];
+}
+
+- (void)reloadData
+{
+	// save off this month and last month for quick compares
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
+	_thisMonth = [dateComponents month];
+	_thisYear = [dateComponents year];
+	
+	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
+	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
+
+	if(_thisMonth == 9)
+	{
+		// first *sigh* go through last service year and add up everything
+		_thisMonth = 8;
+		_lastMonth = 7;
+		[self computeStatistics];
+		
+		// then save everything that we care about off
+		int serviceYearBooks = _serviceYearBooks;
+		int serviceYearBrochures = _serviceYearBrochures;
+		int serviceYearMinutes = _serviceYearMinutes;
+		int serviceYearQuickBuildMinutes = _serviceYearQuickBuildMinutes;
+		int serviceYearMagazines = _serviceYearMagazines;
+		int serviceYearReturnVisits = _serviceYearReturnVisits;
+		int serviceYearBibleStudies = _serviceYearBibleStudies;
+		int serviceYearCampaignTracts = _serviceYearCampaignTracts;
+		
+		// now recompute the statistics and then...
+		_thisMonth = 9;
+		_lastMonth = 8;
+		[self computeStatistics];
+		
+		// use the old service year numbers instead of the current service year
+		_serviceYearBooks = serviceYearBooks;
+		_serviceYearBrochures = serviceYearBrochures;
+		_serviceYearMinutes = serviceYearMinutes;
+		_serviceYearQuickBuildMinutes = serviceYearQuickBuildMinutes;
+		_serviceYearMagazines = serviceYearMagazines;
+		_serviceYearReturnVisits = serviceYearReturnVisits;
+		_serviceYearBibleStudies = serviceYearBibleStudies;
+		_serviceYearCampaignTracts = serviceYearCampaignTracts;
+		
+		_serviceYearText = NSLocalizedString(@"Last Service Year Total", @"Last Service year total hours label");
+	}
+	else
+	{
+		_serviceYearText = NSLocalizedString(@"Service Year Total", @"Service year total hours label");
+		[self computeStatistics];
+	}
 	[theTableView reloadData];
 }
 
@@ -789,7 +834,7 @@ static NSString *MONTHS[] = {
 	{
 		if(section == 0)
 		{
-			return (NSLocalizedString(@"Service Year Total", @"Service year total hours label"));
+			return _serviceYearText;
 		}
 		section--;
 	}
