@@ -245,7 +245,7 @@ enum {
 					NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 					if(currentUser == nil || currentUser.length == 0)
 					{
-						currentUser = NSLocalizedString(@"Default User", @"name for the default user if you have not enabled multiple users");
+						currentUser = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
 					}
 					[cell setValue:currentUser];
 					[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
