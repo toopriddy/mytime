@@ -291,7 +291,7 @@ static MetadataInformation commonInformation[] = {
 + (void)fixMetadata
 {
 	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
-#warning so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
+//#warning so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
 	if([preferredMetadata isKindOfClass:[NSString class]])
 	{
 		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsSortedByMetadata];
