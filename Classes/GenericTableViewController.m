@@ -743,6 +743,11 @@
 {
 	self.sectionControllers = nil;
 	self.displaySectionControllers = nil;
+
+	self.tableView.delegate = nil;
+	self.tableView.dataSource = nil;	
+	self.tableView = nil;
+	
 	[super dealloc];
 }
 
