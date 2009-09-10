@@ -34,9 +34,9 @@
 @synthesize delegate;
 @synthesize widths = _widths;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier textFieldCount:(int)textFieldCount
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier textFieldCount:(int)textFieldCount
 {
-	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
+	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 

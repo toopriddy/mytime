@@ -120,17 +120,17 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
-	self.googleMapsCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"googleMapsCell"] autorelease];
+	self.googleMapsCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"googleMapsCell"] autorelease];
 	googleMapsCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeGoogleMaps value:CallLocationTypeGoogleMaps table:@""];
 	googleMapsCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	googleMapsCell.selected = NO;
 	
-	self.manualCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"manualCell"] autorelease];
+	self.manualCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"manualCell"] autorelease];
 	manualCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeManual value:CallLocationTypeManual table:@""];
 	manualCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	manualCell.selected = NO;
 	
-	self.doNotShowCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"doNotShowCell"] autorelease];
+	self.doNotShowCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"doNotShowCell"] autorelease];
 	doNotShowCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallLocationTypeDoNotShow value:CallLocationTypeDoNotShow table:@""];
 	doNotShowCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	doNotShowCell.selected = NO;

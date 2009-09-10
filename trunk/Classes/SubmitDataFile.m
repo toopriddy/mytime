@@ -8,6 +8,7 @@
 
 #import "SubmitDataFile.h"
 #import "Settings.h"
+#import "HTTPServer.h"
 
 @implementation SubmitDataFile
 
@@ -67,7 +68,7 @@
 			if(![fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])
 			{
 				errorString = [NSString stringWithFormat:@"could not create directory at %@", directory];
-				NSLog(errorString);
+				NSLog(@"%@", errorString);
 			}
 			else
 			{

@@ -150,7 +150,7 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
-	self.returnVisitCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.returnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	if(isInitialVisit)
 		returnVisitCell.textLabel.text = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
 	else
@@ -158,27 +158,27 @@
 	returnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	returnVisitCell.selected = NO;
 	
-	self.studyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.studyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	studyCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeStudy value:CallReturnVisitTypeStudy table:@""];
 	studyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	studyCell.selected = NO;
 	
-	self.notAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.notAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	notAtHomeCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeNotAtHome value:CallReturnVisitTypeNotAtHome table:@""];
 	notAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	notAtHomeCell.selected = NO;
 
-	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	transferedReturnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedReturnVisit value:CallReturnVisitTypeTransferedReturnVisit table:@""];
 	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedReturnVisitCell.selected = NO;
 
-	self.transferedStudyCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.transferedStudyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	transferedStudyCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedStudy value:CallReturnVisitTypeTransferedStudy table:@""];
 	transferedStudyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedStudyCell.selected = NO;
 
-	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
 	transferedNotAtHomeCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedNotAtHome value:CallReturnVisitTypeTransferedNotAtHome table:@""];
 	transferedNotAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedNotAtHomeCell.selected = NO;

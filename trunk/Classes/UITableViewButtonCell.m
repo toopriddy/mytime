@@ -29,7 +29,7 @@
 #define VALUE_HEIGHT 30
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image imagePressed:(UIImage *)imagePressed darkTextColor:(BOOL)darkTextColor reuseIdentifier:(NSString *)reuseIdentifier
 {
-	if (self = [super initWithFrame:CGRectZero reuseIdentifier:reuseIdentifier]) 
+	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) 
 	{
 		self.button = [UIButton buttonWithType:UIButtonTypeCustom];
 		self.button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

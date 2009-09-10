@@ -8,6 +8,7 @@
 
 #import "SubmitNewCall.h"
 #import "Settings.h"
+#import "HTTPServer.h"
 
 
 @implementation SubmitNewCall

@@ -22,7 +22,6 @@
 
 @property (nonatomic, retain) UILabel *textView;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)setText:(NSString *)text;
 + (CGFloat)heightForWidth:(CGFloat)width withText:(NSString *)text;
 

@@ -36,7 +36,7 @@
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
 @property (nonatomic, retain) NSMutableArray *widths;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier textFieldCount:(int)textFieldCount;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier textFieldCount:(int)textFieldCount;
 
 - (UITextField *)textFieldAtIndex:(int)index;
 @end

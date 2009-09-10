@@ -7,6 +7,7 @@
 //
 
 #import "DownloadDataFile.h"
+#import "HTTPServer.h"
 
 @implementation DownloadDataFile
 

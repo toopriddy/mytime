@@ -435,7 +435,7 @@ void PrintPacket(char *banner, uint16_t type, uint32_t flags, NSArray *payload)
 					if(_len > sizeof(_buffer)) 
 					{
 						fprintf(stderr,
-						     "event too large: %d bytes (max = %d)\n", 
+						     "event too large: %u bytes (max = %lu)\n", 
 						     _len, 
 						     sizeof(_buffer));
 						return(NO);

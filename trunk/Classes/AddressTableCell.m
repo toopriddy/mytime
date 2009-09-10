@@ -23,10 +23,9 @@
 @synthesize topLabel;
 @synthesize bottomLabel;
 
-
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
+	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
 		self.textLabel.text = NSLocalizedString(@"Address", @"Address label for call");
 

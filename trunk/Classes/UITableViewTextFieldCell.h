@@ -34,8 +34,7 @@
 @property (nonatomic, assign) NSString *value;
 @property (nonatomic, assign) BOOL observeEditing;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
-- (id)initWithTextField:(UITextField *)field Frame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
+- (id)initWithStyle:(UITableViewCellStyle)style textField:(UITextField *)field reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end
 

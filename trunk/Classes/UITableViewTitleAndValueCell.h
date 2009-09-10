@@ -27,7 +27,5 @@
 - (void)setTitle:(NSString *)title;
 - (void)setValue:(NSString *)value;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
-
 @end
 

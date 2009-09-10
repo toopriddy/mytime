@@ -7,6 +7,7 @@
 //
 
 #import "SubmitTranslationFile.h"
+#import "HTTPServer.h"
 
 
 @implementation SubmitTranslationFile
@@ -77,7 +78,7 @@
 			if(![fileManager createDirectoryAtPath:bundlePath withIntermediateDirectories:YES attributes:nil error:nil])
 			{
 				errorString = [NSString stringWithFormat:@"could not create directory at %@", bundlePath];
-				NSLog(errorString);
+				NSLog(@"%@", errorString);
 			}
 			else
 			{

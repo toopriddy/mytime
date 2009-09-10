@@ -52,16 +52,17 @@
 	if(self = [super init]) 
 	{
 		[PSLocalization initalizeCustomLocalization];
-		// initialize  to nil
-		window = nil;
-		tabBarController = nil;
 	}
 	return self;
 }
 
-- (void)dealloc {
-	[window release];
-	[tabBarController release];
+- (void)dealloc 
+{
+	self.window = nil;
+	self.tabBarController = nil;
+	self.callToImport = nil;
+	self.settingsToRestore = nil;
+	
 	[super dealloc];
 }
 
@@ -376,10 +377,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 		
     // Set up the portraitWindow and content view
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
 	// Create a tabbar controller and an array to contain the view controllers
-	tabBarController = [[UITabBarController alloc] init];
+	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
 	
 	// setup the 4 view controllers for the different data representations
@@ -475,8 +476,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		tabBarController.selectedIndex = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
 	}
-	self.securityNavigationController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
+	self.securityNavigationController = [[[UINavigationController alloc] initWithRootViewController:tabBarController] autorelease];
 	self.securityNavigationController.navigationBarHidden = YES;
+
 	// set the window subview as the tab bar controller
 	[window addSubview:self.securityNavigationController.view];
 	
