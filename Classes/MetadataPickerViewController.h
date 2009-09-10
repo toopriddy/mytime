@@ -11,7 +11,7 @@
 @interface MetadataPickerViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 {	
 @private	
-    IBOutlet UINavigationItem *navigationTitle;
+//    IBOutlet UINavigationItem *navigationTitle;
     IBOutlet UIPickerView *pickerView;
 
 	NSArray *_metadataArray;
