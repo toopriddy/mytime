@@ -36,6 +36,7 @@ typedef enum {
 	UITabBarController *tabBarController;
 	NSMutableDictionary *callToImport;
 	NSMutableDictionary *settingsToRestore;
+	UINavigationController *securityNavigationController;
 	UrlActionType _actionSheetType;
 }
 
@@ -43,6 +44,7 @@ typedef enum {
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *callToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
+@property (nonatomic, retain) UINavigationController *securityNavigationController;
 
 + (MyTimeAppDelegate *)sharedInstance;
 
