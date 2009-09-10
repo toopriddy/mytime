@@ -39,5 +39,24 @@
 			<false/>
 		</dict>
 	</array>
+	<key>Hidden Items</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Remove Passcode the next time MyTime Starts</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Remove Passcode</string>
+			<key>Key</key>
+			<string>removePasscode</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+	</array>
 </dict>
 </plist>

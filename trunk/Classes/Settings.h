@@ -156,6 +156,7 @@ extern NSString * const SettingsPublisherType;
 
 extern NSString *const UserDefaultsClearMapCache;
 extern NSString *const UserDefaultsEmailBackupInstantly;
+extern NSString *const UserDefaultsRemovePasscode;
 
 
 

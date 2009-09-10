@@ -498,8 +498,17 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
-	
+
+	if([defaults boolForKey:UserDefaultsRemovePasscode])
+	{
+		[defaults setBool:NO forKey:UserDefaultsRemovePasscode];
+		[settings removeObjectForKey:SettingsPasscode];
+		[[Settings sharedInstance] saveData];
+	}
+		
 	NSString *passcode = [settings objectForKey:SettingsPasscode];
+		
+		
 	if(passcode.length)
 	{
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];

@@ -135,6 +135,7 @@ NSString * const SettingsPublisherType = @"publisherType";
 
 NSString *const UserDefaultsClearMapCache = @"clearMapCache";
 NSString *const UserDefaultsEmailBackupInstantly = @"emailBackupInstantly";
+NSString *const UserDefaultsRemovePasscode = @"removePasscode";
 
 
 #include "PSRemoveLocalizedString.h"
