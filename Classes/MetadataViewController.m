@@ -60,7 +60,7 @@ static MetadataInformation commonInformation[] = {
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:commonIdentifier];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
 
@@ -213,7 +213,7 @@ static MetadataInformation commonInformation[] = {
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	cell.accessoryType = UITableViewCellAccessoryNone;
 	
@@ -244,7 +244,7 @@ static MetadataInformation commonInformation[] = {
 	[metadata addObject:entry];
 	[[Settings sharedInstance] saveData];																	
 	
-	MetadataCellController *cellController = [[MetadataCellController alloc] init];
+	MetadataCellController *cellController = [[[MetadataCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
 
 	GenericTableViewSectionController *sectionController = [self.delegate.sectionControllers objectAtIndex:self.indexPath.section];

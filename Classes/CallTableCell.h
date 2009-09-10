@@ -31,8 +31,6 @@
 
 + (float)height;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
-
 - (void)setCall:(NSMutableDictionary *)call;
 
 - (void)useNameAsMainLabel;

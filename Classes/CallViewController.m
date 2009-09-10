@@ -216,7 +216,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:@"NameCell"];
 	if(cell == nil)
 	{
-		cell = [[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"NameCell"];
+		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault textField:_name reuseIdentifier:@"NameCell"] autorelease];
 	}
 	else
 	{
@@ -370,7 +370,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	AddressTableCell *cell = (AddressTableCell *)[tableView dequeueReusableCellWithIdentifier:@"AddressCell"];
 	if(cell == nil)
 	{
-		cell = [[[AddressTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddressCell"] autorelease];
+		cell = [[[AddressTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddressCell"] autorelease];
 	}
 	NSMutableDictionary *call = self.delegate.call;
 	[cell setStreetNumber:[call objectForKey:CallStreetNumber] 
@@ -572,7 +572,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"locationCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"locationCell"] autorelease];
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"locationCell"] autorelease];
 	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -893,7 +893,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"addMetadataCell"];
 		if(cell == nil)
 		{
-			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"addMetadataCell"] autorelease];
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"addMetadataCell"] autorelease];
 			cell.accessoryType = UITableViewCellAccessoryNone;
 			[cell setValue:NSLocalizedString(@"Add Additional Information", @"Button to click to add more information like phone number and email address")];
 		}
@@ -911,7 +911,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataNotesCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataNotesCell"] autorelease];
+				cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MetadataNotesCell"] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 			}
 			[cell setText:value.length ? value : name];
@@ -944,7 +944,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"MetadataCell"] autorelease];
+				cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MetadataCell"] autorelease];
 				cell.accessoryType = UITableViewCellAccessoryNone;
 				cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			}
@@ -1128,7 +1128,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"AddReturnVisitCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddReturnVisitCell"] autorelease];
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddReturnVisitCell"] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 	NSMutableDictionary *call = self.delegate.call;
@@ -1238,7 +1238,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
+		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 	}
 	NSMutableString *notes = [self.returnVisit objectForKey:CallReturnVisitNotes];
@@ -1349,7 +1349,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"ChangeDateCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"ChangeDateCell"] autorelease];
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ChangeDateCell"] autorelease];
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
 	}
@@ -1423,7 +1423,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"returnVisitTypeCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"returnVisitTypeCell"] autorelease];
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitTypeCell"] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -1590,7 +1590,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"PublicationCell"];
 		if(cell == nil)
 		{
-			cell = [[[UITableViewTitleAndValueCell alloc ] initWithFrame:CGRectZero reuseIdentifier:@"PublicationCell"] autorelease];
+			cell = [[[UITableViewTitleAndValueCell alloc ] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PublicationCell"] autorelease];
 			cell.accessoryType = UITableViewCellAccessoryNone;
 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -1604,7 +1604,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"AddPublicationCell"];
 		if(cell == nil)
 		{
-			cell = [[[UITableViewTitleAndValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"AddPublicationCell"] autorelease];
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddPublicationCell"] autorelease];
 			cell.editingAccessoryType = UITableViewCellAccessoryNone;
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 			[cell setValue:NSLocalizedString(@"Add a placed publication", @"Add a placed publication action button in call view")];

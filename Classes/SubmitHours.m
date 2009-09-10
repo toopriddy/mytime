@@ -8,6 +8,7 @@
 
 #import "SubmitHours.h"
 #import "Settings.h"
+#import "HTTPServer.h"
 
 @implementation SubmitHours
 

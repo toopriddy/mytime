@@ -69,7 +69,7 @@
 	mapView.delegate = self;
     mapView.multipleTouchEnabled = YES;
 	[mapView setBackgroundColor:[UIColor blackColor]];
-	[mapView.contents setTileSource:[[RMVirtualEarthSource alloc] init]];
+	[mapView.contents setTileSource:[[[RMVirtualEarthSource alloc] init] autorelease]];
 	mapView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
 	[self.view addSubview:mapView];

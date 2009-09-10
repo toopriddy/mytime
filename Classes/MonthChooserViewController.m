@@ -261,7 +261,7 @@
 					UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[theTableView dequeueReusableCellWithIdentifier:@"NotesCell"];
 					if(cell == nil)
 					{
-						cell = [[[UITableViewMultilineTextCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"NotesCell"] autorelease];
+						cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 					}
 					NSMutableString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
 					cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -280,7 +280,7 @@
 			UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"typeCell"] autorelease];
 			}
 			
 			cell.textLabel.text = [_months objectAtIndex:row];

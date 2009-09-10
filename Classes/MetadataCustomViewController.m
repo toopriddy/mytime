@@ -219,7 +219,7 @@ static MetadataInformation commonInformation[] = {
 			UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"nameCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewTextFieldCell alloc] initWithTextField:_name Frame:CGRectZero reuseIdentifier:@"nameCell"] autorelease];
+				cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:_name reuseIdentifier:@"nameCell"] autorelease];
 			}
 			cell.delegate = self;
 			
@@ -231,7 +231,7 @@ static MetadataInformation commonInformation[] = {
 			UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
 			if(cell == nil)
 			{
-				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"typeCell"] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"typeCell"] autorelease];
 			}
 			
 			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""];

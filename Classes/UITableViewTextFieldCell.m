@@ -32,9 +32,9 @@
 @synthesize delegate;
 @synthesize observeEditing;
 
-- (id)initWithTextField:(UITextField *)field Frame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style textField:(UITextField *)field reuseIdentifier:(NSString *)reuseIdentifier
 {
-	if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) 
+	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
@@ -67,10 +67,10 @@
 }
 
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
 	UITextField *field = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-	return [self initWithTextField:field Frame:frame reuseIdentifier:reuseIdentifier];
+	return [self initWithStyle:style textField:field reuseIdentifier:reuseIdentifier];
 }
 
 - (void)dealloc

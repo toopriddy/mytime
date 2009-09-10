@@ -67,7 +67,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"What Does the Bible Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"What Does the Bible Really Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}

@@ -58,13 +58,10 @@
 {
     if((self = [super initWithNibName:@"MetadataPickerView" bundle:[NSBundle mainBundle]])) 
     {
-        int i;
-		
         // we are managing the picker's data and display
 		_metadataArray = [[MetadataViewController metadataNames] copy];
 		
         _selection = 0;
-		i = 0;
 		_selection = [_metadataArray indexOfObject:metadata];
 		if(_selection ==  NSNotFound)
 		{

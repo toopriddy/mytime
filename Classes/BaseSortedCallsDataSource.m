@@ -115,7 +115,7 @@
 	CallTableCell *cell = (CallTableCell *)[tableView dequeueReusableCellWithIdentifier:@"CallTableCell"];
 	if (cell == nil) 
 	{
-		cell = [[[CallTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"CallTableCell"] autorelease];
+		cell = [[[CallTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CallTableCell"] autorelease];
 	}
     
 	// configure cell contents

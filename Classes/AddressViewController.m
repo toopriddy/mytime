@@ -178,7 +178,7 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
-	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
+	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
 	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.55], [NSNumber numberWithFloat:.45], nil];
 	streetNumberAndApartmentCell.delegate = self;
 	UITextField *streetTextField = [streetNumberAndApartmentCell textFieldAtIndex:0];
@@ -197,7 +197,7 @@
 	apartmentTextField.returnKeyType = UIReturnKeyNext;
 	apartmentTextField.clearButtonMode = UITextFieldViewModeAlways;
 	
-	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
+	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	streetCell.textField.text = street;
 	streetCell.textField.placeholder = NSLocalizedString(@"Street", @"Street");
 	streetCell.textField.returnKeyType = UIReturnKeyNext;
@@ -205,7 +205,7 @@
 	streetCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	streetCell.delegate = self;
 	
-	self.cityCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
+	self.cityCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	cityCell.textField.text = city;
 	cityCell.textField.placeholder = NSLocalizedString(@"City", @"City");
 	cityCell.textField.returnKeyType = UIReturnKeyNext;
@@ -214,7 +214,7 @@
 	cityCell.delegate = self;
 
 
-	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
+	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	stateCell.textField.text = state;
 	stateCell.textField.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
 	stateCell.textField.returnKeyType = UIReturnKeyDone;
