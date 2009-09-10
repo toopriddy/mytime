@@ -598,8 +598,6 @@ static NSString *MONTHS[] = {
 	while( (entry = [bulkArrayEnumerator nextObject]) ) // ASSIGNMENT, NOT COMPARISON 
 	{
 		NSDate *date = [entry objectForKey:BulkLiteratureDate];
-		BOOL foundThisMonth = NO;
-		BOOL foundLastMonth = NO;
 		int offset = -1;
 			
 		if(date != nil)
@@ -607,13 +605,6 @@ static NSString *MONTHS[] = {
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
-			// if this is not the first visit and
-			// if there are more than 1 visit then that means that any return visits
-			// this month are counted as return visits
-			if(month == _thisMonth && year == _thisYear)
-				foundThisMonth = YES;
-			else if(month == _lastMonth && year == _thisYear)
-				foundLastMonth = YES;
 
 			if(year == _thisYear && 
 			   month <= _thisMonth)
