@@ -40,6 +40,7 @@
 @synthesize tabBarController;
 @synthesize callToImport;
 @synthesize settingsToRestore;
+@synthesize securityNavigationController;
 
 + (MyTimeAppDelegate *)sharedInstance
 {
@@ -130,7 +131,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{  
 		return NO; 
 	}
-//	sleep(20); #warning this should not be released!!!
+//	sleep(20); 
+//#warning this should not be released!!!
 
     NSString *URLString = [url absoluteString];
 	NSLog(@"%@", URLString);
@@ -473,10 +475,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		tabBarController.selectedIndex = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
 	}
-	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabBarController];
-	nav.navigationBarHidden = YES;
+	self.securityNavigationController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
+	self.securityNavigationController.navigationBarHidden = YES;
 	// set the window subview as the tab bar controller
-	[window addSubview:nav.view];
+	[window addSubview:self.securityNavigationController.view];
 	
 	// make the window visible
 	[window makeKeyAndVisible];
@@ -503,7 +505,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		securityView.shouldConfirm = NO;
 		securityView.passcode = passcode;
 		securityView.delegate = self;
-		[nav presentModalViewController:securityView animated:NO];
+		[self.securityNavigationController presentModalViewController:securityView animated:NO];
 	}
 }
 
@@ -511,7 +513,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 	if(authenticated)
 	{
-		[[tabBarController selectedViewController] dismissModalViewControllerAnimated:YES];
+		[self.securityNavigationController dismissModalViewControllerAnimated:YES];
 	}
 	else
 	{
