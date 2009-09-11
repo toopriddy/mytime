@@ -36,6 +36,15 @@ zip:
 	zip translations.zip $(patsubst %,%/Localizable.strings,$(LANGUAGES)) $(patsubst %,SettingsTranslations/%/Root.strings,$(LANGUAGES))
 	rm -rf SettingsTranslations
 
-clang:
-	scan-build xcodebuild
-		
+VERSION=$(shell defaults read `pwd`/Info CFBundleVersion)
+
+test: build/AdHoc\ Distribution-iphoneos/MyTime.app zip
+	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/${VERSION} -m "${VERSION} to beta testers"
+	zip -r MyTime-${VERSION}AdHoc.zip build/AdHoc\ Distribution-iphoneos-iphoneos/MyTime.app
+	zip -r MyTime-${VERSION}AdHoc.app.dSYM.zip build/AdHoc\ Distribution-iphoneos-iphoneos/MyTime.app.dSYM
+
+
+release: build/Distribution-iphoneos/MyTime.app
+	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/${VERSION} -m "${VERSION} to AppStore"
+	zip -r MyTime-${VERSION}.zip build/Distribution-iphoneos/MyTime.app
+	zip -r MyTime-${VERSION}.app.dSYM.zip build/Distribution-iphoneos/MyTime.app.dSYM
