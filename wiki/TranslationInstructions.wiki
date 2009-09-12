@@ -88,12 +88,20 @@ If I send you a new mobileprovision file these are the instructions on how to up
   # sync your iphone with your Mac
   # Finally drag the MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
 
-= Test your translation (OSX 10.5 only, sorry) =
+= Test your translation =
 Requirements:
-  * an Apple computer running a minimum of OSX 10.5
-  * a wireless network that both your iPhone and your Mac are on
+  * a wireless network that both your iPhone and your computer are on
 
-Instructions:
+Instructions for using the MyTime webserver on a PC or Mac:
+  # in MyTime, go to More->Settings->Start MyTime Webserver
+  # follow the instructions on the screen (open a web browser on your Mac or PC and enter in the URL mentioned in the popup)
+  # On the webpage, look for "Load/Test Translation" and under it select the browse button to select your translation file
+  # press the "Load Translation" button
+  # after it is submitted, quit mytime
+  # restart mytime to see your translation at work.
+  # you are able to repeat this over and over until you are satisfied with your results
+
+Instructions using MyTime Backup on a Mac:
   # on the Mac:
   ## get the latest [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application
   ## make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
@@ -109,6 +117,7 @@ Instructions:
   # On the Iphone:
   ## It should now tell you that you need to restart MyTime to apply the localization. So hit the home button to quit and then you need to restart MyTime.
   ## to remove your custom translation (because it might be a bit slow and use a bit more memory, go to More->Settings->Remove Custom Translation, you will have to restart to apply)
+  ## you are able to repeat this over and over until you are satisfied with your results
 
 
 
