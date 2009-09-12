@@ -1,0 +1,54 @@
+#summary Older release information
+
+==Features/Bug fixes in 2.4.6==
+Submitted to apple on 3/23/2009, I hope apple gets this thing out before September because the Year counts will show 0 during the month of September.
+  * Passcode support (where you can passcode your mytime application)
+  * Added All Service Year statistics
+  * Fixed the service year totals to display Last Service Year during the whole month of September so that people can keep up with their totals.
+
+
+==Features/Bug fixes in 2.4.4==
+Submited to apple on 8/14/2009, but gave up on apple... I resubmitted including another serious bug fix (I wanted to get this out quick cause people are having problems with corrupted map caches causing crashes in MyTime)
+  * New MyTime webserver builtin to MyTime, this allows you to download/upload your backup of mytime and add hours and calls from the comfort of a real keyboard.
+  * Added a Settings Application section for MyTime so that you can clear Map Caches if it is causing your application to crash and a way to email out your backup before MyTime really gets started if there is any other reason for a crash.
+  * Fixed a bug in transferring a call that would count magazines
+
+==Features/Bug fixes in 2.4.1==
+Submitted to apple on 7/21/2009
+  * fixed crash when applying a date "Additional Informaiton"
+  * fixed the bulk placements not changing when the user changes
+  * fixed a bug in the Hours and RBC view where data was not saved when changing to another user and not quitting the application
+  * Updated Italian translation
+  * added a way to clear the Map cache (this allows you to free up space on your iPhone or iPod Touch)
+  * added a link in the More->Settings view to take you to the YouTube documentation of MyTime
+
+==Features in the next 2.4.0 release:==
+Sent to apple on 7/13/2009:
+  * "Sort By ..." view that allows you to sort by any of your "Additional Information". So you can do Sort by Territory, Suburb, Day that you call on people... the sky is the limit
+  * Multiple users
+  * Entered return visits are always sorted by date now
+  * Added a "always shown" section to the "Additional Information" so that you can always have certain commonly used "Additional Information" always appear in existing and new calls.  For example if you keep up with the person who was with you at the door, you could have a field for that.  Maybe you are a CO or DO and are in different congregations, you could have an "always shown" "Additional Information" that was titled "Congregation" (This would allow you to sort by "Congregation" so you can more readily view calls when you are in that congregation)
+  * Added a YES/NO switch and URL as another type for the "Additional Information" you can create.
+  * Fixed various crashes
+  * Completely rewrote the Call Detail view, it now animates more and is generally quicker (most of the changes are to make things more manageable for me to add features later).
+  * Added Greek and Slovak translations
+
+==Features in the 2.3.1 release:==
+I plan on submitting a bug fix release Tuesday 7/21/2009
+  * Fixed a crash if you add a "Date/Time" Additional Information entry
+  * Fixed a bug saving your field service hours for the first time after creating a new user (you can work around this right now by exiting after changing the user before you start/stop your time... you only have to do this once)
+  * Fixed a bug in the Bulk Placements where the data from one user would look like it was on the other user (you can work around this by exiting the application every time you change a user).
+
+==Features in the 2.3.0 release:==
+Features in this release (re-submitted to apple on June 12, 2009):
+  * Search in the sorted calls views (this will search everything within a call).  I have this mostly working, but have to massage out some bugs
+  * You can selectively remove Return Visits from the Mapped Calls view
+  * Added all books and brochures in the WTLibrary
+  * Fixed a bug in the address sorting, the address numbers were not sorted correctly.
+  * Fixed a bug where you could not edit your return visit's name unless you scrolled the name off of the screen.
+  * I got UK English dates localized, if there is any other English speaking country that does not use the US way of doing dates or addresses let me know.
+  * Fixed the Address view to show "State or Country" for English speaking regions outside of the US
+  * Fixed a major memory leak that would cause a crash when doing things like adding publications to your calls. (you can work around it by quitting MyTime after extended use)
+  * Fixed a bug in the secretary email where it would not get sent if your notes have an "&" in them
+
+
