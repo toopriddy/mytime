@@ -128,7 +128,7 @@ Instructions using MyTime Backup on a Mac:
   # on the Mac:
   ## get the latest [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application
   ## make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
-  ## do you have the file in the appropriate directory? like ~/Desktop/French.lproj/Localizable.strings  It REALLY matters what the parent directory is and what the name of the file is.  Please do not use any other filename than Localizable.strings or a parent directory that does not match the above <language>.lproj directories
+  ## do you have the file in the appropriate directory? like ~/Desktop/French.lproj/Localizable.strings  It REALLY matters what the parent directory is and what the name of the file is.  Please do not use any other filename than Localizable.strings or a parent directory that does not match the above PutYourLanguageHere.lproj directories
   ## Now that you have the appropriate file and directory setup, open the new MyTime Backup application
   # On the iPhone:
   ## Start MyTime
