@@ -7,7 +7,7 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-Use the English [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file (or [http://mytime.googlecode.com/svn/trunk/ your language] if it exists), open this file with "TextEdit" in OSX (or notepad in XP, yes I do mean notepad, StartMenu->Run->notepad.exe) and you will see that this file has many lines in the form of:
+Use the English [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file and the [http://mytime.googlecode.com/svn/trunk/Settings.bundle/Root.strings Root.strings] file (or [http://mytime.googlecode.com/svn/trunk/ your language] if it exists), open and work on these files with "TextEdit" in OSX (or notepad in XP, yes I do mean notepad, StartMenu->Run->notepad.exe) and you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
@@ -65,6 +65,7 @@ There are simple words that are included as translations purely for singular/plu
 /* Plural form of the word hours */
 "hours" = "hours";
 }}}
+
 
 *File format:*
 
