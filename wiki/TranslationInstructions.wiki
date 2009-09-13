@@ -28,6 +28,28 @@ I am trying to stay with the style of the iPhone, so if there are any buttons th
 
 Watchtower publication names *MUST* be the exact names that you would see on the literature request booklet in your language that has the Item numbers for each publication (you could ask your literature attendant for a copy of the pages that have Brochures, Magacines, DVDs, Tracts, Sign language DVDs and others).
 
+*Quotations and special characters*
+
+When dealing with "special characters" you have to pay attention to a few things:
+
+\n represents a "new line" this is like you hit enter on the keyboard... you have to represent a new line with an \n 
+see in the example below:
+
+{{{
+/* An example showing the \n special character */
+"This is text on the first line\n This is text on the second line" = "This is text on the first line\n This is text on the second line";
+}}}
+
+
+\" is how you would quote something within the quoted string that you have to change, notice below how it is done:
+
+{{{
+/* Add a return visit action button */
+"This is an example of \"text that is quoted\"" = "This is an example of \"text that is quoted\"";
+}}}
+
+see how when you have a quote inside the quoted string you represent it by a \" instead of just simply using a "?
+
 *Variable wording:*
 
 There are situations where you might need to reorder how things are displayed like the address:
