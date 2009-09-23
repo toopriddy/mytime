@@ -15,6 +15,26 @@
   # hit the home button on the iPhone to quit MyTime and restart MyTime to see your data
 
 == On Windows ==
+
+  # You will need to navigate to one of the following directories:
+    * On a Mac: ~/Library/Application Support/MobileSync/Backup/
+    * On Windows XP: \Documents and Settings\(username)\Application Data\Apple Computer\MobileSync\Backup\
+    * On Windows Vista: \Users\(username)\AppData\Roaming\Apple Computer\MobileSync\Backup\
+
+  # Now take a look at the directories that match the date/time stamp and zip up the ones that match (you might want to sort by the date/time)
+
+  # Now email me the zip directory toopriddy@gmail.com and let me know what you are wanting and tell me the name of your iPhone/iPod
+
+
+
+
+
+
+
+
+==For iTunes < 8.2, this mostly does not work anymore==
+
+
 This is in construction and I am verifying its accuracy
   # make sure that you have installed Safari from apple (see if you have a C:\Program Files\Safari directory)
   # download http://mobilesync-inspect.googlecode.com/files/mobilesync-inspect-Windows-r10.zip
