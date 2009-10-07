@@ -26,6 +26,7 @@
 #import "StatisticsViewController.h"
 #import "HourViewController.h"
 #import "SettingsViewController.h"
+#import "SettingsTableViewController.h"
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
 #import "Settings.h"
@@ -344,7 +345,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
 	}
 
-
 //	application.networkActivityIndicatorVisible = NO;
 
 	[[Settings sharedInstance] saveData];
@@ -437,7 +437,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 
 	// SETTINGS
-	SettingsViewController *settingsViewController = [[[SettingsViewController alloc] init] autorelease];
+	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:settingsViewController] autorelease]];
 
 	// get the buttons that we should show in the button bar

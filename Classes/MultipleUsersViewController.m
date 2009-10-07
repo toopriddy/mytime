@@ -69,7 +69,7 @@
 	NSString *username = [user objectForKey:SettingsMultipleUsersName];
 	if(tableView.editing)
 	{
-		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:@"Your Name" type:STRING data:username value:username] autorelease];
+		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Your Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:username value:username] autorelease];
 		[p setAutocapitalizationType:UITextAutocapitalizationTypeWords];
 		p.delegate = self;
 		p.tag = indexPath.row;
@@ -80,6 +80,10 @@
 		[self.delegate changeToUser:indexPath.row];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 		[self.delegate updateWithoutReload];
+		if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(multipleUsersViewController:selectedUser:)])
+		{
+			[self.delegate.delegate multipleUsersViewController:self.delegate selectedUser:username];
+		}
 		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
 }
@@ -136,7 +140,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// make the new call view 
-	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:@"Your Name" type:STRING data:@"" value:@""] autorelease];
+	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Your Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:@"" value:@""] autorelease];
 	p.delegate = self;
 	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
@@ -164,6 +168,7 @@
 
 
 @implementation MultipleUsersViewController
+@synthesize delegate;
 
 - (id) init;
 {

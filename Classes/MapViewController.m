@@ -375,20 +375,20 @@
 //
 - (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)thisCall keepInformation:(BOOL)keepInformation
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	if(keepInformation)
 	{
 		
-		NSMutableArray *deletedCalls = [settings objectForKey:SettingsDeletedCalls];
+		NSMutableArray *deletedCalls = [userSettings objectForKey:SettingsDeletedCalls];
 		if(deletedCalls == nil)
 		{
 			deletedCalls = [NSMutableArray array];
-			[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
+			[userSettings setObject:deletedCalls forKey:SettingsDeletedCalls];
 		}
 		[deletedCalls addObject:thisCall];
 	}
 
-	NSMutableArray *array = [settings objectForKey:SettingsCalls];
+	NSMutableArray *array = [userSettings objectForKey:SettingsCalls];
 	[array removeObject:detailView.call];
 	[[Settings sharedInstance] saveData];
 

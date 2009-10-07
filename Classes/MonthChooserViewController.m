@@ -136,6 +136,7 @@
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
+	[self.navigationController popToViewController:self animated:YES];
 	[[[Settings sharedInstance] settings] setObject:notesViewController.textView.text forKey:SettingsSecretaryEmailNotes];
 	[[Settings sharedInstance] saveData];
 }

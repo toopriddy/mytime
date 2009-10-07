@@ -32,6 +32,7 @@
 		9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */; };
 		90059C900F3A2112006DF536 /* PSUrlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 90059C8F0F3A2112006DF536 /* PSUrlString.m */; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
+		900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
 		90226AFF1030B56500A94FEC /* SubmitDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226AFE1030B56500A94FEC /* SubmitDataFile.m */; };
 		90226B021030B87600A94FEC /* DownloadDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226B011030B87600A94FEC /* DownloadDataFile.m */; };
@@ -185,6 +186,8 @@
 		90059C8F0F3A2112006DF536 /* PSUrlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSUrlString.m; sourceTree = "<group>"; };
 		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		900A21750F1461FF00BE1AF2 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		900FA5121064405500C246FE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		900FA5131064405500C246FE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		901313140EA03A4B0055D890 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
 		9013137F0EA0773A0055D890 /* NumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberViewController.m; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				9045A7250E7C1423001B439C /* TCPServer.m */,
 				90D02FE80E53DD4C001CEF0D /* SettingsViewController.h */,
 				90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */,
+				900FA5121064405500C246FE /* SettingsTableViewController.h */,
+				900FA5131064405500C246FE /* SettingsTableViewController.m */,
 				9045A7270E7C1590001B439C /* BackupView.h */,
 				9045A7280E7C1590001B439C /* BackupView.m */,
 				904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */,
@@ -964,6 +969,7 @@
 				90226C581030DB5900A94FEC /* MyTimeWebServerView.m in Sources */,
 				90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */,
 				907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */,
+				900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

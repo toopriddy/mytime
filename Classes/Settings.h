@@ -123,6 +123,9 @@ extern NSString * const SettingsBulkLiteratureAlertSheetShown;
 extern NSString * const SettingsExistingCallAlertSheetShown;
 
 //multiple users
+extern NSString * const SettingsQuickNotes;
+
+//multiple users
 extern NSString * const SettingsTimeStartDate;
 //multiple users
 extern NSString * const SettingsRBCTimeStartDate;
@@ -168,14 +171,17 @@ extern int debugging;
 #define VERBOSE(a) if(debugging > 1) { a }
 #define VERY_VERBOSE(a) if(debugging > 2) { a }
 
+NSString *emailFormattedStringForCall(NSDictionary *_call);
 
-@interface Settings : NSObject {
+@interface Settings : NSObject 
+{
 	NSMutableDictionary *settings;
 	NSMutableDictionary *userSettings;
 }
 + (Settings *)sharedInstance;
 + (id)initWithZone:(NSZone *)zone;
 + (void)sendEmailBackup;
++ (void)sendPrintableEmailBackup;
 
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 

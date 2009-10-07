@@ -21,7 +21,7 @@
 @synthesize textView;
 @synthesize containerView;
 @synthesize delegate;
-
+@synthesize tag;
 
 
 - (id) initWithNotes:(NSString *)notes
@@ -59,12 +59,12 @@
 
 - (void)navigationControlDone:(id)sender 
 {
+	[[self retain] autorelease]; // make sure that we dont go away while processing the delegate call
 	VERBOSE(NSLog(@"navigationControlDone:");)
 	if(delegate)
 	{
 		[delegate notesViewControllerDone:self];
 	}
-	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)updateTextView
@@ -105,7 +105,7 @@
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
-	self.navigationItem.hidesBackButton = YES;
+//	self.navigationItem.hidesBackButton = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated

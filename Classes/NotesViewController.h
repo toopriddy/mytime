@@ -21,10 +21,12 @@
 	UITextView *textView;
 	UIView *containerView;
 	id<NotesViewControllerDelegate> delegate;
+	int tag;
 }
 @property (nonatomic, retain) UITextView *textView;
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, assign) id<NotesViewControllerDelegate> delegate;
+@property (nonatomic, assign) int tag;
 
 - (id) initWithNotes:(NSString *)notes;
 - (NSString *)notes;

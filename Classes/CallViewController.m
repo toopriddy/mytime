@@ -40,6 +40,7 @@
 #import "PSLocalization.h"
 #import "UITableViewButtonCell.h"
 #import "UITableViewSwitchCell.h"
+#import "QuickNotesViewController.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -1203,6 +1204,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
 	[[self retain] autorelease];
+
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [returnVisit setObject:[notesViewController notes] forKey:CallReturnVisitNotes];
 	[self.delegate save];
@@ -1215,6 +1217,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		self.delegate.forceReload = YES;
 	}
+
+	[self.delegate.navigationController popToViewController:self.delegate animated:YES];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1271,11 +1275,21 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"changeNotesForReturnVisitAtIndex: %d", index);)
-	
-	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[self.returnVisit objectForKey:CallReturnVisitNotes]] autorelease];
-	p.delegate = self;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	NSString *notes = [self.returnVisit objectForKey:CallReturnVisitNotes];
+	if(notes == nil || notes.length == 0)
+	{
+		// make the new call view 
+		QuickNotesViewController *p = [[[QuickNotesViewController alloc] init] autorelease];
+		p.delegate = self;
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+	}
+	else 
+	{
+		// make the new call view 
+		NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[self.returnVisit objectForKey:CallReturnVisitNotes]] autorelease];
+		p.delegate = self;
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+	}
 }
 
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
@@ -1720,7 +1734,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:YES];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
-			
 		}
 	}
 	if(button == 1)
@@ -2291,97 +2304,15 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (BOOL)emailCallToUser
 {
-	// add notes if there are any
-	NSString *value;
-		
 	NSMutableString *string = [[[NSMutableString alloc] initWithString:@"mailto:?"] autorelease];
 	[string appendString:@"subject="];
 	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringWithEscapedCharacters]];
 	[string appendString:@"&body="];
 
 	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
-	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [_call objectForKey:CallName]] stringWithEscapedCharacters]];
-	
-	NSMutableString *top = [[NSMutableString alloc] init];
-	NSMutableString *bottom = [[NSMutableString alloc] init];
-	[Settings formatStreetNumber:[_call objectForKey:CallStreetNumber]
-	                   apartment:[_call objectForKey:CallApartmentNumber]
-					      street:[_call objectForKey:CallStreet]
-							city:[_call objectForKey:CallCity]
-						   state:[_call objectForKey:CallState]
-						 topLine:top 
-				      bottomLine:bottom];
-	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringWithEscapedCharacters]];
-	[top release];
-	[bottom release];
-	top = nil;
-	bottom = nil;
-	
-	// Add Metadata
-	// they had an array of publications, lets check them too
-	NSMutableArray *metadata = [_call objectForKey:CallMetadata];
-	if(metadata != nil)
-	{
-		int j;
-		int endMetadata = [metadata count];
-		for(j = 0; j < endMetadata; ++j)
-		{
-			// METADATA
-			NSMutableDictionary *entry = [metadata objectAtIndex:j];
-			NSString *name = [entry objectForKey:CallMetadataName];
-			value = [entry objectForKey:CallMetadataValue];
-			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
-		}
-	}
 
-	[string appendString:[[NSString stringWithFormat:@"\n"] stringWithEscapedCharacters]];
-	
+	[string appendString:emailFormattedStringForCall(_call)];
 
-	NSMutableArray *returnVisits = [_call objectForKey:CallReturnVisits];
-	NSMutableDictionary *visit;
-
-	int i;
-	int end = [returnVisits count];
-	for(i = 0; i < end; ++i)
-	{
-		visit = [returnVisits objectAtIndex:i];
-
-		// GROUP TITLE
-		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
-		// create dictionary entry for This Return Visit
-		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
-		{
-			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
-		}
-		else
-		{
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
-		}
-		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
-
-		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringWithEscapedCharacters]];
-		value = [visit objectForKey:CallReturnVisitType];
-		[string appendString:[[NSString stringWithFormat:@"%@\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""]] stringWithEscapedCharacters]];
-		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringWithEscapedCharacters]];
-
-		// Publications
-		if([visit objectForKey:CallReturnVisitPublications] != nil)
-		{
-			// they had an array of publications, lets check them too
-			NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-			int j;
-			int endPublications = [publications count];
-			for(j = 0; j < endPublications; ++j)
-			{
-				NSDictionary *publication = [publications objectAtIndex:j];
-				// PUBLICATION
-				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringWithEscapedCharacters]];
-			}
-		}
-		[string appendString:[[NSString stringWithFormat:@"  \n"] stringWithEscapedCharacters]];
-	}
 
 	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
 
