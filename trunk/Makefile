@@ -40,11 +40,12 @@ VERSION=$(shell defaults read `pwd`/Info CFBundleVersion)
 
 test: build/AdHoc\ Distribution-iphoneos/MyTime.app zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/${VERSION} -m "${VERSION} to beta testers"
-	zip -r MyTime-${VERSION}AdHoc.zip build/AdHoc\ Distribution-iphoneos-iphoneos/MyTime.app
-	zip -r MyTime-${VERSION}AdHoc.app.dSYM.zip build/AdHoc\ Distribution-iphoneos-iphoneos/MyTime.app.dSYM
+	cd build/AdHoc\ Distribution-iphoneos/ && zip -r MyTime-${VERSION}AdHoc.zip MyTime.app
+	cd build/AdHoc\ Distribution-iphoneos/ && zip -r MyTime-${VERSION}AdHoc.app.dSYM.zip MyTime.app.dSYM
 
+release-zip:
+	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.zip MyTime.app
+	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.app.dSYM.zip MyTime.app.dSYM
 
-release: build/Distribution-iphoneos/MyTime.app
+release: build/Distribution-iphoneos/MyTime.app release-zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/${VERSION} -m "${VERSION} to AppStore"
-	zip -r MyTime-${VERSION}.zip build/Distribution-iphoneos/MyTime.app
-	zip -r MyTime-${VERSION}.app.dSYM.zip build/Distribution-iphoneos/MyTime.app.dSYM

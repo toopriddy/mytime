@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "GenericTableViewController.h"
-
+#import "NotesViewController.h"
 
 @interface QuickNotesViewController : GenericTableViewController 
 {
-	NSMutableArray *returnVistHistory;
+	NSMutableArray *returnVisitHistory;
+	id<NotesViewControllerDelegate> delegate;
 }
-@property (nonatomic, retain) NSMutableArray *returnVistHistory;
+@property (nonatomic, retain) NSMutableArray *returnVisitHistory;
+@property (nonatomic, assign) id<NotesViewControllerDelegate> delegate;
 
 @end

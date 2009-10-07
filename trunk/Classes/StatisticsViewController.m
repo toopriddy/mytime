@@ -333,7 +333,6 @@ static NSString *MONTHS[] = {
 									  [type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
 									  [type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
 					
-					bool counted = NO;
 					if(returnVisitsCount > 1 && i != returnVisitsCount)
 					{
 						// if this is not the first visit and
@@ -347,21 +346,16 @@ static NSString *MONTHS[] = {
 							{
 								_serviceYearReturnVisits++;
 							}
-							counted = YES;
 						}
 					}
 					else if(isStudy)
 					{
 						// go ahead and count studies as return visits
-						if(!counted)
+						_returnVisits[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_returnVisits[offset]++;
-							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-							   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-							{
-								_serviceYearReturnVisits++;
-							}
-							counted = YES;
+							_serviceYearReturnVisits++;
 						}
 					}
 
@@ -484,7 +478,7 @@ static NSString *MONTHS[] = {
 	}
 }
 
-- (void)computeStatistics
+- (void)computeStatisticsDeletingOldEntries:(BOOL)deleteOldEntries
 {
 	memset(_books, 0, sizeof(_books));
 	memset(_brochures, 0, sizeof(_brochures));
@@ -690,14 +684,14 @@ static NSString *MONTHS[] = {
 	}
 
 	[self countCalls:[userSettings objectForKey:SettingsCalls] removeOld:NO];
-	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls] removeOld:YES];
+	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls] removeOld:deleteOldEntries];
 }
 
 - (void)reloadData
 {
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
-	_thisMonth = [dateComponents month];
+	_thisMonth = 9; //[dateComponents month];
 	_thisYear = [dateComponents year];
 	
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
@@ -708,7 +702,7 @@ static NSString *MONTHS[] = {
 		// first *sigh* go through last service year and add up everything
 		_thisMonth = 8;
 		_lastMonth = 7;
-		[self computeStatistics];
+		[self computeStatisticsDeletingOldEntries:NO];
 		
 		// then save everything that we care about off
 		int serviceYearBooks = _serviceYearBooks;
@@ -723,7 +717,7 @@ static NSString *MONTHS[] = {
 		// now recompute the statistics and then...
 		_thisMonth = 9;
 		_lastMonth = 8;
-		[self computeStatistics];
+		[self computeStatisticsDeletingOldEntries:YES];
 		
 		// use the old service year numbers instead of the current service year
 		_serviceYearBooks = serviceYearBooks;
@@ -740,7 +734,7 @@ static NSString *MONTHS[] = {
 	else
 	{
 		_serviceYearText = NSLocalizedString(@"Service Year Total", @"Service year total hours label");
-		[self computeStatistics];
+		[self computeStatisticsDeletingOldEntries:YES];
 	}
 	[theTableView reloadData];
 }

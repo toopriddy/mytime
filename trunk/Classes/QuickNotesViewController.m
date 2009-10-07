@@ -5,117 +5,302 @@
 //  Created by Brent Priddy on 8/21/09.
 //  Copyright 2009 Priddy Software, LLC. All rights reserved.
 //
-#if 0
 #import "QuickNotesViewController.h"
 #import "TableViewCellController.h"
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
+#import "UITableViewMultilineTextCell.h"
 #import "PSLocalization.h"
 
-@interface QuickNotesCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
+@interface QuickNotesCellController : NSObject<TableViewCellController>
 {
 	QuickNotesViewController *delegate;
 }
 @property (nonatomic, assign) QuickNotesViewController *delegate;
 @end
-@implementation QuickNotesViewController
+@implementation QuickNotesCellController
 @synthesize delegate;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return nil;
+}
 @end
 
 
-@interface AddNewNoteSectionController : QuickNotesCellController
+
+
+
+/******************************************************************
+ *
+ *   JustAddNoteSectionController
+ *
+ ******************************************************************/
+#pragma mark JustAddNoteSectionController
+
+@interface JustAddNoteSectionController : GenericTableViewSectionController
 {
 }
 @end
-@implementation AddNewNoteSectionController
+@implementation JustAddNoteSectionController
+- (BOOL)isViewableWhenEditing
+{
+	return NO;
+}
+@end
+
+
+/******************************************************************
+ *
+ *   JustAddNoteCellController
+ *
+ ******************************************************************/
+#pragma mark JustAddNoteCellController
+@interface JustAddNoteCellController : QuickNotesCellController<NotesViewControllerDelegate>
+{
+}
+@end
+@implementation JustAddNoteCellController
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSMutableDictionary *user = [users objectAtIndex:indexPath.row];
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-	NSString *name = [user objectForKey:SettingsMultipleUsersName];
-	
-	NSString *commonIdentifier = @"MultipleUserCell";
+	NSString *commonIdentifier = @"JustAddNotesCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
-	cell.textLabel.text = name;
-	
-	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	cell.accessoryType = [currentUser isEqualToString:name] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.textLabel.text = NSLocalizedString(@"Create a note from scratch", @"More View Table Enable shown popups");
 	
 	return cell;
 }
 
-
-- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
-{
-	// pass this onto the caller
-	
-	[self.delegate renameUser:metadataEditorViewController.tag toName:metadataEditorViewController.value];
-	self.delegate.forceReload = YES;
-}
-
-// Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableArray *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsQuickNotes];
-	NSMutableDictionary *note = [notes objectAtIndex:indexPath.row];
-
 	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:note] autorelease];
+	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:@""] autorelease];
 	p.delegate = self;
-	p.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
-
-// fix me
-	if(tableView.editing)
-	{
-		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:@"Your Name" type:STRING data:username value:username] autorelease];
-		[p setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-		p.delegate = self;
-		p.tag = indexPath.row;
-		[[self.delegate navigationController] pushViewController:p animated:YES];		
-	}
-	else
-	{
-		[self.delegate changeToUser:indexPath.row];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[self.delegate updateWithoutReload];
-		[[self.delegate navigationController] popViewControllerAnimated:YES];
-	}
 }
 
-// Editing
-
-@end
-
-@interface AddMultipleUsersCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	MultipleUsersViewController *delegate;
+	[[self retain] autorelease];
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notesViewControllerDone:)])
+	{
+		[self.delegate.delegate notesViewControllerDone:notesViewController];
+	}
 }
-@property (nonatomic, assign) MultipleUsersViewController *delegate;
+
 @end
-@implementation AddMultipleUsersCellController
-@synthesize delegate;
+
+
+/******************************************************************
+ *
+ *   FAVORITES
+ *
+ ******************************************************************/
+#pragma mark FAVORITES
+@interface FavoriteNotesSectionController : GenericTableViewSectionController
+{
+}
+@end
+@implementation FavoriteNotesSectionController
+
+- (id)init
+{
+	if( (self = [super init]) )
+	{
+		self.title = NSLocalizedString(@"Favorites", @"this is a section label in the 'quick notes' view if you edit a call and add brand new notes.  The favorites section is where you can add your own favorite notes");
+	}
+	return self;
+}
+
+- (BOOL)isViewableWhenNotEditing
+{
+ 	return [[[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes] count] != 0;
+}
+@end
+
+/******************************************************************
+ *
+ *   OldQuickNotesCellController
+ *
+ ******************************************************************/
+#pragma mark OldQuickNotesCellController
+@interface OldQuickNotesCellController : QuickNotesCellController<NotesViewControllerDelegate>
+{
+	NSString *notes;
+	BOOL editing;
+	int row;
+	int section;
+}
+@property (nonatomic, retain) NSString *notes;
+@end
+@implementation OldQuickNotesCellController
+@synthesize notes;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"AddMultipleUserCell";
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	NSString *commonIdentifier = @"OldQuickNotesCell";
+	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		
+//		cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+//		cell.detailTextLabel.numberOfLines = 0; // unlimited lines
 	}
-	cell.accessoryType = UITableViewCellAccessoryNone;
 	
-	[cell setValue:NSLocalizedString(@"Add Additional User", @"Button to click to add an additional user to MyTime")];
+	[cell setText:self.notes];
+	
 	return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:self.notes];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// make the new call view 
+	editing = tableView.editing;
+	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:self.notes] autorelease];
+	p.delegate = self;
+	row = indexPath.row;
+	section = indexPath.section;
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+}
+
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+{
+	[[self retain] autorelease];
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	if(editing)
+	{
+		NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+		NSMutableArray *quickNotes = [userSettings objectForKey:SettingsQuickNotes];
+		NSString *note = [NSString stringWithString:notesViewController.textView.text];
+		
+		[[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] objectAtIndex:row] setNotes:note];
+		
+		// now store the data and save it
+		[quickNotes replaceObjectAtIndex:row withObject:note];
+		[[Settings sharedInstance] saveData];
+		
+		// reload the table
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
+//		[self.delegate updateWithoutReload];
+		[[self.delegate navigationController] popToViewController:self.delegate animated:YES];
+	}
+	else
+	{
+		if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notesViewControllerDone:)])
+		{
+			[self.delegate.delegate notesViewControllerDone:notesViewController];
+		}
+	}
+}
+
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSMutableArray *quickNotes = [[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes];
+	
+	if(editingStyle == UITableViewCellEditingStyleDelete)
+	{
+		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %d", index);)
+		
+		[quickNotes removeObjectAtIndex:indexPath.row];
+		
+		// save the data
+		[[Settings sharedInstance] saveData];
+		
+		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+	}
+}
+
+@end
+
+
+/******************************************************************
+ *
+ *   AddQuickNotesCellController
+ *
+ ******************************************************************/
+#pragma mark AddQuickNotesCellController
+@interface AddQuickNotesCellController : QuickNotesCellController<NotesViewControllerDelegate>
+{
+	int section;
+	int row;
+}
+@end
+@implementation AddQuickNotesCellController
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return NO;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"AddQuickNotesCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = NSLocalizedString(@"Add New Quick Note", @"button to press when you are in the Quick Notes view and have pressed the Edit nagivation button, this button lets the user add another quick note favorite");
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// make the new call view 
+	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:@""] autorelease];
+	p.delegate = self;
+	section = indexPath.section;
+	row = indexPath.row;
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+}
+
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+{
+	[[self retain] autorelease];
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	NSMutableArray *quickNotes = [userSettings objectForKey:SettingsQuickNotes];
+	if(quickNotes == nil)
+	{
+		quickNotes = [NSMutableArray array];
+		[userSettings setObject:quickNotes forKey:SettingsQuickNotes];
+	}
+	NSString *note = notesViewController.textView.text;
+
+	OldQuickNotesCellController *cellController = [[[OldQuickNotesCellController alloc] init] autorelease];
+	cellController.delegate = self.delegate;
+	cellController.notes = note;
+	[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] insertObject:cellController atIndex:quickNotes.count];
+
+	// now store the data and save it
+	[quickNotes addObject:[NSString stringWithString:note]];
+	[[Settings sharedInstance] saveData];
+	
+	// reload the table
+	[self.delegate updateWithoutReload];
+
+	[self.delegate.navigationController popToViewController:self.delegate animated:YES];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -123,44 +308,29 @@
 	return UITableViewCellEditingStyleInsert;
 }
 
-- (BOOL)isViewableWhenNotEditing
-{
-	return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
-}
-
-- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
-{
-	[self.delegate addUser:metadataEditorViewController.value];
-}
-
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// make the new call view 
-	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:@"Your Name" type:STRING data:@"" value:@""] autorelease];
-	p.delegate = self;
-	
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-}
-
 
 @end
 
-
-
-
-
-@interface AddNewNoteSectionController : GenericTableViewSectionController
+/******************************************************************
+ *
+ *   History
+ *
+ ******************************************************************/
+#pragma mark HISTORY
+@interface HistoryNotesSectionController : GenericTableViewSectionController
 {
 }
 @end
-@implementation AddNewNoteSectionController
+@implementation HistoryNotesSectionController
+
+- (id)init
+{
+	if( (self = [super init]) )
+	{
+		self.title = NSLocalizedString(@"Notes History", @"this is a section label in the 'quick notes' view if you edit a call and add brand new notes.  The history section is where you can add notes to a call based on a previous note you wrote");
+	}
+	return self;
+}
 
 - (BOOL)isViewableWhenEditing
 {
@@ -170,25 +340,17 @@
 
 
 
-@interface FavoriteNotesSectionController : GenericTableViewSectionController
-{
-}
-@end
-@implementation FavoriteNotesSectionController
-
-- (BOOL)isViewableWhenNotEditing
-{
- 	return [[[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes] count];
-}
-@end
-
-
-
-
-
 
 @implementation QuickNotesViewController
-@synthesize returnVistHistory;
+@synthesize returnVisitHistory;
+@synthesize delegate;
+
+- (void)dealloc
+{
+	self.returnVisitHistory = nil;
+	
+	[super dealloc];
+}
 
 - (id) init;
 {
@@ -201,90 +363,6 @@
 		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
-}
-
-- (BOOL)renameUser:(int)index toName:(NSString *)newName
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSString *oldName = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index] objectForKey:SettingsMultipleUsersName];
-	
-	if([oldName isEqualToString:newName])
-	{
-		return YES;
-	}
-	
-	if(newName.length == 0 && users.count > 1)
-	{
-		// we need to make sure that they entered in a name
-		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please enter a name since you have more than one user of MyTime", @"Multiple Users: This message is displayed when fails to enter a username when there is more than one user in the system")];
-		[alertSheet show];
-		return NO;
-	}
-	for(NSMutableDictionary *user in users)
-	{
-		if([newName isEqualToString:[user objectForKey:SettingsMultipleUsersName]])
-		{
-			// need to popup a warning that someone is already named that name
-			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name")];
-			[alertSheet show];
-			return NO;
-		}
-	}
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-	if([currentUser isEqualToString:oldName])
-	{
-		[[[Settings sharedInstance] settings] setObject:newName forKey:SettingsMultipleUsersCurrentUser];
-	}
-	NSMutableDictionary *user = [[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index];
-	[user setObject:newName forKey:SettingsMultipleUsersName];
-	
-	[[Settings sharedInstance] saveData];
-	return YES;
-}
-
-- (BOOL)addUser:(NSString *)name
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	
-	for(NSMutableDictionary *user in users)
-	{
-		if([name isEqualToString:[user objectForKey:SettingsMultipleUsersName]])
-		{
-			// need to popup a warning that someone is already named that name
-			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name")];
-			[alertSheet show];
-			return NO;
-		}
-	}
-	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];
-	cellController.delegate = self;
-	[[[self.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:users.count];
-	[users addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:name, SettingsMultipleUsersName, nil]];
-	[[Settings sharedInstance] saveData];
-	
-	
-	[self updateWithoutReload];
-	return YES;
-}
-
-- (void)deleteUser:(int)index
-{
-	NSString *name = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index] objectForKey:SettingsMultipleUsersName];
-	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Are you sure that you want to DELETE ALL USER DATA for %@?\n\nYou can not recover from this action, you will DELETE all of your calls, hours, and other statistics for this user. Are you really sure you want to do this?", @"Multiple Users: question asked when the user wants to delete a user's data"), name]
-															 delegate:self
-												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
-											   destructiveButtonTitle:NSLocalizedString(@"Delete All Data", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
-												    otherButtonTitles:nil] autorelease];
-	
-	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-	alertSheet.tag = index;
-	[alertSheet showInView:self.view];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -345,55 +423,68 @@
 	NSMutableArray *notes = [userSettings objectForKey:SettingsQuickNotes];
 
 // Add A New Note section
-	GenericTableViewSectionController *sectionController = [[AddNewNoteSectionController alloc] init];
-	[self.sectionControllers addObject:sectionController];
-	[sectionController release];
-	
-	JustNotesCellController *cellController = [[JustNotesCellController alloc] init];
-	cellController.delegate = self;
-	[sectionController.cellControllers addObject:cellController];
-	[cellController release];
-	
-	GenericTableViewSectionController *sectionController = [[FavoriteNotesSectionController alloc] init];
-	[self.sectionControllers addObject:sectionController];
-	[sectionController release];
-	
-// Favorate Notes Section
-	for(NSMutableDictionary *entry in notes)
 	{
-		QuickNotesCellController *cellController = [[FavoriteNotesCellController alloc] init];
+		GenericTableViewSectionController *sectionController = [[JustAddNoteSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		JustAddNoteCellController *cellController = [[JustAddNoteCellController alloc] init];
 		cellController.delegate = self;
 		[sectionController.cellControllers addObject:cellController];
 		[cellController release];
 	}
-	
-	// add the "Add Additional User" cell at the end
-	AddMultipleUsersCellController *addCellController = [[AddFavoriteNotesCellController alloc] init];
-	addCellController.delegate = self;
-	[sectionController.cellControllers addObject:addCellController];
-	[addCellController release];
-
-// Notes History Section
-	NSArray *returnVisits = [[userSettings objectForKey:SettingsCalls] valueForKeyPath:CallReturnVisits];
-	self.returnVistHistory = [returnVisits sortedArrayUsingDescriptors:[[NSSortDescriptor alloc] initWithKey:CallReturnVisitDate ascending:NO]];
-
-	int i = 0;
-	for(NSMutableDictionary *entry in self.returnVistHistory)
+// Favorate Notes Section
 	{
-		i++;
-		QuickNotesCellController *cellController = [[NotesHistoryCellController alloc] init];
-		cellController.delegate = self;
-		[sectionController.cellControllers addObject:cellController];
-		[cellController release];
-		
-		// we need to put a limit on the calls
-		if(i == 100)
+		GenericTableViewSectionController *sectionController = [[FavoriteNotesSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		for(NSString *entry in notes)
 		{
-			break;
+			OldQuickNotesCellController *cellController = [[OldQuickNotesCellController alloc] init];
+			cellController.delegate = self;
+			cellController.notes = entry;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+	
+		// add the "Add Additional User" cell at the end
+		AddQuickNotesCellController *addCellController = [[AddQuickNotesCellController alloc] init];
+		addCellController.delegate = self;
+		[sectionController.cellControllers addObject:addCellController];
+		[addCellController release];
+	}
+// Notes History Section
+	{
+		GenericTableViewSectionController *sectionController = [[HistoryNotesSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		NSArray *returnVisits = [[[userSettings objectForKey:SettingsCalls] valueForKeyPath:CallReturnVisits] objectAtIndex:0];
+		self.returnVisitHistory = [NSMutableArray arrayWithArray:[returnVisits sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:CallReturnVisitDate ascending:NO] autorelease]]]];
+
+		int i = 0;
+		for(NSMutableDictionary *entry in self.returnVisitHistory)
+		{
+			NSString *notes = [entry objectForKey:CallReturnVisitNotes];
+			if(notes == nil || notes.length == 0)
+			{
+				continue;
+			}
+			
+			i++;
+			OldQuickNotesCellController *cellController = [[OldQuickNotesCellController alloc] init];
+			cellController.delegate = self;
+			cellController.notes = notes;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+			
+			// we need to put a limit on the calls
+			if(i == 100)
+			{
+				break;
+			}
 		}
 	}
 }
 
 
 @end
-#endif

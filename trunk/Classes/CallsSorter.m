@@ -339,7 +339,7 @@ int sortByMetadata(id v1, id v2, void *context)
 
 	// sort the data
 	// we should sort by the house number too
-	NSArray *sortedArray;
+	NSArray *sortedArray = nil;
 	switch(sortedBy)
 	{
 		case CALLS_SORTED_BY_STREET:

@@ -53,6 +53,12 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	navigationTitle.title = NSLocalizedString(@"Select What To Sort By", @"In the \"Sorted By...\" view this is the prompt that appears to tell the user to pick what to sort by");
+}
+
 // initialize this view given the curent configuration
 - (id) initWithMetadata:(NSString *)metadata
 {
@@ -60,7 +66,7 @@
     {
         // we are managing the picker's data and display
 		_metadataArray = [[MetadataViewController metadataNames] copy];
-		
+
         _selection = 0;
 		_selection = [_metadataArray indexOfObject:metadata];
 		if(_selection ==  NSNotFound)
