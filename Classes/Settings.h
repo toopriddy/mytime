@@ -146,6 +146,18 @@ extern NSString * const SettingsThirdView;
 extern NSString * const SettingsFourthView;
 
 //multiple users
+extern NSString * const SettingsNotAtHomeTerritories;
+	extern NSString * const NotAtHomeTerritoryName;
+	extern NSString * const NotAtHomeTerritoryStreets;
+	extern NSString * const NotAtHomeTerritoryStreetName;
+	extern NSString * const NotAtHomeTerritoryCity;
+	extern NSString * const NotAtHomeTerritoryState;
+	extern NSString * const NotAtHomeTerritoryHouses;
+	extern NSString * const NotAtHomeTerritoryHouseNumber;
+	extern NSString * const NotAtHomeTerritoryHouseAttempts;
+
+
+//multiple users
 extern NSString * const SettingsPublisherType;
 
 	extern NSString * const PublisherTypePublisher;

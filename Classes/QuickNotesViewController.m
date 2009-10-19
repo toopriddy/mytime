@@ -105,15 +105,19 @@
 #pragma mark FAVORITES
 @interface FavoriteNotesSectionController : GenericTableViewSectionController
 {
+	QuickNotesViewController *delegate;
 }
+@property (nonatomic, assign) QuickNotesViewController *delegate;
 @end
 @implementation FavoriteNotesSectionController
-
+@synthesize delegate;
 - (id)init
 {
 	if( (self = [super init]) )
 	{
 		self.title = NSLocalizedString(@"Favorites", @"this is a section label in the 'quick notes' view if you edit a call and add brand new notes.  The favorites section is where you can add your own favorite notes");
+		self.footer = NSLocalizedString(@"Add your current presentations or common notes here to be used as a template for notes for your initial/return visits", @"This text is right below the Quick notes Favoriate section describing what this section is for");
+
 	}
 	return self;
 }
@@ -121,6 +125,14 @@
 - (BOOL)isViewableWhenNotEditing
 {
  	return [[[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes] count] != 0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if(tableView.editing)
+		return self.footer;
+	else
+		return nil;
 }
 @end
 
@@ -344,6 +356,7 @@
 @implementation QuickNotesViewController
 @synthesize returnVisitHistory;
 @synthesize delegate;
+@synthesize editOnly;
 
 - (void)dealloc
 {
@@ -352,7 +365,7 @@
 	[super dealloc];
 }
 
-- (id) init;
+- (id) init
 {
 	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
@@ -409,10 +422,16 @@
 - (void)loadView 
 {
 	[super loadView];
+
+	if(self.editOnly)
+		self.editing = YES;
 	
 	[self updateAndReload];
 	
-	[self navigationControlDone:nil];
+	if(!self.editOnly)
+	{
+		[self navigationControlDone:nil];
+	}
 }
 
 - (void)constructSectionControllers
@@ -458,7 +477,13 @@
 		GenericTableViewSectionController *sectionController = [[HistoryNotesSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
-		NSArray *returnVisits = [[[userSettings objectForKey:SettingsCalls] valueForKeyPath:CallReturnVisits] objectAtIndex:0];
+		NSArray *tempReturnVisits = [[userSettings objectForKey:SettingsCalls] valueForKeyPath:CallReturnVisits];
+		NSMutableArray *returnVisits = [NSMutableArray array];
+		for(NSArray *entry in tempReturnVisits)
+		{
+			[returnVisits addObjectsFromArray:entry];
+		}
+		
 		self.returnVisitHistory = [NSMutableArray arrayWithArray:[returnVisits sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:CallReturnVisitDate ascending:NO] autorelease]]]];
 
 		int i = 0;

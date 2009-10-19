@@ -133,6 +133,17 @@ NSString * const SettingsSecondView = @"secondView";
 NSString * const SettingsThirdView = @"thirdView";
 NSString * const SettingsFourthView = @"fourthView";
 
+NSString * const SettingsNotAtHomeTerritories = @"notAtHomes";
+NSString * const NotAtHomeTerritoryName = @"name";
+NSString * const NotAtHomeTerritoryStreets = @"streets";
+NSString * const NotAtHomeTerritoryStreetName = @"name";
+NSString * const NotAtHomeTerritoryCity = @"city";
+NSString * const NotAtHomeTerritoryState = @"state";
+NSString * const NotAtHomeTerritoryHouses = @"houses";
+NSString * const NotAtHomeTerritoryHouseNumber = @"houseNumber";
+NSString * const NotAtHomeTerritoryHouseAttempts = @"attempts";
+
+
 NSString * const SettingsPublisherType = @"publisherType";
 
 NSString *const UserDefaultsClearMapCache = @"clearMapCache";
