@@ -18,8 +18,8 @@
 }
 
 @property (nonatomic, assign) NSObject<UITableViewSwitchCellDelegate> *delegate;
-@property (nonatomic, assign) IBOutlet UISwitch *booleanSwitch;
-@property (nonatomic, assign) IBOutlet UILabel *otherTextLabel;
+@property (nonatomic, retain) IBOutlet UISwitch *booleanSwitch;
+@property (nonatomic, retain) IBOutlet UILabel *otherTextLabel;
 @property (nonatomic, assign) BOOL observeEditing;
 
 - (IBAction)switchChanged;

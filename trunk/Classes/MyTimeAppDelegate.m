@@ -24,6 +24,7 @@
 #import "SortedCallsViewController.h"
 #import "MetadataSortedCallsViewController.h"
 #import "StatisticsViewController.h"
+#import "NotAtHomeViewController.h"
 #import "HourViewController.h"
 #import "SettingsViewController.h"
 #import "SettingsTableViewController.h"
@@ -54,6 +55,7 @@
 	{
 		[PSLocalization initalizeCustomLocalization];
 	}
+	
 	return self;
 }
 
@@ -324,6 +326,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	return(nil);
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+	// always save data before quitting
+	[[Settings sharedInstance] saveData];
+}
+
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
 	// dynamically add a method to UITableViewIndex that lets us move around the index
@@ -347,7 +356,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 //	application.networkActivityIndicatorVisible = NO;
 
-	[[Settings sharedInstance] saveData];
+#warning why is this here? this slows down applicaiton load time.	
+//	[[Settings sharedInstance] saveData];
 
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if([defaults boolForKey:UserDefaultsClearMapCache])
@@ -422,11 +432,15 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	CallsSortedByStudyViewDataSource *studySortedDataSource = [[[CallsSortedByStudyViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *studyViewController = [[[SortedCallsViewController alloc] initWithDataSource:studySortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:studyViewController] autorelease]];
-
+#if 0
+	// NOT AT HOMES
+	NotAtHomeViewController *notAtHomeViewController = [[[NotAtHomeViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:notAtHomeViewController] autorelease]];
+#endif	
 	// BULK LITERATURE
 	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[[BulkLiteraturePlacementViewContoller alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
-
+	
 	// ALL CALLS WEB VIEW
 	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
@@ -467,14 +481,19 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[settings setObject:controller.title forKey:SettingsThirdView];
 	controller = [array objectAtIndex:3];
 	[settings setObject:controller.title forKey:SettingsFourthView];
-	[[Settings sharedInstance] saveData];
+#warning why is this here? it is slowing things down 
+//	[[Settings sharedInstance] saveData];
 
 	// set the tab bar controller view controller array to the localViewControllersArray
 	tabBarController.viewControllers = array;
 	tabBarController.delegate = self;
 	if([settings objectForKey:SettingsCurrentButtonBarIndex])
 	{
-		tabBarController.selectedIndex = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
+		int index = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
+		if(index < array.count)
+		{
+			tabBarController.selectedViewController = [array objectAtIndex:index];
+		}
 	}
 	self.securityNavigationController = [[[UINavigationController alloc] initWithRootViewController:tabBarController] autorelease];
 	self.securityNavigationController.navigationBarHidden = YES;
@@ -535,8 +554,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController
 {
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	[settings setObject:[NSNumber numberWithInt:theTabBarController.selectedIndex] forKey:SettingsCurrentButtonBarIndex];
-	[[Settings sharedInstance] saveData];
+	[settings setObject:[NSNumber numberWithInt:[theTabBarController.viewControllers indexOfObject:viewController]] forKey:SettingsCurrentButtonBarIndex];
+	// this is slowing things down so I am removing it
+	//	[[Settings sharedInstance] saveData];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed

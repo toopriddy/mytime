@@ -8,6 +8,9 @@
 
 - (void)dealloc
 {
+	self.booleanSwitch = nil;
+	self.otherTextLabel = nil;
+	
 	[super dealloc];
 }
 

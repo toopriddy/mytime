@@ -14,8 +14,10 @@
 {
 	NSMutableArray *returnVisitHistory;
 	id<NotesViewControllerDelegate> delegate;
+	BOOL editOnly;
 }
 @property (nonatomic, retain) NSMutableArray *returnVisitHistory;
 @property (nonatomic, assign) id<NotesViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL editOnly;
 
 @end

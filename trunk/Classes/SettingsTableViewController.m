@@ -17,6 +17,7 @@
 #import "PublisherTypeViewController.h"
 #import "SecurityViewController.h"
 #import "MetadataEditorViewController.h"
+#import "QuickNotesViewController.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -314,6 +315,40 @@
 }
 @end
 
+/******************************************************************
+ *
+ *   SettingsQuickNotesCellController
+ *
+ ******************************************************************/
+#pragma mark SettingsQuickNotesCellController
+@interface SettingsQuickNotesCellController : SettingsCellController
+{
+}
+@end
+@implementation SettingsQuickNotesCellController
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"QuickNotesSettingCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = NSLocalizedString(@"Quick Notes", @"More->Settings view quick notes settings");
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	QuickNotesViewController *viewController = [[[QuickNotesViewController alloc] init] autorelease];
+	viewController.editOnly = YES;
+	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+}
+@end
 
 /******************************************************************
  *
@@ -349,7 +384,6 @@
 	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
 	
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Secretary's Email", @"More->Settings view publisher type setting title") type:EMAIL data:value value:value] autorelease];
-	viewController.delegate = self;
 	viewController.delegate = self;
 	viewController.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
@@ -941,6 +975,14 @@
 		// Number of months shown in statistics view
 		{
 			MonthsDisplayedCellController *cellController = [[MonthsDisplayedCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// QuickNotes
+		{
+			SettingsQuickNotesCellController *cellController = [[SettingsQuickNotesCellController alloc] init];
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];

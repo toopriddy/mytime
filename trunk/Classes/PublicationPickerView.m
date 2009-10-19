@@ -59,6 +59,7 @@ typedef struct {
 static const PublicationInformation PUBLICATIONS[] = {
 	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
+//,   {NSLocalizedString(@"W & A", @"Both Magizines (g and w)"),       PublicationTypeMagazine}
 
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
