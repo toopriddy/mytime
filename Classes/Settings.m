@@ -257,6 +257,8 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 		[string appendString:[[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")] stringWithEscapedCharacters]];
 	else if(minutes || minutes == 0)
 		[string appendString:[[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")] stringWithEscapedCharacters]];
+	[string appendString:[@"<br>" stringWithEscapedCharacters]];
+
 	return string;
 }
 
@@ -272,31 +274,31 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	for(NSDictionary *userSettings in allUserSettings)
 	{
 		// the specific user
-		[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:<h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]] stringWithEscapedCharacters]];
+		[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]] stringWithEscapedCharacters]];
 		
 		// calls
-		[string appendString:[NSLocalizedString(@"<h2>Calls:<h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:[NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
 		for(NSDictionary *call in [userSettings objectForKey:SettingsCalls])
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
 		
 		// hours
-		[string appendString:[NSLocalizedString(@"<h2>Hours:<h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:[NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsTimeEntries])
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
 		
 		// quickbuild
-		[string appendString:[NSLocalizedString(@"<h2>RBC Hours:<h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:[NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsRBCTimeEntries])
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
 		
 		// Bulk Placements
-		[string appendString:[NSLocalizedString(@"<h2>Bulk Placements:<h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:[NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
 		for(NSDictionary *bulkPlacement in [userSettings objectForKey:SettingsBulkLiterature])
 		{
 			NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[bulkPlacement objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
@@ -311,7 +313,7 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 			{
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
-			[string appendString:[[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:date]] stringWithEscapedCharacters]];
+			[string appendString:[[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:date]] stringWithEscapedCharacters]];
 			for(NSDictionary *publication in [bulkPlacement objectForKey:BulkLiteratureArray])
 			{
 				NSString *name = [publication objectForKey:BulkLiteratureArrayTitle];
@@ -332,7 +334,9 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 						[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name] stringWithEscapedCharacters]];
 					}
 				}
+				[string appendString:[@"<br>" stringWithEscapedCharacters]];
 			}
+			[string appendString:[@"<br>" stringWithEscapedCharacters]];
 		}
 	}	
 	
@@ -602,7 +606,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 {
 	NSMutableString *string = [NSMutableString string];
 	NSString *value;
-	[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]] stringWithEscapedCharacters]];
+	[string appendString:[[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]] stringWithEscapedCharacters]];
 	
 	NSMutableString *top = [[NSMutableString alloc] init];
 	NSMutableString *bottom = [[NSMutableString alloc] init];
@@ -663,9 +667,10 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		}
 		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 		
-		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Return Visit", @"return visit type name"), formattedDateString] stringWithEscapedCharacters]];
 		value = [visit objectForKey:CallReturnVisitType];
-		[string appendString:[[NSString stringWithFormat:@"%@\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""]] stringWithEscapedCharacters]];
+		if(value == nil || value.length == 0)
+			value = CallReturnVisitTypeReturnVisit;
+		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString] stringWithEscapedCharacters]];
 		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringWithEscapedCharacters]];
 		
 		// Publications
