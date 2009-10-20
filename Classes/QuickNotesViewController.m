@@ -146,13 +146,49 @@
 {
 	NSString *notes;
 	BOOL editing;
+	BOOL movable;
 	int row;
 	int section;
 }
 @property (nonatomic, retain) NSString *notes;
+@property (nonatomic, assign) BOOL movable;
 @end
 @implementation OldQuickNotesCellController
 @synthesize notes;
+@synthesize movable;
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return self.movable;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	// move the row
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	NSMutableArray *notesArray = [userSettings objectForKey:SettingsQuickNotes];
+
+	NSString *fromString = [[notesArray objectAtIndex:fromIndexPath.row] retain];
+	[notesArray removeObjectAtIndex:fromIndexPath.row];
+	[notesArray insertObject:fromString atIndex:toIndexPath.row];
+	[fromString release];
+	
+	[[Settings sharedInstance] saveData];																	
+	
+	// move the cellController
+	GenericTableViewSectionController *fromSectionController = [self.delegate.displaySectionControllers objectAtIndex:fromIndexPath.section];
+	GenericTableViewSectionController *toSectionController = [self.delegate.displaySectionControllers objectAtIndex:toIndexPath.section];
+	NSObject *cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+	
+	// move the cellController in the displayList (the main list and the display list are the same)
+	cellController = [[fromSectionController.cellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.cellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.cellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -434,6 +470,25 @@
 	}
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath 
+{
+	GenericTableViewSectionController *sectionController = [self.displaySectionControllers objectAtIndex:proposedDestinationIndexPath.section];
+	// check to see if they are moving it beyond the "Add custom information", the last entry and there are no entries in the list
+	if(proposedDestinationIndexPath.section == sourceIndexPath.section && 
+	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
+	   sectionController.displayCellControllers.count > 1)
+	{
+		// only subtract 1 off of the row if the source row is in the same section (cause the row count is not increasing just getting shuffled)
+		int offset = proposedDestinationIndexPath.section == sourceIndexPath.section ? 1 : 0;
+		// if there is only one section controller in this section then put the entry 
+		return [NSIndexPath indexPathForRow:(proposedDestinationIndexPath.row - offset) inSection:proposedDestinationIndexPath.section];
+	}
+    // Allow the proposed destination.
+    return proposedDestinationIndexPath;
+}
+
+
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
@@ -461,6 +516,7 @@
 		{
 			OldQuickNotesCellController *cellController = [[OldQuickNotesCellController alloc] init];
 			cellController.delegate = self;
+			cellController.movable = YES;
 			cellController.notes = entry;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];

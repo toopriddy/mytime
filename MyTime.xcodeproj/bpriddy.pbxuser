@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = "AdHoc Distribution";
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphoneos3.0;
+		activeSDKPreference = iphonesimulator3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -58,9 +58,11 @@
 			90D323E710706CE40069584B /* StatisticsViewController.m:687 */,
 			90D323F010706D5D0069584B /* StatisticsViewController.m:313 */,
 			9052CA541074CAA4001FFA13 /* StatisticsViewController.m:695 */,
-			9052CB69107A205D001FFA13 /* QuickNotesViewController.m:501 */,
+			9052CB69107A205D001FFA13 /* QuickNotesViewController.m:557 */,
 			9052CCAF107B6844001FFA13 /* CallViewController.m:1207 */,
 			9052CD06108641D3001FFA13 /* MyTimeAppDelegate.m:493 */,
+			90658536108D648C00282323 /* QuickNotesViewController.m:476 */,
+			90658554108D6BC800282323 /* QuickNotesViewController.m:168 */,
 		);
 		codeSenseManager = 90FBE8380E36D02300FD8014 /* Code sense */;
 		executables = (
@@ -134,7 +136,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					875,
+					10,
 					20,
 					48,
 					43,
@@ -721,6 +723,37 @@
 			9065852B108C40BB00282323 /* PBXTextBookmark */ = 9065852B108C40BB00282323 /* PBXTextBookmark */;
 			9065852C108C40BB00282323 /* PBXTextBookmark */ = 9065852C108C40BB00282323 /* PBXTextBookmark */;
 			90658535108C40F400282323 /* PBXTextBookmark */ = 90658535108C40F400282323 /* PBXTextBookmark */;
+			90658542108D6A9D00282323 /* PBXTextBookmark */ = 90658542108D6A9D00282323 /* PBXTextBookmark */;
+			90658543108D6A9D00282323 /* PBXTextBookmark */ = 90658543108D6A9D00282323 /* PBXTextBookmark */;
+			90658544108D6A9D00282323 /* PBXTextBookmark */ = 90658544108D6A9D00282323 /* PBXTextBookmark */;
+			90658545108D6A9D00282323 /* PBXTextBookmark */ = 90658545108D6A9D00282323 /* PBXTextBookmark */;
+			90658546108D6A9D00282323 /* PBXTextBookmark */ = 90658546108D6A9D00282323 /* PBXTextBookmark */;
+			90658547108D6A9D00282323 /* PBXTextBookmark */ = 90658547108D6A9D00282323 /* PBXTextBookmark */;
+			90658548108D6A9D00282323 /* PBXTextBookmark */ = 90658548108D6A9D00282323 /* PBXTextBookmark */;
+			90658549108D6A9D00282323 /* PBXTextBookmark */ = 90658549108D6A9D00282323 /* PBXTextBookmark */;
+			9065854A108D6A9D00282323 /* PBXTextBookmark */ = 9065854A108D6A9D00282323 /* PBXTextBookmark */;
+			9065854F108D6B9400282323 /* PBXTextBookmark */ = 9065854F108D6B9400282323 /* PBXTextBookmark */;
+			90658556108D6BC800282323 /* PBXTextBookmark */ = 90658556108D6BC800282323 /* PBXTextBookmark */;
+			90658557108D6BC800282323 /* PBXTextBookmark */ = 90658557108D6BC800282323 /* PBXTextBookmark */;
+			90658559108D6BD900282323 /* PBXTextBookmark */ = 90658559108D6BD900282323 /* PBXTextBookmark */;
+			9065855C108D6C0300282323 /* PBXTextBookmark */ = 9065855C108D6C0300282323 /* PBXTextBookmark */;
+			9065855E108D6C1700282323 /* PBXTextBookmark */ = 9065855E108D6C1700282323 /* PBXTextBookmark */;
+			90658562108D786E00282323 /* PBXTextBookmark */ = 90658562108D786E00282323 /* PBXTextBookmark */;
+			90658564108D789A00282323 /* PBXTextBookmark */ = 90658564108D789A00282323 /* PBXTextBookmark */;
+			90658566108D78A600282323 /* PBXTextBookmark */ = 90658566108D78A600282323 /* PBXTextBookmark */;
+			90658567108D78A600282323 /* PBXTextBookmark */ = 90658567108D78A600282323 /* PBXTextBookmark */;
+			90658569108D78A600282323 /* PBXTextBookmark */ = 90658569108D78A600282323 /* PBXTextBookmark */;
+			9065856D108D78B400282323 /* PBXTextBookmark */ = 9065856D108D78B400282323 /* PBXTextBookmark */;
+			9065856E108D78B400282323 /* PBXTextBookmark */ = 9065856E108D78B400282323 /* PBXTextBookmark */;
+			9065856F108D78BC00282323 /* PBXTextBookmark */ = 9065856F108D78BC00282323 /* PBXTextBookmark */;
+			90658570108D78C000282323 /* PBXTextBookmark */ = 90658570108D78C000282323 /* PBXTextBookmark */;
+			90658572108D78F800282323 /* PBXTextBookmark */ = 90658572108D78F800282323 /* PBXTextBookmark */;
+			90658575108D792B00282323 /* PBXTextBookmark */ = 90658575108D792B00282323 /* PBXTextBookmark */;
+			90658579108D799800282323 /* PBXTextBookmark */ = 90658579108D799800282323 /* PBXTextBookmark */;
+			9065857B108D79AA00282323 /* PBXTextBookmark */ = 9065857B108D79AA00282323 /* PBXTextBookmark */;
+			9065857C108D7A0200282323 /* PBXTextBookmark */ = 9065857C108D7A0200282323 /* PBXTextBookmark */;
+			9065857D108D7A0200282323 /* PBXTextBookmark */ = 9065857D108D7A0200282323 /* PBXTextBookmark */;
+			90658580108D7A0500282323 /* PBXTextBookmark */ = 90658580108D7A0500282323 /* PBXTextBookmark */;
 			906678D8105EA475003EFDE1 = 906678D8105EA475003EFDE1 /* PBXTextBookmark */;
 			906678E8105EA4BF003EFDE1 = 906678E8105EA4BF003EFDE1 /* PBXTextBookmark */;
 			906A63241038943F00563D85 = 906A63241038943F00563D85 /* PBXTextBookmark */;
@@ -870,9 +903,9 @@
 	};
 	9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 3878}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1053, 3892}}";
 			sepNavSelRange = "{6717, 0}";
-			sepNavVisRange = "{6195, 912}";
+			sepNavVisRange = "{6192, 915}";
 			sepNavWindowFrame = "{{15, 98}, {1185, 775}}";
 		};
 	};
@@ -941,7 +974,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 206";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1873;
 		vrLoc = 5558;
@@ -1355,7 +1388,7 @@
 		ignoreCount = 0;
 		lineNumber = 96;
 		location = MyTime;
-		modificationTime = 277626934.955257;
+		modificationTime = 277707162.71194;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1373,7 +1406,7 @@
 		ignoreCount = 0;
 		lineNumber = 138;
 		location = MyTime;
-		modificationTime = 277626934.973513;
+		modificationTime = 277707162.71236;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1437,7 +1470,7 @@
 		ignoreCount = 0;
 		lineNumber = 226;
 		location = MyTime;
-		modificationTime = 277626934.446384;
+		modificationTime = 277707162.709217;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -1595,7 +1628,7 @@
 		ignoreCount = 0;
 		lineNumber = 934;
 		location = MyTime;
-		modificationTime = 277626934.917017;
+		modificationTime = 277707162.711166;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1718,7 +1751,7 @@
 		ignoreCount = 0;
 		lineNumber = 695;
 		location = MyTime;
-		modificationTime = 277626934.45283;
+		modificationTime = 277707162.717761;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -2682,7 +2715,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 145";
 		rLen = 0;
-		rLoc = 4525;
+		rLoc = 6340;
 		rType = 0;
 		vrLen = 1128;
 		vrLoc = 3672;
@@ -2702,7 +2735,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 399";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1471;
 		vrLoc = 10274;
@@ -2772,7 +2805,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 157";
 		rLen = 19;
-		rLoc = 5522;
+		rLoc = 7337;
 		rType = 0;
 		vrLen = 1626;
 		vrLoc = 3460;
@@ -2782,7 +2815,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 157";
 		rLen = 19;
-		rLoc = 5522;
+		rLoc = 7337;
 		rType = 0;
 		vrLen = 1627;
 		vrLoc = 10879;
@@ -2862,7 +2895,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 279";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1951;
 		vrLoc = 7114;
@@ -2942,7 +2975,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 359";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1721;
 		vrLoc = 10326;
@@ -2952,7 +2985,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 359";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1693;
 		vrLoc = 10354;
@@ -2972,7 +3005,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 359";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1440;
 		vrLoc = 7488;
@@ -3029,7 +3062,7 @@
 		isa = PBXTextBookmark;
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		rLen = 0;
-		rLoc = 485;
+		rLoc = 541;
 		rType = 1;
 	};
 	9052CB56107A1F8E001FFA13 /* PBXTextBookmark */ = {
@@ -3037,7 +3070,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 358";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1690;
 		vrLoc = 10357;
@@ -3047,7 +3080,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 358";
 		rLen = 0;
-		rLoc = 11509;
+		rLoc = 13324;
 		rType = 0;
 		vrLen = 1716;
 		vrLoc = 10357;
@@ -3067,7 +3100,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 382";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1818;
 		vrLoc = 10327;
@@ -3087,7 +3120,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 382";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1818;
 		vrLoc = 10327;
@@ -3102,7 +3135,7 @@
 		vrLen = 3457;
 		vrLoc = 13392;
 	};
-	9052CB69107A205D001FFA13 /* QuickNotesViewController.m:501 */ = {
+	9052CB69107A205D001FFA13 /* QuickNotesViewController.m:557 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -3114,9 +3147,9 @@
 		functionName = "-constructSectionControllers";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 501;
+		lineNumber = 557;
 		location = MyTime;
-		modificationTime = 277626934.453064;
+		modificationTime = 277707162.718149;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -3125,7 +3158,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 382";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1787;
 		vrLoc = 10358;
@@ -3145,7 +3178,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 382";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1779;
 		vrLoc = 10384;
@@ -3165,7 +3198,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 382";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1758;
 		vrLoc = 10384;
@@ -3205,7 +3238,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 359";
 		rLen = 27;
-		rLoc = 15633;
+		rLoc = 18695;
 		rType = 0;
 		vrLen = 1028;
 		vrLoc = 10989;
@@ -3215,7 +3248,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 370";
 		rLen = 0;
-		rLoc = 15988;
+		rLoc = 19050;
 		rType = 0;
 		vrLen = 422;
 		vrLoc = 11829;
@@ -3225,7 +3258,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 370";
 		rLen = 0;
-		rLoc = 15988;
+		rLoc = 19050;
 		rType = 0;
 		vrLen = 1762;
 		vrLoc = 10491;
@@ -3252,7 +3285,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 416";
 		rLen = 0;
-		rLoc = 16350;
+		rLoc = 19412;
 		rType = 0;
 		vrLen = 1645;
 		vrLoc = 11284;
@@ -3272,7 +3305,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 383";
 		rLen = 0;
-		rLoc = 15194;
+		rLoc = 18256;
 		rType = 0;
 		vrLen = 1644;
 		vrLoc = 11284;
@@ -3292,7 +3325,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 387";
 		rLen = 0;
-		rLoc = 15757;
+		rLoc = 18819;
 		rType = 0;
 		vrLen = 1643;
 		vrLoc = 11284;
@@ -3312,7 +3345,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 387";
 		rLen = 0;
-		rLoc = 15757;
+		rLoc = 18819;
 		rType = 0;
 		vrLen = 1679;
 		vrLoc = 11248;
@@ -3352,7 +3385,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 147";
 		rLen = 28;
-		rLoc = 4849;
+		rLoc = 6664;
 		rType = 0;
 		vrLen = 1631;
 		vrLoc = 3767;
@@ -3382,7 +3415,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 272";
 		rLen = 0;
-		rLoc = 11432;
+		rLoc = 13247;
 		rType = 0;
 		vrLen = 1040;
 		vrLoc = 7567;
@@ -3412,7 +3445,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 154";
 		rLen = 0;
-		rLoc = 5118;
+		rLoc = 6933;
 		rType = 0;
 		vrLen = 1613;
 		vrLoc = 3711;
@@ -3422,7 +3455,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 161";
 		rLen = 0;
-		rLoc = 5363;
+		rLoc = 7178;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 3806;
@@ -3442,7 +3475,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 251";
 		rLen = 0;
-		rLoc = 10594;
+		rLoc = 12409;
 		rType = 0;
 		vrLen = 1642;
 		vrLoc = 6581;
@@ -3472,7 +3505,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 251";
 		rLen = 0;
-		rLoc = 10594;
+		rLoc = 12409;
 		rType = 0;
 		vrLen = 1801;
 		vrLoc = 5778;
@@ -3482,7 +3515,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 182";
 		rLen = 0;
-		rLoc = 7004;
+		rLoc = 8819;
 		rType = 0;
 		vrLen = 1558;
 		vrLoc = 5005;
@@ -3502,7 +3535,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 182";
 		rLen = 0;
-		rLoc = 7004;
+		rLoc = 8819;
 		rType = 0;
 		vrLen = 1558;
 		vrLoc = 5005;
@@ -3512,7 +3545,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 182";
 		rLen = 0;
-		rLoc = 7004;
+		rLoc = 8819;
 		rType = 0;
 		vrLen = 1521;
 		vrLoc = 5102;
@@ -3558,7 +3591,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 196";
 		rLen = 0;
-		rLoc = 7612;
+		rLoc = 9427;
 		rType = 0;
 		vrLen = 876;
 		vrLoc = 5104;
@@ -3568,7 +3601,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 214";
 		rLen = 0;
-		rLoc = 8022;
+		rLoc = 9837;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 6479;
@@ -3588,7 +3621,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 1869;
 		vrLoc = 6503;
@@ -3608,7 +3641,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 1869;
 		vrLoc = 6503;
@@ -3634,7 +3667,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 741;
 		vrLoc = 6503;
@@ -3644,7 +3677,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 735;
 		vrLoc = 6155;
@@ -3684,7 +3717,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 741;
 		vrLoc = 6503;
@@ -3753,7 +3786,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 217";
 		rLen = 0;
-		rLoc = 8097;
+		rLoc = 9912;
 		rType = 0;
 		vrLen = 1434;
 		vrLoc = 5921;
@@ -3763,7 +3796,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 412";
 		rLen = 0;
-		rLoc = 14693;
+		rLoc = 17755;
 		rType = 0;
 		vrLen = 2075;
 		vrLoc = 12083;
@@ -3783,7 +3816,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 412";
 		rLen = 0;
-		rLoc = 14693;
+		rLoc = 17755;
 		rType = 0;
 		vrLen = 2075;
 		vrLoc = 12083;
@@ -3943,7 +3976,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 319";
 		rLen = 1;
-		rLoc = 11519;
+		rLoc = 13334;
 		rType = 0;
 		vrLen = 1240;
 		vrLoc = 9325;
@@ -3953,7 +3986,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 326";
 		rLen = 0;
-		rLoc = 11634;
+		rLoc = 13449;
 		rType = 0;
 		vrLen = 1125;
 		vrLoc = 9511;
@@ -4130,7 +4163,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 169";
 		rLen = 19;
-		rLoc = 5522;
+		rLoc = 7337;
 		rType = 0;
 		vrLen = 1982;
 		vrLoc = 4575;
@@ -4200,7 +4233,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 169";
 		rLen = 19;
-		rLoc = 5522;
+		rLoc = 7337;
 		rType = 0;
 		vrLen = 1874;
 		vrLoc = 4575;
@@ -4210,7 +4243,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 181";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 7762;
 		rType = 0;
 		vrLen = 1913;
 		vrLoc = 4924;
@@ -4230,7 +4263,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 181";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 7762;
 		rType = 0;
 		vrLen = 1913;
 		vrLoc = 4924;
@@ -4266,7 +4299,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 181";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 7762;
 		rType = 0;
 		vrLen = 899;
 		vrLoc = 5070;
@@ -4276,7 +4309,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 181";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 7762;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 4954;
@@ -4302,7 +4335,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 193";
 		rLen = 19;
-		rLoc = 6716;
+		rLoc = 8531;
 		rType = 0;
 		vrLen = 806;
 		vrLoc = 5432;
@@ -4312,7 +4345,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 950;
 		vrLoc = 9092;
@@ -4339,7 +4372,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 193";
 		rLen = 19;
-		rLoc = 6716;
+		rLoc = 8531;
 		rType = 0;
 		vrLen = 806;
 		vrLoc = 5432;
@@ -4425,7 +4458,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 1644;
 		vrLoc = 8707;
@@ -4435,7 +4468,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 1644;
 		vrLoc = 8707;
@@ -4455,7 +4488,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 1581;
 		vrLoc = 8770;
@@ -4592,7 +4625,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 1827;
 		vrLoc = 6943;
@@ -4602,7 +4635,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 299";
 		rLen = 19;
-		rLoc = 10546;
+		rLoc = 12361;
 		rType = 0;
 		vrLen = 1821;
 		vrLoc = 6949;
@@ -4622,7 +4655,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 262";
 		rLen = 8;
-		rLoc = 8994;
+		rLoc = 10809;
 		rType = 0;
 		vrLen = 2168;
 		vrLoc = 7547;
@@ -4642,7 +4675,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 262";
 		rLen = 8;
-		rLoc = 8994;
+		rLoc = 10809;
 		rType = 0;
 		vrLen = 966;
 		vrLoc = 7804;
@@ -4652,7 +4685,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 262";
 		rLen = 8;
-		rLoc = 8994;
+		rLoc = 10809;
 		rType = 0;
 		vrLen = 2168;
 		vrLoc = 7547;
@@ -4672,7 +4705,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 262";
 		rLen = 8;
-		rLoc = 8994;
+		rLoc = 10809;
 		rType = 0;
 		vrLen = 2066;
 		vrLoc = 7672;
@@ -4702,7 +4735,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 193";
 		rLen = 0;
-		rLoc = 6605;
+		rLoc = 8420;
 		rType = 0;
 		vrLen = 1963;
 		vrLoc = 4589;
@@ -4712,7 +4745,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 192";
 		rLen = 0;
-		rLoc = 6460;
+		rLoc = 8275;
 		rType = 0;
 		vrLen = 2139;
 		vrLoc = 4592;
@@ -4732,7 +4765,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 192";
 		rLen = 0;
-		rLoc = 6460;
+		rLoc = 8275;
 		rType = 0;
 		vrLen = 2139;
 		vrLoc = 4592;
@@ -4742,7 +4775,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 195";
 		rLen = 0;
-		rLoc = 6460;
+		rLoc = 8275;
 		rType = 0;
 		vrLen = 2113;
 		vrLoc = 4616;
@@ -4762,7 +4795,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 195";
 		rLen = 0;
-		rLoc = 6585;
+		rLoc = 8400;
 		rType = 0;
 		vrLen = 921;
 		vrLoc = 5301;
@@ -4781,7 +4814,7 @@
 		ignoreCount = 0;
 		lineNumber = 1207;
 		location = MyTime;
-		modificationTime = 277626934.453454;
+		modificationTime = 277707162.718737;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -4790,7 +4823,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 195";
 		rLen = 0;
-		rLoc = 6585;
+		rLoc = 8400;
 		rType = 0;
 		vrLen = 2036;
 		vrLoc = 4918;
@@ -5276,7 +5309,7 @@
 		ignoreCount = 0;
 		lineNumber = 493;
 		location = MyTime;
-		modificationTime = 277626934.453773;
+		modificationTime = 277707162.719148;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -5395,7 +5428,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 195";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 8378;
 		rType = 0;
 		vrLen = 892;
 		vrLoc = 5333;
@@ -5466,7 +5499,7 @@
 			sepNavFolds = "{\n    c =     (\n                {\n            l = \"(UIViewController *)modalViewController\";\n            r = \"{1421, 43}\";\n            s = 1;\n        },\n                {\n            l = \"(BOOL)animated\";\n            r = \"{1474, 18}\";\n            s = 1;\n        }\n    );\n    r = \"{0, 5822}\";\n    s = 0;\n}";
 			sepNavIntBoundsRect = "{{0, 0}, {1053, 2394}}";
 			sepNavSelRange = "{5763, 0}";
-			sepNavVisRange = "{4912, 851}";
+			sepNavVisRange = "{3382, 2042}";
 		};
 	};
 	9052CD4310867CED001FFA13 /* PBXTextBookmark */ = {
@@ -5689,7 +5722,7 @@
 		ignoreCount = 0;
 		lineNumber = 118;
 		location = MyTime;
-		modificationTime = 277626934.872381;
+		modificationTime = 277707162.709571;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -5707,7 +5740,7 @@
 		ignoreCount = 0;
 		lineNumber = 125;
 		location = MyTime;
-		modificationTime = 277626934.446795;
+		modificationTime = 277707162.70998;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -5950,7 +5983,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1583;
 		vrLoc = 13993;
@@ -5960,7 +5993,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1676;
 		vrLoc = 13900;
@@ -5970,7 +6003,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1676;
 		vrLoc = 13900;
@@ -5980,7 +6013,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 13993;
@@ -5990,7 +6023,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 13993;
@@ -6000,7 +6033,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1557;
 		vrLoc = 14155;
@@ -6010,7 +6043,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 14155;
@@ -6020,7 +6053,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 14155;
@@ -6030,7 +6063,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 14155;
@@ -6040,7 +6073,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 458";
 		rLen = 29;
-		rLoc = 15165;
+		rLoc = 18227;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 14155;
@@ -6050,7 +6083,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 471";
 		rLen = 0;
-		rLoc = 15790;
+		rLoc = 18852;
 		rType = 0;
 		vrLen = 1191;
 		vrLoc = 14155;
@@ -6097,7 +6130,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 348";
 		rLen = 0;
-		rLoc = 11564;
+		rLoc = 13379;
 		rType = 0;
 		vrLen = 1514;
 		vrLoc = 9069;
@@ -6136,7 +6169,7 @@
 		isa = PBXTextBookmark;
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		rLen = 1;
-		rLoc = 355;
+		rLoc = 391;
 		rType = 1;
 	};
 	906584A4108C2E7B00282323 /* PBXTextBookmark */ = {
@@ -6144,7 +6177,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 364";
 		rLen = 0;
-		rLoc = 12009;
+		rLoc = 13824;
 		rType = 0;
 		vrLen = 838;
 		vrLoc = 11072;
@@ -6164,7 +6197,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 364";
 		rLen = 0;
-		rLoc = 12009;
+		rLoc = 13824;
 		rType = 0;
 		vrLen = 845;
 		vrLoc = 13015;
@@ -6174,7 +6207,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 364";
 		rLen = 0;
-		rLoc = 12009;
+		rLoc = 13824;
 		rType = 0;
 		vrLen = 845;
 		vrLoc = 13015;
@@ -6193,7 +6226,7 @@
 		isa = PBXTextBookmark;
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		rLen = 0;
-		rLoc = 440;
+		rLoc = 495;
 		rType = 1;
 	};
 	906584AD108C2EAF00282323 /* PBXTextBookmark */ = {
@@ -6201,7 +6234,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 447";
 		rLen = 0;
-		rLoc = 14339;
+		rLoc = 17368;
 		rType = 0;
 		vrLen = 1141;
 		vrLoc = 13287;
@@ -6235,7 +6268,7 @@
 		isa = PBXTextBookmark;
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		rLen = 0;
-		rLoc = 364;
+		rLoc = 400;
 		rType = 1;
 	};
 	906584B3108C2ED000282323 /* PBXTextBookmark */ = {
@@ -6243,7 +6276,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 344";
 		rLen = 0;
-		rLoc = 11471;
+		rLoc = 13286;
 		rType = 0;
 		vrLen = 576;
 		vrLoc = 10586;
@@ -6253,7 +6286,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 431";
 		rLen = 0;
-		rLoc = 13684;
+		rLoc = 16713;
 		rType = 0;
 		vrLen = 845;
 		vrLoc = 13015;
@@ -6292,7 +6325,7 @@
 		isa = PBXTextBookmark;
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		rLen = 0;
-		rLoc = 440;
+		rLoc = 495;
 		rType = 1;
 	};
 	906584BC108C2F0A00282323 /* PBXTextBookmark */ = {
@@ -6300,7 +6333,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 431";
 		rLen = 0;
-		rLoc = 13684;
+		rLoc = 16713;
 		rType = 0;
 		vrLen = 777;
 		vrLoc = 12976;
@@ -6340,7 +6373,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 356";
 		rLen = 0;
-		rLoc = 11649;
+		rLoc = 13464;
 		rType = 0;
 		vrLen = 710;
 		vrLoc = 11021;
@@ -6350,7 +6383,7 @@
 		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
 		name = "QuickNotesViewController.m: 417";
 		rLen = 0;
-		rLoc = 13514;
+		rLoc = 15329;
 		rType = 0;
 		vrLen = 503;
 		vrLoc = 12817;
@@ -6693,6 +6726,359 @@
 		vrLen = 1680;
 		vrLoc = 28713;
 	};
+	90658536108D648C00282323 /* QuickNotesViewController.m:476 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		functionName = "-tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 476;
+		location = MyTime;
+		modificationTime = 277707162.719561;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	90658542108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90FBE88F0E39938F00FD8014 /* Settings.m */;
+		name = "Settings.m: 672";
+		rLen = 30;
+		rLoc = 29553;
+		rType = 0;
+		vrLen = 1680;
+		vrLoc = 28713;
+	};
+	90658543108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */;
+		name = "NotAtHomeViewController.m: 171";
+		rLen = 0;
+		rLoc = 5822;
+		rType = 0;
+		vrLen = 2042;
+		vrLoc = 3441;
+	};
+	90658544108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907A23140ECA82A600BE38DD /* MetadataViewController.h */;
+		name = "MetadataViewController.h: 25";
+		rLen = 4;
+		rLoc = 1133;
+		rType = 0;
+		vrLen = 1160;
+		vrLoc = 347;
+	};
+	90658545108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */;
+		name = "MetadataEditorViewController.m: 406";
+		rLen = 14;
+		rLoc = 12222;
+		rType = 0;
+		vrLen = 741;
+		vrLoc = 11256;
+	};
+	90658546108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */;
+		name = "MetadataCustomViewController.m: 222";
+		rLen = 0;
+		rLoc = 6717;
+		rType = 0;
+		vrLen = 915;
+		vrLoc = 6192;
+	};
+	90658547108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */;
+		name = "GenericTableViewController.m: 423";
+		rLen = 21;
+		rLoc = 17612;
+		rType = 0;
+		vrLen = 1209;
+		vrLoc = 16970;
+	};
+	90658548108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907A23150ECA82A600BE38DD /* MetadataViewController.m */;
+		name = "MetadataViewController.m: 396";
+		rLen = 40;
+		rLoc = 15803;
+		rType = 0;
+		vrLen = 1329;
+		vrLoc = 15576;
+	};
+	90658549108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 508";
+		rLen = 0;
+		rLoc = 16455;
+		rType = 0;
+		vrLen = 1349;
+		vrLoc = 16401;
+	};
+	9065854A108D6A9D00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 172";
+		rLen = 0;
+		rLoc = 5174;
+		rType = 0;
+		vrLen = 2367;
+		vrLoc = 4425;
+	};
+	9065854F108D6B9400282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 478";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 1830;
+		vrLoc = 14934;
+	};
+	90658554108D6BC800282323 /* QuickNotesViewController.m:168 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		functionName = "-tableView:moveRowAtIndexPath:toIndexPath:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 168;
+		location = MyTime;
+		modificationTime = 277707162.720045;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	90658556108D6BC800282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 478";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2136;
+		vrLoc = 4108;
+	};
+	90658557108D6BC800282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 478";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2136;
+		vrLoc = 4108;
+	};
+	90658559108D6BD900282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 478";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2164;
+		vrLoc = 4213;
+	};
+	9065855C108D6C0300282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 479";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2177;
+		vrLoc = 4384;
+	};
+	9065855E108D6C1700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 479";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2210;
+		vrLoc = 4384;
+	};
+	90658562108D786E00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 479";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 2243;
+		vrLoc = 4409;
+	};
+	90658564108D789A00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 479";
+		rLen = 0;
+		rLoc = 16101;
+		rType = 0;
+		vrLen = 1455;
+		vrLoc = 4409;
+	};
+	90658566108D78A600282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 191";
+		rLen = 0;
+		rLoc = 6339;
+		rType = 0;
+		vrLen = 1649;
+		vrLoc = 5306;
+	};
+	90658567108D78A600282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90658568108D78A600282323 /* asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b */;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+		rType = 0;
+	};
+	90658568108D78A600282323 /* asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b */ = {
+		isa = PBXFileReference;
+		path = "asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b";
+		sourceTree = "<group>";
+	};
+	90658569108D78A600282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9065856A108D78A600282323 /* asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b */;
+		name = "asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1448;
+		vrLoc = 0;
+	};
+	9065856A108D78A600282323 /* asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b */ = {
+		isa = PBXFileReference;
+		path = "asm -[UITableViewRowData sectionLocationForReorderedRow:inSection:]  0x30a8540b";
+		sourceTree = "<group>";
+	};
+	9065856D108D78B400282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1798;
+		vrLoc = 15033;
+	};
+	9065856E108D78B400282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1797;
+		vrLoc = 15033;
+	};
+	9065856F108D78BC00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1797;
+		vrLoc = 15033;
+	};
+	90658570108D78C000282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1682;
+		vrLoc = 15175;
+	};
+	90658572108D78F800282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1501;
+		vrLoc = 15175;
+	};
+	90658575108D792B00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1682;
+		vrLoc = 15175;
+	};
+	90658579108D799800282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1426;
+		vrLoc = 14186;
+	};
+	9065857B108D79AA00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 190";
+		rLen = 0;
+		rLoc = 6337;
+		rType = 0;
+		vrLen = 1426;
+		vrLoc = 14186;
+	};
+	9065857C108D7A0200282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 773;
+		vrLoc = 3;
+	};
+	9065857D108D7A0200282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 484";
+		rLen = 0;
+		rLoc = 16544;
+		rType = 0;
+		vrLen = 1342;
+		vrLoc = 15329;
+	};
+	90658580108D7A0500282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
+		name = "QuickNotesViewController.m: 484";
+		rLen = 0;
+		rLoc = 16544;
+		rType = 0;
+		vrLen = 1865;
+		vrLoc = 15220;
+	};
 	906678D8105EA475003EFDE1 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 900A21750F1461FF00BE1AF2 /* English */;
@@ -6748,7 +7134,7 @@
 		ignoreCount = 0;
 		lineNumber = 232;
 		location = MyTime;
-		modificationTime = 277626934.760016;
+		modificationTime = 277707162.705806;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -6766,7 +7152,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 277626934.775799;
+		modificationTime = 277707162.707502;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -6784,7 +7170,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 277626934.797931;
+		modificationTime = 277707162.707968;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -6802,7 +7188,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 277626934.814785;
+		modificationTime = 277707162.708386;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -6820,7 +7206,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 277626934.854707;
+		modificationTime = 277707162.708831;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -6872,7 +7258,7 @@
 		ignoreCount = 0;
 		lineNumber = 407;
 		location = MyTime;
-		modificationTime = 277626934.446999;
+		modificationTime = 277707162.710405;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -6890,22 +7276,22 @@
 		ignoreCount = 0;
 		lineNumber = 237;
 		location = MyTime;
-		modificationTime = 277626934.447251;
+		modificationTime = 277707162.710781;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
 	907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {990, 712}}";
-			sepNavSelRange = "{1405, 13}";
-			sepNavVisRange = "{0, 1548}";
+			sepNavIntBoundsRect = "{{0, 0}, {1053, 672}}";
+			sepNavSelRange = "{1133, 4}";
+			sepNavVisRange = "{347, 1160}";
 		};
 	};
 	907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 6860}}";
-			sepNavSelRange = "{11847, 6}";
-			sepNavVisRange = "{11286, 637}";
+			sepNavIntBoundsRect = "{{0, 0}, {1140, 6818}}";
+			sepNavSelRange = "{15803, 40}";
+			sepNavVisRange = "{15576, 1329}";
 		};
 	};
 	907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {
@@ -6917,9 +7303,9 @@
 	};
 	907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1446, 6650}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1446, 6552}}";
 			sepNavSelRange = "{12222, 14}";
-			sepNavVisRange = "{11470, 640}";
+			sepNavVisRange = "{11256, 741}";
 		};
 	};
 	907A63990EFD8EC6002E4144 /* en_US */ = {
@@ -6959,9 +7345,9 @@
 	};
 	907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1500, 7322}}";
-			sepNavSelRange = "{11471, 0}";
-			sepNavVisRange = "{11129, 576}";
+			sepNavIntBoundsRect = "{{0, 0}, {1500, 8414}}";
+			sepNavSelRange = "{16544, 0}";
+			sepNavVisRange = "{15220, 1865}";
 		};
 	};
 	9096C3F010142E3E00B9A000 /* CallViewController.m:818 */ = {
@@ -6978,7 +7364,7 @@
 		ignoreCount = 0;
 		lineNumber = 818;
 		location = MyTime;
-		modificationTime = 277626934.933731;
+		modificationTime = 277707162.711552;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -7595,7 +7981,7 @@
 		ignoreCount = 0;
 		lineNumber = 125;
 		location = MyTime;
-		modificationTime = 277626935.007899;
+		modificationTime = 277707162.71269;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -7799,7 +8185,7 @@
 		ignoreCount = 0;
 		lineNumber = 165;
 		location = MyTime;
-		modificationTime = 277626934.451667;
+		modificationTime = 277707162.716144;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -7857,7 +8243,7 @@
 		ignoreCount = 0;
 		lineNumber = 171;
 		location = MyTime;
-		modificationTime = 277626934.451903;
+		modificationTime = 277707162.716558;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -7875,7 +8261,7 @@
 		ignoreCount = 0;
 		lineNumber = 687;
 		location = MyTime;
-		modificationTime = 277626934.452205;
+		modificationTime = 277707162.716913;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -7910,7 +8296,7 @@
 		ignoreCount = 0;
 		lineNumber = 313;
 		location = MyTime;
-		modificationTime = 277626934.452529;
+		modificationTime = 277707162.717335;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -8064,7 +8450,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 277626935.02278;
+		modificationTime = 277707162.713084;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8082,7 +8468,7 @@
 		ignoreCount = 0;
 		lineNumber = 139;
 		location = MyTime;
-		modificationTime = 277626935.061778;
+		modificationTime = 277707162.713449;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8100,7 +8486,7 @@
 		ignoreCount = 0;
 		lineNumber = 188;
 		location = MyTime;
-		modificationTime = 277626935.077521;
+		modificationTime = 277707162.713851;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8118,7 +8504,7 @@
 		ignoreCount = 0;
 		lineNumber = 184;
 		location = MyTime;
-		modificationTime = 277626935.098451;
+		modificationTime = 277707162.714202;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8136,7 +8522,7 @@
 		ignoreCount = 0;
 		lineNumber = 199;
 		location = MyTime;
-		modificationTime = 277626935.113203;
+		modificationTime = 277707162.71461;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8154,7 +8540,7 @@
 		ignoreCount = 0;
 		lineNumber = 194;
 		location = MyTime;
-		modificationTime = 277626935.150176;
+		modificationTime = 277707162.71498;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -8196,7 +8582,7 @@
 		ignoreCount = 0;
 		lineNumber = 517;
 		location = MyTime;
-		modificationTime = 277626934.451179;
+		modificationTime = 277707162.715398;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -8214,7 +8600,7 @@
 		ignoreCount = 0;
 		lineNumber = 67;
 		location = MyTime;
-		modificationTime = 277626934.451403;
+		modificationTime = 277707162.715766;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -8234,9 +8620,9 @@
 	};
 	90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1242, 11158}}";
-			sepNavSelRange = "{28860, 44}";
-			sepNavVisRange = "{28470, 583}";
+			sepNavIntBoundsRect = "{{0, 0}, {1242, 10626}}";
+			sepNavSelRange = "{17612, 21}";
+			sepNavVisRange = "{16970, 1209}";
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
