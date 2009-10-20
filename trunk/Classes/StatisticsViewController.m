@@ -691,7 +691,7 @@ static NSString *MONTHS[] = {
 {
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
-	_thisMonth = 9; //[dateComponents month];
+	_thisMonth = [dateComponents month];
 	_thisYear = [dateComponents year];
 	
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
