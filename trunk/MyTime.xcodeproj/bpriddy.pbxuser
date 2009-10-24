@@ -22,7 +22,7 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
@@ -136,7 +136,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					875,
 					20,
 					48,
 					43,
@@ -764,6 +764,19 @@
 			90658595108E08F900282323 /* PBXTextBookmark */ = 90658595108E08F900282323 /* PBXTextBookmark */;
 			90658596108E08F900282323 /* PlistBookmark */ = 90658596108E08F900282323 /* PlistBookmark */;
 			90658597108E08F900282323 /* PlistBookmark */ = 90658597108E08F900282323 /* PlistBookmark */;
+			906585A71091761700282323 /* PlistBookmark */ = 906585A71091761700282323 /* PlistBookmark */;
+			906585A81091761700282323 /* PBXTextBookmark */ = 906585A81091761700282323 /* PBXTextBookmark */;
+			906585AA1091761700282323 /* PBXTextBookmark */ = 906585AA1091761700282323 /* PBXTextBookmark */;
+			906585AB1091761700282323 /* PBXTextBookmark */ = 906585AB1091761700282323 /* PBXTextBookmark */;
+			906585AD1091761700282323 /* PBXTextBookmark */ = 906585AD1091761700282323 /* PBXTextBookmark */;
+			906585AE1091761700282323 /* PBXTextBookmark */ = 906585AE1091761700282323 /* PBXTextBookmark */;
+			906585B01091761700282323 /* PBXTextBookmark */ = 906585B01091761700282323 /* PBXTextBookmark */;
+			906585B11091761700282323 /* PBXTextBookmark */ = 906585B11091761700282323 /* PBXTextBookmark */;
+			906585B31091761700282323 /* PBXTextBookmark */ = 906585B31091761700282323 /* PBXTextBookmark */;
+			906585B41091761700282323 /* PBXTextBookmark */ = 906585B41091761700282323 /* PBXTextBookmark */;
+			906585BB1091769A00282323 /* PBXTextBookmark */ = 906585BB1091769A00282323 /* PBXTextBookmark */;
+			906585BC1091769A00282323 /* PlistBookmark */ = 906585BC1091769A00282323 /* PlistBookmark */;
+			906585BD1091769A00282323 /* PlistBookmark */ = 906585BD1091769A00282323 /* PlistBookmark */;
 			906678D8105EA475003EFDE1 = 906678D8105EA475003EFDE1 /* PBXTextBookmark */;
 			906678E8105EA4BF003EFDE1 = 906678E8105EA4BF003EFDE1 /* PBXTextBookmark */;
 			906A63241038943F00563D85 = 906A63241038943F00563D85 /* PBXTextBookmark */;
@@ -1500,9 +1513,9 @@
 	};
 	903477630E8CAA0100BB6F2D /* Swedish */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {4806, 15708}}";
-			sepNavSelRange = "{47031, 0}";
-			sepNavVisRange = "{42489, 4542}";
+			sepNavIntBoundsRect = "{{0, 0}, {4806, 16856}}";
+			sepNavSelRange = "{50466, 0}";
+			sepNavVisRange = "{47645, 2821}";
 		};
 	};
 	903FF231102A049900CC60B8 /* HTTPServer.m */ = {
@@ -7193,6 +7206,166 @@
 		rLen = 0;
 		rLoc = 9223372036854775807;
 	};
+	906585A71091761700282323 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	906585A81091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906585A91091761700282323 /* Root-3.strings */;
+		name = "Root-3.strings: 1";
+		rLen = 708;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 708;
+		vrLoc = 0;
+	};
+	906585A91091761700282323 /* Root-3.strings */ = {
+		isa = PBXFileReference;
+		name = "Root-3.strings";
+		path = "/Users/bpriddy/Downloads/Root-3.strings";
+		sourceTree = "<absolute>";
+	};
+	906585AA1091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C611AA103283470054C822 /* Root.strings */;
+		name = "Root.strings: 13";
+		rLen = 0;
+		rLoc = 708;
+		rType = 0;
+		vrLen = 708;
+		vrLoc = 0;
+	};
+	906585AB1091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906585AC1091761700282323 /* Localizable-44.strings */;
+		name = "Localizable-44.strings: 1";
+		rLen = 50466;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1446;
+		vrLoc = 0;
+	};
+	906585AC1091761700282323 /* Localizable-44.strings */ = {
+		isa = PBXFileReference;
+		name = "Localizable-44.strings";
+		path = "/Users/bpriddy/Downloads/Localizable-44.strings";
+		sourceTree = "<absolute>";
+	};
+	906585AD1091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 903477630E8CAA0100BB6F2D /* Swedish */;
+		name = "Localizable.strings: 1261";
+		rLen = 0;
+		rLoc = 50466;
+		rType = 0;
+		vrLen = 2821;
+		vrLoc = 47645;
+	};
+	906585AE1091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906585AF1091761700282323 /* Root.strings */;
+		name = "Root.strings: 1";
+		rLen = 714;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 0;
+	};
+	906585AF1091761700282323 /* Root.strings */ = {
+		isa = PBXFileReference;
+		name = Root.strings;
+		path = /Users/bpriddy/Downloads/Slovak.lproj/Root.strings;
+		sourceTree = "<absolute>";
+	};
+	906585B01091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90C61181103283470054C822 /* Root.strings */;
+		name = "Root.strings: 13";
+		rLen = 0;
+		rLoc = 714;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 0;
+	};
+	906585B11091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906585B21091761700282323 /* Localizable.strings */;
+		name = "Localizable.strings: 1";
+		rLen = 49062;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1442;
+		vrLoc = 0;
+	};
+	906585B21091761700282323 /* Localizable.strings */ = {
+		isa = PBXFileReference;
+		name = Localizable.strings;
+		path = /Users/bpriddy/Downloads/Slovak.lproj/Localizable.strings;
+		sourceTree = "<absolute>";
+	};
+	906585B31091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E759350FE4426900690CEE /* Slovak */;
+		name = "Localizable.strings: 1215";
+		rLen = 0;
+		rLoc = 3449;
+		rType = 0;
+		vrLen = 1519;
+		vrLoc = 44397;
+	};
+	906585B41091761700282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E759350FE4426900690CEE /* Slovak */;
+		name = "Localizable.strings: 1240";
+		rLen = 0;
+		rLoc = 47823;
+		rType = 0;
+		vrLen = 2639;
+		vrLoc = 46423;
+	};
+	906585BB1091769A00282323 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E759350FE4426900690CEE /* Slovak */;
+		name = "Localizable.strings: 1240";
+		rLen = 0;
+		rLoc = 47823;
+		rType = 0;
+		vrLen = 2639;
+		vrLoc = 46423;
+	};
+	906585BC1091769A00282323 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	906585BD1091769A00282323 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	906678D8105EA475003EFDE1 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 900A21750F1461FF00BE1AF2 /* English */;
@@ -7531,7 +7704,7 @@
 		fRef = 90E759350FE4426900690CEE /* Slovak */;
 		name = "Localizable.strings: 1198";
 		rLen = 0;
-		rLoc = 45910;
+		rLoc = 3449;
 		rType = 0;
 		vrLen = 3335;
 		vrLoc = 42575;
@@ -8039,6 +8212,11 @@
 		name = Root.strings;
 		path = /Users/bpriddy/Projects/MyTime/Classes/Settings.bundle/Slovak.lproj/Root.strings;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1218, 423}}";
+			sepNavSelRange = "{714, 0}";
+			sepNavVisRange = "{0, 714}";
+		};
 	};
 	90C61182103283470054C822 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -8080,6 +8258,11 @@
 		name = Root.strings;
 		path = /Users/bpriddy/Projects/MyTime/Classes/Settings.bundle/Swedish.lproj/Root.strings;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1278, 423}}";
+			sepNavSelRange = "{708, 0}";
+			sepNavVisRange = "{0, 708}";
+		};
 	};
 	90C611EA103284380054C822 /* SubmitNewCall.m:125 */ = {
 		isa = PBXFileBreakpoint;
@@ -8487,7 +8670,7 @@
 		fRef = 90C611AA103283470054C822 /* Root.strings */;
 		name = "Root.strings: 13";
 		rLen = 0;
-		rLoc = 711;
+		rLoc = 708;
 		rType = 0;
 		vrLen = 711;
 		vrLoc = 0;
@@ -8514,7 +8697,7 @@
 		fRef = 903477630E8CAA0100BB6F2D /* Swedish */;
 		name = "Localizable.strings: 1195";
 		rLen = 0;
-		rLoc = 47038;
+		rLoc = 3449;
 		rType = 0;
 		vrLen = 4542;
 		vrLoc = 42489;
@@ -8796,9 +8979,9 @@
 	};
 	90E759350FE4426900690CEE /* Slovak */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {3990, 16128}}";
-			sepNavSelRange = "{45910, 0}";
-			sepNavVisRange = "{42575, 3335}";
+			sepNavIntBoundsRect = "{{0, 0}, {3990, 16884}}";
+			sepNavSelRange = "{47823, 0}";
+			sepNavVisRange = "{46423, 2639}";
 		};
 	};
 	90E75D1C0FE5D0BC00690CEE /* MetadataPickerViewController.h */ = {
