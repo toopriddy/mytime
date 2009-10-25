@@ -120,8 +120,9 @@
 	datePicker.autoresizesSubviews = YES;
 	[containerView addSubview: datePicker];
 
+//	UIView *tempView = [[[UIView alloc] initWithFrame:pickerRect] autorelease];
 	pickerRect.origin.y += pickerRect.size.height;
-	pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
+//	pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
 
 	timePicker.frame = pickerRect;
 	timePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
