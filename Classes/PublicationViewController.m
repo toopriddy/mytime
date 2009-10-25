@@ -145,7 +145,6 @@
 	[containerView addSubview: publicationPicker];
 
 	pickerRect.origin.y += pickerRect.size.height;
-	pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
 
 
 	if(showCount)
@@ -163,7 +162,7 @@
 		pickerRect.size.height = [countPicker sizeThatFits:CGSizeZero].height;
 		countPicker.frame = pickerRect;
 #else		
-		pickerRect.size.height = [countPicker sizeThatFits:CGSizeZero].height;
+		//pickerRect.size.height = [countPicker sizeThatFits:CGSizeZero].height;
 		countPicker.frame = pickerRect;
 #endif
 		countPicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
@@ -172,6 +171,7 @@
 	}
 	else
 	{
+		pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
 		UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
 		v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
 		v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
