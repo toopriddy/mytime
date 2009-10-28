@@ -83,7 +83,13 @@ int main (int argc, const char * argv[])
 		return -1;
 	}
 	NSArray *mergeToArray = [mergeToFile componentsSeparatedByString:@"\n"];
-
+	NSString *firstLine = [mergeToArray objectAtIndex:0];
+	NSString *versionLine = nil;
+	if([firstLine hasPrefix:@"/* VERSION:"])
+	{
+		versionLine = firstLine;
+	}
+	
 	NSArray *names = [baseArray valueForKey:@"first"];
 	for(NSString *line in mergeToArray)
 	{
@@ -119,6 +125,10 @@ int main (int argc, const char * argv[])
 
 	NSMutableString *output = [NSMutableString string];
 	NSMutableString *newEntry = [[NSMutableString alloc] init];
+	if(versionLine)
+	{
+		[output appendFormat:@"%@\n\n", versionLine];
+	}
 	for(entry in baseArray)
 	{
 		NSString *comment = [entry objectForKey:@"comment"];
