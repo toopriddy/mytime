@@ -68,17 +68,16 @@
 	[self layoutSubviews];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated 
+- (void)setHighlighted:(BOOL)selected animated:(BOOL)animated 
 {
 	/*
 	 Views are drawn most efficiently when they are opaque and do not have a clear background, so in newLabelForMainText: the labels are made opaque and given a white background.  To show selection properly, however, the views need to be transparent (so that the selection color shows through).  
     */
-	[super setSelected:selected animated:animated];
+	[super setHighlighted:selected animated:animated];
 
 	if(self.selectionStyle != UITableViewCellSelectionStyleNone)
 	{
 		UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
-
 		textView.backgroundColor = backgroundColor;
 		textView.highlighted = selected;
 		textView.opaque = !selected;
