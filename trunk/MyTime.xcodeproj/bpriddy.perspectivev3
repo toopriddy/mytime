@@ -293,15 +293,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>198</integer>
-									<integer>197</integer>
-									<integer>183</integer>
+									<integer>169</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 2957}, {302, 731}}</string>
+							<string>{{0, 1596}, {302, 731}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -338,7 +336,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90B569B510292C4D000065ED</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Root.strings</string>
+								<string>TableViewCellController.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -346,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90B569B610292C4D000065ED</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Root.strings</string>
+										<string>TableViewCellController.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90CBFB5A109F430900BE8C80</string>
+										<string>90CBFB6E109FB09C00BE8C80</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -362,8 +360,12 @@
 											<string>90876441109BEFA10035112F</string>
 											<string>90EB59E9109E4FB300A3128D</string>
 											<string>90CBFB57109F430900BE8C80</string>
-											<string>90CBFB58109F430900BE8C80</string>
-											<string>90CBFB59109F430900BE8C80</string>
+											<string>90CBFB66109FB09C00BE8C80</string>
+											<string>90CBFB68109FB09C00BE8C80</string>
+											<string>90CBFB6A109FB09C00BE8C80</string>
+											<string>90CBFB6B109FB09C00BE8C80</string>
+											<string>90CBFB6C109FB09C00BE8C80</string>
+											<string>90CBFB6D109FB09C00BE8C80</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -377,18 +379,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1114, 515}}</string>
+								<string>{{0, 0}, {1114, 744}}</string>
 								<key>RubberWindowFrame</key>
 								<string>2 88 1438 790 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>515pt</string>
+							<string>744pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>229pt</string>
+							<string>0pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -403,8 +405,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1114, 202}}</string>
-										<key>RubberWindowFrame</key>
-										<string>2 88 1438 790 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -420,7 +420,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1114, 260}}</string>
+										<string>{{10, 27}, {1114, -27}}</string>
+										<key>RubberWindowFrame</key>
+										<string>2 88 1438 790 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXProjectFindModule</string>
@@ -660,14 +662,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>90EB59EF109E4FB300A3128D</string>
+				<string>90CBFB6F109FB09C00BE8C80</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>90EB59F0109E4FB300A3128D</string>
-				<string>90EB59F1109E4FB300A3128D</string>
-				<string>90EB59F2109E4FB300A3128D</string>
-				<string>90EB59F3109E4FB300A3128D</string>
-				<string>90EB59F4109E4FB300A3128D</string>
+				<string>90CBFB70109FB09C00BE8C80</string>
+				<string>90CBFB71109FB09C00BE8C80</string>
+				<string>90CBFB72109FB09C00BE8C80</string>
+				<string>90CBFB73109FB09C00BE8C80</string>
+				<string>90CBFB74109FB09C00BE8C80</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
