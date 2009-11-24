@@ -90,7 +90,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Insight", @"Book Publication Name (it)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name (ip-1)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name (ip-2)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Is This Life All There Is?", @"Book Publication Name (tl)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Is This Life All There Is?", @"Book Publication Name (ts)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Live With Jehovah's Day in Mind", @"Book Publication Name (jd)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Let Your Kingdom Come", @"Book Publication Name (kc)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Listen to the Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
@@ -163,7 +163,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Education", @"Brochures Publication Name (ed)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"God's Friend", @"Brochures Publication Name (gf)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Good Land", @"Brochures Publication Name (gl)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Government", @"Brochures Publication Name (hp)"),   PublicationTypeBrochure}
+,   {NSLocalizedString(@"Government", @"Brochures Publication Name (bp)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Guidance of God", @"Brochures Publication Name (gu)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name (jt)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Lasting Peace", @"Brochures Publication Name (pc)"),   PublicationTypeBrochure}

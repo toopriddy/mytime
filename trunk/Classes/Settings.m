@@ -197,36 +197,33 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 }
 
 
-+ (void)sendEmailBackup
++ (MFMailComposeViewController *)sendEmailBackup
 {
-	NSMutableString *string = [[[NSMutableString alloc] initWithFormat:@"%@%@%@", 
-								@"mailto:?subject=", 
-								[NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it") stringWithEscapedCharacters], 
-								@"&body="] autorelease];
-	[string appendString:[NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n\nWARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP\n\n", @"This is the body of the email that is sent when you go to More->Settings->Email Backup") stringWithEscapedCharacters]];
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it")];
+
+	NSMutableString *string = [[NSMutableString alloc] init];
+	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
 	
 	// now add the url that will allow importing
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
-	NSMutableString *theurl = [NSMutableString string];
-	NSMutableString *link = [NSMutableString string];
-	[link appendString:@"<a href=\""];
-	[theurl appendString:@"mytime://mytime/restoreBackup?"];
+	[mailView addAttachmentData:data mimeType:@"text/plist" fileName:@"records.plist"];
+	[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)
 	{
-		[theurl appendFormat:@"%02X", *bytes++];
+		[string appendFormat:@"%02X", *bytes++];
 	}
-	[link appendString:theurl];
-	[link appendString:@"\">"];
-	[link appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
-	[link appendString:@"</a>\n\n"];
-	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+	[string appendString:@"\">"];
+	[string appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
+	[string appendString:@"</a><br><br>"];
+	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
 	
-	[string appendString:[link stringWithEscapedCharacters]];
-	
-	NSURL *url = [NSURL URLWithString:string];
-	[[UIApplication sharedApplication] openURL:url];
+	return mailView;
 }
 
 NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
@@ -262,43 +259,43 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	return string;
 }
 
-+ (void)sendPrintableEmailBackup
++ (MFMailComposeViewController *)sendPrintableEmailBackup
 {
-	NSMutableString *string = [[[NSMutableString alloc] initWithFormat:@"%@%@%@", 
-								@"mailto:?subject=", 
-								[NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data") stringWithEscapedCharacters], 
-								@"&body="] autorelease];
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data")];
+	
+	NSMutableString *string = [[NSMutableString alloc] init];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
 	for(NSDictionary *userSettings in allUserSettings)
 	{
 		// the specific user
-		[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]] stringWithEscapedCharacters]];
+		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]]];
 		
 		// calls
-		[string appendString:[NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *call in [userSettings objectForKey:SettingsCalls])
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
 		
 		// hours
-		[string appendString:[NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsTimeEntries])
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
 		
 		// quickbuild
-		[string appendString:[NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsRBCTimeEntries])
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
 		
 		// Bulk Placements
-		[string appendString:[NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email") stringWithEscapedCharacters]];
+		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *bulkPlacement in [userSettings objectForKey:SettingsBulkLiterature])
 		{
 			NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[bulkPlacement objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
@@ -313,7 +310,7 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 			{
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
-			[string appendString:[[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:date]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:date]]];
 			for(NSDictionary *publication in [bulkPlacement objectForKey:BulkLiteratureArray])
 			{
 				NSString *name = [publication objectForKey:BulkLiteratureArrayTitle];
@@ -321,27 +318,27 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
 				if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")])
 				{
-					[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name] stringWithEscapedCharacters]];
+					[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
 				}
 				else
 				{
 					if(count == 1)
 					{
-						[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name] stringWithEscapedCharacters]];
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 					else
 					{	
-						[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name] stringWithEscapedCharacters]];
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 				}
-				[string appendString:[@"<br>" stringWithEscapedCharacters]];
+				[string appendString:@"<br>"];
 			}
-			[string appendString:[@"<br>" stringWithEscapedCharacters]];
+			[string appendString:@"<br>"];
 		}
 	}	
-	
-	NSURL *url = [NSURL URLWithString:string];
-	[[UIApplication sharedApplication] openURL:url];
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	return mailView;
 }
 
 - (NSString *)filename
@@ -606,7 +603,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 {
 	NSMutableString *string = [NSMutableString string];
 	NSString *value;
-	[string appendString:[[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]] stringWithEscapedCharacters]];
+	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]]];
 	
 	NSMutableString *top = [[NSMutableString alloc] init];
 	NSMutableString *bottom = [[NSMutableString alloc] init];
@@ -617,7 +614,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 						   state:[call objectForKey:CallState]
 						 topLine:top 
 				      bottomLine:bottom];
-	[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n%@\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom] stringWithEscapedCharacters]];
+	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
 	[top release];
 	[bottom release];
 	top = nil;
@@ -636,11 +633,10 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 			NSMutableDictionary *entry = [metadata objectAtIndex:j];
 			NSString *name = [entry objectForKey:CallMetadataName];
 			value = [entry objectForKey:CallMetadataValue];
-			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
 		}
 	}
-	
-	[string appendString:[[NSString stringWithFormat:@"\n"] stringWithEscapedCharacters]];
+	[string appendString:@"\n"];
 	
 	
 	NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
@@ -670,8 +666,8 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		value = [visit objectForKey:CallReturnVisitType];
 		if(value == nil || value.length == 0)
 			value = CallReturnVisitTypeReturnVisit;
-		[string appendString:[[NSString stringWithFormat:@"%@: %@\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString] stringWithEscapedCharacters]];
-		[string appendString:[[NSString stringWithFormat:@"%@:\n%@\n", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]] stringWithEscapedCharacters]];
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
+		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]]];
 		
 		// Publications
 		if([visit objectForKey:CallReturnVisitPublications] != nil)
@@ -684,10 +680,10 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 			{
 				NSDictionary *publication = [publications objectAtIndex:j];
 				// PUBLICATION
-				[string appendString:[[NSString stringWithFormat:@"%@\n", [publication objectForKey:CallReturnVisitPublicationTitle]] stringWithEscapedCharacters]];
+				[string appendString:[NSString stringWithFormat:@"%@<br>", [publication objectForKey:CallReturnVisitPublicationTitle]]];
 			}
 		}
-		[string appendString:[[NSString stringWithFormat:@"  \n"] stringWithEscapedCharacters]];
+		[string appendString:@"<br>"];
 	}
 	return string;
 }

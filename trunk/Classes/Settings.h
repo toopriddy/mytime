@@ -14,7 +14,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 //multiple users
 extern NSString * const SettingsCalls;
 //multiple users
@@ -192,8 +193,9 @@ NSString *emailFormattedStringForCall(NSDictionary *_call);
 }
 + (Settings *)sharedInstance;
 + (id)initWithZone:(NSZone *)zone;
-+ (void)sendEmailBackup;
-+ (void)sendPrintableEmailBackup;
+
++ (MFMailComposeViewController *)sendEmailBackup;
++ (MFMailComposeViewController *)sendPrintableEmailBackup;
 
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 

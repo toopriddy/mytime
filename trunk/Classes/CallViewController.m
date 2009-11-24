@@ -2301,49 +2301,43 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
  *
  ******************************************************************/
 #pragma mark ActionSheet Delegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 
 - (BOOL)emailCallToUser
 {
-	NSMutableString *string = [[[NSMutableString alloc] initWithString:@"mailto:?"] autorelease];
-	[string appendString:@"subject="];
-	[string appendString:[NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness") stringWithEscapedCharacters]];
-	[string appendString:@"&body="];
-
-	[string appendString:[NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.\n\nReturn Visit Details:\n", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
-
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness")];
+	
+	NSMutableString *string = [[NSMutableString alloc] init];
+	[string appendString:NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.<br><br>Return Visit Details:<br>", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details")];
 	[string appendString:emailFormattedStringForCall(_call)];
-
-
-	[string appendString:[NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email\n", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details") stringWithEscapedCharacters]];
+	[string appendString:NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br>", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details")];
 
 	// now add the url that will allow importing
 
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_call];
-	NSMutableString *theurl = [NSMutableString string];
-	NSMutableString *link = [NSMutableString string];
-	[link appendString:@"<a href=\""];
-	[theurl appendString:@"mytime://mytime/addCall?"];
+	[string appendString:@"<a href=\"mytime://mytime/addCall?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)
 	{
-		[theurl appendFormat:@"%02X", *bytes++];
+		[string appendFormat:@"%02X", *bytes++];
 	}
-	[link appendString:theurl];
-	[link appendString:@"\">"];
-	[link appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime")];
-	[link appendString:@"</a>\n\n"];
-	[link appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+	[string appendString:@"\">"];
+	[string appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a call to another witness.  this is the link that they press to open MyTime")];
+	[string appendString:@"</a><br><br>"];
+	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
 
-
-
-	[string appendString:[link stringWithEscapedCharacters]];
-
-	// open the mail program
-	NSURL *url = [NSURL URLWithString:string];
-	BOOL worked = [[UIApplication sharedApplication] openURL:url];
-	NSLog(@"it %s", worked ? "worked" : "did not work");
-	return worked;
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	mailView.mailComposeDelegate = self;
+	[self.navigationController presentModalViewController:mailView animated:YES];
+	
+	return [MFMailComposeViewController canSendMail];
 }
 
 

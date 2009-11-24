@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "GenericTableViewController.h"
 
-@interface SettingsTableViewController : GenericTableViewController <UIActionSheetDelegate>
+@interface SettingsTableViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
 }
 

@@ -16,8 +16,10 @@
 #import <UIKit/UIKit.h>
 #import "GenericTableViewController.h"
 #import "CallViewControllerDelegate.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface CallViewController : GenericTableViewController <UIActionSheetDelegate> 
+@interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate> 
 {
 	BOOL _initialView;
 	
