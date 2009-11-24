@@ -936,7 +936,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			
 			cell.otherTextLabel.text = name;
 			cell.delegate = self;
-			cell.booleanSwitch.on = [value boolValue];
+			cell.booleanSwitch.on = [[self.metadata objectForKey:CallMetadataData] boolValue];
 			return cell;
 		}
 #endif
