@@ -25,7 +25,6 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	
 	[self bringSubviewToFront:self.booleanSwitch];
 	
 	if(self.observeEditing)
