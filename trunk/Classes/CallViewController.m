@@ -918,7 +918,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[cell setText:value.length ? value : name];
 			return(cell);
 		}
-#if 1
 		else if([type intValue] == SWITCH)
 		{
 			UITableViewSwitchCell *cell = (UITableViewSwitchCell *)[tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
@@ -939,7 +938,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			cell.booleanSwitch.on = [[self.metadata objectForKey:CallMetadataData] boolValue];
 			return cell;
 		}
-#endif
 		else
 		{
 			UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"MetadataCell"];

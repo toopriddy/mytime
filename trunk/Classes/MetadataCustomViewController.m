@@ -28,6 +28,7 @@ static MetadataInformation commonInformation[] = {
 ,	{NSLocalizedString(@"Number", @"Call Metadata"), NUMBER}
 ,	{NSLocalizedString(@"Date/Time", @"Call Metadata"), DATE}
 ,	{NSLocalizedString(@"YES/NO Switch", @"Call Metadata"), SWITCH}
+//,	{NSLocalizedString(@"Multiple Choice", @"Call Metadata"), CHOICE}
 ,	{NSLocalizedString(@"URL", @"Call Metadata"), URL}
 };
 #include "PSAddLocalizedString.h"
@@ -43,6 +44,8 @@ static MetadataInformation commonInformation[] = {
 @synthesize delegate;
 @synthesize theTableView;
 @synthesize name = _name;
+
+#warning this is where we need to handle editing the multiple choice values, maybe have it appear below the select list
 
 - (id) init
 {
