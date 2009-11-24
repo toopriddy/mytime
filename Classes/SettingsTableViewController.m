@@ -786,7 +786,7 @@
  *
  ******************************************************************/
 #pragma mark EmailBackupCellController
-@interface EmailBackupCellController : SettingsCellController<UIActionSheetDelegate>
+@interface EmailBackupCellController : SettingsCellController<UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
 }
 @end
@@ -823,6 +823,12 @@
 	[alertSheet showInView:[[[UIApplication sharedApplication] windows] objectAtIndex:0]];
 }
 
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
+	[self autorelease];
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
 {
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
@@ -833,12 +839,18 @@
 	{
 		case 0: // Yes, email toopriddy@gmail.com
 		{
-			[Settings sendEmailBackup];
+			MFMailComposeViewController *mailView = [Settings sendEmailBackup];
+			mailView.mailComposeDelegate = self;
+			[self retain];
+			[self.delegate.navigationController presentModalViewController:mailView animated:YES];
 			break;
 		}
 		case 1: // No, take me to the website
 		{
-			[Settings sendPrintableEmailBackup];
+			MFMailComposeViewController *mailView = [Settings sendPrintableEmailBackup];
+			mailView.mailComposeDelegate = self;
+			[self retain];
+			[self.delegate.navigationController presentModalViewController:mailView animated:YES];
 			break;
 		}
 	}

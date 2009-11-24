@@ -81,7 +81,7 @@ static int sortByDate(id v1, id v2, void *context)
 		if(quickBuild)
 		{
 			self.title = NSLocalizedString(@"RBC", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
-			self.tabBarItem.image = [UIImage imageNamed:@"build.png"];
+			self.tabBarItem.image = [UIImage imageNamed:@"rbc.png"];
 		}
 		else
 		{
