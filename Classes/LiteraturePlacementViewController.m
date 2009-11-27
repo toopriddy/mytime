@@ -222,8 +222,10 @@
 		{
 			NSMutableDictionary *entry = [[placements objectForKey:BulkLiteratureArray] objectAtIndex:row];
 			NSString *name = [entry objectForKey:BulkLiteratureArrayTitle];
+			name = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
 			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
 			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
+			type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""];
 			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")])
 			{
 				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];

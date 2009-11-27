@@ -111,7 +111,6 @@
 		90D02E290E539CD0001CEF0D /* MapWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E280E539CD0001CEF0D /* MapWebView.m */; };
 		90D02E2C0E539D15001CEF0D /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E2B0E539D15001CEF0D /* MapView.m */; };
 		90D02E9C0E53C638001CEF0D /* BaseSortedCallsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E9B0E53C638001CEF0D /* BaseSortedCallsDataSource.m */; };
-		90D02FEA0E53DD4C001CEF0D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */; };
 		90D031080E554C47001CEF0D /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D031070E554C47001CEF0D /* settings.png */; };
 		90D031350E567B20001CEF0D /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031340E567B20001CEF0D /* DatePickerViewController.m */; };
 		90D031D80E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */; };
@@ -340,8 +339,6 @@
 		90D02E820E53B7AE001CEF0D /* CallViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallViewControllerDelegate.h; sourceTree = "<group>"; };
 		90D02E9A0E53C638001CEF0D /* BaseSortedCallsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSortedCallsDataSource.h; sourceTree = "<group>"; };
 		90D02E9B0E53C638001CEF0D /* BaseSortedCallsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSortedCallsDataSource.m; sourceTree = "<group>"; };
-		90D02FE80E53DD4C001CEF0D /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		90D031070E554C47001CEF0D /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		90D031330E567B20001CEF0D /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
 		90D031340E567B20001CEF0D /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
@@ -648,8 +645,6 @@
 				9045A9FF0E7D99A4001B439C /* EventAgent.m */,
 				9045A7240E7C1423001B439C /* TCPServer.h */,
 				9045A7250E7C1423001B439C /* TCPServer.m */,
-				90D02FE80E53DD4C001CEF0D /* SettingsViewController.h */,
-				90D02FE90E53DD4C001CEF0D /* SettingsViewController.m */,
 				900FA5121064405500C246FE /* SettingsTableViewController.h */,
 				900FA5131064405500C246FE /* SettingsTableViewController.m */,
 				9045A7270E7C1590001B439C /* BackupView.h */,
@@ -956,7 +951,6 @@
 				90D02E290E539CD0001CEF0D /* MapWebView.m in Sources */,
 				90D02E2C0E539D15001CEF0D /* MapView.m in Sources */,
 				90D02E9C0E53C638001CEF0D /* BaseSortedCallsDataSource.m in Sources */,
-				90D02FEA0E53DD4C001CEF0D /* SettingsViewController.m in Sources */,
 				90D031350E567B20001CEF0D /* DatePickerViewController.m in Sources */,
 				90D031D80E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m in Sources */,
 				90D031F70E56944C001CEF0D /* LiteraturePlacementViewController.m in Sources */,
@@ -1105,7 +1099,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6C2F95DD-B9FB-4743-8C27-F4DE5FFB895F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E014A52E-91BA-44ED-8EA6-1063F92F8299";
 				SDKROOT = iphoneos3.0;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 			};

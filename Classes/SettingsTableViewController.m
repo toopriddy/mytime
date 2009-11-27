@@ -949,6 +949,11 @@
 	return self;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return YES;
+}
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];

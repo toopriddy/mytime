@@ -22,6 +22,7 @@
 @interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate> 
 {
 	BOOL _initialView;
+	BOOL deleteCall;
 	
     UITextField *_name;
 

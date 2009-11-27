@@ -26,7 +26,6 @@
 #import "StatisticsViewController.h"
 #import "NotAtHomeViewController.h"
 #import "HourViewController.h"
-#import "SettingsViewController.h"
 #import "SettingsTableViewController.h"
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
@@ -326,6 +325,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	return(nil);
 }
 
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[self.securityNavigationController dismissModalViewControllerAnimated:YES];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// always save data before quitting
@@ -356,9 +360,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 //	application.networkActivityIndicatorVisible = NO;
 
-#warning why is this here? this slows down applicaiton load time.	
-//	[[Settings sharedInstance] saveData];
-
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if([defaults boolForKey:UserDefaultsClearMapCache])
 	{
@@ -380,21 +381,29 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			[alertSheet show];
 		}
 	}
-	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
-	{
-		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
-		[Settings sendEmailBackup];
-	}
 		
     // Set up the portraitWindow and content view
 	self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
+	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
+	{
+		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
+		MFMailComposeViewController *mailView = [Settings sendEmailBackup];
+		mailView.mailComposeDelegate = self;
+		self.securityNavigationController = [[[UINavigationController alloc] init] autorelease];
+		[self.window addSubview:self.securityNavigationController.view];
+		// make the window visible
+		[window makeKeyAndVisible];
+
+		[self.securityNavigationController presentModalViewController:mailView animated:YES];
+		return;
+	}
+	
 	// Create a tabbar controller and an array to contain the view controllers
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
 	
 	// setup the 4 view controllers for the different data representations
-
 	// CALLS SORTED BY STREET
 	CallsSortedByStreetViewDataSource *streetSortedDataSource = [[[CallsSortedByStreetViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
@@ -448,7 +457,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// QUICK BUILD HOURS
 	HourViewController *quickBuildHourViewController = [[[HourViewController alloc] initForQuickBuild:YES] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:quickBuildHourViewController] autorelease]];
-
 
 	// SETTINGS
 	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];

@@ -45,7 +45,7 @@ static MetadataInformation commonInformation[] = {
 @synthesize theTableView;
 @synthesize name = _name;
 
-#warning this is where we need to handle editing the multiple choice values, maybe have it appear below the select list
+#warning this is where we need to handle editing the multiple choice values, maybe have it appear above the select list
 
 - (id) init
 {
