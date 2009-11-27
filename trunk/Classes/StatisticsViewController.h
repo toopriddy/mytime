@@ -14,6 +14,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "MonthChooserViewController.h"
 
 #define kMonthsShown 12
@@ -21,7 +23,8 @@
 @interface StatisticsViewController : UIViewController <UITableViewDelegate, 
                                                         UITableViewDataSource,
 														MonthChooserViewControllerDelegate,
-														UIActionSheetDelegate> 
+														UIActionSheetDelegate,
+														MFMailComposeViewControllerDelegate> 
 {
 	UITableView *theTableView;
 

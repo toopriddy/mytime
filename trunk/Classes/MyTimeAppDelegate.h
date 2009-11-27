@@ -14,6 +14,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "SecurityViewController.h"
 
 // for moving around the UITableViewIndex
@@ -30,7 +32,8 @@ typedef enum {
 @interface MyTimeAppDelegate : NSObject <UIApplicationDelegate, 
                                          UITabBarControllerDelegate,
 										 UIActionSheetDelegate,
-										 SecurityViewControllerDelegate> 
+										 SecurityViewControllerDelegate,
+										 MFMailComposeViewControllerDelegate> 
 {
 	UIWindow *window;
 	UITabBarController *tabBarController;

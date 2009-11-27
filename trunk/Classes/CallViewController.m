@@ -2302,6 +2302,11 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
 	[self.navigationController dismissModalViewControllerAnimated:YES];
+	if(deleteCall && result != MFMailComposeResultCancelled)
+	{
+		[delegate callViewController:self deleteCall:_call keepInformation:YES];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 
@@ -2343,15 +2348,14 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 {
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 //	[sheet dismissAnimated:YES];
+	deleteCall = NO;
 	switch(button)
 	{
 		//transfer
 		case 0:
 		{
-			if([self emailCallToUser])
-			{
-				[delegate callViewController:self deleteCall:_call keepInformation:YES];
-			}
+			deleteCall = YES;
+			[self emailCallToUser];
 			break;
 		}
 		// email

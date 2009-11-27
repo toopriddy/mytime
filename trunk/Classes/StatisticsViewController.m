@@ -81,6 +81,11 @@ static NSString *MONTHS[] = {
 	return YES;
 }
 
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 - (void)sendEmailUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
 {
 	// add notes if there are any
@@ -88,24 +93,27 @@ static NSString *MONTHS[] = {
 	NSString *emailAddress = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
 	if(emailAddress == nil || emailAddress.length == 0)
 		return;
+
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report")];
+	[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	
-	NSMutableString *string = [[[NSMutableString alloc] initWithFormat:@"mailto:%@?", emailAddress] autorelease];
-	[string appendString:@"subject="];
-	[string appendString:[NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report") stringWithEscapedCharacters]];
-	[string appendString:@"&body="];
+	NSMutableString *string = [[NSMutableString alloc] init];
 
 	NSString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
 	if([notes length])
 	{
-		[string appendString:[notes stringWithEscapedCharacters]];
-		[string appendString:[[NSString stringWithFormat:@"\n\n"] stringWithEscapedCharacters]];
+		[string appendString:notes];
+		[string appendFormat:@"<br><br>"];
 	}
 	
 	for(index = 0; index < [selectedMonths count]; ++index)
 	{
 		if([[selectedMonths objectAtIndex:index] boolValue])
 		{
-			[string appendString:[[NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:\n", @"Text used in the email that is sent to the congregation secretary, the \\n you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]] stringWithEscapedCharacters]];
+			[string appendString:@"<h3>"];
+			[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:<br>", @"Text used in the email that is sent to the congregation secretary, the <br> you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]]];
+			[string appendString:@"</h3>"];
 
 			// HOURS
 			NSString *count = @"0";
@@ -117,21 +125,21 @@ static NSString *MONTHS[] = {
 				count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
 			else if(minutes)
 				count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count]];
 
 			// BOOKS
-			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]]];
 			// BROCHURES
-			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]]];
 			// MAGAZINES
-			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index]]];
 			// RETURN VISITS
-			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View"), _returnVisits[index]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View"), _returnVisits[index]]];
 			// STUDIES
-			[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View"), _bibleStudies[index]] stringWithEscapedCharacters]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View"), _bibleStudies[index]]];
 			// CAMPAIGN TRACTS
 			if(_campaignTracts[index])
-				[string appendString:[[NSString stringWithFormat:@"%@: %d\n", NSLocalizedString(@"Campaign Tracts", @"Publication Type name"), _campaignTracts[index]] stringWithEscapedCharacters]];
+				[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Campaign Tracts", @"Publication Type name"), _campaignTracts[index]]];
 			// QUICKBUILD TIME
 			if(_quickBuildMinutes[index])
 			{
@@ -144,14 +152,17 @@ static NSString *MONTHS[] = {
 					count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
 				else if(minutes)
 					count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-				[string appendString:[[NSString stringWithFormat:@"%@: %@\n", NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count] stringWithEscapedCharacters]];
+				[string appendString:[NSString stringWithFormat:@"%@: %@<br>", NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count]];
 			}
-			[string appendString:[[NSString stringWithFormat:@"\n\n"] stringWithEscapedCharacters]];
+			[string appendString:@"<br><br>"];
 		}
 	}
-	NSURL *url = [NSURL URLWithString:string];
-	[[UIApplication sharedApplication] openURL:url];
-
+	
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	[mailView setMailComposeDelegate:self];
+	[self.navigationController presentModalViewController:mailView animated:YES];
+	
 }
 - (void)monthChooserViewControllerSendEmail:(MonthChooserViewController *)monthChooserViewController
 {
