@@ -133,7 +133,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					875,
 					20,
 					48,
 					43,
@@ -457,6 +457,9 @@
 			901F25DD10C24EB50081A382 /* PBXTextBookmark */ = 901F25DD10C24EB50081A382 /* PBXTextBookmark */;
 			901F25DE10C24EB50081A382 /* PlistBookmark */ = 901F25DE10C24EB50081A382 /* PlistBookmark */;
 			901F25DF10C24EB50081A382 /* PlistBookmark */ = 901F25DF10C24EB50081A382 /* PlistBookmark */;
+			901F25E410C250A90081A382 /* PlistBookmark */ = 901F25E410C250A90081A382 /* PlistBookmark */;
+			901F25E510C250A90081A382 /* PBXTextBookmark */ = 901F25E510C250A90081A382 /* PBXTextBookmark */;
+			901F25E610C250A90081A382 /* PBXTextBookmark */ = 901F25E610C250A90081A382 /* PBXTextBookmark */;
 			902256C610B5A5020070DAAC = 902256C610B5A5020070DAAC /* PBXTextBookmark */;
 			902256C710B5A5020070DAAC = 902256C710B5A5020070DAAC /* PBXTextBookmark */;
 			9031B41110A6798700EFC1D1 = 9031B41110A6798700EFC1D1 /* PBXTextBookmark */;
@@ -3144,6 +3147,38 @@
 		rLen = 0;
 		rLoc = 9223372036854775807;
 	};
+	901F25E410C250A90081A382 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	901F25E510C250A90081A382 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 903477630E8CAA0100BB6F2D /* Swedish */;
+		name = "Localizable.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1548;
+		vrLoc = 0;
+	};
+	901F25E610C250A90081A382 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 903477630E8CAA0100BB6F2D /* Swedish */;
+		name = "Localizable.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1548;
+		vrLoc = 0;
+	};
 	902256B710B59E7E0070DAAC /* dmstor.c */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.c.c;
@@ -3437,7 +3472,7 @@
 	};
 	903477630E8CAA0100BB6F2D /* Swedish */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1536, 17654}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1536, 17990}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 1548}";
 		};
