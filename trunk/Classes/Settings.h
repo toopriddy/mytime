@@ -105,7 +105,7 @@ extern NSString * const SettingsOtherMetadata;
 	extern NSString * const SettingsMetadataType;
 	extern NSString * const SettingsMetadataValue;
 	extern NSString * const SettingsMetadataData;
-
+		// for the MetadataType of multipleChoice, this is an array of NSStrings
 
 //multiple users
 extern NSString * const SettingsMonthDisplayCount;

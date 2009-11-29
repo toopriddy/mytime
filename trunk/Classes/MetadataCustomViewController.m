@@ -14,6 +14,8 @@
 //
 
 #import "MetadataCustomViewController.h"
+#import "MetadataEditorViewController.h"
+#import "UITableViewTextFieldCell.h"
 #import "PublicationViewController.h"
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
@@ -23,12 +25,12 @@
 static MetadataInformation commonInformation[] = {
 	{NSLocalizedString(@"Email", @"Call Metadata"), EMAIL}
 ,	{NSLocalizedString(@"Phone", @"Call Metadata"), PHONE}
+,	{NSLocalizedString(@"Multiple Choice", @"Call Metadata"), CHOICE}
 ,	{NSLocalizedString(@"String", @"Call Metadata"), STRING}
 ,	{NSLocalizedString(@"Notes", @"Call Metadata"), NOTES}
 ,	{NSLocalizedString(@"Number", @"Call Metadata"), NUMBER}
 ,	{NSLocalizedString(@"Date/Time", @"Call Metadata"), DATE}
 ,	{NSLocalizedString(@"YES/NO Switch", @"Call Metadata"), SWITCH}
-//,	{NSLocalizedString(@"Multiple Choice", @"Call Metadata"), CHOICE}
 ,	{NSLocalizedString(@"URL", @"Call Metadata"), URL}
 };
 #include "PSAddLocalizedString.h"
@@ -36,34 +38,393 @@ static MetadataInformation commonInformation[] = {
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 @interface MetadataCustomViewController ()
-@property (nonatomic,retain) UITableView *theTableView;
+@property (nonatomic, assign) BOOL nameNeedsFocus;
+@property (nonatomic, assign) int selected;
+@end
+
+
+@interface MetadataCustomViewCellController : NSObject<TableViewCellController>
+{
+	MetadataCustomViewController *delegate;
+}
+@property (nonatomic, assign) MetadataCustomViewController *delegate;
+@end
+@implementation MetadataCustomViewCellController
+@synthesize delegate;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return nil;
+}
+@end
+
+
+
+@interface MetadataNameCellController : MetadataCustomViewCellController<UITableViewTextFieldCellDelegate>
+{
+	NSMutableString *name;
+}
+@property (nonatomic, retain) NSMutableString *name;
+@end
+@implementation MetadataNameCellController
+@synthesize name;
+
+- (void)dealloc
+{
+	self.name = nil;
+	
+	[super dealloc];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:@"NameCell"];
+	if(cell == nil)
+	{
+		UITextField *textField = [[[UITextField alloc] init] autorelease];
+		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:textField reuseIdentifier:@"NameCell"] autorelease];
+		textField.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
+		textField.keyboardType = UIKeyboardTypeDefault;
+		textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+	}
+	cell.textField.text = self.name;
+	cell.delegate = self;
+	cell.observeEditing = YES;
+	
+	if(self.delegate.nameNeedsFocus)
+	{
+		self.delegate.nameNeedsFocus = NO;
+		[cell.textField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
+	}
+
+	return cell;
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath];
+	[cell.textField becomeFirstResponder];
+	[tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	[self.name replaceCharactersInRange:range withString:string];
+	self.delegate.name = self.name;
+
+	self.delegate.navigationItem.rightBarButtonItem.enabled = self.delegate.selected >= 0 && self.name.length;
+	return YES;
+}
+
+@end
+
+@interface MultipleChoiceMetadataSectionController : GenericTableViewSectionController
+{
+	MetadataCustomViewController *delegate;
+}
+@property (nonatomic, assign) MetadataCustomViewController *delegate;
+@end
+@implementation MultipleChoiceMetadataSectionController
+@synthesize delegate;
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return NSLocalizedString(@"Multiple Choice", @"title that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type section");
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	return NSLocalizedString(@"Enter the Multiple Choice Values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
+}
+
+- (BOOL)isViewableWhenEditing
+{
+	return self.delegate.selected >= 0 && commonInformation[self.delegate.selected].type == CHOICE;
+}
+
+@end
+
+
+
+
+
+#pragma mark MultipleChoiceMetadataValueCellController
+@interface MultipleChoiceMetadataValueCellController : MetadataCustomViewCellController <MetadataEditorViewControllerDelegate>
+{
+	NSString *value;
+}
+@property (nonatomic, retain) NSString *value;
+@end
+@implementation MultipleChoiceMetadataValueCellController
+@synthesize value;
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	// move the row
+	
+	NSString *fromString = [[self.delegate.data objectAtIndex:fromIndexPath.row] retain];
+	[self.delegate.data removeObjectAtIndex:fromIndexPath.row];
+	[self.delegate.data insertObject:fromString atIndex:toIndexPath.row];
+	[fromString release];
+	
+	[[Settings sharedInstance] saveData];																	
+	
+	// move the cellController
+	GenericTableViewSectionController *fromSectionController = [self.delegate.displaySectionControllers objectAtIndex:fromIndexPath.section];
+	GenericTableViewSectionController *toSectionController = [self.delegate.displaySectionControllers objectAtIndex:toIndexPath.section];
+	NSObject *cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+	
+	// move the cellController in the displayList (the main list and the display list are the same)
+	cellController = [[fromSectionController.cellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.cellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.cellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"MultipleChoiceMetadataValueCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+	}
+	cell.textLabel.text = self.value;
+	
+	return cell;
+}
+
+- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
+{
+	self.value = metadataEditorViewController.value;
+	[self.delegate.data replaceObjectAtIndex:metadataEditorViewController.tag withObject:self.value];
+	
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:self.value value:self.value] autorelease];
+	[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
+	[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+	p.delegate = self;
+	p.tag = indexPath.row;
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+}
+
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(editingStyle == UITableViewCellEditingStyleDelete)
+	{
+		[self.delegate.data removeObjectAtIndex:indexPath.row];
+		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+	}
+}
+
+@end
+
+
+/******************************************************************
+ *
+ *   AddMultipleChoiceMetadataCellController
+ *
+ ******************************************************************/
+#pragma mark AddMultipleChoiceMetadataCellController
+@interface AddMultipleChoiceMetadataCellController : MetadataCustomViewCellController <MetadataEditorViewControllerDelegate>
+{
+	int row;
+}
+@end
+@implementation AddMultipleChoiceMetadataCellController
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"AddQuickNotesCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = NSLocalizedString(@"Add New Choice", @"button to press when you are in the Multiple Choice view, this button lets the user add another choice to a multiple choice type");
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:@"" value:@""] autorelease];
+	[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
+	[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+	p.delegate = self;
+	p.tag = indexPath.row;
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+}
+
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
+{
+	if(self.delegate.data == nil)
+	{
+		self.delegate.data = [NSMutableArray array];
+	}
+	
+	MultipleChoiceMetadataValueCellController *cellController = [[[MultipleChoiceMetadataValueCellController alloc] init] autorelease];
+	cellController.value = metadataEditorViewController.value;
+	cellController.delegate = self.delegate;
+	[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] insertObject:cellController atIndex:[self.delegate.data count]];
+	
+	// now store the data and save it
+	[self.delegate.data addObject:[NSString stringWithString:metadataEditorViewController.value]];
+	[[Settings sharedInstance] saveData];
+	
+	// reload the table
+	[self.delegate updateWithoutReload];
+	
+	[self.delegate.navigationController popToViewController:self.delegate animated:YES];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleInsert;
+}
+
+
+@end
+
+
+/******************************************************************
+ *
+ *   MetadataTypeCellController
+ *
+ ******************************************************************/
+#pragma mark MetadataTypeCellController
+@interface MetadataTypeCellController : MetadataCustomViewCellController
+{
+	int index;
+}
+@property (nonatomic, assign) int index;
+@end
+@implementation MetadataTypeCellController
+@synthesize index;
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"MetadataTypeCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = commonInformation[index].name;
+	cell.editingAccessoryType = (self.delegate.selected == index) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int prevSelected = self.delegate.selected;
+	self.delegate.selected = index;
+	if(prevSelected >= 0)
+	{
+		[[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:prevSelected inSection:indexPath.section]] setEditingAccessoryType:UITableViewCellAccessoryNone];
+	}
+	[[tableView cellForRowAtIndexPath:indexPath] setEditingAccessoryType:UITableViewCellAccessoryCheckmark];
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+
 @end
 
 @implementation MetadataCustomViewController
 
 @synthesize delegate;
-@synthesize theTableView;
-@synthesize name = _name;
+@synthesize name;
+@synthesize nameNeedsFocus;
+@synthesize selected;
+@synthesize data;
 
-#warning this is where we need to handle editing the multiple choice values, maybe have it appear above the select list
+- (void)navigationControlDone:(id)sender
+{
+	if(delegate && selected >= 0)
+	{
+		[delegate metadataCustomViewControllerDone:self];
+	}
+	[[self navigationController] popViewControllerAnimated:YES];
+}
+
+- (void)dealloc
+{
+	self.name = nil;
+	self.data = nil;
+	
+	[super dealloc];
+}
 
 - (id) init
 {
-	return [self initWithName:nil type:-1];
+	return [self initWithName:nil type:-1 data:nil];
 }
 
-- (id) initWithName:(NSString *)name type:(MetadataType)type;
+- (id) initWithName:(NSString *)theName type:(MetadataType)type data:(NSMutableArray *)theData
 {
-	if ([super init]) 
+	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
-		self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-		self.name.text = name;
-		_selected = -1;
+		self.data = theData;
+		self.name = [NSMutableString stringWithString:theName ? theName : @""];
+		selected = -1;
+		nameNeedsFocus = YES;
 		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
 		{
 			if(type == commonInformation[i].type)
 			{
-				_selected = i;
+				nameNeedsFocus = NO;
+				selected = i;
 				break;
 			}
 		}
@@ -73,215 +434,136 @@ static MetadataInformation commonInformation[] = {
 	return self;
 }
 
-- (void)dealloc 
-{
-	self.theTableView.delegate = nil;
-	self.theTableView.dataSource = nil;
-
-	self.theTableView = nil;
-	self.name = nil;
-
-	self.delegate = nil;
-	
-	[super dealloc];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return(YES);
 }
 
-- (void)navigationControlDone:(id)sender
-{
-	if(delegate && _selected >= 0)
-	{
-		[delegate metadataCustomViewControllerDone:self];
-	}
-	[[self navigationController] popViewControllerAnimated:YES];
-}
-
 - (void)loadView 
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-														  style:UITableViewStyleGrouped] autorelease];
+	[super loadView];
 	
-	// set the autoresizing mask so that the table will always fill the view
-	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	self.editing = YES;
 	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	theTableView.delegate = self;
-	theTableView.dataSource = self;
-
-//	self.name = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-	_name.keyboardType = UIKeyboardTypeDefault;
-	_name.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
-	_name.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	[self updateAndReload];
 	
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
-
-	// set the tableview as the controller view
-	self.view = self.theTableView;
-
-	[self.theTableView reloadData];
-	[_name performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.1];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	[theTableView flashScrollIndicators];
+	
+	self.navigationItem.rightBarButtonItem.enabled = selected >= 0 && name.length;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	[_name resignFirstResponder];
+//	[super scrollViewDidScroll:scrollView];
+	[[(UITableViewTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] resignFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableRowSelected: tableRowSelected section=%d row=%d", section, row);)
+	int prevSelected = selected;
+	[super tableView:tableView didSelectRowAtIndexPath:indexPath];
+
+	if((prevSelected >= 0 && commonInformation[prevSelected].type == CHOICE) ||
+	   (selected >= 0 && commonInformation[selected].type == CHOICE))
+	{
+		[self updateWithoutReload];
+	}
 	
-	if(section == 1)
+	if(indexPath.row != 0 || indexPath.section != 0)
 	{
-		[_name resignFirstResponder];
-		
-		if(_selected >= 0 && _selected != row)
-		{
-			[[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_selected inSection:section]] setAccessoryType:UITableViewCellAccessoryNone];
-		}
-		
-		_selected = row;
-		
-		self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && _name.text.length;
-		
-		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:(_selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone)];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[[(UITableViewTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] resignFirstResponder];
 	}
-}
-
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	int length = _name.text.length;
-	if(string.length == 0)
-	{
-		length -= range.length;
-	}
-	else
-	{
-		length -= range.length + string.length;
-	}
-	self.navigationItem.rightBarButtonItem.enabled = _selected >= 0 && length;
-	return YES;
+	self.navigationItem.rightBarButtonItem.enabled = selected >= 0 && name.length;
 }
 
 
-// UITableViewDataSource methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath 
 {
-	return 2;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
-{
-	switch(section)
+	GenericTableViewSectionController *sectionController = [self.displaySectionControllers objectAtIndex:proposedDestinationIndexPath.section];
+	// check to see if they are moving it beyond the "Add custom information", the last entry and there are no entries in the list
+	if(proposedDestinationIndexPath.section == sourceIndexPath.section && 
+	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
+	   sectionController.displayCellControllers.count > 1)
 	{
-		case 0:
-			return 1;
-		case 1:
-			return ARRAY_SIZE(commonInformation);
-		default:
-			return 0;
+		// only subtract 1 off of the row if the source row is in the same section (cause the row count is not increasing just getting shuffled)
+		int offset = proposedDestinationIndexPath.section == sourceIndexPath.section ? 1 : 0;
+		// if there is only one section controller in this section then put the entry 
+		return [NSIndexPath indexPathForRow:(proposedDestinationIndexPath.row - offset) inSection:proposedDestinationIndexPath.section];
 	}
+    // Allow the proposed destination.
+    return proposedDestinationIndexPath;
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)constructSectionControllers
 {
-	int row = [indexPath row];
-	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
+	[super constructSectionControllers];
 	
-	switch(section)
+	// Name Section
 	{
-		case 0:
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		MetadataNameCellController *cellController = [[MetadataNameCellController alloc] init];
+		cellController.delegate = self;
+		cellController.name = self.name;
+		[sectionController.cellControllers addObject:cellController];
+		[cellController release];
+	}
+	
+	// Multiple Choice section
+	{
+		MultipleChoiceMetadataSectionController *sectionController = [[MultipleChoiceMetadataSectionController alloc] init];
+		sectionController.delegate = self;
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+
+		
+		for(NSString *entry in data)
 		{
-			UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[theTableView dequeueReusableCellWithIdentifier:@"nameCell"];
-			if(cell == nil)
-			{
-				cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:_name reuseIdentifier:@"nameCell"] autorelease];
-			}
-			cell.delegate = self;
-			
-			return cell;
+			MultipleChoiceMetadataValueCellController *cellController = [[MultipleChoiceMetadataValueCellController alloc] init];
+			cellController.delegate = self;
+			cellController.value = entry;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
 		}
 		
-		case 1:
+		// add the "Add Additional User" cell at the end
+		AddMultipleChoiceMetadataCellController *addCellController = [[AddMultipleChoiceMetadataCellController alloc] init];
+		addCellController.delegate = self;
+		[sectionController.cellControllers addObject:addCellController];
+		[addCellController release];
+	}
+	// Type Section
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		sectionController.title = NSLocalizedString(@"Type", @"type of Additional Information, used as a title to the section Call->Edit->Add Additional Information->Edit->Add Custom");
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+
+		for(int i = 0; i < ARRAY_SIZE(commonInformation); ++i)
 		{
-			UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"typeCell"];
-			if(cell == nil)
-			{
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"typeCell"] autorelease];
-			}
-			
-			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:commonInformation[row].name value:commonInformation[row].name table:@""];
-			cell.accessoryType = _selected == row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-			
-			return cell;
+			MetadataTypeCellController *cellController = [[MetadataTypeCellController alloc] init];
+			cellController.delegate = self;
+			cellController.index = i;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
 		}
-		default:
-			return nil;
 	}
 }
+
 
 - (MetadataType)type
 {
-	int index = _selected >= 0 ? _selected : 0;
+	int index = selected >= 0 ? selected : 0;
 	return commonInformation[index].type;
 }
 
-//
-//
-// UITableViewDelegate methods
-//
-//
-
-// NONE
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
 @end
-
-
-
 
 
 

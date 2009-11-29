@@ -14,7 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UITableViewTextFieldCell.h"
+#import "GenericTableViewController.h"
 
 typedef enum {
 	// do not reorder!!! dont add in the middle!!!
@@ -42,20 +42,20 @@ typedef struct
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController;
 @end
 
-@interface MetadataCustomViewController : UIViewController <UITableViewDelegate, 
-													      UITableViewDataSource,
-														  UITableViewTextFieldCellDelegate> 
+@interface MetadataCustomViewController : GenericTableViewController
 {
 	id<MetadataCustomViewControllerDelegate> delegate;
 @private
-	UITableView *theTableView;
-	UITextField *_name;
-	int _selected;
+	NSMutableString *name;
+	int selected;
+	BOOL nameNeedsFocus;
+	NSMutableArray *data;
 }
 
 @property (nonatomic, assign) id<MetadataCustomViewControllerDelegate> delegate;
-@property (nonatomic, retain) UITextField *name;
+@property (nonatomic, retain) NSMutableString *name;
 @property (readonly, getter = type) MetadataType type;
+@property (nonatomic, retain) NSMutableArray *data;
 
 /**
  * initialize this view with the address information
@@ -64,7 +64,7 @@ typedef struct
  * @returns self
  */
 - (id) init;
-- (id) initWithName:(NSString *)name type:(MetadataType)type;
+- (id) initWithName:(NSString *)theName type:(MetadataType)type data:(NSMutableArray *)theData;
 
 @end
 

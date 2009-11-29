@@ -54,6 +54,7 @@
 
 - (id) initWithName:(NSString *)name type:(MetadataType)type data:(NSObject *)data value:(NSString *)value;
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)type;
+- (void)setPlaceholder:(NSString *)placeholder;
 - (void)navigationControlDone:(id)sender;
 
 - (NSString *)value;
