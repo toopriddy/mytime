@@ -104,6 +104,7 @@ static MetadataInformation commonInformation[] = {
 	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
 								  [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
 								  [NSMutableArray arrayWithArray:metadataCustomViewController.data], SettingsMetadataData, nil];
+	NSLog(@"Adding\n%@", entry);
 	[metadata replaceObjectAtIndex:self.indexPath.row withObject:entry];
 	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -243,7 +244,8 @@ static MetadataInformation commonInformation[] = {
 {
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
 	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
-	         							                                           [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType, nil];
+	         							                                           [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
+																				   [NSMutableArray arrayWithArray:metadataCustomViewController.data], SettingsMetadataData, nil];
 	[metadata addObject:entry];
 	[[Settings sharedInstance] saveData];																	
 	

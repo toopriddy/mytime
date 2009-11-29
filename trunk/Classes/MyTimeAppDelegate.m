@@ -489,8 +489,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[settings setObject:controller.title forKey:SettingsThirdView];
 	controller = [array objectAtIndex:3];
 	[settings setObject:controller.title forKey:SettingsFourthView];
-#warning why is this here? it is slowing things down 
-//	[[Settings sharedInstance] saveData];
 
 	// set the tab bar controller view controller array to the localViewControllersArray
 	tabBarController.viewControllers = array;
