@@ -293,14 +293,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>108</integer>
-									<integer>61</integer>
-									<integer>2</integer>
+									<integer>228</integer>
+									<integer>201</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1334}, {302, 760}}</string>
+							<string>{{0, 2273}, {302, 760}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -330,14 +329,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90B569B510292C4D000065ED</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MultipleChoiceMetadataViewController.m</string>
+								<string>Info.plist</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -345,11 +342,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90B569B610292C4D000065ED</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MultipleChoiceMetadataViewController.m</string>
+										<string>Info.plist</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>901F25D810C24E5E0081A382</string>
+										<string>901F25DF10C24EB50081A382</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -429,7 +426,6 @@
 											<string>90B0A50D10C08AD60078DEFC</string>
 											<string>90B0A51010C08AE50078DEFC</string>
 											<string>90B0A51D10C08BC90078DEFC</string>
-											<string>901F231C10C1A01C0081A382</string>
 											<string>901F232510C1AA1D0081A382</string>
 											<string>901F232610C1AA1D0081A382</string>
 											<string>901F237410C1DFD80081A382</string>
@@ -452,7 +448,8 @@
 											<string>901F25B610C24C990081A382</string>
 											<string>901F25B710C24C990081A382</string>
 											<string>901F25C110C24D870081A382</string>
-											<string>901F25D510C24E5A0081A382</string>
+											<string>901F25DD10C24EB50081A382</string>
+											<string>901F25DE10C24EB50081A382</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
