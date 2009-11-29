@@ -41,6 +41,7 @@
 #import "UITableViewButtonCell.h"
 #import "UITableViewSwitchCell.h"
 #import "QuickNotesViewController.h"
+#import "MultipleChoiceMetadataViewController.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -638,7 +639,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @end
 
 
-@interface CallMetadataCellController : CallViewCellController<MetadataViewControllerDelegate, MetadataEditorViewControllerDelegate, UITableViewSwitchCellDelegate>
+@interface CallMetadataCellController : CallViewCellController <MetadataViewControllerDelegate, 
+															    MetadataEditorViewControllerDelegate, 
+																UITableViewSwitchCellDelegate,
+																MultipleChoiceMetadataViewControllerDelegate>
 {
 	BOOL add;
 	NSMutableDictionary *_metadata;
@@ -857,6 +861,25 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 }
 
+- (void)multipleChoiceMetadataViewControllerDone:(MultipleChoiceMetadataViewController *)metadataCustomViewController
+{
+	[[self retain] autorelease];
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	
+	[self.metadata setObject:[metadataCustomViewController value] forKey:CallMetadataValue];
+	
+	[self.delegate save];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+}
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return self.add ? UITableViewCellEditingStyleInsert : UITableViewCellEditingStyleDelete;
@@ -1007,12 +1030,22 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			if(tableView.editing)
 			{
-				// make the new call view 
-				MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:[type intValue] data:data value:value] autorelease];
-				p.delegate = self;
-				p.tag = indexPath.row;
-				
-				[[self.delegate navigationController] pushViewController:p animated:YES];		
+				if([type intValue] == CHOICE)
+				{
+					MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value] autorelease];
+					p.delegate = self;
+					
+					[[self.delegate navigationController] pushViewController:p animated:YES];		
+				}
+				else 
+				{
+					// make the new call view 
+					MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:[type intValue] data:data value:value] autorelease];
+					p.delegate = self;
+					p.tag = indexPath.row;
+					
+					[[self.delegate navigationController] pushViewController:p animated:YES];		
+				}
 			}
 			else
 			{

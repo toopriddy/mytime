@@ -40,6 +40,7 @@ static MetadataInformation commonInformation[] = {
 @interface MetadataCustomViewController ()
 @property (nonatomic, assign) BOOL nameNeedsFocus;
 @property (nonatomic, assign) int selected;
+@property (nonatomic, assign) int startedWithSelected;
 @end
 
 
@@ -57,8 +58,27 @@ static MetadataInformation commonInformation[] = {
 }
 @end
 
+@interface MetadataGenericTableViewCellController : NSObject<TableViewCellController>
+{
+	GenericTableViewController *delegate;
+}
+@property (nonatomic, assign) GenericTableViewController *delegate;
+@end
+@implementation MetadataGenericTableViewCellController
+@synthesize delegate;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return nil;
+}
+@end
 
 
+/******************************************************************
+ *
+ *   NAME
+ *
+ ******************************************************************/
+#pragma mark MetadataNameCellController
 @interface MetadataNameCellController : MetadataCustomViewCellController<UITableViewTextFieldCellDelegate>
 {
 	NSMutableString *name;
@@ -128,6 +148,12 @@ static MetadataInformation commonInformation[] = {
 
 @end
 
+/******************************************************************
+ *
+ *   CHOICE SECTION
+ *
+ ******************************************************************/
+#pragma mark MultipleChoiceMetadataSectionController
 @interface MultipleChoiceMetadataSectionController : GenericTableViewSectionController
 {
 	MetadataCustomViewController *delegate;
@@ -158,15 +184,32 @@ static MetadataInformation commonInformation[] = {
 
 
 
+/******************************************************************
+ *
+ *   CHOICE
+ *
+ ******************************************************************/
 #pragma mark MultipleChoiceMetadataValueCellController
-@interface MultipleChoiceMetadataValueCellController : MetadataCustomViewCellController <MetadataEditorViewControllerDelegate>
+@interface MultipleChoiceMetadataValueCellController : MetadataGenericTableViewCellController <MetadataEditorViewControllerDelegate>
 {
 	NSString *value;
+	NSMutableArray *data;
+	NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *metadataDelegate;
 }
 @property (nonatomic, retain) NSString *value;
+@property (nonatomic, retain) NSMutableArray *data;
+@property (nonatomic, assign) NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *metadataDelegate;
 @end
 @implementation MultipleChoiceMetadataValueCellController
 @synthesize value;
+@synthesize data;
+@synthesize metadataDelegate;
+
+- (void)dealloc
+{
+	self.data = nil;
+	[super dealloc];
+}
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -177,9 +220,9 @@ static MetadataInformation commonInformation[] = {
 {
 	// move the row
 	
-	NSString *fromString = [[self.delegate.data objectAtIndex:fromIndexPath.row] retain];
-	[self.delegate.data removeObjectAtIndex:fromIndexPath.row];
-	[self.delegate.data insertObject:fromString atIndex:toIndexPath.row];
+	NSString *fromString = [[self.data objectAtIndex:fromIndexPath.row] retain];
+	[self.data removeObjectAtIndex:fromIndexPath.row];
+	[self.data insertObject:fromString atIndex:toIndexPath.row];
 	[fromString release];
 	
 	[[Settings sharedInstance] saveData];																	
@@ -208,15 +251,20 @@ static MetadataInformation commonInformation[] = {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	cell.textLabel.text = self.value;
-	
+	if(self.metadataDelegate && [self.metadataDelegate respondsToSelector:@selector(selectedMetadataValue)])
+	{
+		cell.accessoryType = [self.value isEqualToString:[self.metadataDelegate selectedMetadataValue]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	}
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	return cell;
 }
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
 	self.value = metadataEditorViewController.value;
-	[self.delegate.data replaceObjectAtIndex:metadataEditorViewController.tag withObject:self.value];
+	[self.data replaceObjectAtIndex:metadataEditorViewController.tag withObject:self.value];
 	
+	[[Settings sharedInstance] saveData];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -230,12 +278,23 @@ static MetadataInformation commonInformation[] = {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:self.value value:self.value] autorelease];
-	[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
-	[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-	p.delegate = self;
-	p.tag = indexPath.row;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	if(tableView.editing)
+	{
+		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:self.value value:self.value] autorelease];
+		[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
+		[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+		p.delegate = self;
+		p.tag = indexPath.row;
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+	}
+	else 
+	{
+		if(self.metadataDelegate && [self.metadataDelegate respondsToSelector:@selector(tableView:didSelectValue:atIndexPath:)])
+		{
+			[self.metadataDelegate tableView:tableView didSelectValue:self.value atIndexPath:indexPath];
+		}
+	}
+
 }
 
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
@@ -243,7 +302,7 @@ static MetadataInformation commonInformation[] = {
 {
 	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
-		[self.delegate.data removeObjectAtIndex:indexPath.row];
+		[self.data removeObjectAtIndex:indexPath.row];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
 	}
 }
@@ -253,16 +312,31 @@ static MetadataInformation commonInformation[] = {
 
 /******************************************************************
  *
- *   AddMultipleChoiceMetadataCellController
+ *   ADD CHOICE
  *
  ******************************************************************/
 #pragma mark AddMultipleChoiceMetadataCellController
-@interface AddMultipleChoiceMetadataCellController : MetadataCustomViewCellController <MetadataEditorViewControllerDelegate>
+@interface AddMultipleChoiceMetadataCellController : MetadataGenericTableViewCellController <MetadataEditorViewControllerDelegate>
 {
 	int row;
+	int section;
+	NSMutableArray *data;
 }
+@property (nonatomic, retain) NSMutableArray *data;
 @end
 @implementation AddMultipleChoiceMetadataCellController
+@synthesize data;
+
+- (void)dealloc
+{
+	self.data = nil;
+	[super dealloc];
+}
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return NO;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -274,7 +348,6 @@ static MetadataInformation commonInformation[] = {
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Add New Choice", @"button to press when you are in the Multiple Choice view, this button lets the user add another choice to a multiple choice type");
-	
 	return cell;
 }
 
@@ -284,6 +357,7 @@ static MetadataInformation commonInformation[] = {
 	[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
 	[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 	p.delegate = self;
+	section = indexPath.section;
 	p.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
 }
@@ -296,18 +370,13 @@ static MetadataInformation commonInformation[] = {
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	if(self.delegate.data == nil)
-	{
-		self.delegate.data = [NSMutableArray array];
-	}
-	
 	MultipleChoiceMetadataValueCellController *cellController = [[[MultipleChoiceMetadataValueCellController alloc] init] autorelease];
 	cellController.value = metadataEditorViewController.value;
 	cellController.delegate = self.delegate;
-	[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] insertObject:cellController atIndex:[self.delegate.data count]];
+	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:[self.data count]];
 	
 	// now store the data and save it
-	[self.delegate.data addObject:[NSString stringWithString:metadataEditorViewController.value]];
+	[self.data addObject:[NSString stringWithString:metadataEditorViewController.value]];
 	[[Settings sharedInstance] saveData];
 	
 	// reload the table
@@ -327,7 +396,7 @@ static MetadataInformation commonInformation[] = {
 
 /******************************************************************
  *
- *   MetadataTypeCellController
+ *   TYPE
  *
  ******************************************************************/
 #pragma mark MetadataTypeCellController
@@ -353,8 +422,16 @@ static MetadataInformation commonInformation[] = {
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
-	
-	cell.textLabel.text = commonInformation[index].name;
+	if(self.delegate.startedWithSelected >= 0 && 
+	   commonInformation[self.delegate.startedWithSelected].type == STRING && 
+	   commonInformation[index].type == CHOICE)
+	{
+		cell.textLabel.text = NSLocalizedString(@"Convert to Multiple Choice", @"When making a new additional information if you previsouly had a 'String' type and you want to change it to a multiple choice, this is the text used, because I go through all of the values of the 'String' and automatically set those up as choices");
+	}
+	else 
+	{
+		cell.textLabel.text = commonInformation[index].name;
+	}
 	cell.editingAccessoryType = (self.delegate.selected == index) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;
@@ -364,13 +441,39 @@ static MetadataInformation commonInformation[] = {
 {
 	int prevSelected = self.delegate.selected;
 	self.delegate.selected = index;
-	if(prevSelected >= 0)
+
+	if(self.delegate.startedWithSelected >= 0 && 
+	   commonInformation[self.delegate.startedWithSelected].type == STRING && 
+	   commonInformation[index].type == CHOICE)
 	{
-		[[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:prevSelected inSection:indexPath.section]] setEditingAccessoryType:UITableViewCellAccessoryNone];
+		NSMutableDictionary *values = [NSMutableDictionary dictionary];
+		// go through all of the calls and add the values as options for this particular metadata
+		for(NSDictionary *call in [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls])
+		{
+			for(NSDictionary *metadata in [call objectForKey:CallMetadata])
+			{
+				if([self.delegate.name isEqualToString:[metadata objectForKey:CallMetadataName]] && 
+				   [[metadata objectForKey:CallMetadataType] intValue] == STRING)
+				{
+					NSString *value = [metadata objectForKey:CallMetadataValue];
+					[values setObject:value forKey:value];
+				}
+			}
+		}
+		NSArray *keys = [values allKeys];
+		[self.delegate.data addObjectsFromArray:keys];
+		[self.delegate updateAndReload];
 	}
-	[[tableView cellForRowAtIndexPath:indexPath] setEditingAccessoryType:UITableViewCellAccessoryCheckmark];
-	
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	else
+	{
+		if(prevSelected >= 0)
+		{
+			[[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:prevSelected inSection:indexPath.section]] setEditingAccessoryType:UITableViewCellAccessoryNone];
+		}
+		[[tableView cellForRowAtIndexPath:indexPath] setEditingAccessoryType:UITableViewCellAccessoryCheckmark];
+		
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -387,10 +490,16 @@ static MetadataInformation commonInformation[] = {
 @synthesize name;
 @synthesize nameNeedsFocus;
 @synthesize selected;
+@synthesize startedWithSelected;
 @synthesize data;
 
 - (void)navigationControlDone:(id)sender
 {
+	// dont save the info if the selection is not Multiple Choice
+	if(commonInformation[selected].type != CHOICE)
+	{
+		self.data = nil;
+	}
 	if(delegate && selected >= 0)
 	{
 		[delegate metadataCustomViewControllerDone:self];
@@ -416,6 +525,11 @@ static MetadataInformation commonInformation[] = {
 	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
 		self.data = theData;
+		if(self.data == nil)
+		{
+			self.data = [NSMutableArray array];
+		}
+		
 		self.name = [NSMutableString stringWithString:theName ? theName : @""];
 		selected = -1;
 		nameNeedsFocus = YES;
@@ -428,6 +542,8 @@ static MetadataInformation commonInformation[] = {
 				break;
 			}
 		}
+		startedWithSelected = selected;
+		
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
 	}
@@ -444,8 +560,6 @@ static MetadataInformation commonInformation[] = {
 	[super loadView];
 	
 	self.editing = YES;
-	
-	[self updateAndReload];
 	
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -498,6 +612,27 @@ static MetadataInformation commonInformation[] = {
     return proposedDestinationIndexPath;
 }
 
++ (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController choices:(NSMutableArray *)data metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate
+{
+	for(NSString *entry in data)
+	{
+		MultipleChoiceMetadataValueCellController *cellController = [[MultipleChoiceMetadataValueCellController alloc] init];
+		cellController.delegate = viewController;
+		cellController.metadataDelegate = metadataDelegate;
+		cellController.value = entry;
+		cellController.data = data;
+		[sectionController.cellControllers addObject:cellController];
+		[cellController release];
+	}
+
+	// add the "Add Additional User" cell at the end
+	AddMultipleChoiceMetadataCellController *addCellController = [[AddMultipleChoiceMetadataCellController alloc] init];
+	addCellController.delegate = viewController;
+	addCellController.data = data;
+	[sectionController.cellControllers addObject:addCellController];
+	[addCellController release];
+}
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
@@ -522,21 +657,8 @@ static MetadataInformation commonInformation[] = {
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 
-		
-		for(NSString *entry in data)
-		{
-			MultipleChoiceMetadataValueCellController *cellController = [[MultipleChoiceMetadataValueCellController alloc] init];
-			cellController.delegate = self;
-			cellController.value = entry;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
-		// add the "Add Additional User" cell at the end
-		AddMultipleChoiceMetadataCellController *addCellController = [[AddMultipleChoiceMetadataCellController alloc] init];
-		addCellController.delegate = self;
-		[sectionController.cellControllers addObject:addCellController];
-		[addCellController release];
+
+		[MetadataCustomViewController addCellMultipleChoiceCellControllersToSectionController:sectionController tableController:self choices:self.data metadataDelegate:nil];
 	}
 	// Type Section
 	{

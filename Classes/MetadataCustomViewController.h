@@ -37,9 +37,15 @@ typedef struct
 
 @class MetadataCustomViewController;
 
-@protocol MetadataCustomViewControllerDelegate<NSObject>
+@protocol MetadataCustomViewControllerDelegate
 @required
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController;
+@end
+
+@protocol MultipleChoiceMetadataValueCellControllerDelegate
+@required
+- (void)tableView:(UITableView *)tableView didSelectValue:(NSString *)value atIndexPath:(NSIndexPath *)indexPath;
+- (NSString *)selectedMetadataValue;
 @end
 
 @interface MetadataCustomViewController : GenericTableViewController
@@ -48,6 +54,7 @@ typedef struct
 @private
 	NSMutableString *name;
 	int selected;
+	int startedWithSelected;
 	BOOL nameNeedsFocus;
 	NSMutableArray *data;
 }
@@ -65,6 +72,8 @@ typedef struct
  */
 - (id) init;
 - (id) initWithName:(NSString *)theName type:(MetadataType)type data:(NSMutableArray *)theData;
+
++ (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController choices:(NSMutableArray *)data metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate;
 
 @end
 
