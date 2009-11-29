@@ -170,7 +170,7 @@ static MetadataInformation commonInformation[] = {
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-	return NSLocalizedString(@"Enter the Multiple Choice Values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
+	return NSLocalizedString(@"Enter the multiple choice values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
 }
 
 - (BOOL)isViewableWhenEditing
