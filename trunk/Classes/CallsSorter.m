@@ -15,6 +15,7 @@
 
 #import "CallsSorter.h"
 #import "Settings.h"
+#import "MetadataCustomViewController.h"
 #import "PSLocalization.h"
 
 @interface CallsSorter ()
@@ -196,12 +197,23 @@ int sortByMetadata(id v1, id v2, void *context)
 	{
 		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
 		{
-			value1 = [metadata objectForKey:CallMetadataData];
+			if([[metadata objectForKey:CallMetadataType] intValue] == CHOICE)
+			{
+				value1 = [metadata objectForKey:CallMetadataValue];
+			}
+			else 
+			{
+				value1 = [metadata objectForKey:CallMetadataData];
+			}
 		}
 	}
 	for(NSDictionary *metadata in metadata2)
 	{
-		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
+		if([[metadata objectForKey:CallMetadataType] intValue] == CHOICE)
+		{
+			value2 = [metadata objectForKey:CallMetadataValue];
+		}
+		else 
 		{
 			value2 = [metadata objectForKey:CallMetadataData];
 		}

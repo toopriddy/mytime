@@ -205,9 +205,11 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 	NSMutableString *string = [[NSMutableString alloc] init];
 	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
 	
+	// attach the real records file
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[Settings sharedInstance] filename]] mimeType:@"text/plist" fileName:@"records.plist"];
+
 	// now add the url that will allow importing
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
-	[mailView addAttachmentData:data mimeType:@"text/plist" fileName:@"records.plist"];
 	[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;

@@ -38,12 +38,11 @@
 @end
 @implementation MultipleChoiceSectionController
 @synthesize delegate;
-
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	if(tableView.editing)
-		return NSLocalizedString(@"Enter the Multiple Choice Values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
-	return nil;
+		return NSLocalizedString(@"Enter the multiple choice values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
+	return NSLocalizedString(@"Please select one option", @"This is text in the header of the screen when you try to select one of the multiple choice values");
 }
 
 @end
@@ -75,13 +74,18 @@
 			if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
 			{
 				self.data = [entry objectForKey:SettingsMetadataData];
+				break;
 			}
 		}
-		for(NSDictionary *entry in [[[Settings sharedInstance] userSettings] objectForKey:SettingsMetadata])
+		if(self.data == nil)
 		{
-			if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
+			for(NSDictionary *entry in [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata])
 			{
-				self.data = [entry objectForKey:SettingsMetadataData];
+				if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
+				{
+					self.data = [entry objectForKey:SettingsMetadataData];
+					break;
+				}
 			}
 		}
 		if(self.data == nil)
@@ -92,7 +96,7 @@
 		self.value = theValue;
 		
 		// set the title, and tab bar images from the dataSource
-		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
+		self.title = theName;
 	}
 	return self;
 }
@@ -197,6 +201,9 @@
 	// Multiple Choice section
 	{
 		MultipleChoiceSectionController *sectionController = [[MultipleChoiceSectionController alloc] init];
+//		sectionController.title = self.title;
+//		sectionController.title = NSLocalizedString(@"Choose One", @"This is text in the header of the screen when you try to select one of the multiple choice values");
+
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
