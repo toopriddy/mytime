@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator3.0;
+		activeSDKPreference = iphoneos3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -454,6 +454,9 @@
 			901F25D410C24E5A0081A382 /* PBXTextBookmark */ = 901F25D410C24E5A0081A382 /* PBXTextBookmark */;
 			901F25D510C24E5A0081A382 /* PBXTextBookmark */ = 901F25D510C24E5A0081A382 /* PBXTextBookmark */;
 			901F25D810C24E5E0081A382 /* PBXTextBookmark */ = 901F25D810C24E5E0081A382 /* PBXTextBookmark */;
+			901F25DD10C24EB50081A382 /* PBXTextBookmark */ = 901F25DD10C24EB50081A382 /* PBXTextBookmark */;
+			901F25DE10C24EB50081A382 /* PlistBookmark */ = 901F25DE10C24EB50081A382 /* PlistBookmark */;
+			901F25DF10C24EB50081A382 /* PlistBookmark */ = 901F25DF10C24EB50081A382 /* PlistBookmark */;
 			902256C610B5A5020070DAAC = 902256C610B5A5020070DAAC /* PBXTextBookmark */;
 			902256C710B5A5020070DAAC = 902256C710B5A5020070DAAC /* PBXTextBookmark */;
 			9031B41110A6798700EFC1D1 = 9031B41110A6798700EFC1D1 /* PBXTextBookmark */;
@@ -3106,6 +3109,40 @@
 		rType = 0;
 		vrLen = 1654;
 		vrLoc = 2299;
+	};
+	901F25DD10C24EB50081A382 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 901F258010C244B00081A382 /* MultipleChoiceMetadataViewController.m */;
+		name = "MultipleChoiceMetadataViewController.m: 97";
+		rLen = 0;
+		rLoc = 2908;
+		rType = 0;
+		vrLen = 1654;
+		vrLoc = 2299;
+	};
+	901F25DE10C24EB50081A382 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	901F25DF10C24EB50081A382 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
 	};
 	902256B710B59E7E0070DAAC /* dmstor.c */ = {
 		isa = PBXFileReference;
