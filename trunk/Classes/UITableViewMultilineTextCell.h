@@ -16,11 +16,16 @@
 #import <UIKit/UIKit.h>
 
 
-@interface UITableViewMultilineTextCell : UITableViewCell <UITextViewDelegate> {
+@interface UITableViewMultilineTextCell : UITableViewCell <UITextViewDelegate> 
+{
 	UILabel *textView;
+	BOOL allowSelectionWhenNotEditing;
+	BOOL allowSelectionWhenEditing;
 }
 
 @property (nonatomic, retain) UILabel *textView;
+@property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) BOOL allowSelectionWhenEditing;
 
 - (void)setText:(NSString *)text;
 + (CGFloat)heightForWidth:(CGFloat)width withText:(NSString *)text;

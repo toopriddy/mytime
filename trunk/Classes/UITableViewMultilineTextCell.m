@@ -18,8 +18,8 @@
 
 @implementation UITableViewMultilineTextCell
 @synthesize textView;
-
-
+@synthesize allowSelectionWhenNotEditing;
+@synthesize allowSelectionWhenEditing;
 #define TITLE_LEFT_OFFSET 10
 #define TITLE_TOP_OFFSET 6
 #define TITLE_HEIGHT 30
@@ -31,6 +31,9 @@
 {
 	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
+		allowSelectionWhenEditing = YES;
+		allowSelectionWhenNotEditing = YES;
+		
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		textView = nil;
 		
@@ -66,6 +69,65 @@
 {
 	textView.text = text;
 	[self layoutSubviews];
+}
+
+- (void)setAllowSelectionWhenEditing:(BOOL)enable
+{
+	allowSelectionWhenEditing = enable;
+	if(self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)setAllowSelectionWhenNotEditing:(BOOL)enable
+{
+	allowSelectionWhenNotEditing = enable;
+	if(!self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)willTransitionToState:(UITableViewCellStateMask)state
+{
+	[super willTransitionToState:state];
+	if(state & UITableViewCellStateEditingMask)
+	{
+		if(self.allowSelectionWhenEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+	else 
+	{
+		if(self.allowSelectionWhenNotEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
 }
 
 - (void)setHighlighted:(BOOL)selected animated:(BOOL)animated 

@@ -19,8 +19,12 @@
 @interface UITableViewTitleAndValueCell : UITableViewCell {
 	UILabel *titleLabel;
 	UILabel *valueLabel;
+	BOOL allowSelectionWhenNotEditing;
+	BOOL allowSelectionWhenEditing;
 }
 
+@property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) BOOL allowSelectionWhenEditing;
 @property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, retain) UILabel *valueLabel;
 

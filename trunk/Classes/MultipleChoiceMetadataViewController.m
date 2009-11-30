@@ -42,7 +42,8 @@
 {
 	if(tableView.editing)
 		return NSLocalizedString(@"Enter the multiple choice values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
-	return NSLocalizedString(@"Please select one option", @"This is text in the header of the screen when you try to select one of the multiple choice values");
+	else
+		return NSLocalizedString(@"Please select one option", @"This is text in the header of the screen when you try to select one of the multiple choice values");
 }
 
 @end
@@ -65,7 +66,7 @@
 	[super dealloc];
 }
 
-- (id) initWithName:(NSString *)theName value:(NSString *)theValue
+- (id) initWithName:(NSString *)theName value:(NSString *)theValue data:(NSMutableArray *)theData
 {
 	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
@@ -90,9 +91,13 @@
 		}
 		if(self.data == nil)
 		{
+			self.data = theData;
+		}
+		if(self.data == nil)
+		{
 			self.data = [NSMutableArray arrayWithObject:theValue];
 		}
-
+		
 		self.value = theValue;
 		
 		// set the title, and tab bar images from the dataSource
@@ -201,8 +206,6 @@
 	// Multiple Choice section
 	{
 		MultipleChoiceSectionController *sectionController = [[MultipleChoiceSectionController alloc] init];
-//		sectionController.title = self.title;
-//		sectionController.title = NSLocalizedString(@"Choose One", @"This is text in the header of the screen when you try to select one of the multiple choice values");
 
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];

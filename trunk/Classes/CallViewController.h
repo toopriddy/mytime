@@ -36,6 +36,7 @@
 	BOOL _shouldReloadAll;
 	
 	BOOL _actionSheetSource;
+	BOOL delayedAddReturnVisit;
 	
 	int _selectedRow;
 	int _setFirstResponderGroup;
@@ -44,6 +45,7 @@
 }
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
+@property (nonatomic, assign) BOOL delayedAddReturnVisit;
 
 /**
  * @returns the call we are editing

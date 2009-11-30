@@ -20,6 +20,8 @@
 
 @synthesize titleLabel;
 @synthesize valueLabel;
+@synthesize allowSelectionWhenNotEditing;
+@synthesize allowSelectionWhenEditing;
 
 
 #define TITLE_LEFT_OFFSET 10
@@ -33,6 +35,9 @@
 {
 	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
+		allowSelectionWhenEditing = YES;
+		allowSelectionWhenNotEditing = YES;
+		
 		VERBOSE(NSLog(@"%s: %s %p %p %p", __FILE__, __FUNCTION__, self, titleLabel, valueLabel);)
 		titleLabel = nil;
 		valueLabel = nil;
@@ -61,6 +66,65 @@
 	self.valueLabel = nil;
     VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 	[super dealloc];
+}
+
+- (void)setAllowSelectionWhenEditing:(BOOL)enable
+{
+	allowSelectionWhenEditing = enable;
+	if(self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)setAllowSelectionWhenNotEditing:(BOOL)enable
+{
+	allowSelectionWhenNotEditing = enable;
+	if(!self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)willTransitionToState:(UITableViewCellStateMask)state
+{
+	[super willTransitionToState:state];
+	if(state & UITableViewCellStateEditingMask)
+	{
+		if(self.allowSelectionWhenEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+	else 
+	{
+		if(self.allowSelectionWhenNotEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
 }
 
 - (void)updateLayout
