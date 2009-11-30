@@ -339,6 +339,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
+#if 0	
 	// dynamically add a method to UITableViewIndex that lets us move around the index
 	Class tvi = NSClassFromString(@"UITableViewIndex");
 	if ( class_addMethod(tvi, @selector(moveIndexIn), (IMP)tableViewIndexMoveIn, "v@:") ) 
@@ -357,7 +358,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
 	}
-
+#endif
 //	application.networkActivityIndicatorVisible = NO;
 
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -585,7 +586,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 }
 
-
+#if 0
 #pragma mark UITableViewIndex Added Methods
  
 static BOOL tableViewIndexMoveIn(id self, SEL _cmd) 
@@ -609,7 +610,7 @@ static BOOL tableViewIndexMoveOut(id self, SEL _cmd)
 	
     return YES;
 }
-
+#endif
 - (BOOL)respondsToSelector:(SEL)selector
 {
 	BOOL ret = [super respondsToSelector:selector];

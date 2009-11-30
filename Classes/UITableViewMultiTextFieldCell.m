@@ -33,6 +33,8 @@
 @synthesize nextKeyboardResponder = _nextKeyboardResponder;
 @synthesize delegate;
 @synthesize widths = _widths;
+@synthesize allowSelectionWhenNotEditing;
+@synthesize allowSelectionWhenEditing;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier textFieldCount:(int)textFieldCount
 {
@@ -40,6 +42,9 @@
 	{
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 
+		allowSelectionWhenEditing = YES;
+		allowSelectionWhenNotEditing = YES;
+		
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		self.multiTextFields = [NSMutableArray array];
@@ -70,6 +75,65 @@
 	self.multiTextFields = nil;
 	self.delegate = nil;
 	[super dealloc];
+}
+
+- (void)setAllowSelectionWhenEditing:(BOOL)enable
+{
+	allowSelectionWhenEditing = enable;
+	if(self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)setAllowSelectionWhenNotEditing:(BOOL)enable
+{
+	allowSelectionWhenNotEditing = enable;
+	if(!self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)willTransitionToState:(UITableViewCellStateMask)state
+{
+	[super willTransitionToState:state];
+	if(state & UITableViewCellStateEditingMask)
+	{
+		if(self.allowSelectionWhenEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+	else 
+	{
+		if(self.allowSelectionWhenNotEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
 }
 
 - (void)setNextKeyboardResponder:(UIResponder *)next

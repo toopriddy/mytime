@@ -28,7 +28,7 @@
 @property (nonatomic, assign) NSObject<MultipleChoiceMetadataViewControllerDelegate> *delegate;
 @property (nonatomic, retain) NSString *value;
 
-- (id) initWithName:(NSString *)theName value:(NSString *)value;
+- (id) initWithName:(NSString *)theName value:(NSString *)theValue data:(NSMutableArray *)theData;
 
 
 @end

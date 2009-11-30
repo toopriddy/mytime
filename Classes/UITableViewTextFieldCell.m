@@ -31,11 +31,16 @@
 @synthesize valueLabel;
 @synthesize delegate;
 @synthesize observeEditing;
+@synthesize allowSelectionWhenNotEditing;
+@synthesize allowSelectionWhenEditing;
 
 - (id)initWithStyle:(UITableViewCellStyle)style textField:(UITextField *)field reuseIdentifier:(NSString *)reuseIdentifier
 {
 	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) 
 	{
+		allowSelectionWhenEditing = YES;
+		allowSelectionWhenNotEditing = YES;
+		
 		VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
 		self.selected = NO;
 		observeEditing = NO;
@@ -83,6 +88,65 @@
 	self.valueLabel = nil;
 	self.delegate = nil;
 	[super dealloc];
+}
+
+- (void)setAllowSelectionWhenEditing:(BOOL)enable
+{
+	allowSelectionWhenEditing = enable;
+	if(self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)setAllowSelectionWhenNotEditing:(BOOL)enable
+{
+	allowSelectionWhenNotEditing = enable;
+	if(!self.editing)
+	{
+		if(enable)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+}
+
+- (void)willTransitionToState:(UITableViewCellStateMask)state
+{
+	[super willTransitionToState:state];
+	if(state & UITableViewCellStateEditingMask)
+	{
+		if(self.allowSelectionWhenEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
+	else 
+	{
+		if(self.allowSelectionWhenNotEditing)
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		else 
+		{
+			self.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+	}
 }
 
 - (void)setNextKeyboardResponder:(UIResponder *)next
@@ -198,14 +262,14 @@
 
 	if(self.editing || !observeEditing)
 	{
-		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		self.selectionStyle = self.allowSelectionWhenEditing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 		textField.hidden = NO;
 		textField.enabled = YES;
 		valueLabel.hidden = YES;
 	}
 	else
 	{
-		self.selectionStyle = UITableViewCellSelectionStyleBlue;
+		self.selectionStyle = self.allowSelectionWhenNotEditing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 		textField.hidden = YES;
 		textField.enabled = NO;
 		valueLabel.hidden = NO;

@@ -321,11 +321,14 @@ static MetadataInformation commonInformation[] = {
 	int row;
 	int section;
 	NSMutableArray *data;
+	NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *metadataDelegate;
 }
 @property (nonatomic, retain) NSMutableArray *data;
+@property (nonatomic, assign) NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *metadataDelegate;
 @end
 @implementation AddMultipleChoiceMetadataCellController
 @synthesize data;
+@synthesize metadataDelegate;
 
 - (void)dealloc
 {
@@ -372,7 +375,9 @@ static MetadataInformation commonInformation[] = {
 {
 	MultipleChoiceMetadataValueCellController *cellController = [[[MultipleChoiceMetadataValueCellController alloc] init] autorelease];
 	cellController.value = metadataEditorViewController.value;
+	cellController.data = self.data;
 	cellController.delegate = self.delegate;
+	cellController.metadataDelegate = self.metadataDelegate;
 	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:[self.data count]];
 	
 	// now store the data and save it
@@ -405,6 +410,7 @@ static MetadataInformation commonInformation[] = {
 	int index;
 }
 @property (nonatomic, assign) int index;
+
 @end
 @implementation MetadataTypeCellController
 @synthesize index;
@@ -628,6 +634,7 @@ static MetadataInformation commonInformation[] = {
 	// add the "Add Additional User" cell at the end
 	AddMultipleChoiceMetadataCellController *addCellController = [[AddMultipleChoiceMetadataCellController alloc] init];
 	addCellController.delegate = viewController;
+	addCellController.metadataDelegate = metadataDelegate;
 	addCellController.data = data;
 	[sectionController.cellControllers addObject:addCellController];
 	[addCellController release];

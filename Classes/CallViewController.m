@@ -49,6 +49,7 @@
 
 @interface CallViewController ()
 @property (nonatomic, assign) BOOL showAddReturnVisit;
+- (void)addReturnVisitAndEdit;
 @end
 
 
@@ -219,6 +220,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	if(cell == nil)
 	{
 		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault textField:_name reuseIdentifier:@"NameCell"] autorelease];
+		cell.allowSelectionWhenNotEditing = NO;
 	}
 	else
 	{
@@ -938,6 +940,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MetadataNotesCell"] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 			}
+			cell.allowSelectionWhenNotEditing = NO;
 			[cell setText:value.length ? value : name];
 			return(cell);
 		}
@@ -969,15 +972,15 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MetadataCell"] autorelease];
 				cell.accessoryType = UITableViewCellAccessoryNone;
 				cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+				cell.allowSelectionWhenNotEditing = NO;
 			}
 			
-			[cell setSelectionStyle:tableView.editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone];
 			switch([type intValue])
 			{
 				case PHONE:
 				case EMAIL:
 				case URL:
-					[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+					cell.allowSelectionWhenNotEditing = YES;
 					// fallthrough
 				default:
 					[cell setTitle:[[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""]];
@@ -993,7 +996,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 {
 	if(tableView.editing)
 		return indexPath;
-	
+
 	NSNumber *type = [self.metadata objectForKey:CallMetadataType];
 	switch([type intValue])
 	{
@@ -1032,7 +1035,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			{
 				if([type intValue] == CHOICE)
 				{
-					MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value] autorelease];
+					MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value data:(NSMutableArray *)data] autorelease];
 					p.delegate = self;
 					
 					[[self.delegate navigationController] pushViewController:p animated:YES];		
@@ -1124,10 +1127,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 {
 	[super dealloc];
 }
--(BOOL)isViewableWhenNotEditing
-{
-	return NO;
-}
+
 -(BOOL)isViewableWhenEditing
 {
 	return self.delegate.showAddReturnVisit;
@@ -1145,13 +1145,31 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[super dealloc];
 }
 
-- (BOOL)isViewableWhenNotEditing
+- (void)delayedSelectRow:(NSArray *)array
 {
-	return NO;
+	UITableView *tableView = [array objectAtIndex:0];
+	NSIndexPath *indexPath = [array objectAtIndex:1];
+	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+	[array release];
+}
+
+- (void)delayedHighlightRow:(NSArray *)array
+{
+	UITableView *tableView = [array objectAtIndex:0];
+	NSIndexPath *indexPath = [array objectAtIndex:1];
+	[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+	[self performSelector:@selector(delayedSelectRow:) withObject:[array retain] afterDelay:0.3];
+	[array release];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if(self.delegate.delayedAddReturnVisit)
+	{
+		self.delegate.delayedAddReturnVisit = NO;
+		
+		[self performSelector:@selector(delayedHighlightRow:) withObject:[[NSArray arrayWithObjects:tableView, indexPath, nil] retain] afterDelay:0.3];
+	}
 	return UITableViewCellEditingStyleInsert;
 }
 
@@ -1166,10 +1184,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	NSMutableDictionary *call = self.delegate.call;
 	if([[call objectForKey:CallReturnVisits] count])
 	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		[cell setValue:NSLocalizedString(@"Add a return visit", @"Add a return visit action button")];
 	}
 	else
 	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		[cell setValue:NSLocalizedString(@"Add a initial visit", @"Add a initial visit action buton")];
 	}
 	return(cell);
@@ -1179,6 +1199,11 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"addReturnVisitSelected _selectedRow=%d", indexPath.row);)
+	if(!tableView.editing)
+	{
+		[self.delegate addReturnVisitAndEdit];
+		return;
+	}
 	[self.delegate setShowAddReturnVisit:NO];
 	
 	NSMutableArray *returnVisits = [self.delegate.call objectForKey:CallReturnVisits];
@@ -1217,6 +1242,31 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 @end
 
+
+
+@interface ReturnVisitNotesCell : UITableViewMultilineTextCell
+{
+}
+@end
+@implementation ReturnVisitNotesCell
+- (void)willTransitionToState:(UITableViewCellStateMask)state
+{
+	[super willTransitionToState:state];
+	if(state & UITableViewCellStateEditingMask)
+	{
+		
+		if([textView.text isEqualToString:NSLocalizedString(@"Initial Visit Notes", @"Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")])
+			[self setText:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")];
+		else if([textView.text isEqualToString:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")])
+			[self setText:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")];
+	}
+	else
+	{
+		if([textView.text isEqualToString:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")])
+			[self setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
+	}
+}
+@end
 
 
 /******************************************************************
@@ -1270,12 +1320,14 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+	ReturnVisitNotesCell *cell = (ReturnVisitNotesCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
+		cell = [[[ReturnVisitNotesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+		cell.allowSelectionWhenNotEditing = NO;
 	}
+	
 	NSMutableString *notes = [self.returnVisit objectForKey:CallReturnVisitNotes];
 	
 	if(tableView.editing)
@@ -1397,7 +1449,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ChangeDateCell"] autorelease];
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		[cell setValue:NSLocalizedString(@"Change Date", @"Change Date action button for visit in call view")];
+		cell.allowSelectionWhenNotEditing = NO;
 	}
+	
 	return cell;
 }
 
@@ -1472,7 +1526,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		
+		cell.allowSelectionWhenNotEditing = NO;
 	}
 	NSString *type = [self.returnVisit objectForKey:CallReturnVisitType];
 	if(type == nil)
@@ -1639,6 +1693,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			cell.accessoryType = UITableViewCellAccessoryNone;
 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.allowSelectionWhenNotEditing = NO;
 		}
 		[cell setTitle:[self.publication objectForKey:CallReturnVisitPublicationTitle]];
 		return(cell);
@@ -1790,6 +1845,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @synthesize showAddReturnVisit = _showAddReturnVisit;
 @synthesize delegate;
 @synthesize currentIndexPath;
+@synthesize delayedAddReturnVisit;
 
 /******************************************************************
  *
@@ -2078,6 +2134,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 	[alertSheet showInView:self.view];
 	_actionSheetSource = YES;
+}
+
+- (void)addReturnVisitAndEdit
+{
+	self.delayedAddReturnVisit = YES;
+	[self navigationControlEdit:nil];
 }
 
 - (void)scrollToSelected:(id)unused

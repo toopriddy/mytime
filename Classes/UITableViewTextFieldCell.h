@@ -24,8 +24,12 @@
 	UIResponder *nextKeyboardResponder;
 	BOOL observeEditing;
 	id<UITableViewTextFieldCellDelegate> delegate;
+	BOOL allowSelectionWhenNotEditing;
+	BOOL allowSelectionWhenEditing;
 }
 
+@property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) BOOL allowSelectionWhenEditing;
 @property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
 @property (nonatomic, retain) UILabel *titleLabel;

@@ -30,8 +30,12 @@
 	NSMutableArray *_multiTextFields;
 	NSMutableArray *_widths;
 	UIResponder *_nextKeyboardResponder;
+	BOOL allowSelectionWhenNotEditing;
+	BOOL allowSelectionWhenEditing;
 }
 
+@property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) BOOL allowSelectionWhenEditing;
 @property (nonatomic, assign) id<UITableViewMultiTextFieldCellDelegate> delegate;
 @property (nonatomic, retain) UIResponder *nextKeyboardResponder;
 @property (nonatomic, retain) NSMutableArray *widths;
