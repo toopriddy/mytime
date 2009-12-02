@@ -285,7 +285,8 @@ static MetadataInformation commonInformation[] = {
 		[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 		p.delegate = self;
 		p.tag = indexPath.row;
-		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[[self.delegate navigationController] pushViewController:p animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else 
 	{
@@ -362,7 +363,8 @@ static MetadataInformation commonInformation[] = {
 	p.delegate = self;
 	section = indexPath.section;
 	p.tag = indexPath.row;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[[self.delegate navigationController] pushViewController:p animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change

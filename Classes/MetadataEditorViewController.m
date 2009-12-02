@@ -392,11 +392,10 @@
 		case EMAIL:
 		case URL:
 		case STRING:
-			return ((UITableViewTextFieldCell *)_textFieldCell).textField.text;
+		case NOTES:
+			return nil;
 		case SWITCH:
 			return [NSNumber numberWithBool:((UITableViewSwitchCell *)_textFieldCell).booleanSwitch.on];
-		case NOTES:
-			return _textView.text;
 		case DATE:
 			return _datePicker.date;
 		case NUMBER:

@@ -74,6 +74,7 @@
 		p.delegate = self;
 		p.tag = indexPath.row;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
@@ -144,6 +145,7 @@
 	p.delegate = self;
 	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 

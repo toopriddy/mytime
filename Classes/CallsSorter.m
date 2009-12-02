@@ -204,6 +204,8 @@ int sortByMetadata(id v1, id v2, void *context)
 			else 
 			{
 				value1 = [metadata objectForKey:CallMetadataData];
+				if(value1 == nil)
+					value1 = [metadata objectForKey:CallMetadataValue];
 			}
 		}
 	}
@@ -216,6 +218,8 @@ int sortByMetadata(id v1, id v2, void *context)
 		else 
 		{
 			value2 = [metadata objectForKey:CallMetadataData];
+			if(value2 == nil)
+				value2 = [metadata objectForKey:CallMetadataValue];
 		}
 	}
 	if(value1 == nil)

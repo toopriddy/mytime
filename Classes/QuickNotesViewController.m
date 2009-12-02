@@ -82,11 +82,11 @@
 	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:@""] autorelease];
 	p.delegate = self;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notesViewControllerDone:)])
 	{
@@ -221,11 +221,11 @@
 	row = indexPath.row;
 	section = indexPath.section;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(editing)
 	{
@@ -315,6 +315,7 @@
 	section = indexPath.section;
 	row = indexPath.row;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
@@ -325,7 +326,6 @@
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	NSMutableArray *quickNotes = [userSettings objectForKey:SettingsQuickNotes];

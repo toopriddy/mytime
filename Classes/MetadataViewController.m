@@ -101,9 +101,10 @@ static MetadataInformation commonInformation[] = {
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	NSMutableArray *data = metadataCustomViewController.type == CHOICE ? [NSMutableArray arrayWithArray:metadataCustomViewController.data] : nil;
 	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
 								  [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
-								  [NSMutableArray arrayWithArray:metadataCustomViewController.data], SettingsMetadataData, nil];
+								  data, SettingsMetadataData, nil];
 	NSLog(@"Adding\n%@", entry);
 	[metadata replaceObjectAtIndex:self.indexPath.row withObject:entry];
 	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -122,7 +123,8 @@ static MetadataInformation commonInformation[] = {
 																						 type:[[metadataDictionary objectForKey:SettingsMetadataType] intValue]
 											                                             data:[metadataDictionary objectForKey:SettingsMetadataData]] autorelease];
 		p.delegate = self;
-		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[[self.delegate navigationController] pushViewController:p animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
@@ -243,9 +245,10 @@ static MetadataInformation commonInformation[] = {
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
 	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
+	NSMutableArray *data = metadataCustomViewController.type == CHOICE ? [NSMutableArray arrayWithArray:metadataCustomViewController.data] : nil;
 	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
 	         							                                           [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
-																				   [NSMutableArray arrayWithArray:metadataCustomViewController.data], SettingsMetadataData, nil];
+																				   data, SettingsMetadataData, nil];
 	[metadata addObject:entry];
 	[[Settings sharedInstance] saveData];																	
 	
@@ -267,6 +270,7 @@ static MetadataInformation commonInformation[] = {
 	p.delegate = self;
 	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	return;
 }
 
