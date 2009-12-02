@@ -22,8 +22,40 @@
 #define DEBUG(a)
 #endif
 
+@interface NSObjectViewControllerAssociation : NSObject
+{
+	NSObject *retainee;
+	UIViewController *viewController;
+}
+@property (nonatomic, retain) NSObject *retainee;
+@property (nonatomic, assign) UIViewController *viewController;
+- (NSObjectViewControllerAssociation *)initWithRetainee:(NSObject *)object viewController:(UIViewController *)theViewController;
+@end
+@implementation NSObjectViewControllerAssociation
+@synthesize retainee;
+@synthesize viewController;
+- (NSObjectViewControllerAssociation *)initWithRetainee:(NSObject *)object viewController:(UIViewController *)theViewController
+{
+	if( (self = [super init]) )
+	{
+		self.retainee = object;
+		self.viewController = theViewController;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[retainee release];
+	
+	[super dealloc];
+}
+@end
+
+
 @interface GenericTableViewController ()
 @property (nonatomic, retain) NSMutableArray *displaySectionControllers;
+@property (nonatomic, retain) NSMutableArray *retainedObjectsAndViewControllers;
 - (void)updateTableViewWithEditing:(BOOL)editing;
 - (void)updateSectionController:(GenericTableViewSectionController *)sectionController insertRows:(BOOL)insertRows insertAnimation:(UITableViewRowAnimation)insertAnimation sectionNumber:(int)sectionNumber;
 @end
@@ -32,6 +64,7 @@
 @synthesize sectionControllers = _sectionControllers;
 @synthesize displaySectionControllers = _displaySectionControllers;
 @synthesize forceReload = _forceReload;
+@synthesize retainedObjectsAndViewControllers = _retainedObjectsAndViewControllers;
 
 // Creates/updates cell data. This method should only be invoked directly if
 // a "reloadData" needs to be avoided. Otherwise, updateAndReload should be used.
@@ -684,8 +717,15 @@
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
-	
-//	self.displaySectionControllers = nil;
+}
+
+- (void)setForceReload:(BOOL)enable
+{
+	_forceReload = enable;
+	if(_forceReload && _displaySectionControllers)
+	{
+		[self updateAndReload];
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated 
@@ -714,7 +754,6 @@
 - (void)loadView 
 {
 	[super loadView];
-	
 	self.tableView.editing = _editing;
 	self.tableView.allowsSelectionDuringEditing = YES;
 	
@@ -734,6 +773,69 @@
 	return self;
 }
 
+- (NSMutableArray *)retainedObjectsAndViewControllers
+{
+	if(_retainedObjectsAndViewControllers)
+		return _retainedObjectsAndViewControllers;
+
+	_retainedObjectsAndViewControllers = [[NSMutableArray alloc] init];
+	
+	return _retainedObjectsAndViewControllers;
+}
+
+- (void)checkRetainedObjects
+{
+	// see if we need to continue checking
+	if([self.retainedObjectsAndViewControllers count] == 0)
+	{
+		self.retainedObjectsAndViewControllers = nil;
+		_viewControllerCheckerRunning = NO;
+		return;
+	}
+	
+	// go through all of the currently visible view controllers and see if we still need to keep a reference count
+	NSArray *viewControllers = [self.navigationController viewControllers];
+	NSMutableArray *removeArray = nil;
+	for(NSObjectViewControllerAssociation *association in self.retainedObjectsAndViewControllers)
+	{
+		BOOL found = NO;
+		UIViewController *test = association.viewController;
+		for(UIViewController *viewController in viewControllers)
+		{
+			if(viewController == test)
+			{
+				found = YES;
+				break;
+			}
+		}
+		if(!found)
+		{
+			if(removeArray == nil)
+			{
+				removeArray = [NSMutableArray array];
+			}
+			[removeArray addObject:association];
+		}
+	}
+	
+	if(removeArray)
+	{
+		[self.retainedObjectsAndViewControllers removeObjectsInArray:removeArray];
+	}
+	[self performSelector:@selector(checkRetainedObjects) withObject:nil afterDelay:1.0];
+}
+
+- (void)retainObject:(NSObject *)object whileViewControllerIsManaged:(UIViewController *)viewController
+{
+	[self.retainedObjectsAndViewControllers addObject:[[NSObjectViewControllerAssociation alloc] initWithRetainee:object viewController:viewController]];
+	
+	if(!_viewControllerCheckerRunning)
+	{
+		_viewControllerCheckerRunning = YES;
+		[self performSelector:@selector(checkRetainedObjects) withObject:nil afterDelay:1.0];
+	}
+}
+
 //
 // dealloc
 //
@@ -743,7 +845,8 @@
 {
 	self.sectionControllers = nil;
 	self.displaySectionControllers = nil;
-
+	self.retainedObjectsAndViewControllers = nil;
+	
 	self.tableView.delegate = nil;
 	self.tableView.dataSource = nil;	
 	self.tableView = nil;

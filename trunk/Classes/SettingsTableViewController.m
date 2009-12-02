@@ -186,6 +186,7 @@
 	MultipleUsersViewController *viewController = [[[MultipleUsersViewController alloc] init] autorelease];
 	viewController.delegate = self;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
 - (void) multipleUsersViewController:(MultipleUsersViewController *)viewController selectedUser:(NSString *)name
@@ -297,6 +298,7 @@
 																					max:12] autorelease];
 	viewController.delegate = self;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
@@ -347,6 +349,7 @@
 	QuickNotesViewController *viewController = [[[QuickNotesViewController alloc] init] autorelease];
 	viewController.editOnly = YES;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 @end
 
@@ -387,6 +390,7 @@
 	viewController.delegate = self;
 	viewController.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
@@ -443,6 +447,7 @@
 	viewController.delegate = self;
 	viewController.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
@@ -504,6 +509,7 @@
 	PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
 	viewController.delegate = self;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
 - (void)publisherTypeViewControllerDone:(PublisherTypeViewController *)publisherTypeViewController
@@ -609,6 +615,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+
 	if(passcode.length == 0)
 	{
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
@@ -619,6 +626,7 @@
 		securityView.delegate = self;
 		securityView.title = NSLocalizedString(@"Set Passcode", @"Title of the view you are presented from Settings->Passcode when you are enabling the passcode");
 		[[self.delegate navigationController] pushViewController:securityView animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:securityView];
 	}
 	else
 	{
@@ -629,6 +637,7 @@
 		securityView.delegate = self;
 		securityView.title = NSLocalizedString(@"Disable Passcode", @"Title of the view you are presented from Settings->Passcode when you are disabling the passcode");
 		[[self.delegate navigationController] pushViewController:securityView animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:securityView];
 	}
 }
 
@@ -658,6 +667,7 @@
 	}
 	else
 	{
+		NSLog(@"\n\n\n\n FORCE RELOAD\n\n\n\n");
 		self.delegate.forceReload = YES;
 	}
 }
@@ -872,7 +882,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"RemoveTestTranslationCell";
+	NSString *commonIdentifier = @"MyTimeBackupTranslationCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
@@ -913,7 +923,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"RemoveTestTranslationCell";
+	NSString *commonIdentifier = @"MyTimeWebserverTranslationCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{

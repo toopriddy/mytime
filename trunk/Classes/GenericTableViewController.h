@@ -23,6 +23,8 @@
 	NSMutableArray *_displaySectionControllers;
 	BOOL _editing;
 	BOOL _forceReload;
+	NSMutableArray *_retainedObjectsAndViewControllers;
+	BOOL _viewControllerCheckerRunning;
 }
 @property (nonatomic, retain) NSMutableArray *sectionControllers;
 @property (nonatomic, assign) BOOL editing;
@@ -40,5 +42,7 @@
 - (void)deleteDisplaySectionAtIndexPath:(NSIndexPath *)indexPath;
 - (void)replaceDisplaySectionAtIndexPath:(NSIndexPath *)indexPath withSection:(GenericTableViewSectionController *)newSectionController;
 - (void)addSectionAfterSection:(GenericTableViewSectionController *)sectionController newSection:(GenericTableViewSectionController *)newSectionController;
+
+- (void)retainObject:(NSObject *)object whileViewControllerIsManaged:(UIViewController *)viewController;
 
 @end

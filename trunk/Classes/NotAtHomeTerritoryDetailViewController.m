@@ -127,11 +127,11 @@
 	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:@""] autorelease];
 	p.delegate = self;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notesViewControllerDone:)])
 	{

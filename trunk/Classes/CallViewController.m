@@ -326,7 +326,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)addressViewControllerDone:(AddressViewController *)addressViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSMutableDictionary *call = self.delegate.call;
 	[call setObject:(addressViewController.streetNumber ? addressViewController.streetNumber : @"") forKey:CallStreetNumber];
@@ -425,6 +424,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 																							   state:state] autorelease];
 		viewController.delegate = self;
 		[self.delegate.navigationController pushViewController:viewController animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 		return;
 	}
 	else
@@ -506,7 +506,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)locationPickerViewControllerDone:(LocationPickerViewController *)locationPickerViewController
 {
-	[[self retain] autorelease];
 	[self.delegate.call setObject:locationPickerViewController.type forKey:CallLocationType];
 	if([locationPickerViewController.type isEqualToString:CallLocationTypeManual])
 	{
@@ -516,6 +515,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:[self.delegate.call objectForKey:CallLattitudeLongitude]] autorelease];
 		controller.delegate = self;
 		[[self.delegate navigationController] pushViewController:controller animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:controller];
 		return;
 	}
 	else
@@ -613,6 +613,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	p.delegate = self;
 	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 @end
@@ -668,7 +669,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
 {
-	[[self retain] autorelease];
 	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 	for(NSMutableDictionary *call in calls)
 	{
@@ -734,7 +734,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata removeAll:(BOOL)removeAll
 {
-	[[self retain] autorelease];
 	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 	for(NSMutableDictionary *call in calls)
 	{
@@ -781,7 +780,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSMutableDictionary *call = self.delegate.call;
 	NSMutableArray *metadataArray = [call objectForKey:CallMetadata];
@@ -801,7 +799,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		case URL:
 		case STRING:
 			[newData setObject:@"" forKey:CallMetadataValue];
-			[newData setObject:@"" forKey:CallMetadataData];
 			break;
 			
 		case SWITCH:
@@ -845,10 +842,13 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	
-	[self.metadata setObject:[metadataEditorViewController data] forKey:CallMetadataData];
+	if([metadataEditorViewController data])
+		[self.metadata setObject:[metadataEditorViewController data] forKey:CallMetadataData];
+	else
+		[self.metadata removeObjectForKey:CallMetadataData];
+		
 	[self.metadata setObject:[metadataEditorViewController value] forKey:CallMetadataValue];
 	
 	[self.delegate save];
@@ -865,7 +865,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)multipleChoiceMetadataViewControllerDone:(MultipleChoiceMetadataViewController *)metadataCustomViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	
 	[self.metadata setObject:[metadataCustomViewController value] forKey:CallMetadataValue];
@@ -1021,6 +1020,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		p.delegate = self;
 		
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
@@ -1039,6 +1039,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 					p.delegate = self;
 					
 					[[self.delegate navigationController] pushViewController:p animated:YES];		
+					[self.delegate retainObject:self whileViewControllerIsManaged:p];
 				}
 				else 
 				{
@@ -1048,6 +1049,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 					p.tag = indexPath.row;
 					
 					[[self.delegate navigationController] pushViewController:p animated:YES];		
+					[self.delegate retainObject:self whileViewControllerIsManaged:p];
 				}
 			}
 			else
@@ -1284,8 +1286,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
-	[[self retain] autorelease];
-
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [returnVisit setObject:[notesViewController notes] forKey:CallReturnVisitNotes];
 	[self.delegate save];
@@ -1365,6 +1365,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		QuickNotesViewController *p = [[[QuickNotesViewController alloc] init] autorelease];
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else 
 	{
@@ -1372,6 +1373,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[self.returnVisit objectForKey:CallReturnVisitNotes]] autorelease];
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 }
 
@@ -1414,7 +1416,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     VERBOSE(NSLog(@"date is now = %@", [datePickerViewController date]);)
 	
-	[[self retain] autorelease];
     [self.returnVisit setObject:[datePickerViewController date] forKey:CallReturnVisitDate];
 	
 	// just in case they changed the date to reorder them
@@ -1465,6 +1466,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	DatePickerViewController *p = [[[DatePickerViewController alloc] initWithDate:[self.returnVisit objectForKey:CallReturnVisitDate]] autorelease];
 	p.delegate = self;
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 @end
@@ -1484,7 +1486,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)returnVisitTypeViewControllerDone:(ReturnVisitTypeViewController *)returnVisitTypeViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     [self.returnVisit setObject:[returnVisitTypeViewController type] forKey:CallReturnVisitType];
 	[self.delegate save];
@@ -1564,6 +1565,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	ReturnVisitTypeViewController *p = [[[ReturnVisitTypeViewController alloc] initWithType:type isInitialVisit:([returnVisits lastObject] == self.returnVisit)] autorelease];	
 	p.delegate = self;	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
 }
 
 @end
@@ -1616,7 +1618,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController
 {
-	[[self retain] autorelease];
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	NSMutableDictionary *editedPublication = self.publication;
 	bool newPublication = (editedPublication == nil);
@@ -1730,6 +1731,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
@@ -1740,6 +1742,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		p.delegate = self;
 		
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 }
 
