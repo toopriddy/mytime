@@ -13,7 +13,7 @@ Portuguese.lproj \
 Spanish.lproj \
 Swedish.lproj \
 Slovak.lproj \
-
+Norwegian.lproj \
 
 
 all: genstrings
