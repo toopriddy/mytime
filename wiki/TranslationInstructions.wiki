@@ -152,7 +152,12 @@ Instructions using MyTime Backup on a Mac:
   ## to remove your custom translation (because it might be a bit slow and use a bit more memory, go to More->Settings->Remove Custom Translation, you will have to restart to apply)
   ## you are able to repeat this over and over until you are satisfied with your results
 
-
+= Emailing your translation to me =
+Please send me the UTF16 formatted files like they are.  You do not have to zip/tar/zip/rar them, I do not want to install the latest blah zipping program just to unzip the files you send me.  Also I dont want to be susceptible to a breach of security because you have sent me a zip file infected with a virus/Trojan.  Please just send me the files as they are: text files.  They are small and do not take that much to send.
+When you email the files, please include:
+  # The 2 files
+  # the language that you are translating to 
+  # the version of ipa that I sent the translations with (so I know how to apply some changes that I have to do sometimes). 
 
 = Updating the Localizable.strings with the latest version =
 If you have already submitted a translation or are in the process of translating a file and I update the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file, this section will tell you what to do.
