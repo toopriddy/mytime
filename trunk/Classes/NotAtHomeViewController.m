@@ -5,12 +5,11 @@
 //  Created by Brent Priddy on 10/14/09.
 //  Copyright 2009 Priddy Software, LLC. All rights reserved.
 //
-
+#if 0
 #import "NotAtHomeViewController.h"
 #import "NotAtHomeTerritoryDetailViewController.h"
 #import "Settings.h"
 #import "PSLocalization.h"
-#if 0
 @implementation NotAtHomeViewController
 
 - (NSMutableArray *)entries
@@ -18,15 +17,15 @@
 	if(entries == nil)
 	{
 		NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-		entries = [userSettings objectForKey:SettingsNotAtHomeTerritories];
+		entries = [[userSettings objectForKey:SettingsNotAtHomeTerritories] retain];
 		if(entries == nil)
 		{
-			entries = [NSMutableArray array];
+			entries = [[NSMutableArray alloc] init];
 			[userSettings setObject:entries forKey:SettingsNotAtHomeTerritories];
 		}
 	}
 	
-	return [[entries retain] autorelease];
+	return entries;
 }
 
 - (void)navigationControlAdd:(id)sender

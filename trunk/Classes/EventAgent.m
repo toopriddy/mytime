@@ -490,7 +490,7 @@ again:
 				uint8_t *temp = _buffer + 4;
 				BUFFER_READ_UINT16(temp, _type);
 				BUFFER_READ_UINT32(temp, _flags);
-				NSData *data = [NSData dataWithBytesNoCopy:(_buffer + kMessageHeaderLength) length:(_len - kMessageHeaderLength)];
+				NSData *data = [NSData dataWithBytesNoCopy:(_buffer + kMessageHeaderLength) length:(_len - kMessageHeaderLength) freeWhenDone:NO];
 				
 				DEBUG_ONLY(
 					PrintPacket("EventAgent::handleEvent()", _type, _flags, [NSArray arrayWithObject:data]);

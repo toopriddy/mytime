@@ -142,13 +142,13 @@ NSString * const MultipartVariableTempFilename = @"tempFilename";
 				if(state == READ_FILE_BODY)
 				{
 					[self.tempFileHandle seekToEndOfFile];
-					[self.tempFileHandle writeData:[NSData dataWithBytesNoCopy:(unsigned char *)haystack length:(found - haystack)]];
+					[self.tempFileHandle writeData:[NSData dataWithBytesNoCopy:(unsigned char *)haystack length:(found - haystack) freeWhenDone:NO]];
 					[self.tempFileHandle closeFile];
 					self.tempFileHandle = nil;
 				}
 				else
 				{
-					NSData *data = [NSData dataWithBytesNoCopy:(unsigned char *)haystack length:(found - haystack)];
+					NSData *data = [NSData dataWithBytesNoCopy:(unsigned char *)haystack length:(found - haystack) freeWhenDone:NO];
 					NSMutableString *value = [[self.variableArray lastObject] objectForKey:MultipartVariableValue];
 					[value appendString:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]];
 				}

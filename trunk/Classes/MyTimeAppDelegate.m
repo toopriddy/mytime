@@ -42,6 +42,7 @@
 @synthesize callToImport;
 @synthesize settingsToRestore;
 @synthesize securityNavigationController;
+@synthesize emailNavigationController;
 
 + (MyTimeAppDelegate *)sharedInstance
 {
@@ -302,6 +303,25 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				}
 			}
 			break;
+		case AUTO_BACKUP:
+			switch(button)
+			{
+				// dont email backup
+				case 0:
+				{
+					[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
+					break;
+				}
+				// send email backup
+				case 1:
+				{
+					MFMailComposeViewController *mailView = [Settings sendEmailBackup];
+					mailView.mailComposeDelegate = self;
+					[self.securityNavigationController presentModalViewController:mailView animated:YES];
+					break;
+				}
+			}
+			break;
 	}
 }
 
@@ -327,7 +347,35 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+	if(result == MFMailComposeResultSent)
+	{
+		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
+	}
 	[self.securityNavigationController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)checkAutoBackup
+{
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	NSDate *lastBackupDate = [settings objectForKey:SettingsLastBackupDate];
+	NSDate *dateLimit = nil;
+	NSNumber *backupInterval = [settings objectForKey:SettingsAutoBackupInterval];
+	if(backupInterval)
+	{
+		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-[backupInterval floatValue]];
+	}
+	if(lastBackupDate == nil || (dateLimit && lastBackupDate == [lastBackupDate earlierDate:dateLimit]) )
+	{
+		_actionSheetType = AUTO_BACKUP;
+		UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"It has been a while since you did an email backup, wana do it now? It just takes 2 seconds.", @"This is the message the user is presented with when they have not backed up their mytime data ever, or they are past their autobackup interval")
+																 delegate:self
+														cancelButtonTitle:nil
+												   destructiveButtonTitle:NSLocalizedString(@"I don't want to backup", @"button to not send the email backup.  I want to have this to have the sense of sounding very bad, like: I dont care about my data, dont backup")
+														otherButtonTitles:NSLocalizedString(@"Send email backup", @"button to send the email backup"), nil] autorelease];
+		
+		alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+		[alertSheet showInView:window];
+	}
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -335,7 +383,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// always save data before quitting
 	[[Settings sharedInstance] saveData];
 }
-
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
@@ -391,12 +438,12 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
 		MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 		mailView.mailComposeDelegate = self;
-		self.securityNavigationController = [[[UINavigationController alloc] init] autorelease];
-		[self.window addSubview:self.securityNavigationController.view];
+		self.emailNavigationController = [[[UINavigationController alloc] init] autorelease];
+		[self.window addSubview:self.emailNavigationController.view];
 		// make the window visible
 		[window makeKeyAndVisible];
 
-		[self.securityNavigationController presentModalViewController:mailView animated:YES];
+		[self.emailNavigationController presentModalViewController:mailView animated:YES];
 		return;
 	}
 	
@@ -511,6 +558,16 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// make the window visible
 	[window makeKeyAndVisible];
 	
+	if([defaults boolForKey:UserDefaultsRemovePasscode])
+	{
+		[defaults setBool:NO forKey:UserDefaultsRemovePasscode];
+		[settings removeObjectForKey:SettingsPasscode];
+		[[Settings sharedInstance] saveData];
+	}
+	
+	NSString *passcode = [settings objectForKey:SettingsPasscode];
+	
+	
 	if([settings objectForKey:SettingsMainAlertSheetShown] == nil)
 	{
 		[settings setObject:@"" forKey:SettingsMainAlertSheetShown];
@@ -521,20 +578,18 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
 		[alertSheet show];
 	}
+	else 
+	{
+		if(!passcode.length)
+		{
+			[self checkAutoBackup];
+		}
+	}
+
 
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
 
-	if([defaults boolForKey:UserDefaultsRemovePasscode])
-	{
-		[defaults setBool:NO forKey:UserDefaultsRemovePasscode];
-		[settings removeObjectForKey:SettingsPasscode];
-		[[Settings sharedInstance] saveData];
-	}
-		
-	NSString *passcode = [settings objectForKey:SettingsPasscode];
-		
-		
 	if(passcode.length)
 	{
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
@@ -551,6 +606,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	if(authenticated)
 	{
 		[self.securityNavigationController dismissModalViewControllerAnimated:YES];
+		[self checkAutoBackup];
 	}
 	else
 	{
