@@ -204,6 +204,13 @@ int sortByMetadata(id v1, id v2, void *context)
 			else 
 			{
 				value1 = [metadata objectForKey:CallMetadataData];
+				if(value1 && ![value1 respondsToSelector:@selector(compare:)])
+				{
+#warning remove me next release
+					[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
+					value1 = nil;
+				}
+				
 				if(value1 == nil)
 					value1 = [metadata objectForKey:CallMetadataValue];
 			}
@@ -218,6 +225,12 @@ int sortByMetadata(id v1, id v2, void *context)
 		else 
 		{
 			value2 = [metadata objectForKey:CallMetadataData];
+			if(value2 && ![value2 respondsToSelector:@selector(compare:)])
+			{
+#warning remove me next release
+				[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
+				value2 = nil;
+			}
 			if(value2 == nil)
 				value2 = [metadata objectForKey:CallMetadataValue];
 		}

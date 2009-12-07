@@ -140,6 +140,10 @@ extern NSString * const SettingsRBCTimeEntries;
 
 extern NSString * const SettingsPasscode;
 
+extern NSString * const SettingsLastBackupDate;
+extern NSString * const SettingsAutoBackupInterval;
+extern NSString * const SettingsBackupEmailAddress;
+
 extern NSString * const SettingsDonated;
 extern NSString * const SettingsFirstView;
 extern NSString * const SettingsSecondView;

@@ -24,9 +24,9 @@ static BOOL tableViewIndexMoveOut(id self, SEL _cmd);
 
 typedef enum {
 	ADD_CALL,
-	RESTORE_BACKUP
+	RESTORE_BACKUP,
+	AUTO_BACKUP
 } UrlActionType;
-
 @class MyTimeViewController;
 
 @interface MyTimeAppDelegate : NSObject <UIApplicationDelegate, 
@@ -40,6 +40,7 @@ typedef enum {
 	NSMutableDictionary *callToImport;
 	NSMutableDictionary *settingsToRestore;
 	UINavigationController *securityNavigationController;
+	UINavigationController *emailNavigationController;
 	UrlActionType _actionSheetType;
 }
 
@@ -48,6 +49,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableDictionary *callToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
 @property (nonatomic, retain) UINavigationController *securityNavigationController;
+@property (nonatomic, retain) UINavigationController *emailNavigationController;
 
 + (MyTimeAppDelegate *)sharedInstance;
 

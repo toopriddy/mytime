@@ -125,6 +125,9 @@ NSString * const SettingsTimeEntryDate = @"date";
 NSString * const SettingsTimeEntryMinutes = @"minutes";
 
 NSString * const SettingsPasscode = @"passcode";
+NSString * const SettingsLastBackupDate = @"lastBackup";
+NSString * const SettingsAutoBackupInterval = @"autoBackupInterval";
+NSString * const SettingsBackupEmailAddress = @"backupAddress";
 
 
 NSString * const SettingsDonated = @"donated";
@@ -207,9 +210,15 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 	
 	// attach the real records file
 	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[Settings sharedInstance] filename]] mimeType:@"text/plist" fileName:@"records.plist"];
+	NSDictionary *settings = [[Settings sharedInstance] settings];
 
+	NSString *toEmailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+	if(toEmailAddress)
+	{
+		[mailView setToRecipients:[toEmailAddress componentsSeparatedByString:@" "]];
+	}
 	// now add the url that will allow importing
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:settings];
 	[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
@@ -268,6 +277,12 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	
 	NSMutableString *string = [[NSMutableString alloc] init];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
+
+	NSString *toEmailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+	if(toEmailAddress)
+	{
+		[mailView setToRecipients:[toEmailAddress componentsSeparatedByString:@" "]];
+	}
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
 	for(NSDictionary *userSettings in allUserSettings)

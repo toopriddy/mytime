@@ -355,6 +355,131 @@
 
 /******************************************************************
  *
+ *   BackupEmailAddressCellController
+ *
+ ******************************************************************/
+#pragma mark BackupEmailAddressCellController
+@interface BackupEmailAddressCellController : SettingsCellController <MetadataEditorViewControllerDelegate>
+{
+}
+@end
+@implementation BackupEmailAddressCellController
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"EmailBackupEmailCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = NSLocalizedString(@"Backup Address", @"More->Settings view backup email address");
+	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailAddress];
+	cell.detailTextLabel.text = value;
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailAddress];
+	
+	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Backup Address", @"More->Settings view backup email address") type:EMAIL data:value value:value] autorelease];
+	viewController.delegate = self;
+	viewController.tag = indexPath.row;
+	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
+}
+
+- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
+{
+	[[[Settings sharedInstance] settings] setObject:[metadataEditorViewController value] forKey:SettingsBackupEmailAddress];
+	[[Settings sharedInstance] saveData];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+}
+@end
+
+/******************************************************************
+ *
+ *   EmailBackupIntervalCellController
+ *
+ ******************************************************************/
+#pragma mark EmailBackupIntervalCellController
+@interface EmailBackupIntervalCellController : SettingsCellController <NumberViewControllerDelegate>
+{
+}
+@end
+@implementation EmailBackupIntervalCellController
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"MonthsDisplayedCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	int number = 0;
+	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsAutoBackupInterval];
+	if(value)
+		number = [value intValue];
+	if(number)
+		cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Autobackup After %u Days", @"Autobackup label when enabled in the statistics view, setting title"), number];
+	else 
+		cell.textLabel.text = NSLocalizedString(@"Email Autobackup Disabled", @"Autobackup disabled label in the statistics view, setting title");
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int number = 0;
+	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsAutoBackupInterval];
+	if(value)
+		number = [value intValue];
+	// open up the edit address view 
+	NumberViewController *viewController = [[[NumberViewController alloc] initWithTitle:NSLocalizedString(@"Autobackup Interval", @"Title for selecting the number of days till you autobackup from the statistics view")
+																		  singularLabel:NSLocalizedString(@"Day", @"Day singular") 
+																				  label:NSLocalizedString(@"Days", @"Days plural") 
+																				 number:number
+																					min:0 
+																					max:365] autorelease];
+	viewController.delegate = self;
+	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
+}
+
+- (void)numberViewControllerDone:(NumberViewController *)numberViewController
+{
+	[[[Settings sharedInstance] userSettings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsAutoBackupInterval];
+	[[Settings sharedInstance] saveData];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+}
+@end
+
+
+/******************************************************************
+ *
  *   SecretaryEmailCellController
  *
  ******************************************************************/
@@ -367,7 +492,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"PublisherTypeCell";
+	NSString *commonIdentifier = @"SecretaryEmailCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
@@ -1014,6 +1139,22 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+		
+		// Backup Address
+		{
+			BackupEmailAddressCellController *cellController = [[BackupEmailAddressCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+
+		// Number of months shown in statistics view
+		{
+			EmailBackupIntervalCellController *cellController = [[EmailBackupIntervalCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}		
 		
 		// Secretary Email
 		{
