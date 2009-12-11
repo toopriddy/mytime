@@ -289,7 +289,7 @@
 		907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickNotesViewController.m; sourceTree = "<group>"; };
 		908722C010AF9A9F00580FFF /* rbc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rbc.png; sourceTree = "<group>"; };
 		908722C210AF9AAA00580FFF /* category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = category.png; sourceTree = "<group>"; };
-		908AC5EB10CD489900922E02 /* Norwegian */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		908AC5EB10CD489900922E02 /* Norwegian */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
 		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90ADA7A40F18760200C65E40 /* WebMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebMapViewController.h; sourceTree = "<group>"; };
