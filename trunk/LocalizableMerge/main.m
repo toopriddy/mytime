@@ -29,14 +29,32 @@ int main (int argc, const char * argv[])
 	NSMutableDictionary *entry = [NSMutableDictionary dictionary];
 	
 	NSArray *baseLanguageArray = [baseLanguageFile componentsSeparatedByString:@"\n"];
+	BOOL previousComment = NO;
 	for(NSString *line in baseLanguageArray)
 	{
 //		CFShow(line);
-		
+//		NSLog(@"%@", line);
 		// check for comment
-		if([line hasPrefix:@"/*"])
+		if([line hasPrefix:@"/*"] || previousComment)
 		{
-			[entry setObject:line forKey:@"comment"];
+			if(previousComment)
+			{	
+				[entry setObject:[[entry objectForKey:@"comment"] stringByAppendingFormat:@"\n%@", line] forKey:@"comment"];
+			}
+			else
+			{
+				[entry setObject:line forKey:@"comment"];
+			}
+			if (![line hasSuffix:@"*/"]) 
+			{
+//				NSLog(@"line did not have suffix:\n%@\n", line);
+				previousComment = YES;
+			}
+			else 
+			{
+				previousComment = NO;
+			}
+
 		}
 		// check for a translation entry
 		else if([line hasPrefix:@"\""])
