@@ -410,6 +410,7 @@
 			90B65E5110D9E5AC00260640 /* PBXBookmark */ = 90B65E5110D9E5AC00260640 /* PBXBookmark */;
 			90B65E5210D9E5AC00260640 /* PlistBookmark */ = 90B65E5210D9E5AC00260640 /* PlistBookmark */;
 			90B65E5310D9E5AC00260640 /* PlistBookmark */ = 90B65E5310D9E5AC00260640 /* PlistBookmark */;
+			90B65E5F10D9E65C00260640 /* PlistBookmark */ = 90B65E5F10D9E65C00260640 /* PlistBookmark */;
 			90CBFB68109FB09C00BE8C80 = 90CBFB68109FB09C00BE8C80 /* PBXTextBookmark */;
 			90EF0DE7109BE43A009B724D = 90EF0DE7109BE43A009B724D /* PBXTextBookmark */;
 			90FDE53E10C5EA1300EF6FE0 = 90FDE53E10C5EA1300EF6FE0 /* PBXTextBookmark */;
@@ -3701,6 +3702,18 @@
 		rLoc = 9223372036854775807;
 	};
 	90B65E5310D9E5AC00260640 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundlePackageType,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90B65E5F10D9E65C00260640 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
 		fallbackIsa = PBXBookmark;
