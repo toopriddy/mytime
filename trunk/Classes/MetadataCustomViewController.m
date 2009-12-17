@@ -280,7 +280,17 @@ static MetadataInformation commonInformation[] = {
 {
 	if(tableView.editing)
 	{
-		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:self.value value:self.value] autorelease];
+		NSString *name = nil;
+		if(self.delegate && [self.delegate respondsToSelector:@selector(name)])
+		{
+			name = [(id)self.delegate name];
+		}
+		if(name == nil || [name length] == 0)
+		{
+			name = NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen");
+		}
+			
+		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:STRING data:self.value value:self.value] autorelease];
 		[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
 		[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 		p.delegate = self;
@@ -357,7 +367,16 @@ static MetadataInformation commonInformation[] = {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:@"" value:@""] autorelease];
+	NSString *name = nil;
+	if(self.delegate && [self.delegate respondsToSelector:@selector(name)])
+	{
+		name = [(id)self.delegate name];
+	}
+	if(name == nil || [name length] == 0)
+	{
+		name = NSLocalizedString(@"Choice Name", @"The title used in the Settings->Multiple Users screen");
+	}
+	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:STRING data:@"" value:@""] autorelease];
 	[p setPlaceholder:NSLocalizedString(@"Enter the multiple choice value", @"multiple choice value placeholder text")];
 	[p setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 	p.delegate = self;

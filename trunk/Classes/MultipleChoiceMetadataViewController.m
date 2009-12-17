@@ -106,6 +106,11 @@
 	return self;
 }
 
+- (NSString *)name
+{
+	return self.title;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectValue:(NSString *)theValue atIndexPath:(NSIndexPath *)indexPath
 {
 	self.value = theValue;

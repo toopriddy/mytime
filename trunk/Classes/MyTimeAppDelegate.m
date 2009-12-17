@@ -317,7 +317,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 					mailView.mailComposeDelegate = self;
-					[self.securityNavigationController presentModalViewController:mailView animated:YES];
+					[self.emailNavigationController presentModalViewController:mailView animated:YES];
 					break;
 				}
 			}
@@ -351,7 +351,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
 	}
-	[self.securityNavigationController dismissModalViewControllerAnimated:YES];
+	[self.emailNavigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)checkAutoBackup
@@ -362,7 +362,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	NSNumber *backupInterval = [settings objectForKey:SettingsAutoBackupInterval];
 	if(backupInterval)
 	{
-		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-[backupInterval floatValue]];
+		// subtract the number of days from now
+		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-([backupInterval floatValue] * 60 * 60 * 24)];
 	}
 	if(lastBackupDate == nil || (dateLimit && lastBackupDate == [lastBackupDate earlierDate:dateLimit]) )
 	{
