@@ -293,14 +293,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>233</integer>
-									<integer>230</integer>
+									<integer>229</integer>
 									<integer>202</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 3636}, {302, 776}}</string>
+							<string>{{0, 3736}, {302, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -330,14 +329,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90B569B510292C4D000065ED</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Localizable.strings</string>
+								<string>Info.plist</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -345,11 +342,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90B569B610292C4D000065ED</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Localizable.strings</string>
+										<string>Info.plist</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90B65E4B10D9E11B00260640</string>
+										<string>90B65E5310D9E5AC00260640</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -453,7 +450,6 @@
 											<string>905970BF10CCCC6400FA2254</string>
 											<string>905970C210CCCC6400FA2254</string>
 											<string>905970C410CCCC6400FA2254</string>
-											<string>905970E110CCD0A600FA2254</string>
 											<string>908D8FA910D5E9A000C212BC</string>
 											<string>908D8FAA10D5E9A000C212BC</string>
 											<string>908D8FAB10D5E9A000C212BC</string>
@@ -497,7 +493,9 @@
 											<string>90B65E4510D9E0F100260640</string>
 											<string>90B65E4610D9E0F100260640</string>
 											<string>90B65E4710D9E0F100260640</string>
-											<string>90B65E4810D9E0F100260640</string>
+											<string>90B65E5010D9E5AC00260640</string>
+											<string>90B65E5110D9E5AC00260640</string>
+											<string>90B65E5210D9E5AC00260640</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -833,7 +831,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>90B65E4A10D9E0F100260640</string>
 		<string>90B65D8E10D9CD9600260640</string>
 		<string>90B65D8F10D9CD9600260640</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
