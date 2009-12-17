@@ -232,6 +232,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -293,13 +295,12 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>229</integer>
-									<integer>202</integer>
-									<integer>0</integer>
+									<integer>263</integer>
+									<integer>261</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 3736}, {302, 776}}</string>
+							<string>{{0, 3899}, {302, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -346,7 +347,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90B65E5310D9E5AC00260640</string>
+										<string>90B65E5F10D9E65C00260640</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -535,6 +536,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1114, 250}}</string>
+										<key>RubberWindowFrame</key>
+										<string>2 43 1438 835 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -610,8 +613,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1114, 250}}</string>
-										<key>RubberWindowFrame</key>
-										<string>2 43 1438 835 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
