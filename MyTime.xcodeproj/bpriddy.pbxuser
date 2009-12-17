@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator3.0;
+		activeSDKPreference = iphoneos3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -406,6 +406,10 @@
 			90B65E4810D9E0F100260640 /* PBXTextBookmark */ = 90B65E4810D9E0F100260640 /* PBXTextBookmark */;
 			90B65E4910D9E0F100260640 /* PBXTextBookmark */ = 90B65E4910D9E0F100260640 /* PBXTextBookmark */;
 			90B65E4B10D9E11B00260640 /* PBXTextBookmark */ = 90B65E4B10D9E11B00260640 /* PBXTextBookmark */;
+			90B65E5010D9E5AC00260640 /* PBXTextBookmark */ = 90B65E5010D9E5AC00260640 /* PBXTextBookmark */;
+			90B65E5110D9E5AC00260640 /* PBXBookmark */ = 90B65E5110D9E5AC00260640 /* PBXBookmark */;
+			90B65E5210D9E5AC00260640 /* PlistBookmark */ = 90B65E5210D9E5AC00260640 /* PlistBookmark */;
+			90B65E5310D9E5AC00260640 /* PlistBookmark */ = 90B65E5310D9E5AC00260640 /* PlistBookmark */;
 			90CBFB68109FB09C00BE8C80 = 90CBFB68109FB09C00BE8C80 /* PBXTextBookmark */;
 			90EF0DE7109BE43A009B724D = 90EF0DE7109BE43A009B724D /* PBXTextBookmark */;
 			90FDE53E10C5EA1300EF6FE0 = 90FDE53E10C5EA1300EF6FE0 /* PBXTextBookmark */;
@@ -3670,6 +3674,44 @@
 		vrLen = 3620;
 		vrLoc = 49527;
 	};
+	90B65E5010D9E5AC00260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 1279";
+		rLen = 0;
+		rLoc = 49972;
+		rType = 0;
+		vrLen = 3657;
+		vrLoc = 49527;
+	};
+	90B65E5110D9E5AC00260640 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 90C148CA0E3B923C00C6EDAF /* street.png */;
+	};
+	90B65E5210D9E5AC00260640 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleVersion,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90B65E5310D9E5AC00260640 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundlePackageType,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	90B8F4170E7ECD300022A01F /* German */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {5052, 17346}}";
@@ -4036,8 +4078,8 @@
 	90DD733D0E925C1E007B1B71 /* Dutch */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {5190, 17458}}";
-			sepNavSelRange = "{49697, 0}";
-			sepNavVisRange = "{49527, 3620}";
+			sepNavSelRange = "{49972, 0}";
+			sepNavVisRange = "{49527, 3657}";
 		};
 	};
 	90E2ED6B103B9763000C2032 /* MyTimeAppDelegate.m:145 */ = {
