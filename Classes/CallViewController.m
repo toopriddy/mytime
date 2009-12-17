@@ -1532,8 +1532,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	NSString *type = [self.returnVisit objectForKey:CallReturnVisitType];
 	if(type == nil)
 		type = CallReturnVisitTypeReturnVisit;
-	
-	
+
 	[cell setTitle:NSLocalizedString(@"Type", @"Return visit type label")];
 	// if this is the initial visit, then just say that it is the initial visit
 	if([type isEqualToString:CallReturnVisitTypeReturnVisit] && 

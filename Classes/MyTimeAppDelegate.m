@@ -41,8 +41,7 @@
 @synthesize tabBarController;
 @synthesize callToImport;
 @synthesize settingsToRestore;
-@synthesize securityNavigationController;
-@synthesize emailNavigationController;
+@synthesize modalNavigationController;
 
 + (MyTimeAppDelegate *)sharedInstance
 {
@@ -317,7 +316,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 					mailView.mailComposeDelegate = self;
-					[self.emailNavigationController presentModalViewController:mailView animated:YES];
+					[self.modalNavigationController presentModalViewController:mailView animated:YES];
 					break;
 				}
 			}
@@ -351,7 +350,15 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
 	}
-	[self.emailNavigationController dismissModalViewControllerAnimated:YES];
+	[self.modalNavigationController dismissModalViewControllerAnimated:NO];
+
+	if(forceEmail)
+	{
+		forceEmail = NO;
+		[self.modalNavigationController.view removeFromSuperview];
+		self.modalNavigationController = nil;
+		[self initializeMyTimeViews];
+	}
 }
 
 - (void)checkAutoBackup
@@ -439,15 +446,23 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
 		MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 		mailView.mailComposeDelegate = self;
-		self.emailNavigationController = [[[UINavigationController alloc] init] autorelease];
-		[self.window addSubview:self.emailNavigationController.view];
+		self.modalNavigationController = [[[UINavigationController alloc] init] autorelease];
+
+		[self.window addSubview:self.modalNavigationController.view];
 		// make the window visible
 		[window makeKeyAndVisible];
 
-		[self.emailNavigationController presentModalViewController:mailView animated:YES];
+		[self.modalNavigationController presentModalViewController:mailView animated:YES];
+		forceEmail = YES;
 		return;
 	}
-	
+	[self initializeMyTimeViews];
+}
+
+- (void)initializeMyTimeViews
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
 	// Create a tabbar controller and an array to contain the view controllers
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
@@ -550,12 +565,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			tabBarController.selectedViewController = [array objectAtIndex:index];
 		}
 	}
-	self.securityNavigationController = [[[UINavigationController alloc] initWithRootViewController:tabBarController] autorelease];
-	self.securityNavigationController.navigationBarHidden = YES;
 
-	// set the window subview as the tab bar controller
-	[window addSubview:self.securityNavigationController.view];
+	self.modalNavigationController = [[[UINavigationController alloc] initWithRootViewController:tabBarController] autorelease];
+	self.modalNavigationController.navigationBarHidden = YES;
 	
+	// set the window subview as the tab bar controller
+	[window addSubview:self.modalNavigationController.view];
+
 	// make the window visible
 	[window makeKeyAndVisible];
 	
@@ -598,7 +614,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		securityView.shouldConfirm = NO;
 		securityView.passcode = passcode;
 		securityView.delegate = self;
-		[self.securityNavigationController presentModalViewController:securityView animated:NO];
+		[self.modalNavigationController presentModalViewController:securityView animated:NO];
 	}
 }
 
@@ -606,7 +622,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 	if(authenticated)
 	{
-		[self.securityNavigationController dismissModalViewControllerAnimated:YES];
+		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
 		[self checkAutoBackup];
 	}
 	else
