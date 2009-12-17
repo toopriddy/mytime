@@ -44,6 +44,7 @@ typedef struct
 
 @protocol MultipleChoiceMetadataValueCellControllerDelegate
 @required
+- (NSString *)name;
 - (void)tableView:(UITableView *)tableView didSelectValue:(NSString *)value atIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)selectedMetadataValue;
 @end

@@ -103,7 +103,7 @@
 	{
 		_type = type;
 		_firstResponder = nil;
-		
+		self.hidesBottomBarWhenPushed = YES;
 		switch(type)
 		{
 			case PHONE:
@@ -184,6 +184,8 @@
 				self.textView.font = [UIFont systemFontOfSize:16];
 				[_textView setKeyboardType:UIKeyboardTypeDefault];
 				_textView.text = value;
+				_textView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+
 				_firstResponder = _textView;
 				break;
 			}
@@ -231,7 +233,17 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return(NO);
+	switch(_type)
+	{
+		case PHONE:
+		case EMAIL:
+		case URL:
+		case STRING:
+		case NOTES:
+		case SWITCH:
+			return YES;
+	}
+	return NO;
 }
 
 - (void)navigationControlDone:(id)sender 
@@ -249,6 +261,23 @@
 	if(_firstResponder)
 		[_firstResponder becomeFirstResponder];
 }
+
+- (void)updateTextView
+{
+	// make a picker for the publications
+	// make a picker for the publications
+	CGRect textViewRect = [self.view bounds];
+	if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+	{
+		textViewRect.size.height -= 160;
+	}
+	else
+	{
+		textViewRect.size.height = 200;
+	}
+	_textView.frame = textViewRect;
+}
+
 
 - (void)loadView 
 {
@@ -300,18 +329,8 @@
 			self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 			// set the autoresizing mask so that the table will always fill the view
 			self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-			
-			// make a picker for the publications
-			CGRect textViewRect = [self.view bounds];
-			if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-			{
-				textViewRect.size.height -= 160;
-			}
-			else
-			{
-				textViewRect.size.height = 200;
-			}
-			_textView.frame = textViewRect;
+
+			[self updateTextView];
 			[self.view setBackgroundColor:[UIColor whiteColor]];
 			[self.view addSubview:_textView];
 			break;
@@ -344,6 +363,15 @@
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
 	[self performSelector:@selector(setResponder) withObject:nil afterDelay:0.1];
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	if(_type == NOTES)
+	{
+		[self updateTextView];
+	}
+}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {

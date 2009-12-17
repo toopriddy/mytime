@@ -277,7 +277,10 @@
 	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
 	if(value)
 		number = [value intValue];
-	cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d Months Displayed", @"Number of months shown in the statistics view, setting title"), number];
+	if(number == 1)
+		cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d Month Displayed", @"Number of months shown in the statistics view, setting title"), number];
+	else
+		cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d Months Displayed", @"Number of months shown in the statistics view, setting title"), number];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -431,13 +434,21 @@
 	}
 	
 	int number = 0;
-	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsAutoBackupInterval];
+	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsAutoBackupInterval];
 	if(value)
 		number = [value intValue];
 	if(number)
-		cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Autobackup After %u Days", @"Autobackup label when enabled in the statistics view, setting title"), number];
+	{
+		if(number == 1)
+		{
+			cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Autobackup every day", @"Autobackup label when enabled in the statistics view, setting title"), number];
+		}
+		else
+		{
+			cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Autobackup after %u days", @"Autobackup label when enabled in the statistics view, setting title"), number];
+		}
 	else 
-		cell.textLabel.text = NSLocalizedString(@"Email Autobackup Disabled", @"Autobackup disabled label in the statistics view, setting title");
+		cell.textLabel.text = NSLocalizedString(@"Email autobackup disabled", @"Autobackup disabled label in the statistics view, setting title");
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;
@@ -446,7 +457,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	int number = 0;
-	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsAutoBackupInterval];
+	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsAutoBackupInterval];
 	if(value)
 		number = [value intValue];
 	// open up the edit address view 
@@ -463,7 +474,7 @@
 
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
 {
-	[[[Settings sharedInstance] userSettings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsAutoBackupInterval];
+	[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsAutoBackupInterval];
 	[[Settings sharedInstance] saveData];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)

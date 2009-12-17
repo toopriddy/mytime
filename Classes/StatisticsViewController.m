@@ -103,6 +103,8 @@ static NSString *MONTHS[] = {
 	NSString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
 	if([notes length])
 	{
+		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 		[string appendString:notes];
 		[string appendFormat:@"<br><br>"];
 	}

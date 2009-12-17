@@ -139,6 +139,7 @@
 	[self.navigationController popToViewController:self animated:YES];
 	[[[Settings sharedInstance] settings] setObject:notesViewController.textView.text forKey:SettingsSecretaryEmailNotes];
 	[[Settings sharedInstance] saveData];
+	[self.theTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

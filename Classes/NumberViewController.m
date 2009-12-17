@@ -41,6 +41,7 @@
 															   number:number
 														singularTitle:singularLabel
 															    title:label];
+		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
 }
@@ -56,7 +57,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return(NO);
+	return NO;
 }
 
 - (void)navigationControlDone:(id)sender 
