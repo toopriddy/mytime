@@ -447,8 +447,11 @@
 		{
 			cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Autobackup after %u days", @"Autobackup label when enabled in the statistics view, setting title"), number];
 		}
+	}
 	else 
+	{
 		cell.textLabel.text = NSLocalizedString(@"Email autobackup disabled", @"Autobackup disabled label in the statistics view, setting title");
+	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;

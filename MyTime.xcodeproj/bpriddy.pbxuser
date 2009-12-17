@@ -400,6 +400,12 @@
 			90B65E3B10D9E09600260640 /* PBXTextBookmark */ = 90B65E3B10D9E09600260640 /* PBXTextBookmark */;
 			90B65E3D10D9E09600260640 /* PBXTextBookmark */ = 90B65E3D10D9E09600260640 /* PBXTextBookmark */;
 			90B65E3E10D9E09600260640 /* PBXTextBookmark */ = 90B65E3E10D9E09600260640 /* PBXTextBookmark */;
+			90B65E4510D9E0F100260640 /* PBXTextBookmark */ = 90B65E4510D9E0F100260640 /* PBXTextBookmark */;
+			90B65E4610D9E0F100260640 /* PBXTextBookmark */ = 90B65E4610D9E0F100260640 /* PBXTextBookmark */;
+			90B65E4710D9E0F100260640 /* PBXTextBookmark */ = 90B65E4710D9E0F100260640 /* PBXTextBookmark */;
+			90B65E4810D9E0F100260640 /* PBXTextBookmark */ = 90B65E4810D9E0F100260640 /* PBXTextBookmark */;
+			90B65E4910D9E0F100260640 /* PBXTextBookmark */ = 90B65E4910D9E0F100260640 /* PBXTextBookmark */;
+			90B65E4B10D9E11B00260640 /* PBXTextBookmark */ = 90B65E4B10D9E11B00260640 /* PBXTextBookmark */;
 			90CBFB68109FB09C00BE8C80 = 90CBFB68109FB09C00BE8C80 /* PBXTextBookmark */;
 			90EF0DE7109BE43A009B724D = 90EF0DE7109BE43A009B724D /* PBXTextBookmark */;
 			90FDE53E10C5EA1300EF6FE0 = 90FDE53E10C5EA1300EF6FE0 /* PBXTextBookmark */;
@@ -534,9 +540,9 @@
 	};
 	900FA5131064405500C246FE /* SettingsTableViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1410, 18088}}";
-			sepNavSelRange = "{15326, 0}";
-			sepNavVisRange = "{15293, 1472}";
+			sepNavIntBoundsRect = "{{0, 0}, {1410, 18144}}";
+			sepNavSelRange = "{15671, 0}";
+			sepNavVisRange = "{15469, 1578}";
 			sepNavWindowFrame = "{{38, 77}, {1185, 775}}";
 		};
 	};
@@ -1001,7 +1007,7 @@
 		ignoreCount = 0;
 		lineNumber = 226;
 		location = MyTime;
-		modificationTime = 282713541.187603;
+		modificationTime = 282714340.062355;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -1211,7 +1217,7 @@
 		ignoreCount = 0;
 		lineNumber = 708;
 		location = MyTime;
-		modificationTime = 282713541.191572;
+		modificationTime = 282714340.066071;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1229,7 +1235,7 @@
 		ignoreCount = 0;
 		lineNumber = 557;
 		location = MyTime;
-		modificationTime = 282713541.191859;
+		modificationTime = 282714340.066554;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1247,7 +1253,7 @@
 		ignoreCount = 0;
 		lineNumber = 1289;
 		location = MyTime;
-		modificationTime = 282713541.192146;
+		modificationTime = 282714340.066997;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1265,7 +1271,7 @@
 		ignoreCount = 0;
 		lineNumber = 548;
 		location = MyTime;
-		modificationTime = 282713541.192442;
+		modificationTime = 282714340.067505;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1594,7 +1600,7 @@
 		ignoreCount = 0;
 		lineNumber = 151;
 		location = MyTime;
-		modificationTime = 282713541.187934;
+		modificationTime = 282714340.062563;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1612,7 +1618,7 @@
 		ignoreCount = 0;
 		lineNumber = 127;
 		location = MyTime;
-		modificationTime = 282713541.188235;
+		modificationTime = 282714340.062809;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -1688,7 +1694,7 @@
 		fRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */;
 		name = "SettingsTableViewController.m: 466";
 		rLen = 0;
-		rLoc = 17121;
+		rLoc = 17130;
 		rType = 0;
 		vrLen = 1480;
 		vrLoc = 15888;
@@ -1861,7 +1867,7 @@
 		ignoreCount = 0;
 		lineNumber = 476;
 		location = MyTime;
-		modificationTime = 282713541.192677;
+		modificationTime = 282714340.067869;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1879,7 +1885,7 @@
 		ignoreCount = 0;
 		lineNumber = 168;
 		location = MyTime;
-		modificationTime = 282713541.192902;
+		modificationTime = 282714340.068228;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1911,7 +1917,7 @@
 		ignoreCount = 0;
 		lineNumber = 232;
 		location = MyTime;
-		modificationTime = 282713541.185636;
+		modificationTime = 282714340.060833;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1929,7 +1935,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 282713541.186377;
+		modificationTime = 282714340.061461;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1947,7 +1953,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 282713541.186643;
+		modificationTime = 282714340.06167;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1965,7 +1971,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 282713541.186939;
+		modificationTime = 282714340.061932;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1983,7 +1989,7 @@
 		ignoreCount = 0;
 		lineNumber = 149;
 		location = MyTime;
-		modificationTime = 282713541.18729;
+		modificationTime = 282714340.062153;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2001,7 +2007,7 @@
 		ignoreCount = 0;
 		lineNumber = 416;
 		location = MyTime;
-		modificationTime = 282713541.188526;
+		modificationTime = 282714340.063036;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -2092,9 +2098,9 @@
 	};
 	907A63990EFD8EC6002E4144 /* en_US */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1548, 18662}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1548, 18830}}";
 			sepNavSelRange = "{28713, 20}";
-			sepNavVisRange = "{27948, 1072}";
+			sepNavVisRange = "{28074, 876}";
 		};
 	};
 	907BEA0F0FB212DA00178ED6 /* OverlayViewController.h */ = {
@@ -2505,7 +2511,7 @@
 	};
 	90ADA7640F18757800C65E40 /* en_UK */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1548, 18816}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1548, 18844}}";
 			sepNavSelRange = "{27737, 0}";
 			sepNavVisRange = "{27417, 708}";
 		};
@@ -2843,7 +2849,7 @@
 		ignoreCount = 0;
 		lineNumber = 350;
 		location = MyTime;
-		modificationTime = 282713541.19356;
+		modificationTime = 282714340.069036;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -3323,7 +3329,7 @@
 		fRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */;
 		name = "SettingsTableViewController.m: 453";
 		rLen = 20;
-		rLoc = 16408;
+		rLoc = 16417;
 		rType = 0;
 		vrLen = 1692;
 		vrLoc = 15440;
@@ -3603,6 +3609,66 @@
 		rType = 0;
 		vrLen = 708;
 		vrLoc = 27417;
+	};
+	90B65E4510D9E0F100260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907A63990EFD8EC6002E4144 /* en_US */;
+		name = "Localizable.strings: 790";
+		rLen = 20;
+		rLoc = 28713;
+		rType = 0;
+		vrLen = 876;
+		vrLoc = 28074;
+	};
+	90B65E4610D9E0F100260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90ADA7640F18757800C65E40 /* en_UK */;
+		name = "Localizable.strings: 753";
+		rLen = 0;
+		rLoc = 27737;
+		rType = 0;
+		vrLen = 708;
+		vrLoc = 27417;
+	};
+	90B65E4710D9E0F100260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */;
+		name = "SettingsTableViewController.m: 448";
+		rLen = 0;
+		rLoc = 15671;
+		rType = 0;
+		vrLen = 1578;
+		vrLoc = 15469;
+	};
+	90B65E4810D9E0F100260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 46";
+		rLen = 6;
+		rLoc = 2533;
+		rType = 0;
+		vrLen = 1758;
+		vrLoc = 1736;
+	};
+	90B65E4910D9E0F100260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 1309";
+		rLen = 0;
+		rLoc = 53496;
+		rType = 0;
+		vrLen = 2981;
+		vrLoc = 50270;
+	};
+	90B65E4B10D9E11B00260640 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90DD733D0E925C1E007B1B71 /* Dutch */;
+		name = "Localizable.strings: 1276";
+		rLen = 0;
+		rLoc = 49697;
+		rType = 0;
+		vrLen = 3620;
+		vrLoc = 49527;
 	};
 	90B8F4170E7ECD300022A01F /* German */ = {
 		uiCtxt = {
@@ -3924,7 +3990,7 @@
 		ignoreCount = 0;
 		lineNumber = 700;
 		location = MyTime;
-		modificationTime = 282713541.190974;
+		modificationTime = 282714340.065181;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -3942,7 +4008,7 @@
 		ignoreCount = 0;
 		lineNumber = 326;
 		location = MyTime;
-		modificationTime = 282713541.191266;
+		modificationTime = 282714340.065493;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -3969,9 +4035,9 @@
 	};
 	90DD733D0E925C1E007B1B71 /* Dutch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {5190, 17668}}";
-			sepNavSelRange = "{2533, 6}";
-			sepNavVisRange = "{1480, 2014}";
+			sepNavIntBoundsRect = "{{0, 0}, {5190, 17458}}";
+			sepNavSelRange = "{49697, 0}";
+			sepNavVisRange = "{49527, 3620}";
 		};
 	};
 	90E2ED6B103B9763000C2032 /* MyTimeAppDelegate.m:145 */ = {
@@ -3988,7 +4054,7 @@
 		ignoreCount = 0;
 		lineNumber = 145;
 		location = MyTime;
-		modificationTime = 282713541.188866;
+		modificationTime = 282714340.063313;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4006,7 +4072,7 @@
 		ignoreCount = 0;
 		lineNumber = 139;
 		location = MyTime;
-		modificationTime = 282713541.1891;
+		modificationTime = 282714340.063544;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4024,7 +4090,7 @@
 		ignoreCount = 0;
 		lineNumber = 188;
 		location = MyTime;
-		modificationTime = 282713541.189401;
+		modificationTime = 282714340.063773;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4042,7 +4108,7 @@
 		ignoreCount = 0;
 		lineNumber = 184;
 		location = MyTime;
-		modificationTime = 282713541.189695;
+		modificationTime = 282714340.063996;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4060,7 +4126,7 @@
 		ignoreCount = 0;
 		lineNumber = 199;
 		location = MyTime;
-		modificationTime = 282713541.190034;
+		modificationTime = 282714340.064241;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4078,7 +4144,7 @@
 		ignoreCount = 0;
 		lineNumber = 194;
 		location = MyTime;
-		modificationTime = 282713541.190339;
+		modificationTime = 282714340.064606;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4110,7 +4176,7 @@
 		ignoreCount = 0;
 		lineNumber = 67;
 		location = MyTime;
-		modificationTime = 282713541.190653;
+		modificationTime = 282714340.064935;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 	};
@@ -4546,7 +4612,7 @@
 		ignoreCount = 0;
 		lineNumber = 697;
 		location = MyTime;
-		modificationTime = 282713541.193256;
+		modificationTime = 282714340.068614;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
