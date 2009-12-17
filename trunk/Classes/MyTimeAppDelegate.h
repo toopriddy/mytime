@@ -39,17 +39,18 @@ typedef enum {
 	UITabBarController *tabBarController;
 	NSMutableDictionary *callToImport;
 	NSMutableDictionary *settingsToRestore;
-	UINavigationController *securityNavigationController;
-	UINavigationController *emailNavigationController;
+	UINavigationController *modalNavigationController;
 	UrlActionType _actionSheetType;
+	BOOL forceEmail;
 }
 
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *callToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
-@property (nonatomic, retain) UINavigationController *securityNavigationController;
-@property (nonatomic, retain) UINavigationController *emailNavigationController;
+@property (nonatomic, retain) UINavigationController *modalNavigationController;
+
+- (void)initializeMyTimeViews;
 
 + (MyTimeAppDelegate *)sharedInstance;
 
