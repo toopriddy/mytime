@@ -789,8 +789,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		[call setObject:metadataArray forKey:CallMetadata];
 	}
 	
-	NSMutableDictionary *newData = [NSMutableDictionary dictionaryWithDictionary:metadata];
+	NSMutableDictionary *newData = [metadata mutableCopy];
 	[metadataArray addObject:newData];
+	[newData release];
 	switch([[metadata objectForKey:CallMetadataType] intValue])
 	{
 		case PHONE:
@@ -1886,7 +1887,14 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			NSMutableArray *returnVisits = [[[NSMutableArray alloc] initWithArray:[_call objectForKey:CallReturnVisits]] autorelease];
 			[_call setObject:returnVisits forKey:CallReturnVisits];
 			// make the preferred metadata show up
-			NSMutableArray *metadata = [[NSMutableArray arrayWithArray:[[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata]] mutableCopy];
+			NSMutableArray *metadata = [[NSMutableArray alloc] init];
+			for(NSMutableDictionary *entry in [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata])
+			{
+				NSMutableDictionary *newMetadata = [entry mutableCopy];
+				[newMetadata removeObjectForKey:CallMetadataValue];
+				[metadata addObject:newMetadata];
+				[newMetadata release];
+			}
 			[_call setObject:metadata forKey:CallMetadata];
 			[metadata release];
 			
