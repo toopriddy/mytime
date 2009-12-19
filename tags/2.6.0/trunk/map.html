@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script
+    src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA8ZaIKMZcvWHNxFL4rpcPlxR4MgLgohEpMJOdpRIqyc07Qp4zFRRNU4wM18YEuS7Vh24_NSPNY8OJVA"
+      type="text/javascript"></script>
+
+<!-- Make the document body take up the full screen --> <style
+type="text/css"> v\:* {behavior:url(#default#VML);} html, body {width: 100%;
+height: 100%} body {margin-top: 0px; margin-right: 0px; margin-left: 0px;
+margin-bottom: 0px} </style>
+
+</head>
+<body>
+  <div id="dummy"></div>
+  <!-- Declare the div, make it take up the full document body -->
+  <div id="map" style="width: 100%; height: 100%;"></div>
+
+  <script type="text/javascript">
+    //<![CDATA[        
+
+var addresses = [];
+var results = [];
+var resultsSaved = [];
+var markers = [];
+var info = []
+var resultsIter = 0;
+var map = null;
+var geocoder = null;
+var first = true;
+var zoomLevel = 16;
+var openMarker = -1;
+
+if (GBrowserIsCompatible()) 
+{
+	map = new GMap(document.getElementById("map"));
+	map.enableDoubleClickZoom();
+	geocoder = new GClientGeocoder();
+	
+	// Monitor the window resize event and let the map know when it occurs 
+	if(window.attachEvent) 
+	{ 
+		window.attachEvent("onresize", function() {this.map.onResize()} ); 
+	} 
+	else 
+	{ 
+		window.addEventListener("resize",function() {this.map.onResize()} , false); 
+	}
+}
+
+function generateClickEvent(x, y)
+{
+	var bounds = map.getBounds();
+	var width = document.body.clientWidth;
+	var height = document.body.clientHeight;
+	var mapWidth = bounds.toSpan().lng();
+	var mapHeight = bounds.toSpan().lat();
+	var mapy = (mapHeight/height)*(-y) + bounds.getNorthEast().lat();
+	var mapx = (mapWidth/width)*x + bounds.getSouthWest().lng();
+	var xdiff = (mapWidth/width)*10;
+	var ydiff = (mapHeight/height)*20;
+	var sw = new GLatLng(mapy - ydiff, mapx - xdiff);
+	var ne = new GLatLng(mapy + ydiff, mapx + xdiff);
+	var mouseBounds = new GLatLngBounds(sw, ne);
+	var center = mouseBounds.getCenter();
+	var count = markers.length;
+	var i = 0;
+	for(i = 0; i < count; ++i)
+	{
+		if(mouseBounds.containsLatLng(markers[i].getLatLng()))
+		{
+			if(openMarker == i)
+			{
+				markers[i].closeInfoWindow();
+				openMarker = -1;
+			}
+			else
+			{
+				markers[i].openInfoWindowHtml(info[i]);
+				openMarker = i;
+			}
+			break;
+		}
+	}
+}
+
+function showAddress(information, lat, long) 
+{
+	var point = new GLatLng(lat, long, true);
+	if(first)
+	{
+		map.setCenter(point, zoomLevel);
+		first = false;
+	}
+	var marker = new GMarker(point);
+	map.addOverlay(marker);
+	info.push(information);
+	// put the marker on the array of markers
+	var count = markers.push(marker);
+	
+	while(!map.getBounds().containsLatLng(point))
+	{
+		map.zoomOut();
+		zoomLevel = map.getZoom();
+	}
+}
+
+function findAddress(information, address) 
+{
+	if (geocoder) 
+	{
+		var iter = resultsIter;
+		
+		addresses[iter] = address;
+		results[iter] = "";
+		resultsSaved[iter] = 0;
+		resultsIter++;
+		
+		geocoder.getLatLng(address, 
+			function (point) 
+			{
+				if (point) 
+				{
+					results[iter] = "" + point.lat() + ", " + point.lng();
+					
+					showAddress(information, point.lat(), point.lng());
+				}
+				else
+				{
+					results[iter] = "nil";
+				}
+			}
+		);
+	}
+}
+
+function getNextResult()
+{
+	var i;
+	var possibilities = 0;
+	for(i = 0; i < resultsIter; i++)
+	{
+		if(resultsSaved[i] == 0)
+			possibilities++;
+			
+		if(results[i] != "")
+		{
+			return(i);
+		}
+	}
+	if(possibilities != 0)
+		return(-2);
+		
+	// nothing left to search for, stop searching
+	return(-1);
+}
+
+function getResult(i)
+{
+	var ret = results[i];
+	results[i] = "";
+	resultsSaved[i] = 1;
+	return(ret);
+}
+
+function getAddress(i)
+{
+	return(addresses[i]);
+}
+
+    //]]>
+  </script>
+
+</body></html>
+
