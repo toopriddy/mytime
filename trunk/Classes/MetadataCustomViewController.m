@@ -457,7 +457,7 @@ static MetadataInformation commonInformation[] = {
 	}
 	else 
 	{
-		cell.textLabel.text = commonInformation[index].name;
+		cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:commonInformation[index].name value:commonInformation[index].name table:@""];
 	}
 	cell.editingAccessoryType = (self.delegate.selected == index) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
