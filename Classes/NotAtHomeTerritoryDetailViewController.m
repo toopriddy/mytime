@@ -7,9 +7,13 @@
 //
 
 #import "NotAtHomeTerritoryDetailViewController.h"
-#include "UITableViewTextFieldCell.h"
+#import "UITableViewTextFieldCell.h"
+#import "NotesViewController.h"
+#import "Settings.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "PSLocalization.h"
-#if 0
+
 @interface NotAtHomeTerritoryViewCellController : NSObject<TableViewCellController>
 {
 	NotAtHomeTerritoryDetailViewController *delegate;
@@ -35,22 +39,12 @@
 @interface TerritoryNameCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
 {
 @private	
-	UITextField *name;
 	BOOL obtainFocus;
 }
-@property (nonatomic, retain) UITextField *name;
 @property (nonatomic, assign) BOOL obtainFocus;
 @end
 @implementation TerritoryNameCellController
-@synthesize name;
 @synthesize obtainFocus;
-
-- (void)dealloc
-{
-	self.name = nil;
-	
-	[super dealloc];
-}
 
 - (BOOL)isViewableWhenNotEditing
 {
@@ -63,12 +57,15 @@
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault textField:_name reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
-	else
+	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
+	if(name == nil)
 	{
-		cell.textField = self.name;
+		name = [[NSMutableString alloc] init];
+		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryName];
 	}
+	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	cell.delegate = self;
 	cell.observeEditing = YES;
 	if(tableView.editing)
@@ -88,8 +85,18 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self.name becomeFirstResponder];
+	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
 	[tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
+{
+}
+
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	[[self.delegate.territory objectForKey:NotAtHomeTerritoryName] replaceCharactersInRange:range withString:string];
+	return YES;
 }
 
 @end
@@ -115,30 +122,52 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
-	
 	cell.textLabel.text = NSLocalizedString(@"Create a note from scratch", @"More View Table Enable shown popups");
 	
+//	[cell.textLabel.r addSubView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:@""] autorelease];
-	p.delegate = self;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+	picker.title = NSLocalizedString(@"Email Address", @"pick an email address");
+	picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
+    picker.peoplePickerDelegate = self;
+    [[self.delegate navigationController] presentModalViewController:picker animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:picker];
+    [picker release];
 }
 
-- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker 
 {
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notesViewControllerDone:)])
-	{
-		[self.delegate.delegate notesViewControllerDone:notesViewController];
-	}
+    [[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
 }
 
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+	  shouldContinueAfterSelectingPerson:(ABRecordRef)person 
+{
+#if 0
+    NSString* name = (NSString *)ABRecordCopyValue(person,
+												   kABPersonFirstNameProperty);
+    self.firstName.text = name;
+    [name release];
+	name = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    self.lastName.text = name;
+    [name release];
+#endif
+//    [[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
+    return YES;
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
+}
 @end
 
 
@@ -146,6 +175,15 @@
 @implementation NotAtHomeTerritoryDetailViewController
 @synthesize territory;
 @synthesize delegate;
+
+- (id)init
+{
+	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
+	{
+		
+	}
+	return self;
+}
 
 - (void)constructSectionControllers
 {
@@ -183,4 +221,3 @@
 
 
 @end
-#endif
