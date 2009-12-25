@@ -5,7 +5,6 @@
 //  Created by Brent Priddy on 10/14/09.
 //  Copyright 2009 Priddy Software, LLC. All rights reserved.
 //
-#if 0
 #import "NotAtHomeViewController.h"
 #import "NotAtHomeTerritoryDetailViewController.h"
 #import "Settings.h"
@@ -31,7 +30,7 @@
 - (void)navigationControlAdd:(id)sender
 {
 	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] init] autorelease];
-	
+
 	// create a custom navigation bar button and set it to always say "back"
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
@@ -167,4 +166,3 @@
 }
 
 @end
-#endif

@@ -73,6 +73,8 @@
 		906143AD0E51312E0072BA7B /* HourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143AC0E51312E0072BA7B /* HourViewController.m */; };
 		906143D10E5144ED0072BA7B /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906143D00E5144ED0072BA7B /* TimePickerViewController.m */; };
 		90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */; };
+		90742DA610E340BD004FAA60 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90742DA510E340BD004FAA60 /* AddressBookUI.framework */; };
+		90742DFC10E34956004FAA60 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90742DFB10E34956004FAA60 /* AddressBook.framework */; };
 		907A23160ECA82A600BE38DD /* MetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A23150ECA82A600BE38DD /* MetadataViewController.m */; };
 		907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */; };
 		907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907BEA100FB212DA00178ED6 /* OverlayViewController.m */; };
@@ -277,6 +279,8 @@
 		9064D8B40ED11A4900A0FBBB /* Portuguese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Portuguese; path = Portuguese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90674D330F1ABBB800D524C0 /* GeocacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocacheViewController.m; sourceTree = "<group>"; };
 		90674D340F1ABBB800D524C0 /* GeocacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocacheViewController.h; sourceTree = "<group>"; };
+		90742DA510E340BD004FAA60 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		90742DFB10E34956004FAA60 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataViewController.h; sourceTree = "<group>"; };
 		907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataViewController.m; sourceTree = "<group>"; };
 		907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataEditorViewController.h; sourceTree = "<group>"; };
@@ -419,6 +423,8 @@
 				90ADA7D30F1877C100C65E40 /* libsqlite3.dylib in Frameworks */,
 				903FF249102A058000CC60B8 /* CFNetwork.framework in Frameworks */,
 				905C1BC510BBA6C100A3FD8D /* MessageUI.framework in Frameworks */,
+				90742DA610E340BD004FAA60 /* AddressBookUI.framework in Frameworks */,
+				90742DFC10E34956004FAA60 /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +522,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				90742DFB10E34956004FAA60 /* AddressBook.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -578,6 +585,7 @@
 				90FBE8F80E39AD7100FD8014 /* CoreGraphics.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				90742DA510E340BD004FAA60 /* AddressBookUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
