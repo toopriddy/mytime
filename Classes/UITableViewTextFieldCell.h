@@ -23,6 +23,7 @@
 	UILabel *valueLabel;
 	UIResponder *nextKeyboardResponder;
 	BOOL observeEditing;
+	BOOL ownedTextField;
 	id<UITableViewTextFieldCellDelegate> delegate;
 	BOOL allowSelectionWhenNotEditing;
 	BOOL allowSelectionWhenEditing;

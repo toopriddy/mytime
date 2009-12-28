@@ -45,7 +45,7 @@
 	int year = [dateComponents year];
     int day = 1;
 
-    return([self initWithPublication:[PublicationPickerView watchtower] year:year month:month day:day showCount:doShowCount number:0 filter:filter]);
+    return([self initWithPublication:[PublicationPickerView watchtowerAndAwake] year:year month:month day:day showCount:doShowCount number:0 filter:filter]);
 }
 
 // initialize this view given the curent configuration

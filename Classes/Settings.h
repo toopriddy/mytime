@@ -77,6 +77,7 @@ extern NSString * const SettingsBulkLiterature;
 #define PublicationTypeDVDNotCount		AlternateLocalizedString(@"DVD (not counted)", @"Publication Type name") 
 #define PublicationTypeBook				AlternateLocalizedString(@"Book", @"Publication Type name")
 #define PublicationTypeBrochure			AlternateLocalizedString(@"Brochure", @"Publication Type name")
+#define PublicationTypeTwoMagazine			AlternateLocalizedString(@"TwoMagazine", @"Publication Type name")
 #define PublicationTypeMagazine			AlternateLocalizedString(@"Magazine", @"Publication Type name")
 #define PublicationTypeTract			AlternateLocalizedString(@"Tract", @"Publication Type name")
 #define PublicationTypeCampaignTract	AlternateLocalizedString(@"Campaign Tract", @"Publication Type name")
@@ -153,13 +154,16 @@ extern NSString * const SettingsFourthView;
 //multiple users
 extern NSString * const SettingsNotAtHomeTerritories;
 	extern NSString * const NotAtHomeTerritoryName;
+	extern NSString * const NotAtHomeTerritoryOwnerId;
+	extern NSString * const NotAtHomeTerritoryOwnerEmailId;
+	extern NSString * const NotAtHomeTerritoryOwnerEmailAddress;
 	extern NSString * const NotAtHomeTerritoryStreets;
-	extern NSString * const NotAtHomeTerritoryStreetName;
-	extern NSString * const NotAtHomeTerritoryCity;
-	extern NSString * const NotAtHomeTerritoryState;
-	extern NSString * const NotAtHomeTerritoryHouses;
-	extern NSString * const NotAtHomeTerritoryHouseNumber;
-	extern NSString * const NotAtHomeTerritoryHouseAttempts;
+		extern NSString * const NotAtHomeTerritoryStreetName;
+		extern NSString * const NotAtHomeTerritoryCity;
+		extern NSString * const NotAtHomeTerritoryState;
+		extern NSString * const NotAtHomeTerritoryHouses;
+			extern NSString * const NotAtHomeTerritoryHouseNumber;
+			extern NSString * const NotAtHomeTerritoryHouseAttempts;
 
 
 //multiple users

@@ -7,6 +7,8 @@
 //
 
 #import "GenericTableViewController.h"
+#import <AddressBook/AddressBook.h>
+
 @class NotAtHomeTerritoryDetailViewController;
 
 @protocol NotAtHomeTerritoryDetailViewControllerDelegate
@@ -16,10 +18,16 @@
 @interface NotAtHomeTerritoryDetailViewController : GenericTableViewController 
 {
 @private	
+	ABAddressBookRef addressBook;
+	
 	NSMutableDictionary *territory;
 	id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+	UITextField *owner;
 }
+@property (nonatomic, retain) UITextField *owner;
 @property (nonatomic, retain) NSMutableDictionary *territory;
-@property (nonatomic, retain) id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+
+- (NSString *)ownerEmailAddress;
 
 @end
