@@ -52,8 +52,7 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Not At Homes", @"Title for Not At Homes view");
-#warning please make me an icon		
+		self.title = NSLocalizedString(@"Not At Home", @"Title for Not At Homes view");
 //		self.tabBarItem.image = [UIImage imageNamed:@"notAtHomes.png"];
 		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																				 target:self

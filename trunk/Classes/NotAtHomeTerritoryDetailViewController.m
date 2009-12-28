@@ -10,7 +10,6 @@
 #import "UITableViewTextFieldCell.h"
 #import "NotesViewController.h"
 #import "Settings.h"
-#import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "PSLocalization.h"
 
@@ -46,18 +45,14 @@
 @implementation TerritoryNameCellController
 @synthesize obtainFocus;
 
-- (BOOL)isViewableWhenNotEditing
-{
-	return [[self.delegate.territory objectForKey:NotAtHomeTerritoryName] length];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"NameCell";
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		cell.textField.placeholder = NSLocalizedString(@"Territory Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
 	}
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	if(name == nil)
@@ -67,16 +62,12 @@
 	}
 	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	cell.delegate = self;
-	cell.observeEditing = YES;
-	if(tableView.editing)
+	if(self.obtainFocus)
 	{
-		if(self.obtainFocus)
-		{
-			[cell.textField performSelector:@selector(becomeFirstResponder)
-								 withObject:nil
-								 afterDelay:0.0000001];
-			self.obtainFocus = NO;
-		}
+		[cell.textField performSelector:@selector(becomeFirstResponder)
+							 withObject:nil
+							 afterDelay:0.0000001];
+		self.obtainFocus = NO;
 	}
 	
 	return cell;
@@ -108,27 +99,56 @@
  *
  ******************************************************************/
 #pragma mark TerritoryOwnerCellController
-@interface TerritoryOwnerCellController : NotAtHomeTerritoryViewCellController<ABPeoplePickerNavigationControllerDelegate>
+@interface TerritoryOwnerCellController : NotAtHomeTerritoryViewCellController<ABPeoplePickerNavigationControllerDelegate,
+																			   UITableViewTextFieldCellDelegate>
 {
+	UITextField *owner;
 }
+@property (nonatomic, retain) UITextField *owner;
 @end
 @implementation TerritoryOwnerCellController
+@synthesize owner;
+
+- (id)initWithTextField:(UITextField *)theOwner
+{
+	if( (self = [super init]) )
+	{
+		self.owner = theOwner;
+		NSSet *targets = [(UIButton *)self.owner.rightView allTargets];
+		for(TerritoryOwnerCellController *controller in targets)
+		{
+			[(UIButton *)self.owner.rightView removeTarget:controller action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
+		}
+		[(UIButton *)self.owner.rightView addTarget:self action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
+
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[(UIButton *)self.owner.rightView removeTarget:self action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
+	self.owner = nil;
+	
+	[super dealloc];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"OwnerCell";
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:self.owner reuseIdentifier:commonIdentifier] autorelease];
+		cell.textField.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Not At Home View when you press on the Add button and enter in the territory's information");
 	}
-	cell.textLabel.text = NSLocalizedString(@"Create a note from scratch", @"More View Table Enable shown popups");
-	
-//	[cell.textLabel.r addSubView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
+	cell.delegate = self;
+	cell.textField.text = [self.delegate ownerEmailAddress];
 	return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)userSelected
 {
 	// make the new call view 
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
@@ -140,6 +160,25 @@
     [picker release];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self.owner becomeFirstResponder];
+}
+
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	NSMutableString *emailAddress = [NSMutableString stringWithString:[self.delegate.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress]];
+	[emailAddress replaceCharactersInRange:range withString:string];
+
+	[self.delegate.territory setObject:emailAddress forKey:NotAtHomeTerritoryOwnerEmailAddress];
+	[self.delegate.territory removeObjectForKey:NotAtHomeTerritoryOwnerId];
+	[self.delegate.territory removeObjectForKey:NotAtHomeTerritoryOwnerEmailId];
+
+	[[Settings sharedInstance] saveData];
+	
+	return YES;
+}
+
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker 
 {
     [[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
@@ -148,16 +187,18 @@
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
 	  shouldContinueAfterSelectingPerson:(ABRecordRef)person 
 {
-#if 0
-    NSString* name = (NSString *)ABRecordCopyValue(person,
-												   kABPersonFirstNameProperty);
-    self.firstName.text = name;
-    [name release];
-	name = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-    self.lastName.text = name;
-    [name release];
-#endif
-//    [[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
+	ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+	if(ABMultiValueGetCount(emails) == 1)
+	{
+		[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
+		[self.delegate.territory setObject:[NSNumber numberWithInt:ABRecordGetRecordID(person)] forKey:NotAtHomeTerritoryOwnerId];
+		[self.delegate.territory setObject:[NSNumber numberWithInt:ABMultiValueGetIdentifierAtIndex(emails, 0)] forKey:NotAtHomeTerritoryOwnerEmailId];
+		[self.delegate.territory setObject:[self.delegate ownerEmailAddress] forKey:NotAtHomeTerritoryOwnerEmailAddress];
+		
+		[self.delegate updateAndReload];
+		return NO;
+	}
+	CFRelease(emails);
     return YES;
 }
 
@@ -166,6 +207,12 @@
                                 property:(ABPropertyID)property
                               identifier:(ABMultiValueIdentifier)identifier
 {
+	[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
+	[self.delegate.territory setObject:[NSNumber numberWithInt:ABRecordGetRecordID(person)] forKey:NotAtHomeTerritoryOwnerId];
+	[self.delegate.territory setObject:[NSNumber numberWithInt:identifier] forKey:NotAtHomeTerritoryOwnerEmailId];
+	[self.delegate.territory setObject:[self.delegate ownerEmailAddress] forKey:NotAtHomeTerritoryOwnerEmailAddress];
+	
+	[self.delegate updateAndReload];
     return NO;
 }
 @end
@@ -175,14 +222,90 @@
 @implementation NotAtHomeTerritoryDetailViewController
 @synthesize territory;
 @synthesize delegate;
+@synthesize owner;
 
-- (id)init
+- (UITextField *)owner
+{
+	if(owner == nil)
+	{
+		owner = [[[UITextField alloc] init] autorelease];
+		[owner setBackgroundColor:[UIColor blueColor]];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		button.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+		owner.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+		owner.returnKeyType = UIReturnKeyDone;
+		
+		owner.rightView = button;
+		owner.rightViewMode = UITextFieldViewModeAlways;
+	}
+	return owner;
+}
+
+- (NSString *)ownerEmailAddress
+{
+	NSString *name = [[[self.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress] retain] autorelease];
+	NSNumber *ownerId = [self.territory objectForKey:NotAtHomeTerritoryOwnerId];
+	if(ownerId)
+	{
+		NSNumber *ownerEmailId = [self.territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
+		if(addressBook == nil)
+			addressBook = ABAddressBookCreate();
+		
+		ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, [ownerId intValue]);
+		ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+		int index = ABMultiValueGetIndexForIdentifier(emails, [ownerEmailId intValue]);
+		if(index < ABMultiValueGetCount(emails))
+		{
+			name = [(NSString *)ABMultiValueCopyValueAtIndex(emails , index) autorelease];
+		}
+		CFRelease(emails);
+	}	
+	return name;
+}
+
+- (id)initWithTerritory:(NSMutableDictionary *)theTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
-		
+		if(theTerritory == nil)
+		{
+			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
+		}
+		self.territory = theTerritory;
 	}
 	return self;
+}
+
+- (id)init
+{
+	return [self initWithTerritory:nil];
+}
+
+- (void)didReceiveMemoryWarning
+{
+	[super didReceiveMemoryWarning];
+	
+	if(addressBook)
+	{
+		CFRelease(addressBook);
+		addressBook = nil;
+	}
+	
+	self.owner = nil;
+}
+
+
+
+- (void)dealloc
+{
+	if(addressBook)
+	{
+		CFRelease(addressBook);
+	}
+	self.owner = nil;
+	self.territory = nil;
+	
+	[super dealloc];
 }
 
 - (void)constructSectionControllers
@@ -201,17 +324,10 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-	}
-
-	{
-		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
-		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Territory Owner", @"This is in the Not At Homes View when you add/edit a territory and you want to give the territory an owner");
-		[sectionController release];
 	
 		{
 			// Territory Owner
-			TerritoryOwnerCellController *cellController = [[TerritoryOwnerCellController alloc] init];
+			TerritoryOwnerCellController *cellController = [[TerritoryOwnerCellController alloc] initWithTextField:self.owner];
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];

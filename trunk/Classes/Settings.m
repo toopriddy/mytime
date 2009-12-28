@@ -138,6 +138,9 @@ NSString * const SettingsFourthView = @"fourthView";
 
 NSString * const SettingsNotAtHomeTerritories = @"notAtHomes";
 NSString * const NotAtHomeTerritoryName = @"name";
+NSString * const NotAtHomeTerritoryOwnerId = @"ownerId";
+NSString * const NotAtHomeTerritoryOwnerEmailId = @"ownerEmailId";
+NSString * const NotAtHomeTerritoryOwnerEmailAddress = @"ownerEmailAddress";
 NSString * const NotAtHomeTerritoryStreets = @"streets";
 NSString * const NotAtHomeTerritoryStreetName = @"name";
 NSString * const NotAtHomeTerritoryCity = @"city";
@@ -333,7 +336,8 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 				NSString *name = [publication objectForKey:BulkLiteratureArrayTitle];
 				int count = [[publication objectForKey:BulkLiteratureArrayCount] intValue];
 				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
-				if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")])
+				if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
+				   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
 				{
 					[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
 				}

@@ -367,7 +367,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	NSDate *lastBackupDate = [settings objectForKey:SettingsLastBackupDate];
 	NSDate *dateLimit = nil;
 	NSNumber *backupInterval = [settings objectForKey:SettingsAutoBackupInterval];
-	if(backupInterval)
+	if(backupInterval && [backupInterval floatValue] > 0)
 	{
 		// subtract the number of days from now
 		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-([backupInterval floatValue] * 60 * 60 * 24)];
@@ -505,7 +505,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	CallsSortedByStudyViewDataSource *studySortedDataSource = [[[CallsSortedByStudyViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *studyViewController = [[[SortedCallsViewController alloc] initWithDataSource:studySortedDataSource] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:studyViewController] autorelease]];
-#if 1
+#if 0
 	// NOT AT HOMES
 	NotAtHomeViewController *notAtHomeViewController = [[[NotAtHomeViewController alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:notAtHomeViewController] autorelease]];

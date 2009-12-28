@@ -57,9 +57,9 @@ typedef struct {
 
 #include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
-	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+    {NSLocalizedString(@"W & A", @"Both Magizines (w and g)"),       PublicationTypeMagazine}
+,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
-//,   {NSLocalizedString(@"W & A", @"Both Magizines (g and w)"),       PublicationTypeMagazine}
 
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
@@ -69,6 +69,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"What Does the Bible Really Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Yearbook", @"Book Publication Name"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
@@ -210,24 +211,39 @@ static const PublicationInformation PUBLICATIONS[] = {
 };
 #include "PSAddLocalizedString.h"
 
++ (NSString *)watchtowerAndAwake
+{
+	return [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[0].name table:@""];
+}
+
 + (NSString *)watchtower
 {
-	return([[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[0].name table:@""]);
+	return [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[0].name value:PUBLICATIONS[1].name table:@""];
 }
 
 + (NSString *)awake
 {
-	return([[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[1].name table:@""]);
+	return [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[1].name value:PUBLICATIONS[2].name table:@""];
 }
 
-- (BOOL)publicationIsWatchtower:(int)publication
+- (BOOL)publicationIsWatchtowerAndAwake:(int)publication
 {
 	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 0;
 }
 
-- (BOOL)publicationIsAwake:(int)publication
+- (BOOL)publicationIsWatchtower:(int)publication
 {
 	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 1;
+}
+
+- (BOOL)publicationIsAwake:(int)publication
+{
+	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 2;
+}
+
+- (BOOL)publicationIsYearbook:(int)publication
+{
+	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 10;
 }
 
 
@@ -251,35 +267,50 @@ static const PublicationInformation PUBLICATIONS[] = {
         case 1:
             // if there is only one publication, then set the only column to 
             // the width of the entire picker
-            return(PUBLICATION_WIDTH + MONTH_WIDTH + YEAR_WIDTH + DAY_WIDTH);
+            return PUBLICATION_WIDTH + MONTH_WIDTH + YEAR_WIDTH + DAY_WIDTH;
+			
+        case 2:
+            // if there are three columns then the "last two" columns are combined
+            // to make the picker look like it is adjusting for the years
+            switch(component)
+			{
+				case 0:
+					return PUBLICATION_WIDTH + MONTH_WIDTH + DAY_WIDTH;
+				case 1:
+					return YEAR_WIDTH;
+			}
+			break;
+			
         case 3:
             // if there are three columns then the "last two" columns are combined
             // to make the picker look like it is adjusting for the years
             switch(component)
-		{
-			case 0:
-				return(PUBLICATION_WIDTH);
-			case 1:
-				return(MONTH_WIDTH);
-			case 2:
-				return(YEAR_WIDTH + DAY_WIDTH);
-		}
+			{
+				case 0:
+					return PUBLICATION_WIDTH;
+				case 1:
+					return MONTH_WIDTH;
+				case 2:
+					return YEAR_WIDTH + DAY_WIDTH;
+			}
+			break;
+			
         case 4:
             // if there are four columns then report each of the column widths
             switch(component)
-		{
-			case 0:
-				return(PUBLICATION_WIDTH);
-			case 1:
-				return(MONTH_WIDTH);
-			case 2:
-				return(YEAR_WIDTH);
-			case 3:
-				return(DAY_WIDTH);
-		}
-		default:
-			return(1);
+			{
+				case 0:
+					return PUBLICATION_WIDTH;
+				case 1:
+					return MONTH_WIDTH;
+				case 2:
+					return YEAR_WIDTH;
+				case 3:
+					return DAY_WIDTH;
+			}
+			break;
 	}
+	return 1;
 }
 #if 0
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -304,7 +335,23 @@ static const PublicationInformation PUBLICATIONS[] = {
         // if the publicaiton is a watchtower or an awake, then
         // we have to display the month year and possibly date of
         // the publication
-		if([self publicationIsWatchtower:_publication])
+		if([self publicationIsWatchtowerAndAwake:_publication])
+		{
+            // W & A Jan 2007
+			switch(component)
+			{
+				case 1: // Month
+					cell.textAlignment = UITextAlignmentCenter;
+					cell.text = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				case 2: // Year
+					cell.textAlignment = UITextAlignmentLeft;
+					// we offset the _year from 1900
+					cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+			}
+		} 
+		else if([self publicationIsWatchtower:_publication])
 		{
             // Watchtower Jan 2007 15
 			switch(component)
@@ -351,7 +398,18 @@ static const PublicationInformation PUBLICATIONS[] = {
 					cell.text = row == 0 ? @"8" : @"22";
 					break;
 			}
-		
+        }
+		else if([self publicationIsYearbook:_publication])
+		{
+			// Awake Jan 2007 15
+			switch(component)
+			{
+				case 1: // Year
+					cell.textAlignment = UITextAlignmentLeft;
+					// we offset the _year from 1900
+					cell.text = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+			}
         }
     }    
 	return(cell);
@@ -374,7 +432,21 @@ static const PublicationInformation PUBLICATIONS[] = {
         // if the publicaiton is a watchtower or an awake, then
         // we have to display the month year and possibly date of
         // the publication
-		if([self publicationIsWatchtower:_publication])
+		if([self publicationIsWatchtowerAndAwake:_publication])
+		{
+			// W & A Jan 2007
+			switch(component)
+			{
+				case 1: // Month
+					ret = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[row] value:MONTHS[row] table:@""];
+					break;
+				case 2: // Year
+					// we offset the _year from 1900
+					ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+			}
+		}
+		else if([self publicationIsWatchtower:_publication])
 		{
 			// Watchtower Jan 2007 15
 			switch(component)
@@ -414,6 +486,17 @@ static const PublicationInformation PUBLICATIONS[] = {
 					break;
 			}
         }
+		else if([self publicationIsYearbook:_publication])
+		{
+            // Awake Jan 2007 15
+			switch(component)
+			{
+				case 1: // Year
+					// we offset the _year from 1900
+					ret = [NSString stringWithFormat:@"%d", row+YEAR_OFFSET];
+					break;
+			}
+        }
     }    
 	return(ret);
 }
@@ -438,7 +521,9 @@ static const PublicationInformation PUBLICATIONS[] = {
     }
     // if the previous publication was a watchtower or awake, then 
     // lets get at the month year and possibly date of the magazine
-    if([self publicationIsWatchtower:previousPublication] || [self publicationIsAwake:previousPublication])
+    if([self publicationIsWatchtower:previousPublication] || 
+	   [self publicationIsAwake:previousPublication] || 
+	   [self publicationIsWatchtowerAndAwake:previousPublication])
     {
         if(component == 1)
 			_month = row;
@@ -454,6 +539,12 @@ static const PublicationInformation PUBLICATIONS[] = {
         if(component == 3 && [self publicationIsAwake:previousPublication] && previousYear + YEAR_OFFSET < 2007)
             _day = row;
     }
+    if([self publicationIsYearbook:previousPublication])
+    {
+        if(component == 1)
+			_year = row;
+    }
+	
     // if anything changed, update the picker so that it will dynamically display the columns
     // (for example if you went from a watchtower to a bible teach book we would only have one
     // column in the picker).  This is to work around a problem that if you select a value before
@@ -488,16 +579,25 @@ static const PublicationInformation PUBLICATIONS[] = {
 		// time
 		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
 		{
-			[self selectRow: _month inComponent: 1 animated: NO];
-			[self selectRow: _year inComponent: 2 animated: NO];
+			[self selectRow:_month inComponent:1 animated:NO];
+			[self selectRow:_year inComponent:2 animated:NO];
 			
 			// in 2008, the watchtower went from bimonthly to monthly
 			if(_publication == 0 && _year + YEAR_OFFSET < 2008)
-				[self selectRow: _day inComponent: 3 animated: NO];
+				[self selectRow:_day inComponent:3 animated:NO];
 			
 			// in 2007, the awake went from bimonthly to monthly
 			if(_publication == 1 && _year + YEAR_OFFSET < 2007)
-				[self selectRow: _day inComponent: 3 animated: NO];
+				[self selectRow:_day inComponent:3 animated:NO];
+		}
+		else if([self publicationIsWatchtowerAndAwake:_publication])
+		{
+			[self selectRow:_month inComponent:1 animated:NO];
+			[self selectRow:_year inComponent:2 animated:NO];
+		}
+		else if([self publicationIsYearbook:_publication])
+		{
+			[self selectRow:_year inComponent:1 animated:NO];
 		}
     }
 }
@@ -506,7 +606,12 @@ static const PublicationInformation PUBLICATIONS[] = {
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     int ret = 1;
-	if([self publicationIsWatchtower:_publication])
+	if([self publicationIsWatchtowerAndAwake:_publication])
+	{
+		// W & A Jan 2007
+		ret = 3;
+	}
+	else if([self publicationIsWatchtower:_publication])
 	{
 		// Watchtower Jan 2007 15
 		// check to see if they chose something before 2008, if so then
@@ -536,6 +641,13 @@ static const PublicationInformation PUBLICATIONS[] = {
 			ret = 3;
 		}
     }
+	else if([self publicationIsYearbook:_publication])
+	{
+        // Yearbook 2006
+		// check to see if they chose something before 2007, if so then
+		// we need to specify the 1st or the 15th of the month
+		ret = 2;
+    }
     VERY_VERBOSE(NSLog(@"numberOfComponentsInPickerView: %d", ret);)
     return(ret);
 }
@@ -553,7 +665,9 @@ static const PublicationInformation PUBLICATIONS[] = {
     {
         // if the publication is a watchtower or an awake
         // then there might be 3 or four columns
-		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+		if([self publicationIsWatchtower:_publication] || 
+		   [self publicationIsAwake:_publication] ||
+		   [self publicationIsWatchtowerAndAwake:_publication])
 		{
             // Watchtower Jan 2007 15
             // Awake Jan 2006 22
@@ -567,7 +681,17 @@ static const PublicationInformation PUBLICATIONS[] = {
 					return(2);
 					
 			}
+		}		
+		else if([self publicationIsYearbook:_publication])
+		{
+            // Yearbook 2009
+			switch(component)
+			{
+				case 1: // Year
+					return(200);
+			}
 		}
+		
     }
 	return(0);
 }
@@ -589,7 +713,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	int year = [dateComponents year];
     int day = 1;
 	
-    return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day]);
+    return([self initWithFrame:rect publication:[PublicationPickerView watchtowerAndAwake] year:year month:month day:day]);
 }
 
 - (id) initWithFrame: (CGRect)rect filteredToType:(NSString *)filter
@@ -602,12 +726,12 @@ static const PublicationInformation PUBLICATIONS[] = {
 	int year = [dateComponents year];
     int day = 1;
 
-	return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day filter:filter]);
+	return([self initWithFrame:rect publication:[PublicationPickerView watchtowerAndAwake] year:year month:month day:day filter:filter]);
 }
 
 - (id) initWithFrame: (CGRect)rect publication: (NSString *)publication year: (int)year month: (int)month day: (int)day
 {
-	return([self initWithFrame:rect publication:[PublicationPickerView watchtower] year:year month:month day:day filter:nil]);
+	return([self initWithFrame:rect publication:[PublicationPickerView watchtowerAndAwake] year:year month:month day:day filter:nil]);
 }
 
 // initialize this view given the curent configuration
@@ -667,7 +791,9 @@ static const PublicationInformation PUBLICATIONS[] = {
 			++i;
         }
 		
-        if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+        if([self publicationIsWatchtower:_publication] || 
+		   [self publicationIsAwake:_publication] ||
+		   [self publicationIsWatchtowerAndAwake:_publication])
         {
             _year = year - YEAR_OFFSET;
             _month = month - 1;
@@ -676,6 +802,18 @@ static const PublicationInformation PUBLICATIONS[] = {
                 _day = day == 15 ? 1 : 0;
             if([self publicationIsAwake:_publication])
                 _day = day == 22 ? 1 : 0;
+        }
+        else if([self publicationIsYearbook:_publication])
+        {
+            _year = year - YEAR_OFFSET;
+            // initalize the date information to the current date, since it is just a book
+            // and does not have a publication date (if they want to change the publication
+            // to a magazine, at least they will see the current date's magazine)
+			NSDate *date = [NSDate date];
+			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+            // set the default publication to be the watchtower this month and year
+            _month = [dateComponents month] - 1;
+            _day = 0; // 1st or 22nd
         }
         else
         {
@@ -697,18 +835,27 @@ static const PublicationInformation PUBLICATIONS[] = {
 		// the watchtower and awake are the only ones that have a subscription
 		// type of placement, all others are just books that do not have a release
 		// time
-		if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+		if([self publicationIsWatchtowerAndAwake:_publication])
 		{
-			[self selectRow: _month inComponent: 1 animated: NO];
-			[self selectRow: _year inComponent: 2 animated: NO];
+			[self selectRow:_month inComponent:1 animated:NO];
+			[self selectRow:_year inComponent:2 animated:NO];
+		}
+		else if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+		{
+			[self selectRow:_month inComponent:1 animated:NO];
+			[self selectRow:_year inComponent:2 animated:NO];
 			
 			// in 2008, the watchtower went from bimonthly to monthly
 			if([self publicationIsWatchtower:_publication] && _year + YEAR_OFFSET < 2008)
-				[self selectRow: _day inComponent: 3 animated: NO];
+				[self selectRow:_day inComponent:3 animated:NO];
 			
 			// in 2007, the awake went from bimonthly to monthly
 			if([self publicationIsAwake:_publication] && _year + YEAR_OFFSET < 2007)
-				[self selectRow: _day inComponent: 3 animated: NO];
+				[self selectRow:_day inComponent:3 animated:NO];
+		}
+		else if([self publicationIsYearbook:_publication])
+		{
+			[self selectRow:_year inComponent:1 animated:NO];
 		}
 		[self setSoundsEnabled:NO];
     }
@@ -744,7 +891,9 @@ static const PublicationInformation PUBLICATIONS[] = {
 // 0-11 where 0=Jan
 - (int)month
 {
-    if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+    if([self publicationIsWatchtower:_publication] || 
+	   [self publicationIsAwake:_publication] ||
+	   [self publicationIsWatchtowerAndAwake:_publication])
         return(_month + 1);
     else
         return(0);
@@ -763,9 +912,11 @@ static const PublicationInformation PUBLICATIONS[] = {
     int day = [self day];
     int year = [self year];
     int month = [self month];
-	
+
 	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
-    if([self publicationIsWatchtower:_publication] || [self publicationIsAwake:_publication])
+    if([self publicationIsWatchtower:_publication] || 
+	   [self publicationIsAwake:_publication] ||
+	   [self publicationIsWatchtowerAndAwake:_publication])
     {
         if(day)
             return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d, %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month %3$d as the day of the month and %4$d as the year"),
@@ -774,10 +925,16 @@ static const PublicationInformation PUBLICATIONS[] = {
 																day, 
 																year ]);
         else
-            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),
+            return([NSString stringWithFormat:NSLocalizedString(@"%@ %@ %d", @"This is a representation for the watchtower or awake (or W & A combo) when it was published on the 1, 15 and 2, 22 respectively, like Watchtower March 15, 2001, please use %1$@ as the magazine type %2$@ as the month and %3$d as the year"),
 			                                                    [[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""], 
 																[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month-1] value:MONTHS[month-1] table:@""], 
 																year ]);
+    }
+    else if([self publicationIsYearbook:_publication])
+    {
+		return([NSString stringWithFormat:NSLocalizedString(@"%d %@", @"This is a representation for the yearbook when it was published on what year, like 2009 Yearbook, please use %2$@ as the placeholder for 'Yearbook' %1$d as the year"),
+																year,
+																[[PSLocalization localizationBundle] localizedStringForKey:PUBLICATIONS[index].name value:PUBLICATIONS[index].name table:@""]]);
     }
     else
     {
@@ -785,11 +942,19 @@ static const PublicationInformation PUBLICATIONS[] = {
     }
 }
 
+- (BOOL)isWatchtowerAndAwake
+{
+	return [self publicationIsWatchtowerAndAwake:_publication];
+}
+
 // string of the publication name
 - (NSString *)publicationType
 {
 	int index = [[_publicationLookupTable objectAtIndex:_publication] intValue];
-    return([NSString stringWithString:PUBLICATIONS[index].type]);
+	if(index == 0)
+		return PublicationTypeTwoMagazine;
+	else
+		return [NSString stringWithString:PUBLICATIONS[index].type];
 }
 
 

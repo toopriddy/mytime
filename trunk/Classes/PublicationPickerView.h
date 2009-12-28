@@ -42,6 +42,7 @@
  * names for the publications used for comparison
  * @return the "official" name of the publication as used in this program
  */
++ (NSString *)watchtowerAndAwake;
 + (NSString *)watchtower;
 + (NSString *)awake;
 

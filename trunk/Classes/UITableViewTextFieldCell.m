@@ -58,6 +58,7 @@
 		textField.textColor = [UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:138.0/255.0 alpha:1.0];
 		textField.font = [UIFont systemFontOfSize:16];
 		textField.delegate = self;
+		textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		[self.contentView addSubview:self.textField];
 		
 		self.valueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
@@ -75,12 +76,16 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
 	UITextField *field = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-	return [self initWithStyle:style textField:field reuseIdentifier:reuseIdentifier];
+	ownedTextField = YES;
+	[self initWithStyle:style textField:field reuseIdentifier:reuseIdentifier];
+	return self;
 }
 
 - (void)dealloc
 {
     VERBOSE(NSLog(@"%s: %s %p", __FILE__, __FUNCTION__, self);)
+
+	self.textField.delegate = nil;
 	
 	self.nextKeyboardResponder = nil;
 	self.textField = nil;
@@ -237,12 +242,13 @@
 	   [titleLabel.text isEqualToString:@""])
 	{
 		CGSize size = [@"Ig" sizeWithFont:textField.font];
+		size.height = 31;
 		frame = CGRectMake(boundsX, (height - size.height)/2, width, size.height);
 		textField.frame = frame;
 		valueLabel.frame = frame;
 		textField.selected = NO;
 		titleLabel.hidden = YES;
-		
+
 		valueLabel.textColor = [UIColor blackColor];
 		valueLabel.textAlignment = UITextAlignmentLeft;
 		valueLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -250,11 +256,13 @@
 	else
 	{
 		CGSize size = [titleLabel.text sizeWithFont:titleLabel.font];
+		size.height = 31;
 		frame = CGRectMake(boundsX , (height - size.height)/2, size.width, size.height);
 		[titleLabel setFrame:frame];
 		titleLabel.hidden = NO;
 
 		CGSize textSize = [@"Ig" sizeWithFont:textField.font];
+		textSize.height = 31;
 		frame = CGRectMake(boundsX + TITLE_LEFT_OFFSET + size.width, (height - textSize.height)/2, width - size.width - TITLE_LEFT_OFFSET, textSize.height);
 		textField.frame = frame;
 		valueLabel.frame = frame;

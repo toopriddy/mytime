@@ -226,7 +226,8 @@
 			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
 			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
 			type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""];
-			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")])
+			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
+			   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
 			{
 				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
 			}

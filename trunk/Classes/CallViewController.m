@@ -695,6 +695,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		if(!found)
 		{
 			NSMutableDictionary *addMetadata = [metadata mutableCopy];
+			[addMetadata removeObjectForKey:CallMetadataData];
 			[metadataArray addObject:addMetadata];
 			[addMetadata release];
 		}
@@ -723,6 +724,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	if(!found)
 	{
 		NSMutableDictionary *addedEntry = [metadata mutableCopy];
+		[addedEntry removeObjectForKey:CallMetadataData];
 		[metadataArray addObject:addedEntry];
 		[addedEntry release];
 	}
@@ -790,6 +792,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	
 	NSMutableDictionary *newData = [metadata mutableCopy];
+	[newData removeObjectForKey:CallMetadataData];
 	[metadataArray addObject:newData];
 	[newData release];
 	switch([[metadata objectForKey:CallMetadataType] intValue])
