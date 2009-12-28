@@ -123,12 +123,28 @@ static int sortByDate(id v1, id v2, void *context)
 	return YES;
 }
 
+- (void)literaturePlacementCanceled
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)navigationControlAdd:(id)sender 
 {
-	LiteraturePlacementViewController *viewController = [[[LiteraturePlacementViewController alloc] init] autorelease];
+	LiteraturePlacementViewController *controller = [[[LiteraturePlacementViewController alloc] init] autorelease];
 	self.selectedIndexPath = nil;
-	viewController.delegate = self;
-	[[self navigationController] pushViewController:viewController animated:YES];
+	controller.delegate = self;
+
+	// push the element view controller onto the navigation stack to display it
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+	[self presentModalViewController:navigationController animated:YES];
+	
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	[temporaryBarButtonItem setAction:@selector(literaturePlacementCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 }
 
 - (void)loadView 
@@ -195,12 +211,12 @@ static int sortByDate(id v1, id v2, void *context)
 	if(selectedIndexPath != nil)
 	{
 		[self.entries replaceObjectAtIndex:[selectedIndexPath row] withObject:[literaturePlacementController placements]];
-		
+		[[self navigationController] popViewControllerAnimated:YES];
 	}
 	else
 	{
 		[self.entries addObject:[literaturePlacementController placements]];
-		
+		[[self navigationController] dismissModalViewControllerAnimated:YES];
 	}
 	[self reloadData];
 
@@ -259,7 +275,15 @@ static int sortByDate(id v1, id v2, void *context)
 	int number = 0;
 	for(i = 0; i < count; ++i)
 	{
-		number += [[[publications objectAtIndex:i] objectForKey:BulkLiteratureArrayCount] intValue];
+		NSDictionary *publication = [publications objectAtIndex:i];
+		if([PublicationTypeTwoMagazine isEqualToString:[publication objectForKey:BulkLiteratureArrayType]])
+		{
+			number += [[publication objectForKey:BulkLiteratureArrayCount] intValue] * 2;
+		}
+		else
+		{
+			number += [[publication objectForKey:BulkLiteratureArrayCount] intValue];
+		}
 	}
 	if(number == 1)
 	{
