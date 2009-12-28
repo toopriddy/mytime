@@ -35,11 +35,10 @@
 - (void)navigationControlAdd:(id)sender
 {
 	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] init] autorelease];
-
+	controller.tag = -1;
 	controller.delegate = self;
 	
 	// push the element view controller onto the navigation stack to display it
-//	[[self navigationController] pushViewController:controller animated:YES];
 	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 
 	// create a custom navigation bar button and set it to always say "back"
@@ -55,6 +54,29 @@
 
 - (void)notAtHomeTerritoryDetailViewControllerDone:(NotAtHomeTerritoryDetailViewController *)notAtHomeTerritoryDetailViewController
 {
+	if(notAtHomeTerritoryDetailViewController.tag >= 0)
+	{
+		[[Settings sharedInstance] saveData];
+		
+		[self.tableView reloadData];
+		[[self navigationController] popViewControllerAnimated:YES];
+	}
+	else
+	{
+		[self.entries addObject:notAtHomeTerritoryDetailViewController.territory];
+		[[Settings sharedInstance] saveData];
+		
+		[self.tableView reloadData];
+		[self dismissModalViewControllerAnimated:YES];
+	}
+
+}
+
+- (void)loadView
+{
+	[super loadView];
+	self.tableView.allowsSelectionDuringEditing = YES;
+	self.tableView.editing = YES;
 }
 
 - (id)init
@@ -115,36 +137,26 @@
 	return cell;
 }
 
-#if 0
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
-	self.selectedIndexPath = indexPath;
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
-	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
+	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] initWithTerritory:[self.entries objectAtIndex:row]] autorelease];
+	controller.tag = row;
+	controller.delegate = self;
 	
-	NSNumber *minutes = [entry objectForKey:SettingsTimeEntryMinutes];
-	NSDate *date = [entry objectForKey:SettingsTimeEntryDate];
-	
-	[self retain];
-	TimePickerViewController *viewController = [[[TimePickerViewController alloc] initWithDate:date minutes:[minutes intValue]] autorelease];
-	
-	viewController.delegate = self;
-	[[self navigationController] pushViewController:viewController animated:YES];
+	// push the element view controller onto the navigation stack to display it
+	[[self navigationController] pushViewController:controller animated:YES];
 }
 
 - (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
-	[timeEntries removeObjectAtIndex:[indexPath row]];
+    DEBUG(NSLog(@"table: deleteRow: %d", indexPath.row);)
+	[self.entries removeObjectAtIndex:indexPath.row];
+
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
-#endif
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {

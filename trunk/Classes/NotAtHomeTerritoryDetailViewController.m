@@ -96,7 +96,10 @@
 
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	[[self.delegate.territory objectForKey:NotAtHomeTerritoryName] replaceCharactersInRange:range withString:string];
+	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
+	[name replaceCharactersInRange:range withString:string];
+	if(!self.delegate.newTerritory)
+		self.delegate.title = name;
 	return YES;
 }
 
@@ -189,7 +192,8 @@
 
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	NSMutableString *emailAddress = [NSMutableString stringWithString:[self.delegate.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress]];
+	NSString *previousEmail = [self.delegate.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
+	NSMutableString *emailAddress = [NSMutableString stringWithString:previousEmail ? previousEmail : @""];
 	[emailAddress replaceCharactersInRange:range withString:string];
 
 	[self.delegate.territory setObject:emailAddress forKey:NotAtHomeTerritoryOwnerEmailAddress];
@@ -323,6 +327,8 @@
 @synthesize territory;
 @synthesize delegate;
 @synthesize owner;
+@synthesize tag;
+@synthesize newTerritory;
 
 - (UITextField *)owner
 {
@@ -363,15 +369,38 @@
 	return name;
 }
 
+- (void)navigationControlDone:(id)sender 
+{
+	VERBOSE(NSLog(@"navigationControlDone:");)
+	if(delegate)
+	{
+		[delegate notAtHomeTerritoryDetailViewControllerDone:self];
+	}
+}
+
+- (void)navigationControlAction:(id)sender 
+{
+}
+
 - (id)initWithTerritory:(NSMutableDictionary *)theTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		if(theTerritory == nil)
 		{
+			newTerritory = YES;
 			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
-			self.editing = YES;
 		}
+		if(!newTerritory)
+		{
+			self.title = [theTerritory objectForKey:NotAtHomeTerritoryName];
+			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction 
+																					 target:self 
+																					 action:@selector(navigationControlAction:)] autorelease];
+			[self.navigationItem setLeftBarButtonItem:button animated:YES];
+		}
+		self.hidesBottomBarWhenPushed = YES;
+		self.editing = YES;
 		self.territory = theTerritory;
 	}
 	return self;
@@ -395,6 +424,16 @@
 //	self.owner = nil;
 }
 
+- (void)loadView
+{
+	[super loadView];
+	
+	// add DONE button
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																			 target:self
+																			 action:@selector(navigationControlDone:)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:NO];	
+}
 
 
 - (void)dealloc
