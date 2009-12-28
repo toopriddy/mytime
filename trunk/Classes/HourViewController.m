@@ -107,12 +107,29 @@ static int sortByDate(id v1, id v2, void *context)
 	return YES;
 }
 
+
+- (void)modalViewControllerCanceled
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)navigationControlAdd:(id)sender 
 {
-	TimePickerViewController *viewController = [[[TimePickerViewController alloc] init] autorelease];
+	TimePickerViewController *controller = [[[TimePickerViewController alloc] init] autorelease];
 	self.selectedIndexPath = nil;
-	viewController.delegate = self;
-	[[self navigationController] pushViewController:viewController animated:YES];
+	controller.delegate = self;
+	
+	// push the element view controller onto the navigation stack to display it
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+	[self presentModalViewController:navigationController animated:YES];
+	
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	[temporaryBarButtonItem setAction:@selector(modalViewControllerCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 }
 
 - (void)updatePrompt
@@ -283,6 +300,8 @@ static int sortByDate(id v1, id v2, void *context)
 
 		// save the data
 		[[Settings sharedInstance] saveData];
+
+		[[self navigationController] popViewControllerAnimated:YES];
 	}
 	else
 	{
@@ -299,6 +318,8 @@ static int sortByDate(id v1, id v2, void *context)
 
 		// save the data
 		[[Settings sharedInstance] saveData];
+		
+		[self dismissModalViewControllerAnimated:YES];
 	}
 }
 

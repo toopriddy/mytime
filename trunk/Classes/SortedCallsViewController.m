@@ -27,21 +27,28 @@
 @synthesize dataSource;
 @synthesize indexPath;
 
+- (void)addCallCanceled
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)navigationControlAdd:(id)sender
 {
 	CallViewController *controller = [[[CallViewController alloc] init] autorelease];
-
-	// create a custom navigation bar button and set it to always say "back"
-	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
-	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	controller.delegate = self;
-	
 	self.indexPath = nil;
 	
 	// push the element view controller onto the navigation stack to display it
-	[[self navigationController] pushViewController:controller animated:YES];
-//	[self presentModalViewController:<#(UIViewController *)modalViewController#> animated:<#(BOOL)animated#>
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+	[self presentModalViewController:navigationController animated:YES];
+	
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	[temporaryBarButtonItem setAction:@selector(addCallCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 } 
 
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol,UITableViewDataSource>)theDataSource 

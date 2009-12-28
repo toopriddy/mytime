@@ -45,6 +45,16 @@
 @implementation TerritoryNameCellController
 @synthesize obtainFocus;
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"NameCell";
@@ -109,6 +119,16 @@
 @implementation TerritoryOwnerCellController
 @synthesize owner;
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
 - (id)initWithTextField:(UITextField *)theOwner
 {
 	if( (self = [super init]) )
@@ -150,6 +170,8 @@
 
 - (void)userSelected
 {
+	[self.delegate.owner becomeFirstResponder];
+	[self.delegate.owner resignFirstResponder];
 	// make the new call view 
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
 	picker.title = NSLocalizedString(@"Email Address", @"pick an email address");
@@ -219,6 +241,84 @@
 
 
 
+
+/******************************************************************
+*
+*   TerritoryStreetCellController
+*
+******************************************************************/
+#pragma mark TerritoryStreetCellController
+
+@interface TerritoryStreetCellController : NotAtHomeTerritoryViewCellController
+{
+@private	
+}
+@end
+@implementation TerritoryStreetCellController
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleDelete;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"StreetCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+	}
+	cell.textLabel.text = [[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row];
+	return cell;
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+@end
+
+/******************************************************************
+ *
+ *   TerritoryAddStreetCellController
+ *
+ ******************************************************************/
+#pragma mark TerritoryAddStreetCellController
+
+@interface TerritoryAddStreetCellController : NotAtHomeTerritoryViewCellController
+{
+@private	
+}
+@end
+@implementation TerritoryAddStreetCellController
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleInsert;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"StreetCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+	}
+	cell.textLabel.text = NSLocalizedString(@"Add Street", @"button to add streets to the list of not at home streets");
+	return cell;
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+@end
+
+
 @implementation NotAtHomeTerritoryDetailViewController
 @synthesize territory;
 @synthesize delegate;
@@ -228,7 +328,7 @@
 {
 	if(owner == nil)
 	{
-		owner = [[[UITextField alloc] init] autorelease];
+		owner = [[UITextField alloc] init];
 		[owner setBackgroundColor:[UIColor blueColor]];
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		button.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
@@ -270,6 +370,7 @@
 		if(theTerritory == nil)
 		{
 			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
+			self.editing = YES;
 		}
 		self.territory = theTerritory;
 	}
@@ -291,7 +392,7 @@
 		addressBook = nil;
 	}
 	
-	self.owner = nil;
+//	self.owner = nil;
 }
 
 
@@ -332,6 +433,31 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+	}
+
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		sectionController.title = NSLocalizedString(@"Streets", @"Title of the section in the Not-At-Homes territory view that allows you to add/edit streets in the territory");
+		[sectionController release];
+
+		for(NSDictionary *street in [self.territory objectForKey:NotAtHomeTerritoryStreets])
+		{
+			// Add Territory Street
+			TerritoryStreetCellController *cellController = [[TerritoryStreetCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		{
+			// Add Territory Street
+			TerritoryAddStreetCellController *cellController = [[TerritoryAddStreetCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 	}
 }
 

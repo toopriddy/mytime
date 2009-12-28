@@ -2013,11 +2013,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		if(_newCall)
 		{
 			self.title = NSLocalizedString(@"New Call", @"Call main title when you are adding a new call");
-			// update the button in the nav bar
-			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-																					 target:self
-																					 action:@selector(navigationControlCancel:)] autorelease];
-			[self.navigationItem setLeftBarButtonItem:button animated:YES];
 		}
 		else
 		{
@@ -2119,7 +2114,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	if(isNewCall)
 	{
-		[self.navigationController popViewControllerAnimated:YES];
+		[self.navigationController dismissModalViewControllerAnimated:YES];
 	}
 	else
 	{

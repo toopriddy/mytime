@@ -27,19 +27,30 @@
 	return entries;
 }
 
+- (void)notAtHomeDetailCanceled
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)navigationControlAdd:(id)sender
 {
 	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] init] autorelease];
 
-	// create a custom navigation bar button and set it to always say "back"
-	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
-	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
-	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	controller.delegate = self;
 	
 	// push the element view controller onto the navigation stack to display it
-	[[self navigationController] pushViewController:controller animated:YES];
-	//	[self presentModalViewController:<#(UIViewController *)modalViewController#> animated:<#(BOOL)animated#>
+//	[[self navigationController] pushViewController:controller animated:YES];
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	controller.title = NSLocalizedString(@"Add New Territory", @"Title for the a new territory in the Not At Home view");
+	[self presentModalViewController:navigationController animated:YES];
+	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 } 
 
 - (void)notAtHomeTerritoryDetailViewControllerDone:(NotAtHomeTerritoryDetailViewController *)notAtHomeTerritoryDetailViewController

@@ -94,7 +94,6 @@
 	{
 		[delegate timePickerViewControllerDone:self];
 	}
-	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 

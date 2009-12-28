@@ -96,8 +96,6 @@
 	{
 		[delegate literaturePlacementViewControllerDone:self];
 	}
-
-	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)loadView 
