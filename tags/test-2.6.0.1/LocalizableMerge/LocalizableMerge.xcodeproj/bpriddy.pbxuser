@@ -1,0 +1,146 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 90A799C70F22A87F00365D96 /* LocalizableMerge */;
+		activeTarget = 8DD76F740486A8DE00D96B5E /* LocalizableMerge */;
+		addToTargets = (
+			8DD76F740486A8DE00D96B5E /* LocalizableMerge */,
+		);
+		breakpoints = (
+			908D8F0F10D077CB00C212BC /* main.m:38 */,
+		);
+		codeSenseManager = 90A799CF0F22A89200365D96 /* Code sense */;
+		executables = (
+			90A799C70F22A87F00365D96 /* LocalizableMerge */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					803,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 282096605;
+			PBXWorkspaceStateSaveDate = 282096605;
+		};
+		perUserProjectItems = {
+			908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */ = 908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */;
+			908D8FD910D5E9A500C212BC /* PBXTextBookmark */ = 908D8FD910D5E9A500C212BC /* PBXTextBookmark */;
+		};
+		sourceControlManager = 90A799CE0F22A89200365D96 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {981, 2366}}";
+			sepNavSelRange = "{1368, 0}";
+			sepNavVisRange = "{841, 1084}";
+			sepNavWindowFrame = "{{322, 88}, {1118, 790}}";
+		};
+	};
+	8DD76F740486A8DE00D96B5E /* LocalizableMerge */ = {
+		activeExec = 0;
+		executables = (
+			90A799C70F22A87F00365D96 /* LocalizableMerge */,
+		);
+	};
+	908D8F0F10D077CB00C212BC /* main.m:38 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 08FB7796FE84155DC02AAC07 /* main.m */;
+		functionName = "main()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 38;
+		location = LocalizableMerge;
+		modificationTime = 282097616.250673;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'stringWithCString:' is deprecated (declared at /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:364)";
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 16;
+		rType = 1;
+	};
+	908D8FD910D5E9A500C212BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 50";
+		rLen = 0;
+		rLoc = 1368;
+		rType = 0;
+		vrLen = 1084;
+		vrLoc = 841;
+	};
+	90A799C70F22A87F00365D96 /* LocalizableMerge */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LocalizableMerge;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	90A799CE0F22A89200365D96 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	90A799CF0F22A89200365D96 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}
