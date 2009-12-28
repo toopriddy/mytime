@@ -517,6 +517,9 @@
 			904A860B10E846B00029A63F /* PBXTextBookmark */ = 904A860B10E846B00029A63F /* PBXTextBookmark */;
 			904A860C10E846B00029A63F /* PBXTextBookmark */ = 904A860C10E846B00029A63F /* PBXTextBookmark */;
 			904A861210E848570029A63F /* PBXTextBookmark */ = 904A861210E848570029A63F /* PBXTextBookmark */;
+			904A861710E849E50029A63F /* PBXTextBookmark */ = 904A861710E849E50029A63F /* PBXTextBookmark */;
+			904A861810E849E50029A63F /* PlistBookmark */ = 904A861810E849E50029A63F /* PlistBookmark */;
+			904A861910E849E50029A63F /* PlistBookmark */ = 904A861910E849E50029A63F /* PlistBookmark */;
 			90596FCB10CA1EEE00FA2254 = 90596FCB10CA1EEE00FA2254 /* PBXTextBookmark */;
 			90596FCC10CA1EEE00FA2254 = 90596FCC10CA1EEE00FA2254 /* PBXTextBookmark */;
 			90596FCD10CA1EEE00FA2254 = 90596FCD10CA1EEE00FA2254 /* PBXTextBookmark */;
@@ -4294,6 +4297,39 @@
 		rType = 0;
 		vrLen = 569;
 		vrLoc = 1786;
+	};
+	904A861710E849E50029A63F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140380E4ABBBC0072BA7B /* PublicationPickerView.h */;
+		name = "PublicationPickerView.h: 66";
+		rLen = 0;
+		rLoc = 1859;
+		rType = 0;
+		vrLen = 569;
+		vrLoc = 1786;
+	};
+	904A861810E849E50029A63F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	904A861910E849E50029A63F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
 	};
 	904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {
 		uiCtxt = {
