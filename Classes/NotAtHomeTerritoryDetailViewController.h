@@ -23,10 +23,16 @@
 	NSMutableDictionary *territory;
 	id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
 	UITextField *owner;
+	int tag;
+	BOOL newTerritory;
 }
+@property (nonatomic, readonly) BOOL newTerritory;
+@property (nonatomic, assign) int tag;
 @property (nonatomic, retain) UITextField *owner;
 @property (nonatomic, retain) NSMutableDictionary *territory;
 @property (nonatomic, assign) id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+
+- (id)initWithTerritory:(NSMutableDictionary *)theTerritory;
 
 - (NSString *)ownerEmailAddress;
 
