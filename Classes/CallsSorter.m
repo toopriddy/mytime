@@ -192,7 +192,7 @@ int sortByMetadata(id v1, id v2, void *context)
 	NSString *value1 = nil;
 	NSString *value2 = nil;
 	int compare;
-
+	
 	for(NSDictionary *metadata in metadata1)
 	{
 		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
@@ -218,24 +218,21 @@ int sortByMetadata(id v1, id v2, void *context)
 	}
 	for(NSDictionary *metadata in metadata2)
 	{
-		if([[metadata objectForKey:CallMetadataName] isEqualToString:metadataName])
+		if([[metadata objectForKey:CallMetadataType] intValue] == CHOICE)
 		{
-			if([[metadata objectForKey:CallMetadataType] intValue] == CHOICE)
+			value2 = [metadata objectForKey:CallMetadataValue];
+		}
+		else 
+		{
+			value2 = [metadata objectForKey:CallMetadataData];
+			if(value2 && ![value2 respondsToSelector:@selector(compare:)])
 			{
+#warning remove me next release
+				[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
+				value2 = nil;
+			}
+			if(value2 == nil)
 				value2 = [metadata objectForKey:CallMetadataValue];
-			}
-			else 
-			{
-				value2 = [metadata objectForKey:CallMetadataData];
-				if(value2 && ![value2 respondsToSelector:@selector(compare:)])
-				{
-	#warning remove me next release
-					[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
-					value2 = nil;
-				}
-				if(value2 == nil)
-					value2 = [metadata objectForKey:CallMetadataValue];
-			}
 		}
 	}
 	if(value1 == nil)
@@ -268,7 +265,6 @@ int sortByMetadata(id v1, id v2, void *context)
 			}
 		}
 	}
-	
 	return compare;
 }
 
