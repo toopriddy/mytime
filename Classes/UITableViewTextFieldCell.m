@@ -76,7 +76,6 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
 	UITextField *field = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
-	ownedTextField = YES;
 	[self initWithStyle:style textField:field reuseIdentifier:reuseIdentifier];
 	return self;
 }

@@ -827,8 +827,9 @@
 
 - (void)retainObject:(NSObject *)object whileViewControllerIsManaged:(UIViewController *)viewController
 {
-	[self.retainedObjectsAndViewControllers addObject:[[NSObjectViewControllerAssociation alloc] initWithRetainee:object viewController:viewController]];
-	
+	NSObjectViewControllerAssociation *obj = [[NSObjectViewControllerAssociation alloc] initWithRetainee:object viewController:viewController];
+	[self.retainedObjectsAndViewControllers addObject:obj];
+	[obj release];
 	if(!_viewControllerCheckerRunning)
 	{
 		_viewControllerCheckerRunning = YES;

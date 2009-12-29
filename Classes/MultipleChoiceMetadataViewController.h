@@ -21,7 +21,6 @@
 {
 	NSObject<MultipleChoiceMetadataViewControllerDelegate> *delegate;
 @private
-	int selected;
 	NSMutableArray *data;
 	NSString *value;
 }

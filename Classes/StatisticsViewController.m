@@ -307,6 +307,7 @@ static NSString *MONTHS[] = {
 			memset(studyAlreadyConducted, 0, sizeof(studyAlreadyConducted));
 			
 			int i;
+			BOOL foundBibleDVD = NO;
 			int returnVisitsCount = [returnVisits count];
 			for(i = returnVisitsCount; i > 0; --i)
 			{
@@ -450,14 +451,18 @@ static NSString *MONTHS[] = {
 								}
 								else if([type isEqualToString:PublicationTypeDVDBible])
 								{
-									if(!isTransfer)
+									if(!foundBibleDVD)
 									{
-										_books[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+										if(!isTransfer)
 										{
-											_serviceYearBooks++;
+											_books[offset]++;
+											if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+											   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+											{
+												_serviceYearBooks++;
+											}
 										}
+										foundBibleDVD = TRUE;
 									}
 								}
 								else if([type isEqualToString:PublicationTypeDVDBook])
