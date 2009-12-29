@@ -9,9 +9,9 @@
 	};
 	1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1051, 8736}}";
-			sepNavSelRange = "{18402, 36}";
-			sepNavVisRange = "{16153, 3951}";
+			sepNavIntBoundsRect = "{{0, 0}, {1051, 8918}}";
+			sepNavSelRange = "{18111, 0}";
+			sepNavVisRange = "{17830, 2274}";
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Distribution;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphoneos3.0;
+		activeSDKPreference = iphonesimulator3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -131,7 +131,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					873,
 					20,
 					48,
 					43,
@@ -695,6 +695,10 @@
 			904A87A710E9C3680029A63F /* PBXBookmark */ = 904A87A710E9C3680029A63F /* PBXBookmark */;
 			904A87A810E9C3680029A63F /* PBXTextBookmark */ = 904A87A810E9C3680029A63F /* PBXTextBookmark */;
 			904A87A910E9C3680029A63F /* PBXTextBookmark */ = 904A87A910E9C3680029A63F /* PBXTextBookmark */;
+			904A87BD10E9D18E0029A63F /* PBXTextBookmark */ = 904A87BD10E9D18E0029A63F /* PBXTextBookmark */;
+			904A87BE10E9D18E0029A63F /* PlistBookmark */ = 904A87BE10E9D18E0029A63F /* PlistBookmark */;
+			904A87BF10E9D18E0029A63F /* PBXTextBookmark */ = 904A87BF10E9D18E0029A63F /* PBXTextBookmark */;
+			904A87C010E9D18E0029A63F /* PBXTextBookmark */ = 904A87C010E9D18E0029A63F /* PBXTextBookmark */;
 			90596FCB10CA1EEE00FA2254 = 90596FCB10CA1EEE00FA2254 /* PBXTextBookmark */;
 			90596FCC10CA1EEE00FA2254 = 90596FCC10CA1EEE00FA2254 /* PBXTextBookmark */;
 			90596FCD10CA1EEE00FA2254 = 90596FCD10CA1EEE00FA2254 /* PBXTextBookmark */;
@@ -6333,6 +6337,48 @@
 		rType = 0;
 		vrLen = 625;
 		vrLoc = 1118;
+	};
+	904A87BD10E9D18E0029A63F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9003010E0F337AC000F2B68F /* CallsSortedByFilterDataSource.m */;
+		name = "CallsSortedByFilterDataSource.m: 49";
+		rLen = 0;
+		rLoc = 1229;
+		rType = 0;
+		vrLen = 677;
+		vrLoc = 1118;
+	};
+	904A87BE10E9D18E0029A63F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	904A87BF10E9D18E0029A63F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 514";
+		rLen = 36;
+		rLoc = 18402;
+		rType = 0;
+		vrLen = 2396;
+		vrLoc = 17708;
+	};
+	904A87C010E9D18E0029A63F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 508";
+		rLen = 0;
+		rLoc = 18111;
+		rType = 0;
+		vrLen = 2274;
+		vrLoc = 17830;
 	};
 	904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {
 		uiCtxt = {
