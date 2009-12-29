@@ -206,7 +206,6 @@ int sortByMetadata(id v1, id v2, void *context)
 				value1 = [metadata objectForKey:CallMetadataData];
 				if(value1 && ![value1 respondsToSelector:@selector(compare:)])
 				{
-#warning remove me next release
 					[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
 					value1 = nil;
 				}
@@ -229,7 +228,6 @@ int sortByMetadata(id v1, id v2, void *context)
 				value2 = [metadata objectForKey:CallMetadataData];
 				if(value2 && ![value2 respondsToSelector:@selector(compare:)])
 				{
-	#warning remove me next release
 					[(NSMutableDictionary *)metadata removeObjectForKey:CallMetadataData];
 					value2 = nil;
 				}

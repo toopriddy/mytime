@@ -69,6 +69,7 @@
 	{
 		name = [[NSMutableString alloc] init];
 		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryName];
+		[name release];
 	}
 	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	cell.delegate = self;
@@ -222,6 +223,7 @@
 		[self.delegate.territory setObject:[self.delegate ownerEmailAddress] forKey:NotAtHomeTerritoryOwnerEmailAddress];
 		
 		[self.delegate updateAndReload];
+		CFRelease(emails);
 		return NO;
 	}
 	CFRelease(emails);

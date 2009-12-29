@@ -46,7 +46,7 @@
 
 - (UIImage *)tabBarImage 
 {
-	return [UIImage imageNamed:@"sort4.png"];
+	return [UIImage imageNamed:@"category.png"];
 }
 
 - (void)dealloc
