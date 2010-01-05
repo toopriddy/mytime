@@ -44,7 +44,7 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Visit Type", @"Return Visit Type title");
+		self.title = NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title");
 
 		self.type = publisherType;
 	}
