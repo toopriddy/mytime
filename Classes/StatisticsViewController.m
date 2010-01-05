@@ -307,7 +307,6 @@ static NSString *MONTHS[] = {
 			memset(studyAlreadyConducted, 0, sizeof(studyAlreadyConducted));
 			
 			int i;
-			BOOL foundBibleDVD = NO;
 			int returnVisitsCount = [returnVisits count];
 			for(i = returnVisitsCount; i > 0; --i)
 			{
@@ -401,7 +400,9 @@ static NSString *MONTHS[] = {
 							NSString *type;
 							if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
 							{
-								if([type isEqualToString:PublicationTypeBook])
+								if([type isEqualToString:PublicationTypeBook] ||
+								   [type isEqualToString:PublicationTypeDVDBible] || 
+								   [type isEqualToString:PublicationTypeDVDBook])
 								{
 									if(!isTransfer)
 									{
@@ -413,7 +414,8 @@ static NSString *MONTHS[] = {
 										}
 									}
 								}
-								else if([type isEqualToString:PublicationTypeBrochure])
+								else if([type isEqualToString:PublicationTypeBrochure] ||
+										[type isEqualToString:PublicationTypeDVDBrochure])
 								{
 									if(!isTransfer)
 									{
@@ -446,34 +448,6 @@ static NSString *MONTHS[] = {
 										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 										{
 											_serviceYearMagazines += 2;
-										}
-									}
-								}
-								else if([type isEqualToString:PublicationTypeDVDBible])
-								{
-									if(!foundBibleDVD)
-									{
-										if(!isTransfer)
-										{
-											_books[offset]++;
-											if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-											   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-											{
-												_serviceYearBooks++;
-											}
-										}
-										foundBibleDVD = TRUE;
-									}
-								}
-								else if([type isEqualToString:PublicationTypeDVDBook])
-								{
-									if(!isTransfer)
-									{
-										_books[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearBooks++;
 										}
 									}
 								}
@@ -648,7 +622,9 @@ static NSString *MONTHS[] = {
 				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
 				if(type != nil)
 				{
-					if([type isEqualToString:PublicationTypeBook])
+					if([type isEqualToString:PublicationTypeBook] || 
+					   [type isEqualToString:PublicationTypeDVDBible] || 
+					   [type isEqualToString:PublicationTypeDVDBook])
 					{
 						_books[offset] += number;
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
@@ -657,7 +633,8 @@ static NSString *MONTHS[] = {
 							_serviceYearBooks += number;
 						}
 					}
-					else if([type isEqualToString:PublicationTypeBrochure])
+					else if([type isEqualToString:PublicationTypeBrochure] || 
+							[type isEqualToString:PublicationTypeDVDBrochure])
 					{
 						_brochures[offset] += number;
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
@@ -682,24 +659,6 @@ static NSString *MONTHS[] = {
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
 							_serviceYearMagazines += number*2;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeDVDBible])
-					{
-						_books[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearBooks += number;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeDVDBook])
-					{
-						_books[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearBooks += number;
 						}
 					}
 					else if([type isEqualToString:PublicationTypeCampaignTract])

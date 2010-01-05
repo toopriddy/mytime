@@ -129,12 +129,16 @@
 		case 6:
 			filter = PublicationTypeDVDBook;
 			break;
-		// PublicationTypeDVDNotCount @"DVD Not Counted"
+		// PublicationTypeDVDBrochure @"DVD Brochure"
 		case 7:
+			filter = PublicationTypeDVDBrochure;
+			break;
+		// PublicationTypeDVDNotCount @"DVD Not Counted"
+		case 8:
 			filter = PublicationTypeDVDNotCount;
 			break;
 		// PublicationTypeTract @"Tract"
-		case 8:
+		case 9:
 			filter = PublicationTypeTract;
 			break;
 	}
@@ -178,6 +182,7 @@
 	// ALL
 	// PublicationTypeDVDBible @"Bible DVD"
 	// PublicationTypeDVDBook @"DVD"
+	// PublicationTypeDVDBook @"DVD Brochure"
 	// PublicationTypeDVDNotCount @"DVD Not Counted"
 	// PublicationTypeBook @"Book"
 	// PublicationTypeBrochure @"Brochure"
@@ -185,7 +190,7 @@
 	// PublicationTypeTract @"Tract"
 	// PublicationTypeCampaignTract @"Special"
 
-	return 9;
+	return 10;
 }
 
 
@@ -230,12 +235,16 @@
 		case 6:
 			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBook value:PublicationTypeDVDBook table:@""];
 			break;
-		// PublicationTypeDVDNotCount @"DVD Not Counted"
+		// PublicationTypeDVDBrochure @"DVD Brochure"
 		case 7:
+			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDBrochure value:PublicationTypeDVDBrochure table:@""];
+			break;
+		// PublicationTypeDVDNotCount @"DVD Not Counted"
+		case 8:
 			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeDVDNotCount value:PublicationTypeDVDNotCount table:@""];
 			break;
 		// PublicationTypeTract @"Tract"
-		case 8:
+		case 9:
 			cell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:PublicationTypeTract value:PublicationTypeTract table:@""];
 			break;
     }
