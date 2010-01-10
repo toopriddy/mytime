@@ -3,10 +3,6 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 
-@interface UIPickerView (soundsEnabled)
-- (void)setSoundsEnabled:(BOOL)fp8;
-@end
-
 @implementation MetadataPickerViewController
 @synthesize delegate = _delegate;
 
@@ -79,8 +75,6 @@
 		
 		[pickerView reloadAllComponents];
 		[pickerView selectRow:_selection inComponent:0 animated:NO];
-		
-		[pickerView setSoundsEnabled:NO];
     }
     
     return(self);

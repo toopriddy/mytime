@@ -18,10 +18,6 @@
 #import "PSLocalization.h"
 #import "UITableViewSwitchCell.h"
 
-@interface UIPickerView (soundsEnabled)
-- (void)setSoundsEnabled:(BOOL)fp8;
-@end
-
 @interface MetadataSaveAndDone : UIResponder <UITextFieldDelegate>
 {
 	MetadataEditorViewController *viewController;
@@ -206,11 +202,6 @@
 				self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 				_datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 				_datePicker.date = (NSDate *)data;
-				{
-					NSArray *views = _datePicker.subviews;
-					UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
-					[picker setSoundsEnabled:NO];
-				}
 				break;
 			}
 		}

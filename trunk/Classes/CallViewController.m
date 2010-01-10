@@ -589,9 +589,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
 	
+	NSString *latLong = [call objectForKey:CallLattitudeLongitude];
 	// if this does not have a latitude/longitude then look it up
-	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
-	   [call objectForKey:CallLattitudeLongitude] != nil)
+	if(latLong && ![latLong isEqualToString:@"nil"])
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 		cell.editingAccessoryType = UITableViewCellAccessoryCheckmark;
@@ -2418,7 +2418,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness")];
 	
-	NSMutableString *string = [[NSMutableString alloc] init];
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	[string appendString:NSLocalizedString(@"This return visit has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this call into MyTime.<br><br>Return Visit Details:<br>", @"This is the first part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details")];
 	[string appendString:emailFormattedStringForCall(_call)];
 	[string appendString:NSLocalizedString(@"You are able to import this call into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br>", @"This is the second part of the body of the email message that is sent to a user when you click on a Call then click on Edit and then click on the action button in the upper left corner and select transfer or email details")];
@@ -2438,6 +2438,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[string appendString:@"</a><br><br>"];
 	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
 
+	[string appendString:@"</body></html>"];
 	[mailView setMessageBody:string isHTML:YES];
 	[string release];
 	mailView.mailComposeDelegate = self;

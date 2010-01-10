@@ -56,11 +56,12 @@
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
 		9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9045A8F80E7D6F86001B439C /* Localizable.strings */; };
 		9045AA000E7D99A4001B439C /* EventAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A9FF0E7D99A4001B439C /* EventAgent.m */; };
+		904A87E110EAFC790029A63F /* not-at-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 904A87E010EAFC790029A63F /* not-at-home.png */; };
 		904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */; };
 		9052CD2C108668AE001FFA13 /* NotAtHomeTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9052CD2B108668AE001FFA13 /* NotAtHomeTableCell.xib */; };
 		9052CD3010866F3F001FFA13 /* NotAtHomeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
-		9052CD6610868231001FFA13 /* NotAtHomeTerritoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryDetailViewController.m */; };
+		9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */; };
 		905A0E741029213B00875539 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 905A0E731029213B00875539 /* Settings.bundle */; };
 		905C1BC510BBA6C100A3FD8D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 905C1BC410BBA6C100A3FD8D /* MessageUI.framework */; };
 		905C36DB0E3BBD4600C8DB27 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */; };
@@ -120,6 +121,8 @@
 		90D031F70E56944C001CEF0D /* LiteraturePlacementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */; };
 		90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D0F3C10FD333D600107ADB /* PSLocalization.m */; };
 		90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */; };
+		90DE42D110F8F9320003D14B /* NSObject+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */; };
+		90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */; };
 		90E157AC0FF438F3001BD69B /* sort4.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E157AB0FF438F3001BD69B /* sort4.png */; };
 		90E2EDDF103BB5AA000C2032 /* SecurityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E2EDDE103BB5AA000C2032 /* SecurityView.xib */; };
 		90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */; };
@@ -242,6 +245,7 @@
 		9045A7280E7C1590001B439C /* BackupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupView.m; sourceTree = "<group>"; };
 		9045A9FE0E7D99A4001B439C /* EventAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAgent.h; sourceTree = "<group>"; };
 		9045A9FF0E7D99A4001B439C /* EventAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAgent.m; sourceTree = "<group>"; };
+		904A87E010EAFC790029A63F /* not-at-home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "not-at-home.png"; sourceTree = "<group>"; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
 		904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublisherTypeViewController.m; sourceTree = "<group>"; };
 		9052CD2B108668AE001FFA13 /* NotAtHomeTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NotAtHomeTableCell.xib; path = Classes/NotAtHomeTableCell.xib; sourceTree = "<group>"; };
@@ -249,8 +253,8 @@
 		9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeTableCell.m; sourceTree = "<group>"; };
 		9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeViewController.h; sourceTree = "<group>"; };
 		9052CD331086753F001FFA13 /* NotAtHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeViewController.m; sourceTree = "<group>"; };
-		9052CD6410868231001FFA13 /* NotAtHomeTerritoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeTerritoryDetailViewController.h; sourceTree = "<group>"; };
-		9052CD6510868231001FFA13 /* NotAtHomeTerritoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeTerritoryDetailViewController.m; sourceTree = "<group>"; };
+		9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeTerritoryViewController.h; sourceTree = "<group>"; };
+		9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeTerritoryViewController.m; sourceTree = "<group>"; };
 		9053E0580E8DDD7100BA35F7 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9053E06F0E8DDDD400BA35F7 /* Spanish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90574B950E5F79CE003A6BCE /* CallTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTableCell.h; sourceTree = "<group>"; };
@@ -364,6 +368,10 @@
 		90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		90DD73320E91B4AE007B1B71 /* Croatian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Croatian; path = Croatian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90DD733D0E925C1E007B1B71 /* Dutch */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90DE42CF10F8F9320003D14B /* NSObject+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PriddySoftware.h"; sourceTree = "<group>"; };
+		90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PriddySoftware.m"; sourceTree = "<group>"; };
+		90DE435E10F93F730003D14B /* NotAtHomeStreetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeStreetViewController.h; sourceTree = "<group>"; };
+		90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeStreetViewController.m; sourceTree = "<group>"; };
 		90E157AB0FF438F3001BD69B /* sort4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort4.png; sourceTree = "<group>"; };
 		90E2EDDE103BB5AA000C2032 /* SecurityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecurityView.xib; sourceTree = "<group>"; };
 		90E2EDE2103BBB14000C2032 /* SecurityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityViewController.h; sourceTree = "<group>"; };
@@ -500,6 +508,8 @@
 				90E75D1D0FE5D0BC00690CEE /* MetadataPickerViewController.m */,
 				90E2EDE2103BBB14000C2032 /* SecurityViewController.h */,
 				90E2EDE3103BBB14000C2032 /* SecurityViewController.m */,
+				90DE42CF10F8F9320003D14B /* NSObject+PriddySoftware.h */,
+				90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */,
 				905A0E731029213B00875539 /* Settings.bundle */,
 			);
 			path = Classes;
@@ -549,6 +559,7 @@
 				90C148EB0E3B937300C6EDAF /* bulkPlacements.png */,
 				90C148EC0E3B937300C6EDAF /* city.png */,
 				90C4D4F30E8564DD00E202E2 /* map.png */,
+				904A87E010EAFC790029A63F /* not-at-home.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
 				90EA4F35100275590046A2E4 /* whiteButton.png */,
 				90EA4F36100275590046A2E4 /* blueButton.png */,
@@ -630,8 +641,10 @@
 				9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */,
 				9052CD321086753F001FFA13 /* NotAtHomeViewController.h */,
 				9052CD331086753F001FFA13 /* NotAtHomeViewController.m */,
-				9052CD6410868231001FFA13 /* NotAtHomeTerritoryDetailViewController.h */,
-				9052CD6510868231001FFA13 /* NotAtHomeTerritoryDetailViewController.m */,
+				9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */,
+				9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */,
+				90DE435E10F93F730003D14B /* NotAtHomeStreetViewController.h */,
+				90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */,
 			);
 			name = NotAtHomes;
 			sourceTree = "<group>";
@@ -903,6 +916,7 @@
 				9052CD2C108668AE001FFA13 /* NotAtHomeTableCell.xib in Resources */,
 				908722C110AF9A9F00580FFF /* rbc.png in Resources */,
 				908722C310AF9AAA00580FFF /* category.png in Resources */,
+				904A87E110EAFC790029A63F /* not-at-home.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,8 +1034,10 @@
 				900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */,
 				9052CD3010866F3F001FFA13 /* NotAtHomeTableCell.m in Sources */,
 				9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */,
-				9052CD6610868231001FFA13 /* NotAtHomeTerritoryDetailViewController.m in Sources */,
+				9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */,
 				901F258110C244B00081A382 /* MultipleChoiceMetadataViewController.m in Sources */,
+				90DE42D110F8F9320003D14B /* NSObject+PriddySoftware.m in Sources */,
+				90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
