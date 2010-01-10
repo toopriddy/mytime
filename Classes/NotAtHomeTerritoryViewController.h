@@ -9,19 +9,19 @@
 #import "GenericTableViewController.h"
 #import <AddressBook/AddressBook.h>
 
-@class NotAtHomeTerritoryDetailViewController;
+@class NotAtHomeTerritoryViewController;
 
-@protocol NotAtHomeTerritoryDetailViewControllerDelegate
-- (void)notAtHomeTerritoryDetailViewControllerDone:(NotAtHomeTerritoryDetailViewController *)notAtHomeTerritoryDetailViewController;
+@protocol NotAtHomeTerritoryViewControllerDelegate
+- (void)notAtHomeTerritoryViewControllerDone:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController;
 @end
 
-@interface NotAtHomeTerritoryDetailViewController : GenericTableViewController 
+@interface NotAtHomeTerritoryViewController : GenericTableViewController 
 {
 @private	
 	ABAddressBookRef addressBook;
 	
 	NSMutableDictionary *territory;
-	id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+	id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 	UITextField *owner;
 	int tag;
 	BOOL newTerritory;
@@ -30,7 +30,7 @@
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) UITextField *owner;
 @property (nonatomic, retain) NSMutableDictionary *territory;
-@property (nonatomic, assign) id<NotAtHomeTerritoryDetailViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 
 - (id)initWithTerritory:(NSMutableDictionary *)theTerritory;
 

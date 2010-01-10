@@ -222,7 +222,7 @@
 			}
 			else
 			{
-				NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
+				NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
 				VERBOSE(NSLog(@"%@", script);)
 				
 				if([theWebView evalJS:script] == nil)
@@ -256,7 +256,7 @@
 				}
 				else
 				{
-					NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
+					NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
 					VERBOSE(NSLog(@"%@", script);)
 					
 					if([theWebView evalJS:script] == nil)

@@ -23,6 +23,7 @@ margin-bottom: 0px} </style>
     //<![CDATA[        
 
 var addresses = [];
+var isAddressLookups = [];
 var results = [];
 var resultsSaved = [];
 var markers = [];
@@ -108,12 +109,13 @@ function showAddress(information, lat, long)
 	}
 }
 
-function findAddress(information, address) 
+function findLocationFromAddress(information, address) 
 {
 	if (geocoder) 
 	{
 		var iter = resultsIter;
 		
+		isAddressLookups[iter] = 1;
 		addresses[iter] = address;
 		results[iter] = "";
 		resultsSaved[iter] = 0;
@@ -127,6 +129,36 @@ function findAddress(information, address)
 					results[iter] = "" + point.lat() + ", " + point.lng();
 					
 					showAddress(information, point.lat(), point.lng());
+				}
+				else
+				{
+					results[iter] = "nil";
+				}
+			}
+		);
+	}
+}
+
+function findAddressFromLocation(information, latlong) 
+{
+	if (geocoder) 
+	{
+		var iter = resultsIter;
+		
+		isAddressLookups[iter] = 0;
+		addresss[iter] = latlong;
+		results[iter] = "";
+		resultsSaved[iter] = 0;
+		resultsIter++;
+		
+		geocoder.getLocations(latlong, 
+			function (response) 
+			{
+				// Retrieve the object
+				place = response.Placemark[0];
+				if(place)
+				{
+					results[iter] = place.AddressDetails;
 				}
 				else
 				{
@@ -166,9 +198,34 @@ function getResult(i)
 	return(ret);
 }
 
+function getResultCountry(i)
+{
+	return results[i].Country.CountryName;
+}
+
+function getResultState(i)
+{
+	return results[i].Country.AdministrativeArea.AdministrativeAreaName;
+}
+
+function getResultCity(i)
+{
+	return results[i].Country.AdministrativeArea.Locality.LocalityName;
+}
+
+function getResultStreet(i)
+{
+	return results[i].Country.AdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+}
+
 function getAddress(i)
 {
 	return(addresses[i]);
+}
+
+function getIsAddressLookup(i)
+{
+	return(isAddressLookups[i]);
 }
 
     //]]>

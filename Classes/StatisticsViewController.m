@@ -98,7 +98,7 @@ static NSString *MONTHS[] = {
 	[mailView setSubject:NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report")];
 	[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	
-	NSMutableString *string = [[NSMutableString alloc] init];
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 
 	NSString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
 	if([notes length])
@@ -160,6 +160,7 @@ static NSString *MONTHS[] = {
 		}
 	}
 	
+	[string appendString:@"</body></html>"];
 	[mailView setMessageBody:string isHTML:YES];
 	[string release];
 	[mailView setMailComposeDelegate:self];

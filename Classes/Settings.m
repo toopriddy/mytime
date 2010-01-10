@@ -143,6 +143,7 @@ NSString * const NotAtHomeTerritoryOwnerEmailId = @"ownerEmailId";
 NSString * const NotAtHomeTerritoryOwnerEmailAddress = @"ownerEmailAddress";
 NSString * const NotAtHomeTerritoryStreets = @"streets";
 NSString * const NotAtHomeTerritoryStreetName = @"name";
+NSString * const NotAtHomeTerritoryStreetDate = @"date";
 NSString * const NotAtHomeTerritoryCity = @"city";
 NSString * const NotAtHomeTerritoryState = @"state";
 NSString * const NotAtHomeTerritoryHouses = @"houses";
@@ -208,7 +209,7 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it")];
 
-	NSMutableString *string = [[NSMutableString alloc] init];
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
 	
 	// attach the real records file
@@ -233,7 +234,7 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 	[string appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
 	[string appendString:@"</a><br><br>"];
 	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
-
+	[string appendString:@"</body></html>"];
 	[mailView setMessageBody:string isHTML:YES];
 	[string release];
 	
@@ -278,7 +279,7 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data")];
 	
-	NSMutableString *string = [[NSMutableString alloc] init];
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 
 	NSString *toEmailAddress = [settings objectForKey:SettingsBackupEmailAddress];
@@ -357,6 +358,7 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 			[string appendString:@"<br>"];
 		}
 	}	
+	[string appendString:@"</body></html>"];
 	[mailView setMessageBody:string isHTML:YES];
 	[string release];
 	return mailView;

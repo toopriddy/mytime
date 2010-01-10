@@ -17,11 +17,6 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 
-@interface UIPickerView (soundsEnabled)
-- (void)setSoundsEnabled:(BOOL)fp8;
-@end
-
-
 @implementation TimePickerViewController
 @synthesize datePicker;
 @synthesize timePicker;
@@ -55,19 +50,9 @@
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 		datePicker.date = date;
-		{
-			NSArray *views = datePicker.subviews;
-			UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
-			[picker setSoundsEnabled:NO];
-		}
 		self.timePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		timePicker.datePickerMode = UIDatePickerModeCountDownTimer;
 		timePicker.countDownDuration = minutes*60;
-		{
-			NSArray *views = timePicker.subviews;
-			UIPickerView *picker = (UIPickerView*)[views objectAtIndex:0];
-			[picker setSoundsEnabled:NO];
-		}
 	}
 	return self;
 }

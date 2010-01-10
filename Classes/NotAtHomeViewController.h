@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NotAtHomeTerritoryDetailViewController.h"
+#import "NotAtHomeTerritoryViewController.h"
 
-@interface NotAtHomeViewController : UITableViewController <NotAtHomeTerritoryDetailViewControllerDelegate>
+@interface NotAtHomeViewController : UITableViewController <NotAtHomeTerritoryViewControllerDelegate>
 {
 @private
 	NSMutableArray *entries;

@@ -15,6 +15,7 @@
 
 #import "GeocacheViewController.h"
 #import "Settings.h"
+#import "NSObject+PriddySoftware.h"
 
 @implementation GeocacheViewController
 @synthesize mapView;
@@ -61,6 +62,7 @@
 		[self addSubview:progressView];
 
 		// start fetching the default web page
+		[[[UIApplication sharedApplication] mainThreadProxy] setNetworkActivityIndicatorVisible:YES];
 		[progressView startAnimating];							
 	}
 	return self;
@@ -124,11 +126,13 @@
 
 - (void)stopProgressIndicator
 {
+	[[[UIApplication sharedApplication] mainThreadProxy] setNetworkActivityIndicatorVisible:NO];
 	[progressView stopAnimating];
 }
 
 - (void)mapViewDidStartLoad:(MapWebView *)mapView
 {	
+	[[[UIApplication sharedApplication] mainThreadProxy] setNetworkActivityIndicatorVisible:YES];
 	[progressView startAnimating];
 }
 
@@ -155,6 +159,7 @@
 	{
 		NSString *latLong = [mapView.map evalJS:[NSString stringWithFormat:@"getResult(%d)", iter]];
 		NSString *address = [mapView.map evalJS:[NSString stringWithFormat:@"getAddress(%d)", iter]];
+		BOOL isAddressLookup = [[mapView.map evalJS:[NSString stringWithFormat:@"getIsAddressLookup(%d)", iter]] boolValue];
 		NSMutableDictionary *foundCall = call;
 		if(foundCall == nil)
 		{
@@ -162,17 +167,37 @@
 			
 			while ( (foundCall = [e nextObject]) ) 
 			{
-				NSString *str = [self getAddressFromCall:foundCall useHtml:NO];
-				if(str && [str isEqualToString:address])
+				if(isAddressLookup)
 				{
-					break;
+					NSString *str = [self getAddressFromCall:foundCall useHtml:NO];
+					if(str && [str isEqualToString:address])
+					{
+						break;
+					}
+				}
+				else
+				{
+					NSString *str = [foundCall objectForKey:CallLattitudeLongitude];
+					if(str && [str isEqualToString:address])
+					{
+						break;
+					}
 				}
 			}
 		}
+		
 		if(foundCall)
 		{
-			[foundCall setObject:latLong forKey:CallLattitudeLongitude];
-			[[Settings sharedInstance] saveData];
+			if(isAddressLookup)
+			{
+				[foundCall setObject:latLong forKey:CallLattitudeLongitude];
+				[[Settings sharedInstance] saveData];
+			}
+			else
+			{
+//				[foundCall setObject:latLong forKey:CallLattitudeLongitude];
+//				[[Settings sharedInstance] saveData];
+			}
 		}
 	}
 
@@ -192,7 +217,7 @@
 			NSString *latLong = [call objectForKey:CallLattitudeLongitude];
 			if(latLong == nil)
 			{
-				NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
+				NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
 				VERBOSE(NSLog(@"%@", script);)
 				
 				if([theWebView evalJS:script] == nil)
@@ -225,7 +250,7 @@
 				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
 				if(latLong == nil)
 				{
-					NSString *script = [NSString stringWithFormat:@"findAddress(\"%@\", \"%@\");", info, str];
+					NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
 					VERBOSE(NSLog(@"%@", script);)
 					
 					if([theWebView evalJS:script] == nil)

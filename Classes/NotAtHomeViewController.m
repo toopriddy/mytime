@@ -6,7 +6,7 @@
 //  Copyright 2009 Priddy Software, LLC. All rights reserved.
 //
 #import "NotAtHomeViewController.h"
-#import "NotAtHomeTerritoryDetailViewController.h"
+#import "NotAtHomeTerritoryViewController.h"
 #import "Settings.h"
 #import "PSLocalization.h"
 @implementation NotAtHomeViewController
@@ -34,7 +34,7 @@
 
 - (void)navigationControlAdd:(id)sender
 {
-	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] init] autorelease];
+	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] init] autorelease];
 	controller.tag = -1;
 	controller.delegate = self;
 	
@@ -52,9 +52,9 @@
 	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 } 
 
-- (void)notAtHomeTerritoryDetailViewControllerDone:(NotAtHomeTerritoryDetailViewController *)notAtHomeTerritoryDetailViewController
+- (void)notAtHomeTerritoryViewControllerDone:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController
 {
-	if(notAtHomeTerritoryDetailViewController.tag >= 0)
+	if(notAtHomeTerritoryViewController.tag >= 0)
 	{
 		[[Settings sharedInstance] saveData];
 		
@@ -63,7 +63,7 @@
 	}
 	else
 	{
-		[self.entries addObject:notAtHomeTerritoryDetailViewController.territory];
+		[self.entries addObject:notAtHomeTerritoryViewController.territory];
 		[[Settings sharedInstance] saveData];
 		
 		[self.tableView reloadData];
@@ -86,7 +86,7 @@
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Not At Home", @"Title for Not At Homes view");
-//		self.tabBarItem.image = [UIImage imageNamed:@"notAtHomes.png"];
+		self.tabBarItem.image = [UIImage imageNamed:@"not-at-home.png"];
 		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																				 target:self
 																				 action:@selector(navigationControlAdd:)] autorelease];
@@ -133,7 +133,8 @@
 	NSMutableDictionary *entry = [theEntries objectAtIndex:row];
 	
 	cell.textLabel.text = [entry objectForKey:NotAtHomeTerritoryName];
-
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
 	return cell;
 }
 
@@ -141,7 +142,7 @@
 {
     int row = [indexPath row];
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
-	NotAtHomeTerritoryDetailViewController *controller = [[[NotAtHomeTerritoryDetailViewController alloc] initWithTerritory:[self.entries objectAtIndex:row]] autorelease];
+	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:[self.entries objectAtIndex:row]] autorelease];
 	controller.tag = row;
 	controller.delegate = self;
 	
