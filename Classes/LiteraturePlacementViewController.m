@@ -441,6 +441,7 @@
     [placements setObject:[datePickerViewController date] forKey:BulkLiteratureDate];
     
 	[tableView reloadData];
+	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 @end

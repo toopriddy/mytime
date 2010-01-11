@@ -20,6 +20,7 @@
 
 @protocol UITableViewMultiTextFieldCellDelegate<NSObject>
 @optional
+- (BOOL)tableViewMultiTextFieldCellShouldClear:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField;
 - (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected;
 - (BOOL)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 @end

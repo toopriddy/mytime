@@ -148,7 +148,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField 
 {
 	[textField resignFirstResponder];
-	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
+	if(delegate && [delegate respondsToSelector:@selector(tableViewMultiTextFieldCell:selected:)])
 	{
 		[delegate tableViewMultiTextFieldCell:self textField:textField selected:NO];
 	}
@@ -166,9 +166,19 @@
 	return YES;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+	if(delegate && [delegate respondsToSelector:@selector(tableViewMultiTextFieldCellShouldClear:textField:)])
+	{
+		return [delegate tableViewMultiTextFieldCellShouldClear:self textField:textField];
+	}
+	return YES;
+}
+
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:shouldChangeCharactersInRange:replacementString:)])
+	if(delegate && [delegate respondsToSelector:@selector(tableViewMultiTextFieldCell:textField:shouldChangeCharactersInRange:replacementString:)])
 	{
 		return [delegate tableViewMultiTextFieldCell:self textField:textField shouldChangeCharactersInRange:range replacementString:string];
 	}
@@ -178,7 +188,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
+	if(delegate && [delegate respondsToSelector:@selector(tableViewMultiTextFieldCell:textField:selected:)])
 	{
 		[delegate tableViewMultiTextFieldCell:self textField:textField selected:YES];
 	}
@@ -186,7 +196,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	if(delegate && [delegate respondsToSelector:@selector(tableViewTextFieldCell:selected:)])
+	if(delegate && [delegate respondsToSelector:@selector(tableViewMultiTextFieldCell:textField:selected:)])
 	{
 		[delegate tableViewMultiTextFieldCell:self textField:textField selected:NO];
 	}

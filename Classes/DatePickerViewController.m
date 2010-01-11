@@ -21,7 +21,7 @@
 @synthesize datePicker;
 @synthesize containerView;
 @synthesize delegate;
-
+@synthesize tag;
 
 
 - (id) init
@@ -73,7 +73,6 @@
 	{
 		[delegate datePickerViewControllerDone:self];
 	}
-	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)loadView 

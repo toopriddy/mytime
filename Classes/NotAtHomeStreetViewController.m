@@ -11,6 +11,9 @@
 #import "NotesViewController.h"
 #import "DatePickerViewController.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "UITableViewMultilineTextCell.h"
+#import "NotAtHomeHouseCell.h"
+#import "NotAtHomeHouseViewController.h"
 #import "Settings.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "PSLocalization.h"
@@ -59,7 +62,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"NameCell";
+	NSString *commonIdentifier = @"StreetNameCell";
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
@@ -69,14 +72,14 @@
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	}
-	NSMutableString *name = [self.delegate.street objectForKey:NotAtHomeTerritoryName];
+	NSMutableString *name = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
 	if(name == nil)
 	{
 		name = [[NSMutableString alloc] init];
 		[self.delegate.street setObject:name forKey:NotAtHomeTerritoryStreetName];
 		[name release];
 	}
-	cell.textField.text = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
+	cell.textField.text = name;
 	cell.delegate = self;
 	if(self.obtainFocus)
 	{
@@ -189,8 +192,85 @@
 	{
 		self.delegate.forceReload = YES;
 	}
+	[[self.delegate navigationController] popViewControllerAnimated:YES];
 }
 
+@end
+
+/******************************************************************
+ *
+ *   NAHStreetNotesCellController
+ *
+ ******************************************************************/
+#pragma mark NAHStreetNotesCellController
+
+@interface NAHStreetNotesCellController : NotAtHomeStreetViewCellController<NotesViewControllerDelegate>
+{
+}
+@end
+@implementation NAHStreetNotesCellController
+
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+{
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+    [self.delegate.street setObject:[notesViewController notes] forKey:NotAtHomeTerritoryStreetNotes];
+	[[Settings sharedInstance] saveData];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+	
+	[self.delegate.navigationController popViewControllerAnimated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:[self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes]];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
+	}
+	
+	NSMutableString *notes = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes];
+	
+	if([notes length] == 0)
+		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
+	else
+		[cell setText:notes];
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *notes = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes];
+	// make the new call view 
+	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
+	p.delegate = self;
+	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
+}
 @end
 
 
@@ -201,12 +281,39 @@
 ******************************************************************/
 #pragma mark NAHStreetHouseCellController
 
-@interface NAHStreetHouseCellController : NotAtHomeStreetViewCellController
+@interface NAHStreetHouseCellController : UIViewController<TableViewCellController, NotAtHomeHouseCellDelegate, NotAtHomeHouseViewControllerDelegate>
 {
-@private	
+	NotAtHomeStreetViewController *delegate;
+	NSMutableDictionary *house;
 }
+@property (nonatomic, assign) NotAtHomeStreetViewController *delegate;
+@property (nonatomic, retain) NSMutableDictionary *house;
 @end
 @implementation NAHStreetHouseCellController
+@synthesize delegate;
+@synthesize house;
+
+- (void)dealloc
+{
+	self.house = nil;
+	
+	[super dealloc];
+}
+
+- (void)notAtHomeHouseCellAttemptsChanged:(NotAtHomeHouseCell *)cell
+{
+	NSMutableArray *attempts = [self.house objectForKey:NotAtHomeTerritoryHouseAttempts];
+	if(attempts.count > cell.attempts)
+	{
+		[attempts removeLastObject];
+	}
+	else
+	{
+		[attempts addObject:[NSDate date]];
+	}
+
+	[[Settings sharedInstance] saveData];
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -215,19 +322,44 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"StreetCell";
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	NSString *commonIdentifier = @"NotAtHomeHouseCell";
+	NotAtHomeHouseCell *cell = (NotAtHomeHouseCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		// Create a temporary UIViewController to instantiate the custom cell.
+        UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"NotAtHomeHouseCell" bundle:nil];
+		// Grab a pointer to the custom cell.
+        cell = (NotAtHomeHouseCell *)temporaryController.view;
+		// Release the temporary UIViewController.
+        [temporaryController autorelease];
 	}
-	cell.textLabel.text = [[self.delegate.street objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row];
+	else
+	{
+		NSLog(@"got here");
+	}
+
+	
+	self.house = [[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row];
+	
+	cell.delegate = self;
+	cell.attempts = [[self.house objectForKey:NotAtHomeTerritoryHouseAttempts] count];
+	NSMutableString *string = [[NSMutableString alloc] init];
+	[Settings formatStreetNumber:[self.house objectForKey:NotAtHomeTerritoryHouseNumber] 
+					   apartment:[self.house objectForKey:NotAtHomeTerritoryHouseApartment] 
+						 topLine:string];
+	cell.houseLabel.text = string;
+	[string release];
+
 	return cell;
 }
 
-// Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row]];
+	controller.delegate = self;
+	[self.delegate.navigationController pushViewController:controller animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
+	[controller release];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -246,6 +378,20 @@
 	}
 }
 
+- (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
+{
+	[[Settings sharedInstance] saveData];
+	[self.delegate.navigationController popViewControllerAnimated:YES];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+}
 @end
 
 /******************************************************************
@@ -255,9 +401,10 @@
  ******************************************************************/
 #pragma mark NAHStreetAddHouseCellController
 
-@interface NAHStreetAddHouseCellController : NotAtHomeStreetViewCellController
+@interface NAHStreetAddHouseCellController : NotAtHomeStreetViewCellController <NotAtHomeHouseViewControllerDelegate>
 {
 @private	
+	int section;
 }
 @end
 @implementation NAHStreetAddHouseCellController
@@ -269,7 +416,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"StreetCell";
+	NSString *commonIdentifier = @"AddHouseCell";
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
@@ -279,11 +426,54 @@
 	return cell;
 }
 
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)notAtHomeDetailCanceled
 {
+	[self.delegate dismissModalViewControllerAnimated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] init] autorelease];
+	controller.delegate = self;
+
+	section = indexPath.section;
+	
+	// push the element view controller onto the navigation stack to display it
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+
+	controller.title = NSLocalizedString(@"Add House", @"Title for the a new house in the Not At Home view");
+	[self.delegate presentModalViewController:navigationController animated:YES];
+	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+
+	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
+}
+
+- (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
+{
+	NSMutableArray *houses = [self.delegate.street objectForKey:NotAtHomeTerritoryHouses];
+	if(houses == nil)
+	{
+		houses = [[NSMutableArray alloc] init];
+		[self.delegate.street setObject:houses forKey:NotAtHomeTerritoryHouses];
+		[houses release];
+	}
+	[houses addObject:notAtHomeHouseViewController.house];
+	[[Settings sharedInstance] saveData];
+	
+	NAHStreetHouseCellController *cellController = [[NAHStreetHouseCellController alloc] init];
+	cellController.delegate = self.delegate;
+	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:([houses count] - 1)];
+	[cellController release];
+	
+	[self.delegate dismissModalViewControllerAnimated:YES];
+	[self.delegate updateWithoutReload];
+}	
 @end
 
 
@@ -350,6 +540,10 @@
 	[self.navigationItem setRightBarButtonItem:button animated:NO];	
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return(YES);
+}
 
 - (void)dealloc
 {
@@ -376,21 +570,30 @@
 		}
 		
 		{
-			// Territory Date
+			// Street Date
 			NAHStreetDateCellController *cellController = [[NAHStreetDateCellController alloc] init];
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+
+		{
+			// Street Notes
+			NAHStreetNotesCellController *cellController = [[NAHStreetNotesCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 	}
 
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Streets", @"Title of the section in the Not-At-Homes territory view that allows you to add/edit streets in the territory");
+		sectionController.title = NSLocalizedString(@"Houses", @"Title of the section in the Not-At-Homes street view that allows you to add/edit houses in the street");
 		[sectionController release];
 
-		for(NSDictionary *street in [self.street objectForKey:NotAtHomeTerritoryStreets])
+		for(NSDictionary *house in [self.street objectForKey:NotAtHomeTerritoryHouses])
 		{
 			// House
 			NAHStreetHouseCellController *cellController = [[NAHStreetHouseCellController alloc] init];

@@ -171,24 +171,6 @@
 	[super setEditing:editing animated:animated];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated 
-{
-	UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
-
-	[super setSelected:selected animated:animated];
-
-	if(self.selectionStyle != UITableViewCellSelectionStyleNone)
-	{
-		valueLabel.backgroundColor = backgroundColor;
-		valueLabel.highlighted = selected;
-		valueLabel.opaque = !selected;
-
-		titleLabel.backgroundColor = backgroundColor;
-		titleLabel.highlighted = selected;
-		titleLabel.opaque = !selected;
-	}
-}
-
 - (void)layoutSubviews 
 {
     [super layoutSubviews];
