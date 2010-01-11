@@ -21,10 +21,11 @@
 {
     UIDatePicker *datePicker;
 	UIView *containerView;
-	
+	int tag;
 	id<DatePickerViewControllerDelegate> delegate;
 }
 
+@property (nonatomic, assign) int tag;
 @property (nonatomic, retain) UIDatePicker *datePicker;
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, assign) id<DatePickerViewControllerDelegate> delegate;

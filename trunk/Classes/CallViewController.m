@@ -1429,6 +1429,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
     
 	[self.delegate save];
 	self.delegate.forceReload = YES;
+	[[self.delegate navigationController] popViewControllerAnimated:YES];
 }
 
 - (BOOL)isViewableWhenNotEditing

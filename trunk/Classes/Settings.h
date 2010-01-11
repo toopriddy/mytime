@@ -161,10 +161,14 @@ extern NSString * const SettingsNotAtHomeTerritories;
 	extern NSString * const NotAtHomeTerritoryStreets;
 	extern NSString * const NotAtHomeTerritoryCity;
 	extern NSString * const NotAtHomeTerritoryState;
+	extern NSString * const NotAtHomeTerritoryNotes;
 		extern NSString * const NotAtHomeTerritoryStreetName;
 		extern NSString * const NotAtHomeTerritoryStreetDate;
+		extern NSString * const NotAtHomeTerritoryStreetNotes;
 		extern NSString * const NotAtHomeTerritoryHouses;
 			extern NSString * const NotAtHomeTerritoryHouseNumber;
+			extern NSString * const NotAtHomeTerritoryHouseApartment;
+			extern NSString * const NotAtHomeTerritoryHouseNotes;
 			extern NSString * const NotAtHomeTerritoryHouseAttempts;
 
 
@@ -207,6 +211,8 @@ NSString *emailFormattedStringForCall(NSDictionary *_call);
 + (MFMailComposeViewController *)sendEmailBackup;
 + (MFMailComposeViewController *)sendPrintableEmailBackup;
 
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber topLine:(NSMutableString *)top;
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street topLine:(NSMutableString *)top;
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 
 - (NSString *)filename;

@@ -58,8 +58,6 @@
 		9045AA000E7D99A4001B439C /* EventAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A9FF0E7D99A4001B439C /* EventAgent.m */; };
 		904A87E110EAFC790029A63F /* not-at-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 904A87E010EAFC790029A63F /* not-at-home.png */; };
 		904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */; };
-		9052CD2C108668AE001FFA13 /* NotAtHomeTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9052CD2B108668AE001FFA13 /* NotAtHomeTableCell.xib */; };
-		9052CD3010866F3F001FFA13 /* NotAtHomeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
 		9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */; };
 		905A0E741029213B00875539 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 905A0E731029213B00875539 /* Settings.bundle */; };
@@ -123,6 +121,12 @@
 		90D6A2AC0EA1A13400FA0252 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6A2AB0EA1A13400FA0252 /* SwitchTableCell.m */; };
 		90DE42D110F8F9320003D14B /* NSObject+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */; };
 		90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */; };
+		90DE453C10FA4F780003D14B /* NotAtHomeHouseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */; };
+		90DE453F10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */; };
+		90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */; };
+		90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */; };
+		90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */; };
+		90DE479810FADF660003D14B /* testdelegeme.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90DE479710FADF660003D14B /* testdelegeme.xib */; };
 		90E157AC0FF438F3001BD69B /* sort4.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E157AB0FF438F3001BD69B /* sort4.png */; };
 		90E2EDDF103BB5AA000C2032 /* SecurityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E2EDDE103BB5AA000C2032 /* SecurityView.xib */; };
 		90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */; };
@@ -248,9 +252,6 @@
 		904A87E010EAFC790029A63F /* not-at-home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "not-at-home.png"; sourceTree = "<group>"; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
 		904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublisherTypeViewController.m; sourceTree = "<group>"; };
-		9052CD2B108668AE001FFA13 /* NotAtHomeTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NotAtHomeTableCell.xib; path = Classes/NotAtHomeTableCell.xib; sourceTree = "<group>"; };
-		9052CD2E10866F3F001FFA13 /* NotAtHomeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeTableCell.h; sourceTree = "<group>"; };
-		9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeTableCell.m; sourceTree = "<group>"; };
 		9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeViewController.h; sourceTree = "<group>"; };
 		9052CD331086753F001FFA13 /* NotAtHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeViewController.m; sourceTree = "<group>"; };
 		9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeTerritoryViewController.h; sourceTree = "<group>"; };
@@ -372,6 +373,14 @@
 		90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PriddySoftware.m"; sourceTree = "<group>"; };
 		90DE435E10F93F730003D14B /* NotAtHomeStreetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeStreetViewController.h; sourceTree = "<group>"; };
 		90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeStreetViewController.m; sourceTree = "<group>"; };
+		90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotAtHomeHouseCell.xib; sourceTree = "<group>"; };
+		90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueMinusButtonWhiteOutlineSmall.png; sourceTree = "<group>"; };
+		90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BluePlusButtonWhiteOutlineSmall.png; sourceTree = "<group>"; };
+		90DE454110FA7F140003D14B /* NotAtHomeHouseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeHouseViewController.h; sourceTree = "<group>"; };
+		90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseViewController.m; sourceTree = "<group>"; };
+		90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseCell.m; sourceTree = "<group>"; };
+		90DE454810FA8C190003D14B /* NotAtHomeHouseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeHouseCell.h; sourceTree = "<group>"; };
+		90DE479710FADF660003D14B /* testdelegeme.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testdelegeme.xib; sourceTree = "<group>"; };
 		90E157AB0FF438F3001BD69B /* sort4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort4.png; sourceTree = "<group>"; };
 		90E2EDDE103BB5AA000C2032 /* SecurityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecurityView.xib; sourceTree = "<group>"; };
 		90E2EDE2103BBB14000C2032 /* SecurityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityViewController.h; sourceTree = "<group>"; };
@@ -575,12 +584,15 @@
 				90E157AB0FF438F3001BD69B /* sort4.png */,
 				90C148CC0E3B923C00C6EDAF /* time.png */,
 				90C148CD0E3B923C00C6EDAF /* timer.png */,
+				90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */,
+				90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				9045A8F80E7D6F86001B439C /* Localizable.strings */,
 				90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */,
 				90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */,
 				90E2EDDE103BB5AA000C2032 /* SecurityView.xib */,
-				9052CD2B108668AE001FFA13 /* NotAtHomeTableCell.xib */,
+				90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */,
+				90DE479710FADF660003D14B /* testdelegeme.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -637,14 +649,16 @@
 		9052CD3110866F57001FFA13 /* NotAtHomes */ = {
 			isa = PBXGroup;
 			children = (
-				9052CD2E10866F3F001FFA13 /* NotAtHomeTableCell.h */,
-				9052CD2F10866F3F001FFA13 /* NotAtHomeTableCell.m */,
+				90DE454810FA8C190003D14B /* NotAtHomeHouseCell.h */,
+				90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */,
 				9052CD321086753F001FFA13 /* NotAtHomeViewController.h */,
 				9052CD331086753F001FFA13 /* NotAtHomeViewController.m */,
 				9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */,
 				9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */,
 				90DE435E10F93F730003D14B /* NotAtHomeStreetViewController.h */,
 				90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */,
+				90DE454110FA7F140003D14B /* NotAtHomeHouseViewController.h */,
+				90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */,
 			);
 			name = NotAtHomes;
 			sourceTree = "<group>";
@@ -913,10 +927,13 @@
 				905A0E741029213B00875539 /* Settings.bundle in Resources */,
 				903FF2E6102FDAF100CC60B8 /* index.html in Resources */,
 				90E2EDDF103BB5AA000C2032 /* SecurityView.xib in Resources */,
-				9052CD2C108668AE001FFA13 /* NotAtHomeTableCell.xib in Resources */,
 				908722C110AF9A9F00580FFF /* rbc.png in Resources */,
 				908722C310AF9AAA00580FFF /* category.png in Resources */,
 				904A87E110EAFC790029A63F /* not-at-home.png in Resources */,
+				90DE453C10FA4F780003D14B /* NotAtHomeHouseCell.xib in Resources */,
+				90DE453F10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png in Resources */,
+				90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */,
+				90DE479810FADF660003D14B /* testdelegeme.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1032,12 +1049,13 @@
 				90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */,
 				907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */,
 				900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */,
-				9052CD3010866F3F001FFA13 /* NotAtHomeTableCell.m in Sources */,
 				9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */,
 				9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */,
 				901F258110C244B00081A382 /* MultipleChoiceMetadataViewController.m in Sources */,
 				90DE42D110F8F9320003D14B /* NSObject+PriddySoftware.m in Sources */,
 				90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */,
+				90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */,
+				90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

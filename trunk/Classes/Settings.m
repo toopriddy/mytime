@@ -142,12 +142,16 @@ NSString * const NotAtHomeTerritoryOwnerId = @"ownerId";
 NSString * const NotAtHomeTerritoryOwnerEmailId = @"ownerEmailId";
 NSString * const NotAtHomeTerritoryOwnerEmailAddress = @"ownerEmailAddress";
 NSString * const NotAtHomeTerritoryStreets = @"streets";
+NSString * const NotAtHomeTerritoryNotes = @"notes";
 NSString * const NotAtHomeTerritoryStreetName = @"name";
 NSString * const NotAtHomeTerritoryStreetDate = @"date";
+NSString * const NotAtHomeTerritoryStreetNotes = @"notes";
 NSString * const NotAtHomeTerritoryCity = @"city";
 NSString * const NotAtHomeTerritoryState = @"state";
 NSString * const NotAtHomeTerritoryHouses = @"houses";
 NSString * const NotAtHomeTerritoryHouseNumber = @"houseNumber";
+NSString * const NotAtHomeTerritoryHouseApartment = @"apartment";
+NSString * const NotAtHomeTerritoryHouseNotes = @"notes";
 NSString * const NotAtHomeTerritoryHouseAttempts = @"attempts";
 
 
@@ -560,6 +564,26 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 {
     return self;
 }
+
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber topLine:(NSMutableString *)top
+{
+	[Settings formatStreetNumber:houseNumber 
+					   apartment:apartmentNumber 
+						  street:nil 
+						 topLine:top];
+}
+
++ (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street topLine:(NSMutableString *)top
+{
+	[Settings formatStreetNumber:houseNumber 
+					   apartment:apartmentNumber 
+						  street:street 
+							city:nil 
+						   state:nil 
+						 topLine:top 
+					  bottomLine:nil];
+}
+
 
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom
 {

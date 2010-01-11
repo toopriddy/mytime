@@ -12,6 +12,7 @@
 #import "Settings.h"
 #import "NotAtHomeStreetViewController.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "UITableViewMultilineTextCell.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "PSLocalization.h"
 
@@ -132,7 +133,7 @@
 		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryName];
 		[name release];
 	}
-	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
+	cell.textField.text = name;
 	cell.delegate = self;
 	if(self.obtainFocus)
 	{
@@ -474,6 +475,81 @@
 }
 @end
 
+/******************************************************************
+ *
+ *   NAHTerritoryNotesCellController
+ *
+ ******************************************************************/
+#pragma mark NAHTerritoryNotesCellController
+
+@interface NAHTerritoryNotesCellController : NotAtHomeTerritoryViewCellController<NotesViewControllerDelegate>
+{
+}
+@end
+@implementation NAHTerritoryNotesCellController
+
+- (void)notesViewControllerDone:(NotesViewController *)notesViewController
+{
+    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+    [self.delegate.territory setObject:[notesViewController notes] forKey:NotAtHomeTerritoryNotes];
+	[[Settings sharedInstance] saveData];
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+	
+	[self.delegate.navigationController popViewControllerAnimated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:[self.delegate.territory objectForKey:NotAtHomeTerritoryNotes]];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
+	}
+	
+	NSMutableString *notes = [self.delegate.territory objectForKey:NotAtHomeTerritoryNotes];
+	
+	if([notes length] == 0)
+		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
+	else
+		[cell setText:notes];
+
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *notes = [self.delegate.territory objectForKey:NotAtHomeTerritoryNotes];
+	// make the new call view 
+	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
+	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+	p.delegate = self;
+	[[self.delegate navigationController] pushViewController:p animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:p];
+}
+@end
 
 
 
@@ -563,7 +639,6 @@
 {
 @private	
 	int section;
-	int row;
 }
 @end
 @implementation NAHTerritoryAddStreetCellController
@@ -575,15 +650,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"StreetCell";
+	NSString *commonIdentifier = @"NewStreetCell";
 	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
 		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	[cell setValue:NSLocalizedString(@"Add Street", @"button to add streets to the list of not at home streets")];
-	section = indexPath.section;
-	row = indexPath.row;
 	return cell;
 }
 
@@ -598,6 +671,8 @@
 	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] init] autorelease];
 	controller.delegate = self;
 
+	section = indexPath.section;
+
 	// push the element view controller onto the navigation stack to display it
 	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 	
@@ -605,7 +680,7 @@
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	
-	controller.title = NSLocalizedString(@"Add New Street", @"Title for the a new street in the Not At Home view");
+	controller.title = NSLocalizedString(@"Add Street", @"Title for the a new street in the Not At Home view");
 	[self.delegate presentModalViewController:navigationController animated:YES];
 	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
 	[temporaryBarButtonItem setTarget:self];
@@ -629,7 +704,8 @@
 	NAHTerritoryStreetCellController *cellController = [[NAHTerritoryStreetCellController alloc] init];
 	cellController.delegate = self.delegate;
 	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:([streets count] - 1)];
-
+	[cellController release];
+	
 	[self.delegate dismissModalViewControllerAnimated:YES];
 	[self.delegate updateWithoutReload];
 }
@@ -762,6 +838,12 @@
 	[super dealloc];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return(YES);
+}
+
+
 #if 0
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -803,6 +885,14 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+
+		{
+			// Territory Notes
+			NAHTerritoryNotesCellController *cellController = [[NAHTerritoryNotesCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
 		
 		{
 			// Territory Owner
@@ -812,7 +902,6 @@
 			[cellController release];
 		}
 	}
-
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];

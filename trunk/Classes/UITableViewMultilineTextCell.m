@@ -130,12 +130,12 @@
 	}
 }
 
-- (void)setHighlighted:(BOOL)selected animated:(BOOL)animated 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated 
 {
 	/*
 	 Views are drawn most efficiently when they are opaque and do not have a clear background, so in newLabelForMainText: the labels are made opaque and given a white background.  To show selection properly, however, the views need to be transparent (so that the selection color shows through).  
     */
-	[super setHighlighted:selected animated:animated];
+	[super setSelected:selected animated:animated];
 
 	if(self.selectionStyle != UITableViewCellSelectionStyleNone)
 	{
@@ -173,14 +173,7 @@
 	constraints.width = width;
 	constraints.height = 10000000000.0;
 	CGSize size = [textView.text sizeWithFont:textView.font constrainedToSize:constraints];
-	if(size.height < contentRect.size.height)
-	{
-		size.height = contentRect.size.height; 
-	}
-	else
-	{
-		contentRect.size.height = size.height + 10.0;
-	}
+	contentRect.size.height = size.height > 44 ? size.height + 10.0 : 44;
 	frame = CGRectMake(boundsX, (contentRect.size.height - size.height)/2, width, size.height);
 	[textView setFrame:frame];
 }
