@@ -26,6 +26,39 @@
 @synthesize tableView;
 @synthesize dataSource;
 @synthesize indexPath;
+@synthesize emptyView;
+
+- (void)updateEmptyView
+{
+	if([self.dataSource numberOfSectionsInTableView:nil] > 1 || [self.dataSource tableView:nil numberOfRowsInSection:0])
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		[self.emptyView.view removeFromSuperview];
+		self.emptyView = nil;
+	}
+	else
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		if(self.emptyView == nil)
+		{
+			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
+			self.emptyView.view.frame = self.tableView.bounds;
+			self.emptyView.imageView.image = [self.dataSource tabBarImage];
+			self.emptyView.mainLabel.text = NSLocalizedString(@"No Calls", @"Text that appears at the sorted call views when there are no entries configured");
+			if([self.dataSource showAddNewCall])
+			{
+				self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add a call", @"Text that appears at the sorted call views when there are no entries configured");
+			}
+			else
+			{
+				self.emptyView.subLabel.text = NSLocalizedString(@"Use another call view to add a call", @"Text that appears at the sorted call views when there are no entries configured");
+			}
+
+			[self.view addSubview:self.emptyView.view];
+		}
+	}
+}
+
 
 - (void)addCallCanceled
 {
@@ -82,6 +115,7 @@
 
 - (void)dealloc 
 {
+	self.emptyView = nil;
 	[ovController release];
 	tableView.delegate = nil;
 	tableView.dataSource = nil;
@@ -270,6 +304,8 @@
 	// force the tableview to load
 	[dataSource refreshData];
 	[tableView reloadData];
+
+	[self updateEmptyView];
 }
 
 - (void)viewDidAppear:(BOOL)animated 

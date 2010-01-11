@@ -15,6 +15,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TimePickerViewControllerDelegate.h"
+#import "EmptyListViewController.h"
 
 @interface HourViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, TimePickerViewControllerDelegate> 
 {
@@ -22,7 +23,9 @@
 	BOOL _quickBuild;
 	
 	NSIndexPath *selectedIndexPath;
+	EmptyListViewController *emptyView;
 }
+@property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSIndexPath *selectedIndexPath;
 

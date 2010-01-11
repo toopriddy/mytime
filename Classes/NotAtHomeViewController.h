@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "NotAtHomeTerritoryViewController.h"
+#import "EmptyListViewController.h"
 
 @interface NotAtHomeViewController : UITableViewController <NotAtHomeTerritoryViewControllerDelegate>
 {
 @private
 	NSMutableArray *entries;
+	EmptyListViewController *emptyView;
 }
+@property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic, readonly) NSMutableArray *entries;
 @end

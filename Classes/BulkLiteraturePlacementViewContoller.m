@@ -48,6 +48,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 @synthesize tableView;
 @synthesize entries;
 @synthesize selectedIndexPath;
+@synthesize emptyView;
 
 static int sortByDate(id v1, id v2, void *context)
 {
@@ -58,6 +59,28 @@ static int sortByDate(id v1, id v2, void *context)
 	return(-[date1 compare:date2]);
 }
 
+- (void)updateEmptyView
+{
+	if(self.entries.count == 0)
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		if(self.emptyView == nil)
+		{
+			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
+			self.emptyView.view.frame = self.tableView.bounds;
+			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.mainLabel.text = NSLocalizedString(@"No Placements", @"Text that appears at the Bulk placements view when there are no entries configured");
+			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add street witnessing placements", @"Text that appears at the bulk placements view when there are no entries configured");
+			[self.view addSubview:self.emptyView.view];
+		}
+	}
+	else
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		[self.emptyView.view removeFromSuperview];
+		self.emptyView = nil;
+	}
+}
 
 // sort the time entries and remove the 3 month old entries
 - (void)reloadData
@@ -183,6 +206,7 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 	// force the tableview to load
 	[self reloadData];
+	[self updateEmptyView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -318,6 +342,7 @@ static int sortByDate(id v1, id v2, void *context)
 	[self.entries removeObjectAtIndex:[indexPath row]];
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+	[self updateEmptyView];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

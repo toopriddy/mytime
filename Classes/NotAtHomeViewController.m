@@ -9,7 +9,9 @@
 #import "NotAtHomeTerritoryViewController.h"
 #import "Settings.h"
 #import "PSLocalization.h"
+#import "QuartzCore/CAGradientLayer.h"
 @implementation NotAtHomeViewController
+@synthesize emptyView;
 
 - (NSMutableArray *)entries
 {
@@ -79,6 +81,36 @@
 	self.tableView.editing = YES;
 }
 
+- (void)updateEmptyView
+{
+	if(self.entries.count == 0)
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		if(self.emptyView == nil)
+		{
+			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
+			self.emptyView.view.frame = self.tableView.bounds;
+			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.mainLabel.text = NSLocalizedString(@"No Territories", @"Text that appears at the Not-At-Homes view when there are no entries configured");
+			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add a not-at-home territory", @"Text that appears at the Not-At-Homes view when there are no entries configured");
+			[self.view addSubview:self.emptyView.view];
+		}
+	}
+	else
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		[self.emptyView.view removeFromSuperview];
+		self.emptyView = nil;
+	}
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[self updateEmptyView];
+}
+
+
 - (id)init
 {
 	if ([super init]) 
@@ -99,6 +131,7 @@
 {
 	[entries release];
 	entries = nil;
+	self.emptyView = nil;
 	
 	[super dealloc];
 }
@@ -117,6 +150,7 @@
 {
     DEBUG(NSLog(@"numberOfRowsInTable:");)
 	int count = self.entries.count;
+
     DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
 	return count;
 }
@@ -162,6 +196,7 @@
 
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+	[self updateEmptyView];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

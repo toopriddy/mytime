@@ -126,7 +126,9 @@
 		90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */; };
 		90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */; };
 		90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */; };
-		90DE479810FADF660003D14B /* testdelegeme.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90DE479710FADF660003D14B /* testdelegeme.xib */; };
+		90DE47DC10FAE59B0003D14B /* EmptyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE47DB10FAE59B0003D14B /* EmptyListViewController.m */; };
+		90DE47EA10FAE6450003D14B /* EmptyListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90DE47E910FAE6450003D14B /* EmptyListView.xib */; };
+		90DE47F010FAEA330003D14B /* EmptyGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE47EF10FAEA330003D14B /* EmptyGradient.png */; };
 		90E157AC0FF438F3001BD69B /* sort4.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E157AB0FF438F3001BD69B /* sort4.png */; };
 		90E2EDDF103BB5AA000C2032 /* SecurityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E2EDDE103BB5AA000C2032 /* SecurityView.xib */; };
 		90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */; };
@@ -380,7 +382,10 @@
 		90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseViewController.m; sourceTree = "<group>"; };
 		90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseCell.m; sourceTree = "<group>"; };
 		90DE454810FA8C190003D14B /* NotAtHomeHouseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeHouseCell.h; sourceTree = "<group>"; };
-		90DE479710FADF660003D14B /* testdelegeme.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testdelegeme.xib; sourceTree = "<group>"; };
+		90DE47DA10FAE59B0003D14B /* EmptyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyListViewController.h; sourceTree = "<group>"; };
+		90DE47DB10FAE59B0003D14B /* EmptyListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyListViewController.m; sourceTree = "<group>"; };
+		90DE47E910FAE6450003D14B /* EmptyListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyListView.xib; sourceTree = "<group>"; };
+		90DE47EF10FAEA330003D14B /* EmptyGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmptyGradient.png; sourceTree = "<group>"; };
 		90E157AB0FF438F3001BD69B /* sort4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort4.png; sourceTree = "<group>"; };
 		90E2EDDE103BB5AA000C2032 /* SecurityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecurityView.xib; sourceTree = "<group>"; };
 		90E2EDE2103BBB14000C2032 /* SecurityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityViewController.h; sourceTree = "<group>"; };
@@ -475,6 +480,8 @@
 				90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */,
 				90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */,
 				90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */,
+				90DE47DA10FAE59B0003D14B /* EmptyListViewController.h */,
+				90DE47DB10FAE59B0003D14B /* EmptyListViewController.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
 				906140390E4ABBBC0072BA7B /* PublicationPickerView.m */,
 				9061409A0E4D6EC80072BA7B /* PublicationViewController.h */,
@@ -584,6 +591,7 @@
 				90E157AB0FF438F3001BD69B /* sort4.png */,
 				90C148CC0E3B923C00C6EDAF /* time.png */,
 				90C148CD0E3B923C00C6EDAF /* timer.png */,
+				90DE47EF10FAEA330003D14B /* EmptyGradient.png */,
 				90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */,
 				90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -592,7 +600,7 @@
 				90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */,
 				90E2EDDE103BB5AA000C2032 /* SecurityView.xib */,
 				90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */,
-				90DE479710FADF660003D14B /* testdelegeme.xib */,
+				90DE47E910FAE6450003D14B /* EmptyListView.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -813,7 +821,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MyTime */ = {
+		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -871,7 +879,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MyTime */,
+				1D6058900D05DD3D006BFB54 /* SimpleMap */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -933,7 +941,8 @@
 				90DE453C10FA4F780003D14B /* NotAtHomeHouseCell.xib in Resources */,
 				90DE453F10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png in Resources */,
 				90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */,
-				90DE479810FADF660003D14B /* testdelegeme.xib in Resources */,
+				90DE47EA10FAE6450003D14B /* EmptyListView.xib in Resources */,
+				90DE47F010FAEA330003D14B /* EmptyGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1056,6 +1065,7 @@
 				90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */,
 				90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */,
 				90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */,
+				90DE47DC10FAE59B0003D14B /* EmptyListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,7 +1079,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
