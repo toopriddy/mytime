@@ -23,6 +23,7 @@
 
 @synthesize tableView;
 @synthesize selectedIndexPath;
+@synthesize emptyView;
 
 static int sortByDate(id v1, id v2, void *context)
 {
@@ -33,6 +34,31 @@ static int sortByDate(id v1, id v2, void *context)
 	return(-[date1 compare:date2]);
 }
 
+- (void)updateEmptyView
+{
+	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	NSMutableArray *timeEntries = [userSettings objectForKey:timeEntriesName];
+	if(timeEntries.count == 0)
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		if(self.emptyView == nil)
+		{
+			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
+			self.emptyView.view.frame = self.tableView.bounds;
+			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.mainLabel.text = NSLocalizedString(@"No Hours", @"Text that appears at the Hours view when there are no entries configured");
+			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add hours", @"Text that appears at the Hours view when there are no entries configured");
+			[self.view addSubview:self.emptyView.view];
+		}
+	}
+	else
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		[self.emptyView.view removeFromSuperview];
+		self.emptyView = nil;
+	}
+}
 
 // sort the time entries and remove the 13 month old entries
 - (void)reloadData
@@ -98,6 +124,7 @@ static int sortByDate(id v1, id v2, void *context)
 	tableView.delegate = nil;
 	tableView.dataSource = nil;
 	self.tableView = nil;
+	self.emptyView = nil;
 	
 	[super dealloc];
 }
@@ -274,6 +301,7 @@ static int sortByDate(id v1, id v2, void *context)
 		[self.navigationItem setLeftBarButtonItem:button animated:NO];
 	}
 	[self updatePrompt];
+	[self updateEmptyView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -420,6 +448,7 @@ static int sortByDate(id v1, id v2, void *context)
 	[timeEntries removeObjectAtIndex:[indexPath row]];
 	[[Settings sharedInstance] saveData];
 	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+	[self updateEmptyView];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 #import "PublicationViewControllerDelegate.h"
 #import "LiteraturePlacementViewControllerDelegate.h"
+#import "EmptyListViewController.h"
 
 @interface BulkLiteraturePlacementViewContoller : UIViewController <UITableViewDelegate, 
                                                                     UITableViewDataSource, 
@@ -25,7 +26,9 @@
 	NSMutableArray *entries;
 	
 	NSIndexPath *selectedIndexPath;
+	EmptyListViewController *emptyView;
 }
+@property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *entries;
 @property (nonatomic,retain) NSIndexPath *selectedIndexPath;

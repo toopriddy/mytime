@@ -17,6 +17,7 @@
 #import "SortedCallsViewDataSourceProtocol.h"
 #import "CallViewController.h"
 #import "OverlayViewController.h"
+#import "EmptyListViewController.h"
 
 @interface SortedCallsViewController : UIViewController <UITableViewDelegate, 
 														 CallViewControllerDelegate, 
@@ -31,8 +32,9 @@
 	OverlayViewController *ovController;
 	UIBarButtonItem *savedLeftButton;
 	BOOL savedHidesBackButton;
+	EmptyListViewController *emptyView;
 }
-
+@property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
 @property (nonatomic,retain) NSIndexPath *indexPath;
