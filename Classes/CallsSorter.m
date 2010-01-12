@@ -478,7 +478,11 @@ int sortByMetadata(id v1, id v2, void *context)
 			case CALLS_SORTED_BY_DATE:
 			{
 				self.sectionIndexNames = nil;
-				[sectionNames addObject:NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'")];
+				if(count)
+					[sectionNames addObject:NSLocalizedString(@"Oldest Return Visits First", @"Section Title for Date Sorted Calls 'Oldest Return Visits First'")];
+				else
+					[sectionNames addObject:@""];
+
 				[sectionOffsets addObject:[NSNumber numberWithInt:0]];
 				break;
 			}

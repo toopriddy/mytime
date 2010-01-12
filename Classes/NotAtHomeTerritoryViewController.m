@@ -85,19 +85,24 @@
 @interface NAHTerritoryNameCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
 {
 @private	
-	BOOL obtainFocus;
 	SelectRowNextResponder *nextRowResponder;
+	UITextField *textField;
 }
-@property (nonatomic, assign) BOOL obtainFocus;
+@property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
 @end
 @implementation NAHTerritoryNameCellController
-@synthesize obtainFocus;
 @synthesize nextRowResponder;
+@synthesize textField;
 
 - (void)dealloc
 {
 	self.nextRowResponder = nil;
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	
 	[super dealloc];
 }
@@ -114,6 +119,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	NSString *commonIdentifier = @"NameCell";
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(self.nextRowResponder == nil)
@@ -125,6 +135,9 @@
 		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 		cell.textField.placeholder = NSLocalizedString(@"Territory Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
 		cell.nextKeyboardResponder = self.nextRowResponder;
+		cell.textField.returnKeyType = UIReturnKeyNext;
+		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
+		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	}
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	if(name == nil)
@@ -133,14 +146,16 @@
 		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryName];
 		[name release];
 	}
+	self.textField = cell.textField;
+	[self.delegate.allTextFields addObject:self.textField];
 	cell.textField.text = name;
 	cell.delegate = self;
-	if(self.obtainFocus)
+	if(self.delegate.obtainFocus)
 	{
 		[cell.textField performSelector:@selector(becomeFirstResponder)
 							 withObject:nil
 							 afterDelay:0.0000001];
-		self.obtainFocus = NO;
+		self.delegate.obtainFocus = NO;
 	}
 	
 	return cell;
@@ -179,15 +194,23 @@
 @interface NAHTerritoryCityCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
 {
 	SelectRowNextResponder *nextRowResponder;
+	UITextField *textField;
 }
+@property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
 @end
 @implementation NAHTerritoryCityCellController
 @synthesize nextRowResponder;
+@synthesize textField;
 
 - (void)dealloc
 {
 	self.nextRowResponder = nil;
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	
 	[super dealloc];
 }
@@ -205,6 +228,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"CityCell";
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(self.nextRowResponder == nil)
 	{
@@ -219,6 +247,8 @@
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		cell.nextKeyboardResponder = self.nextRowResponder;
 	}
+	self.textField = cell.textField;
+	[self.delegate.allTextFields addObject:self.textField];
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
 	if(name == nil)
 	{
@@ -263,15 +293,23 @@
 @interface NAHTerritoryStateCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
 {
 	SelectRowNextResponder *nextRowResponder;
+	UITextField *textField;
 }
+@property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
 @end
 @implementation NAHTerritoryStateCellController
 @synthesize nextRowResponder;
+@synthesize textField;
 
 - (void)dealloc
 {
 	self.nextRowResponder = nil;
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	
 	[super dealloc];
 }
@@ -289,6 +327,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"StateCell";
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(self.nextRowResponder == nil)
 	{
@@ -302,7 +345,17 @@
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		cell.nextKeyboardResponder = self.nextRowResponder;
+
+		// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
+		if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
+		{
+			cell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+			cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+		}
 	}
+	self.textField = cell.textField;
+	[self.delegate.allTextFields addObject:self.textField];
+	
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
 	if(name == nil)
 	{
@@ -382,7 +435,6 @@
 - (void)dealloc
 {
 	[(UIButton *)self.owner.rightView removeTarget:self action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
-	self.owner = nil;
 	
 	[super dealloc];
 }
@@ -719,6 +771,8 @@
 @synthesize owner;
 @synthesize tag;
 @synthesize newTerritory;
+@synthesize allTextFields;
+@synthesize obtainFocus;
 
 - (UITextField *)owner
 {
@@ -733,6 +787,8 @@
 		
 		owner.rightView = button;
 		owner.rightViewMode = UITextFieldViewModeAlways;
+		
+		[self.allTextFields addObject:owner];
 	}
 	return owner;
 }
@@ -776,11 +832,14 @@
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
+		self.obtainFocus = YES;
 		if(theTerritory == nil)
 		{
 			newTerritory = YES;
 			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
 		}
+		self.allTextFields = [NSMutableArray array];
+		
 		self.territory = theTerritory;
 		if(!newTerritory)
 		{
@@ -832,6 +891,7 @@
 	{
 		CFRelease(addressBook);
 	}
+	self.allTextFields = nil;
 	self.owner = nil;
 	self.territory = nil;
 	
@@ -843,15 +903,13 @@
 	return(YES);
 }
 
-
-#if 0
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//	[super scrollViewDidScroll:scrollView];
-	[owner becomeFirstResponder];
-	[owner resignFirstResponder];
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
 }
-#endif
 
 - (void)constructSectionControllers
 {

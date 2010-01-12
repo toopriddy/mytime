@@ -20,14 +20,18 @@
 @private	
 	ABAddressBookRef addressBook;
 	
+	NSMutableArray *allTextFields;
 	NSMutableDictionary *territory;
 	id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 	UITextField *owner;
 	int tag;
 	BOOL newTerritory;
+	BOOL obtainFocus;
 }
+@property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, readonly) BOOL newTerritory;
 @property (nonatomic, assign) int tag;
+@property (nonatomic, retain) NSMutableArray *allTextFields;
 @property (nonatomic, retain) UITextField *owner;
 @property (nonatomic, retain) NSMutableDictionary *territory;
 @property (nonatomic, assign) id<NotAtHomeTerritoryViewControllerDelegate> delegate;
