@@ -63,6 +63,7 @@ static int sortByDate(id v1, id v2, void *context)
 {
 	if(self.entries.count == 0)
 	{
+		self.tableView.scrollEnabled = NO;
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		if(self.emptyView == nil)
 		{
@@ -76,6 +77,7 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 	else
 	{
+		self.tableView.scrollEnabled = YES;
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		[self.emptyView.view removeFromSuperview];
 		self.emptyView = nil;

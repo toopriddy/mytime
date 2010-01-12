@@ -22,10 +22,14 @@
 	id<NotAtHomeHouseViewControllerDelegate> delegate;
 	int tag;
 	BOOL newHouse;
+	NSMutableArray *allTextFields;
+	BOOL obtainFocus;
 }
 @property (nonatomic, readonly) BOOL newHouse;
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) NSMutableDictionary *house;
+@property (nonatomic, assign) BOOL obtainFocus;
+@property (nonatomic, retain) NSMutableArray *allTextFields;
 @property (nonatomic, assign) id<NotAtHomeHouseViewControllerDelegate> delegate;
 
 - (id)initWithHouse:(NSMutableDictionary *)theHouse;

@@ -42,13 +42,23 @@
 
 @interface NAHStreetNameCellController : NotAtHomeStreetViewCellController<UITableViewTextFieldCellDelegate>
 {
-@private	
-	BOOL obtainFocus;
+	UITextField *textField;
 }
-@property (nonatomic, assign) BOOL obtainFocus;
+@property (nonatomic, retain) UITextField *textField;
 @end
 @implementation NAHStreetNameCellController
-@synthesize obtainFocus;
+@synthesize textField;
+
+- (void)dealloc
+{
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
+	
+	[super dealloc];
+}
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -62,6 +72,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if(self.textField)
+	{
+		[self.delegate.allTextFields removeObject:self.textField];
+		self.textField = nil;
+	}
 	NSString *commonIdentifier = @"StreetNameCell";
 	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
@@ -79,14 +94,16 @@
 		[self.delegate.street setObject:name forKey:NotAtHomeTerritoryStreetName];
 		[name release];
 	}
+	self.textField = cell.textField;
+	[self.delegate.allTextFields addObject:self.textField];
 	cell.textField.text = name;
 	cell.delegate = self;
-	if(self.obtainFocus)
+	if(self.delegate.obtainFocus)
 	{
 		[cell.textField performSelector:@selector(becomeFirstResponder)
 							 withObject:nil
 							 afterDelay:0.0000001];
-		self.obtainFocus = NO;
+		self.delegate.obtainFocus = NO;
 	}
 	
 	return cell;
@@ -482,6 +499,8 @@
 @synthesize delegate;
 @synthesize tag;
 @synthesize newStreet;
+@synthesize allTextFields;
+@synthesize obtainFocus;
 
 - (void)navigationControlDone:(id)sender 
 {
@@ -501,6 +520,8 @@
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
+		self.obtainFocus = YES;
+		self.allTextFields = [NSMutableArray array];
 		if(theStreet == nil)
 		{
 			newStreet = YES;
@@ -548,8 +569,17 @@
 - (void)dealloc
 {
 	self.street = nil;
+	self.allTextFields = nil;
 	
 	[super dealloc];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
 }
 
 - (void)constructSectionControllers

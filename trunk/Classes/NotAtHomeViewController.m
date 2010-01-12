@@ -85,6 +85,7 @@
 {
 	if(self.entries.count == 0)
 	{
+		self.tableView.scrollEnabled = NO;
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		if(self.emptyView == nil)
 		{
@@ -98,6 +99,7 @@
 	}
 	else
 	{
+		self.tableView.scrollEnabled = YES;
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		[self.emptyView.view removeFromSuperview];
 		self.emptyView = nil;

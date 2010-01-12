@@ -42,6 +42,7 @@ static int sortByDate(id v1, id v2, void *context)
 	if(timeEntries.count == 0)
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		self.tableView.scrollEnabled = NO;
 		if(self.emptyView == nil)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
@@ -54,6 +55,7 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 	else
 	{
+		self.tableView.scrollEnabled = YES;
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		[self.emptyView.view removeFromSuperview];
 		self.emptyView = nil;

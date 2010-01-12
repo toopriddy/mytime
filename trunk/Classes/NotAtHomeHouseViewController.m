@@ -41,13 +41,31 @@
 
 @interface NAHHouseNameCellController : NotAtHomeHouseViewCellController<UITableViewMultiTextFieldCellDelegate>
 {
-@private	
-	BOOL obtainFocus;
+	UITextField *textField1;
+	UITextField *textField2;
 }
-@property (nonatomic, assign) BOOL obtainFocus;
+@property (nonatomic, retain) UITextField *textField1;
+@property (nonatomic, retain) UITextField *textField2;
 @end
 @implementation NAHHouseNameCellController
-@synthesize obtainFocus;
+@synthesize textField1;
+@synthesize textField2;
+
+- (void)dealloc
+{
+	if(self.textField1)
+	{
+		[self.delegate.allTextFields removeObject:self.textField1];
+		self.textField1 = nil;
+	}
+	if(self.textField2)
+	{
+		[self.delegate.allTextFields removeObject:self.textField2];
+		self.textField2 = nil;
+	}
+	
+	[super dealloc];
+}
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -62,6 +80,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"HouseApartmentCell";
+	if(self.textField1)
+	{
+		[self.delegate.allTextFields removeObject:self.textField1];
+		self.textField1 = nil;
+	}
+	if(self.textField2)
+	{
+		[self.delegate.allTextFields removeObject:self.textField2];
+		self.textField2 = nil;
+	}
 	UITableViewMultiTextFieldCell *cell = (UITableViewMultiTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
@@ -80,11 +108,15 @@
 		apartmentTextField.placeholder = NSLocalizedString(@"Apt/Floor", @"Apartment/Floor Number");
 		apartmentTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 		apartmentTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-		apartmentTextField.returnKeyType = UIReturnKeyNext;
+		apartmentTextField.returnKeyType = UIReturnKeyDone;
 		apartmentTextField.clearButtonMode = UITextFieldViewModeAlways;
 	}
 	UITextField *streetTextField = [cell textFieldAtIndex:0];
 	UITextField *apartmentTextField = [cell textFieldAtIndex:1];
+	self.textField1 = streetTextField;
+	[self.delegate.allTextFields addObject:self.textField1];
+	self.textField2 = apartmentTextField;
+	[self.delegate.allTextFields addObject:self.textField2];
 
 	NSMutableString *houseNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
 	NSMutableString *apartment = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
@@ -100,12 +132,12 @@
 	streetTextField.text = houseNumber;
 	apartmentTextField.text = apartment;
 	cell.delegate = self;
-	if(self.obtainFocus)
+	if(self.delegate.obtainFocus)
 	{
 		[streetTextField performSelector:@selector(becomeFirstResponder)
 							 withObject:nil
 							 afterDelay:0.0000001];
-		self.obtainFocus = NO;
+		self.delegate.obtainFocus = NO;
 	}
 	
 	return cell;
@@ -133,7 +165,7 @@
 	{
 		[houseNumber setString:@""];
 	}
-	else if(textField = apartmentTextField)
+	else if(textField == apartmentTextField)
 	{
 		[apartment setString:@""];
 	}
@@ -162,7 +194,7 @@
 	{
 		[houseNumber replaceCharactersInRange:range withString:string];
 	}
-	else if(textField = apartmentTextField)
+	else if(textField == apartmentTextField)
 	{
 		[apartment replaceCharactersInRange:range withString:string];
 	}
@@ -414,6 +446,8 @@
 @synthesize delegate;
 @synthesize tag;
 @synthesize newHouse;
+@synthesize obtainFocus;
+@synthesize allTextFields;
 
 - (void)navigationControlDone:(id)sender 
 {
@@ -433,6 +467,8 @@
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
+		self.obtainFocus = YES;
+		self.allTextFields = [NSMutableArray array];
 		if(theHouse == nil)
 		{
 			newHouse = YES;
@@ -489,6 +525,14 @@
 	self.house = nil;
 	
 	[super dealloc];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
 }
 
 - (void)constructSectionControllers

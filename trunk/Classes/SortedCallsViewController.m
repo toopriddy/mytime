@@ -33,12 +33,14 @@
 	if([self.dataSource numberOfSectionsInTableView:nil] > 1 || [self.dataSource tableView:nil numberOfRowsInSection:0])
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		self.tableView.scrollEnabled = YES;
 		[self.emptyView.view removeFromSuperview];
 		self.emptyView = nil;
 	}
 	else
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		self.tableView.scrollEnabled = NO;
 		if(self.emptyView == nil)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
