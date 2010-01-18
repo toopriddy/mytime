@@ -96,7 +96,10 @@ static NSString *MONTHS[] = {
 
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report")];
-	[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
 	
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 

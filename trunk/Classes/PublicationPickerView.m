@@ -156,6 +156,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {NSLocalizedString(@"Blood", @"Brochures Publication Name (hb)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Book for All", @"Brochures Publication Name (ba)"),   PublicationTypeBrochure}
+,   {NSLocalizedString(@"The Bible, What is its Message", @"Brochures Publication Name (bm)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Divine Name", @"Brochures Publication Name (na)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Does God Care", @"Brochures Publication Name (dg)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Doing God's Will", @"Brochures Publication Name (je)"),   PublicationTypeBrochure}

@@ -39,6 +39,7 @@
 @synthesize displayArray = _displayArray;
 @synthesize searchText = _searchText;
 @synthesize metadata = _metadata;
+@synthesize callsName;
 
 int sortByStreet(id v1, id v2, void *context);
 
@@ -78,50 +79,10 @@ int sortByStreet(id v1, id v2, void *context)
 	int compare = [street1 localizedCaseInsensitiveCompare:street2];
 	if(compare == NSOrderedSame)
 	{
-		NSInteger house1Number = [house1 integerValue];
-		NSInteger house2Number = [house2 integerValue];
-		if(house1Number == 0 || house1Number == 0)
-		{
-			compare = [house1 compare:house2];
-		}
-		else
-		{
-			if(house1Number == house2Number)
-			{
-				compare = NSOrderedSame;
-			}
-			else if(house1Number < house2Number)
-			{
-				compare = NSOrderedAscending;
-			}
-			else
-			{
-				compare = NSOrderedDescending;
-			}
-		}
+		compare = [house1 compare:house2 options:(NSNumericSearch | NSCaseInsensitiveSearch)];
 		if(compare == NSOrderedSame)
 		{
-			NSInteger apartment1Number = [apartment1 integerValue];
-			NSInteger apartment2Number = [apartment2 integerValue];
-			if(apartment1Number == 0 || apartment1Number == 0)
-			{
-				compare = [apartment1 compare:apartment2];
-			}
-			else
-			{
-				if(apartment1Number == apartment2Number)
-				{
-					compare = NSOrderedSame;
-				}
-				else if(apartment1Number < apartment2Number)
-				{
-					compare = NSOrderedAscending;
-				}
-				else
-				{
-					compare = NSOrderedDescending;
-				}
-			}
+			compare = [apartment1 compare:apartment2 options:(NSNumericSearch | NSCaseInsensitiveSearch)];
 			if(compare == NSOrderedSame)
 			{
 				// use the compare where we just compare the names and do not look elsewhere
@@ -276,6 +237,7 @@ int sortByMetadata(id v1, id v2, void *context)
 {
     DEBUG(NSLog(@"%s: dealloc", __FILE__);)
 	self.calls = nil;
+	self.callsName = nil;
 	self.sectionNames = nil;
 	self.sectionRowCount = nil;
 	self.sectionOffsets = nil;
@@ -284,17 +246,24 @@ int sortByMetadata(id v1, id v2, void *context)
 	[super dealloc];
 }
 
-- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata;
+- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata
+{
+	return [self initSortedBy:theSortedBy withMetadata:metadata callsName:SettingsCalls];
+}
+
+- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata callsName:(NSString *)theCallsName
 {
 	[super init];
 	sortedBy = theSortedBy;
+	self.callsName = [theCallsName copy];
+	[self.callsName release];
 	
 	self.metadata = metadata;
-	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
+	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:self.callsName];
 	if(calls == nil)
 	{
 		self.calls = [NSMutableArray array];
-		[[[Settings sharedInstance] userSettings] setObject:self.calls forKey:SettingsCalls];
+		[[[Settings sharedInstance] userSettings] setObject:self.calls forKey:self.callsName];
 	}
 	[self refreshData];
 	return(self);
@@ -361,11 +330,11 @@ int sortByMetadata(id v1, id v2, void *context)
 - (void)refreshData
 {
 	VERY_VERBOSE(NSLog(@"refreshData:");)
-	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
+	self.calls = [[[Settings sharedInstance] userSettings] objectForKey:self.callsName];
 	if(calls == nil)
 	{
 		self.calls = [NSMutableArray array];
-		[[[Settings sharedInstance] userSettings] setObject:self.calls forKey:SettingsCalls];
+		[[[Settings sharedInstance] userSettings] setObject:self.calls forKey:self.callsName];
 	}
 
 	// sort the data
@@ -849,6 +818,17 @@ int sortByMetadata(id v1, id v2, void *context)
 		index = [indexPath row] + [self callRowOffsetForSection:[indexPath section]];
 	[calls removeObjectAtIndex:index];
 }
+
+- (void)restoreCallAtIndexPath:(NSIndexPath *)indexPath
+{
+	int index;
+	if(_displayArray)
+		index = [[_displayArray objectAtIndex:([indexPath row] + [self callRowOffsetForSection:[indexPath section]])] intValue];
+	else
+		index = [indexPath row] + [self callRowOffsetForSection:[indexPath section]];
+	[calls removeObjectAtIndex:index];
+}
+
 
 - (void)addCall:(NSMutableDictionary *)call
 {

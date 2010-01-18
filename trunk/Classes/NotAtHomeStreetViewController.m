@@ -520,7 +520,6 @@
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
-		self.obtainFocus = YES;
 		self.allTextFields = [NSMutableArray array];
 		if(theStreet == nil)
 		{
@@ -528,6 +527,7 @@
 			theStreet = [[[NSMutableDictionary alloc] init] autorelease];
 			[theStreet setObject:[NSDate date] forKey:NotAtHomeTerritoryStreetDate];
 		}
+		self.obtainFocus = newStreet;
 		self.street = theStreet;
 		if(!newStreet)
 		{

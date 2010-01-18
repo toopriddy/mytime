@@ -133,7 +133,7 @@
 	if(cell == nil)
 	{
 		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"Territory Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
+		cell.textField.placeholder = NSLocalizedString(@"Territory Name/Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
 		cell.nextKeyboardResponder = self.nextRowResponder;
 		cell.textField.returnKeyType = UIReturnKeyNext;
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -824,20 +824,112 @@
 	}
 }
 
+/******************************************************************
+ *
+ *   ACTION SHEET DELEGATE FUNCTIONS
+ *
+ ******************************************************************/
+#pragma mark ActionSheet Delegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[self.navigationController dismissModalViewControllerAnimated:YES];
+	if(deleteAfterEmailing && result != MFMailComposeResultCancelled)
+	{
+		[delegate notAtHomeTerritoryViewController:self deleteTerritory:self.territory];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
+
+- (BOOL)sendEmail
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Not At Home Territory, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness")];
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	[string appendString:NSLocalizedString(@"This not at home territory has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this not at home territory into MyTime.<br><br>", @"This is the first part of the body of the email message that is sent to a user when you click on a Not At Home Territory and then click on the action button in the upper left corner and select transfer or email details")];
+	[string appendString:emailFormattedStringForNotAtHomeTerritory(self.territory)];
+	[string appendString:NSLocalizedString(@"You are able to import this not at home territory into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br>", @"This is the second part of the body of the email message that is sent to a user when you click on a Not At Home Territory and then click on the action button in the upper left corner and select transfer or email details")];
+	
+	// now add the url that will allow importing
+	
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.territory];
+	[string appendString:@"<a href=\"mytime://mytime/addNotAtHomeTerritory?"];
+	int length = data.length;
+	unsigned char *bytes = (unsigned char *)data.bytes;
+	for(int i = 0; i < length; ++i)
+	{
+		[string appendFormat:@"%02X", *bytes++];
+	}
+	[string appendString:@"\">"];
+	[string appendString:NSLocalizedString(@"Click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are transferring a not at home territory to another witness.  this is the link that they press to open MyTime")];
+	[string appendString:@"</a><br><br>"];
+	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a not at home territory to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+	
+	[string appendString:@"</body></html>"];
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	mailView.mailComposeDelegate = self;
+
+	NSString *emailAddress = [self ownerEmailAddress];
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
+	
+	[self.navigationController presentModalViewController:mailView animated:YES];
+	
+	return [MFMailComposeViewController canSendMail];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+	//	[sheet dismissAnimated:YES];
+	deleteAfterEmailing = NO;
+	switch(button)
+	{
+			//transfer
+		case 0:
+		{
+			deleteAfterEmailing = YES;
+			[self sendEmail];
+			break;
+		}
+			// email
+		case 1:
+		{
+			[self sendEmail];
+			break;
+		}
+	}
+}
+
+
 - (void)navigationControlAction:(id)sender 
 {
+    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You can transfer this not at home territory to someone else. Transferring will delete this territory from your data or just emailing the details will keep the data. The witness who gets this email will be able to click on a link in the email and add the territory to MyTime.", @"This message is displayed when the user clicks on a territory and clicks on the \"Action\" button at the top left of the screen")
+															 delegate:self
+												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+											   destructiveButtonTitle:NSLocalizedString(@"Transfer, and Delete", @"Transferr this not at home territory to another MyTime user and delete it off of this iphone, but keep the data")
+												    otherButtonTitles:NSLocalizedString(@"Email Details", @"Email the not at home territory details to another MyTime user"), nil] autorelease];
+	
+	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+	[alertSheet showInView:self.view];
 }
 
 - (id)initWithTerritory:(NSMutableDictionary *)theTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
-		self.obtainFocus = YES;
 		if(theTerritory == nil)
 		{
 			newTerritory = YES;
 			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
 		}
+		self.obtainFocus = newTerritory;
 		self.allTextFields = [NSMutableArray array];
 		
 		self.territory = theTerritory;

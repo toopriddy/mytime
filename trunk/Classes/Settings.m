@@ -87,7 +87,7 @@ NSString * const SettingsLastCallApartmentNumber = @"lastApartmentNumber";
 NSString * const SettingsLastCallStreet = @"lastStreet";
 NSString * const SettingsLastCallCity = @"lastCity";
 NSString * const SettingsLastCallState = @"lastState";
-NSString * const SettingsCurrentButtonBarIndex = @"currentButtonBarIndex";
+NSString * const SettingsCurrentButtonBarName = @"currentButtonBarName";
 
 NSString * const SettingsTimeAlertSheetShown = @"timeAlertShown";
 NSString * const SettingsStatisticsAlertSheetShown = @"statisticsAlertShown2";
@@ -220,10 +220,10 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[Settings sharedInstance] filename]] mimeType:@"text/plist" fileName:@"records.plist"];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 
-	NSString *toEmailAddress = [settings objectForKey:SettingsBackupEmailAddress];
-	if(toEmailAddress)
+	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+	if(emailAddress && emailAddress.length)
 	{
-		[mailView setToRecipients:[toEmailAddress componentsSeparatedByString:@" "]];
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	}
 	// now add the url that will allow importing
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:settings];
@@ -278,6 +278,92 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	return string;
 }
 
+NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
+{
+	NSMutableString *string = [NSMutableString string];
+	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Territory Name/Number", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryName]]];
+	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"City", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryCity]]];
+	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"State", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryState]]];
+	NSString *notes = [territory objectForKey:NotAtHomeTerritoryNotes];
+	if([notes length])
+	{
+		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+		[string appendString:notes];
+		[string appendFormat:@"<br><br>"];
+	}
+	[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Streets", @"used as a label when emailing not at homes")]];
+	for(NSMutableDictionary *street in [territory objectForKey:NotAtHomeTerritoryStreets])
+	{
+		[string appendString:[NSString stringWithFormat:@"<h4>%@: %@</h4>\n", NSLocalizedString(@"Street", @"used as a label when emailing not at homes"), [street objectForKey:NotAtHomeTerritoryStreetName]]];
+		NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[street objectForKey:NotAtHomeTerritoryStreetDate] timeIntervalSinceReferenceDate]];	
+		// create dictionary entry for This Return Visit
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		{
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+		}
+		else
+		{
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		}
+		
+		[string appendString:[NSString stringWithFormat:@"%@<br>\n", [dateFormatter stringFromDate:date]]];
+		[dateFormatter release];
+		[date release];
+		NSString *notes = [street objectForKey:NotAtHomeTerritoryStreetNotes];
+		if([notes length])
+		{
+			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+			[string appendString:notes];
+			[string appendFormat:@"<br><br>"];
+		}
+		
+		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
+		for(NSMutableDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
+		{
+			NSMutableString *top = [[NSMutableString alloc] init];
+			[Settings formatStreetNumber:[house objectForKey:NotAtHomeTerritoryHouseNumber]
+							   apartment:[house objectForKey:NotAtHomeTerritoryHouseApartment]
+								 topLine:top];
+			
+			[string appendString:[NSString stringWithFormat:@"<b>%@: %@</b><br>\n", NSLocalizedString(@"House Number", @"used as a label when emailing not at homes"), top]];
+			NSString *notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
+			if([notes length])
+			{
+				notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+				notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+				[string appendString:notes];
+				[string appendFormat:@"<br>"];
+			}
+			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
+			for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
+			{
+				NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[attempt timeIntervalSinceReferenceDate]];	
+				// create dictionary entry for This Return Visit
+				NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+				[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+				if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+				{
+					[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+				}
+				else
+				{
+					[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+				}
+				
+				[string appendString:[NSString stringWithFormat:@" %@<br>\n", [dateFormatter stringFromDate:date]]];
+			}
+		}
+	}
+	[string appendString:@"<br><br>"];
+	return string;
+}
+
+
+
 + (MFMailComposeViewController *)sendPrintableEmailBackup
 {
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
@@ -286,10 +372,10 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 
-	NSString *toEmailAddress = [settings objectForKey:SettingsBackupEmailAddress];
-	if(toEmailAddress)
+	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+	if(emailAddress && emailAddress.length)
 	{
-		[mailView setToRecipients:[toEmailAddress componentsSeparatedByString:@" "]];
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	}
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
@@ -360,6 +446,13 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 				[string appendString:@"<br>"];
 			}
 			[string appendString:@"<br>"];
+		}
+		
+		// quickbuild
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Not At Home", @"label for sending a printable email backup.  this label is in the body of the email")];
+		for(NSDictionary *territory in [userSettings objectForKey:SettingsNotAtHomeTerritories])
+		{
+			[string appendString:emailFormattedStringForNotAtHomeTerritory(territory)];
 		}
 	}	
 	[string appendString:@"</body></html>"];

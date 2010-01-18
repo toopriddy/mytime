@@ -22,7 +22,9 @@
 @required
 
 - (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)call keepInformation:(BOOL)keepInformation;
-
 - (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call;
+
+@optional
+- (void)callViewController:(CallViewController *)callViewController restoreCall:(NSMutableDictionary *)call;
 
 @end
