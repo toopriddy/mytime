@@ -299,7 +299,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 2223}, {305, 776}}</string>
+							<string>{{0, 2371}, {305, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -348,7 +348,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>908B955A1104410B00250C56</string>
+										<string>908B957E1104D38000250C56</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -555,7 +555,6 @@
 											<string>90B2FEFB10FC4D13007AEA50</string>
 											<string>90B2FEFC10FC4D13007AEA50</string>
 											<string>90B2FF1210FC4EE4007AEA50</string>
-											<string>90B2FF1610FC4EE4007AEA50</string>
 											<string>90B2FF1E10FCFC27007AEA50</string>
 											<string>90B2FF2210FCFC33007AEA50</string>
 											<string>90B2FF2310FCFC33007AEA50</string>
@@ -617,7 +616,8 @@
 											<string>9035FCFD1104304800C9F5C7</string>
 											<string>9035FD131104379B00C9F5C7</string>
 											<string>9035FD141104379B00C9F5C7</string>
-											<string>9035FD1D1104385D00C9F5C7</string>
+											<string>908B95651104D12E00250C56</string>
+											<string>908B957B1104D37A00250C56</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -631,18 +631,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1112, 526}}</string>
+								<string>{{0, 0}, {1112, 789}}</string>
 								<key>RubberWindowFrame</key>
 								<string>1 43 1439 835 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>526pt</string>
+							<string>789pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>263pt</string>
+							<string>0pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -656,7 +656,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1112, 236}}</string>
+										<string>{{10, 27}, {1112, -27}}</string>
 										<key>RubberWindowFrame</key>
 										<string>1 43 1439 835 0 0 1440 878 </string>
 									</dict>
@@ -953,6 +953,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>908B957A1104D37100250C56</string>
+		<string>908B95691104D12E00250C56</string>
+		<string>908B956A1104D12E00250C56</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
