@@ -93,7 +93,7 @@ extern NSString * const SettingsLastCallApartmentNumber;
 extern NSString * const SettingsLastCallStreet;
 extern NSString * const SettingsLastCallCity;
 extern NSString * const SettingsLastCallState;
-extern NSString * const SettingsCurrentButtonBarIndex;
+extern NSString * const SettingsCurrentButtonBarName;
 
 //multiple users
 extern NSString * const SettingsPreferredMetadata;
@@ -199,6 +199,7 @@ extern int debugging;
 #define VERY_VERBOSE(a) if(debugging > 2) { a }
 
 NSString *emailFormattedStringForCall(NSDictionary *_call);
+NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 
 @interface Settings : NSObject 
 {

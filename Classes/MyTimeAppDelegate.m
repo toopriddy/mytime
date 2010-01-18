@@ -21,6 +21,7 @@
 #import "CallsSortedByNameViewDataSource.h"
 #import "CallsSortedByStudyViewDataSource.h"
 #import "CallsSortedByFilterDataSource.h"
+#import "DeletedCallsSortedByStreetViewDataSource.h"
 #import "SortedCallsViewController.h"
 #import "MetadataSortedCallsViewController.h"
 #import "StatisticsViewController.h"
@@ -39,7 +40,7 @@
 
 @synthesize window;
 @synthesize tabBarController;
-@synthesize callToImport;
+@synthesize dataToImport;
 @synthesize settingsToRestore;
 @synthesize modalNavigationController;
 
@@ -62,7 +63,7 @@
 {
 	self.window = nil;
 	self.tabBarController = nil;
-	self.callToImport = nil;
+	self.dataToImport = nil;
 	self.settingsToRestore = nil;
 	
 	[super dealloc];
@@ -154,16 +155,16 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					break;
 				@try
 				{
-					self.callToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+					self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
 				}
 				@catch (NSException *e) 
 				{
 					NSLog(@"%@", e);
 				}
 				[dataStore release];
-				DEBUG(NSLog(@"%@", callToImport);)
+				DEBUG(NSLog(@"%@", dataToImport);)
 
-				if(self.callToImport == nil)
+				if(self.dataToImport == nil)
 					break;
 
 				handled = YES;
@@ -174,6 +175,39 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 														   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
 																otherButtonTitles:nil] autorelease];
 
+				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+				[alertSheet showInView:window];
+			} while (false);
+		}
+		if([@"/addNotAtHomeTerritory" isEqualToString:[url path]])
+		{
+			do 
+			{
+				NSData *dataStore = allocNSDataFromNSStringByteString(data);
+				if(dataStore == nil)
+					break;
+				@try
+				{
+					self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+				}
+				@catch (NSException *e) 
+				{
+					NSLog(@"%@", e);
+				}
+				[dataStore release];
+				DEBUG(NSLog(@"%@", dataToImport);)
+				
+				if(self.dataToImport == nil)
+					break;
+				
+				handled = YES;
+				_actionSheetType = ADD_NOT_AT_HOME_TERRITORY;
+				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a not at home territory into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a not at home territory from an email when the call was transferred from another iphone/itouch")
+																		 delegate:self
+																cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+														   destructiveButtonTitle:NSLocalizedString(@"Yes, add territory", @"Transferr this call from another user")
+																otherButtonTitles:nil] autorelease];
+				
 				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 				[alertSheet showInView:window];
 			} while (false);
@@ -239,7 +273,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				case 0:
 				{
 					NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
-					NSMutableDictionary *newCall = [NSMutableDictionary dictionaryWithDictionary:callToImport];
+					NSMutableDictionary *newCall = [NSMutableDictionary dictionaryWithDictionary:dataToImport];
 					
 					// change all return visits to be transferrs so that we dont count the other person's work
 					for(NSMutableDictionary *visit in [newCall objectForKey:CallReturnVisits])
@@ -258,9 +292,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 							[visit setObject:CallReturnVisitTypeTransferedStudy forKey:CallReturnVisitType];
 						}
 					}
+					if(calls == nil)
+					{
+						calls = [NSMutableArray array];
+						[[[Settings sharedInstance] userSettings] setObject:calls forKey:SettingsCalls];
+					}
 					[calls addObject:newCall];
 					[[Settings sharedInstance] saveData];
-					self.callToImport = nil;
+					self.dataToImport = nil;
 
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
@@ -271,7 +310,40 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				// cancel
 				case 1:
 				{
-					self.callToImport = nil;
+					self.dataToImport = nil;
+					break;
+				}
+			}
+			break;
+		case ADD_NOT_AT_HOME_TERRITORY:
+			switch(button)
+			{
+					//import
+				case 0:
+				{
+					NSMutableArray *territories = [[[Settings sharedInstance] userSettings] objectForKey:SettingsNotAtHomeTerritories];
+					NSMutableDictionary *newTerritory = [NSMutableDictionary dictionaryWithDictionary:dataToImport];
+					
+					if(territories == nil)
+					{
+						territories = [NSMutableArray array];
+						[[[Settings sharedInstance] userSettings] setObject:territories forKey:SettingsNotAtHomeTerritories];
+					}
+					
+					[territories addObject:newTerritory];
+					[[Settings sharedInstance] saveData];
+					self.dataToImport = nil;
+					
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup")];
+					[alertSheet show];
+					break;
+				}
+					// cancel
+				case 1:
+				{
+					self.dataToImport = nil;
 					break;
 				}
 			}
@@ -297,7 +369,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				// cancel
 				case 1:
 				{
-					self.callToImport = nil;
+					self.dataToImport = nil;
 					break;
 				}
 			}
@@ -524,7 +596,12 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// SETTINGS
 	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:settingsViewController] autorelease]];
-
+	
+	// Deleted Cals
+	DeletedCallsSortedByStreetViewDataSource *deletedCallsStreetSortedDataSource = [[[DeletedCallsSortedByStreetViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *deletedCallsStreetViewController = [[[SortedCallsViewController alloc] initWithDataSource:deletedCallsStreetSortedDataSource] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:deletedCallsStreetViewController] autorelease]];
+	
 	// get the buttons that we should show in the button bar
 	NSMutableArray *array = [NSMutableArray array];
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
@@ -556,12 +633,18 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// set the tab bar controller view controller array to the localViewControllersArray
 	tabBarController.viewControllers = array;
 	tabBarController.delegate = self;
-	if([settings objectForKey:SettingsCurrentButtonBarIndex])
+	tabBarController.moreNavigationController.delegate = self;
+	if([settings objectForKey:SettingsCurrentButtonBarName])
 	{
-		int index = [[settings objectForKey:SettingsCurrentButtonBarIndex] intValue];
-		if(index < array.count)
+		NSArray *nameArray = [array valueForKeyPath:@"topViewController.title"];
+		NSUInteger index = [nameArray indexOfObject:[settings objectForKey:SettingsCurrentButtonBarName]];
+		if(index != NSNotFound)
 		{
-			tabBarController.selectedViewController = [array objectAtIndex:index];
+			UIViewController *viewController = [array objectAtIndex:index];
+			if(viewController)
+			{
+				tabBarController.selectedViewController = viewController;
+			}
 		}
 	}
 
@@ -630,12 +713,30 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	if(viewController != self.tabBarController.moreNavigationController)
+	{
+		[settings setObject:viewController.title forKey:SettingsCurrentButtonBarName];
+	}
+	else
+	{
+		[settings setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
+	}
+}
+
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController
 {
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	[settings setObject:[NSNumber numberWithInt:[theTabBarController.viewControllers indexOfObject:viewController]] forKey:SettingsCurrentButtonBarIndex];
-	// this is slowing things down so I am removing it
-	//	[[Settings sharedInstance] saveData];
+	if(viewController != self.tabBarController.moreNavigationController)
+	{
+		[settings setObject:viewController.title forKey:SettingsCurrentButtonBarName];
+	}
+	else
+	{
+		[settings setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
+	}
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed

@@ -74,6 +74,13 @@
 
 }
 
+- (void)notAtHomeTerritoryViewController:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController deleteTerritory:(NSMutableDictionary *)territory
+{
+	[self.entries removeObject:territory];
+	[[Settings sharedInstance] saveData];
+}
+
+
 - (void)loadView
 {
 	[super loadView];

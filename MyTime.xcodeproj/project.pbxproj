@@ -45,6 +45,8 @@
 		902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902866600ECF757A0076BCBD /* MonthChooserViewController.m */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
+		9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */; };
+		9035FC021103F1CD00C9F5C7 /* deletedCalls.png in Resources */ = {isa = PBXBuildFile; fileRef = 9035FC011103F1CC00C9F5C7 /* deletedCalls.png */; };
 		903FF237102A049900CC60B8 /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF231102A049900CC60B8 /* HTTPServer.m */; };
 		903FF238102A049900CC60B8 /* HTTPResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF233102A049900CC60B8 /* HTTPResponseHandler.m */; };
 		903FF239102A049900CC60B8 /* HttpMultipartResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF235102A049900CC60B8 /* HttpMultipartResponseHandler.m */; };
@@ -231,6 +233,9 @@
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
 		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9035FBFE1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedCallsSortedByStreetViewDataSource.h; sourceTree = "<group>"; };
+		9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedCallsSortedByStreetViewDataSource.m; sourceTree = "<group>"; };
+		9035FC011103F1CC00C9F5C7 /* deletedCalls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletedCalls.png; sourceTree = "<group>"; };
 		903FF231102A049900CC60B8 /* HTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPServer.m; sourceTree = "<group>"; };
 		903FF232102A049900CC60B8 /* HTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
 		903FF233102A049900CC60B8 /* HTTPResponseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPResponseHandler.m; sourceTree = "<group>"; };
@@ -576,6 +581,7 @@
 				90C148EC0E3B937300C6EDAF /* city.png */,
 				90C4D4F30E8564DD00E202E2 /* map.png */,
 				904A87E010EAFC790029A63F /* not-at-home.png */,
+				9035FC011103F1CC00C9F5C7 /* deletedCalls.png */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
 				90EA4F35100275590046A2E4 /* whiteButton.png */,
 				90EA4F36100275590046A2E4 /* blueButton.png */,
@@ -768,6 +774,8 @@
 				9001FEAE0E9B0B820091F8FD /* AddressTableCell.m */,
 				90D02E9A0E53C638001CEF0D /* BaseSortedCallsDataSource.h */,
 				90D02E9B0E53C638001CEF0D /* BaseSortedCallsDataSource.m */,
+				9035FBFE1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.h */,
+				9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */,
 				90FBE8730E39884700FD8014 /* CallsSortedByStreetViewDataSource.h */,
 				90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */,
 				90C148D30E3B926E00C6EDAF /* CallsSortedByDateViewDataSource.h */,
@@ -943,6 +951,7 @@
 				90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */,
 				90DE47EA10FAE6450003D14B /* EmptyListView.xib in Resources */,
 				90DE47F010FAEA330003D14B /* EmptyGradient.png in Resources */,
+				9035FC021103F1CD00C9F5C7 /* deletedCalls.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,6 +1075,7 @@
 				90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */,
 				90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */,
 				90DE47DC10FAE59B0003D14B /* EmptyListViewController.m in Sources */,
+				9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,7 +1268,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
@@ -1267,7 +1277,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "708374F2-37E2-47CD-B253-47D6895C02BA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "49485C90-DDD2-4450-96AF-A182F16A1321";
 				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
@@ -1277,16 +1287,16 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Priddy";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "708374F2-37E2-47CD-B253-47D6895C02BA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "708374F2-37E2-47CD-B253-47D6895C02BA";
+				PROVISIONING_PROFILE = "49485C90-DDD2-4450-96AF-A182F16A1321";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "49485C90-DDD2-4450-96AF-A182F16A1321";
 				SDKROOT = iphoneos3.0;
 				VALID_ARCHS = armv6;
 			};

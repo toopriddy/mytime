@@ -332,6 +332,15 @@
 	}
 }
 
+- (void)callViewController:(CallViewController *)callViewController restoreCall:(NSMutableDictionary *)call
+{
+	if(indexPath)
+	{
+		[dataSource restoreCallAtIndexPath:indexPath];
+	}
+}
+
+
 - (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call
 {
 	if(self.indexPath != nil)

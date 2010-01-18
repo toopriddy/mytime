@@ -8,14 +8,18 @@
 
 #import "GenericTableViewController.h"
 #import <AddressBook/AddressBook.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @class NotAtHomeTerritoryViewController;
 
 @protocol NotAtHomeTerritoryViewControllerDelegate
 - (void)notAtHomeTerritoryViewControllerDone:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController;
+- (void)notAtHomeTerritoryViewController:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController deleteTerritory:(NSMutableDictionary *)territory;
 @end
 
-@interface NotAtHomeTerritoryViewController : GenericTableViewController 
+@interface NotAtHomeTerritoryViewController : GenericTableViewController <UIActionSheetDelegate,
+																		  MFMailComposeViewControllerDelegate>
 {
 @private	
 	ABAddressBookRef addressBook;
@@ -27,6 +31,7 @@
 	int tag;
 	BOOL newTerritory;
 	BOOL obtainFocus;
+	BOOL deleteAfterEmailing;
 }
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, readonly) BOOL newTerritory;

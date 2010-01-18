@@ -146,7 +146,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
+	[[(UITableViewMultiTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textFieldAtIndex:0] becomeFirstResponder];
 	[tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -406,6 +406,11 @@
 	return cell;
 }
 
+- (void)notAtHomeDetailCanceled
+{
+	[self.delegate dismissModalViewControllerAnimated:YES];
+}
+
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -467,7 +472,6 @@
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
-		self.obtainFocus = YES;
 		self.allTextFields = [NSMutableArray array];
 		if(theHouse == nil)
 		{
@@ -475,6 +479,7 @@
 			theHouse = [[[NSMutableDictionary alloc] init] autorelease];
 			[theHouse setObject:[NSMutableArray arrayWithObject:[NSDate date]] forKey:NotAtHomeTerritoryHouseAttempts];
 		}
+		self.obtainFocus = newHouse;
 		self.house = theHouse;
 		if(!newHouse)
 		{

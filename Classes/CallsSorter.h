@@ -28,6 +28,7 @@ typedef enum {
 
 @interface CallsSorter : NSObject {
 	NSMutableArray *calls;
+	NSString *callsName;
 	NSMutableArray *sectionNames;
 	NSMutableArray *sectionIndexNames;
 	NSMutableArray *sectionRowCount;
@@ -41,6 +42,7 @@ typedef enum {
 }
 
 @property (nonatomic, retain) NSMutableArray *calls;
+@property (nonatomic, retain) NSString *callsName;
 @property (nonatomic, retain) NSMutableArray *sectionNames;
 @property (nonatomic, retain) NSMutableArray *sectionIndexNames;
 @property (nonatomic, retain) NSMutableArray *sectionRowCount;
@@ -50,6 +52,7 @@ typedef enum {
 @property (nonatomic, retain) NSString *searchText;
 @property (nonatomic, retain) NSString *metadata;
 
+- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
 - (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata;
 - (void)filterUsingSearchText:(NSString *)searchText;
 - (NSInteger)numberOfSections;
@@ -60,6 +63,7 @@ typedef enum {
 - (NSMutableDictionary *)callForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)refreshData;
 - (void)deleteCallAtIndexPath:(NSIndexPath *)indexPath;
+- (void)restoreCallAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)setCall:(NSMutableDictionary *)call forIndexPath:(NSIndexPath *)indexPath;
 - (void)addCall:(NSMutableDictionary *)call;

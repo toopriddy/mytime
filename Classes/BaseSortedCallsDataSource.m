@@ -90,8 +90,13 @@
 
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata
 {
+	return [self initSortedBy:sortedBy withMetadata:metadata callsName:SettingsCalls];
+}
+
+- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
+{
 	[super init];
-	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy withMetadata:metadata];
+	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy withMetadata:metadata callsName:callsName];
 	return(self);
 }
 
@@ -176,6 +181,22 @@
 		[deletedCalls addObject:call];
 	}
 	[callsSorter deleteCallAtIndexPath:indexPath];
+	[[Settings sharedInstance] saveData];
+}
+
+- (void)restoreCallAtIndexPath:(NSIndexPath *)indexPath
+{
+	// remove the call from the array
+	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
+	NSMutableDictionary *call = [callsSorter callForRowAtIndexPath:indexPath];
+	NSMutableArray *aliveCalls = [settings objectForKey:SettingsCalls];
+	if(aliveCalls == nil)
+	{
+		aliveCalls = [NSMutableArray array];
+		[settings setObject:aliveCalls forKey:SettingsCalls];
+	}
+	[aliveCalls addObject:call];
+	[callsSorter restoreCallAtIndexPath:indexPath];
 	[[Settings sharedInstance] saveData];
 }
 

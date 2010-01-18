@@ -1252,9 +1252,13 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 @interface ReturnVisitNotesCell : UITableViewMultilineTextCell
 {
+	BOOL lastCell;
 }
+@property (nonatomic, assign) BOOL lastCell;
 @end
 @implementation ReturnVisitNotesCell
+@synthesize lastCell;
+
 - (void)willTransitionToState:(UITableViewCellStateMask)state
 {
 	[super willTransitionToState:state];
@@ -1269,7 +1273,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	else
 	{
 		if([textView.text isEqualToString:NSLocalizedString(@"Add Notes", @"Return Visit Notes Placeholder text")])
-			[self setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
+		{
+			if(self.lastCell)
+				[self setText:NSLocalizedString(@"Initial Visit Notes", @"Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
+			else
+				[self setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
+		}
 	}
 }
 @end
@@ -1331,7 +1340,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 		cell.allowSelectionWhenNotEditing = NO;
 	}
-	
+	cell.lastCell = [[self.delegate.call objectForKey:CallReturnVisits] lastObject] == returnVisit;
 	NSMutableString *notes = [self.returnVisit objectForKey:CallReturnVisitNotes];
 	
 	if(tableView.editing)
@@ -1345,7 +1354,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		if([notes length] == 0)
 		{
-			if([[self.delegate.call objectForKey:CallReturnVisits] lastObject] == returnVisit)
+			if(cell.lastCell)
 				[cell setText:NSLocalizedString(@"Initial Visit Notes", @"Initial Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
 			else
 				[cell setText:NSLocalizedString(@"Return Visit Notes", @"Return Visit Notes default text when the user did not enter notes, displayed on the view-mode Call view")];
@@ -1761,9 +1770,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 #pragma mark DeleteCallCellController
 @interface DeleteCallCellController : CallViewCellController<UIActionSheetDelegate>
 {
+	BOOL deleteForever;
 }
+@property (nonatomic, assign) BOOL deleteForever;
 @end
 @implementation DeleteCallCellController
+@synthesize deleteForever;
 
 - (BOOL)isViewableWhenNotEditing
 {
@@ -1783,11 +1795,24 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)deleteCall
 {
 	DEBUG(NSLog(@"deleteCall");)
-	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call (the return visits and placed literature will still be counted)?", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")
-															 delegate:self
-												    cancelButtonTitle:NSLocalizedString(@"No", @"No dont delete the call")
-											   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes delete the call")
-												    otherButtonTitles:NSLocalizedString(@"Delete and don't keep info", @"Yes delete the call and the data"), nil] autorelease];
+	UIActionSheet *alertSheet;
+	if(self.deleteForever)
+	{
+		 alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call forever, and remove all return visits, studies, and placed publications in yoru statistics?", @"Statement to make the user realize that they are deleting a call forever")
+												 delegate:self
+										cancelButtonTitle:NSLocalizedString(@"No", @"No dont delete the call")
+								   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes delete the call")
+										otherButtonTitles:nil] autorelease];
+	}
+	else
+	{
+		alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call?\n\nThe return visits and placed literature will still be counted in your statistics and you can restore or perminantly delete this call in the \"Deleted Calls\" View.", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")
+												 delegate:self
+										cancelButtonTitle:NSLocalizedString(@"No", @"No dont delete the call")
+								   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes delete the call")
+										otherButtonTitles:nil] autorelease];
+	}
+
 	// 0: grey with grey and black buttons
 	// 1: black background with grey and black buttons
 	// 2: transparent black background with grey and black buttons
@@ -1825,15 +1850,90 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		if(delegate)
 		{
-			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:YES];
+			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:!self.deleteForever];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
 		}
 	}
-	if(button == 1)
+}
+
+
+@end
+
+
+
+/******************************************************************
+ *
+ *   RESTORE CALL
+ *
+ ******************************************************************/
+#pragma mark RestoreCallCellController
+@interface RestoreCallCellController : CallViewCellController<UIActionSheetDelegate>
+{
+}
+@end
+@implementation RestoreCallCellController
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (void)restoreCall
+{
+	DEBUG(NSLog(@"deleteCall");)
+	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to restore the call (your statistics will not change)?", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")
+															 delegate:self
+												    cancelButtonTitle:NSLocalizedString(@"No", @"No dont restore the call")
+											   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes restore the call")
+												    otherButtonTitles:nil] autorelease];
+	// 0: grey with grey and black buttons
+	// 1: black background with grey and black buttons
+	// 2: transparent black background with grey and black buttons
+	// 3: grey transparent background
+	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+	[alertSheet showInView:self.delegate.view];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewButtonCell *cell;
+	//	cell = (UITableViewButtonCell *)[tableView dequeueReusableCellWithIdentifier:@"DeleteCallCell"];
+	//	if(cell == nil)
 	{
-		if(delegate)
+		cell = [[[UITableViewButtonCell alloc ] initWithTitle:NSLocalizedString(@"Restore Call", @"Restore Call button in editing mode of call view") 
+														image:[UIImage imageNamed:@"blueButton.png"]
+												 imagePressed:[UIImage imageNamed:@"blueButton.png"]
+												darkTextColor:NO
+											  reuseIdentifier:nil /*@"DeleteCallCell"*/] autorelease];
+	}
+	[cell.button addTarget:self action:@selector(restoreCall) forControlEvents:UIControlEventTouchUpInside];
+	return cell;
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self restoreCall];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+	if(button == 0)
+	{
+		if(delegate && [delegate respondsToSelector:@selector(callViewController:restoreCall:)])
 		{
-			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:NO];
+			[self.delegate.delegate callViewController:self.delegate restoreCall:self.delegate.call];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
 		}
 	}
@@ -1847,13 +1947,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 
 
-
 @implementation CallViewController
 @synthesize showAddReturnVisit = _showAddReturnVisit;
 @synthesize delegate;
 @synthesize currentIndexPath;
 @synthesize delayedAddReturnVisit;
-
+@synthesize call = _call;
 /******************************************************************
  *
  *   INIT
@@ -1884,7 +1983,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		_showDeleteButton = !_newCall;
 		if(_newCall)
 		{
-			_call = [[NSMutableDictionary alloc] init];
+			self.call = [[NSMutableDictionary alloc] init];
+			[self.call release];
 			_setFirstResponderGroup = 0;
 			_showAddReturnVisit = NO;
 
@@ -1914,7 +2014,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			_showAddReturnVisit = YES;
 
-			_call = [call mutableCopy];
+			self.call = call;
 		}
 
 		_name = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -2029,7 +2129,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 
     [_name release];
-    [_call release];
+    self.call = nil;
 
 	[super dealloc];
 }
@@ -2126,8 +2226,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 - (void)navigationControlCancel:(id)sender 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	[_call release];
-	_call = nil;
+	self.call = nil;
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -2320,13 +2419,30 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// DELETE call
 	if(!_newCall)
 	{
-		GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
-		sectionController.isViewableWhenNotEditing = NO;
-		[self.sectionControllers addObject:sectionController];
+		BOOL isDeletedCall = ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:self.call];
+		{
+			GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
+			sectionController.isViewableWhenNotEditing = NO;
+			[self.sectionControllers addObject:sectionController];
+			
+			if(isDeletedCall)
+			{
+				RestoreCallCellController *cellController = [[[RestoreCallCellController alloc] init] autorelease];
+				cellController.delegate = self;
+				[sectionController.cellControllers addObject:cellController];
+			}
+		}
 		
-		DeleteCallCellController *cellController = [[[DeleteCallCellController alloc] init] autorelease];
-		cellController.delegate = self;
-		[sectionController.cellControllers addObject:cellController];
+		{
+			GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
+			sectionController.isViewableWhenNotEditing = NO;
+			[self.sectionControllers addObject:sectionController];
+			
+			DeleteCallCellController *cellController = [[[DeleteCallCellController alloc] init] autorelease];
+			cellController.delegate = self;
+			cellController.deleteForever = isDeletedCall;
+			[sectionController.cellControllers addObject:cellController];
+		}		
 	}
 
 	DEBUG(NSLog(@"CallView reloadData %s:%d", __FILE__, __LINE__);)

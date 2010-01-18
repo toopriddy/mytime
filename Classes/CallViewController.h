@@ -43,14 +43,10 @@
 
 	id<CallViewControllerDelegate> delegate;
 }
+@property (nonatomic, retain) NSMutableDictionary *call;
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
 @property (nonatomic, assign) BOOL delayedAddReturnVisit;
-
-/**
- * @returns the call we are editing
- */
-- (NSMutableDictionary *)call;
 
 /**
  * @returns the call's name
