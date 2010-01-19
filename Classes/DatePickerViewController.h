@@ -17,17 +17,20 @@
 #import "DatePickerViewControllerDelegate.h"
 #import "NumberedPickerView.h"
 
-@interface  DatePickerViewController : UIViewController 
+@interface  DatePickerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 {
     UIDatePicker *datePicker;
 	UIView *containerView;
 	int tag;
 	id<DatePickerViewControllerDelegate> delegate;
+	UITableView *tableView;
+	BOOL first;
 }
 
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) UIDatePicker *datePicker;
 @property (nonatomic, retain) UIView *containerView;
+@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, assign) id<DatePickerViewControllerDelegate> delegate;
 
 

@@ -22,7 +22,7 @@
 @synthesize containerView;
 @synthesize delegate;
 @synthesize tag;
-
+@synthesize tableView;
 
 - (id) init
 {
@@ -57,7 +57,8 @@
 	self.containerView = nil;
 	self.datePicker = nil;
 	self.delegate = nil;
-
+	self.tableView = nil;
+	
 	[super dealloc];
 }
 
@@ -95,12 +96,20 @@
 
 	pickerRect.origin.y += pickerRect.size.height;
 	pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
-
+#if 1
+	self.tableView = [[[UITableView alloc] initWithFrame:pickerRect style:UITableViewStyleGrouped] autorelease];
+	self.tableView.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
+	self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
+	self.tableView.sectionHeaderHeight = pickerRect.size.height/2 - self.tableView.rowHeight - 20;
+	[containerView addSubview:self.tableView];
+#else	
 	UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
 	v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
 	v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	[containerView addSubview: v];
-
+#endif
 	self.view = containerView;
 	
 	// add DONE button
@@ -115,6 +124,65 @@
 {
     return(datePicker.date);
 }
+
+- (void)delayedSelectCell
+{
+	[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(indexPath.row == 0 && first == NO)
+	{
+		first = YES;
+		[self performSelector:@selector(delayedSelectCell) withObject:nil afterDelay:0];
+	}
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(indexPath.row == 0)
+	{
+		self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+	}
+	else
+	{
+		self.datePicker.datePickerMode = UIDatePickerModeDate;
+	}
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = (UITableViewCell *)[theTableView dequeueReusableCellWithIdentifier:@"datecell"];
+	if (cell == nil) 
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"datecell"] autorelease];
+	}
+	if(indexPath.row == 0)
+	{
+		cell.textLabel.text = NSLocalizedString(@"Date/Time", @"cell title in the Date Picker View where you can change the return visit date");
+	}
+	else
+	{
+		cell.textLabel.text = NSLocalizedString(@"Date", @"cell title in the Date Picker View where you can change the return visit date");
+	}
+
+	return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
+	return 2;
+}
+
 
 
 - (BOOL)respondsToSelector:(SEL)selector
