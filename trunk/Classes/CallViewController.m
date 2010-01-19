@@ -1798,7 +1798,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	UIActionSheet *alertSheet;
 	if(self.deleteForever)
 	{
-		 alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call forever, and remove all return visits, studies, and placed publications in yoru statistics?", @"Statement to make the user realize that they are deleting a call forever")
+		 alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call forever, and remove all return visits, studies, and placed publications in your statistics?", @"Statement to make the user realize that they are deleting a call forever")
 												 delegate:self
 										cancelButtonTitle:NSLocalizedString(@"No", @"No dont delete the call")
 								   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes delete the call")
