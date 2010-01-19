@@ -201,7 +201,10 @@
 				self.title = name;
 				self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 				_datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-				_datePicker.date = (NSDate *)data;
+				NSDate *date = (NSDate *)data;
+				if(date == nil)
+					date = [NSDate date];
+				_datePicker.date = date;
 				break;
 			}
 		}
