@@ -283,7 +283,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 	NSMutableString *string = [NSMutableString string];
 	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Territory Name/Number", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryName]]];
 	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"City", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryCity]]];
-	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"State", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryState]]];
+	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"State or Country", @"used as a label when emailing not at homes"), [territory objectForKey:NotAtHomeTerritoryState]]];
 	NSString *notes = [territory objectForKey:NotAtHomeTerritoryNotes];
 	if([notes length])
 	{
