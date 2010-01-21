@@ -170,6 +170,10 @@ NSString * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pione
 NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling Servant", @"publisher type selected in the More->Settings->Publisher Type setting");
 #include "PSAddLocalizedString.h"
 
+
+NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChanged";
+
+
 @implementation Settings
 
 @synthesize settings;
@@ -534,6 +538,8 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 	[self.settings setObject:username forKey:SettingsMultipleUsersCurrentUser];
 	if(save)
 		[self saveData];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationUserChanged object:self];
 }
 
 - (BOOL)hasOldData
