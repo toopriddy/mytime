@@ -295,14 +295,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>262</integer>
-									<integer>247</integer>
+									<integer>246</integer>
 									<integer>214</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 321}, {305, 776}}</string>
+							<string>{{0, 3738}, {305, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -332,14 +331,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>90B569B510292C4D000065ED</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Localizable.strings</string>
+								<string>Info.plist</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -347,11 +344,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90B569B610292C4D000065ED</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Localizable.strings</string>
+										<string>Info.plist</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9095A4C61107FBF6006A98AE</string>
+										<string>9095A4CF1107FCF4006A98AE</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -612,7 +609,6 @@
 											<string>9095A41A11074B77006A98AE</string>
 											<string>9095A41C11074B77006A98AE</string>
 											<string>9095A41D11074B77006A98AE</string>
-											<string>9095A42B11074C04006A98AE</string>
 											<string>9095A4341107E086006A98AE</string>
 											<string>9095A4351107E086006A98AE</string>
 											<string>9095A46B1107E7B9006A98AE</string>
@@ -628,7 +624,8 @@
 											<string>9095A4BC1107F4F5006A98AE</string>
 											<string>9095A4C31107FBF6006A98AE</string>
 											<string>9095A4C41107FBF6006A98AE</string>
-											<string>9095A4C51107FBF6006A98AE</string>
+											<string>9095A4CD1107FCF4006A98AE</string>
+											<string>9095A4CE1107FCF4006A98AE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
