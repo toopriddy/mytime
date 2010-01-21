@@ -1097,7 +1097,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		NSMutableArray *array = [self.delegate.call objectForKey:CallMetadata];
 		if(array == nil) // this should not happen
 			return;
-		[array removeObject:self.metadata];
+		[array removeObjectIdenticalTo:self.metadata];
 
 		// save the data
 		[self.delegate save];
@@ -1399,7 +1399,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %d", index);)
 		
-		[returnVisits removeObject:returnVisit];
+		[returnVisits removeObjectIdenticalTo:returnVisit];
 
 		
 		// save the data
@@ -1614,7 +1614,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 		// this is the entry that we need to delete
 		NSMutableArray *array = [self.returnVisit objectForKey:CallReturnVisitPublications];
-		[array removeObject:self.publication];
+		[array removeObjectIdenticalTo:self.publication];
 		
 		// save the data
 		[self.delegate save];
@@ -1848,7 +1848,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 	if(button == 0)
 	{
-		if(delegate)
+		if(self.delegate.delegate)
 		{
 			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:!self.deleteForever];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
@@ -1931,7 +1931,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 	if(button == 0)
 	{
-		if(delegate && [delegate respondsToSelector:@selector(callViewController:restoreCall:)])
+		if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(callViewController:restoreCall:)])
 		{
 			[self.delegate.delegate callViewController:self.delegate restoreCall:self.delegate.call];
 			[self.delegate.navigationController popViewControllerAnimated:YES];

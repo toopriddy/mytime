@@ -190,6 +190,10 @@ extern NSString *const UserDefaultsRemovePasscode;
 
 
 
+// notifications
+
+extern NSString *const SettingsNotificationUserChanged;
+
 
 
 extern int debugging;

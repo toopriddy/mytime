@@ -12,6 +12,7 @@
 #import "QuartzCore/CAGradientLayer.h"
 @implementation NotAtHomeViewController
 @synthesize emptyView;
+@synthesize entries;
 
 - (NSMutableArray *)entries
 {
@@ -76,8 +77,9 @@
 
 - (void)notAtHomeTerritoryViewController:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController deleteTerritory:(NSMutableDictionary *)territory
 {
-	[self.entries removeObject:territory];
+	[self.entries removeObjectIdenticalTo:territory];
 	[[Settings sharedInstance] saveData];
+	[self.tableView reloadData];
 }
 
 
@@ -119,6 +121,12 @@
 	[self updateEmptyView];
 }
 
+- (void)userChanged
+{
+	[entries release];
+	entries = nil;
+	[self.tableView reloadData];
+}
 
 - (id)init
 {
@@ -132,12 +140,16 @@
 																				 target:self
 																				 action:@selector(navigationControlAdd:)] autorelease];
 		[self.navigationItem setRightBarButtonItem:button animated:NO];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:SettingsNotificationUserChanged object:[Settings sharedInstance]];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
 	[entries release];
 	entries = nil;
 	self.emptyView = nil;
