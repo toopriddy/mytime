@@ -22,7 +22,7 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
@@ -430,6 +430,9 @@
 			9095A4C41107FBF6006A98AE /* PBXTextBookmark */ = 9095A4C41107FBF6006A98AE /* PBXTextBookmark */;
 			9095A4C51107FBF6006A98AE /* PBXTextBookmark */ = 9095A4C51107FBF6006A98AE /* PBXTextBookmark */;
 			9095A4C61107FBF6006A98AE /* PBXTextBookmark */ = 9095A4C61107FBF6006A98AE /* PBXTextBookmark */;
+			9095A4CD1107FCF4006A98AE /* PBXTextBookmark */ = 9095A4CD1107FCF4006A98AE /* PBXTextBookmark */;
+			9095A4CE1107FCF4006A98AE /* PlistBookmark */ = 9095A4CE1107FCF4006A98AE /* PlistBookmark */;
+			9095A4CF1107FCF4006A98AE /* PlistBookmark */ = 9095A4CF1107FCF4006A98AE /* PlistBookmark */;
 			90B07B251105350E00826640 = 90B07B251105350E00826640 /* PBXTextBookmark */;
 			90B07B261105350E00826640 = 90B07B261105350E00826640 /* PBXTextBookmark */;
 			90B07B271105350E00826640 = 90B07B271105350E00826640 /* PBXTextBookmark */;
@@ -4256,6 +4259,40 @@
 		vrLen = 2524;
 		vrLoc = 58378;
 	};
+	9095A4CD1107FCF4006A98AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E759350FE4426900690CEE /* Slovak */;
+		name = "Localizable.strings: 1449";
+		rLen = 0;
+		rLoc = 60902;
+		rType = 0;
+		vrLen = 2524;
+		vrLoc = 58378;
+	};
+	9095A4CE1107FCF4006A98AE /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	9095A4CF1107FCF4006A98AE /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	90ADA7640F18757800C65E40 /* en_UK */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1548, 18844}}";
@@ -6286,8 +6323,8 @@
 	};
 	90E759350FE4426900690CEE /* Slovak */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {5244, 19166}}";
-			sepNavSelRange = "{60497, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {5244, 19152}}";
+			sepNavSelRange = "{60902, 0}";
 			sepNavVisRange = "{58378, 2524}";
 		};
 	};
