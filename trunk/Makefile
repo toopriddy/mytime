@@ -48,6 +48,7 @@ test: build/AdHoc\ Distribution-iphoneos/MyTime.app zip test-zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/test-${VERSION} -m "${VERSION} to beta testers"
 
 release-zip:
+	cd build/Distribution-iphoneos/ && rm -f MyTime-${VERSION}.zip MyTime-${VERSION}.app.dSYM.zip
 	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.zip MyTime.app
 	cd build/Distribution-iphoneos/ &&  cp -f MyTime-${VERSION}.zip MyTime.zip
 	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.app.dSYM.zip MyTime.app.dSYM
