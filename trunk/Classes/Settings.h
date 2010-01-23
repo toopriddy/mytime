@@ -78,7 +78,7 @@ extern NSString * const SettingsBulkLiterature;
 #define PublicationTypeDVDNotCount		AlternateLocalizedString(@"DVD (not counted)", @"Publication Type name") 
 #define PublicationTypeBook				AlternateLocalizedString(@"Book", @"Publication Type name")
 #define PublicationTypeBrochure			AlternateLocalizedString(@"Brochure", @"Publication Type name")
-#define PublicationTypeTwoMagazine			AlternateLocalizedString(@"TwoMagazine", @"Publication Type name")
+#define PublicationTypeTwoMagazine		AlternateLocalizedString(@"TwoMagazine", @"Publication Type name")
 #define PublicationTypeMagazine			AlternateLocalizedString(@"Magazine", @"Publication Type name")
 #define PublicationTypeTract			AlternateLocalizedString(@"Tract", @"Publication Type name")
 #define PublicationTypeCampaignTract	AlternateLocalizedString(@"Campaign Tract", @"Publication Type name")
