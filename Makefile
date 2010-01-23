@@ -40,18 +40,18 @@ zip:
 VERSION=$(shell defaults read `pwd`/Info CFBundleVersion)
 
 test-zip:
-	cd build/AdHoc\ Distribution-iphoneos/ && zip -r MyTime-${VERSION}AdHoc.zip MyTime.app
-	cd build/AdHoc\ Distribution-iphoneos/ && zip -r MyTime-${VERSION}AdHoc.app.dSYM.zip MyTime.app.dSYM
+	cd build/AdHoc\ Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app MyTime-${VERSION}AdHoc.zip
+	cd build/AdHoc\ Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app.dSYM MyTime-${VERSION}AdHoc.app.dSYM.zip 
 	cd build/AdHoc\ Distribution-iphoneos/ && mv MyTime.ipa MyTime-${VERSION}.ipa
 
 test: build/AdHoc\ Distribution-iphoneos/MyTime.app zip test-zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/test-${VERSION} -m "${VERSION} to beta testers"
 
 release-zip:
-	cd build/Distribution-iphoneos/ && rm -f MyTime-${VERSION}.zip MyTime-${VERSION}.app.dSYM.zip
-	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.zip MyTime.app
-	cd build/Distribution-iphoneos/ &&  cp -f MyTime-${VERSION}.zip MyTime.zip
-	cd build/Distribution-iphoneos/ && zip -r MyTime-${VERSION}.app.dSYM.zip MyTime.app.dSYM
+	cd build/Distribution-iphoneos/ && rm -f MyTime-${VERSION}.zip MyTime-${VERSION}.app.dSYM.zip Mytime.zip
+	cd build/Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app MyTime-${VERSION}.zip
+	cd build/Distribution-iphoneos/ && cp -f MyTime-${VERSION}.zip MyTime.zip
+	cd build/Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app.dSYM MyTime-${VERSION}.app.dSYM.zip
 	
 release: build/Distribution-iphoneos/MyTime.app release-zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/${VERSION} -m "${VERSION} to AppStore"
