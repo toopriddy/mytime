@@ -18,8 +18,10 @@
 
   # You will need to navigate to one of the following directories:
     * On a Mac: ~/Library/Application Support/MobileSync/Backup/
-    * On Windows XP: \Documents and Settings\(username)\Application Data\Apple Computer\MobileSync\Backup\
-    * On Windows Vista: \Users\(username)\AppData\Roaming\Apple Computer\MobileSync\Backup\
+    * On Windows XP: open "My Computer" and go to the "Tools" menu -> Folder Options -> View -> select "Show hidden files and folders" and hit OK.
+    * c:\Documents and Settings\(username)\Application Data\Apple Computer\MobileSync\Backup\
+    * On Windows Vista: go to Control Panel > Appearance and Personalization > Folder Options > general > and make sure that "Show hidden files" is checked
+    ** go to C:\Users\(username)\AppData\Roaming\Apple Computer\MobileSync\Backup\
   # Now take a look at the directories that match the date/time stamp and zip up the ones that match (you might want to sort by the date/time)
   # Now email me the zip directory toopriddy@gmail.com and let me know what you are wanting and tell me the name of your iPhone/iPod
 
