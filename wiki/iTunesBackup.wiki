@@ -1,6 +1,14 @@
 #summary Extract your MyTime data from your iTunes backups
 = Extract your mytime data from your iTunes backups =
 
+Here is some info about backups from apple's website http://support.apple.com/kb/HT1766
+
+Here are some rules:
+1. never ever setup your phone as a new phone, ALWAYS restore from a backup (even if the apple store told you to).
+2. always keep up to date with your email backups.
+3. sync your iPhone/iPad/iPod Touch with iTunes regularly to keep a backup of your data.
+
+
 == On OSX ==
   # download http://supercrazyawesome.com/downloads/iPhone%20Backup%20Extractor.app.zip from http://supercrazyawesome.com/
   # extract and run the application 
