@@ -14,6 +14,7 @@ Spanish.lproj \
 Swedish.lproj \
 Slovak.lproj \
 Norwegian.lproj \
+Korean.lproj \
 
 
 all: genstrings
@@ -40,6 +41,7 @@ zip:
 VERSION=$(shell defaults read `pwd`/Info CFBundleVersion)
 
 test-zip:
+	cd build/AdHoc\ Distribution-iphoneos/ && rm -f MyTime-${VERSION}AdHoc.zip MyTime-${VERSION}AdHoc.app.dSYM.zip
 	cd build/AdHoc\ Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app MyTime-${VERSION}AdHoc.zip
 	cd build/AdHoc\ Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app.dSYM MyTime-${VERSION}AdHoc.app.dSYM.zip 
 	cd build/AdHoc\ Distribution-iphoneos/ && mv MyTime.ipa MyTime-${VERSION}.ipa
