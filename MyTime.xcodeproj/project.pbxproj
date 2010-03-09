@@ -212,6 +212,7 @@
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
 		9013137F0EA0773A0055D890 /* NumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberViewController.m; sourceTree = "<group>"; };
 		901313810EA078780055D890 /* NumberViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewControllerDelegate.h; sourceTree = "<group>"; };
+		90196F0B11345DC6005F0621 /* Korean */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
 		901F257F10C244B00081A382 /* MultipleChoiceMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleChoiceMetadataViewController.h; sourceTree = "<group>"; };
 		901F258010C244B00081A382 /* MultipleChoiceMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceMetadataViewController.m; sourceTree = "<group>"; };
 		90226AFD1030B56500A94FEC /* SubmitDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitDataFile.h; sourceTree = "<group>"; };
@@ -876,6 +877,7 @@
 				Greek,
 				Slovak,
 				Norwegian,
+				Korean,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1114,6 +1116,7 @@
 				903477630E8CAA0100BB6F2D /* Swedish */,
 				90E759350FE4426900690CEE /* Slovak */,
 				908AC5EB10CD489900922E02 /* Norwegian */,
+				90196F0B11345DC6005F0621 /* Korean */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

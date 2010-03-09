@@ -452,8 +452,9 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 			[string appendString:@"<br>"];
 		}
 		
-		// quickbuild
-		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Not At Home", @"label for sending a printable email backup.  this label is in the body of the email")];
+		// not at home
+		
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *territory in [userSettings objectForKey:SettingsNotAtHomeTerritories])
 		{
 			[string appendString:emailFormattedStringForNotAtHomeTerritory(territory)];
