@@ -1806,7 +1806,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call?\n\nThe return visits and placed literature will still be counted in your statistics and you can restore or perminantly delete this call in the \"Deleted Calls\" View.", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")
+		alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to delete the call?\n\nThe return visits and placed literature will still be counted in your statistics and you can restore or permanently delete this call in the \"Deleted Calls\" View.", @"Statement to make the user realize that this will still save information, and acknowledge they are deleting a call")
 												 delegate:self
 										cancelButtonTitle:NSLocalizedString(@"No", @"No dont delete the call")
 								   destructiveButtonTitle:NSLocalizedString(@"Yes", @"Yes delete the call")
