@@ -23,6 +23,7 @@ static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
 static BOOL tableViewIndexMoveOut(id self, SEL _cmd);
 
 typedef enum {
+	NORMAL_STARTUP = 0,
 	ADD_CALL,
 	RESTORE_BACKUP,
 	AUTO_BACKUP,
