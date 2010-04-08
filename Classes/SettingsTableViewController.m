@@ -18,6 +18,7 @@
 #import "SecurityViewController.h"
 #import "MetadataEditorViewController.h"
 #import "QuickNotesViewController.h"
+#import "UITableViewSwitchCell.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -412,6 +413,51 @@
 	{
 		self.delegate.forceReload = YES;
 	}
+}
+@end
+
+/******************************************************************
+ *
+ *   BackupEmailIncludeAttachmentCellController
+ *
+ ******************************************************************/
+#pragma mark BackupEmailIncludeAttachmentCellController
+@interface BackupEmailIncludeAttachmentCellController : SettingsCellController <UITableViewSwitchCellDelegate>
+{
+	UIViewController *cellViewController;
+}
+@property (nonatomic, retain) UIViewController *cellViewController;
+@end
+@implementation BackupEmailIncludeAttachmentCellController
+@synthesize cellViewController;
+- (void)dealloc
+{
+	self.cellViewController = nil;
+	
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	self.cellViewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
+	UITableViewSwitchCell *cell = (UITableViewSwitchCell *)self.cellViewController.view;
+	cell.delegate = self;
+	cell.otherTextLabel.text = NSLocalizedString(@"Backup Attachment", @"More->Settings view backup attachment");
+	cell.booleanSwitch.on = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailDontIncludeAttachment] == nil;
+	return cell;
+}
+
+- (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell
+{
+	if(uiTableViewSwitchCell.booleanSwitch.on)
+	{
+		[[[Settings sharedInstance] settings] removeObjectForKey:SettingsBackupEmailDontIncludeAttachment];
+	}
+	else
+	{
+		[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithBool:YES] forKey:SettingsBackupEmailDontIncludeAttachment];
+	}
+	[[Settings sharedInstance] saveData];
 }
 @end
 
@@ -1169,7 +1215,15 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-
+		
+		// Backup Dont Include Attachment
+		{
+			BackupEmailIncludeAttachmentCellController *cellController = [[BackupEmailIncludeAttachmentCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 		// Number of months shown in statistics view
 		{
 			EmailBackupIntervalCellController *cellController = [[EmailBackupIntervalCellController alloc] init];
