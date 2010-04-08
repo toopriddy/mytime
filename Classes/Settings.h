@@ -220,7 +220,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street topLine:(NSMutableString *)top;
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 
-- (NSString *)filename;
++ (NSString *)filename;
 - (void)readData;
 - (void)saveData;
 

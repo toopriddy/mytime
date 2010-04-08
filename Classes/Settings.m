@@ -16,6 +16,7 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 #import "PSUrlString.h"
+#import "NSData+PSCompress.h"
 
 static Settings *instance = nil;
 
@@ -221,7 +222,7 @@ NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChan
 	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
 	
 	// attach the real records file
-	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[Settings sharedInstance] filename]] mimeType:@"text/plist" fileName:@"records.plist"];
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings filename]] mimeType:@"text/plist" fileName:@"records.plist"];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 
 	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
@@ -230,8 +231,8 @@ NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChan
 		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	}
 	// now add the url that will allow importing
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:settings];
-	[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
+	NSData *data = [[NSKeyedArchiver archivedDataWithRootObject:settings] compress];
+	[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)
@@ -466,7 +467,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 	return mailView;
 }
 
-- (NSString *)filename
++ (NSString *)filename
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
 	return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"records.plist"];
@@ -563,7 +564,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 {
 	VERY_VERBOSE(NSLog(@"readData");)
 #if 1
-	NSData *data = [[NSData alloc] initWithContentsOfFile:[self filename]];
+	NSData *data = [[NSData alloc] initWithContentsOfFile:[Settings filename]];
 	NSString *err = nil;
 	NSPropertyListFormat format;
 	self.settings = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&err];
@@ -573,7 +574,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		NSLog(@"%@", err);
 	}
 #else
-	self.settings = [[[NSMutableDictionary alloc] initWithContentsOfFile:[self filename]] autorelease];
+	self.settings = [[[NSMutableDictionary alloc] initWithContentsOfFile:[Settings filename]] autorelease];
 #endif
 	if(self.settings == nil)
 	{
@@ -637,7 +638,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 - (void)saveData
 {
 	VERY_VERBOSE(NSLog(@"saveData");)
-	[self.settings writeToFile:[self filename] atomically: YES];
+	[self.settings writeToFile:[Settings filename] atomically: YES];
 }
 
 - (id)copyWithZone:(NSZone *)zone
