@@ -46,3 +46,26 @@
 - (void)retainObject:(NSObject *)object whileViewControllerIsManaged:(UIViewController *)viewController;
 
 @end
+
+@interface URLCellController : NSObject<TableViewCellController>
+{
+	NSURL *ps_url;
+	NSString *ps_title;
+}
+@property (nonatomic, retain) NSURL *url;
+@property (nonatomic, retain) NSString *title;
+- (id)initWithTitle:(NSString *)title;
+- (id)initWithTitle:(NSString *)title URL:(NSURL *)url;
+@end
+
+@interface TitleValueCellController : NSObject<TableViewCellController>
+{
+	NSString *ps_title;
+	NSString *ps_value;
+}
+@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *value;
+- (id)initWithTitle:(NSString *)title;
+- (id)initWithTitle:(NSString *)title value:(NSString *)value;
+@end
+
