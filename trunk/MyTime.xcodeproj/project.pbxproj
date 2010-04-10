@@ -59,6 +59,7 @@
 		9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9045A8F80E7D6F86001B439C /* Localizable.strings */; };
 		9045AA000E7D99A4001B439C /* EventAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A9FF0E7D99A4001B439C /* EventAgent.m */; };
 		904A87E110EAFC790029A63F /* not-at-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 904A87E010EAFC790029A63F /* not-at-home.png */; };
+		904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904AF63D1170101000D497E7 /* StatisticsTableViewController.m */; };
 		904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
 		9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */; };
@@ -260,6 +261,8 @@
 		9045A9FE0E7D99A4001B439C /* EventAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAgent.h; sourceTree = "<group>"; };
 		9045A9FF0E7D99A4001B439C /* EventAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAgent.m; sourceTree = "<group>"; };
 		904A87E010EAFC790029A63F /* not-at-home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "not-at-home.png"; sourceTree = "<group>"; };
+		904AF63C1170101000D497E7 /* StatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsTableViewController.h; sourceTree = "<group>"; };
+		904AF63D1170101000D497E7 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsTableViewController.m; sourceTree = "<group>"; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
 		904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublisherTypeViewController.m; sourceTree = "<group>"; };
 		9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeViewController.h; sourceTree = "<group>"; };
@@ -736,6 +739,8 @@
 				90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */,
 				9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */,
 				902866600ECF757A0076BCBD /* MonthChooserViewController.m */,
+				904AF63C1170101000D497E7 /* StatisticsTableViewController.h */,
+				904AF63D1170101000D497E7 /* StatisticsTableViewController.m */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -1088,6 +1093,7 @@
 				90DE47DC10FAE59B0003D14B /* EmptyListViewController.m in Sources */,
 				9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */,
 				90E526AF116D886100D5EFBD /* NSData+PSCompress.m in Sources */,
+				904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,7 +24,8 @@
 #import "DeletedCallsSortedByStreetViewDataSource.h"
 #import "SortedCallsViewController.h"
 #import "MetadataSortedCallsViewController.h"
-#import "StatisticsViewController.h"
+#import "StatisticsTableViewController.h"
+//#import "StatisticsViewController.h"
 #import "NotAtHomeViewController.h"
 #import "HourViewController.h"
 #import "SettingsTableViewController.h"
@@ -579,7 +580,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:hourViewController] autorelease]];
 
 	// STATISTICS
-	StatisticsViewController *statisticsViewController = [[[StatisticsViewController alloc] init] autorelease];
+	StatisticsTableViewController *statisticsViewController = [[[StatisticsTableViewController alloc] init] autorelease];
+//	StatisticsViewController *statisticsViewController = [[[StatisticsViewController alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:statisticsViewController] autorelease]];
 
 	// CALLS SORTED BY CITY

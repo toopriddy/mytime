@@ -22,6 +22,12 @@
 #define DEBUG(a)
 #endif
 
+/******************************************************************
+ *
+ *   NSObjectViewControllerAssociation
+ *
+ ******************************************************************/
+#pragma mark NSObjectViewControllerAssociation
 @interface NSObjectViewControllerAssociation : NSObject
 {
 	NSObject *retainee;
@@ -53,6 +59,117 @@
 @end
 
 
+/******************************************************************
+ *
+ *   URLCellController
+ *
+ ******************************************************************/
+#pragma mark URLCellController
+@implementation URLCellController
+@synthesize url = ps_url;
+@synthesize title = ps_title;
+
+- (id)initWithTitle:(NSString *)title
+{
+	return [self initWithTitle:title URL:@""];
+}
+
+- (id)initWithTitle:(NSString *)title URL:(NSURL *)url
+{
+	if( (self = [super init]) )
+	{
+		self.title = title;
+		self.url = url;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	self.title = nil;
+	self.url = nil;
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"URLCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+	}
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	cell.textLabel.text = self.title;
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[[UIApplication sharedApplication] openURL:self.url];
+}
+@end
+
+/******************************************************************
+ *
+ *   TitleValueCellController
+ *
+ ******************************************************************/
+#pragma mark TitleValueCellController
+@implementation TitleValueCellController
+@synthesize value = ps_value;
+@synthesize title = ps_title;
+
+- (id)initWithTitle:(NSString *)title
+{
+	return [self initWithTitle:title value:@""];
+}
+
+- (id)initWithTitle:(NSString *)title value:(NSString *)value
+{
+	if( (self = [super init]) )
+	{
+		self.title = title;
+		self.value = value;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	self.title = nil;
+	self.value = nil;
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"TitleAndValueCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	cell.textLabel.text = self.title;
+	cell.detailTextLabel.text = self.value;
+	return cell;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return nil;
+}
+@end
+
+
+/******************************************************************
+ *
+ *   GenericTableViewController
+ *
+ ******************************************************************/
+#pragma mark GenericTableViewController
 @interface GenericTableViewController ()
 @property (nonatomic, retain) NSMutableArray *displaySectionControllers;
 @property (nonatomic, retain) NSMutableArray *retainedObjectsAndViewControllers;
