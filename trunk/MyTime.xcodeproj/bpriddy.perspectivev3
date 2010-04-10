@@ -293,13 +293,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>184</integer>
+									<integer>62</integer>
+									<integer>56</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 2678}, {322, 776}}</string>
+							<string>{{0, 605}, {322, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -348,7 +349,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>904AF6A21170438200D497E7</string>
+										<string>904AF6B3117044CA00D497E7</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -629,7 +630,6 @@
 											<string>90E526E4116D919400D5EFBD</string>
 											<string>90E526E6116D919400D5EFBD</string>
 											<string>90E526E8116D919400D5EFBD</string>
-											<string>90E52736116D994600D5EFBD</string>
 											<string>90E52763116D9C3700D5EFBD</string>
 											<string>90E5277E116DA1C300D5EFBD</string>
 											<string>90E5278E116DA70F00D5EFBD</string>
@@ -651,10 +651,12 @@
 											<string>904AF67E11703DDF00D497E7</string>
 											<string>904AF686117040AB00D497E7</string>
 											<string>904AF694117042EC00D497E7</string>
-											<string>904AF695117042EC00D497E7</string>
-											<string>904AF696117042EC00D497E7</string>
 											<string>904AF69C1170432500D497E7</string>
-											<string>904AF69D1170432500D497E7</string>
+											<string>904AF6AE117044CA00D497E7</string>
+											<string>904AF6AF117044CA00D497E7</string>
+											<string>904AF6B0117044CA00D497E7</string>
+											<string>904AF6B1117044CA00D497E7</string>
+											<string>904AF6B2117044CA00D497E7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -990,7 +992,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>904AF6A31170438200D497E7</string>
+		<string>904AF6B4117044CA00D497E7</string>
 		<string>904AF68111703DDF00D497E7</string>
 		<string>904AF67B11703D9700D497E7</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>

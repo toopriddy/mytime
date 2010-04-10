@@ -289,6 +289,158 @@ static NSString *MONTHS[] = {
 	[self sendEmailUsingMonthNames:monthNames selectedMonths:selectedMonths];
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+	//	[sheet dismissAnimated:YES];
+	
+	if(_emailActionSheet)
+	{
+		if(button == 0)
+		{
+			int month = _thisMonth;
+			NSMutableArray *months = [NSMutableArray array];
+			int i;
+			for(i = 0; i < 12; ++i)
+			{
+				if(month < 1)
+					month = 12 + month;
+				[months addObject:[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+				
+				--month;
+			}
+			
+			MonthChooserViewController *p = [[[MonthChooserViewController alloc] initWithMonths:months] autorelease];
+			p.delegate = self;
+			
+			[[self navigationController] pushViewController:p animated:YES];		
+		}
+		else if(button == 1 && actionSheet.numberOfButtons > 2)
+		{
+			int month = _thisMonth;
+			NSMutableArray *months = [NSMutableArray array];
+			int i;
+			for(i = 0; i < 12; ++i)
+			{
+				if(month < 1)
+					month = 12 + month;
+				[months addObject:[[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
+				
+				--month;
+			}
+			
+			// use the current month unless it is over the 6th day of the month
+			int monthGuess = 0;
+			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit) fromDate:[NSDate date]];
+			
+			if([dateComponents day] <= 6)
+			{
+				monthGuess = 1;
+			}
+			NSMutableArray *array = [NSMutableArray array];
+			for(int i = 0; i < 12; i++)
+			{
+				[array addObject:[NSNumber numberWithBool:(monthGuess == i)]];
+			}
+			[self sendEmailUsingMonthNames:months selectedMonths:array];
+		}
+	}
+	else
+	{
+		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+		switch(button)
+		{
+			case 0: // ROUND UP
+			{
+				int minutes = _minutes[_selectedMonth] % 60;
+				
+				NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+				[comps setMonth:-_selectedMonth];
+				NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
+				
+				// now go and add the entry
+				NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
+				[timeEntry setObject:date forKey:SettingsTimeEntryDate];
+				[timeEntry setObject:[NSNumber numberWithInt:(60 - minutes)] forKey:SettingsTimeEntryMinutes];
+				[[[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries] addObject:timeEntry];
+				[[Settings sharedInstance] saveData];
+				[self updateAndReload];
+				break;
+			}
+				
+			case 1: // MOVE TO NEXT MONTH
+			{
+				int minutes = _minutes[_selectedMonth] % 60;
+				
+				NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+				[comps setMonth:(1 - _selectedMonth)];
+				NSDate *date = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
+				
+				//make the time entries editable
+				NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries];
+				if(timeEntries == nil)
+				{
+					timeEntries = [NSMutableArray array];
+					[[[Settings sharedInstance] userSettings] setObject:timeEntries forKey:SettingsTimeEntries];
+				}
+				// now go and add the entry
+				NSMutableDictionary *timeEntry = [NSMutableDictionary dictionary];
+				[timeEntry setObject:date forKey:SettingsTimeEntryDate];
+				[timeEntry setObject:[NSNumber numberWithInt:minutes] forKey:SettingsTimeEntryMinutes];
+				[timeEntries addObject:timeEntry];
+				[[Settings sharedInstance] saveData];
+				
+				
+				int month = _thisMonth - _selectedMonth;
+				int year = _thisYear;
+				if(month < 1)
+				{
+					--year;
+					month += 12;
+				}
+				
+				// now remove time from an entry in this month
+				int timeCount = [timeEntries count];
+				int timeIndex;
+				for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
+				{
+					timeEntry = [timeEntries objectAtIndex:timeIndex];
+					
+					NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
+					NSNumber *minutesEntry = [timeEntry objectForKey:SettingsTimeEntryMinutes];
+					if(date && minutesEntry)
+					{
+						NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+						if(month == [dateComponents month] && year == [dateComponents year])
+						{
+							// get the minimum of the two
+							int leftover = [minutesEntry intValue] < minutes ? [minutesEntry intValue] : minutes;
+							
+							NSMutableDictionary *newTimeEntry = [NSMutableDictionary dictionary];
+							[newTimeEntry setObject:date forKey:SettingsTimeEntryDate];
+							[newTimeEntry setObject:[NSNumber numberWithInt:([minutesEntry intValue] - leftover)] forKey:SettingsTimeEntryMinutes];
+							[timeEntries replaceObjectAtIndex:timeIndex withObject:newTimeEntry];
+							// subtract off what we were able to take off of this time entry
+							// if it turns out that it was not enough, then we will try another entry
+							minutes -= leftover;
+							if(minutes == 0)
+							{
+								[[Settings sharedInstance] saveData];
+								// we have finished subtracting minutes off of time entries
+								break;
+							}
+						}
+					}
+				}
+				
+				
+				[self updateAndReload];
+				break;
+			}
+		}
+	}
+}
+
 - (void)navigationControlEmail:(id)sender
 {
 	int month = _thisMonth;
