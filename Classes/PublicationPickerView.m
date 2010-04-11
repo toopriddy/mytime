@@ -51,12 +51,12 @@ typedef struct {
 	NSString * type;
 } PublicationInformation;
 
-#warning add the study version of the Watchtower
 #include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
     {NSLocalizedString(@"W & A", @"Both Magizines (w and g)"),       PublicationTypeMagazine}
 ,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
+,	{NSLocalizedString(@"Study Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
 
@@ -235,7 +235,8 @@ static const PublicationInformation PUBLICATIONS[] = {
 
 - (BOOL)publicationIsWatchtower:(int)publication
 {
-	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 1;
+	return [[_publicationLookupTable objectAtIndex:publication] intValue] == 1 ||
+	       [[_publicationLookupTable objectAtIndex:publication] intValue] == 3;
 }
 
 - (BOOL)publicationIsAwake:(int)publication
