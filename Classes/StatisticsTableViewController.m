@@ -11,6 +11,7 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "PSUrlString.h"
 #import "PSLocalization.h"
+#import "StatisticsNumberCell.h"
 
 #include "PSRemoveLocalizedString.h"
 static NSString *MONTHS[] = {
@@ -35,7 +36,7 @@ static NSString *MONTHS[] = {
  *
  ******************************************************************/
 #pragma mark StatisticsCellController
-@interface StatisticsCellController : NSObject<TableViewCellController>
+@interface StatisticsCellController : NSObject<TableViewCellController, StatisticsNumberCellDelegate>
 {
 	NSString *ps_title;
 	int *ps_array;
@@ -75,7 +76,12 @@ static NSString *MONTHS[] = {
 	return displayIfZero || self.array[self.section];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return NO;
 }
@@ -83,17 +89,30 @@ static NSString *MONTHS[] = {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *commonIdentifier = @"StatisticsCellController";
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	StatisticsNumberCell *cell = (StatisticsNumberCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.accessoryType = UITableViewCellAccessoryNone;
+		// Create a temporary UIViewController to instantiate the custom cell.
+        UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"StatisticsNumberCell" bundle:nil];
+		// Grab a pointer to the custom cell.
+        cell = (StatisticsNumberCell *)temporaryController.view;
+		// Release the temporary UIViewController.
+        [temporaryController autorelease];
 	}
-	cell.textLabel.text = self.title;
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", self.array[self.section]];
+	
+//	[cell setEditing:tableView.editing animated:NO];
+	cell.nameLabel.text = self.title;
+	cell.delegate = self;
+	cell.statistic = self.array[self.section];
 	return cell;
 }
+
+- (void)statisticsNumberCellValueChanged:(StatisticsNumberCell *)cell
+{
+	self.array[self.section] = cell.statistic;
+#warning fix me to store this value	
+}
+
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -537,7 +556,7 @@ static NSString *MONTHS[] = {
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
 																			 target:self
 																			 action:@selector(navigationControlEdit:)] autorelease];
-	[self.navigationItem setRightBarButtonItem:button animated:YES];
+	[self.navigationItem setRightBarButtonItem:button animated:NO];
 	// add action button
 	 button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
 															 target:self
