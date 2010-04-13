@@ -71,7 +71,7 @@
 
 - (id)initWithTitle:(NSString *)title
 {
-	return [self initWithTitle:title URL:@""];
+	return [self initWithTitle:title URL:nil];
 }
 
 - (id)initWithTitle:(NSString *)title URL:(NSURL *)url
