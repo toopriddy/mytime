@@ -155,6 +155,7 @@ NSString * const NotAtHomeTerritoryHouseApartment = @"apartment";
 NSString * const NotAtHomeTerritoryHouseNotes = @"notes";
 NSString * const NotAtHomeTerritoryHouseAttempts = @"attempts";
 
+NSString * const SettingsStatisticsAdjustments = @"statisticsAdjustments";
 
 NSString * const SettingsPublisherType = @"publisherType";
 
@@ -398,7 +399,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
-		
+#warning need to print out adjustments		
 		// hours
 		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsTimeEntries])

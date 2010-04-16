@@ -30,6 +30,16 @@ static NSString *MONTHS[] = {
 };
 #include "PSAddLocalizedString.h"
 
+NSString * const StatisticsTypeHours = @"Hours";
+NSString * const StatisticsTypeBooks = @"Books";
+NSString * const StatisticsTypeBrochures = @"Brochures";
+NSString * const StatisticsTypeMagazines = @"Magazines";
+NSString * const StatisticsTypeReturnVisits = @"Return Visits";
+NSString * const StatisticsTypeBibleStudies = @"Bible Studies";
+NSString * const StatisticsTypeCampaignTracts = @"Campaign Tracts";
+NSString * const StatisticsTypeRBCHours = @"RBC Hours";
+													
+
 /******************************************************************
  *
  *   StatisticsCellController
@@ -42,25 +52,36 @@ static NSString *MONTHS[] = {
 	int *ps_array;
 	int ps_section;
 	BOOL displayIfZero;
+	int ps_timestamp;
+	NSMutableDictionary *ps_adjustments;
+	NSString *ps_adjustmentName;
 }
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, assign) int *array;
 @property (nonatomic, assign) int section;
 @property (nonatomic, assign) BOOL displayIfZero;
+@property (nonatomic, assign) int timestamp;
+@property (nonatomic, retain, readonly) NSMutableDictionary *adjustments;
+@property (nonatomic, assign) NSString *adjustmentName;
 @end
 @implementation StatisticsCellController
 @synthesize array = ps_array;
 @synthesize section = ps_section;
 @synthesize title = ps_title;
+@synthesize timestamp = ps_timestamp;
+@synthesize adjustments = ps_adjustments;
+@synthesize adjustmentName = ps_adjustmentName;
 @synthesize displayIfZero;
 
-- (id)initWithTitle:(NSString *)title array:(int *)array section:(int)section
+- (id)initWithTitle:(NSString *)title array:(int *)array section:(int)section timestamp:(int)timestamp adjustmentName:(NSString *)adjustmentName
 {
 	if( (self = [super init]) )
 	{
 		self.title = title;
 		self.array = array;
 		self.section = section;
+		self.timestamp = timestamp;
+		self.adjustmentName = adjustmentName;
 	}
 	return self;
 }
@@ -68,6 +89,9 @@ static NSString *MONTHS[] = {
 - (void)dealloc
 {
 	self.title = nil;
+	[ps_adjustments release];
+	ps_adjustments = nil;
+	self.adjustmentName = nil;
 	[super dealloc];
 }
 
@@ -107,10 +131,41 @@ static NSString *MONTHS[] = {
 	return cell;
 }
 
+- (NSMutableDictionary *)adjustments
+{
+	if(ps_adjustments == nil)
+	{
+		// make sure that the main adjustments is there
+		NSMutableDictionary *allAdjustments = [[[Settings sharedInstance] userSettings] objectForKey:SettingsStatisticsAdjustments];
+		if(allAdjustments == nil)
+		{
+			// go add the timestamp
+			allAdjustments = [NSMutableDictionary dictionary];
+			[[[Settings sharedInstance] userSettings] setObject:allAdjustments forKey:SettingsStatisticsAdjustments];
+		}
+		// make sure the type of adjustment is there
+		NSMutableDictionary *temp = [allAdjustments objectForKey:self.adjustmentName];
+		if(temp == nil)
+		{
+			// go add the timestamp
+			temp = [NSMutableDictionary dictionary];
+			[allAdjustments setObject:temp forKey:self.adjustmentName];
+		}
+		
+		ps_adjustments = [temp retain];
+	}
+	return [[ps_adjustments retain] autorelease];
+}
+
 - (void)statisticsNumberCellValueChanged:(StatisticsNumberCell *)cell
 {
+	NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
+	int value = [[self.adjustments objectForKey:stamp] intValue];
+	int difference = value + cell.statistic - self.array[self.section];
 	self.array[self.section] = cell.statistic;
-#warning fix me to store this value	
+
+	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
+	[[Settings sharedInstance] saveData];
 }
 
 
@@ -186,9 +241,10 @@ static NSString *MONTHS[] = {
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	// force the tableview to load if there was display information stored
+	self.forceReload = YES;
+
 	[super viewWillAppear:animated];
-	// force the tableview to load
-	[self updateAndReload];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -513,55 +569,55 @@ static NSString *MONTHS[] = {
 	
 }
 
+- (void)displayButtons
+{
+	if(self.editing)
+	{
+		// update the button in the nav bar
+		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																				 target:self
+																				 action:@selector(navigationControlDone:)] autorelease];
+		[self.navigationItem setRightBarButtonItem:button animated:YES];
+		[self.navigationItem setLeftBarButtonItem:nil animated:YES];
+		
+		// hide the back button so that they cant cancel the edit without hitting done
+		self.navigationItem.hidesBackButton = YES;
+	}
+	else
+	{
+		// update the button in the nav bar
+		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+																				 target:self
+																				 action:@selector(navigationControlEdit:)] autorelease];
+		[self.navigationItem setRightBarButtonItem:button animated:YES];
+		// update the button in the nav bar
+		button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+																target:self
+																action:@selector(navigationControlEmail:)] autorelease];
+		[self.navigationItem setLeftBarButtonItem:button animated:YES];
+	}
+
+}
+
 - (void)navigationControlEdit:(id)sender 
 {
-	// update the button in the nav bar
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																			 target:self
-																			 action:@selector(navigationControlDone:)] autorelease];
-	[self.navigationItem setRightBarButtonItem:button animated:YES];
-	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
-	// show the back button when they are done editing
-	self.navigationItem.hidesBackButton = NO;
-	
-	// hide the back button so that they cant cancel the edit without hitting done
-	self.navigationItem.hidesBackButton = YES;
-	
 	self.editing = YES;
+	[self displayButtons];
 }	
 
 - (void)navigationControlDone:(id)sender 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	
-	// update the button in the nav bar
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-																			 target:self
-																			 action:@selector(navigationControlEdit:)] autorelease];
-	[self.navigationItem setRightBarButtonItem:button animated:YES];
-	// update the button in the nav bar
-	button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-															target:self
-															action:@selector(navigationControlEmail:)] autorelease];
-	[self.navigationItem setLeftBarButtonItem:button animated:YES];
-	
 	self.editing = NO;
+	[self displayButtons];
 }	
 
 - (void)loadView 
 {
 	[super loadView];
 	
-	// update the button in the nav bar
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-																			 target:self
-																			 action:@selector(navigationControlEdit:)] autorelease];
-	[self.navigationItem setRightBarButtonItem:button animated:NO];
-	// add action button
-	 button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-															 target:self
-															 action:@selector(navigationControlEmail:)] autorelease];
-	[self.navigationItem setLeftBarButtonItem:button animated:NO];
+	[self displayButtons];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -784,6 +840,81 @@ static NSString *MONTHS[] = {
 	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	
 	BOOL newServiceYear = _thisMonth >= 9;
+	
+	//Start with Adjustments
+	NSMutableDictionary *adjustmentTypes = [userSettings objectForKey:SettingsStatisticsAdjustments];
+	for(NSString *key in [adjustmentTypes allKeys])
+	{
+		int dummyArray[kMonthsShown];
+		int *array = dummyArray;
+		BOOL isHours = NO;
+		
+		if([key isEqualToString:StatisticsTypeHours])
+		{
+			isHours = YES;
+			array = _minutes;
+		}
+		else if([key isEqualToString:StatisticsTypeBooks])
+		{
+			array = _books;
+		}
+		else if([key isEqualToString:StatisticsTypeBrochures])
+		{
+			array = _brochures;
+		}
+		else if([key isEqualToString:StatisticsTypeMagazines])
+		{
+			array = _magazines;
+		}
+		else if([key isEqualToString:StatisticsTypeReturnVisits])
+		{
+			array = _returnVisits;
+		}
+		else if([key isEqualToString:StatisticsTypeBibleStudies])
+		{
+			array = _bibleStudies;
+		}
+		else if([key isEqualToString:StatisticsTypeCampaignTracts])
+		{
+			array = _campaignTracts;
+		}
+		else if([key isEqualToString:StatisticsTypeRBCHours])
+		{
+			array = _quickBuildMinutes;
+		}
+		
+		NSMutableDictionary *adjustments = [adjustmentTypes objectForKey:key];
+		for(int section = 0; section < 12; ++section)
+		{
+			int month = _thisMonth - section;
+			int timestamp;
+			if(month < 1)
+			{
+				month = 12 + month;
+				timestamp = (_thisYear - 1) * 100 + month;
+			}
+			else
+			{
+				timestamp = _thisYear * 100 + month;
+			}
+			int value = [[adjustments objectForKey:[NSString stringWithFormat:@"%d", timestamp]] intValue];
+			if(value == 0)
+				continue;
+			
+			array[section] += value;
+						
+			if(isHours)
+			{
+				if( (newServiceYear && month <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+				   (!newServiceYear && _thisMonth + 4 > month)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+				{
+					_serviceYearMinutes += value;
+				}
+			}
+		}
+	}
+	
+	// Hours entries
 	NSArray *timeEntries = [userSettings objectForKey:SettingsTimeEntries];
 	int timeIndex;
 	int timeCount = [timeEntries count];
@@ -823,7 +954,8 @@ static NSString *MONTHS[] = {
 			}
 		}
 	}
-	
+
+
 	// QUICK BUILD
 	
 	timeEntries = [userSettings objectForKey:SettingsRBCTimeEntries];
@@ -983,7 +1115,6 @@ static NSString *MONTHS[] = {
 	_thisYear = [dateComponents year];
 	
 	_lastMonth = _thisMonth == 1 ? 12 : _thisMonth - 1;
-	_lastYear = _thisMonth == 1 ? _thisYear - 1 : _thisYear;
 	
 	if(_thisMonth == 9)
 	{
@@ -1121,8 +1252,17 @@ static NSString *MONTHS[] = {
 	{
 		NSString *title;
 		int month = _thisMonth - section;
+		int timestamp;
 		if(month < 1)
+		{
 			month = 12 + month;
+			timestamp = (_thisYear - 1) * 100 + month;
+		}
+		else
+		{
+			timestamp = _thisYear * 100 + month;
+		}
+
 		title = [NSString stringWithFormat:NSLocalizedString(@"Time for %@", @"Time for %@ Group title on the Statistics View where %@ is the month of the year"), 
 				 [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""]];
 
@@ -1136,7 +1276,9 @@ static NSString *MONTHS[] = {
 		{
 			HourStatisticsCellController *cellController = [[HourStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")
 																										 array:_minutes
-																									   section:section];
+																									   section:section
+																									 timestamp:timestamp
+																								adjustmentName:StatisticsTypeHours];
 			cellController.displayIfZero = YES;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
@@ -1145,7 +1287,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Books", @"Publication Type name")
 																								 array:_books
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeBooks];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1153,7 +1297,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Brochures", @"Publication Type name")
 																								 array:_brochures
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeBrochures];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1161,7 +1307,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Magazines", @"Publication Type name")
 																								 array:_magazines
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeMagazines];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1169,7 +1317,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View")
 																								 array:_returnVisits
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeReturnVisits];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1177,7 +1327,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View")
 																								 array:_bibleStudies
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeBibleStudies];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1185,7 +1337,9 @@ static NSString *MONTHS[] = {
 		{
 			StatisticsCellController *cellController = [[StatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name") 
 																								 array:_campaignTracts
-																							   section:section];
+																							   section:section
+																							 timestamp:timestamp
+																						adjustmentName:StatisticsTypeCampaignTracts];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1193,7 +1347,9 @@ static NSString *MONTHS[] = {
 		{
 			HourStatisticsCellController *cellController = [[HourStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")
 																										 array:_quickBuildMinutes
-																									   section:section];
+																									   section:section
+																									 timestamp:timestamp
+																								adjustmentName:StatisticsTypeRBCHours];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}

@@ -201,8 +201,21 @@
 	return [[_sectionControllers retain] autorelease];
 }
 
+// make sure that if anyone tries to get these that these are initalized
+- (NSMutableArray *)displaySectionControllers
+{
+	if(_displaySectionControllers == nil)
+	{
+		[self constructDisplaySectionControllers];
+	}
+	return [[_displaySectionControllers retain] autorelease];
+}
+
+
 - (void)constructDisplaySectionControllers
 {
+	// if we are rebuilding the display, then we have already reloaded
+	_forceReload = NO;
 	[self constructSectionControllers];
 	self.displaySectionControllers = [NSMutableArray array];
 	SEL isViewableSelector = self.tableView.editing ? @selector(isViewableWhenEditing) : @selector(isViewableWhenNotEditing);
@@ -308,7 +321,7 @@
 // updateAndReload
 - (void)updateAndReload
 {
-	[self constructSectionControllers];
+	[self constructDisplaySectionControllers];
 	[self.tableView reloadData];
 }
 
@@ -477,11 +490,6 @@
 {
 	DEBUG(NSLog(@"tableView: titleForHeaderInSection:%d", section));
 
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
 	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
 	return [sectionController tableView:tableView titleForHeaderInSection:section];
 }
@@ -490,11 +498,6 @@
 {
 	DEBUG(NSLog(@"tableView: titleForFooterInSection:%d", section));
 
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
 	NSObject<TableViewSectionController> *sectionController = [self.displaySectionControllers objectAtIndex:section];
 	return [sectionController tableView:tableView titleForFooterInSection:section];
 }
@@ -507,10 +510,6 @@
 // Return the number of sections for the table.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	if(!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	int count = [self.displaySectionControllers count];
 	if(count == 0)
 		count = 1;
@@ -522,11 +521,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	DEBUG(NSLog(@"tableView: numberOfRowsInSection:%d", section));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
 	int count = [[self.displaySectionControllers objectAtIndex:section] tableView:tableView numberOfRowsInSection:section];
 	
 	DEBUG(NSLog(@"tableView: numberOfRowsInSection:%d = %u", section, count));
@@ -538,11 +532,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: cellForRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
 	return [[[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath] tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
@@ -552,11 +541,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: canEditRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	
+
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)])
 	{
@@ -573,10 +558,6 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: canMoveRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:canMoveRowAtIndexPath:)])
@@ -591,10 +572,6 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
 	DEBUG(NSLog(@"tableView: cellForRowAtIndexPath:%@ toIndexPath:%@", fromIndexPath, toIndexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:fromIndexPath.section] tableView:tableView cellControllerAtIndexPath:fromIndexPath];
 	if ([cellData respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)])
@@ -610,10 +587,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: commitEditingStyle: forRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)])
@@ -632,10 +605,6 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: willDisplayCell: forRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:willDisplayCell:forRowAtIndexPath:)])
@@ -649,10 +618,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: heightForRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)])
@@ -668,10 +633,6 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: accessoryButtonTappedForRowWithIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)])
@@ -693,10 +654,6 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: willSelectRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)])
@@ -715,10 +672,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: didSelectRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)])
@@ -733,10 +686,6 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:editingStyleForRowAtIndexPath:)])
@@ -754,10 +703,6 @@
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: shouldIndentWhileEditingRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:shouldIndentWhileEditingRowAtIndexPath:)])
@@ -772,10 +717,6 @@
 - (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: willBeginEditingRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:willBeginEditingRowAtIndexPath:)])
@@ -787,10 +728,6 @@
 - (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: didEndEditingRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:didEndEditingRowAtIndexPath:)])
@@ -805,10 +742,6 @@
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DEBUG(NSLog(@"tableView: indentationLevelForRowAtIndexPath:%@", indexPath));
-	if (!self.displaySectionControllers)
-	{
-		[self constructDisplaySectionControllers];
-	}
 	
 	NSObject<TableViewCellController> *cellData = [[self.displaySectionControllers objectAtIndex:indexPath.section] tableView:tableView cellControllerAtIndexPath:indexPath];
 	if ([cellData respondsToSelector:@selector(tableView:indentationLevelForRowAtIndexPath:)])
@@ -854,13 +787,14 @@
 
 - (void)viewWillAppear:(BOOL)animated 
 {
-	[super viewWillAppear:animated];
-
 	if(self.forceReload)
 	{
 		self.forceReload = NO;
-		[self updateAndReload];
+		// getting rid of the displaySectionControllers will cause a reload
+		self.displaySectionControllers = nil;
 	}
+	[super viewWillAppear:animated];
+
 }	
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

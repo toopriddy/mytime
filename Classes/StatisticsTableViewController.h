@@ -30,7 +30,6 @@
 	int _thisMonth;
 	int _lastMonth;
 	int _thisYear;
-	int _lastYear;
 	
 	int _books[kMonthsShown];
 	int _brochures[kMonthsShown];

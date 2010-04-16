@@ -58,7 +58,7 @@
 
 - (IBAction)subtractPressed
 {
-	if(statistic > 1)
+	if(statistic >= 1)
 	{
 		self.statistic = statistic - 1;
 		if(self.delegate && [self.delegate respondsToSelector:@selector(statisticsNumberCellValueChanged:)])
