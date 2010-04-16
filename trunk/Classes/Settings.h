@@ -139,6 +139,8 @@ extern NSString * const SettingsRBCTimeEntries;
 	extern NSString * const SettingsTimeEntryDate;
 	extern NSString * const SettingsTimeEntryMinutes;
 
+//multiple users
+extern NSString * const SettingsStatisticsAdjustments;
 
 extern NSString * const SettingsPasscode;
 

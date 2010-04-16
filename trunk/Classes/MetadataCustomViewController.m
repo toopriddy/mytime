@@ -626,8 +626,13 @@ static MetadataInformation commonInformation[] = {
 {
 	GenericTableViewSectionController *sectionController = [self.displaySectionControllers objectAtIndex:proposedDestinationIndexPath.section];
 	// check to see if they are moving it beyond the "Add custom information", the last entry and there are no entries in the list
-	if(proposedDestinationIndexPath.section == sourceIndexPath.section && 
-	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
+	if(proposedDestinationIndexPath.section < sourceIndexPath.section)
+		return [NSIndexPath indexPathForRow:0 inSection:sourceIndexPath.section];
+	
+	if(proposedDestinationIndexPath.section > sourceIndexPath.section) // have to put it before the "add new" row
+		return [NSIndexPath indexPathForRow:([[[self.displaySectionControllers objectAtIndex:sourceIndexPath.section] displayCellControllers] count] - 2) inSection:sourceIndexPath.section];
+	
+	if((sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
 	   sectionController.displayCellControllers.count > 1)
 	{
 		// only subtract 1 off of the row if the source row is in the same section (cause the row count is not increasing just getting shuffled)
