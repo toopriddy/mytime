@@ -12,6 +12,7 @@
 @implementation StatisticsNumberCell
 @synthesize nameLabel;
 @synthesize countLabel;
+@synthesize realCountLabel;
 @synthesize editingCountLabel;
 @synthesize subtractButton;
 @synthesize addButton;
@@ -20,6 +21,7 @@
 - (void)dealloc
 {
 	self.nameLabel = nil;
+	self.realCountLabel = nil;
 	self.countLabel = nil;
 	self.editingCountLabel = nil;
 	self.subtractButton = nil;
@@ -28,24 +30,28 @@
 	[super dealloc];
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+- (void)didTransitionToState:(UITableViewCellStateMask)state
 {
-	[super setEditing:editing animated:animated];
-	if(animated)
-	{
-		[UIView beginAnimations:nil context:nil];
-	}
+	BOOL editing = self.editing;
 	
-	self.editingCountLabel.hidden = !editing;
-	self.addButton.hidden = !editing;
-	self.subtractButton.hidden = !editing;
-	self.countLabel.hidden = editing;
+	// Editing -> not editing:
+	//    hide the buttons and make the count move to the right
+	// Not editing -> editing
+	//    show the buttons and make the count move to the left
 	
-	if(animated)
-	{
-		[UIView commitAnimations];
-	}
+	UILabel *referenceLabel = editing ? self.editingCountLabel : self.countLabel;
+	self.realCountLabel.frame = referenceLabel.frame;
+	self.realCountLabel.textAlignment = referenceLabel.textAlignment;
+
+	self.addButton.enabled = editing;
+	self.addButton.alpha = !editing ? 0 : 1.0;
+	self.addButton.hidden = NO;
+
+	self.subtractButton.enabled = editing;
+	self.subtractButton.alpha = !editing ? 0 : 1.0;
+	self.subtractButton.hidden = NO;
 }
+
 
 - (IBAction)addPressed
 {
@@ -76,29 +82,24 @@
 - (void)setStatistic:(int)value
 {
 	statistic = value;
-	countLabel.text = [NSString stringWithFormat:@"%u", statistic];
-	editingCountLabel.text = countLabel.text;
+	realCountLabel.text = [NSString stringWithFormat:@"%u", statistic];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated 
 {
-	UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
-	
 	[super setSelected:selected animated:animated];
 	
 	if(self.selectionStyle != UITableViewCellSelectionStyleNone)
 	{
+		UIColor *backgroundColor = selected || animated ? [UIColor clearColor] : [UIColor whiteColor];
+
 		nameLabel.backgroundColor = backgroundColor;
 		nameLabel.highlighted = selected;
 		nameLabel.opaque = !selected;
 		
-		countLabel.backgroundColor = backgroundColor;
-		countLabel.highlighted = selected;
-		countLabel.opaque = !selected;
-		
-		editingCountLabel.backgroundColor = backgroundColor;
-		editingCountLabel.highlighted = selected;
-		editingCountLabel.opaque = !selected;
+		realCountLabel.backgroundColor = backgroundColor;
+		realCountLabel.highlighted = selected;
+		realCountLabel.opaque = !selected;
 	}
 }
 

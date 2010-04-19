@@ -18,6 +18,7 @@
 {
 	UILabel *countLabel;
 	UILabel *editingCountLabel;
+	UILabel *realCountLabel;
 	UILabel *nameLabel;
 	UIButton *subtractButton;
 	UIButton *addButton;
@@ -26,6 +27,7 @@
 }
 @property (nonatomic, retain) IBOutlet UILabel *countLabel;
 @property (nonatomic, retain) IBOutlet UILabel *editingCountLabel;
+@property (nonatomic, retain) IBOutlet UILabel *realCountLabel;
 @property (nonatomic, retain) IBOutlet UIButton *subtractButton;
 @property (nonatomic, retain) IBOutlet UIButton *addButton;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
