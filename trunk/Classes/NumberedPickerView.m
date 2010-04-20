@@ -15,10 +15,20 @@
 
 #import "NumberedPickerView.h"
 #import "Settings.h"
+#import <QuartzCore/QuartzCore.h>
+#import <QuartzCore/CALayer.h>
 
 @implementation NumberedPickerView
 @synthesize number;
 @synthesize label;
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+	CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+	alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:1.0], nil];
+	label.text = _newTitle;
+	[label.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
+}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -27,13 +37,28 @@
 	number = row + _min;
 	if(_singularTitle && _title)
 	{
-		if(number == 1 && oldNumber != 1)
+		if(titlesAreDifferent)
 		{
-			label.text = _singularTitle;
-		}
-		else if(number != 1 && oldNumber == 1)
-		{
-			label.text = _title;
+			// do a cute little fade out/fade in animation when it changes from singular to plural like the countdown picker
+			BOOL changed = false;
+			if(number == 1 && oldNumber != 1)
+			{
+				changed = YES;
+				_newTitle = _singularTitle;
+			}
+			else if(number != 1 && oldNumber == 1)
+			{
+				changed = YES;
+				_newTitle = _title;
+			}
+			
+			if(changed)
+			{
+				CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+				alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:1.0], [NSNumber numberWithFloat:0.0], /*[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:1.0], */ nil];
+				[alphaAnimation setDelegate:self];
+				[label.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
+			}
 		}
 	}
 }
@@ -98,10 +123,14 @@
 			_singularTitle = [[NSString alloc] initWithString:singularTitle];
 			#define LABEL_OFFSET 60.0
 			CGRect contentRect = [self bounds];
-
+			
+			titlesAreDifferent = ![title isEqualToString:singularTitle];
+			
 			self.label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-			label.backgroundColor = [UIColor clearColor];
 			label.font = [UIFont boldSystemFontOfSize:18];
+			label.backgroundColor = [UIColor clearColor];
+			label.shadowColor = [UIColor whiteColor];
+			label.shadowOffset = CGSizeMake(0,1);
 			CGSize size = [title sizeWithFont:label.font];
 			label.frame = CGRectMake(contentRect.origin.x + LABEL_OFFSET, (contentRect.size.height - size.height)/2.0, contentRect.size.width, size.height);
 			if(number == 1)
@@ -109,10 +138,19 @@
 			else
 				label.text = _title;
 			
-			
-			[self addSubview:label];
+			int i = 0;
+			for(UIView *view in [self subviews])
+			{
+				i++;
+				if(view.frame.size.height == 44)
+				{
+					[self insertSubview:label atIndex:i];
+					break;
+				}
+			}
+			if(label.superview == nil)
+				[self addSubview:label];
 		}
-		
     }
     
     return(self);

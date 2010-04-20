@@ -12,6 +12,7 @@
 #import "PSUrlString.h"
 #import "PSLocalization.h"
 #import "StatisticsNumberCell.h"
+#import "HourPickerViewController.h"
 
 #include "PSRemoveLocalizedString.h"
 static NSString *MONTHS[] = {
@@ -181,11 +182,14 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
  *
  ******************************************************************/
 #pragma mark HourStatisticsCellController
-@interface HourStatisticsCellController : StatisticsCellController
+@interface HourStatisticsCellController : StatisticsCellController <HourPickerViewControllerDelegate>
 {
+	StatisticsTableViewController *delegate;
 }
+@property (nonatomic, assign) StatisticsTableViewController *delegate;
 @end
 @implementation HourStatisticsCellController
+@synthesize delegate;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -195,6 +199,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 	cell.textLabel.text = self.title;
 	int hours = self.array[self.section] / 60;
@@ -212,6 +217,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	{
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
+	else
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	
 	return cell;
 }
 
@@ -222,6 +232,26 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if(tableView.editing)
+	{
+		// make the new call view 
+		HourPickerViewController *p = [[[HourPickerViewController alloc] initWithTitle:NSLocalizedString(@"Enter Hours", @"This is the title for the Statistics->Edit->Select an hours row-> view that pops up to allow you to edit the hours") minutes:self.array[self.section]] autorelease];
+		p.delegate = self;
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	}
+}
+
+- (void)hourPickerViewControllerDone:(HourPickerViewController *)hourPickerViewController
+{
+	NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
+	int value = [[self.adjustments objectForKey:stamp] intValue];
+	int difference = value + hourPickerViewController.minutes - self.array[self.section];
+	self.array[self.section] = hourPickerViewController.minutes;
+	
+	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
+	[[Settings sharedInstance] saveData];
+	[[self.delegate navigationController] popViewControllerAnimated:YES];
 }
 
 @end
@@ -1279,6 +1309,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																									   section:section
 																									 timestamp:timestamp
 																								adjustmentName:StatisticsTypeHours];
+			cellController.delegate = self;
 			cellController.displayIfZero = YES;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
@@ -1350,6 +1381,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																									   section:section
 																									 timestamp:timestamp
 																								adjustmentName:StatisticsTypeRBCHours];
+			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
