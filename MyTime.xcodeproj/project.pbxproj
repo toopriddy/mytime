@@ -83,6 +83,8 @@
 		907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */; };
 		908722C110AF9A9F00580FFF /* rbc.png in Resources */ = {isa = PBXBuildFile; fileRef = 908722C010AF9A9F00580FFF /* rbc.png */; };
 		908722C310AF9AAA00580FFF /* category.png in Resources */ = {isa = PBXBuildFile; fileRef = 908722C210AF9AAA00580FFF /* category.png */; };
+		90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A60369117CCE50004E8D9A /* HourPickerViewController.m */; };
+		90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6040C117D508D004E8D9A /* libGenericTableViewController.a */; };
 		90A7AE830EA5A62200EBEF2D /* build.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A7AE820EA5A62100EBEF2D /* build.png */; };
 		90ADA7A60F18760200C65E40 /* WebMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA7A50F18760200C65E40 /* WebMapViewController.m */; };
 		90ADA7AC0F1876C500C65E40 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */; };
@@ -139,8 +141,6 @@
 		90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */; };
 		90E526AF116D886100D5EFBD /* NSData+PSCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E526AE116D886100D5EFBD /* NSData+PSCompress.m */; };
 		90E526D0116D8DAC00D5EFBD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E526CF116D8DAC00D5EFBD /* libz.dylib */; };
-		90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */; };
-		90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
 		90E756B30FE2E97F00690CEE /* MultipleUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E756B20FE2E97F00690CEE /* MultipleUsersViewController.m */; };
 		90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E75D1A0FE5D0AB00690CEE /* MetadataPickerView.xib */; };
@@ -161,6 +161,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		90A6040B117D508D004E8D9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libGenericTableViewController.a */;
+			remoteInfo = GenericTableViewController;
+		};
+		90A60428117D51D3004E8D9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D /* GenericTableViewController */;
+			remoteInfo = GenericTableViewController;
+		};
 		90ADA7C20F18773E00C65E40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */;
@@ -314,6 +328,9 @@
 		908722C010AF9A9F00580FFF /* rbc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rbc.png; sourceTree = "<group>"; };
 		908722C210AF9AAA00580FFF /* category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = category.png; sourceTree = "<group>"; };
 		908AC5EB10CD489900922E02 /* Norwegian */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		90A60368117CCE50004E8D9A /* HourPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerViewController.h; sourceTree = "<group>"; };
+		90A60369117CCE50004E8D9A /* HourPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerViewController.m; sourceTree = "<group>"; };
+		90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GenericTableViewController.xcodeproj; path = GenericTableViewController/GenericTableViewController.xcodeproj; sourceTree = "<group>"; };
 		90A7AE820EA5A62100EBEF2D /* build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = build.png; sourceTree = "<group>"; };
 		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90ADA7A40F18760200C65E40 /* WebMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebMapViewController.h; sourceTree = "<group>"; };
@@ -409,12 +426,6 @@
 		90E526AD116D886100D5EFBD /* NSData+PSCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+PSCompress.h"; sourceTree = "<group>"; };
 		90E526AE116D886100D5EFBD /* NSData+PSCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+PSCompress.m"; sourceTree = "<group>"; };
 		90E526CF116D8DAC00D5EFBD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		90E56ABB0FE199A200DF7393 /* TableViewCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellController.h; sourceTree = "<group>"; };
-		90E56ABC0FE199A200DF7393 /* GenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTableViewController.h; sourceTree = "<group>"; };
-		90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTableViewController.m; sourceTree = "<group>"; };
-		90E56ACA0FE1C18800DF7393 /* GenericTableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTableViewSectionController.h; sourceTree = "<group>"; };
-		90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTableViewSectionController.m; sourceTree = "<group>"; };
-		90E56ACD0FE1C4D500DF7393 /* TableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSectionController.h; sourceTree = "<group>"; };
 		90E6D1D30EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByStudyViewDataSource.h; sourceTree = "<group>"; };
 		90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByStudyViewDataSource.m; sourceTree = "<group>"; };
 		90E756B10FE2E97F00690CEE /* MultipleUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleUsersViewController.h; sourceTree = "<group>"; };
@@ -467,6 +478,7 @@
 				90742DA610E340BD004FAA60 /* AddressBookUI.framework in Frameworks */,
 				90742DFC10E34956004FAA60 /* AddressBook.framework in Frameworks */,
 				90E526D0116D8DAC00D5EFBD /* libz.dylib in Frameworks */,
+				90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,12 +542,6 @@
 				90059C8E0F3A2112006DF536 /* PSUrlString.h */,
 				90059C8F0F3A2112006DF536 /* PSUrlString.m */,
 				907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */,
-				90E56ABB0FE199A200DF7393 /* TableViewCellController.h */,
-				90E56ACD0FE1C4D500DF7393 /* TableViewSectionController.h */,
-				90E56ACA0FE1C18800DF7393 /* GenericTableViewSectionController.h */,
-				90E56ACB0FE1C23900DF7393 /* GenericTableViewSectionController.m */,
-				90E56ABC0FE199A200DF7393 /* GenericTableViewController.h */,
-				90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */,
 				90D0F3C00FD3336100107ADB /* PSLocalization.h */,
 				90D0F3C10FD333D600107ADB /* PSLocalization.m */,
 				90D0F4870FD34AB300107ADB /* PSAddLocalizedString.h */,
@@ -564,6 +570,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */,
 				90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -729,6 +736,14 @@
 			name = SettingsView;
 			sourceTree = "<group>";
 		};
+		90A60408117D508D004E8D9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90A6040C117D508D004E8D9A /* libGenericTableViewController.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		90ADA7B70F18773D00C65E40 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -749,6 +764,8 @@
 				904AF63D1170101000D497E7 /* StatisticsTableViewController.m */,
 				90E087B41174163300C5BDEA /* StatisticsNumberCell.h */,
 				90E087B51174163300C5BDEA /* StatisticsNumberCell.m */,
+				90A60368117CCE50004E8D9A /* HourPickerViewController.h */,
+				90A60369117CCE50004E8D9A /* HourPickerViewController.m */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -865,6 +882,7 @@
 			);
 			dependencies = (
 				90ADA7C90F18779900C65E40 /* PBXTargetDependency */,
+				90A60429117D51D3004E8D9A /* PBXTargetDependency */,
 			);
 			name = MyTime;
 			productName = MyTime;
@@ -905,6 +923,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 90A60408117D508D004E8D9A /* Products */;
+					ProjectRef = 90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */;
+				},
+				{
 					ProductGroup = 90ADA7B70F18773D00C65E40 /* Products */;
 					ProjectRef = 90ADA7B60F18773D00C65E40 /* MapView.xcodeproj */;
 				},
@@ -918,6 +940,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		90A6040C117D508D004E8D9A /* libGenericTableViewController.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGenericTableViewController.a;
+			remoteRef = 90A6040B117D508D004E8D9A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		90ADA7C30F18773E00C65E40 /* MapView.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1072,8 +1101,6 @@
 				904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */,
 				907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */,
 				90D0F3C20FD333D600107ADB /* PSLocalization.m in Sources */,
-				90E56ABE0FE199A200DF7393 /* GenericTableViewController.m in Sources */,
-				90E56ACC0FE1C23900DF7393 /* GenericTableViewSectionController.m in Sources */,
 				90E756B30FE2E97F00690CEE /* MultipleUsersViewController.m in Sources */,
 				90E75D1E0FE5D0BC00690CEE /* MetadataPickerViewController.m in Sources */,
 				90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */,
@@ -1104,12 +1131,18 @@
 				90E526AF116D886100D5EFBD /* NSData+PSCompress.m in Sources */,
 				904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */,
 				90E087B61174163300C5BDEA /* StatisticsNumberCell.m in Sources */,
+				90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		90A60429117D51D3004E8D9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GenericTableViewController;
+			targetProxy = 90A60428117D51D3004E8D9A /* PBXContainerItemProxy */;
+		};
 		90ADA7C90F18779900C65E40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapView;
@@ -1163,8 +1196,13 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
-				HEADER_SEARCH_PATHS = "../MapView/**";
+				HEADER_SEARCH_PATHS = (
+					"GenericTableViewController//**",
+					"../MapView/**",
+				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = MyTime;
 			};
 			name = Debug;
@@ -1180,8 +1218,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
-				HEADER_SEARCH_PATHS = "../MapView/**";
+				HEADER_SEARCH_PATHS = (
+					"GenericTableViewController//**",
+					"../MapView/**",
+				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = MyTime;
 			};
 			name = Release;
@@ -1216,8 +1259,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
-				HEADER_SEARCH_PATHS = "../MapView/**";
+				HEADER_SEARCH_PATHS = (
+					"GenericTableViewController//**",
+					"../MapView/**",
+				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = MyTime;
 			};
 			name = "AdHoc Distribution";
@@ -1252,8 +1300,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyTime_Prefix.pch;
-				HEADER_SEARCH_PATHS = "../MapView/**";
+				HEADER_SEARCH_PATHS = (
+					"GenericTableViewController//**",
+					"../MapView/**",
+				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = MyTime;
 			};
 			name = Distribution;

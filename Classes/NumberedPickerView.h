@@ -22,8 +22,9 @@
 	int number;
 	NSString *_title;
 	NSString *_singularTitle;
-	
+	NSString *_newTitle;
 	UILabel *label;
+	BOOL titlesAreDifferent;
 }
 @property (nonatomic) int number;
 @property (nonatomic, retain) UILabel *label;
