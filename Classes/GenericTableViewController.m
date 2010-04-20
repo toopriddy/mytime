@@ -201,17 +201,6 @@
 	return [[_sectionControllers retain] autorelease];
 }
 
-// make sure that if anyone tries to get these that these are initalized
-- (NSMutableArray *)displaySectionControllers
-{
-	if(_displaySectionControllers == nil)
-	{
-		[self constructDisplaySectionControllers];
-	}
-	return [[_displaySectionControllers retain] autorelease];
-}
-
-
 - (void)constructDisplaySectionControllers
 {
 	// if we are rebuilding the display, then we have already reloaded
@@ -237,6 +226,16 @@
 			}
 		}
 	}
+}
+
+// make sure that if anyone tries to get these that these are initalized
+- (NSMutableArray *)displaySectionControllers
+{
+	if(_displaySectionControllers == nil)
+	{
+		[self constructDisplaySectionControllers];
+	}
+	return [[_displaySectionControllers retain] autorelease];
 }
 
 - (void)deleteDisplayRowAtIndexPath:(NSIndexPath *)indexPath
