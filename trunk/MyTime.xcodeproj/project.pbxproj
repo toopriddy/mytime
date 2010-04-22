@@ -152,6 +152,7 @@
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
+		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
 		90FBE8780E39887300FD8014 /* SortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */; };
 		90FBE8900E39938F00FD8014 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE88F0E39938F00FD8014 /* Settings.m */; };
@@ -165,14 +166,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libGenericTableViewController.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = GenericTableViewController;
 		};
 		90A60428117D51D3004E8D9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* GenericTableViewController */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = GenericTableViewController;
 		};
 		90ADA7C20F18773E00C65E40 /* PBXContainerItemProxy */ = {
@@ -446,6 +447,8 @@
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
+		90F6B288117EBB6400519165 /* HourPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerView.h; sourceTree = "<group>"; };
+		90F6B289117EBB6400519165 /* HourPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerView.m; sourceTree = "<group>"; };
 		90FBE86B0E36D95200FD8014 /* MyTime_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTime_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		90FBE8730E39884700FD8014 /* CallsSortedByStreetViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByStreetViewDataSource.h; sourceTree = "<group>"; };
 		90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByStreetViewDataSource.m; sourceTree = "<group>"; };
@@ -766,6 +769,8 @@
 				90E087B51174163300C5BDEA /* StatisticsNumberCell.m */,
 				90A60368117CCE50004E8D9A /* HourPickerViewController.h */,
 				90A60369117CCE50004E8D9A /* HourPickerViewController.m */,
+				90F6B288117EBB6400519165 /* HourPickerView.h */,
+				90F6B289117EBB6400519165 /* HourPickerView.m */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -1132,6 +1137,7 @@
 				904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */,
 				90E087B61174163300C5BDEA /* StatisticsNumberCell.m in Sources */,
 				90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */,
+				90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

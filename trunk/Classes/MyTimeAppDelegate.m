@@ -327,6 +327,12 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+	// always save data before quitting
+	[[Settings sharedInstance] saveData];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// always save data before quitting
