@@ -125,7 +125,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
         [temporaryController autorelease];
 	}
 	
-//	[cell setEditing:tableView.editing animated:NO];
 	cell.nameLabel.text = self.title;
 	cell.delegate = self;
 	cell.statistic = self.array[self.section];
@@ -182,14 +181,17 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
  *
  ******************************************************************/
 #pragma mark HourStatisticsCellController
-@interface HourStatisticsCellController : StatisticsCellController <HourPickerViewControllerDelegate>
+@interface HourStatisticsCellController : StatisticsCellController <HourPickerViewControllerDelegate, UIActionSheetDelegate>
 {
 	StatisticsTableViewController *delegate;
+	BOOL enableRounding;
 }
 @property (nonatomic, assign) StatisticsTableViewController *delegate;
+@property (nonatomic, assign) BOOL enableRounding;
 @end
 @implementation HourStatisticsCellController
 @synthesize delegate;
+@synthesize enableRounding;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -213,7 +215,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	else
 		cell.detailTextLabel.text = @"0";
 
-	if(minutes)
+	if(minutes && enableRounding)
 	{
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
@@ -240,6 +242,31 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
 		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
+	else
+	{
+		int hours = self.array[self.section] / 60;
+		int minutes = self.array[self.section] % 60;
+		if(enableRounding && minutes)
+		{
+			[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+			int month = self.timestamp % 100;
+			NSString *monthName = [[PSLocalization localizationBundle] localizedStringForKey:MONTHS[month - 1] value:MONTHS[month - 1] table:@""];
+			
+			// handle rolling over minutes
+			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Would you like to move %d minutes from the month of %@ to the next month? Or, round up to %d hours for %@?\n(This will change the time that you put in the Hours view so you can undo this manually)", @"If the publisher has 1 hour 14 minutes, this question shows up in the statistics view if they click on the hours for a month, this question is asking them if they want to round up or roll over the minutes"), minutes, monthName, (hours+1), monthName]
+																	 delegate:self
+															cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+													   destructiveButtonTitle:[NSString stringWithFormat:NSLocalizedString(@"Round Up to %d hours", @"Yes round up where %d is a placeholder for the number of hours"), hours+1]
+															otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"Move to next month", @"Yes roll over the extra minutes to the next month where %d is the placeholder for the number of minutes"), minutes], nil] autorelease];
+			// 0: grey with grey and black buttons
+			// 1: black background with grey and black buttons
+			// 2: transparent black background with grey and black buttons
+			// 3: grey transparent background
+			alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+			[alertSheet showInView:[[[UIApplication sharedApplication] windows] objectAtIndex:0]];
+			
+		}
+	}
 }
 
 - (void)hourPickerViewControllerDone:(HourPickerViewController *)hourPickerViewController
@@ -252,6 +279,62 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
 	[[Settings sharedInstance] saveData];
 	[[self.delegate navigationController] popViewControllerAnimated:YES];
+}
+		   
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
+	//	[sheet dismissAnimated:YES];
+	
+	switch(button)
+	{
+		case 0: // ROUND UP
+		{
+			int minutes = self.array[self.section] % 60;
+			
+			// take off the minutes off of this month
+			NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
+			int value = [[self.adjustments objectForKey:stamp] intValue];
+			int difference = value - minutes + 60; // take off the minutes and add an hour
+			self.array[self.section] = self.array[self.section] - minutes + 60;			
+			[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
+			[[Settings sharedInstance] saveData];
+			
+			
+			[self.delegate updateAndReload];
+			break;
+		}
+			
+		case 1: // MOVE TO NEXT MONTH
+		{
+			int minutes = self.array[self.section] % 60;
+			
+			// take off the minutes off of this month
+			NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
+			int value = [[self.adjustments objectForKey:stamp] intValue];
+			int difference = value - minutes;
+			self.array[self.section] = self.array[self.section] - minutes;			
+			[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
+			
+			// now move it to the next month
+			int year = self.timestamp/100;
+			int month = self.timestamp%100 + 1;
+			if(month > 12)
+			{
+				month = 1;
+				year++;
+			}
+			stamp = [NSString stringWithFormat:@"%d", (month + year*100)];
+			value = [[self.adjustments objectForKey:stamp] intValue];
+			[self.adjustments setObject:[NSNumber numberWithInt:(value + minutes)] forKey:stamp];
+			
+			
+			[[Settings sharedInstance] saveData];
+			
+			[self.delegate updateAndReload];
+			break;
+		}
+	}
 }
 
 @end
@@ -655,7 +738,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	return YES;
 }
 
-- (void)countCalls:(NSMutableArray *)calls removeOld:(BOOL)removeOld
+- (void)countCalls:(NSMutableArray *)calls
 {
 	BOOL found;
 	int callIndex;
@@ -839,11 +922,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				}
 			}
 		}
-		if(!found && removeOld)
-		{
-			[calls removeObjectAtIndex:callIndex];
-			[[Settings sharedInstance] saveData];
-		}
 	}
 }
 
@@ -878,41 +956,51 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		int dummyArray[kMonthsShown];
 		int *array = dummyArray;
 		BOOL isHours = NO;
+		int *serviceYearValue;
 		
 		if([key isEqualToString:StatisticsTypeHours])
 		{
-			isHours = YES;
 			array = _minutes;
+			serviceYearValue = &_serviceYearMinutes;
 		}
 		else if([key isEqualToString:StatisticsTypeBooks])
 		{
 			array = _books;
+			serviceYearValue = &_serviceYearBooks;
 		}
 		else if([key isEqualToString:StatisticsTypeBrochures])
 		{
 			array = _brochures;
+			serviceYearValue = &_serviceYearBrochures;
 		}
 		else if([key isEqualToString:StatisticsTypeMagazines])
 		{
 			array = _magazines;
+			serviceYearValue = &_serviceYearMagazines;
 		}
 		else if([key isEqualToString:StatisticsTypeReturnVisits])
 		{
 			array = _returnVisits;
+			serviceYearValue = &_serviceYearReturnVisits;
 		}
 		else if([key isEqualToString:StatisticsTypeBibleStudies])
 		{
 			array = _bibleStudies;
+			serviceYearValue = &_serviceYearBibleStudies;
 		}
 		else if([key isEqualToString:StatisticsTypeCampaignTracts])
 		{
 			array = _campaignTracts;
+			serviceYearValue = &_serviceYearCampaignTracts;
 		}
 		else if([key isEqualToString:StatisticsTypeRBCHours])
 		{
 			array = _quickBuildMinutes;
+			serviceYearValue = &_serviceYearQuickBuildMinutes;
 		}
-		
+		assert(array);// you should handle this
+		assert(serviceYearValue);// you should handle this
+
 		NSMutableDictionary *adjustments = [adjustmentTypes objectForKey:key];
 		for(int section = 0; section < 12; ++section)
 		{
@@ -933,13 +1021,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			
 			array[section] += value;
 						
-			if(isHours)
+			if( (newServiceYear && month <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > month)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				if( (newServiceYear && month <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-				   (!newServiceYear && _thisMonth + 4 > month)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-				{
-					_serviceYearMinutes += value;
-				}
+				*serviceYearValue += value;
 			}
 		}
 	}
@@ -1122,8 +1207,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		}
 	}
 	
-	[self countCalls:[userSettings objectForKey:SettingsCalls] removeOld:NO];
-	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls] removeOld:deleteOldEntries];
+	[self countCalls:[userSettings objectForKey:SettingsCalls]];
+	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls]];
 }
 
 - (BOOL)showYearInformation
@@ -1310,6 +1395,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																									 timestamp:timestamp
 																								adjustmentName:StatisticsTypeHours];
 			cellController.delegate = self;
+			cellController.enableRounding = YES;
 			cellController.displayIfZero = YES;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];

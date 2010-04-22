@@ -14,6 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HourPickerView.h"
 
 @class HourPickerViewController;
 
@@ -29,15 +30,16 @@
 
 @interface  HourPickerViewController : UIViewController
 {
-	UIDatePicker *datePicker;
+	HourPickerView *datePicker;
 	UIView *containerView;
 	int tag;
 	id<HourPickerViewControllerDelegate> delegate;
 	BOOL first;
+	int minutes;
 }
 
 @property (nonatomic, assign) int tag;
-@property (nonatomic, retain) UIDatePicker *datePicker;
+@property (nonatomic, retain) HourPickerView *datePicker;
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, assign) id<HourPickerViewControllerDelegate> delegate;
 

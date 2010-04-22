@@ -17,7 +17,6 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 
-
 @implementation HourPickerViewController
 
 @synthesize datePicker;
@@ -31,24 +30,21 @@
 }
 
 
-- (id)initWithTitle:(NSString *)title minutes:(int)minutes
+- (id)initWithTitle:(NSString *)title minutes:(int)theMinutes
 {
 	if ([super init]) 
 	{
 		containerView = nil;
 		datePicker = nil;
 		delegate = nil;
+		minutes = theMinutes;
 		
 		// set the title, and tab bar images from the dataSource
 		// object.
         
-		//		self.hidesBottomBarWhenPushed = YES;
-		
+		self.hidesBottomBarWhenPushed = YES;
 		self.title = title;
 		
-		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
-		datePicker.datePickerMode = UIDatePickerModeCountDownTimer;
-		datePicker.countDownDuration = 60*minutes;
 	}
 	return self;
 }
@@ -87,6 +83,7 @@
 	
 	// make a picker for the publications
 	CGRect pickerRect = [containerView bounds];
+	self.datePicker = [[[HourPickerView alloc] initWithFrame:CGRectZero minutes:minutes] autorelease];
 	pickerRect.size.height = [datePicker sizeThatFits:CGSizeZero].height;
 	
 	datePicker.frame = pickerRect;
@@ -111,7 +108,8 @@
 
 - (int)minutes
 {
-    return(datePicker.minuteInterval);
+    return datePicker.minutes;
 }
 
 @end
+

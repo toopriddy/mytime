@@ -46,6 +46,7 @@
 		// object. 
 		self.title = NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title");
 
+		self.hidesBottomBarWhenPushed = YES;
 		self.type = publisherType;
 	}
 	return self;
