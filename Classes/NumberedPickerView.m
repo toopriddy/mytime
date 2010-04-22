@@ -18,17 +18,50 @@
 #import <QuartzCore/QuartzCore.h>
 #import <QuartzCore/CALayer.h>
 
+@interface NumberPickerLabelFadeInAnimation : NSObject
+{
+	UILabel *label;
+	NSString *newText;
+}
+@property (nonatomic, retain) UILabel *label;
+@property (nonatomic, retain) NSString *newText;
+@end
+@implementation NumberPickerLabelFadeInAnimation
+@synthesize label;
+@synthesize newText;
+
+- (id)initWithLabel:(UILabel *)theLabel newText:(NSString *)theText
+{
+	if( (self = [super init]) )
+	{
+		self.label = theLabel;
+		self.newText = theText;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	self.label = nil;
+	self.newText = nil;
+	[super dealloc];
+}
+
+- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+	if([finished boolValue])
+	{
+		[UIView beginAnimations:nil context:nil];
+		self.label.alpha = 1;
+		self.label.text = self.newText;
+		[UIView commitAnimations];
+	}
+}
+@end
+
 @implementation NumberedPickerView
 @synthesize number;
 @synthesize label;
-
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
-{
-	CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-	alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:1.0], nil];
-	label.text = _newTitle;
-	[label.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
-}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -54,10 +87,11 @@
 			
 			if(changed)
 			{
-				CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-				alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:1.0], [NSNumber numberWithFloat:0.0], /*[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:1.0], */ nil];
-				[alphaAnimation setDelegate:self];
-				[label.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
+				[UIView beginAnimations:nil context:nil];
+				label.alpha = 0;
+				[UIView setAnimationDelegate:[[[NumberPickerLabelFadeInAnimation alloc] initWithLabel:label newText:_newTitle] autorelease]];
+				[UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+				[UIView commitAnimations];
 			}
 		}
 	}
