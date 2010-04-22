@@ -40,22 +40,14 @@
 	[super dealloc];
 }
 
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
-	if(flag)
+	if([finished boolValue])
 	{
-#if 1
 		[UIView beginAnimations:nil context:nil];
 		self.label.alpha = 1;
 		self.label.text = self.newText;
 		[UIView commitAnimations];
-#else		
-		CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-		alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:1.0], nil];
-		self.label.text = self.newText;
-		alphaAnimation.removedOnCompletion = YES;
-		[self.label.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
-#endif
 	}
 }
 @end
@@ -109,20 +101,11 @@
 	
 	if(newText)
 	{
-#if 1
 		[UIView beginAnimations:nil context:nil];
 		changedLabel.alpha = 0;
 		[UIView setAnimationDelegate:[[[PickerLabelFadeInAnimation alloc] initWithLabel:changedLabel newText:newText] autorelease]];
+		[UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
 		[UIView commitAnimations];
-#else		
-		CAKeyframeAnimation *alphaAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-		alphaAnimation.values = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:1.0], [NSNumber numberWithFloat:0.0], nil];
-		alphaAnimation.autoreverses = NO;
-		alphaAnimation.removedOnCompletion = NO;
-		alphaAnimation.repeatCount = 0;
-		[alphaAnimation setDelegate:[[[PickerLabelFadeInAnimation alloc] initWithLabel:changedLabel newText:newText] autorelease]];
-		[changedLabel.layer addAnimation:alphaAnimation forKey:@"animateNumberPickerTitle"];
-#endif		
 	}
 }
 

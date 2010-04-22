@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphoneos3.1;
+		activeSDKPreference = iphonesimulator3.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -610,6 +610,28 @@
 			90F6B4A81180289B00519165 /* PBXTextBookmark */ = 90F6B4A81180289B00519165 /* PBXTextBookmark */;
 			90F6B4A91180289B00519165 /* PlistBookmark */ = 90F6B4A91180289B00519165 /* PlistBookmark */;
 			90F6B4AA1180289B00519165 /* PlistBookmark */ = 90F6B4AA1180289B00519165 /* PlistBookmark */;
+			90F6B4B11180298A00519165 /* PlistBookmark */ = 90F6B4B11180298A00519165 /* PlistBookmark */;
+			90F6B4B21180298A00519165 /* PBXTextBookmark */ = 90F6B4B21180298A00519165 /* PBXTextBookmark */;
+			90F6B4B31180298A00519165 /* PBXTextBookmark */ = 90F6B4B31180298A00519165 /* PBXTextBookmark */;
+			90F6B4B41180298A00519165 /* PBXTextBookmark */ = 90F6B4B41180298A00519165 /* PBXTextBookmark */;
+			90F6B4BB118029C200519165 /* PBXTextBookmark */ = 90F6B4BB118029C200519165 /* PBXTextBookmark */;
+			90F6B4BC118029C200519165 /* PBXTextBookmark */ = 90F6B4BC118029C200519165 /* PBXTextBookmark */;
+			90F6B4BF118029C900519165 /* PBXTextBookmark */ = 90F6B4BF118029C900519165 /* PBXTextBookmark */;
+			90F6B4C0118029C900519165 /* PBXTextBookmark */ = 90F6B4C0118029C900519165 /* PBXTextBookmark */;
+			90F6B4C5118029DF00519165 /* PBXTextBookmark */ = 90F6B4C5118029DF00519165 /* PBXTextBookmark */;
+			90F6B4C6118029DF00519165 /* PBXTextBookmark */ = 90F6B4C6118029DF00519165 /* PBXTextBookmark */;
+			90F6B4C7118029E400519165 /* PBXTextBookmark */ = 90F6B4C7118029E400519165 /* PBXTextBookmark */;
+			90F6B4C8118029E400519165 /* PBXTextBookmark */ = 90F6B4C8118029E400519165 /* PBXTextBookmark */;
+			90F6B4CB11802AA300519165 /* PBXTextBookmark */ = 90F6B4CB11802AA300519165 /* PBXTextBookmark */;
+			90F6B4CC11802AA300519165 /* PBXTextBookmark */ = 90F6B4CC11802AA300519165 /* PBXTextBookmark */;
+			90F6B4CD11802AA300519165 /* PBXTextBookmark */ = 90F6B4CD11802AA300519165 /* PBXTextBookmark */;
+			90F6B4CF11802ABF00519165 /* PBXTextBookmark */ = 90F6B4CF11802ABF00519165 /* PBXTextBookmark */;
+			90F6B4D011802ABF00519165 /* PBXTextBookmark */ = 90F6B4D011802ABF00519165 /* PBXTextBookmark */;
+			90F6B4D111802ABF00519165 /* PBXTextBookmark */ = 90F6B4D111802ABF00519165 /* PBXTextBookmark */;
+			90F6B4D211802AC400519165 /* PBXTextBookmark */ = 90F6B4D211802AC400519165 /* PBXTextBookmark */;
+			90F6B4D511802AF500519165 /* PBXTextBookmark */ = 90F6B4D511802AF500519165 /* PBXTextBookmark */;
+			90F6B4D611802AF500519165 /* PBXTextBookmark */ = 90F6B4D611802AF500519165 /* PBXTextBookmark */;
+			90F6B4D711802AF500519165 /* PBXTextBookmark */ = 90F6B4D711802AF500519165 /* PBXTextBookmark */;
 			90FB79CF1156FDFC00E7141C = 90FB79CF1156FDFC00E7141C /* PBXTextBookmark */;
 			90FDE56910C6020B00EF6FE0 = 90FDE56910C6020B00EF6FE0 /* PBXTextBookmark */;
 			90FDE5A310C62B7D00EF6FE0 = 90FDE5A310C62B7D00EF6FE0 /* PBXTextBookmark */;
@@ -2978,9 +3000,9 @@
 	};
 	906140C90E4FC42B0072BA7B /* NumberedPickerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1278, 2422}}";
-			sepNavSelRange = "{3725, 9}";
-			sepNavVisRange = "{3032, 1132}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 3136}}";
+			sepNavSelRange = "{1233, 131}";
+			sepNavVisRange = "{959, 585}";
 			sepNavWindowFrame = "{{19, -2}, {1185, 775}}";
 		};
 	};
@@ -3751,7 +3773,7 @@
 		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
 		name = "NumberedPickerView.m: 42";
 		rLen = 0;
-		rLoc = 1564;
+		rLoc = 1974;
 		rType = 0;
 		vrLen = 1373;
 		vrLoc = 770;
@@ -5839,9 +5861,9 @@
 	};
 	90F6B289117EBB6400519165 /* HourPickerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1034, 3626}}";
-			sepNavSelRange = "{3185, 0}";
-			sepNavVisRange = "{600, 816}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 3206}}";
+			sepNavSelRange = "{2896, 0}";
+			sepNavVisRange = "{1797, 1104}";
 		};
 	};
 	90F6B29B117FF57200519165 /* PBXTextBookmark */ = {
@@ -5858,7 +5880,7 @@
 		isa = PBXTextBookmark;
 		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
 		name = "NumberedPickerView.m: 16";
-		rLen = 4408;
+		rLen = 4716;
 		rLoc = 577;
 		rType = 0;
 		vrLen = 1365;
@@ -5909,7 +5931,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 210";
 		rLen = 0;
-		rLoc = 7176;
+		rLoc = 6327;
 		rType = 0;
 		vrLen = 1527;
 		vrLoc = 4940;
@@ -5989,7 +6011,7 @@
 		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
 		name = "NumberedPickerView.m: 117";
 		rLen = 9;
-		rLoc = 3725;
+		rLoc = 4033;
 		rType = 0;
 		vrLen = 1132;
 		vrLoc = 3032;
@@ -6008,7 +6030,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		rLen = 9;
-		rLoc = 4674;
+		rLoc = 3825;
 		rType = 0;
 	};
 	90F6B2B2117FF64000519165 /* PBXTextBookmark */ = {
@@ -6016,7 +6038,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 109";
 		rLen = 0;
-		rLoc = 3836;
+		rLoc = 2987;
 		rType = 0;
 		vrLen = 1505;
 		vrLoc = 2418;
@@ -6026,7 +6048,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 203";
 		rLen = 0;
-		rLoc = 7176;
+		rLoc = 6327;
 		rType = 0;
 		vrLen = 1682;
 		vrLoc = 4629;
@@ -6036,7 +6058,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 4563;
@@ -6046,7 +6068,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1688;
 		vrLoc = 4632;
@@ -6056,7 +6078,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5673;
+		rLoc = 4824;
 		rType = 0;
 		vrLen = 2145;
 		vrLoc = 3813;
@@ -6066,7 +6088,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5673;
+		rLoc = 4824;
 		rType = 0;
 		vrLen = 1726;
 		vrLoc = 857;
@@ -6076,7 +6098,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5673;
+		rLoc = 4824;
 		rType = 0;
 		vrLen = 1726;
 		vrLoc = 857;
@@ -6086,7 +6108,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 3281;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6096,7 +6118,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 3281;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6106,7 +6128,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 3281;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6116,7 +6138,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1915;
 		vrLoc = 1238;
@@ -6126,7 +6148,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1915;
 		vrLoc = 1238;
@@ -6136,7 +6158,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6146,7 +6168,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6156,7 +6178,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6176,7 +6198,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1078;
 		vrLoc = 602;
@@ -6243,7 +6265,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1352;
 		vrLoc = 443;
@@ -6253,7 +6275,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1352;
 		vrLoc = 443;
@@ -6263,7 +6285,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6273,7 +6295,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6283,7 +6305,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2641;
+		rLoc = 2279;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6293,7 +6315,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 63";
 		rLen = 0;
-		rLoc = 1748;
+		rLoc = 1386;
 		rType = 0;
 		vrLen = 1704;
 		vrLoc = 1238;
@@ -6303,7 +6325,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5648;
+		rLoc = 4799;
 		rType = 0;
 		vrLen = 1802;
 		vrLoc = 4451;
@@ -6373,7 +6395,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 202";
 		rLen = 0;
-		rLoc = 7093;
+		rLoc = 6244;
 		rType = 0;
 		vrLen = 1917;
 		vrLoc = 1238;
@@ -6383,7 +6405,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 202";
 		rLen = 0;
-		rLoc = 7093;
+		rLoc = 6244;
 		rType = 0;
 		vrLen = 1917;
 		vrLoc = 1238;
@@ -6393,7 +6415,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2423;
+		rLoc = 2061;
 		rType = 0;
 		vrLen = 1913;
 		vrLoc = 1259;
@@ -6413,7 +6435,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2423;
+		rLoc = 2061;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6423,7 +6445,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2423;
+		rLoc = 2061;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6442,7 +6464,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		rLen = 0;
-		rLoc = 210;
+		rLoc = 193;
 		rType = 1;
 	};
 	90F6B32211800C6C00519165 /* PBXTextBookmark */ = {
@@ -6450,7 +6472,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6690;
+		rLoc = 5841;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6460,7 +6482,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 187";
 		rLen = 0;
-		rLoc = 6431;
+		rLoc = 5582;
 		rType = 0;
 		vrLen = 1827;
 		vrLoc = 4411;
@@ -6470,7 +6492,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1729;
 		vrLoc = 4511;
@@ -6480,7 +6502,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1733;
 		vrLoc = 4511;
@@ -6490,7 +6512,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6500,7 +6522,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6510,7 +6532,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6520,7 +6542,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6530,7 +6552,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1743;
 		vrLoc = 4577;
@@ -6540,7 +6562,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1816;
 		vrLoc = 4581;
@@ -6550,7 +6572,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1863;
 		vrLoc = 4581;
@@ -6560,7 +6582,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 4697;
@@ -6570,7 +6592,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 4697;
@@ -6580,7 +6602,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1772;
 		vrLoc = 4697;
@@ -6590,7 +6612,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 197";
 		rLen = 0;
-		rLoc = 6786;
+		rLoc = 5937;
 		rType = 0;
 		vrLen = 1890;
 		vrLoc = 4708;
@@ -6600,7 +6622,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 190";
 		rLen = 0;
-		rLoc = 6572;
+		rLoc = 5723;
 		rType = 0;
 		vrLen = 1473;
 		vrLoc = 5032;
@@ -6610,7 +6632,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6785;
+		rLoc = 5936;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 5032;
@@ -6620,7 +6642,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6785;
+		rLoc = 5936;
 		rType = 0;
 		vrLen = 1890;
 		vrLoc = 4708;
@@ -6990,7 +7012,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6785;
+		rLoc = 5936;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 5032;
@@ -7063,7 +7085,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 109";
 		rLen = 0;
-		rLoc = 3177;
+		rLoc = 2895;
 		rType = 0;
 		vrLen = 1318;
 		vrLoc = 2273;
@@ -7073,7 +7095,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 51";
 		rLen = 0;
-		rLoc = 980;
+		rLoc = 1020;
 		rType = 0;
 		vrLen = 945;
 		vrLoc = 704;
@@ -7083,7 +7105,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 51";
 		rLen = 0;
-		rLoc = 980;
+		rLoc = 1020;
 		rType = 0;
 		vrLen = 928;
 		vrLoc = 721;
@@ -7093,7 +7115,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 51";
 		rLen = 0;
-		rLoc = 980;
+		rLoc = 1020;
 		rType = 0;
 		vrLen = 928;
 		vrLoc = 721;
@@ -7113,7 +7135,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 117";
 		rLen = 0;
-		rLoc = 3185;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 1068;
 		vrLoc = 348;
@@ -7123,7 +7145,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 117";
 		rLen = 0;
-		rLoc = 3185;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 1068;
 		vrLoc = 348;
@@ -7133,7 +7155,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 117";
 		rLen = 0;
-		rLoc = 3185;
+		rLoc = 2896;
 		rType = 0;
 		vrLen = 816;
 		vrLoc = 600;
@@ -7160,6 +7182,225 @@
 		name = /Users/bpriddy/Projects/MyTime/Info.plist;
 		rLen = 0;
 		rLoc = 9223372036854775807;
+	};
+	90F6B4B11180298A00519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B4B21180298A00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 14";
+		rLen = 801;
+		rLoc = 258;
+		rType = 0;
+		vrLen = 913;
+		vrLoc = 721;
+	};
+	90F6B4B31180298A00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 25";
+		rLen = 0;
+		rLoc = 1584;
+		rType = 0;
+		vrLen = 1140;
+		vrLoc = 144;
+	};
+	90F6B4B41180298A00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 893;
+		vrLoc = 1926;
+	};
+	90F6B4BB118029C200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 965;
+		vrLoc = 1172;
+	};
+	90F6B4BC118029C200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 965;
+		vrLoc = 1172;
+	};
+	90F6B4BF118029C900519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 783;
+		vrLoc = 2337;
+	};
+	90F6B4C0118029C900519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 783;
+		vrLoc = 2337;
+	};
+	90F6B4C5118029DF00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 606;
+		vrLoc = 789;
+	};
+	90F6B4C6118029DF00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 645;
+		vrLoc = 663;
+	};
+	90F6B4C7118029E400519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 2896;
+		rType = 0;
+		vrLen = 1068;
+		vrLoc = 348;
+	};
+	90F6B4C8118029E400519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 85";
+		rLen = 0;
+		rLoc = 2002;
+		rType = 0;
+		vrLen = 822;
+		vrLoc = 573;
+	};
+	90F6B4CB11802AA300519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 93";
+		rLen = 88;
+		rLoc = 2414;
+		rType = 0;
+		vrLen = 880;
+		vrLoc = 2140;
+	};
+	90F6B4CC11802AA300519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 14";
+		rLen = 801;
+		rLoc = 258;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 721;
+	};
+	90F6B4CD11802AA300519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 2867;
+		rType = 0;
+		vrLen = 1264;
+		vrLoc = 2759;
+	};
+	90F6B4CF11802ABF00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 2867;
+		rType = 0;
+		vrLen = 1264;
+		vrLoc = 2759;
+	};
+	90F6B4D011802ABF00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		rLen = 0;
+		rLoc = 89;
+		rType = 1;
+	};
+	90F6B4D111802ABF00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 90";
+		rLen = 0;
+		rLoc = 2217;
+		rType = 0;
+		vrLen = 689;
+		vrLoc = 1108;
+	};
+	90F6B4D211802AC400519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 90";
+		rLen = 0;
+		rLoc = 2217;
+		rType = 0;
+		vrLen = 675;
+		vrLoc = 663;
+	};
+	90F6B4D511802AF500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 906140C90E4FC42B0072BA7B /* NumberedPickerView.m */;
+		name = "NumberedPickerView.m: 50";
+		rLen = 131;
+		rLoc = 1233;
+		rType = 0;
+		vrLen = 585;
+		vrLoc = 959;
+	};
+	90F6B4D611802AF500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 2867;
+		rType = 0;
+		vrLen = 1168;
+		vrLoc = 2759;
+	};
+	90F6B4D711802AF500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 109";
+		rLen = 0;
+		rLoc = 2896;
+		rType = 0;
+		vrLen = 1104;
+		vrLoc = 1797;
 	};
 	90FB79CF1156FDFC00E7141C /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
