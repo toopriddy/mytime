@@ -9,9 +9,9 @@
 	};
 	1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2154, 12236}}";
-			sepNavSelRange = "{9779, 0}";
-			sepNavVisRange = "{9560, 1590}";
+			sepNavIntBoundsRect = "{{0, 0}, {2034, 12012}}";
+			sepNavSelRange = "{10245, 0}";
+			sepNavVisRange = "{8558, 1899}";
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
@@ -22,32 +22,14 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = "AdHoc Distribution";
+		activeBuildConfigurationName = Release;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator3.1;
+		activeSDKPreference = iphoneos3.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
 		);
 		breakpoints = (
-			90674D720F1AC27200D524C0 /* GeocacheViewController.m:257 */,
-			902E78F40F38C7CB00E4F2F8 /* SelectPositionMapViewController.m:226 */,
-			90598FF51005BB770030A482 /* GenericTableViewController.m:280 */,
-			905991491005D6C20030A482 /* CallViewController.m:127 */,
-			906AE820100BABB700226CA0 /* MetadataViewController.m:416 */,
-			90E2EEDC103BCA9E000C2032 /* SecurityViewController.m:67 */,
-			90D323E710706CE40069584B /* StatisticsViewController.m:730 */,
-			90D323F010706D5D0069584B /* StatisticsViewController.m:331 */,
-			9052CA541074CAA4001FFA13 /* StatisticsViewController.m:738 */,
-			9052CB69107A205D001FFA13 /* QuickNotesViewController.m:557 */,
-			9052CCAF107B6844001FFA13 /* CallViewController.m:1299 */,
-			90658536108D648C00282323 /* QuickNotesViewController.m:476 */,
-			90658554108D6BC800282323 /* QuickNotesViewController.m:168 */,
-			9074C0E410DC67FF00BCDF00 /* CallViewController.m:1999 */,
-			90DE431210F91CE20003D14B /* GeocacheViewController.m:163 */,
-			9035FBBC10FEE24B00C9F5C7 /* MyTimeAppDelegate.m:690 */,
-			90E526A0116D843F00D5EFBD /* MyTimeAppDelegate.m:227 */,
-			90F6B30D1180055A00519165 /* StatisticsTableViewController.m:311 */,
 		);
 		codeSenseManager = 90FBE8380E36D02300FD8014 /* Code sense */;
 		executables = (
@@ -121,7 +103,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					10,
+					856,
 					20,
 					48,
 					43,
@@ -599,6 +581,35 @@
 			90F6B3B611801CBA00519165 /* PBXTextBookmark */ = 90F6B3B611801CBA00519165 /* PBXTextBookmark */;
 			90F6B3B711801CBA00519165 /* PBXTextBookmark */ = 90F6B3B711801CBA00519165 /* PBXTextBookmark */;
 			90F6B3B811801CBA00519165 /* PBXTextBookmark */ = 90F6B3B811801CBA00519165 /* PBXTextBookmark */;
+			90F6B3C111801D1600519165 /* PBXTextBookmark */ = 90F6B3C111801D1600519165 /* PBXTextBookmark */;
+			90F6B3C211801D1600519165 /* PlistBookmark */ = 90F6B3C211801D1600519165 /* PlistBookmark */;
+			90F6B3C311801D1600519165 /* PlistBookmark */ = 90F6B3C311801D1600519165 /* PlistBookmark */;
+			90F6B455118022A200519165 /* PlistBookmark */ = 90F6B455118022A200519165 /* PlistBookmark */;
+			90F6B456118022A200519165 /* PBXTextBookmark */ = 90F6B456118022A200519165 /* PBXTextBookmark */;
+			90F6B457118022A200519165 /* PBXTextBookmark */ = 90F6B457118022A200519165 /* PBXTextBookmark */;
+			90F6B458118022A200519165 /* XCBuildMessageTextBookmark */ = 90F6B458118022A200519165 /* XCBuildMessageTextBookmark */;
+			90F6B45A118022A200519165 /* PlistBookmark */ = 90F6B45A118022A200519165 /* PlistBookmark */;
+			90F6B462118022E500519165 /* PlistBookmark */ = 90F6B462118022E500519165 /* PlistBookmark */;
+			90F6B463118022E500519165 /* PBXTextBookmark */ = 90F6B463118022E500519165 /* PBXTextBookmark */;
+			90F6B464118022E500519165 /* PBXTextBookmark */ = 90F6B464118022E500519165 /* PBXTextBookmark */;
+			90F6B465118022E500519165 /* PBXTextBookmark */ = 90F6B465118022E500519165 /* PBXTextBookmark */;
+			90F6B468118023BA00519165 /* PBXTextBookmark */ = 90F6B468118023BA00519165 /* PBXTextBookmark */;
+			90F6B469118023BA00519165 /* PBXTextBookmark */ = 90F6B469118023BA00519165 /* PBXTextBookmark */;
+			90F6B46A118023BA00519165 /* PBXTextBookmark */ = 90F6B46A118023BA00519165 /* PBXTextBookmark */;
+			90F6B46B118023BA00519165 /* PBXTextBookmark */ = 90F6B46B118023BA00519165 /* PBXTextBookmark */;
+			90F6B48A1180274200519165 /* PBXTextBookmark */ = 90F6B48A1180274200519165 /* PBXTextBookmark */;
+			90F6B48B1180274200519165 /* PBXTextBookmark */ = 90F6B48B1180274200519165 /* PBXTextBookmark */;
+			90F6B48D1180274200519165 /* PBXTextBookmark */ = 90F6B48D1180274200519165 /* PBXTextBookmark */;
+			90F6B48E1180274200519165 /* PBXTextBookmark */ = 90F6B48E1180274200519165 /* PBXTextBookmark */;
+			90F6B48F1180274200519165 /* PBXTextBookmark */ = 90F6B48F1180274200519165 /* PBXTextBookmark */;
+			90F6B4941180279600519165 /* PBXTextBookmark */ = 90F6B4941180279600519165 /* PBXTextBookmark */;
+			90F6B4951180279600519165 /* PBXTextBookmark */ = 90F6B4951180279600519165 /* PBXTextBookmark */;
+			90F6B4A21180288600519165 /* PBXTextBookmark */ = 90F6B4A21180288600519165 /* PBXTextBookmark */;
+			90F6B4A31180288600519165 /* PBXTextBookmark */ = 90F6B4A31180288600519165 /* PBXTextBookmark */;
+			90F6B4A41180288600519165 /* PBXTextBookmark */ = 90F6B4A41180288600519165 /* PBXTextBookmark */;
+			90F6B4A81180289B00519165 /* PBXTextBookmark */ = 90F6B4A81180289B00519165 /* PBXTextBookmark */;
+			90F6B4A91180289B00519165 /* PlistBookmark */ = 90F6B4A91180289B00519165 /* PlistBookmark */;
+			90F6B4AA1180289B00519165 /* PlistBookmark */ = 90F6B4AA1180289B00519165 /* PlistBookmark */;
 			90FB79CF1156FDFC00E7141C = 90FB79CF1156FDFC00E7141C /* PBXTextBookmark */;
 			90FDE56910C6020B00EF6FE0 = 90FDE56910C6020B00EF6FE0 /* PBXTextBookmark */;
 			90FDE5A310C62B7D00EF6FE0 = 90FDE5A310C62B7D00EF6FE0 /* PBXTextBookmark */;
@@ -623,9 +634,9 @@
 	};
 	29B97316FDCFA39411CA2CEA /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1041, 602}}";
-			sepNavSelRange = "{950, 20}";
-			sepNavVisRange = "{0, 833}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 602}}";
+			sepNavSelRange = "{840, 0}";
+			sepNavVisRange = "{399, 606}";
 			sepNavWindowFrame = "{{67, -2}, {1185, 775}}";
 		};
 	};
@@ -1362,24 +1373,6 @@
 			sepNavVisRange = "{2333, 2162}";
 		};
 	};
-	902E78F40F38C7CB00E4F2F8 /* SelectPositionMapViewController.m:226 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */;
-		functionName = "-dragMarkerPosition:onMap:position:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 226;
-		location = MyTime;
-		modificationTime = 293608105.397707;
-		originalNumberOfMultipleMatches = 0;
-		state = 2;
-	};
 	9032C7520F30DACA005FA8D0 /* Geocache.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {849, 644}}";
@@ -1520,24 +1513,6 @@
 		name = "Localizable Danish 2.6.3.strings";
 		path = "/Users/bpriddy/Downloads/Localizable Danish 2.6.3.strings";
 		sourceTree = "<absolute>";
-	};
-	9035FBBC10FEE24B00C9F5C7 /* MyTimeAppDelegate.m:690 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
-		functionName = "-initializeMyTimeViews";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 690;
-		location = MyTime;
-		modificationTime = 293608105.402122;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	9035FBFE1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.h */ = {
 		uiCtxt = {
@@ -2464,9 +2439,9 @@
 	};
 	904AF63D1170101000D497E7 /* StatisticsTableViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1266, 21266}}";
-			sepNavSelRange = "{40569, 0}";
-			sepNavVisRange = "{40030, 1555}";
+			sepNavIntBoundsRect = "{{0, 0}, {1266, 21420}}";
+			sepNavSelRange = "{6156, 0}";
+			sepNavVisRange = "{5448, 1165}";
 			sepNavWindowFrame = "{{15, 98}, {1185, 775}}";
 		};
 	};
@@ -2617,60 +2592,6 @@
 			sepNavSelRange = "{1616, 0}";
 			sepNavVisRange = "{676, 1321}";
 		};
-	};
-	9052CA541074CAA4001FFA13 /* StatisticsViewController.m:738 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
-		functionName = "-reloadData";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 738;
-		location = MyTime;
-		modificationTime = 293608105.399775;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	9052CB69107A205D001FFA13 /* QuickNotesViewController.m:557 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
-		functionName = "-constructSectionControllers";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 557;
-		location = MyTime;
-		modificationTime = 293608105.400139;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	9052CCAF107B6844001FFA13 /* CallViewController.m:1299 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
-		functionName = "-notesViewControllerDone:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1299;
-		location = MyTime;
-		modificationTime = 293608105.400479;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {
 		uiCtxt = {
@@ -2846,42 +2767,6 @@
 		name = Localizable.strings;
 		path = "/Users/bpriddy/Downloads/translations 3/Japanese.lproj/Localizable.strings";
 		sourceTree = "<absolute>";
-	};
-	90598FF51005BB770030A482 /* GenericTableViewController.m:280 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */;
-		functionName = "-replaceDisplaySectionAtIndexPath:withSection:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 280;
-		location = MyTime;
-		modificationTime = 293608105.397937;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
-	};
-	905991491005D6C20030A482 /* CallViewController.m:127 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
-		functionName = "-dealloc";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 127;
-		location = MyTime;
-		modificationTime = 293608105.398181;
-		originalNumberOfMultipleMatches = 0;
-		state = 2;
 	};
 	905BF65110ED2F12004A5AEA /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3142,42 +3027,6 @@
 			sepNavVisRange = "{26637, 2177}";
 		};
 	};
-	90658536108D648C00282323 /* QuickNotesViewController.m:476 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
-		functionName = "-tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 476;
-		location = MyTime;
-		modificationTime = 293608105.400795;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	90658554108D6BC800282323 /* QuickNotesViewController.m:168 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */;
-		functionName = "-tableView:moveRowAtIndexPath:toIndexPath:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 168;
-		location = MyTime;
-		modificationTime = 293608105.401122;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	90674D330F1ABBB800D524C0 /* GeocacheViewController.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1051, 4942}}";
@@ -3191,41 +3040,6 @@
 			sepNavSelRange = "{976, 139}";
 			sepNavVisRange = "{0, 1220}";
 		};
-	};
-	90674D720F1AC27200D524C0 /* GeocacheViewController.m:257 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */;
-		functionName = "-mapView:didFailLoadWithError:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 257;
-		modificationTime = 293608105.397191;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	906AE820100BABB700226CA0 /* MetadataViewController.m:416 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 907A23150ECA82A600BE38DD /* MetadataViewController.m */;
-		functionName = "-tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 416;
-		location = MyTime;
-		modificationTime = 293608105.398453;
-		originalNumberOfMultipleMatches = 0;
-		state = 2;
 	};
 	9073325D10BB94D300D93C01 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3342,24 +3156,6 @@
 		path = "/Users/bpriddy/Downloads/Root-5.strings";
 		sourceTree = "<absolute>";
 	};
-	9074C0E410DC67FF00BCDF00 /* CallViewController.m:1999 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 905C36DA0E3BBD4600C8DB27 /* CallViewController.m */;
-		functionName = "-initWithCall:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1999;
-		location = MyTime;
-		modificationTime = 293608105.401478;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1053, 693}}";
@@ -3369,9 +3165,9 @@
 	};
 	907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1440, 6916}}";
-			sepNavSelRange = "{20335, 0}";
-			sepNavVisRange = "{15759, 2017}";
+			sepNavIntBoundsRect = "{{0, 0}, {1326, 7042}}";
+			sepNavSelRange = "{288, 0}";
+			sepNavVisRange = "{0, 1210}";
 		};
 	};
 	907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {
@@ -5141,42 +4937,6 @@
 			sepNavVisRange = "{0, 687}";
 		};
 	};
-	90D323E710706CE40069584B /* StatisticsViewController.m:730 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
-		functionName = "-computeStatistics";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 730;
-		location = MyTime;
-		modificationTime = 293608105.399189;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	90D323F010706D5D0069584B /* StatisticsViewController.m:331 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */;
-		functionName = "-countCalls:removeOld:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 331;
-		location = MyTime;
-		modificationTime = 293608105.399476;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	90D6A2AA0EA1A13400FA0252 /* SwitchTableCell.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1053, 448}}";
@@ -5228,24 +4988,6 @@
 			sepNavSelRange = "{1994, 8}";
 			sepNavVisRange = "{985, 1386}";
 		};
-	};
-	90DE431210F91CE20003D14B /* GeocacheViewController.m:163 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */;
-		functionName = "-timer";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 163;
-		location = MyTime;
-		modificationTime = 293608105.401791;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	90DE431910F91CE70003D14B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -5704,24 +5446,6 @@
 			sepNavVisRange = "{4079, 752}";
 		};
 	};
-	90E2EEDC103BCA9E000C2032 /* SecurityViewController.m:67 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */;
-		functionName = "-validatePasscode:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 67;
-		location = MyTime;
-		modificationTime = 293608105.398864;
-		originalNumberOfMultipleMatches = 0;
-		state = 2;
-	};
 	90E52643116D6DBD00D5EFBD /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 9053E06F0E8DDDD400BA35F7 /* Spanish */;
@@ -5738,23 +5462,6 @@
 		name = UIApplication.h;
 		path = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIApplication.h;
 		sourceTree = "<absolute>";
-	};
-	90E526A0116D843F00D5EFBD /* MyTimeAppDelegate.m:227 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
-		functionName = "-actionSheet:clickedButtonAtIndex:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 227;
-		modificationTime = 293608105.40252;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
 	};
 	90E526A4116D851000D5EFBD /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -5951,14 +5658,6 @@
 		path = /Users/bpriddy/Projects/MyTime/Classes/TableViewCellController.h;
 		sourceTree = "<absolute>";
 	};
-	90E56ABD0FE199A200DF7393 /* GenericTableViewController.m */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.c.objc;
-		name = GenericTableViewController.m;
-		path = /Users/bpriddy/Projects/MyTime/Classes/GenericTableViewController.m;
-		sourceTree = "<absolute>";
-	};
 	90E56ACA0FE1C18800DF7393 /* GenericTableViewSectionController.h */ = {
 		isa = PBXFileReference;
 		fileEncoding = 4;
@@ -6140,9 +5839,9 @@
 	};
 	90F6B289117EBB6400519165 /* HourPickerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {982, 3052}}";
-			sepNavSelRange = "{6207, 0}";
-			sepNavVisRange = "{5032, 1487}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 3626}}";
+			sepNavSelRange = "{3185, 0}";
+			sepNavVisRange = "{600, 816}";
 		};
 	};
 	90F6B29B117FF57200519165 /* PBXTextBookmark */ = {
@@ -6210,7 +5909,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 210";
 		rLen = 0;
-		rLoc = 6598;
+		rLoc = 7176;
 		rType = 0;
 		vrLen = 1527;
 		vrLoc = 4940;
@@ -6309,7 +6008,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		rLen = 9;
-		rLoc = 4096;
+		rLoc = 4674;
 		rType = 0;
 	};
 	90F6B2B2117FF64000519165 /* PBXTextBookmark */ = {
@@ -6317,7 +6016,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 109";
 		rLen = 0;
-		rLoc = 3258;
+		rLoc = 3836;
 		rType = 0;
 		vrLen = 1505;
 		vrLoc = 2418;
@@ -6327,7 +6026,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 203";
 		rLen = 0;
-		rLoc = 6598;
+		rLoc = 7176;
 		rType = 0;
 		vrLen = 1682;
 		vrLoc = 4629;
@@ -6337,7 +6036,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 4563;
@@ -6347,7 +6046,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1688;
 		vrLoc = 4632;
@@ -6357,7 +6056,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5095;
+		rLoc = 5673;
 		rType = 0;
 		vrLen = 2145;
 		vrLoc = 3813;
@@ -6367,7 +6066,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5095;
+		rLoc = 5673;
 		rType = 0;
 		vrLen = 1726;
 		vrLoc = 857;
@@ -6377,7 +6076,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5095;
+		rLoc = 5673;
 		rType = 0;
 		vrLen = 1726;
 		vrLoc = 857;
@@ -6387,7 +6086,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 2825;
+		rLoc = 3281;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6397,7 +6096,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 2825;
+		rLoc = 3281;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6407,7 +6106,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 101";
 		rLen = 0;
-		rLoc = 2825;
+		rLoc = 3281;
 		rType = 0;
 		vrLen = 1734;
 		vrLoc = 1206;
@@ -6417,7 +6116,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1915;
 		vrLoc = 1238;
@@ -6427,7 +6126,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1915;
 		vrLoc = 1238;
@@ -6437,7 +6136,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6447,7 +6146,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6457,7 +6156,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1286;
 		vrLoc = 394;
@@ -6477,7 +6176,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1078;
 		vrLoc = 602;
@@ -6544,7 +6243,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1352;
 		vrLoc = 443;
@@ -6554,7 +6253,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1352;
 		vrLoc = 443;
@@ -6564,7 +6263,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6574,7 +6273,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6584,7 +6283,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 88";
 		rLen = 0;
-		rLoc = 2425;
+		rLoc = 2641;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 1475;
@@ -6594,7 +6293,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 63";
 		rLen = 0;
-		rLoc = 1532;
+		rLoc = 1748;
 		rType = 0;
 		vrLen = 1704;
 		vrLoc = 1238;
@@ -6604,7 +6303,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 171";
 		rLen = 0;
-		rLoc = 5070;
+		rLoc = 5648;
 		rType = 0;
 		vrLen = 1802;
 		vrLoc = 4451;
@@ -6674,7 +6373,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 202";
 		rLen = 0;
-		rLoc = 6515;
+		rLoc = 7093;
 		rType = 0;
 		vrLen = 1917;
 		vrLoc = 1238;
@@ -6684,7 +6383,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 202";
 		rLen = 0;
-		rLoc = 6515;
+		rLoc = 7093;
 		rType = 0;
 		vrLen = 1917;
 		vrLoc = 1238;
@@ -6694,27 +6393,10 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2207;
+		rLoc = 2423;
 		rType = 0;
 		vrLen = 1913;
 		vrLoc = 1259;
-	};
-	90F6B30D1180055A00519165 /* StatisticsTableViewController.m:311 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 904AF63D1170101000D497E7 /* StatisticsTableViewController.m */;
-		functionName = "-actionSheet:clickedButtonAtIndex:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 311;
-		modificationTime = 293608105.402853;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
 	};
 	90F6B31C11800C5B00519165 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -6731,7 +6413,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2207;
+		rLoc = 2423;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6741,7 +6423,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 84";
 		rLen = 0;
-		rLoc = 2207;
+		rLoc = 2423;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6760,7 +6442,7 @@
 		isa = PBXTextBookmark;
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		rLen = 0;
-		rLoc = 189;
+		rLoc = 210;
 		rType = 1;
 	};
 	90F6B32211800C6C00519165 /* PBXTextBookmark */ = {
@@ -6768,7 +6450,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 194";
 		rLen = 0;
-		rLoc = 6112;
+		rLoc = 6690;
 		rType = 0;
 		vrLen = 1905;
 		vrLoc = 4358;
@@ -6778,7 +6460,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 187";
 		rLen = 0;
-		rLoc = 5853;
+		rLoc = 6431;
 		rType = 0;
 		vrLen = 1827;
 		vrLoc = 4411;
@@ -6788,7 +6470,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1729;
 		vrLoc = 4511;
@@ -6798,7 +6480,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1733;
 		vrLoc = 4511;
@@ -6808,7 +6490,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6818,7 +6500,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6828,7 +6510,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6838,7 +6520,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1742;
 		vrLoc = 4511;
@@ -6848,7 +6530,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 195";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1743;
 		vrLoc = 4577;
@@ -6858,7 +6540,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1816;
 		vrLoc = 4581;
@@ -6868,7 +6550,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1863;
 		vrLoc = 4581;
@@ -6878,7 +6560,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 4697;
@@ -6888,7 +6570,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 4697;
@@ -6898,7 +6580,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1772;
 		vrLoc = 4697;
@@ -6908,7 +6590,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 197";
 		rLen = 0;
-		rLoc = 6208;
+		rLoc = 6786;
 		rType = 0;
 		vrLen = 1890;
 		vrLoc = 4708;
@@ -6918,7 +6600,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 190";
 		rLen = 0;
-		rLoc = 5994;
+		rLoc = 6572;
 		rType = 0;
 		vrLen = 1473;
 		vrLoc = 5032;
@@ -6928,7 +6610,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6207;
+		rLoc = 6785;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 5032;
@@ -6938,7 +6620,7 @@
 		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
 		name = "HourPickerView.m: 196";
 		rLen = 0;
-		rLoc = 6207;
+		rLoc = 6785;
 		rType = 0;
 		vrLen = 1890;
 		vrLoc = 4708;
@@ -7168,6 +6850,316 @@
 		rType = 0;
 		vrLen = 5653;
 		vrLoc = 57337;
+	};
+	90F6B3C111801D1600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90417EAB0F0EDE96007CBA7E /* Danish */;
+		name = "Localizable.strings: 1450";
+		rLen = 0;
+		rLoc = 61211;
+		rType = 0;
+		vrLen = 5653;
+		vrLoc = 57337;
+	};
+	90F6B3C211801D1600519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B3C311801D1600519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B455118022A200519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B456118022A200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 904AF63D1170101000D497E7 /* StatisticsTableViewController.m */;
+		name = "StatisticsTableViewController.m: 186";
+		rLen = 0;
+		rLoc = 6156;
+		rType = 0;
+		vrLen = 1165;
+		vrLoc = 5448;
+	};
+	90F6B457118022A200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 907A23150ECA82A600BE38DD /* MetadataViewController.m */;
+		name = "MetadataViewController.m: 10";
+		rLen = 0;
+		rLoc = 288;
+		rType = 0;
+		vrLen = 1210;
+		vrLoc = 0;
+	};
+	90F6B458118022A200519165 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Copy /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/ResourceRules.plist";
+		fRef = 90F6B459118022A200519165 /* ResourceRules.plist */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 0;
+		rLoc = 0;
+		rType = 1;
+	};
+	90F6B459118022A200519165 /* ResourceRules.plist */ = {
+		isa = PBXFileReference;
+		name = ResourceRules.plist;
+		path = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/ResourceRules.plist;
+		sourceTree = "<absolute>";
+	};
+	90F6B45A118022A200519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 90F6B45B118022A200519165 /* ResourceRules.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/ResourceRules.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B45B118022A200519165 /* ResourceRules.plist */ = {
+		isa = PBXFileReference;
+		name = ResourceRules.plist;
+		path = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/ResourceRules.plist;
+		sourceTree = "<absolute>";
+	};
+	90F6B462118022E500519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 90F6B459118022A200519165 /* ResourceRules.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/ResourceRules.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B463118022E500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 333";
+		rLen = 0;
+		rLoc = 9779;
+		rType = 0;
+		vrLen = 1493;
+		vrLoc = 8800;
+	};
+	90F6B464118022E500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		rLen = 0;
+		rLoc = 37;
+		rType = 1;
+	};
+	90F6B465118022E500519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 38";
+		rLen = 0;
+		rLoc = 840;
+		rType = 0;
+		vrLen = 521;
+		vrLoc = 484;
+	};
+	90F6B468118023BA00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 196";
+		rLen = 0;
+		rLoc = 6785;
+		rType = 0;
+		vrLen = 1487;
+		vrLoc = 5032;
+	};
+	90F6B469118023BA00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 38";
+		rLen = 0;
+		rLoc = 840;
+		rType = 0;
+		vrLen = 1002;
+		vrLoc = 3;
+	};
+	90F6B46A118023BA00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		rLen = 0;
+		rLoc = 332;
+		rType = 1;
+	};
+	90F6B46B118023BA00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 348";
+		rLen = 0;
+		rLoc = 10245;
+		rType = 0;
+		vrLen = 1899;
+		vrLoc = 8558;
+	};
+	90F6B48A1180274200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 348";
+		rLen = 0;
+		rLoc = 10245;
+		rType = 0;
+		vrLen = 814;
+		vrLoc = 6709;
+	};
+	90F6B48B1180274200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B48C1180274200519165 /* main.m */;
+		name = "main.m: 38";
+		rLen = 48;
+		rLoc = 1065;
+		rType = 0;
+		vrLen = 955;
+		vrLoc = 0;
+	};
+	90F6B48C1180274200519165 /* main.m */ = {
+		isa = PBXFileReference;
+		name = main.m;
+		path = /Users/bpriddy/Projects/MyTime/LocalizableMerge/main.m;
+		sourceTree = "<absolute>";
+	};
+	90F6B48D1180274200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 38";
+		rLen = 0;
+		rLoc = 840;
+		rType = 0;
+		vrLen = 606;
+		vrLoc = 399;
+	};
+	90F6B48E1180274200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 109";
+		rLen = 0;
+		rLoc = 3177;
+		rType = 0;
+		vrLen = 1318;
+		vrLoc = 2273;
+	};
+	90F6B48F1180274200519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 51";
+		rLen = 0;
+		rLoc = 980;
+		rType = 0;
+		vrLen = 945;
+		vrLoc = 704;
+	};
+	90F6B4941180279600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 51";
+		rLen = 0;
+		rLoc = 980;
+		rType = 0;
+		vrLen = 928;
+		vrLoc = 721;
+	};
+	90F6B4951180279600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 51";
+		rLen = 0;
+		rLoc = 980;
+		rType = 0;
+		vrLen = 928;
+		vrLoc = 721;
+	};
+	90F6B4A21180288600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 348";
+		rLen = 0;
+		rLoc = 10245;
+		rType = 0;
+		vrLen = 1899;
+		vrLoc = 8558;
+	};
+	90F6B4A31180288600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 3185;
+		rType = 0;
+		vrLen = 1068;
+		vrLoc = 348;
+	};
+	90F6B4A41180288600519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 3185;
+		rType = 0;
+		vrLen = 1068;
+		vrLoc = 348;
+	};
+	90F6B4A81180289B00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90F6B289117EBB6400519165 /* HourPickerView.m */;
+		name = "HourPickerView.m: 117";
+		rLen = 0;
+		rLoc = 3185;
+		rType = 0;
+		vrLen = 816;
+		vrLoc = 600;
+	};
+	90F6B4A91180289B00519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	90F6B4AA1180289B00519165 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
 	};
 	90FB79CF1156FDFC00E7141C /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
