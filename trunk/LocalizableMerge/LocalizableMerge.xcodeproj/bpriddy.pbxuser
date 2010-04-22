@@ -8,7 +8,6 @@
 			8DD76F740486A8DE00D96B5E /* LocalizableMerge */,
 		);
 		breakpoints = (
-			908D8F0F10D077CB00C212BC /* main.m:38 */,
 		);
 		codeSenseManager = 90A799CF0F22A89200365D96 /* Code sense */;
 		executables = (
@@ -53,9 +52,9 @@
 	};
 	08FB7796FE84155DC02AAC07 /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {981, 2436}}";
+			sepNavIntBoundsRect = "{{0, 0}, {981, 2380}}";
 			sepNavSelRange = "{3413, 0}";
-			sepNavVisRange = "{2903, 1128}";
+			sepNavVisRange = "{1366, 1092}";
 			sepNavWindowFrame = "{{322, 88}, {1118, 790}}";
 		};
 	};
@@ -64,24 +63,6 @@
 		executables = (
 			90A799C70F22A87F00365D96 /* LocalizableMerge */,
 		);
-	};
-	908D8F0F10D077CB00C212BC /* main.m:38 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 08FB7796FE84155DC02AAC07 /* main.m */;
-		functionName = "main()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 38;
-		location = LocalizableMerge;
-		modificationTime = 293608105.660033;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
 	};
 	90A799C70F22A87F00365D96 /* LocalizableMerge */ = {
 		isa = PBXExecutable;
