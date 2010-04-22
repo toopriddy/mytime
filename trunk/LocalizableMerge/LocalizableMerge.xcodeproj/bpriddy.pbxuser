@@ -37,12 +37,15 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 282096605;
-			PBXWorkspaceStateSaveDate = 282096605;
+			PBXPerProjectTemplateStateSaveDate = 293608015;
+			PBXWorkspaceStateSaveDate = 293608015;
 		};
 		perUserProjectItems = {
-			908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */ = 908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */;
-			908D8FD910D5E9A500C212BC /* PBXTextBookmark */ = 908D8FD910D5E9A500C212BC /* PBXTextBookmark */;
+			90F6B3821180199100519165 = 90F6B3821180199100519165 /* PBXTextBookmark */;
+			90F6B3831180199100519165 = 90F6B3831180199100519165 /* PBXTextBookmark */;
+			90F6B39711801A6B00519165 /* PBXTextBookmark */ = 90F6B39711801A6B00519165 /* PBXTextBookmark */;
+			90F6B39D11801A7E00519165 /* PBXTextBookmark */ = 90F6B39D11801A7E00519165 /* PBXTextBookmark */;
+			90F6B3A911801AAC00519165 /* PBXTextBookmark */ = 90F6B3A911801AAC00519165 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 90A799CE0F22A89200365D96 /* Source Control */;
 		userBuildSettings = {
@@ -50,9 +53,9 @@
 	};
 	08FB7796FE84155DC02AAC07 /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {981, 2366}}";
-			sepNavSelRange = "{1368, 0}";
-			sepNavVisRange = "{841, 1084}";
+			sepNavIntBoundsRect = "{{0, 0}, {981, 2436}}";
+			sepNavSelRange = "{3413, 0}";
+			sepNavVisRange = "{2903, 1128}";
 			sepNavWindowFrame = "{{322, 88}, {1118, 790}}";
 		};
 	};
@@ -76,28 +79,9 @@
 		ignoreCount = 0;
 		lineNumber = 38;
 		location = LocalizableMerge;
-		modificationTime = 282097616.250673;
+		modificationTime = 293608105.660033;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
-	};
-	908D8F1C10D0785C00C212BC /* XCBuildMessageTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "'stringWithCString:' is deprecated (declared at /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:364)";
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		fallbackIsa = XCBuildMessageTextBookmark;
-		rLen = 1;
-		rLoc = 16;
-		rType = 1;
-	};
-	908D8FD910D5E9A500C212BC /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 50";
-		rLen = 0;
-		rLoc = 1368;
-		rType = 0;
-		vrLen = 1084;
-		vrLoc = 841;
 	};
 	90A799C70F22A87F00365D96 /* LocalizableMerge */ = {
 		isa = PBXExecutable;
@@ -142,5 +126,53 @@
 	90A799CF0F22A89200365D96 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	90F6B3821180199100519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'stringWithCString:' is deprecated (declared at /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:364)";
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		rLen = 1;
+		rLoc = 16;
+		rType = 1;
+	};
+	90F6B3831180199100519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 17";
+		rLen = 0;
+		rLoc = 398;
+		rType = 0;
+		vrLen = 1146;
+		vrLoc = 0;
+	};
+	90F6B39711801A6B00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 122";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 1190;
+		vrLoc = 2482;
+	};
+	90F6B39D11801A7E00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 122";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 1113;
+		vrLoc = 2619;
+	};
+	90F6B3A911801AAC00519165 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
+		name = "main.m: 124";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 1128;
+		vrLoc = 2903;
 	};
 }

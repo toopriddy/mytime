@@ -109,8 +109,10 @@ int main (int argc, const char * argv[])
 	}
 	
 	NSArray *names = [baseArray valueForKey:@"first"];
+	int lineNumber = 0;
 	for(NSString *line in mergeToArray)
 	{
+		lineNumber++;
 //		CFShow(line);
 		
 		// check for comment
@@ -119,7 +121,7 @@ int main (int argc, const char * argv[])
 			NSArray *tempArray = [line componentsSeparatedByString:@" = "];
 			if(tempArray.count != 2)
 			{
-				NSLog(@"ERROR: there is an equal sign in the text and this breaks this merge utility");
+				NSLog(@"ERROR: there is an equal sign in the text in %@:%d and this breaks this merge utility", mergeToFilename, lineNumber);
 				return -1;
 			}
 			int index = [names indexOfObject:[tempArray objectAtIndex:0]];
