@@ -153,6 +153,7 @@
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
+		90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
 		90FBE8780E39887300FD8014 /* SortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8770E39887300FD8014 /* SortedCallsViewController.m */; };
 		90FBE8900E39938F00FD8014 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE88F0E39938F00FD8014 /* Settings.m */; };
@@ -449,6 +450,8 @@
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
 		90F6B288117EBB6400519165 /* HourPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerView.h; sourceTree = "<group>"; };
 		90F6B289117EBB6400519165 /* HourPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerView.m; sourceTree = "<group>"; };
+		90F6B50211814F9500519165 /* StatisticsCallsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsCallsTableViewController.h; sourceTree = "<group>"; };
+		90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsCallsTableViewController.m; sourceTree = "<group>"; };
 		90FBE86B0E36D95200FD8014 /* MyTime_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTime_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		90FBE8730E39884700FD8014 /* CallsSortedByStreetViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByStreetViewDataSource.h; sourceTree = "<group>"; };
 		90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallsSortedByStreetViewDataSource.m; sourceTree = "<group>"; };
@@ -763,6 +766,8 @@
 				90C1496C0E3BA27400C6EDAF /* StatisticsViewController.m */,
 				9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */,
 				902866600ECF757A0076BCBD /* MonthChooserViewController.m */,
+				90F6B50211814F9500519165 /* StatisticsCallsTableViewController.h */,
+				90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */,
 				904AF63C1170101000D497E7 /* StatisticsTableViewController.h */,
 				904AF63D1170101000D497E7 /* StatisticsTableViewController.m */,
 				90E087B41174163300C5BDEA /* StatisticsNumberCell.h */,
@@ -1138,6 +1143,7 @@
 				90E087B61174163300C5BDEA /* StatisticsNumberCell.m in Sources */,
 				90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */,
 				90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */,
+				90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

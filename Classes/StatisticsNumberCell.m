@@ -34,6 +34,7 @@
 {
 	BOOL editing = self.editing;
 	
+	[UIView beginAnimations:nil context:nil];
 	// Editing -> not editing:
 	//    hide the buttons and make the count move to the right
 	// Not editing -> editing
@@ -50,6 +51,12 @@
 	self.subtractButton.enabled = editing;
 	self.subtractButton.alpha = !editing ? 0 : 1.0;
 	self.subtractButton.hidden = NO;
+	
+	if(self.accessoryType != UITableViewCellAccessoryNone)
+	{
+		self.selectionStyle = editing ? UITableViewCellSelectionStyleNone : UITableViewCellSelectionStyleBlue;
+	}
+	[UIView commitAnimations];
 }
 
 

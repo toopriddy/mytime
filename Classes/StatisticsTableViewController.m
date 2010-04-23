@@ -13,6 +13,7 @@
 #import "PSLocalization.h"
 #import "StatisticsNumberCell.h"
 #import "HourPickerViewController.h"
+#import "StatisticsCallsTableViewController.h"
 
 #include "PSRemoveLocalizedString.h"
 static NSString *MONTHS[] = {
@@ -40,6 +41,68 @@ NSString * const StatisticsTypeBibleStudies = @"Bible Studies";
 NSString * const StatisticsTypeCampaignTracts = @"Campaign Tracts";
 NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 													
+/******************************************************************
+ *
+ *   StatisticsCallsCellController
+ *
+ ******************************************************************/
+#pragma mark StatisticsCallsCellController
+@interface StatisticsCallsCellController : TitleValueCellController
+{
+	NSArray *calls;
+	StatisticsTableViewController *delegate;
+}
+@property (nonatomic, assign) StatisticsTableViewController *delegate;
+@property (nonatomic, retain) NSArray *calls;
+@end
+@implementation StatisticsCallsCellController
+@synthesize calls;
+@synthesize delegate;
+
+- (void)dealloc
+{
+	self.calls = nil;
+	
+	[super dealloc];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"StatisticsCallsCellController";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	cell.textLabel.text = self.title;
+	cell.detailTextLabel.text = self.value;
+	if(self.calls)
+	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;	
+		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+	}
+	return cell;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return indexPath;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(self.calls)
+	{
+		StatisticsCallsTableViewController *p = [[StatisticsCallsTableViewController alloc] initWithCalls:self.calls];
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	}
+}
+
+@end
 
 /******************************************************************
  *
@@ -56,7 +119,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	int ps_timestamp;
 	NSMutableDictionary *ps_adjustments;
 	NSString *ps_adjustmentName;
+	NSArray *calls;
+	StatisticsTableViewController *delegate;
 }
+@property (nonatomic, assign) StatisticsTableViewController *delegate;
+@property (nonatomic, retain) NSArray *calls;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, assign) int *array;
 @property (nonatomic, assign) int section;
@@ -73,6 +140,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 @synthesize adjustments = ps_adjustments;
 @synthesize adjustmentName = ps_adjustmentName;
 @synthesize displayIfZero;
+@synthesize calls;
+@synthesize delegate;
 
 - (id)initWithTitle:(NSString *)title array:(int *)array section:(int)section timestamp:(int)timestamp adjustmentName:(NSString *)adjustmentName
 {
@@ -89,6 +158,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (void)dealloc
 {
+	self.calls = nil;
 	self.title = nil;
 	[ps_adjustments release];
 	ps_adjustments = nil;
@@ -128,6 +198,17 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	cell.nameLabel.text = self.title;
 	cell.delegate = self;
 	cell.statistic = self.array[self.section];
+	if(self.calls)
+	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+	}
+	else
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;	
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
+
 	return cell;
 }
 
@@ -171,8 +252,24 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if(self.calls && !tableView.editing)
+	{
+		return indexPath;
+	}
 	return nil;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(self.calls && !tableView.editing)
+	{
+		StatisticsCallsTableViewController *p = [[StatisticsCallsTableViewController alloc] initWithCalls:self.calls];
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	}
+}
+
+
 @end
 
 /******************************************************************
@@ -183,14 +280,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 #pragma mark HourStatisticsCellController
 @interface HourStatisticsCellController : StatisticsCellController <HourPickerViewControllerDelegate, UIActionSheetDelegate>
 {
-	StatisticsTableViewController *delegate;
 	BOOL enableRounding;
 }
-@property (nonatomic, assign) StatisticsTableViewController *delegate;
 @property (nonatomic, assign) BOOL enableRounding;
 @end
 @implementation HourStatisticsCellController
-@synthesize delegate;
 @synthesize enableRounding;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -759,6 +853,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			BOOL studyAlreadyConducted[12];
 			memset(studyAlreadyConducted, 0, sizeof(studyAlreadyConducted));
 			
+			int previousServiceYearBibleStudies = _serviceYearBibleStudies;
+			
 			int i;
 			int returnVisitsCount = [returnVisits count];
 			for(i = returnVisitsCount; i > 0; --i)
@@ -831,6 +927,12 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 					{
 						studyAlreadyConducted[offset] = YES;
 						_bibleStudies[offset]++;
+						if(_individualCalls[offset] == nil)
+						{
+							_individualCalls[offset] = [[NSMutableArray alloc] init];
+						}
+						[_individualCalls[offset] addObject:call];
+						
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
@@ -921,6 +1023,12 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 					}
 				}
 			}
+			// if this is someone we studied with this service year, then count them
+			if(previousServiceYearBibleStudies != _serviceYearBibleStudies) 
+			{
+				_serviceYearStudyIndividuals++;
+				[_serviceYearStudyIndividualCalls addObject:call];
+			}
 		}
 	}
 }
@@ -936,6 +1044,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	memset(_campaignTracts, 0, sizeof(_campaignTracts));
 	memset(_quickBuildMinutes, 0, sizeof(_quickBuildMinutes));
 	
+	for(int i = 0; i < kMonthsShown; i++)
+	{
+		[_individualCalls[i] release];
+		_individualCalls[i] = nil;
+	}
 	_serviceYearBooks = 0;
 	_serviceYearBrochures = 0;
 	_serviceYearMinutes = 0;
@@ -943,7 +1056,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	_serviceYearMagazines = 0;
 	_serviceYearReturnVisits = 0;
 	_serviceYearBibleStudies = 0;
+	_serviceYearStudyIndividuals = 0;
 	_serviceYearCampaignTracts = 0;
+	[_serviceYearStudyIndividualCalls release];
+	_serviceYearStudyIndividualCalls = [[NSMutableArray alloc] init];
 	
 	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	
@@ -955,7 +1071,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	{
 		int dummyArray[kMonthsShown];
 		int *array = dummyArray;
-		BOOL isHours = NO;
 		int *serviceYearValue;
 		
 		if([key isEqualToString:StatisticsTypeHours])
@@ -1246,7 +1361,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		int serviceYearMagazines = _serviceYearMagazines;
 		int serviceYearReturnVisits = _serviceYearReturnVisits;
 		int serviceYearBibleStudies = _serviceYearBibleStudies;
+		int serviceYearStudyIndividuals = _serviceYearStudyIndividuals;
 		int serviceYearCampaignTracts = _serviceYearCampaignTracts;
+		
+		NSMutableArray *serviceYearStudyIndividualCalls = _serviceYearStudyIndividualCalls;
+		_serviceYearStudyIndividualCalls = [[NSMutableArray alloc] init];
 		
 		// now recompute the statistics and then...
 		_thisMonth = 9;
@@ -1261,7 +1380,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		_serviceYearMagazines = serviceYearMagazines;
 		_serviceYearReturnVisits = serviceYearReturnVisits;
 		_serviceYearBibleStudies = serviceYearBibleStudies;
+		_serviceYearStudyIndividuals = serviceYearStudyIndividuals;
 		_serviceYearCampaignTracts = serviceYearCampaignTracts;
+		[_serviceYearStudyIndividualCalls release];
+		_serviceYearStudyIndividualCalls = serviceYearStudyIndividualCalls;
 		
 		_serviceYearText = NSLocalizedString(@"Last Service Year Total", @"Last Service year total hours label");
 	}
@@ -1328,6 +1450,15 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		if(_serviceYearBibleStudies)
 		{
 			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View") value:[NSString stringWithFormat:@"%d", _serviceYearBibleStudies]];
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		// Study Individuals
+		if(_serviceYearStudyIndividuals)
+		{
+			StatisticsCallsCellController *cellController = [[StatisticsCallsCellController alloc] initWithTitle:NSLocalizedString(@"Study Individuals", @"Bible Studies label on the Statistics View") value:[NSString stringWithFormat:@"%d", _serviceYearStudyIndividuals]];
+			cellController.calls = _serviceYearStudyIndividualCalls;
+			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1447,6 +1578,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																							   section:section
 																							 timestamp:timestamp
 																						adjustmentName:StatisticsTypeBibleStudies];
+			cellController.calls = _individualCalls[section];
+			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
