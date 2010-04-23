@@ -25,7 +25,10 @@
 	int _serviceYearMagazines;
 	int _serviceYearReturnVisits;
 	int _serviceYearBibleStudies;
+	int _serviceYearStudyIndividuals;
 	int _serviceYearCampaignTracts;
+	
+	NSMutableArray *_serviceYearStudyIndividualCalls;
 	
 	int _thisMonth;
 	int _lastMonth;
@@ -39,7 +42,9 @@
 	int _returnVisits[kMonthsShown];
 	int _bibleStudies[kMonthsShown];
 	int _campaignTracts[kMonthsShown];
-	
+
+	NSMutableArray *_individualCalls[kMonthsShown];
+
 	int _selectedMonth;
 	BOOL _emailActionSheet;
 	NSString *_serviceYearText;
