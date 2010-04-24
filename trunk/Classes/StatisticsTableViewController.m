@@ -207,6 +207,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSString *ps_adjustmentName;
 	NSArray *calls;
 	StatisticsTableViewController *delegate;
+	int *ps_serviceYearValue;
 }
 @property (nonatomic, assign) StatisticsTableViewController *delegate;
 @property (nonatomic, retain) NSArray *calls;
@@ -229,7 +230,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 @synthesize calls;
 @synthesize delegate;
 
-- (id)initWithTitle:(NSString *)title array:(int *)array section:(int)section timestamp:(int)timestamp adjustmentName:(NSString *)adjustmentName
+- (id)initWithTitle:(NSString *)title array:(int *)array section:(int)section timestamp:(int)timestamp adjustmentName:(NSString *)adjustmentName serviceYearValue:(int*)serviceYearValue
 {
 	if( (self = [super init]) )
 	{
@@ -238,6 +239,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		self.section = section;
 		self.timestamp = timestamp;
 		self.adjustmentName = adjustmentName;
+		ps_serviceYearValue = serviceYearValue;
 	}
 	return self;
 }
@@ -331,6 +333,9 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	int difference = value + cell.statistic - self.array[self.section];
 	self.array[self.section] = cell.statistic;
 
+	if(ps_serviceYearValue)
+		*ps_serviceYearValue += difference;
+	
 	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
 	[[Settings sharedInstance] saveData];
 }
@@ -455,6 +460,9 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	int value = [[self.adjustments objectForKey:stamp] intValue];
 	int difference = value + hourPickerViewController.minutes - self.array[self.section];
 	self.array[self.section] = hourPickerViewController.minutes;
+
+	if(ps_serviceYearValue)
+		*ps_serviceYearValue += difference;
 	
 	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
 	[[Settings sharedInstance] saveData];
@@ -1563,6 +1571,16 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	if(value)
 		shownMonths = [value intValue];
 	
+	// figure out the timestamp to compare the month/year with
+	// we are only comparing serviceYearTimeStampStart < timestamp because we dont want to include september in the counts.
+	// the month of september displays last service year only
+	int serviceYearTimestampStart;
+	if(_thisMonth >= 9)
+		serviceYearTimestampStart = _thisYear * 100 + 9;
+	else
+		serviceYearTimestampStart = (_thisYear - 1) * 100 + 9;
+		
+
 	for(int section = 0; section < 12; section++)
 	{
 		NSString *title;
@@ -1593,7 +1611,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																										 array:_minutes
 																									   section:section
 																									 timestamp:timestamp
-																								adjustmentName:StatisticsTypeHours];
+																								adjustmentName:StatisticsTypeHours
+																							  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearMinutes : nil];
 			cellController.delegate = self;
 			cellController.enableRounding = YES;
 			cellController.displayIfZero = YES;
@@ -1606,7 +1625,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_books
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeBooks];
+																						adjustmentName:StatisticsTypeBooks
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearBooks : nil];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1616,7 +1636,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_brochures
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeBrochures];
+																						adjustmentName:StatisticsTypeBrochures
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearBrochures : nil];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1626,7 +1647,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_magazines
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeMagazines];
+																						adjustmentName:StatisticsTypeMagazines
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearMagazines : nil];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1636,7 +1658,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_returnVisits
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeReturnVisits];
+																						adjustmentName:StatisticsTypeReturnVisits
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearReturnVisits : nil];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1646,7 +1669,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_bibleStudies
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeBibleStudies];
+																						adjustmentName:StatisticsTypeBibleStudies
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearBibleStudies : nil];
 			cellController.calls = _individualCalls[section];
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
@@ -1658,7 +1682,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																								 array:_campaignTracts
 																							   section:section
 																							 timestamp:timestamp
-																						adjustmentName:StatisticsTypeCampaignTracts];
+																						adjustmentName:StatisticsTypeCampaignTracts
+																					  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearCampaignTracts : nil];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -1668,7 +1693,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 																										 array:_quickBuildMinutes
 																									   section:section
 																									 timestamp:timestamp
-																								adjustmentName:StatisticsTypeRBCHours];
+																								adjustmentName:StatisticsTypeRBCHours
+																							  serviceYearValue:(serviceYearTimestampStart < timestamp) : &_serviceYearQuickBuildMinutes : nil];
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
