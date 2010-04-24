@@ -5,6 +5,13 @@
 //  Created by Brent Priddy on 4/9/10.
 //  Copyright 2010 Priddy Software, LLC. All rights reserved.
 //
+//  Permission is NOT given to use this source code file in any
+//  project, commercial or otherwise, with the condition
+//  that any redistribution (in part or whole) of source code must retain
+//  this copyright and permission notice. Attribution in non compiled references
+//  MUST attribute the source (Priddy Software, LLC).  This file (in part or whole) 
+//  is NOT allowed to be used in a compiled or scripted program.
+//
 
 #import "StatisticsTableViewController.h"
 #import "Settings.h"
@@ -41,6 +48,85 @@ NSString * const StatisticsTypeBibleStudies = @"Bible Studies";
 NSString * const StatisticsTypeCampaignTracts = @"Campaign Tracts";
 NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 													
+/******************************************************************
+ *
+ *   ServiceYearStatisticsCellController
+ *
+ ******************************************************************/
+#pragma mark ServiceYearStatisticsCellController
+@interface ServiceYearStatisticsCellController : NSObject<TableViewCellController>
+{
+	NSString *ps_title;
+	int *ps_serviceYearValue;
+	BOOL ps_isHours;
+}
+@property (nonatomic, retain) NSString *title;
+@end
+@implementation ServiceYearStatisticsCellController
+@synthesize title = ps_title;
+
+- (id)initWithTitle:(NSString *)title serviceYearValue:(int *)serviceYearValue isHours:(BOOL)isHours
+{
+	if( (self = [super init]) )
+	{
+		self.title = title;
+		ps_serviceYearValue = serviceYearValue;
+		ps_isHours = isHours;
+	}
+	return self;
+}
+
+- (id)initWithTitle:(NSString *)title serviceYearValue:(int *)serviceYearValue
+{
+	return [self initWithTitle:title serviceYearValue:serviceYearValue isHours:NO];
+}
+
+- (void)dealloc
+{
+	self.title = nil;
+	[super dealloc];
+}
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return *(ps_serviceYearValue) != 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"ServiceYearStatisticsCellController";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	cell.textLabel.text = self.title;
+	if(ps_isHours)
+	{
+		int value = *(ps_serviceYearValue);
+		int hours = value / 60;
+		int minutes = value % 60;
+		if(hours && minutes)
+			cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+		else if(hours)
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
+		else if(minutes)
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
+		else
+			cell.detailTextLabel.text = @"0";
+	}
+	else 
+	{
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"d", *(ps_serviceYearValue)];
+	}
+	
+	return cell;
+}
+@end
+
+
 /******************************************************************
  *
  *   StatisticsCallsCellController
@@ -1404,85 +1490,68 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 		// Hours
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")];
-			int hours = _serviceYearMinutes / 60;
-			int minutes = _serviceYearMinutes % 60;
-			if(hours && minutes)
-				cellController.value = [NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			else if(hours)
-				cellController.value = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
-			else if(minutes)
-				cellController.value = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			else
-				cellController.value = @"0";
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view")
+																											serviceYearValue:&_serviceYearMinutes
+																													 isHours:YES];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Books
-		if(_serviceYearBooks)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Books", @"Publication Type name") value:[NSString stringWithFormat:@"%d", _serviceYearBooks]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Books", @"Publication Type name") 
+																											serviceYearValue:&_serviceYearBooks];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-		if(_serviceYearBrochures)
 		// Brochures
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Brochures", @"Publication Type name") value:[NSString stringWithFormat:@"%d", _serviceYearBrochures]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Brochures", @"Publication Type name") 
+																											serviceYearValue:&_serviceYearBrochures];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Magazines
-		if(_serviceYearMagazines)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Magazines", @"Publication Type name") value:[NSString stringWithFormat:@"%d", _serviceYearMagazines]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Magazines", @"Publication Type name") 
+																											serviceYearValue:&_serviceYearMagazines];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Return Visits
-		if(_serviceYearReturnVisits)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View") value:[NSString stringWithFormat:@"%d", _serviceYearReturnVisits]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View") 
+																											serviceYearValue:&_serviceYearReturnVisits];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Bible Studies
-		if(_serviceYearBibleStudies)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View") value:[NSString stringWithFormat:@"%d", _serviceYearBibleStudies]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View") 
+																											serviceYearValue:&_serviceYearBibleStudies];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Study Individuals
-		if(_serviceYearStudyIndividuals)
 		{
-			StatisticsCallsCellController *cellController = [[StatisticsCallsCellController alloc] initWithTitle:NSLocalizedString(@"Study Individuals", @"Bible Studies label on the Statistics View") value:[NSString stringWithFormat:@"%d", _serviceYearStudyIndividuals]];
+			StatisticsCallsCellController *cellController = [[StatisticsCallsCellController alloc] initWithTitle:NSLocalizedString(@"Study Individuals", @"Bible Studies label on the Statistics View") 
+																								serviceYearValue:&_serviceYearStudyIndividuals];
 			cellController.calls = _serviceYearStudyIndividualCalls;
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// Campaign Tracts
-		if(_serviceYearCampaignTracts)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name") value:[NSString stringWithFormat:@"%d", _serviceYearCampaignTracts]];
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"Campaign Tracts", @"Publication Type name") 
+																											serviceYearValue:&_serviceYearCampaignTracts];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
 		// RBC Hours
-		if(_serviceYearQuickBuildMinutes)
 		{
-			TitleValueCellController *cellController = [[TitleValueCellController alloc] initWithTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")];
-			int hours = _serviceYearQuickBuildMinutes / 60;
-			int minutes = _serviceYearQuickBuildMinutes % 60;
-			if(hours && minutes)
-				cellController.value = [NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			else if(hours)
-				cellController.value = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
-			else if(minutes)
-				cellController.value = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			else
-				cellController.value = @"0";
+			ServiceYearStatisticsCellController *cellController = [[ServiceYearStatisticsCellController alloc] initWithTitle:NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds")
+																											serviceYearValue:&_serviceYearQuickBuildMinutes
+																													 isHours:YES];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
