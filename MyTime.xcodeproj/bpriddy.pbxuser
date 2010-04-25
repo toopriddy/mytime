@@ -22,7 +22,7 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos3.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
@@ -302,6 +302,10 @@
 			904AF6AF117044CA00D497E7 = 904AF6AF117044CA00D497E7 /* PBXTextBookmark */;
 			904AF6B0117044CA00D497E7 = 904AF6B0117044CA00D497E7 /* PBXTextBookmark */;
 			905222911183E9D10047C9DA /* PBXTextBookmark */ = 905222911183E9D10047C9DA /* PBXTextBookmark */;
+			905222C01183EFB10047C9DA /* PBXTextBookmark */ = 905222C01183EFB10047C9DA /* PBXTextBookmark */;
+			905222C11183EFB10047C9DA /* PBXTextBookmark */ = 905222C11183EFB10047C9DA /* PBXTextBookmark */;
+			905222C21183EFB10047C9DA /* PlistBookmark */ = 905222C21183EFB10047C9DA /* PlistBookmark */;
+			905222C31183EFB10047C9DA /* PlistBookmark */ = 905222C31183EFB10047C9DA /* PlistBookmark */;
 			90596FF110CA218C00FA2254 = 90596FF110CA218C00FA2254 /* PBXTextBookmark */;
 			9059700510CA229900FA2254 = 9059700510CA229900FA2254 /* PBXTextBookmark */;
 			9059701D10CB119500FA2254 = 9059701D10CB119500FA2254 /* PBXTextBookmark */;
@@ -2735,6 +2739,50 @@
 		vrLen = 927;
 		vrLoc = 651;
 	};
+	905222C01183EFB10047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90E087B51174163300C5BDEA /* StatisticsNumberCell.m */;
+		name = "StatisticsNumberCell.m: 29";
+		rLen = 0;
+		rLoc = 848;
+		rType = 0;
+		vrLen = 704;
+		vrLoc = 2463;
+	};
+	905222C11183EFB10047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C37040E3C303400C8DB27 /* AddressViewController.m */;
+		name = "AddressViewController.m: 214";
+		rLen = 80;
+		rLoc = 7331;
+		rType = 0;
+		vrLen = 1472;
+		vrLoc = 17332;
+	};
+	905222C21183EFB10047C9DA /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	905222C31183EFB10047C9DA /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1051, 508}}";
@@ -3039,9 +3087,9 @@
 	};
 	905C37040E3C303400C8DB27 /* AddressViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1356, 4578}}";
+			sepNavIntBoundsRect = "{{0, 0}, {2604, 7154}}";
 			sepNavSelRange = "{7331, 80}";
-			sepNavVisRange = "{6385, 2294}";
+			sepNavVisRange = "{17332, 1472}";
 		};
 	};
 	905C37170E3D52DB00C8DB27 /* UITableViewTextFieldCell.h */ = {
