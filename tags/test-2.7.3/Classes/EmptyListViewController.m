@@ -1,0 +1,34 @@
+//
+//  EmptyListView.m
+//  MyTime
+//
+//  Created by Brent Priddy on 1/10/10.
+//  Copyright 2010 Priddy Software, LLC. All rights reserved.
+//
+//  Permission is NOT given to use this source code file in any
+//  project, commercial or otherwise, with the condition
+//  that any redistribution (in part or whole) of source code must retain
+//  this copyright and permission notice. Attribution in non compiled references
+//  MUST attribute the source (Priddy Software, LLC).  This file (in part or whole) 
+//  is NOT allowed to be used in a compiled or scripted program.
+//
+
+#import "EmptyListViewController.h"
+
+
+@implementation EmptyListViewController
+@synthesize mainLabel;
+@synthesize subLabel;
+@synthesize imageView;
+
+- (void)dealloc 
+{
+	self.mainLabel = nil;
+	self.subLabel = nil;
+	self.imageView = nil;
+	
+    [super dealloc];
+}
+
+
+@end
