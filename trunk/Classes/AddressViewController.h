@@ -17,11 +17,16 @@
 #import "UITableViewTextFieldCell.h"
 #import "AddressViewControllerDelegate.h"
 #import "UITableViewMultiTextFieldCell.h"
+#import "CoreLocation/CoreLocation.h"
+#import "MapKit/MapKit.h"
 
 @interface AddressViewController : UIViewController <UITableViewDelegate, 
                                                      UITableViewDataSource,
 													 UITableViewTextFieldCellDelegate,
-													 UITableViewMultiTextFieldCellDelegate> 
+													 UITableViewMultiTextFieldCellDelegate,
+                                                     UIAlertViewDelegate,
+                                                     CLLocationManagerDelegate,
+                                                     MKReverseGeocoderDelegate> 
 {
 	id<AddressViewControllerDelegate> delegate;
 	UITableView *theTableView;
@@ -36,10 +41,22 @@
     NSString *street;
     NSString *city;
     NSString *state;
+	
+	BOOL showReverseGeocoding;
+	BOOL wasShowingReverseGeocoding;
+	UIAlertView *locationMessage;
+	
+	CLLocationManager *locationManager;
+	MKReverseGeocoder *geocoder;
+	MKPlacemark *placemark;
 }
 
 @property (nonatomic,assign) id<AddressViewControllerDelegate> delegate;
 @property (nonatomic,retain) UITableView *theTableView;
+@property (nonatomic,retain) UIAlertView *locationMessage;
+@property (nonatomic,retain) CLLocationManager *locationManager;
+@property (nonatomic,retain) MKReverseGeocoder *geocoder;
+@property (nonatomic,retain) MKPlacemark *placemark;
 
 @property (nonatomic,retain) UITableViewMultiTextFieldCell *streetNumberAndApartmentCell;
 @property (nonatomic,retain) NSString *apartmentNumber;
@@ -67,7 +84,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithStreetNumber:(NSString *)streetNumber apartment:(NSString *)apartment street:(NSString *)street city:(NSString *)city state:(NSString *)state;
+- (id) initWithStreetNumber:(NSString *)streetNumber apartment:(NSString *)apartment street:(NSString *)street city:(NSString *)city state:(NSString *)state askAboutReverseGeocoding:(BOOL)askAboutReverseGeocoding;
 
 - (void)navigationControlDone:(id)sender;
 

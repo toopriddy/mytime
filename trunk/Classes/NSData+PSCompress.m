@@ -133,6 +133,9 @@ NSError* decompressData2(NSData *inData, NSData **outData)
 - (NSData *)compress:(NSError **)errorOut 
 {
 	NSData *ret;
+	NSError *substitute;
+	if(errorOut == nil)
+		errorOut = &substitute;
 	*errorOut = compressData2(self, &ret);
 	return ret;
 }
@@ -145,6 +148,9 @@ NSError* decompressData2(NSData *inData, NSData **outData)
 - (NSData *)decompress:(NSError **)errorOut 
 {
 	NSData *ret;
+	NSError *substitute;
+	if(errorOut == nil)
+		errorOut = &substitute;
 	*errorOut = decompressData2(self, &ret);
 	return ret;
 }

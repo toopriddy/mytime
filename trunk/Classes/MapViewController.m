@@ -87,8 +87,6 @@
 	[RMMapContents setPerformExpensiveOperations:YES];
 	
 	RMMarkerManager *markerManager = mapView.markerManager;
-	CLLocationCoordinate2D ne;
-	CLLocationCoordinate2D sw;
 	BOOL init = false;
 	
 	if(call)
@@ -107,8 +105,11 @@
 	}
 	else
 	{
+		CLLocationCoordinate2D ne;
+		CLLocationCoordinate2D sw;
 		NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
 		NSMutableDictionary *theCall;
+		BOOL found = NO;
 		
 		while ( (theCall = [e nextObject]) ) 
 		{
@@ -148,11 +149,14 @@
 					ne = point;
 					sw = point;
 				}
+				found = YES;
 			}
 		}
+		if(found)
+		{
+			[mapView zoomWithLatLngBoundsNorthEast:ne SouthWest:sw];
+		}
 	}
-
-	[mapView zoomWithLatLngBoundsNorthEast:ne SouthWest:sw];
 }
 
 - (void)loadView
