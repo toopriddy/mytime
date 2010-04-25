@@ -17,7 +17,7 @@
 #import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 #import "PSLocalization.h"
-
+#import "UITableViewTitleAndValueCell.h"
 
 
 @interface SaveAndDone : UIResponder <UITextFieldDelegate>
@@ -67,14 +67,17 @@
 @synthesize cityCell;
 @synthesize stateCell;
 @synthesize streetNumberAndApartmentCell;
-
+@synthesize locationMessage;
+@synthesize locationManager;
+@synthesize geocoder;
+@synthesize placemark;
 
 - (id)init
 {
-    return([self initWithStreetNumber:@"" apartment:@"" street:@"" city:@"" state:@""]);
+    return([self initWithStreetNumber:@"" apartment:@"" street:@"" city:@"" state:@"" askAboutReverseGeocoding:YES]);
 }
 
-- (id) initWithStreetNumber:(NSString *)theStreetNumber apartment:(NSString *)apartment street:(NSString *)theStreet city:(NSString *)theCity state:(NSString *)theState;
+- (id) initWithStreetNumber:(NSString *)theStreetNumber apartment:(NSString *)apartment street:(NSString *)theStreet city:(NSString *)theCity state:(NSString *)theState askAboutReverseGeocoding:(BOOL)askAboutReverseGeocoding;
 {
 	if ([super init]) 
 	{
@@ -91,6 +94,7 @@
 		self.street = theStreet;
 		self.city = theCity;
 		self.state = theState;
+		showReverseGeocoding = askAboutReverseGeocoding;
 	}
 	return self;
 }
@@ -100,6 +104,10 @@
 	self.theTableView.delegate = nil;
 	self.theTableView.dataSource = nil;
 
+	self.locationManager = nil;
+	self.locationMessage = nil;
+	self.geocoder = nil;
+	self.placemark = nil;
 	self.theTableView = nil;
 
     self.streetNumberAndApartmentCell = nil;
@@ -212,7 +220,7 @@
 	cityCell.textField.clearButtonMode = UITextFieldViewModeAlways;
 	cityCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	cityCell.delegate = self;
-
+	
 
 	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
 	stateCell.textField.text = state;
@@ -295,20 +303,38 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-	return 1;
+	return showReverseGeocoding ? 2 : 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
 {
-	return 4;
+	if(showReverseGeocoding)
+	{
+		switch(section)
+		{
+			case 0:
+				return 1;
+			case 1:
+				return 4;
+		}
+	}
+	else
+	{
+		return 4;
+	}
+	return 0;
 }
 
 
 // make the footer be as tall as the keyboard is tall when we are in landscape mode.
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-	return 165;
+	if(showReverseGeocoding && section-- == 0)
+	{
+		return 5;
+	}
+	return 220;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -323,7 +349,20 @@
 {
 	int row = [indexPath row];
 	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
+	if(showReverseGeocoding && section-- == 0)
+	{
+		NSString *commonIdentifier = @"ReverseGeocoderCellController";
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+		}
+		cell.valueLabel.textAlignment = UITextAlignmentCenter;
+		cell.valueLabel.text = NSLocalizedString(@"Automatically Lookup Address", @"This is a button you see when you create a new call and go to the address view for the first time, it allows the user to use google to lookup the address by the current location");
+		
+		return cell;
+	}
     if(section == 0)
     {
         switch(row) 
@@ -342,7 +381,130 @@
 	return(nil);
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	int section = [indexPath section];
+	if(showReverseGeocoding && section == 0)
+	{
+		showReverseGeocoding = NO;
+		wasShowingReverseGeocoding = YES;
 
+		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+		self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+		self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+		[self.locationManager startUpdatingLocation];
+
+		self.locationMessage = [[[UIAlertView alloc] initWithTitle:nil
+														   message:NSLocalizedString(@"Looking up your position with Location Services", @"This is the first message you see when you make a new Call -> press on the address -> press on automatically lookup address") 
+														  delegate:self 
+												 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button") 
+												 otherButtonTitles:nil] autorelease];
+		[self.locationMessage setOpaque:NO];
+		[self.locationMessage show];
+		
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+	}
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
+{
+	self.geocoder.delegate = nil;
+	self.geocoder = nil;
+	self.locationMessage.message = NSLocalizedString(@"Error acquiring location, reverse lookup failed", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and there is a geolocation error (the google lookup of the address failed)");
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)thePlacemark
+{
+	[self.locationMessage dismissWithClickedButtonIndex:-1 animated:NO];
+	self.locationManager.delegate = nil;
+	self.locationManager = nil;
+	
+	self.placemark = thePlacemark;
+	self.locationMessage = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Would you like to use this address?", @"This is a success message you see when you make a new Call -> press on the address -> press on automatically lookup address")
+													   message:[NSString stringWithFormat:@"%@ %@\n%@\n%@",
+																		[placemark subThoroughfare],
+																		[placemark thoroughfare],
+																		[placemark locality],
+																		[placemark administrativeArea]] 
+													  delegate:self
+											 cancelButtonTitle:NSLocalizedString(@"No", @"No button title")
+											 otherButtonTitles:NSLocalizedString(@"Yes", @"Yes button title"), nil] autorelease];
+	[self.locationMessage show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+	if(self.geocoder == nil)
+	{
+		self.geocoder = [[[MKReverseGeocoder alloc] initWithCoordinate:newLocation.coordinate] autorelease];
+		self.geocoder.delegate = self;
+		[self.geocoder start];
+	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+	switch([error code])
+	{
+		case kCLErrorLocationUnknown:
+		{
+			int accuracy = MAX(self.locationManager.location.horizontalAccuracy, self.locationManager.location.verticalAccuracy);
+			if(accuracy >= 0)
+			{
+				self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Looking up position, current accuracy %dm", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and geolocation is having a hard time getting accurate results"), accuracy];
+			}
+			else
+			{
+				self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Error: Location Services can not find your location.", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and the location services can not obtain a location (could happen for iPod or iPhone with only wifi turned on and location cant be determined by wifi)"), accuracy];
+			}
+
+			break;
+		}
+		case kCLErrorDenied:
+		{
+			[self alertViewCancel:self.locationMessage];
+			break;
+		}
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex == 0)
+	{
+		self.placemark = nil;
+		self.geocoder = nil;
+		[self alertViewCancel:alertView];
+		return;
+	}
+	if(self.geocoder)
+	{
+		[streetNumberAndApartmentCell textFieldAtIndex:0].text = [self.placemark subThoroughfare];
+		streetCell.textField.text = [self.placemark thoroughfare];
+		cityCell.textField.text = [self.placemark locality];
+		stateCell.textField.text = [self.placemark administrativeArea];
+		self.geocoder = nil;
+		self.placemark = nil;
+	}
+}
+
+- (void)alertViewCancel:(UIAlertView *)alertView
+{
+	[self.locationMessage dismissWithClickedButtonIndex:0 animated:YES];
+	self.locationManager.delegate = nil;
+	self.locationManager = nil;
+	self.locationMessage = nil;
+	self.geocoder = nil;
+	self.placemark = nil;
+	
+	if(wasShowingReverseGeocoding)
+	{
+		showReverseGeocoding = YES;
+		wasShowingReverseGeocoding = NO;
+		[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+	}
+}
 //
 //
 // UITableViewDelegate methods

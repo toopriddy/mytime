@@ -395,6 +395,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		NSString *street = [self.delegate.call objectForKey:CallStreet];
 		NSString *city = [self.delegate.call objectForKey:CallCity];
 		NSString *state = [self.delegate.call objectForKey:CallState];
+		BOOL askAboutReverseGeocoding = NO;
 		
 		// if they have not initialized the address then assume that it is
 		// the same as the last one
@@ -404,6 +405,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		   (city == nil || [city isEqualToString:@""]) &&
 		   (state == nil || [state isEqualToString:@""]))
 		{
+			askAboutReverseGeocoding = YES;
 			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 			// if they are in an apartment territory then just null out the apartment number
 			streetNumber = [settings objectForKey:SettingsLastCallStreetNumber];
@@ -421,7 +423,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 																			               apartment:apartmentNumber
 																							  street:street
 																							    city:city
-																							   state:state] autorelease];
+																							   state:state
+																			askAboutReverseGeocoding:askAboutReverseGeocoding] autorelease];
 		viewController.delegate = self;
 		[self.delegate.navigationController pushViewController:viewController animated:YES];
 		[self.delegate retainObject:self whileViewControllerIsManaged:viewController];

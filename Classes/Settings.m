@@ -339,6 +339,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 								 topLine:top];
 			
 			[string appendString:[NSString stringWithFormat:@"<b>%@: %@</b><br>\n", NSLocalizedString(@"House Number", @"used as a label when emailing not at homes"), top]];
+			[top release];
 			NSString *notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
 			if([notes length])
 			{
@@ -362,8 +363,9 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 				{
 					[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 				}
-				
 				[string appendString:[NSString stringWithFormat:@" %@<br>\n", [dateFormatter stringFromDate:date]]];
+				[date release];
+				[dateFormatter release];
 			}
 		}
 	}
@@ -399,7 +401,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
-#warning need to print out adjustments		
+
 		// hours
 		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsTimeEntries])
@@ -413,7 +415,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
-		
+
 		// Bulk Placements
 		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *bulkPlacement in [userSettings objectForKey:SettingsBulkLiterature])

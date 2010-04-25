@@ -217,8 +217,8 @@
 				<string>build-and-go</string>
 				<string>com.apple.ide.PBXToolbarStopButton</string>
 				<string>get-info</string>
-				<string>NSToolbarFlexibleSpaceItem</string>
 				<string>toggle-editor</string>
+				<string>NSToolbarFlexibleSpaceItem</string>
 				<string>com.apple.pbx.toolbar.searchfield</string>
 			</array>
 			<key>ControllerClassBaseName</key>
@@ -319,7 +319,7 @@
 							<real>300</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 193 1439 835 0 0 1680 1028 </string>
+						<string>0 43 1439 835 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -349,7 +349,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90337B27118387840092A83B</string>
+										<string>905222911183E9D10047C9DA</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -573,7 +573,7 @@
 											<string>90F6B58511815ABB00519165</string>
 											<string>90F6B58F11815D1300519165</string>
 											<string>90F6B5B6118161B200519165</string>
-											<string>90F6B5C11181624000519165</string>
+											<string>90337B27118387840092A83B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -587,18 +587,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1095, 519}}</string>
+								<string>{{0, 0}, {1095, 512}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 193 1439 835 0 0 1680 1028 </string>
+								<string>0 43 1439 835 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>519pt</string>
+							<string>512pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>270pt</string>
+							<string>277pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -612,9 +612,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1095, 243}}</string>
+										<string>{{10, 27}, {1095, 250}}</string>
 										<key>RubberWindowFrame</key>
-										<string>0 193 1439 835 0 0 1680 1028 </string>
+										<string>0 43 1439 835 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -717,11 +717,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>90337B28118387840092A83B</string>
+				<string>905222921183E9D10047C9DA</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>90337B29118387840092A83B</string>
+				<string>905222931183E9D10047C9DA</string>
 				<string>90B569B510292C4D000065ED</string>
-				<string>90337B2A118387840092A83B</string>
+				<string>905222941183E9D10047C9DA</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -870,14 +870,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>90337B2B118387840092A83B</string>
+				<string>905222951183E9D10047C9DA</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>90337B2C118387840092A83B</string>
-				<string>90337B2D118387840092A83B</string>
-				<string>90337B2E118387840092A83B</string>
-				<string>90337B2F118387840092A83B</string>
-				<string>90337B30118387840092A83B</string>
+				<string>905222961183E9D10047C9DA</string>
+				<string>905222971183E9D10047C9DA</string>
+				<string>905222981183E9D10047C9DA</string>
+				<string>905222991183E9D10047C9DA</string>
+				<string>9052229A1183E9D10047C9DA</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -896,7 +896,7 @@
 	<key>TimeStamp</key>
 	<real>0.0</real>
 	<key>ToolbarDisplayMode</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>ToolbarIsVisible</key>
 	<true/>
 	<key>ToolbarSizeMode</key>
@@ -912,7 +912,7 @@
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 193 1439 835 0 0 1680 1028 </string>
+	<string>0 43 1439 835 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

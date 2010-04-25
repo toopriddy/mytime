@@ -40,11 +40,8 @@
 			PBXWorkspaceStateSaveDate = 293608015;
 		};
 		perUserProjectItems = {
-			90F6B3821180199100519165 = 90F6B3821180199100519165 /* PBXTextBookmark */;
-			90F6B3831180199100519165 = 90F6B3831180199100519165 /* PBXTextBookmark */;
-			90F6B39711801A6B00519165 /* PBXTextBookmark */ = 90F6B39711801A6B00519165 /* PBXTextBookmark */;
-			90F6B39D11801A7E00519165 /* PBXTextBookmark */ = 90F6B39D11801A7E00519165 /* PBXTextBookmark */;
-			90F6B3A911801AAC00519165 /* PBXTextBookmark */ = 90F6B3A911801AAC00519165 /* PBXTextBookmark */;
+			90F6B3831180199100519165 /* PBXTextBookmark */ = 90F6B3831180199100519165 /* PBXTextBookmark */;
+			90F6B5C71181629400519165 /* PBXTextBookmark */ = 90F6B5C71181629400519165 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 90A799CE0F22A89200365D96 /* Source Control */;
 		userBuildSettings = {
@@ -52,7 +49,7 @@
 	};
 	08FB7796FE84155DC02AAC07 /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {981, 2380}}";
+			sepNavIntBoundsRect = "{{0, 0}, {981, 2422}}";
 			sepNavSelRange = "{3413, 0}";
 			sepNavVisRange = "{1366, 1092}";
 			sepNavWindowFrame = "{{322, 88}, {1118, 790}}";
@@ -108,14 +105,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	90F6B3821180199100519165 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "'stringWithCString:' is deprecated (declared at /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:364)";
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		rLen = 1;
-		rLoc = 16;
-		rType = 1;
-	};
 	90F6B3831180199100519165 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
@@ -126,34 +115,14 @@
 		vrLen = 1146;
 		vrLoc = 0;
 	};
-	90F6B39711801A6B00519165 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 122";
-		rLen = 0;
-		rLoc = 3413;
-		rType = 0;
-		vrLen = 1190;
-		vrLoc = 2482;
-	};
-	90F6B39D11801A7E00519165 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 122";
-		rLen = 0;
-		rLoc = 3413;
-		rType = 0;
-		vrLen = 1113;
-		vrLoc = 2619;
-	};
-	90F6B3A911801AAC00519165 /* PBXTextBookmark */ = {
+	90F6B5C71181629400519165 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
 		name = "main.m: 124";
 		rLen = 0;
 		rLoc = 3413;
 		rType = 0;
-		vrLen = 1128;
-		vrLoc = 2903;
+		vrLen = 1092;
+		vrLoc = 1366;
 	};
 }
