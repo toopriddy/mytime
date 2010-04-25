@@ -15,7 +15,7 @@
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
-	1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
+	1D6058900D05DD3D006BFB54 /* MyTime */ = {
 		activeExec = 0;
 		executables = (
 			90FBE82A0E36D01400FD8014 /* MyTime */,
@@ -25,9 +25,9 @@
 		activeBuildConfigurationName = Release;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
 		activeSDKPreference = iphoneos3.1;
-		activeTarget = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
-			1D6058900D05DD3D006BFB54 /* SimpleMap */,
+			1D6058900D05DD3D006BFB54 /* MyTime */,
 		);
 		breakpoints = (
 		);
@@ -5464,9 +5464,9 @@
 	};
 	90E087B51174163300C5BDEA /* StatisticsNumberCell.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1034, 1596}}";
-			sepNavSelRange = "{1407, 0}";
-			sepNavVisRange = "{651, 927}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 1708}}";
+			sepNavSelRange = "{848, 0}";
+			sepNavVisRange = "{2463, 704}";
 		};
 	};
 	90E087BF117430D900C5BDEA /* PBXTextBookmark */ = {
