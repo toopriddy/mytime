@@ -788,7 +788,7 @@
 		owner = [[UITextField alloc] init];
 		[owner setBackgroundColor:[UIColor blueColor]];
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
-		button.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+//		button.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 		owner.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		owner.returnKeyType = UIReturnKeyDone;
 		

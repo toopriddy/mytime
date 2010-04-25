@@ -9,9 +9,9 @@
 	};
 	1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2034, 12012}}";
-			sepNavSelRange = "{10245, 0}";
-			sepNavVisRange = "{8558, 1899}";
+			sepNavIntBoundsRect = "{{0, 0}, {2034, 12488}}";
+			sepNavSelRange = "{9655, 0}";
+			sepNavVisRange = "{8458, 2141}";
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = "AdHoc Distribution";
+		activeBuildConfigurationName = Release;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphoneos3.1;
+		activeSDKPreference = iphoneos4.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -103,7 +103,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					856,
+					10,
 					20,
 					48,
 					43,
@@ -306,6 +306,19 @@
 			905222C11183EFB10047C9DA /* PBXTextBookmark */ = 905222C11183EFB10047C9DA /* PBXTextBookmark */;
 			905222C21183EFB10047C9DA /* PlistBookmark */ = 905222C21183EFB10047C9DA /* PlistBookmark */;
 			905222C31183EFB10047C9DA /* PlistBookmark */ = 905222C31183EFB10047C9DA /* PlistBookmark */;
+			905222D41184097D0047C9DA /* PlistBookmark */ = 905222D41184097D0047C9DA /* PlistBookmark */;
+			905222D51184097D0047C9DA /* PBXTextBookmark */ = 905222D51184097D0047C9DA /* PBXTextBookmark */;
+			905222D61184097D0047C9DA /* PBXTextBookmark */ = 905222D61184097D0047C9DA /* PBXTextBookmark */;
+			905222D71184097D0047C9DA /* PBXTextBookmark */ = 905222D71184097D0047C9DA /* PBXTextBookmark */;
+			905222D81184097D0047C9DA /* PBXTextBookmark */ = 905222D81184097D0047C9DA /* PBXTextBookmark */;
+			905222D91184097D0047C9DA /* PBXTextBookmark */ = 905222D91184097D0047C9DA /* PBXTextBookmark */;
+			905222DB1184097D0047C9DA /* PBXTextBookmark */ = 905222DB1184097D0047C9DA /* PBXTextBookmark */;
+			905222DC1184097D0047C9DA /* PBXTextBookmark */ = 905222DC1184097D0047C9DA /* PBXTextBookmark */;
+			905222DD1184097D0047C9DA /* PBXTextBookmark */ = 905222DD1184097D0047C9DA /* PBXTextBookmark */;
+			905222DE1184097D0047C9DA /* PBXTextBookmark */ = 905222DE1184097D0047C9DA /* PBXTextBookmark */;
+			905222E211840AA40047C9DA /* PBXTextBookmark */ = 905222E211840AA40047C9DA /* PBXTextBookmark */;
+			905222E411840AE50047C9DA /* PBXTextBookmark */ = 905222E411840AE50047C9DA /* PBXTextBookmark */;
+			905222E911840B490047C9DA /* PBXTextBookmark */ = 905222E911840B490047C9DA /* PBXTextBookmark */;
 			90596FF110CA218C00FA2254 = 90596FF110CA218C00FA2254 /* PBXTextBookmark */;
 			9059700510CA229900FA2254 = 9059700510CA229900FA2254 /* PBXTextBookmark */;
 			9059701D10CB119500FA2254 = 9059701D10CB119500FA2254 /* PBXTextBookmark */;
@@ -890,9 +903,9 @@
 	};
 	900FA5131064405500C246FE /* SettingsTableViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1410, 18410}}";
-			sepNavSelRange = "{12998, 0}";
-			sepNavVisRange = "{15010, 1596}";
+			sepNavIntBoundsRect = "{{0, 0}, {1488, 17752}}";
+			sepNavSelRange = "{20212, 0}";
+			sepNavVisRange = "{19701, 2096}";
 			sepNavWindowFrame = "{{38, 77}, {1185, 775}}";
 		};
 	};
@@ -2783,6 +2796,144 @@
 		rLen = 0;
 		rLoc = 9223372036854775807;
 	};
+	905222D41184097D0047C9DA /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	905222D51184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9064D8B40ED11A4900A0FBBB /* Portuguese */;
+		name = "Localizable.strings: 10";
+		rLen = 0;
+		rLoc = 349;
+		rType = 0;
+		vrLen = 1534;
+		vrLoc = 0;
+	};
+	905222D61184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */;
+		name = "SettingsTableViewController.m: 520";
+		rLen = 0;
+		rLoc = 20212;
+		rType = 0;
+		vrLen = 2096;
+		vrLoc = 19701;
+	};
+	905222D71184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
+		name = "MyTimeAppDelegate.m: 326";
+		rLen = 0;
+		rLoc = 9655;
+		rType = 0;
+		vrLen = 2141;
+		vrLoc = 8458;
+	};
+	905222D81184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */;
+		name = "NotAtHomeViewController.m: 8";
+		rLen = 0;
+		rLoc = 167;
+		rType = 0;
+		vrLen = 1962;
+		vrLoc = 6134;
+	};
+	905222D91184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905222DA1184097D0047C9DA /* UITextField.h */;
+		name = "UITextField.h: 182";
+		rLen = 95;
+		rLoc = 7711;
+		rType = 0;
+		vrLen = 2688;
+		vrLoc = 6148;
+	};
+	905222DA1184097D0047C9DA /* UITextField.h */ = {
+		isa = PBXFileReference;
+		name = UITextField.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UITextField.h;
+		sourceTree = "<absolute>";
+	};
+	905222DB1184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 905C37180E3D52DB00C8DB27 /* UITableViewTextFieldCell.m */;
+		name = "UITableViewTextFieldCell.m: 26";
+		rLen = 41;
+		rLoc = 775;
+		rType = 0;
+		vrLen = 1973;
+		vrLoc = 775;
+	};
+	905222DC1184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */;
+		name = "NotAtHomeTerritoryViewController.h: 13";
+		rLen = 160;
+		rLoc = 535;
+		rType = 0;
+		vrLen = 1994;
+		vrLoc = 48;
+	};
+	905222DD1184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */;
+		name = "NotAtHomeTerritoryViewController.m: 785";
+		rLen = 0;
+		rLoc = 28265;
+		rType = 0;
+		vrLen = 1641;
+		vrLoc = 27927;
+	};
+	905222DE1184097D0047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */;
+		name = "NotAtHomeTerritoryViewController.m: 785";
+		rLen = 0;
+		rLoc = 28265;
+		rType = 0;
+		vrLen = 1641;
+		vrLoc = 27927;
+	};
+	905222E211840AA40047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */;
+		name = "NotAtHomeTerritoryViewController.m: 791";
+		rLen = 0;
+		rLoc = 28448;
+		rType = 0;
+		vrLen = 1624;
+		vrLoc = 28032;
+	};
+	905222E411840AE50047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */;
+		name = "NotAtHomeTerritoryViewController.m: 791";
+		rLen = 0;
+		rLoc = 28448;
+		rType = 0;
+		vrLen = 1624;
+		vrLoc = 28032;
+	};
+	905222E911840B490047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */;
+		name = "NotAtHomeTerritoryViewController.m: 781";
+		rLen = 0;
+		rLoc = 28214;
+		rType = 0;
+		vrLen = 1613;
+		vrLoc = 28104;
+	};
 	9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1051, 508}}";
@@ -2792,23 +2943,23 @@
 	};
 	9052CD331086753F001FFA13 /* NotAtHomeViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1051, 3668}}";
+			sepNavIntBoundsRect = "{{0, 0}, {2946, 3584}}";
 			sepNavSelRange = "{167, 0}";
-			sepNavVisRange = "{0, 873}";
+			sepNavVisRange = "{6134, 1962}";
 		};
 	};
 	9052CD6410868231001FFA13 /* NotAtHomeTerritoryViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1051, 686}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 784}}";
 			sepNavSelRange = "{535, 160}";
-			sepNavVisRange = "{369, 1249}";
+			sepNavVisRange = "{48, 1994}";
 		};
 	};
 	9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1380, 15596}}";
-			sepNavSelRange = "{11424, 193}";
-			sepNavVisRange = "{10629, 1643}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 15456}}";
+			sepNavSelRange = "{28214, 0}";
+			sepNavVisRange = "{28104, 1613}";
 		};
 	};
 	9053E0580E8DDD7100BA35F7 /* Italian */ = {
@@ -3101,9 +3252,9 @@
 	};
 	905C37180E3D52DB00C8DB27 /* UITableViewTextFieldCell.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1051, 4690}}";
-			sepNavSelRange = "{4778, 0}";
-			sepNavVisRange = "{5231, 1246}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 4564}}";
+			sepNavSelRange = "{775, 41}";
+			sepNavVisRange = "{775, 1973}";
 		};
 	};
 	905C38380E3D971700C8DB27 /* CallTableCell.m */ = {
@@ -3212,9 +3363,9 @@
 	};
 	9064D8B40ED11A4900A0FBBB /* Portuguese */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1536, 20440}}";
-			sepNavSelRange = "{69, 0}";
-			sepNavVisRange = "{0, 1565}";
+			sepNavIntBoundsRect = "{{0, 0}, {1536, 20916}}";
+			sepNavSelRange = "{349, 0}";
+			sepNavVisRange = "{0, 1534}";
 		};
 	};
 	90674D330F1ABBB800D524C0 /* GeocacheViewController.m */ = {

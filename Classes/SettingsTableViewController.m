@@ -510,7 +510,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *commonIdentifier = @"PublisherTypeCell";
+	NSString *commonIdentifier = @"SecretaryEmailTypeCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
