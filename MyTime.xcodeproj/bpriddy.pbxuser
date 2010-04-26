@@ -22,9 +22,9 @@
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "AdHoc Distribution";
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphonesimulator3.1;
+		activeSDKPreference = iphoneos4.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* MyTime */,
@@ -449,6 +449,9 @@
 			9052242011854D230047C9DA /* PBXTextBookmark */ = 9052242011854D230047C9DA /* PBXTextBookmark */;
 			9052242111854D230047C9DA /* PBXTextBookmark */ = 9052242111854D230047C9DA /* PBXTextBookmark */;
 			9052242211854D230047C9DA /* PBXTextBookmark */ = 9052242211854D230047C9DA /* PBXTextBookmark */;
+			9052242711854EF90047C9DA /* PBXTextBookmark */ = 9052242711854EF90047C9DA /* PBXTextBookmark */;
+			9052242811854EF90047C9DA /* PlistBookmark */ = 9052242811854EF90047C9DA /* PlistBookmark */;
+			9052242911854EF90047C9DA /* PlistBookmark */ = 9052242911854EF90047C9DA /* PlistBookmark */;
 			90596FF110CA218C00FA2254 = 90596FF110CA218C00FA2254 /* PBXTextBookmark */;
 			9059700510CA229900FA2254 = 9059700510CA229900FA2254 /* PBXTextBookmark */;
 			9059701D10CB119500FA2254 = 9059701D10CB119500FA2254 /* PBXTextBookmark */;
@@ -1651,9 +1654,9 @@
 	};
 	9032C7530F30DACA005FA8D0 /* Geocache.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1034, 2324}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 2310}}";
 			sepNavSelRange = "{1676, 0}";
-			sepNavVisRange = "{1277, 1273}";
+			sepNavVisRange = "{1277, 1305}";
 		};
 	};
 	90337B27118387840092A83B /* PBXTextBookmark */ = {
@@ -4413,6 +4416,40 @@
 		rType = 0;
 		vrLen = 1273;
 		vrLoc = 1277;
+	};
+	9052242711854EF90047C9DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */;
+		name = "Geocache.m: 62";
+		rLen = 0;
+		rLoc = 1676;
+		rType = 0;
+		vrLen = 1305;
+		vrLoc = 1277;
+	};
+	9052242811854EF90047C9DA /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	9052242911854EF90047C9DA /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/bpriddy/Projects/MyTime/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775807;
 	};
 	9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {
 		uiCtxt = {
