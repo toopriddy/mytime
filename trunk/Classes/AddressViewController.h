@@ -49,6 +49,8 @@
 	CLLocationManager *locationManager;
 	MKReverseGeocoder *geocoder;
 	MKPlacemark *placemark;
+	
+	NSDate *locationStartDate;
 }
 
 @property (nonatomic,assign) id<AddressViewControllerDelegate> delegate;
@@ -57,6 +59,7 @@
 @property (nonatomic,retain) CLLocationManager *locationManager;
 @property (nonatomic,retain) MKReverseGeocoder *geocoder;
 @property (nonatomic,retain) MKPlacemark *placemark;
+@property (nonatomic,retain) NSDate *locationStartDate;
 
 @property (nonatomic,retain) UITableViewMultiTextFieldCell *streetNumberAndApartmentCell;
 @property (nonatomic,retain) NSString *apartmentNumber;

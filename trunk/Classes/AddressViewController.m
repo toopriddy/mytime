@@ -71,6 +71,7 @@
 @synthesize locationManager;
 @synthesize geocoder;
 @synthesize placemark;
+@synthesize locationStartDate;
 
 - (id)init
 {
@@ -108,8 +109,10 @@
 	self.locationMessage = nil;
 	self.geocoder = nil;
 	self.placemark = nil;
-	self.theTableView = nil;
+	self.locationStartDate = nil;
 
+	self.theTableView = nil;
+	
     self.streetNumberAndApartmentCell = nil;
     self.streetCell = nil;
     self.cityCell = nil;
@@ -389,6 +392,7 @@
 		showReverseGeocoding = NO;
 		wasShowingReverseGeocoding = YES;
 
+		self.locationStartDate = [NSDate date];
 		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
 		self.locationManager.delegate = self; // Tells the location manager to send updates to this object
 		self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -411,6 +415,7 @@
 {
 	self.geocoder.delegate = nil;
 	self.geocoder = nil;
+
 	self.locationMessage.message = NSLocalizedString(@"Error acquiring location, reverse lookup failed", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and there is a geolocation error (the google lookup of the address failed)");
 }
 
@@ -419,14 +424,25 @@
 	[self.locationMessage dismissWithClickedButtonIndex:-1 animated:NO];
 	self.locationManager.delegate = nil;
 	self.locationManager = nil;
-	
+
 	self.placemark = thePlacemark;
+	NSString *houseNumber = [placemark subThoroughfare];
+	NSString *streetName = [placemark thoroughfare];
+	NSString *cityName = [placemark locality];
+	if(cityName == nil)
+		cityName = [[[placemark addressDictionary] objectForKey:@"FormattedAddressLines"] objectAtIndex:1];
+	NSString *stateName = [placemark administrativeArea];
+	if(stateName == nil)
+		stateName = [placemark country];
+
+	NSMutableString *topLine = [NSMutableString string];
+	[Settings formatStreetNumber:houseNumber apartment:nil street:streetName topLine:topLine];
+
 	self.locationMessage = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Would you like to use this address?", @"This is a success message you see when you make a new Call -> press on the address -> press on automatically lookup address")
-													   message:[NSString stringWithFormat:@"%@ %@\n%@\n%@",
-																		[placemark subThoroughfare],
-																		[placemark thoroughfare],
-																		[placemark locality],
-																		[placemark administrativeArea]] 
+													   message:[NSString stringWithFormat:@"%@\n%@\n%@",
+																		topLine,
+																		cityName,
+																		stateName] 
 													  delegate:self
 											 cancelButtonTitle:NSLocalizedString(@"No", @"No button title")
 											 otherButtonTitles:NSLocalizedString(@"Yes", @"Yes button title"), nil] autorelease];
@@ -437,6 +453,23 @@
 {
 	if(self.geocoder == nil)
 	{
+		if([self.locationStartDate earlierDate:newLocation.timestamp] == newLocation.timestamp)
+		{
+			// we have a stale location, try again
+			return;
+		}
+		int accuracy = MAX(newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
+//#warning DONT PUT THIS IN PRODUCTION CODE
+//accuracy = 0;
+		if(accuracy > 100)
+		{
+			self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Looking up position, current accuracy is %dm", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and geolocation is having a hard time getting accurate results"), accuracy];
+			return;
+		}
+		
+		self.locationStartDate = nil;
+//#warning DONT PUT THIS IN PRODUCTION CODE
+//newLocation = [[[CLLocation alloc] initWithLatitude:57.6689616 longitude:11.9303895] autorelease];
 		self.geocoder = [[[MKReverseGeocoder alloc] initWithCoordinate:newLocation.coordinate] autorelease];
 		self.geocoder.delegate = self;
 		[self.geocoder start];
@@ -452,7 +485,7 @@
 			int accuracy = MAX(self.locationManager.location.horizontalAccuracy, self.locationManager.location.verticalAccuracy);
 			if(accuracy >= 0)
 			{
-				self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Looking up position, current accuracy %dm", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and geolocation is having a hard time getting accurate results"), accuracy];
+				self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Looking up position, current accuracy is %dm", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and geolocation is having a hard time getting accurate results"), accuracy];
 			}
 			else
 			{
@@ -482,8 +515,16 @@
 	{
 		[streetNumberAndApartmentCell textFieldAtIndex:0].text = [self.placemark subThoroughfare];
 		streetCell.textField.text = [self.placemark thoroughfare];
-		cityCell.textField.text = [self.placemark locality];
-		stateCell.textField.text = [self.placemark administrativeArea];
+		NSString *cityName = [placemark locality];
+		if(cityName == nil)
+			cityName = [[[placemark addressDictionary] objectForKey:@"FormattedAddressLines"] objectAtIndex:1];
+		NSString *stateName = [placemark administrativeArea];
+		if(stateName == nil)
+			stateName = [placemark country];
+		
+		cityCell.textField.text = cityName;
+		stateCell.textField.text = stateName;
+		
 		self.geocoder = nil;
 		self.placemark = nil;
 	}
@@ -495,6 +536,7 @@
 	self.locationManager.delegate = nil;
 	self.locationManager = nil;
 	self.locationMessage = nil;
+	self.locationStartDate = nil;
 	self.geocoder = nil;
 	self.placemark = nil;
 	
