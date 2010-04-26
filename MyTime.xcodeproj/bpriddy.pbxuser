@@ -9,9 +9,9 @@
 	};
 	1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2034, 12488}}";
-			sepNavSelRange = "{9655, 0}";
-			sepNavVisRange = "{8458, 2141}";
+			sepNavIntBoundsRect = "{{0, 0}, {2154, 12152}}";
+			sepNavSelRange = "{15807, 0}";
+			sepNavVisRange = "{14539, 1455}";
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
@@ -1612,9 +1612,9 @@
 	};
 	90226C571030DB5900A94FEC /* MyTimeWebServerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1830, 1176}}";
-			sepNavSelRange = "{1648, 0}";
-			sepNavVisRange = "{1201, 1036}";
+			sepNavIntBoundsRect = "{{0, 0}, {1830, 1302}}";
+			sepNavSelRange = "{2828, 44}";
+			sepNavVisRange = "{1698, 1367}";
 		};
 	};
 	9022ED170E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.h */ = {
@@ -2136,9 +2136,9 @@
 	};
 	9045A7250E7C1423001B439C /* TCPServer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {849, 3402}}";
-			sepNavSelRange = "{733, 23}";
-			sepNavVisRange = "{0, 1013}";
+			sepNavIntBoundsRect = "{{0, 0}, {1034, 3444}}";
+			sepNavSelRange = "{6262, 0}";
+			sepNavVisRange = "{5688, 1189}";
 		};
 	};
 	9045A7270E7C1590001B439C /* BackupView.h */ = {
@@ -2150,9 +2150,9 @@
 	};
 	9045A7280E7C1590001B439C /* BackupView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 3682}}";
-			sepNavSelRange = "{641, 27}";
-			sepNavVisRange = "{34, 971}";
+			sepNavIntBoundsRect = "{{0, 0}, {2034, 3948}}";
+			sepNavSelRange = "{2979, 0}";
+			sepNavVisRange = "{2533, 796}";
 		};
 	};
 	9045A9FE0E7D99A4001B439C /* EventAgent.h */ = {
@@ -2966,7 +2966,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 326";
 		rLen = 0;
-		rLoc = 9655;
+		rLoc = 9571;
 		rType = 0;
 		vrLen = 2141;
 		vrLoc = 8458;
@@ -7572,9 +7572,9 @@
 	};
 	90E756B20FE2E97F00690CEE /* MultipleUsersViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1764, 6020}}";
-			sepNavSelRange = "{5885, 0}";
-			sepNavVisRange = "{3682, 1164}";
+			sepNavIntBoundsRect = "{{0, 0}, {2550, 5782}}";
+			sepNavSelRange = "{9838, 0}";
+			sepNavVisRange = "{9308, 1251}";
 			sepNavWindowFrame = "{{15, 98}, {1185, 775}}";
 		};
 	};
@@ -8564,7 +8564,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 330";
 		rLen = 0;
-		rLoc = 9663;
+		rLoc = 9579;
 		rType = 0;
 		vrLen = 2237;
 		vrLoc = 8143;
@@ -8574,7 +8574,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 336";
 		rLen = 0;
-		rLoc = 9811;
+		rLoc = 9727;
 		rType = 0;
 		vrLen = 2197;
 		vrLoc = 8458;
@@ -8584,7 +8584,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 336";
 		rLen = 0;
-		rLoc = 9811;
+		rLoc = 9727;
 		rType = 0;
 		vrLen = 2139;
 		vrLoc = 8516;
@@ -8594,7 +8594,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 336";
 		rLen = 0;
-		rLoc = 9811;
+		rLoc = 9727;
 		rType = 0;
 		vrLen = 1512;
 		vrLoc = 11096;
@@ -8604,7 +8604,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 333";
 		rLen = 0;
-		rLoc = 9779;
+		rLoc = 9695;
 		rType = 0;
 		vrLen = 1542;
 		vrLoc = 9557;
@@ -8614,7 +8614,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 333";
 		rLen = 0;
-		rLoc = 9779;
+		rLoc = 9695;
 		rType = 0;
 		vrLen = 1590;
 		vrLoc = 9560;
@@ -8832,7 +8832,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 333";
 		rLen = 0;
-		rLoc = 9779;
+		rLoc = 9695;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 8800;
@@ -8886,7 +8886,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 348";
 		rLen = 0;
-		rLoc = 10245;
+		rLoc = 10161;
 		rType = 0;
 		vrLen = 1899;
 		vrLoc = 8558;
@@ -8896,7 +8896,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 348";
 		rLen = 0;
-		rLoc = 10245;
+		rLoc = 10161;
 		rType = 0;
 		vrLen = 814;
 		vrLoc = 6709;
@@ -8973,7 +8973,7 @@
 		fRef = 1D3623250D0F684500981E51 /* MyTimeAppDelegate.m */;
 		name = "MyTimeAppDelegate.m: 348";
 		rLen = 0;
-		rLoc = 10245;
+		rLoc = 10161;
 		rType = 0;
 		vrLen = 1899;
 		vrLoc = 8558;
@@ -10392,9 +10392,9 @@
 	};
 	90FBE88F0E39938F00FD8014 /* Settings.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1872, 12208}}";
-			sepNavSelRange = "{31164, 120}";
-			sepNavVisRange = "{30103, 1261}";
+			sepNavIntBoundsRect = "{{0, 0}, {1872, 12572}}";
+			sepNavSelRange = "{33481, 0}";
+			sepNavVisRange = "{31973, 1735}";
 		};
 	};
 	90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */ = {

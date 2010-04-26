@@ -708,13 +708,13 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		else if(houseNumber && [houseNumber length] && apartmentNumber && [apartmentNumber length])
 			[top appendFormat:NSLocalizedString(@"%@ #%@", @"House number and apartment number represented by %1$@ as the house number and %2$@ as the apartment number"), houseNumber, apartmentNumber];
 		else if(houseNumber && [houseNumber length])
-			[top appendFormat:houseNumber];
+			[top appendString:houseNumber];
 		else if(street && [street length] && apartmentNumber && [apartmentNumber length])
 			[top appendFormat:NSLocalizedString(@"#%@ %@", @"Apartment Number and street name represented by %1$@ as the apartment number and %2$@ as the street name"), apartmentNumber, street];
 		else if(street && [street length])
-			[top appendFormat:street];
+			[top appendString:street];
 		else if(apartmentNumber && [apartmentNumber length])
-			[top appendFormat:apartmentNumber];
+			[top appendString:apartmentNumber];
 	}
 	if(bottom)
 	{

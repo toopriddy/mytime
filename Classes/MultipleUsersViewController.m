@@ -217,7 +217,7 @@
 		// we need to make sure that they entered in a name
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please enter a name since you have more than one user of MyTime", @"Multiple Users: This message is displayed when fails to enter a username when there is more than one user in the system")];
+		alertSheet.title = NSLocalizedString(@"Please enter a name since you have more than one user of MyTime", @"Multiple Users: This message is displayed when fails to enter a username when there is more than one user in the system");
 		[alertSheet show];
 		return NO;
 	}
@@ -228,7 +228,7 @@
 			// need to popup a warning that someone is already named that name
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name")];
+			alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
 			[alertSheet show];
 			return NO;
 		}
@@ -256,7 +256,7 @@
 			// need to popup a warning that someone is already named that name
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name")];
+			alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
 			[alertSheet show];
 			return NO;
 		}
