@@ -43,6 +43,7 @@
 		self.currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
+		[[Geocache sharedInstance] addDelegate:self];
 	}
 	return self;
 }
@@ -198,17 +199,21 @@
 		RMMarkerManager *markerManager = mapView.markerManager;
 		NSArray *markers = [markerManager getMarkers];
 
+		NSMutableArray *removeMarkers = [NSMutableArray array];
 		for(RMMarker *marker in markers)
 		{
 			NSMutableDictionary *theCall = (NSMutableDictionary *)marker.data;
 			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
 			NSString *lookupType = [theCall objectForKey:CallLocationType];
-			if([lookupType isEqualToString:CallLocationTypeDoNotShow])
+			if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
+			   latLong == nil || 
+			   [latLong isEqualToString:@"nil"] ||
+			   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:theCall])
 			{
 				// make the detail view go away
 				[self tapOnMarker:selectedMarker onMap:mapView];
 
-				[markerManager removeMarker:marker];
+				[removeMarkers addObject:marker];
 				continue;
 			}
 
@@ -220,6 +225,10 @@
 				point.longitude = [[stringArray objectAtIndex:1] doubleValue];
 				[markerManager moveMarker:marker AtLatLon:point];
 			}
+		}
+		for(RMMarker *marker in removeMarkers)
+		{
+			[markerManager removeMarker:marker];
 		}
 	}
 }

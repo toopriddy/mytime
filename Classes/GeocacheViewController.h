@@ -37,6 +37,7 @@
 @property (nonatomic, retain) NSMutableDictionary *call;
 @property (nonatomic, retain) UIActivityIndicatorView *progressView;
 
++ (BOOL)canLookupCall:(NSDictionary *)call;
 - (id)initWithCall:(NSMutableDictionary *)call;
 
 @end

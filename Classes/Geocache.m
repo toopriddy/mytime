@@ -69,9 +69,12 @@ static Geocache *instance = nil;
 
 - (void)lookupCall:(NSMutableDictionary *)call
 {
-	[_callsToLookup addObject:call];
+	if([GeocacheViewController canLookupCall:call])
+	{
+		[_callsToLookup addObject:call];
 
-	[self startLookupProcess];
+		[self startLookupProcess];
+	}
 }
 
 - (void)setWindow:(UIWindow*)window

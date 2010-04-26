@@ -78,7 +78,7 @@
 }
 
 #define EMPTY_NSSTRING_IF_NULL(str) ((str) ? (str) : @"")
-- (NSString *)getAddressFromCall:(NSMutableDictionary *)theCall useHtml:(BOOL)useHtml
++ (NSString *)getAddressFromCall:(NSDictionary *)theCall useHtml:(BOOL)useHtml
 {
 	NSString *streetNumber = [theCall objectForKey:CallStreetNumber];
 	NSString *apartmentNumber = [theCall objectForKey:CallApartmentNumber];
@@ -103,7 +103,7 @@
 	return(nil);
 }
 
-- (NSString *)getInfoFromCall:(NSMutableDictionary *)theCall 
++ (NSString *)getInfoFromCall:(NSDictionary *)theCall 
 {
 	NSString *name = [theCall objectForKey:CallName];
 	NSString *address = [self getAddressFromCall:theCall useHtml:YES];
@@ -121,6 +121,10 @@
 	[super layoutSubviews];
 }
 
++ (BOOL)canLookupCall:(NSDictionary *)call
+{
+	return [GeocacheViewController getAddressFromCall:call useHtml:NO] != NULL;
+}
 
 #pragma mark UIWebView delegate methods
 
@@ -169,7 +173,7 @@
 			{
 				if(isAddressLookup)
 				{
-					NSString *str = [self getAddressFromCall:foundCall useHtml:NO];
+					NSString *str = [GeocacheViewController getAddressFromCall:foundCall useHtml:NO];
 					if(str && [str isEqualToString:address])
 					{
 						break;
@@ -210,10 +214,10 @@
 	
 	if(call)
 	{
-		NSString *str = [self getAddressFromCall:call useHtml:NO];
-		NSString *info = [self getInfoFromCall:call];
+		NSString *str = [GeocacheViewController getAddressFromCall:call useHtml:NO];
 		if(str)
 		{
+			NSString *info = [GeocacheViewController getInfoFromCall:call];
 			NSString *latLong = [call objectForKey:CallLattitudeLongitude];
 			if(latLong == nil)
 			{
@@ -229,6 +233,7 @@
 		}
 		else
 		{
+			[self stopProgressIndicator];
 			[call setObject:@"nil" forKey:CallLattitudeLongitude];
 			if(_delegate && [_delegate respondsToSelector:@selector(geocacheViewControllerDone:)])
 			{
@@ -243,13 +248,13 @@
 		
 		while ( (theCall = [e nextObject]) ) 
 		{
-			NSString *str = [self getAddressFromCall:theCall useHtml:NO];
-			NSString *info = [self getInfoFromCall:theCall];
+			NSString *str = [GeocacheViewController getAddressFromCall:theCall useHtml:NO];
 			if(str)
 			{
 				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
 				if(latLong == nil)
 				{
+					NSString *info = [GeocacheViewController getInfoFromCall:theCall];
 					NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
 					VERBOSE(NSLog(@"%@", script);)
 					
