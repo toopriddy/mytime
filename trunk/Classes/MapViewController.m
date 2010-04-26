@@ -268,6 +268,10 @@
 			point.latitude = [[stringArray objectAtIndex:0] doubleValue];
 			point.longitude = [[stringArray objectAtIndex:1] doubleValue];
 			[markerManager addMarker:marker AtLatLong:point];
+			if([[markerManager getMarkers] count] == 1)
+			{
+				[mapView moveToXYPoint:marker.location];
+			}
 		}
 	}
 }
