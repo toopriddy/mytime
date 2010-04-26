@@ -77,7 +77,7 @@
 {
 	UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 	[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-	alertSheet.title = [NSString stringWithFormat:NSLocalizedString(@"Please quit MyTime if you changed any data using the MyTime Webserver", @"This message is displayed after you turn off the MyTime Webserver from the Settings View")];
+	alertSheet.title = NSLocalizedString(@"Please quit MyTime if you changed any data using the MyTime Webserver", @"This message is displayed after you turn off the MyTime Webserver from the Settings View");
 	[alertSheet show];
 }
 
