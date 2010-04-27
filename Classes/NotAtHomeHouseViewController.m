@@ -22,6 +22,8 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "Settings.h"
 #import <AddressBookUI/AddressBookUI.h>
+#import "CallViewController.h"
+#import "Geocache.h"
 #import "PSLocalization.h"
 
 @interface NotAtHomeHouseViewCellController : NSObject<TableViewCellController>
@@ -452,6 +454,133 @@
 
 @end
 
+/******************************************************************
+ *
+ *   NAHHouseConvertToCallCellController
+ *
+ ******************************************************************/
+#pragma mark NAHHouseConvertToCallCellController
+
+@interface NAHHouseConvertToCallCellController : NotAtHomeHouseViewCellController <CallViewControllerDelegate>
+{
+@private	
+}
+@end
+@implementation NAHHouseConvertToCallCellController
+
+- (void)dealloc
+{
+	[super dealloc];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"NewAttemptCell";
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+	}
+	[cell setValue:NSLocalizedString(@"Convert to call", @"button to convert a not at home territpry house into a regular call")];
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	return cell;
+}
+
+- (void)notAtHomeDetailCanceled
+{
+	[self.delegate dismissModalViewControllerAnimated:YES];
+}
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	CallViewController *controller = [[[CallViewController alloc] init] autorelease];
+	controller.delegate = self;
+
+	// setup the address from the not at home information
+	NSString *state = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
+	NSString *city = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
+	NSString *street = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
+	NSString *streetNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
+	NSString *apartmentNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
+	if(state)
+		[controller.call setObject:[self.delegate.territory objectForKey:NotAtHomeTerritoryState] forKey:CallState];
+	if(city)
+		[controller.call setObject:[self.delegate.territory objectForKey:NotAtHomeTerritoryCity] forKey:CallCity];
+	if(street)
+		[controller.call setObject:[self.delegate.street objectForKey:NotAtHomeTerritoryStreetName] forKey:CallStreet];
+	if(streetNumber)
+		[controller.call setObject:[self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber] forKey:CallStreetNumber];
+	if(apartmentNumber)
+		[controller.call setObject:[self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment] forKey:CallApartmentNumber];
+	
+	// push the element view controller onto the navigation stack to display it
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+	
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	controller.title = controller.title;
+	[self.delegate presentModalViewController:navigationController animated:YES];
+	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+	
+	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
+}
+
+- (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)call keepInformation:(BOOL)keepInformation
+{
+	assert(false);
+}
+
+- (void)delegateLater
+{
+	// remove this house, pop view controller to the street
+	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notAtHomeHouseViewControllerDeleteHouse:)])
+	{
+		[self.delegate.delegate notAtHomeHouseViewControllerDeleteHouse:self.delegate];
+	}
+	[self autorelease];
+}
+
+- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call
+{
+	// save the new call
+	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	NSMutableArray *calls = [userSettings objectForKey:SettingsCalls];
+	if(calls == nil)
+	{
+		calls = [NSMutableArray array];
+		[userSettings setObject:calls forKey:SettingsCalls];
+	}
+	[calls addObject:call];
+		
+	[[Settings sharedInstance] saveData];
+
+	if(![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual])
+	{
+		[[Geocache sharedInstance] lookupCall:call];
+	}
+	
+	// get outfrom underneeth the call
+	[self retain];
+	[self performSelector:@selector(delegateLater) withObject:nil afterDelay:0];
+}
+
+@end
 
 @implementation NotAtHomeHouseViewController
 @synthesize house;
@@ -460,7 +589,9 @@
 @synthesize newHouse;
 @synthesize obtainFocus;
 @synthesize allTextFields;
-
+@synthesize territory;
+@synthesize street;
+	 
 - (void)navigationControlDone:(id)sender 
 {
 	VERBOSE(NSLog(@"navigationControlDone:");)
@@ -474,12 +605,15 @@
 {
 }
 
-- (id)initWithHouse:(NSMutableDictionary *)theHouse
+- (id)initWithHouse:(NSMutableDictionary *)theHouse street:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
 		self.allTextFields = [NSMutableArray array];
+		self.street = theStreet;
+		self.territory = theTerritory;
+		
 		if(theHouse == nil)
 		{
 			newHouse = YES;
@@ -505,15 +639,14 @@
 	return self;
 }
 
-- (id)init
+- (id)initWithStreet:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory
 {
-	return [self initWithHouse:nil];
+	return [self initWithHouse:nil street:theStreet territory:theTerritory];
 }
 
 - (void)didReceiveMemoryWarning
 {
-	[super didReceiveMemoryWarning];
-	
+	[super didReceiveMemoryWarning];	
 }
 
 - (void)loadView
@@ -535,6 +668,8 @@
 - (void)dealloc
 {
 	self.house = nil;
+	self.territory = nil;
+	self.street = nil;
 	
 	[super dealloc];
 }
@@ -573,6 +708,22 @@
 		}
 	}
 
+	if(!newHouse)
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		{
+			// Convert to call
+			NAHHouseConvertToCallCellController *cellController = [[NAHHouseConvertToCallCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+	}
+	
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
