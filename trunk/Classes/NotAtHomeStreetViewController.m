@@ -309,17 +309,21 @@
 {
 	NotAtHomeStreetViewController *delegate;
 	NSMutableDictionary *house;
+	NSIndexPath *savedIndexPath;
 }
 @property (nonatomic, assign) NotAtHomeStreetViewController *delegate;
 @property (nonatomic, retain) NSMutableDictionary *house;
+@property (nonatomic, copy) NSIndexPath *savedIndexPath;
 @end
 @implementation NAHStreetHouseCellController
 @synthesize delegate;
 @synthesize house;
+@synthesize savedIndexPath;
 
 - (void)dealloc
 {
 	self.house = nil;
+	self.savedIndexPath = nil;
 	
 	[super dealloc];
 }
@@ -379,8 +383,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row]];
+	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row]
+																							street:self.delegate.street
+																						 territory:self.delegate.territory];
 	controller.delegate = self;
+	self.savedIndexPath = indexPath;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
 	[controller release];
@@ -400,6 +407,18 @@
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
 	}
+}
+
+- (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
+{
+	[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] removeObjectAtIndex:self.savedIndexPath.row];
+	
+	// save the data
+	[[Settings sharedInstance] saveData];
+	
+	[[self retain] autorelease];
+	[self.delegate deleteDisplayRowAtIndexPath:self.savedIndexPath];
+	[self.delegate.navigationController popToViewController:self.delegate animated:YES];
 }
 
 - (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
@@ -433,6 +452,10 @@
 @end
 @implementation NAHStreetAddHouseCellController
 
+- (void)dealloc
+{
+	[super dealloc];
+}
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return UITableViewCellEditingStyleInsert;
@@ -457,7 +480,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] init] autorelease];
+	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] initWithStreet:self.delegate.street territory:self.delegate.territory] autorelease];
 	controller.delegate = self;
 
 	section = indexPath.section;
@@ -498,6 +521,13 @@
 	[self.delegate dismissModalViewControllerAnimated:YES];
 	[self.delegate updateWithoutReload];
 }	
+
+- (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
+{
+#warning help	
+	[self.delegate dismissModalViewControllerAnimated:YES];
+}
+
 @end
 
 
@@ -508,6 +538,7 @@
 @synthesize newStreet;
 @synthesize allTextFields;
 @synthesize obtainFocus;
+@synthesize territory;
 
 - (void)navigationControlDone:(id)sender 
 {
@@ -522,12 +553,14 @@
 {
 }
 
-- (id)initWithStreet:(NSMutableDictionary *)theStreet
+- (id)initWithStreet:(NSMutableDictionary *)theStreet territory:(NSDictionary *)theTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
 		self.allTextFields = [NSMutableArray array];
+		self.territory = theTerritory;
+		
 		if(theStreet == nil)
 		{
 			newStreet = YES;
@@ -546,15 +579,14 @@
 	return self;
 }
 
-- (id)init
+- (id)initWithTerritory:(NSDictionary *)theTerritory
 {
-	return [self initWithStreet:nil];
+	return [self initWithStreet:nil territory:theTerritory];
 }
 
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
-	
 }
 
 - (void)loadView
@@ -576,6 +608,7 @@
 - (void)dealloc
 {
 	self.street = nil;
+	self.territory = nil;
 	self.allTextFields = nil;
 	
 	[super dealloc];

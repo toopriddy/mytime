@@ -1186,15 +1186,30 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		for(int section = 0; section < 12; ++section)
 		{
 			int month = _thisMonth - section;
+			int year;
 			int timestamp;
+			int offset = -1;
 			if(month < 1)
 			{
 				month = 12 + month;
 				timestamp = (_thisYear - 1) * 100 + month;
+				year = _thisYear - 1;
 			}
 			else
 			{
+				year = _thisYear;
 				timestamp = _thisYear * 100 + month;
+			}
+			if(year == _thisYear && 
+			   month <= _thisMonth)
+			{
+				offset = _thisMonth - month;
+			}
+			// if this call was made last year and in a month after this month
+			else if(year == _thisYear - 1 &&
+					_thisMonth < month)
+			{
+				offset = 12 - month + _thisMonth;
 			}
 			int value = [[adjustments objectForKey:[NSString stringWithFormat:@"%d", timestamp]] intValue];
 			if(value == 0)
@@ -1202,8 +1217,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			
 			array[section] += value;
 						
-			if( (newServiceYear && month <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-			   (!newServiceYear && _thisMonth + 4 > month)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
 				*serviceYearValue += value;
 			}

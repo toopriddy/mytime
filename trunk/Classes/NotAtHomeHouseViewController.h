@@ -20,13 +20,16 @@
 
 @protocol NotAtHomeHouseViewControllerDelegate
 - (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeStreetViewController;
+- (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController;
 @end
 
 @interface NotAtHomeHouseViewController : GenericTableViewController 
 {
 @private	
 	NSMutableDictionary *house;
-	id<NotAtHomeHouseViewControllerDelegate> delegate;
+	NSDictionary *territory;
+	NSDictionary *street;
+	NSObject<NotAtHomeHouseViewControllerDelegate> *delegate;
 	int tag;
 	BOOL newHouse;
 	NSMutableArray *allTextFields;
@@ -37,8 +40,11 @@
 @property (nonatomic, retain) NSMutableDictionary *house;
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSMutableArray *allTextFields;
-@property (nonatomic, assign) id<NotAtHomeHouseViewControllerDelegate> delegate;
+@property (nonatomic, retain) NSDictionary *territory;
+@property (nonatomic, retain) NSDictionary *street;
+@property (nonatomic, assign) NSObject<NotAtHomeHouseViewControllerDelegate> *delegate;
 
-- (id)initWithHouse:(NSMutableDictionary *)theHouse;
+- (id)initWithHouse:(NSMutableDictionary *)theHouse street:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory;
+- (id)initWithStreet:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory;
 
 @end

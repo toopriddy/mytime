@@ -2205,9 +2205,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL isNewCall = _newCall;
 	// we dont save a new call untill they hit "Done"
 	_newCall = NO;
-	[self save];
-	
-	
+
 	// we need to reload data now, so we need to hide:
 	//   the name field if it does not have a value
 	//   the insert new call
@@ -2216,14 +2214,20 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	_showAddReturnVisit = YES;
 	_showDeleteButton = YES;
 	
+	// save
+	[self retain];
+	[self save];
+	
+	
 	if(isNewCall)
 	{
-		[self.navigationController dismissModalViewControllerAnimated:YES];
+		[self dismissModalViewControllerAnimated:YES];
 	}
 	else
 	{
 		self.editing = NO;
 	}		
+	[self autorelease];
 }	
 
 - (void)navigationControlCancel:(id)sender 

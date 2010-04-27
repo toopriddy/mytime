@@ -26,6 +26,7 @@
 {
 @private	
 	NSMutableDictionary *street;
+	NSDictionary *territory;
 	id<NotAtHomeStreetViewControllerDelegate> delegate;
 	int tag;
 	BOOL newStreet;
@@ -35,10 +36,12 @@
 @property (nonatomic, readonly) BOOL newStreet;
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) NSMutableDictionary *street;
+@property (nonatomic, retain) NSDictionary *territory;
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSMutableArray *allTextFields;
 @property (nonatomic, assign) id<NotAtHomeStreetViewControllerDelegate> delegate;
 
-- (id)initWithStreet:(NSMutableDictionary *)theStreet;
+- (id)initWithStreet:(NSMutableDictionary *)theStreet territory:(NSDictionary *)territory;
+- (id)initWithTerritory:(NSDictionary *)theTerritory;
 
 @end

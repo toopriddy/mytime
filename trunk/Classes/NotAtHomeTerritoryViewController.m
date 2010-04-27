@@ -646,7 +646,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:[[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row]];
+	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:[[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row] territory:self.delegate.territory];
 	controller.delegate = self;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
@@ -727,7 +727,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] init] autorelease];
+	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithTerritory:self.delegate.territory] autorelease];
 	controller.delegate = self;
 
 	section = indexPath.section;
