@@ -524,7 +524,6 @@
 
 - (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
-#warning help	
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }
 
