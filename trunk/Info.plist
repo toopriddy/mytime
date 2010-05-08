@@ -35,5 +35,28 @@
 	<string>2.7.5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>MyTime Backup</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>CFBundleTypeIconFile</key>
+			<string>Icon.png</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>mytime/plist</string>
+			</array>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mytimedata</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

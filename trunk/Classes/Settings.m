@@ -226,7 +226,7 @@ NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChan
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 	if(![settings objectForKey:SettingsBackupEmailDontIncludeAttachment])
 	{
-		[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings filename]] mimeType:@"text/plist" fileName:@"records.plist"];
+		[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings filename]] mimeType:@"mytime/plist" fileName:@"backup.mytimedata"];
 	}
 	
 	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
