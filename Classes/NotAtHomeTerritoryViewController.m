@@ -107,6 +107,10 @@
 	self.nextRowResponder = nil;
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -128,6 +132,10 @@
 {
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -145,6 +153,7 @@
 		cell.textField.returnKeyType = UIReturnKeyNext;
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
 	if(name == nil)
@@ -154,6 +163,10 @@
 		[name release];
 	}
 	self.textField = cell.textField;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextFieldChanged:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self.textField];
 	[self.delegate.allTextFields addObject:self.textField];
 	cell.textField.text = name;
 	cell.delegate = self;
@@ -179,14 +192,14 @@
 {
 }
 
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
-	[name replaceCharactersInRange:range withString:string];
+	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryName];
 	if(!self.delegate.newTerritory)
-		self.delegate.title = name;
-	return YES;
+		self.delegate.title = self.textField.text;
 }
+
+
 
 @end
 
@@ -215,6 +228,10 @@
 	self.nextRowResponder = nil;
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -237,6 +254,10 @@
 	NSString *commonIdentifier = @"CityCell";
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -253,8 +274,14 @@
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		cell.nextKeyboardResponder = self.nextRowResponder;
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	self.textField = cell.textField;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextFieldChanged:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self.textField];
+	
 	[self.delegate.allTextFields addObject:self.textField];
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
 	if(name == nil)
@@ -280,11 +307,9 @@
 {
 }
 
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
-	[name replaceCharactersInRange:range withString:string];
-	return YES;
+	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryCity];
 }
 
 @end
@@ -314,6 +339,10 @@
 	self.nextRowResponder = nil;
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -336,6 +365,10 @@
 	NSString *commonIdentifier = @"StateCell";
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -359,8 +392,14 @@
 			cell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 			cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 		}
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	self.textField = cell.textField;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextFieldChanged:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self.textField];
+	
 	[self.delegate.allTextFields addObject:self.textField];
 	
 	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
@@ -387,11 +426,9 @@
 {
 }
 
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
-	[name replaceCharactersInRange:range withString:string];
-	return YES;
+	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryState];
 }
 
 @end

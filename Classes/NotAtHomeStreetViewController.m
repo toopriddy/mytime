@@ -60,6 +60,10 @@
 {
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -81,6 +85,10 @@
 {
 	if(self.textField)
 	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:UITextFieldTextDidChangeNotification
+													  object:self.textField];
+		
 		[self.delegate.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
@@ -93,6 +101,7 @@
 		cell.textField.returnKeyType = UIReturnKeyDone;
 		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	NSMutableString *name = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
 	if(name == nil)
@@ -102,6 +111,10 @@
 		[name release];
 	}
 	self.textField = cell.textField;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTextFieldChanged:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self.textField];
 	[self.delegate.allTextFields addObject:self.textField];
 	cell.textField.text = name;
 	cell.delegate = self;
@@ -127,14 +140,13 @@
 {
 }
 
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	NSMutableString *name = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
-	[name replaceCharactersInRange:range withString:string];
+	[self.delegate.street setObject:self.textField.text forKey:NotAtHomeTerritoryStreetName];
 	if(!self.delegate.newStreet)
-		self.delegate.title = name;
-	return YES;
+		self.delegate.title = self.textField.text;
 }
+
 
 @end
 
