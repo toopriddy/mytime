@@ -15,7 +15,7 @@
 			sepNavWindowFrame = "{{61, 56}, {1185, 775}}";
 		};
 	};
-	1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
+	1D6058900D05DD3D006BFB54 /* MyTime */ = {
 		activeExec = 0;
 		executables = (
 			90FBE82A0E36D01400FD8014 /* MyTime */,
@@ -24,10 +24,10 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Debug;
 		activeExecutable = 90FBE82A0E36D01400FD8014 /* MyTime */;
-		activeSDKPreference = iphoneos4.0;
-		activeTarget = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
+		activeSDKPreference = iphoneos3.1;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* MyTime */;
 		addToTargets = (
-			1D6058900D05DD3D006BFB54 /* SimpleMap */,
+			1D6058900D05DD3D006BFB54 /* MyTime */,
 		);
 		breakpoints = (
 			905223B51185371E0047C9DA /* Geocache.m:74 */,
@@ -164,7 +164,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					816,
+					804,
 					60,
 					20,
 					48,
@@ -278,6 +278,7 @@
 			905BF65810ED2F12004A5AEA = 905BF65810ED2F12004A5AEA /* PBXTextBookmark */;
 			905C1CDC10BBB0DB00A3FD8D = 905C1CDC10BBB0DB00A3FD8D /* PBXTextBookmark */;
 			9068982111991EF2007BEFAD /* PBXTextBookmark */ = 9068982111991EF2007BEFAD /* PBXTextBookmark */;
+			9068983211992082007BEFAD /* PBXTextBookmark */ = 9068983211992082007BEFAD /* PBXTextBookmark */;
 			9073326010BB94D300D93C01 = 9073326010BB94D300D93C01 /* PBXTextBookmark */;
 			9073326D10BB972800D93C01 = 9073326D10BB972800D93C01 /* PBXTextBookmark */;
 			9074C0D610DC649400BCDF00 = 9074C0D610DC649400BCDF00 /* PBXTextBookmark */;
@@ -2149,7 +2150,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1022, 4914}}";
 			sepNavSelRange = "{2827, 0}";
-			sepNavVisRange = "{2457, 1652}";
+			sepNavVisRange = "{2457, 1287}";
 		};
 	};
 	90674D340F1ABBB800D524C0 /* GeocacheViewController.h */ = {
@@ -2167,6 +2168,16 @@
 		rLoc = 2827;
 		rType = 0;
 		vrLen = 1652;
+		vrLoc = 2457;
+	};
+	9068983211992082007BEFAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */;
+		name = "GeocacheViewController.m: 84";
+		rLen = 0;
+		rLoc = 2827;
+		rType = 0;
+		vrLen = 1287;
 		vrLoc = 2457;
 	};
 	9073326010BB94D300D93C01 /* PBXTextBookmark */ = {
