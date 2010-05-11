@@ -883,7 +883,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MyTime */ = {
+		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MyTime" */;
 			buildPhases = (
@@ -947,7 +947,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MyTime */,
+				1D6058900D05DD3D006BFB54 /* SimpleMap */,
 				90E6D1090EEC3D17008B4A9C /* Build ipa */,
 			);
 		};
@@ -1166,7 +1166,7 @@
 		};
 		90E6D1100EEC3D2B008B4A9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* MyTime */;
+			target = 1D6058900D05DD3D006BFB54 /* SimpleMap */;
 			targetProxy = 90E6D10F0EEC3D2B008B4A9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1258,7 +1258,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "37176445-1350-4A88-8CD7-8DEF5E355620";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96CBC3D2-DB21-4FE9-9A99-C91F09804652";
 				SDKROOT = iphoneos3.0;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
