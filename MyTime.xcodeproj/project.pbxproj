@@ -1378,7 +1378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos4.0;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
