@@ -461,8 +461,7 @@
 		int accuracy = MAX(newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
 //#warning DONT PUT THIS IN PRODUCTION CODE
 //accuracy = 0;
-#warning make sure the accuracy is ok
-		if(accuracy > 60)
+		if(accuracy > REVERSE_GEOCODING_ACCURACY)
 		{
 			self.locationMessage.message = [NSString stringWithFormat:NSLocalizedString(@"Looking up position, current accuracy is %dm", @"This is a message you see when you make a new Call -> press on the address -> press on automatically lookup address, and geolocation is having a hard time getting accurate results"), accuracy];
 			return;

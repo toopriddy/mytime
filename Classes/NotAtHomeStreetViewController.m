@@ -361,10 +361,6 @@
 		// Release the temporary UIViewController.
         [temporaryController autorelease];
 	}
-	else
-	{
-		NSLog(@"got here");
-	}
 
 	
 	self.house = [[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row];
