@@ -637,9 +637,11 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
-	cell.textLabel.text = [[[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row] objectForKey:NotAtHomeTerritoryStreetName];
+	NSDictionary *street = [[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row];
+	cell.textLabel.text = [street objectForKey:NotAtHomeTerritoryStreetName];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [[street objectForKey:NotAtHomeTerritoryHouses] count]];
 	return cell;
 }
 

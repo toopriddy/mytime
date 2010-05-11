@@ -15,6 +15,7 @@
 
 #import "StatisticsCallsTableViewController.h"
 #import "Settings.h"
+#import "PSLocalization.h"
 
 @implementation StatisticsCallsTableViewController
 @synthesize calls;

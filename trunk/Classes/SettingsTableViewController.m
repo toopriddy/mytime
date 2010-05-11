@@ -124,7 +124,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 		cell.detailTextLabel.text = @"";
 	}
 
@@ -170,8 +170,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	int number = 2;
@@ -239,8 +238,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Quick Notes", @"Quick Notes title.  This is shown when you click on the notes to type in for a call, it is the title of the view that shows you the last several notes you have typed in");
@@ -339,6 +337,7 @@
 {
 	self.cellViewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
 	UITableViewSwitchCell *cell = (UITableViewSwitchCell *)self.cellViewController.view;
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.delegate = self;
 	cell.otherTextLabel.text = NSLocalizedString(@"Backup Attachment", @"More->Settings view backup attachment");
 	cell.booleanSwitch.on = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailDontIncludeAttachment] == nil;
@@ -377,8 +376,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	int number = 0;
@@ -514,8 +512,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Notes for Secretary", @"More->Settings view publisher type setting title");
@@ -633,8 +630,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Erase map cache", @"More->Settings view title for erasing the map cache");
@@ -785,8 +781,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Remove Custom Translation", @"More->Settings custom translation title");
@@ -830,8 +825,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Questions, Comments? Email me", @"More View Table Questions, Comments? Email me");
@@ -897,8 +891,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Email backup", @"More View Table backup your data by emailing the data");
@@ -976,8 +969,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 
 	cell.textLabel.text = NSLocalizedString(@"Backup using 'MyTime Backup'", @"More View Table backup your data");
@@ -1018,8 +1010,7 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.detailTextLabel.text = @"";
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Start MyTime Webserver", @"Settings View button to start the webserver that allows you to type in your calls, import/export data, add translations, and import hours");

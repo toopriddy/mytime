@@ -358,7 +358,7 @@ static MetadataInformation commonInformation[] = {
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Add New Choice", @"button to press when you are in the Multiple Choice view, this button lets the user add another choice to a multiple choice type");
@@ -447,7 +447,7 @@ static MetadataInformation commonInformation[] = {
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	if(self.delegate.startedWithSelected >= 0 && 
 	   commonInformation[self.delegate.startedWithSelected].type == STRING && 
