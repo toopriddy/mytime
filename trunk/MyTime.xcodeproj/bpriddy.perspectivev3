@@ -292,14 +292,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>136</integer>
-									<integer>130</integer>
+									<integer>179</integer>
 									<integer>3</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1889}, {322, 776}}</string>
+							<string>{{0, 2760}, {322, 776}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -336,7 +335,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>90B569B510292C4D000065ED</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>NotAtHomeTerritoryViewController.m</string>
+								<string>GeocacheViewController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -344,11 +343,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>90B569B610292C4D000065ED</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>NotAtHomeTerritoryViewController.m</string>
+										<string>GeocacheViewController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>90AB60BD119913830006F86E</string>
+										<string>90AB60D611991A8B0006F86E</string>
 										<key>history</key>
 										<array>
 											<string>90EF0DE7109BE43A009B724D</string>
@@ -449,8 +448,6 @@
 											<string>9035FCA6110415AC00C9F5C7</string>
 											<string>9035FCD311042BA400C9F5C7</string>
 											<string>90B07B9411068F8A00826640</string>
-											<string>90B07B9511068F8A00826640</string>
-											<string>90B07B9611068F8A00826640</string>
 											<string>90B07B9811068F8A00826640</string>
 											<string>9095A4341107E086006A98AE</string>
 											<string>9095A4BB1107F4F5006A98AE</string>
@@ -487,7 +484,6 @@
 											<string>90F6B2AE117FF64000519165</string>
 											<string>90F6B2B0117FF64000519165</string>
 											<string>90F6B300118003F900519165</string>
-											<string>90F6B303118003F900519165</string>
 											<string>90F6B35F1180172900519165</string>
 											<string>90F6B3611180172900519165</string>
 											<string>90F6B3AF11801CBA00519165</string>
@@ -516,7 +512,6 @@
 											<string>9052232A118528410047C9DA</string>
 											<string>9052232D118528410047C9DA</string>
 											<string>90522330118528410047C9DA</string>
-											<string>905223D011853E060047C9DA</string>
 											<string>9052240A118549BE0047C9DA</string>
 											<string>9052240C118549BE0047C9DA</string>
 											<string>9052240E118549BE0047C9DA</string>
@@ -533,11 +528,9 @@
 											<string>9087412E118609320082E737</string>
 											<string>9087414C118652E00082E737</string>
 											<string>90874195118676880082E737</string>
-											<string>90874196118676880082E737</string>
 											<string>908741AF118678880082E737</string>
 											<string>9087426B11869E940082E737</string>
 											<string>908742941186A0F10082E737</string>
-											<string>9077B85D118A7475004F36E4</string>
 											<string>90CE131D118AF655008EF30C</string>
 											<string>90CE131E118AF655008EF30C</string>
 											<string>90CE131F118AF655008EF30C</string>
@@ -549,8 +542,6 @@
 											<string>904246B11198E4E700A2C3A6</string>
 											<string>904246B21198E4E700A2C3A6</string>
 											<string>904246B41198E4E700A2C3A6</string>
-											<string>904246B51198E4E700A2C3A6</string>
-											<string>904246B61198E4E700A2C3A6</string>
 											<string>904246B71198E4E700A2C3A6</string>
 											<string>9042473A1198FB0400A2C3A6</string>
 											<string>9042473C1198FB0400A2C3A6</string>
@@ -565,13 +556,21 @@
 											<string>90AB609E119911A60006F86E</string>
 											<string>90AB609F119911A60006F86E</string>
 											<string>90AB60A0119911A60006F86E</string>
-											<string>90AB60A1119911A60006F86E</string>
 											<string>90AB60A2119911A60006F86E</string>
 											<string>90AB60A3119911A60006F86E</string>
 											<string>90AB60A4119911A60006F86E</string>
 											<string>90AB60A5119911A60006F86E</string>
-											<string>90AB60BB119913830006F86E</string>
-											<string>90AB60BC119913830006F86E</string>
+											<string>90AB60CB11991A8B0006F86E</string>
+											<string>90AB60CC11991A8B0006F86E</string>
+											<string>90AB60CD11991A8B0006F86E</string>
+											<string>90AB60CE11991A8B0006F86E</string>
+											<string>90AB60CF11991A8B0006F86E</string>
+											<string>90AB60D011991A8B0006F86E</string>
+											<string>90AB60D111991A8B0006F86E</string>
+											<string>90AB60D211991A8B0006F86E</string>
+											<string>90AB60D311991A8B0006F86E</string>
+											<string>90AB60D411991A8B0006F86E</string>
+											<string>90AB60D511991A8B0006F86E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -585,18 +584,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1083, 546}}</string>
+								<string>{{0, 0}, {1083, 789}}</string>
 								<key>RubberWindowFrame</key>
 								<string>4 43 1427 835 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>546pt</string>
+							<string>789pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>243pt</string>
+							<string>0pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -685,7 +684,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1083, 216}}</string>
+										<string>{{10, 27}, {1083, -27}}</string>
 										<key>RubberWindowFrame</key>
 										<string>4 43 1427 835 0 0 1440 878 </string>
 									</dict>
@@ -907,7 +906,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>90AB60BE119913830006F86E</string>
 		<string>90AB60B3119911B10006F86E</string>
 		<string>90AB60B4119911B10006F86E</string>
 		<string>/Users/bpriddy/Projects/MyTime/MyTime.xcodeproj</string>

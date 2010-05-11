@@ -95,6 +95,8 @@
 		if(apartmentNumber.length)
 			apartmentNumber = [NSString stringWithFormat:@"(%@)", apartmentNumber];
 		streetNumber = EMPTY_NSSTRING_IF_NULL(streetNumber);
+		if(streetNumber.length)
+			apartmentNumber = @"";
 		street = EMPTY_NSSTRING_IF_NULL(street);
 		city = EMPTY_NSSTRING_IF_NULL(city);
 		state = EMPTY_NSSTRING_IF_NULL(state);
