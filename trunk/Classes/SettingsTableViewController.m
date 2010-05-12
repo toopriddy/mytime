@@ -360,6 +360,52 @@
 
 /******************************************************************
  *
+ *   BackupEmailUncompressedLinkCellController
+ *
+ ******************************************************************/
+#pragma mark BackupEmailUncompressedLinkCellController
+@interface BackupEmailUncompressedLinkCellController : SettingsCellController <UITableViewSwitchCellDelegate>
+{
+	UIViewController *cellViewController;
+}
+@property (nonatomic, retain) UIViewController *cellViewController;
+@end
+@implementation BackupEmailUncompressedLinkCellController
+@synthesize cellViewController;
+- (void)dealloc
+{
+	self.cellViewController = nil;
+	
+	[super dealloc];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	self.cellViewController = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
+	UITableViewSwitchCell *cell = (UITableViewSwitchCell *)self.cellViewController.view;
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	cell.delegate = self;
+	cell.otherTextLabel.text = NSLocalizedString(@"Compress Backup", @"More->Settings view Compress backup link");
+	cell.booleanSwitch.on = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailUncompressedLink] == nil;
+	return cell;
+}
+
+- (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell
+{
+	if(uiTableViewSwitchCell.booleanSwitch.on)
+	{
+		[[[Settings sharedInstance] settings] removeObjectForKey:SettingsBackupEmailUncompressedLink];
+	}
+	else
+	{
+		[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithBool:YES] forKey:SettingsBackupEmailUncompressedLink];
+	}
+	[[Settings sharedInstance] saveData];
+}
+@end
+
+/******************************************************************
+ *
  *   EmailBackupIntervalCellController
  *
  ******************************************************************/
@@ -1113,6 +1159,14 @@
 			[cellController release];
 		}
 		
+		// Compress Backup Link
+		{
+			BackupEmailUncompressedLinkCellController *cellController = [[BackupEmailUncompressedLinkCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+
 		// Number of months shown in statistics view
 		{
 			EmailBackupIntervalCellController *cellController = [[EmailBackupIntervalCellController alloc] init];
