@@ -1259,7 +1259,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96CBC3D2-DB21-4FE9-9A99-C91F09804652";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.2;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1301,7 +1301,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC8CC640-ED81-46AA-B313-4090C2817AA3";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.2;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1378,7 +1378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.2;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -1398,7 +1398,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.2;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
