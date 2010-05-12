@@ -130,6 +130,7 @@ NSString * const SettingsLastBackupDate = @"lastBackup";
 NSString * const SettingsAutoBackupInterval = @"autoBackupInterval";
 NSString * const SettingsBackupEmailAddress = @"backupAddress";
 NSString * const SettingsBackupEmailDontIncludeAttachment = @"backupDontIncludeAttachment";
+NSString * const SettingsBackupEmailUncompressedLink = @"backupUncompressedLink";
 
 NSString * const SettingsDonated = @"donated";
 NSString * const SettingsFirstView = @"firstView";
@@ -235,8 +236,18 @@ NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChan
 		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	}
 	// now add the url that will allow importing
-	NSData *data = [[NSKeyedArchiver archivedDataWithRootObject:settings] compress];
-	[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:settings];
+	if(![settings objectForKey:SettingsBackupEmailUncompressedLink])
+	{	
+		data = [data compress];
+		[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+	}
+	else
+	{
+		[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
+	}
+
+	
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)
