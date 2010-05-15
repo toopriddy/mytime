@@ -1248,7 +1248,7 @@
 		904B20BD0E9B234B0020816E /* AdHoc Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
@@ -1259,7 +1259,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96CBC3D2-DB21-4FE9-9A99-C91F09804652";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos3.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1290,7 +1290,7 @@
 		9052DB310E44462A00E191AB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
@@ -1301,7 +1301,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC8CC640-ED81-46AA-B313-4090C2817AA3";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos3.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1367,7 +1367,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1378,7 +1378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos3.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -1386,7 +1386,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
@@ -1398,7 +1398,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos3.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
