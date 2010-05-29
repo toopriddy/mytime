@@ -16,18 +16,33 @@
 #import <UIKit/UIKit.h>
 #import "TimePickerViewControllerDelegate.h"
 #import "EmptyListViewController.h"
+#import "MTTimeType.h"
 
-@interface HourViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, TimePickerViewControllerDelegate> 
+@interface HourViewController : UIViewController <UITableViewDelegate, 
+												  UITableViewDataSource, 
+												  TimePickerViewControllerDelegate, 
+												  NSFetchedResultsControllerDelegate> 
 {
-	UITableView *tableView;
-	BOOL _quickBuild;
+@private
+	UITableView *tableView_;
+
+	MTTimeType *type_;
 	
 	NSIndexPath *selectedIndexPath;
 	EmptyListViewController *emptyView;
+
+    NSFetchedResultsController *fetchedResultsController_;
+    NSManagedObjectContext *managedObjectContext_;
 }
+
 @property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSIndexPath *selectedIndexPath;
+@property (nonatomic,retain) MTTimeType *type;
+
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
 
 /**
  * initialize this view with a watchtower at the current month/year
@@ -35,7 +50,5 @@
  * @param rect - the rect
  * @returns self
  */
-- (id)initForQuickBuild:(BOOL)quickBuild;
-- (void)dealloc;
-- (void)reloadData;
+- (id)initWithTimeTypeName:(NSString *)typeName;
 @end
