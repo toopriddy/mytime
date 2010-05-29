@@ -18,28 +18,27 @@
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSLocalization.h"
+#import "MTTimeEntry.h"
+#import "MTUser.h"
+#import "MTTimeType+Extensions.h"
+
+@interface HourViewController ()
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@end
 
 @implementation HourViewController
 
-@synthesize tableView;
+@synthesize tableView = tableView_;
 @synthesize selectedIndexPath;
 @synthesize emptyView;
-
-static int sortByDate(id v1, id v2, void *context)
-{
-	// ok, we need to compare the dates of the calls since we have
-	// at least one call for each of 
-	NSDate *date1 = [v1 objectForKey:SettingsTimeEntryDate];
-	NSDate *date2 = [v2 objectForKey:SettingsTimeEntryDate];
-	return(-[date1 compare:date2]);
-}
+@synthesize fetchedResultsController = fetchedResultsController_;
+@synthesize managedObjectContext = managedObjectContext_;
+@synthesize type = type_;
 
 - (void)updateEmptyView
 {
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *timeEntries = [userSettings objectForKey:timeEntriesName];
-	if(timeEntries.count == 0)
+	
+	if(self.fetchedResultsController.fetchedObjects.count == 0)
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		self.tableView.scrollEnabled = NO;
@@ -62,60 +61,14 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 }
 
-// sort the time entries and remove the 13 month old entries
-- (void)reloadData
+- (id)initWithTimeTypeName:(NSString *)typeName
 {
-	// refresh the data
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *timeEntries = [userSettings objectForKey:timeEntriesName];
-
-
-	NSArray *sortedArray = [timeEntries sortedArrayUsingFunction:sortByDate context:NULL];
-	[sortedArray retain];
-	[timeEntries setArray:sortedArray];
-	[sortedArray release];
-
-	// remove all entries that are older than 13 months
-	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	[comps setMonth:-25];
-	NSDate *now = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
-	int count = [timeEntries count];
-	int i;
-	for(i = 0; i < count; ++i)
-	{
-		VERBOSE(NSLog(@"Comparing %d to %d", now, [[timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]);)
-		if([now compare:[[timeEntries objectAtIndex:i] objectForKey:SettingsTimeEntryDate]] > 0)
-		{
-			[timeEntries removeObjectAtIndex:i];
-			--i;
-			count = [timeEntries count];
-		}
-	}
-	[tableView reloadData];
-}
-
-
-- (id)initForQuickBuild:(BOOL)quickBuild
-{
+#warning need to update when there is a user change	
 	if ([super init]) 
 	{
-		tableView = nil;
-		selectedIndexPath = nil;
-
-		_quickBuild = quickBuild;
-		// set the title, and tab bar images from the dataSource
-		// object. 
-		if(quickBuild)
-		{
-			self.title = NSLocalizedString(@"RBC", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
-			self.tabBarItem.image = [UIImage imageNamed:@"rbc.png"];
-		}
-		else
-		{
-			self.title = NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view");
-			self.tabBarItem.image = [UIImage imageNamed:@"timer.png"];
-		}
+		self.type = [MTTimeType timeTypeWithName:typeName];
+		self.title = self.type.name;
+		self.tabBarItem.image = [UIImage imageNamed:self.type.imageFile];
 	}
 	return self;
 }
@@ -123,8 +76,8 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)dealloc 
 {
-	tableView.delegate = nil;
-	tableView.dataSource = nil;
+	self.tableView.delegate = nil;
+	self.tableView.dataSource = nil;
 	self.tableView = nil;
 	self.emptyView = nil;
 	
@@ -163,8 +116,7 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)updatePrompt
 {
-	NSString *whichStartDate = _quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate;
-	NSDate *date = [[[Settings sharedInstance] userSettings] objectForKey:whichStartDate];
+	NSDate *date = self.type.startTimerDate;
 	if(date)
 	{
 		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -188,9 +140,14 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)navigationControlStartTime:(id)sender 
 {
-	NSString *whichStartDate = _quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate;
-	[[[Settings sharedInstance] userSettings] setObject:[NSDate date] forKey:whichStartDate];
-	[[Settings sharedInstance] saveData];
+	self.type.startTimerDate = [NSDate date];
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+#warning fix me
+		abort();
+	}
+	
 	// add Stop Time button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop Time", @"'Stop Time' navigation bar action button")
 																style:UIBarButtonItemStyleDone
@@ -202,28 +159,27 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)navigationControlStopTime:(id)sender 
 {
-	NSString *whichStartDate = _quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate;
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	// we found a saved start date, lets see how much time there was between then and now
-	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[userSettings objectForKey:whichStartDate] timeIntervalSinceReferenceDate]] autorelease];	
+	NSDate *date = self.type.startTimerDate;	
 	NSDate *now = [NSDate date];
 	
 	int minutes = [now timeIntervalSinceDate:date]/60.0;
 	if(minutes > 0)
 	{
-		NSString *whichTimeEntryName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-		NSMutableArray *timeEntries = [userSettings objectForKey:whichTimeEntryName];
-	
-		NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
-
-		[entry setObject:date forKey:SettingsTimeEntryDate];
-		[entry setObject:[[[NSNumber alloc] initWithInt:minutes] autorelease] forKey:SettingsTimeEntryMinutes];
-		[timeEntries insertObject:entry atIndex:0];
-	
-		[tableView reloadData];
+		MTTimeEntry *timeEntry = [NSEntityDescription insertNewObjectForEntityForName:[[[self.fetchedResultsController fetchRequest] entity] name] 
+															   inManagedObjectContext:self.managedObjectContext];
+		timeEntry.minutes = [NSNumber numberWithInt:minutes];
+		timeEntry.date = date;
+		timeEntry.type = self.type;
+		
+		self.type.startTimerDate = nil;
 	}
-	[userSettings removeObjectForKey:whichStartDate];
-	[[Settings sharedInstance] saveData];
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+#warning fix me
+		abort();
+	}
 
 
 	// add Start Time button
@@ -241,18 +197,18 @@ static int sortByDate(id v1, id v2, void *context)
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 												  style:UITableViewStylePlain] autorelease];
-	tableView.editing = YES;
-	tableView.allowsSelectionDuringEditing = YES;
+	self.tableView.editing = YES;
+	self.tableView.allowsSelectionDuringEditing = YES;
 	
 	// set the autoresizing mask so that the table will always fill the view
-	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	
 	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	tableView.delegate = self;
-	tableView.dataSource = self;
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
 	
 	// set the tableview as the controller view
-	self.view = tableView;
+	self.view = self.tableView;
 
 	// add + button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -263,28 +219,14 @@ static int sortByDate(id v1, id v2, void *context)
 
 -(void)viewWillAppear:(BOOL)animated
 {
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *timeEntries = [userSettings objectForKey:timeEntriesName];
-	if(timeEntries == nil)
-	{
-		timeEntries = [NSMutableArray array];
-		[userSettings setObject:timeEntries forKey:timeEntriesName];
-	}		
-	
-	
 	[super viewWillAppear:animated];
 	if(selectedIndexPath)
 	{
-		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+		[self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
 		selectedIndexPath = nil;
 	}
-	// force the tableview to load
-	[self reloadData];
 
-	NSString *whichStartDate = _quickBuild ? SettingsRBCTimeStartDate : SettingsTimeStartDate;
-	if([[[Settings sharedInstance] userSettings] objectForKey:whichStartDate] == nil)
+	if(self.type.startTimerDate == nil)
 	{
 		// add Start Time button
 		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Start Time", @"'Start Time' navigation bar action button")
@@ -308,29 +250,36 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[tableView flashScrollIndicators];
-	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+	[self.tableView flashScrollIndicators];
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)timePickerViewControllerDone:(TimePickerViewController *)timePickerController 
 {
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+	
 	if(selectedIndexPath != nil)
 	{
 		VERBOSE(NSLog(@"date is = %@, minutes %d", [timePickerController date], [timePickerController minutes]);)
+		MTTimeEntry *timeEntry = [self.fetchedResultsController objectAtIndexPath:selectedIndexPath];
+	
+		timeEntry.minutes = [NSNumber numberWithInt:[timePickerController minutes]];
+		timeEntry.date = [timePickerController date];
+
+		// Save the context.
+		NSError *error = nil;
+		if (![context save:&error]) 
+		{
+#warning fix me			
+			/*
+			 Replace this implementation with code to handle the error appropriately.
+			 
+			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+			 */
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			abort();
+		}
 		
-		// existing entry
-		NSMutableDictionary *entry = [timeEntries objectAtIndex:[selectedIndexPath row]];
-
-		[entry setObject:[timePickerController date] forKey:SettingsTimeEntryDate];
-		[entry setObject:[[[NSNumber alloc] initWithInt:[timePickerController minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
-		
-		[self reloadData];
-
-		// save the data
-		[[Settings sharedInstance] saveData];
-
 		[[self navigationController] popViewControllerAnimated:YES];
 	}
 	else
@@ -338,62 +287,37 @@ static int sortByDate(id v1, id v2, void *context)
 		// new entry
 		VERBOSE(NSLog(@"date is = %@, minutes %d", [timePickerController date], [timePickerController minutes]);)
 
-		NSMutableDictionary *entry = [[[NSMutableDictionary alloc] init] autorelease];
-
-		[entry setObject:[timePickerController date] forKey:SettingsTimeEntryDate];
-		[entry setObject:[[[NSNumber alloc] initWithInt:[timePickerController minutes]] autorelease] forKey:SettingsTimeEntryMinutes];
-		[timeEntries insertObject:entry atIndex:0];
 		
-		[self reloadData];
-
-		// save the data
-		[[Settings sharedInstance] saveData];
+		// Create a new instance of the entity managed by the fetched results controller.
+		NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+		MTTimeEntry *timeEntry = [NSEntityDescription insertNewObjectForEntityForName:[entity name] 
+															   inManagedObjectContext:context];
+		timeEntry.minutes = [NSNumber numberWithInt:[timePickerController minutes]];
+		timeEntry.date = [timePickerController date];
+		timeEntry.type = self.type;
+		
+		// Save the context.
+		NSError *error = nil;
+		if (![context save:&error]) 
+		{
+#warning fix me			
+			/*
+			 Replace this implementation with code to handle the error appropriately.
+			 
+			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+			 */
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			abort();
+		}
 		
 		[self dismissModalViewControllerAnimated:YES];
 	}
 }
 
-/******************************************************************
- *
- *   TABLE DELEGATE FUNCTIONS
- *
- ******************************************************************/
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)configureCell:(UITableViewTitleAndValueCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {
-    DEBUG(NSLog(@"numberOfRowsInTable:");)
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
-	int count = [timeEntries count];
-    DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
-	return(count);
-}
-
-- (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d ", row);)
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"HourTableCell"];
-	if (cell == nil) 
-	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HourTableCell"] autorelease];
-	}
-	else
-	{
-		[cell setValue:@""];
-		[cell setTitle:@""];
-	}
-
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
+	MTTimeEntry *timeEntry = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	if(row >= [timeEntries count])
-		return(NULL);
-	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
-
-	NSNumber *time = [entry objectForKey:SettingsTimeEntryMinutes];
-
-
-	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
 	// create dictionary entry for This Return Visit
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
@@ -405,12 +329,12 @@ static int sortByDate(id v1, id v2, void *context)
 	{
 		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 	}
-
-	[cell setTitle:[dateFormatter stringFromDate:date]];
-
-
-
-	int minutes = [time intValue];
+	
+	[cell setTitle:[dateFormatter stringFromDate:timeEntry.date]];
+	
+	
+	
+	int minutes = [timeEntry.minutes intValue];
 	int hours = minutes / 60;
 	minutes %= 60;
 	if(hours && minutes)
@@ -419,67 +343,231 @@ static int sortByDate(id v1, id v2, void *context)
 		[cell setValue:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
 	else if(minutes || minutes == 0)
 		[cell setValue:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+	else
+		[cell setValue:@""];
+}
 
+
+
+
+/******************************************************************
+ *
+ *   TABLE DELEGATE FUNCTIONS
+ *
+ ******************************************************************/
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
+    return [[self.fetchedResultsController sections] count];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *CellIdentifier = @"HourTableCell";
+
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) 
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+	}
+	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleDelete;
+}
+
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) 
+	{
+        // Delete the managed object for the given index path
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        // Save the context.
+        NSError *error = nil;
+        if (![context save:&error]) 
+		{
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+		
+		// display the "no entries" picture
+		[self updateEmptyView];
+    }   
+}
+
+#pragma mark -
+#pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
     DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
 	self.selectedIndexPath = indexPath;
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
-	NSMutableDictionary *entry = [timeEntries objectAtIndex:row];
-
-	NSNumber *minutes = [entry objectForKey:SettingsTimeEntryMinutes];
-	NSDate *date = [entry objectForKey:SettingsTimeEntryDate];
-
-	[self retain];
-	TimePickerViewController *viewController = [[[TimePickerViewController alloc] initWithDate:date minutes:[minutes intValue]] autorelease];
-
+	MTTimeEntry *timeEntry = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	
+	TimePickerViewController *viewController = [[[TimePickerViewController alloc] initWithDate:timeEntry.date minutes:[timeEntry.minutes intValue]] autorelease];
 	viewController.delegate = self;
 	[[self navigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-	NSString *timeEntriesName = _quickBuild ? SettingsRBCTimeEntries : SettingsTimeEntries;
-	NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:timeEntriesName];
-	[timeEntries removeObjectAtIndex:[indexPath row]];
-	[[Settings sharedInstance] saveData];
-	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-	[self updateEmptyView];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return(YES);
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return(UITableViewCellEditingStyleDelete);
-}
 
 
-- (BOOL)respondsToSelector:(SEL)selector
+#pragma mark -
+#pragma mark Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController 
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
+    if (fetchedResultsController_ != nil) 
+	{
+        return fetchedResultsController_;
+    }
+    
+    /*
+     Set up the fetched results controller.
+	 */
+    // Create the fetch request for the entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"TimeEntry" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"type == %@", self.type]];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext 
+																								  sectionNameKeyPath:nil 
+																										   cacheName:[NSString stringWithFormat:@"HourViewController %@ %@", self.type.name, self.type.user.name]];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    [aFetchedResultsController release];
+    [fetchRequest release];
+    [sortDescriptor release];
+    [sortDescriptors release];
+    
+    NSError *error = nil;
+    if (![fetchedResultsController_ performFetch:&error]) 
+	{
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return fetchedResultsController_;
+}    
+
+
+#pragma mark -
+#pragma mark Fetched results controller delegate
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView beginUpdates];
 }
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+
+- (void)controller:(NSFetchedResultsController *)controller 
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex 
+	 forChangeType:(NSFetchedResultsChangeType)type 
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
 }
 
-- (void)forwardInvocation:(NSInvocation*)invocation
+
+- (void)controller:(NSFetchedResultsController *)controller 
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath 
+	 forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath 
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
 }
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView endUpdates];
+}
+
+
+/*
+ // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
+ 
+ - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+ // In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+ }
+ */
 
 @end
