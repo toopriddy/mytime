@@ -61,7 +61,6 @@
 		904A87E110EAFC790029A63F /* not-at-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 904A87E010EAFC790029A63F /* not-at-home.png */; };
 		904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904AF63D1170101000D497E7 /* StatisticsTableViewController.m */; };
 		904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */; };
-		904FEAFA11B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */; };
 		905222B51183EB790047C9DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 905222B41183EB790047C9DA /* MapKit.framework */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
 		9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */; };
@@ -85,27 +84,6 @@
 		907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */; };
 		908722C110AF9A9F00580FFF /* rbc.png in Resources */ = {isa = PBXBuildFile; fileRef = 908722C010AF9A9F00580FFF /* rbc.png */; };
 		908722C310AF9AAA00580FFF /* category.png in Resources */ = {isa = PBXBuildFile; fileRef = 908722C210AF9AAA00580FFF /* category.png */; };
-		908AC73A11AF4F500009F22B /* MyTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 908AC73811AF4F500009F22B /* MyTime.xcdatamodeld */; };
-		908AC79411AF54BD0009F22B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 908AC79311AF54BD0009F22B /* CoreData.framework */; };
-		908AC88E11AF87490009F22B /* MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC86F11AF87490009F22B /* MTTimeEntry.m */; };
-		908AC88F11AF87490009F22B /* MTCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87111AF87490009F22B /* MTCall.m */; };
-		908AC89011AF87490009F22B /* MTBulkPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87311AF87490009F22B /* MTBulkPlacement.m */; };
-		908AC89111AF87490009F22B /* MTAdditionalInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87511AF87490009F22B /* MTAdditionalInformation.m */; };
-		908AC89211AF87490009F22B /* MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87711AF87490009F22B /* MTUser.m */; };
-		908AC89311AF87490009F22B /* MTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87911AF87490009F22B /* MTSettings.m */; };
-		908AC89411AF87490009F22B /* MTStatisticsAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87B11AF87490009F22B /* MTStatisticsAdjustment.m */; };
-		908AC89511AF87490009F22B /* MTTerritory.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87D11AF87490009F22B /* MTTerritory.m */; };
-		908AC89611AF87490009F22B /* MTReturnVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC87F11AF87490009F22B /* MTReturnVisit.m */; };
-		908AC89711AF87490009F22B /* MTTerritoryHouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88111AF87490009F22B /* MTTerritoryHouse.m */; };
-		908AC89811AF87490009F22B /* MTStartTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88311AF87490009F22B /* MTStartTimestamp.m */; };
-		908AC89911AF87490009F22B /* MTAdditionalInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88511AF87490009F22B /* MTAdditionalInformationType.m */; };
-		908AC89A11AF87490009F22B /* MTPublication.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88711AF87490009F22B /* MTPublication.m */; };
-		908AC89B11AF87490009F22B /* MTTerritoryStreet.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88911AF87490009F22B /* MTTerritoryStreet.m */; };
-		908AC89C11AF87490009F22B /* MTPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88B11AF87490009F22B /* MTPresentation.m */; };
-		908AC89D11AF87490009F22B /* MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC88D11AF87490009F22B /* MTTimeType.m */; };
-		908AC8BB11B089E90009F22B /* MTTimeType+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC8BA11B089E90009F22B /* MTTimeType+Extensions.m */; };
-		908AC8BE11B092CB0009F22B /* MTSettings+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC8BD11B092CB0009F22B /* MTSettings+Extensions.m */; };
-		908AC8C111B093C30009F22B /* MTUser+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 908AC8C011B093C30009F22B /* MTUser+Extensions.m */; };
 		90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A60369117CCE50004E8D9A /* HourPickerViewController.m */; };
 		90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6040C117D508D004E8D9A /* libGenericTableViewController.a */; };
 		90A7AE830EA5A62200EBEF2D /* build.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A7AE820EA5A62100EBEF2D /* build.png */; };
@@ -306,8 +284,6 @@
 		904AF63D1170101000D497E7 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsTableViewController.m; sourceTree = "<group>"; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
 		904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublisherTypeViewController.m; sourceTree = "<group>"; };
-		904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+PriddySoftware.h"; sourceTree = "<group>"; };
-		904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+PriddySoftware.m"; sourceTree = "<group>"; };
 		905222B41183EB790047C9DA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9052CD321086753F001FFA13 /* NotAtHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeViewController.h; sourceTree = "<group>"; };
 		9052CD331086753F001FFA13 /* NotAtHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeViewController.m; sourceTree = "<group>"; };
@@ -356,46 +332,6 @@
 		908722C010AF9A9F00580FFF /* rbc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rbc.png; sourceTree = "<group>"; };
 		908722C210AF9AAA00580FFF /* category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = category.png; sourceTree = "<group>"; };
 		908AC5EB10CD489900922E02 /* Norwegian */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		908AC73911AF4F500009F22B /* testcoredata.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = testcoredata.xcdatamodel; sourceTree = "<group>"; };
-		908AC79311AF54BD0009F22B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		908AC86E11AF87490009F22B /* MTTimeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimeEntry.h; sourceTree = "<group>"; };
-		908AC86F11AF87490009F22B /* MTTimeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTimeEntry.m; sourceTree = "<group>"; };
-		908AC87011AF87490009F22B /* MTCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTCall.h; sourceTree = "<group>"; };
-		908AC87111AF87490009F22B /* MTCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTCall.m; sourceTree = "<group>"; };
-		908AC87211AF87490009F22B /* MTBulkPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTBulkPlacement.h; sourceTree = "<group>"; };
-		908AC87311AF87490009F22B /* MTBulkPlacement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTBulkPlacement.m; sourceTree = "<group>"; };
-		908AC87411AF87490009F22B /* MTAdditionalInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformation.h; sourceTree = "<group>"; };
-		908AC87511AF87490009F22B /* MTAdditionalInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformation.m; sourceTree = "<group>"; };
-		908AC87611AF87490009F22B /* MTUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTUser.h; sourceTree = "<group>"; };
-		908AC87711AF87490009F22B /* MTUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTUser.m; sourceTree = "<group>"; };
-		908AC87811AF87490009F22B /* MTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTSettings.h; sourceTree = "<group>"; };
-		908AC87911AF87490009F22B /* MTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTSettings.m; sourceTree = "<group>"; };
-		908AC87A11AF87490009F22B /* MTStatisticsAdjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTStatisticsAdjustment.h; sourceTree = "<group>"; };
-		908AC87B11AF87490009F22B /* MTStatisticsAdjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTStatisticsAdjustment.m; sourceTree = "<group>"; };
-		908AC87C11AF87490009F22B /* MTTerritory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTerritory.h; sourceTree = "<group>"; };
-		908AC87D11AF87490009F22B /* MTTerritory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTerritory.m; sourceTree = "<group>"; };
-		908AC87E11AF87490009F22B /* MTReturnVisit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTReturnVisit.h; sourceTree = "<group>"; };
-		908AC87F11AF87490009F22B /* MTReturnVisit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTReturnVisit.m; sourceTree = "<group>"; };
-		908AC88011AF87490009F22B /* MTTerritoryHouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTerritoryHouse.h; sourceTree = "<group>"; };
-		908AC88111AF87490009F22B /* MTTerritoryHouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryHouse.m; sourceTree = "<group>"; };
-		908AC88211AF87490009F22B /* MTStartTimestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTStartTimestamp.h; sourceTree = "<group>"; };
-		908AC88311AF87490009F22B /* MTStartTimestamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTStartTimestamp.m; sourceTree = "<group>"; };
-		908AC88411AF87490009F22B /* MTAdditionalInformationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformationType.h; sourceTree = "<group>"; };
-		908AC88511AF87490009F22B /* MTAdditionalInformationType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformationType.m; sourceTree = "<group>"; };
-		908AC88611AF87490009F22B /* MTPublication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTPublication.h; sourceTree = "<group>"; };
-		908AC88711AF87490009F22B /* MTPublication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTPublication.m; sourceTree = "<group>"; };
-		908AC88811AF87490009F22B /* MTTerritoryStreet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTerritoryStreet.h; sourceTree = "<group>"; };
-		908AC88911AF87490009F22B /* MTTerritoryStreet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryStreet.m; sourceTree = "<group>"; };
-		908AC88A11AF87490009F22B /* MTPresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTPresentation.h; sourceTree = "<group>"; };
-		908AC88B11AF87490009F22B /* MTPresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTPresentation.m; sourceTree = "<group>"; };
-		908AC88C11AF87490009F22B /* MTTimeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimeType.h; sourceTree = "<group>"; };
-		908AC88D11AF87490009F22B /* MTTimeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTimeType.m; sourceTree = "<group>"; };
-		908AC8B911B089E90009F22B /* MTTimeType+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MTTimeType+Extensions.h"; sourceTree = "<group>"; };
-		908AC8BA11B089E90009F22B /* MTTimeType+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MTTimeType+Extensions.m"; sourceTree = "<group>"; };
-		908AC8BC11B092CB0009F22B /* MTSettings+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MTSettings+Extensions.h"; sourceTree = "<group>"; };
-		908AC8BD11B092CB0009F22B /* MTSettings+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MTSettings+Extensions.m"; sourceTree = "<group>"; };
-		908AC8BF11B093C30009F22B /* MTUser+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MTUser+Extensions.h"; sourceTree = "<group>"; };
-		908AC8C011B093C30009F22B /* MTUser+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MTUser+Extensions.m"; sourceTree = "<group>"; };
 		90A60368117CCE50004E8D9A /* HourPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerViewController.h; sourceTree = "<group>"; };
 		90A60369117CCE50004E8D9A /* HourPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerViewController.m; sourceTree = "<group>"; };
 		90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GenericTableViewController.xcodeproj; path = GenericTableViewController/GenericTableViewController.xcodeproj; sourceTree = "<group>"; };
@@ -552,7 +488,6 @@
 				90E526D0116D8DAC00D5EFBD /* libz.dylib in Frameworks */,
 				90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */,
 				905222B51183EB790047C9DA /* MapKit.framework in Frameworks */,
-				908AC79411AF54BD0009F22B /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,7 +506,6 @@
 				9052CD3110866F57001FFA13 /* NotAtHomes */,
 				90FBE88E0E39938F00FD8014 /* Settings.h */,
 				90FBE88F0E39938F00FD8014 /* Settings.m */,
-				908AC8B811B089CC0009F22B /* Model Extensions */,
 				90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */,
 				90FBEA500E3AA8A100FD8014 /* CallsSorter.m */,
 				90C1497D0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.h */,
@@ -629,8 +563,6 @@
 				90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */,
 				90E526AD116D886100D5EFBD /* NSData+PSCompress.h */,
 				90E526AE116D886100D5EFBD /* NSData+PSCompress.m */,
-				904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */,
-				904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */,
 				905A0E731029213B00875539 /* Settings.bundle */,
 			);
 			path = Classes;
@@ -672,7 +604,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				908AC73811AF4F500009F22B /* MyTime.xcdatamodeld */,
 				903FF2E5102FDAF100CC60B8 /* index.html */,
 				90161BF80FDAB99D001EDB6D /* NotAtHomes */,
 				90D02D7F0E538552001CEF0D /* map.html */,
@@ -728,7 +659,6 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				90742DA510E340BD004FAA60 /* AddressBookUI.framework */,
-				908AC79311AF54BD0009F22B /* CoreData.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -814,19 +744,6 @@
 				90226C571030DB5900A94FEC /* MyTimeWebServerView.m */,
 			);
 			name = SettingsView;
-			sourceTree = "<group>";
-		};
-		908AC8B811B089CC0009F22B /* Model Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				908AC8B911B089E90009F22B /* MTTimeType+Extensions.h */,
-				908AC8BA11B089E90009F22B /* MTTimeType+Extensions.m */,
-				908AC8BC11B092CB0009F22B /* MTSettings+Extensions.h */,
-				908AC8BD11B092CB0009F22B /* MTSettings+Extensions.m */,
-				908AC8BF11B093C30009F22B /* MTUser+Extensions.h */,
-				908AC8C011B093C30009F22B /* MTUser+Extensions.m */,
-			);
-			name = "Model Extensions";
 			sourceTree = "<group>";
 		};
 		90A60408117D508D004E8D9A /* Products */ = {
@@ -1231,27 +1148,6 @@
 				90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */,
 				90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */,
 				90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */,
-				908AC73A11AF4F500009F22B /* MyTime.xcdatamodeld in Sources */,
-				908AC88E11AF87490009F22B /* MTTimeEntry.m in Sources */,
-				908AC88F11AF87490009F22B /* MTCall.m in Sources */,
-				908AC89011AF87490009F22B /* MTBulkPlacement.m in Sources */,
-				908AC89111AF87490009F22B /* MTAdditionalInformation.m in Sources */,
-				908AC89211AF87490009F22B /* MTUser.m in Sources */,
-				908AC89311AF87490009F22B /* MTSettings.m in Sources */,
-				908AC89411AF87490009F22B /* MTStatisticsAdjustment.m in Sources */,
-				908AC89511AF87490009F22B /* MTTerritory.m in Sources */,
-				908AC89611AF87490009F22B /* MTReturnVisit.m in Sources */,
-				908AC89711AF87490009F22B /* MTTerritoryHouse.m in Sources */,
-				908AC89811AF87490009F22B /* MTStartTimestamp.m in Sources */,
-				908AC89911AF87490009F22B /* MTAdditionalInformationType.m in Sources */,
-				908AC89A11AF87490009F22B /* MTPublication.m in Sources */,
-				908AC89B11AF87490009F22B /* MTTerritoryStreet.m in Sources */,
-				908AC89C11AF87490009F22B /* MTPresentation.m in Sources */,
-				908AC89D11AF87490009F22B /* MTTimeType.m in Sources */,
-				908AC8BB11B089E90009F22B /* MTTimeType+Extensions.m in Sources */,
-				908AC8BE11B092CB0009F22B /* MTSettings+Extensions.m in Sources */,
-				908AC8C111B093C30009F22B /* MTUser+Extensions.m in Sources */,
-				904FEAFA11B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,8 +1258,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CC91A492-617E-4E7A-B724-918D8B9CFA0B";
-				SDKROOT = iphonesimulator4.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96CBC3D2-DB21-4FE9-9A99-C91F09804652";
+				SDKROOT = iphoneos3.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1405,7 +1301,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC8CC640-ED81-46AA-B313-4090C2817AA3";
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphoneos3.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1471,7 +1367,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1482,7 +1378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphoneos3.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -1502,7 +1398,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphoneos3.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
@@ -1544,51 +1440,6 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		908AC73811AF4F500009F22B /* MyTime.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				908AC86E11AF87490009F22B /* MTTimeEntry.h */,
-				908AC86F11AF87490009F22B /* MTTimeEntry.m */,
-				908AC87011AF87490009F22B /* MTCall.h */,
-				908AC87111AF87490009F22B /* MTCall.m */,
-				908AC87211AF87490009F22B /* MTBulkPlacement.h */,
-				908AC87311AF87490009F22B /* MTBulkPlacement.m */,
-				908AC87411AF87490009F22B /* MTAdditionalInformation.h */,
-				908AC87511AF87490009F22B /* MTAdditionalInformation.m */,
-				908AC87611AF87490009F22B /* MTUser.h */,
-				908AC87711AF87490009F22B /* MTUser.m */,
-				908AC87811AF87490009F22B /* MTSettings.h */,
-				908AC87911AF87490009F22B /* MTSettings.m */,
-				908AC87A11AF87490009F22B /* MTStatisticsAdjustment.h */,
-				908AC87B11AF87490009F22B /* MTStatisticsAdjustment.m */,
-				908AC87C11AF87490009F22B /* MTTerritory.h */,
-				908AC87D11AF87490009F22B /* MTTerritory.m */,
-				908AC87E11AF87490009F22B /* MTReturnVisit.h */,
-				908AC87F11AF87490009F22B /* MTReturnVisit.m */,
-				908AC88011AF87490009F22B /* MTTerritoryHouse.h */,
-				908AC88111AF87490009F22B /* MTTerritoryHouse.m */,
-				908AC88211AF87490009F22B /* MTStartTimestamp.h */,
-				908AC88311AF87490009F22B /* MTStartTimestamp.m */,
-				908AC88411AF87490009F22B /* MTAdditionalInformationType.h */,
-				908AC88511AF87490009F22B /* MTAdditionalInformationType.m */,
-				908AC88611AF87490009F22B /* MTPublication.h */,
-				908AC88711AF87490009F22B /* MTPublication.m */,
-				908AC88811AF87490009F22B /* MTTerritoryStreet.h */,
-				908AC88911AF87490009F22B /* MTTerritoryStreet.m */,
-				908AC88A11AF87490009F22B /* MTPresentation.h */,
-				908AC88B11AF87490009F22B /* MTPresentation.m */,
-				908AC88C11AF87490009F22B /* MTTimeType.h */,
-				908AC88D11AF87490009F22B /* MTTimeType.m */,
-				908AC73911AF4F500009F22B /* testcoredata.xcdatamodel */,
-			);
-			currentVersion = 908AC73911AF4F500009F22B /* testcoredata.xcdatamodel */;
-			path = MyTime.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }

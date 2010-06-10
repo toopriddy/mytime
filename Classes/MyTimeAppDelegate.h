@@ -17,7 +17,6 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "SecurityViewController.h"
-#import <CoreData/CoreData.h>
 
 // for moving around the UITableViewIndex
 static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
@@ -46,22 +45,13 @@ typedef enum {
 	UINavigationController *modalNavigationController;
 	UrlActionType _actionSheetType;
 	BOOL forceEmail;
-@private
-    NSManagedObjectContext *managedObjectContext_;
-    NSManagedObjectModel *managedObjectModel_;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator_;
-}	
+}
+
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *dataToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
 @property (nonatomic, retain) UINavigationController *modalNavigationController;
-
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (NSString *)applicationDocumentsDirectory;
 
 - (void)initializeMyTimeViews;
 
