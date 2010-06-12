@@ -192,8 +192,16 @@ NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChan
 			[instance readData];
         }
     }
-
+	
     return instance;
+}
+
++ (BOOL)isInitialized
+{
+    @synchronized(self) 
+	{
+        return instance != nil; 
+    }
 }
 
 - (void)dealloc

@@ -61,7 +61,7 @@ typedef enum {
 	kDisconnected
 } BackupViewState;
 
-@interface BackupView : UIAlertView <UIAlertViewDelegate, TCPServerDelegate, EventAgentDelegate, EventAgentMessageDelegate>
+@interface BackupView : UIAlertView <UIAlertViewDelegate, TCPServerDelegate, EventAgentDelegate, EventAgentMessageDelegate, NSStreamDelegate>
 {
 	BackupViewState     _state;
 	TCPServer          *_server;

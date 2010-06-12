@@ -37,7 +37,7 @@ typedef enum
 
 //CLASS INTERFACES:
 
-@interface TCPServer : NSObject 
+@interface TCPServer : NSObject <NSNetServiceDelegate>
 {
 @private
 	id<TCPServerDelegate> _delegate;
