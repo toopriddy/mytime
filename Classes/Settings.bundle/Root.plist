@@ -22,6 +22,9 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
+	</array>
+	<key>Hidden Items</key>
+	<array>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -38,9 +41,6 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
-	</array>
-	<key>Hidden Items</key>
-	<array>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>

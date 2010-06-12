@@ -36,7 +36,8 @@ typedef enum {
 										 UIActionSheetDelegate,
 										 SecurityViewControllerDelegate,
 										 MFMailComposeViewControllerDelegate,
-										 UINavigationControllerDelegate> 
+										 UINavigationControllerDelegate,
+                                         UIAlertViewDelegate> 
 {
 	UIWindow *window;
 	UITabBarController *tabBarController;
