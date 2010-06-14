@@ -440,6 +440,17 @@ int sortByMetadata(id v1, id v2, void *context)
 	self.sectionRowCount = [NSMutableArray array];
 	self.sectionOffsets = [NSMutableArray array];
 
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+	{
+		[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+	}
+	else
+	{
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+	}
+	
 	if(_searchText == nil || _searchText.length == 0)
 	{
 		switch(sortedBy)
@@ -622,7 +633,14 @@ int sortByMetadata(id v1, id v2, void *context)
 					{
 						if([[metadata objectForKey:CallMetadataName] isEqualToString:self.metadata])
 						{
-							value = [metadata objectForKey:CallMetadataValue];
+							if([[metadata objectForKey:CallMetadataType] intValue] == DATE)
+							{
+								value = [dateFormatter stringFromDate:[metadata objectForKey:CallMetadataData]];
+							}
+							else
+							{
+								value = [metadata objectForKey:CallMetadataValue];
+							}
 						}
 					}
 					
@@ -649,7 +667,14 @@ int sortByMetadata(id v1, id v2, void *context)
 						{
 							if([[metadata objectForKey:CallMetadataName] isEqualToString:self.metadata])
 							{
-								value = [metadata objectForKey:CallMetadataValue];
+								if([[metadata objectForKey:CallMetadataType] intValue] == DATE)
+								{
+									value = [dateFormatter stringFromDate:[metadata objectForKey:CallMetadataData]];
+								}
+								else
+								{
+									value = [metadata objectForKey:CallMetadataValue];
+								}
 							}
 						}
 						

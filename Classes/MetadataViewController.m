@@ -405,6 +405,7 @@ static MetadataInformation commonInformation[] = {
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath 
 {
 	GenericTableViewSectionController *sectionController = [self.displaySectionControllers objectAtIndex:proposedDestinationIndexPath.section];
+	NSLog(@"exitsint = %@ proposed = %@", sourceIndexPath, proposedDestinationIndexPath);
 	// check to see if they are moving it beyond the "Add custom information", the last entry and there are no entries in the list
 	if(proposedDestinationIndexPath.section == 1 && 
 	   (sectionController.displayCellControllers.count - 1) == proposedDestinationIndexPath.row &&
