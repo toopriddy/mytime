@@ -60,7 +60,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
-,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeTract}
+,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeCampaignTract}
 
 ,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
