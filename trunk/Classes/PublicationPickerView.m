@@ -117,6 +117,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Young People Ask 1", @"Book Publication Name (ype-1)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Young People Ask 2", @"Book Publication Name (ype-2)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Your Youth", @"Book Publication Name (yy)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Reasoning", @"Book Publication Name (rs)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Watchtower Bound Volume", @"Book Publication Name (wvol)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Awake Bound Volume", @"Book Publication Name (gvol)"),   PublicationTypeBook}
 
