@@ -13,11 +13,60 @@
 //  is NOT allowed to be used in a compiled or scripted program.
 //
 
+#define USE_BUILTIN_MAPS 1
 #import <UIKit/UIKit.h>
-
-#import "RMMapView.h"
 #import "MapViewCallDetailController.h"
 #import "CoreLocation/CoreLocation.h"
+
+
+#if USE_BUILTIN_MAPS
+#import <MapKit/MapKit.h>
+
+@class SelectPositionMapViewController;
+
+@protocol SelectPositionMapViewControllerDelegate<NSObject>
+@required
+- (void)selectPositionMapViewControllerDone:(SelectPositionMapViewController *)selectPositionMapViewController;
+@end
+
+@interface SelectPositionAnnotation : NSObject <MKAnnotation>
+{
+	CLLocationCoordinate2D coordinate;
+	NSString *title;
+}
+// Center latitude and longitude of the annotion view.
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic, retain) NSString *title;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+@end
+
+@interface SelectPositionMapViewController : UIViewController <MKMapViewDelegate,
+															   CLLocationManagerDelegate>
+{
+    MKMapView *mapView;
+	SelectPositionAnnotation *marker;
+	
+	BOOL pointToMove;
+	BOOL markerMoved;
+	BOOL pointInitalized;
+	BOOL defaultPointInitalized;
+	CLLocationCoordinate2D point;
+	
+	NSObject<SelectPositionMapViewControllerDelegate> *delegate;
+}
+
+@property (nonatomic, retain) SelectPositionAnnotation *marker;
+@property (nonatomic, retain) MKMapView *mapView;
+@property (nonatomic, assign) NSObject<SelectPositionMapViewControllerDelegate> *delegate;
+@property (nonatomic, readonly) CLLocationCoordinate2D point;
+
+- (id)initWithPosition:(NSString *)thePosition;
+
+@end
+
+#else
+
+#import "RMMapView.h"
 
 @class SelectPositionMapViewController;
 
@@ -50,3 +99,4 @@
 - (id)initWithPosition:(NSString *)thePosition;
 
 @end
+#endif

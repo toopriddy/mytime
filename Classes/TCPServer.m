@@ -200,7 +200,7 @@ static void TCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType typ
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict
 {
-	[super netServiceDidPublish:sender];
+//	[super netServiceDidPublish:sender];
 	if(self.delegate && [self.delegate respondsToSelector:@selector(server:didNotEnableBonjour:)])
 		[self.delegate server:self didNotEnableBonjour:errorDict];
 }
