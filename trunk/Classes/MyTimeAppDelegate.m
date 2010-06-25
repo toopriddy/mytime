@@ -134,6 +134,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	return [[NSData alloc] initWithBytesNoCopy:buffer length:length/2 freeWhenDone:YES];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	exit(0);
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
 {
 
@@ -229,12 +234,22 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					[self.settingsToRestore writeToFile:[Settings filename] atomically: YES];
 					self.settingsToRestore = nil;
-
-					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = NSLocalizedString(@"MyTime backup restored.", @"This message is displayed after a successful restore of a backup");
-					[alertSheet show];
-					[self initializeMyTimeViews];
+					if([Settings isInitialized])
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						alertSheet.delegate = self;
+						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+						alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
+						[alertSheet show];
+					}
+					else
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+						alertSheet.title = NSLocalizedString(@"MyTime backup restored.", @"This message is displayed after a successful restore of a backup");
+						[alertSheet show];
+						[self initializeMyTimeViews];
+					}
 					break;
 				}
 				// cancel
@@ -400,109 +415,29 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if (!url) 
+	static int debounce = 0;
+    if (!url || debounce++ == 1)  // only cause this to skip when opening a backup from startup
 	{  
 		return NO; 
 	}
-	
-	NSString *path = [url path];
-	NSString *data = [url query];
 	BOOL handled = NO;
-	if(path && data)
+	NSString *path = [url path];
+
+	if([url isFileURL])
 	{
-		if([@"/addCall" isEqualToString:path])
+		NSString *extension = [path pathExtension];
+		if([extension isEqualToString:@"mytimedata"])
 		{
-			do 
+			NSString *err = nil;
+			NSPropertyListFormat format;
+			NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+			self.settingsToRestore = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&err];
+			[data release];
+			if(err == nil && 
+			   format == kCFPropertyListXMLFormat_v1_0 &&
+			   self.settingsToRestore != nil)
 			{
-				NSData *dataStore = allocNSDataFromNSStringByteString(data);
-				if(dataStore == nil)
-					break;
-				@try
-				{
-					self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
-				}
-				@catch (NSException *e) 
-				{
-					NSLog(@"%@", e);
-				}
-				[dataStore release];
-				DEBUG(NSLog(@"%@", dataToImport);)
-				
-				if(self.dataToImport == nil)
-					break;
-				
-				handled = YES;
-				_actionSheetType = ADD_CALL;
-				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a call from an email when the call was transferred from another iphone/itouch")
-																		 delegate:self
-																cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
-														   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
-																otherButtonTitles:nil] autorelease];
-				
-				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-				[alertSheet showInView:window];
-			} while (false);
-		}
-		if([@"/addNotAtHomeTerritory" isEqualToString:path])
-		{
-			do 
-			{
-				NSData *dataStore = allocNSDataFromNSStringByteString(data);
-				if(dataStore == nil)
-					break;
-				@try
-				{
-					self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
-				}
-				@catch (NSException *e) 
-				{
-					NSLog(@"%@", e);
-				}
-				[dataStore release];
-				DEBUG(NSLog(@"%@", dataToImport);)
-				
-				if(self.dataToImport == nil)
-					break;
-				
-				handled = YES;
-				_actionSheetType = ADD_NOT_AT_HOME_TERRITORY;
-				UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a not at home territory into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a not at home territory from an email when the call was transferred from another iphone/itouch")
-																		 delegate:self
-																cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
-														   destructiveButtonTitle:NSLocalizedString(@"Yes, add territory", @"Transferr this call from another user")
-																otherButtonTitles:nil] autorelease];
-				
-				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-				[alertSheet showInView:window];
-			} while (false);
-		}
-		BOOL compressed;
-		if((compressed = [@"/restoreCompressedBackup" isEqualToString:path]) ||
-		   [@"/restoreBackup" isEqualToString:path])
-		{
-			do 
-			{
-				NSData *dataStore = allocNSDataFromNSStringByteString(data);
-				if(dataStore == nil)
-					break;
-				
-				@try
-				{
-					NSData *theData = compressed ? [dataStore decompress] : dataStore;
-					self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:theData];
-				}
-				@catch (NSException *e) 
-				{
-					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-					alertSheet.title = [NSString stringWithFormat:@"%@", e];
-					[alertSheet show];
-					
-				}
-				[dataStore release];
 				DEBUG(NSLog(@"%@", self.settingsToRestore);)
-				
-				if(self.settingsToRestore == nil)
-					break;
 				
 				handled = YES;
 				_actionSheetType = RESTORE_BACKUP;
@@ -514,17 +449,140 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				
 				alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 				[alertSheet showInView:window];
-			} while (false);
+			}
+		}
+		else
+		{
+			// other types of files go here
+		}
+		if(!handled)
+		{
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"MyTime opened with invalid file", @"This message is displayed when someone clicks on a file to open mytime in an email or a webpage which will open up mytime to either add a transfered call or restore from a backup");
+			[alertSheet show];
 		}
 	}
-	
-	if(!handled)
+	else
 	{
-		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"MyTime opened with invalid URL", @"This message is displayed when someone clicks on a link in an email or a webpage which will open up mytime to either add a transfered call or restore from a backup");
-		[alertSheet show];
-	}
+		NSString *data = [url query];
+		if(path && data)
+		{
+			if([@"/addCall" isEqualToString:path])
+			{
+				do 
+				{
+					NSData *dataStore = allocNSDataFromNSStringByteString(data);
+					if(dataStore == nil)
+						break;
+					@try
+					{
+						self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+					}
+					@catch (NSException *e) 
+					{
+						NSLog(@"%@", e);
+					}
+					[dataStore release];
+					DEBUG(NSLog(@"%@", dataToImport);)
+					
+					if(self.dataToImport == nil)
+						break;
+					
+					handled = YES;
+					_actionSheetType = ADD_CALL;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a call from an email when the call was transferred from another iphone/itouch")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
+			if([@"/addNotAtHomeTerritory" isEqualToString:path])
+			{
+				do 
+				{
+					NSData *dataStore = allocNSDataFromNSStringByteString(data);
+					if(dataStore == nil)
+						break;
+					@try
+					{
+						self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+					}
+					@catch (NSException *e) 
+					{
+						NSLog(@"%@", e);
+					}
+					[dataStore release];
+					DEBUG(NSLog(@"%@", dataToImport);)
+					
+					if(self.dataToImport == nil)
+						break;
+					
+					handled = YES;
+					_actionSheetType = ADD_NOT_AT_HOME_TERRITORY;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a not at home territory into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a not at home territory from an email when the call was transferred from another iphone/itouch")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Yes, add territory", @"Transferr this call from another user")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
+			BOOL compressed;
+			if((compressed = [@"/restoreCompressedBackup" isEqualToString:path]) ||
+			   [@"/restoreBackup" isEqualToString:path])
+			{
+				do 
+				{
+					NSData *dataStore = allocNSDataFromNSStringByteString(data);
+					if(dataStore == nil)
+						break;
+					
+					@try
+					{
+						NSData *theData = compressed ? [dataStore decompress] : dataStore;
+						self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:theData];
+					}
+					@catch (NSException *e) 
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						alertSheet.title = [NSString stringWithFormat:@"%@", e];
+						[alertSheet show];
+						
+					}
+					[dataStore release];
+					DEBUG(NSLog(@"%@", self.settingsToRestore);)
+					
+					if(self.settingsToRestore == nil)
+						break;
+					
+					handled = YES;
+					_actionSheetType = RESTORE_BACKUP;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"This message gets displayed when the user is trying to restore from a backup from the email program")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Restore from Backup", @"Yes restore from the backup please")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
+		}
+		if(!handled)
+		{
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"MyTime opened with invalid URL", @"This message is displayed when someone clicks on a link in an email or a webpage which will open up mytime to either add a transfered call or restore from a backup");
+			[alertSheet show];
+		}
+	}	
     return YES;
 }
 
@@ -540,8 +598,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
 		return;
 	}
-	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+	BOOL exists = [fileManager fileExistsAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath]];
+	if(exists)
+		[fileManager removeItemAtPath:[@"~/Documents/MapMicrosoft VirtualEarth.sqlite" stringByExpandingTildeInPath] error:nil];
+#if 0		
 	if([defaults boolForKey:UserDefaultsClearMapCache])
 	{
 		[defaults setBool:NO forKey:UserDefaultsClearMapCache];
@@ -562,7 +625,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			[alertSheet show];
 		}
 	}
-		
+#endif		
 	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
 	{
 		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];

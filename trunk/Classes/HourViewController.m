@@ -470,7 +470,7 @@
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																								managedObjectContext:self.managedObjectContext 
 																								  sectionNameKeyPath:nil 
-																										   cacheName:[NSString stringWithFormat:@"HourViewController %@ %@", self.type.name, self.type.user.name]];
+																										   cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

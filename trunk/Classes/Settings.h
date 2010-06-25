@@ -217,6 +217,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 }
 + (Settings *)sharedInstance;
 + (id)initWithZone:(NSZone *)zone;
++ (BOOL)isInitialized;
 
 + (MFMailComposeViewController *)sendEmailBackup;
 + (MFMailComposeViewController *)sendPrintableEmailBackup;

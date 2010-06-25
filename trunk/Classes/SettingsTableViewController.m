@@ -1213,14 +1213,15 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-		
+
+#if 0		
 		// clear map cache
 		{
 			ClearMapCacheCellController *cellController = [[ClearMapCacheCellController alloc] init];
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-
+#endif
 		// Remove Test Translation
 		{
 			RemoveTestTranslationCellController *cellController = [[RemoveTestTranslationCellController alloc] init];

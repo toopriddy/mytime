@@ -19,9 +19,11 @@
 	MTTimeType *type = nil;
 	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 
-	type = [[managedObjectContext fetchObjectsForEntityName:@"TimeType"
-											  withPredicate:@"(user == %@) AND (name like %@)", currentUser, name] objectAtIndex:0];
-	return type;
+	NSArray *objects = [managedObjectContext fetchObjectsForEntityName:@"TimeType"
+														 withPredicate:@"(user == %@) AND (name like %@)", currentUser, name];
+	if(objects && [objects count])
+		return [objects objectAtIndex:0];
+	return nil;
 }
 
 + (MTTimeType *)hoursType

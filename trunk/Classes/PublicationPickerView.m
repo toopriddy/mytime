@@ -57,14 +57,16 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
 ,	{NSLocalizedString(@"Study Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
+,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeCampaignTract}
 
 ,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"What Does the Bible Really Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Yearbook", @"Book Publication Name"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Yearbook", @"Book Publication Name (yb)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
@@ -115,7 +117,8 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Young People Ask 1", @"Book Publication Name (ype-1)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Young People Ask 2", @"Book Publication Name (ype-2)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Your Youth", @"Book Publication Name (yy)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Reasoning", @"Book Publication Name (rs)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Watchtower Bound Volume", @"Book Publication Name (wvol)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"Awake Bound Volume", @"Book Publication Name (gvol)"),   PublicationTypeBook}
 
 ,   {NSLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {NSLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name (1540)"),   PublicationTypeDVDBible}
@@ -132,11 +135,11 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 ,   {NSLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name (9232)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name (9220)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name (dvmy)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name (9202)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Great Teacher", @"DVD Publication Name ()"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Require", @"DVD Publication Name (9201)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Knowledge", @"DVD Publication Name (1297)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Knowledge", @"DVD Publication Name (dvkl)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Keep Yourselves in Gods Love ", @"DVD Publication Name (?)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name (9203)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name (9229)"),   PublicationTypeDVDBook}
