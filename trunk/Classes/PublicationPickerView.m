@@ -53,20 +53,26 @@ typedef struct {
 
 #include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
+/* do not reorder this or if you add, then adjust yearbook */
     {NSLocalizedString(@"W & A", @"Both Magizines (w and g)"),       PublicationTypeMagazine}
 ,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 ,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
 ,	{NSLocalizedString(@"Study Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
 
+/* do not reorder this or if you add, then adjust yearbook */
 ,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
 ,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
 ,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeCampaignTract}
 
+/* do not reorder this or if you add, then adjust yearbook */
 ,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
+/* do not reorder this or if you add, then adjust yearbook */
 ,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
-,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
+/* do not reorder this or if you add, then adjust yearbook */
 ,   {NSLocalizedString(@"What Does the Bible Really Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
+/* do not reorder this or if you add, then adjust yearbook */
 ,   {NSLocalizedString(@"Yearbook", @"Book Publication Name (yb)"),   PublicationTypeBook}
+,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
