@@ -345,10 +345,34 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 }
 
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	// always save data before quitting
 	[[Settings sharedInstance] saveData];
+
+    NSError *error = nil;
+    if (managedObjectContext_ != nil) 
+	{
+        if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) 
+		{
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+#warning fix me			
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        } 
+    }
+	
+	// since we are going into the background, show the security view (that way when going into the background
+	// the OS will screenshot the security view when restoring... this will hide sensitive info)
+	[self displaySecurityViewController];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -645,6 +669,20 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[self initializeMyTimeViews];
 }
 
+- (void)displaySecurityViewController
+{
+	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+	if(passcode.length)
+	{
+		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
+		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
+		securityView.shouldConfirm = NO;
+		securityView.passcode = passcode;
+		securityView.delegate = self;
+		[self.modalNavigationController presentModalViewController:securityView animated:NO];
+	}
+}
+
 - (void)initializeMyTimeViews
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -816,15 +854,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
 
-	if(passcode.length)
-	{
-		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
-		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
-		securityView.shouldConfirm = NO;
-		securityView.passcode = passcode;
-		securityView.delegate = self;
-		[self.modalNavigationController presentModalViewController:securityView animated:NO];
-	}
+	[self displaySecurityViewController];
 }
 
 - (void)securityViewControllerDone:(SecurityViewController *)viewController authenticated:(BOOL)authenticated
