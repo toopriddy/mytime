@@ -43,6 +43,8 @@
 		9022ED190E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022ED180E8B04CD007DCD2D /* CallsSortedByNameViewDataSource.m */; };
 		9022ED210E8B0858007DCD2D /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = 9022ED200E8B0858007DCD2D /* people.png */; };
 		902866610ECF757A0076BCBD /* MonthChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902866600ECF757A0076BCBD /* MonthChooserViewController.m */; };
+		902B6F1F11F76C9F00441672 /* BlueMinusButtonAppleLike.png in Resources */ = {isa = PBXBuildFile; fileRef = 902B6F1D11F76C9F00441672 /* BlueMinusButtonAppleLike.png */; };
+		902B6F2011F76C9F00441672 /* BluePlusButtonAppleLike.png in Resources */ = {isa = PBXBuildFile; fileRef = 902B6F1E11F76C9F00441672 /* BluePlusButtonAppleLike.png */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
 		9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */; };
@@ -125,8 +127,6 @@
 		90DE42D110F8F9320003D14B /* NSObject+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */; };
 		90DE436010F93F730003D14B /* NotAtHomeStreetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */; };
 		90DE453C10FA4F780003D14B /* NotAtHomeHouseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */; };
-		90DE453F10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */; };
-		90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */; };
 		90DE454310FA7F140003D14B /* NotAtHomeHouseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */; };
 		90DE454910FA8C190003D14B /* NotAtHomeHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */; };
 		90DE47DC10FAE59B0003D14B /* EmptyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE47DB10FAE59B0003D14B /* EmptyListViewController.m */; };
@@ -228,6 +228,8 @@
 		9022ED200E8B0858007DCD2D /* people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people.png; sourceTree = "<group>"; };
 		9028665F0ECF757A0076BCBD /* MonthChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthChooserViewController.h; sourceTree = "<group>"; };
 		902866600ECF757A0076BCBD /* MonthChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthChooserViewController.m; sourceTree = "<group>"; };
+		902B6F1D11F76C9F00441672 /* BlueMinusButtonAppleLike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueMinusButtonAppleLike.png; sourceTree = "<group>"; };
+		902B6F1E11F76C9F00441672 /* BluePlusButtonAppleLike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BluePlusButtonAppleLike.png; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
@@ -385,8 +387,6 @@
 		90DE435E10F93F730003D14B /* NotAtHomeStreetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeStreetViewController.h; sourceTree = "<group>"; };
 		90DE435F10F93F730003D14B /* NotAtHomeStreetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeStreetViewController.m; sourceTree = "<group>"; };
 		90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotAtHomeHouseCell.xib; sourceTree = "<group>"; };
-		90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueMinusButtonWhiteOutlineSmall.png; sourceTree = "<group>"; };
-		90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BluePlusButtonWhiteOutlineSmall.png; sourceTree = "<group>"; };
 		90DE454110FA7F140003D14B /* NotAtHomeHouseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotAtHomeHouseViewController.h; sourceTree = "<group>"; };
 		90DE454210FA7F140003D14B /* NotAtHomeHouseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseViewController.m; sourceTree = "<group>"; };
 		90DE454710FA8C190003D14B /* NotAtHomeHouseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeHouseCell.m; sourceTree = "<group>"; };
@@ -606,8 +606,8 @@
 				90C148CC0E3B923C00C6EDAF /* time.png */,
 				90C148CD0E3B923C00C6EDAF /* timer.png */,
 				90DE47EF10FAEA330003D14B /* EmptyGradient.png */,
-				90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */,
-				90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */,
+				902B6F1D11F76C9F00441672 /* BlueMinusButtonAppleLike.png */,
+				902B6F1E11F76C9F00441672 /* BluePlusButtonAppleLike.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				9045A8F80E7D6F86001B439C /* Localizable.strings */,
 				90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */,
@@ -959,12 +959,12 @@
 				908722C310AF9AAA00580FFF /* category.png in Resources */,
 				904A87E110EAFC790029A63F /* not-at-home.png in Resources */,
 				90DE453C10FA4F780003D14B /* NotAtHomeHouseCell.xib in Resources */,
-				90DE453F10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png in Resources */,
-				90DE454010FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png in Resources */,
 				90DE47EA10FAE6450003D14B /* EmptyListView.xib in Resources */,
 				90DE47F010FAEA330003D14B /* EmptyGradient.png in Resources */,
 				9035FC021103F1CD00C9F5C7 /* deletedCalls.png in Resources */,
 				90E087B2117413FC00C5BDEA /* StatisticsNumberCell.xib in Resources */,
+				902B6F1F11F76C9F00441672 /* BlueMinusButtonAppleLike.png in Resources */,
+				902B6F2011F76C9F00441672 /* BluePlusButtonAppleLike.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
