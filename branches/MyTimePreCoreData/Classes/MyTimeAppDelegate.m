@@ -38,6 +38,10 @@
 #import "SecurityViewController.h"
 #import "NSData+PSCompress.h"
 
+@interface MyTimeAppDelegate ()
+- (void)displaySecurityViewController;
+@end
+
 @implementation MyTimeAppDelegate
 
 @synthesize window;
@@ -342,10 +346,18 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 }
 
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	// always save data before quitting
 	[[Settings sharedInstance] saveData];
+
+	// since we are going into the background, show the security view (that way when going into the background
+	// the OS will screenshot the security view when restoring... this will hide sensitive info)
+	[self displaySecurityViewController];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -626,6 +638,21 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[self initializeMyTimeViews];
 }
 
+- (void)displaySecurityViewController
+{
+	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+	if(passcode.length && !displayingSecurityViewController)
+	{
+		displayingSecurityViewController = YES;
+		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
+		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
+		securityView.shouldConfirm = NO;
+		securityView.passcode = passcode;
+		securityView.delegate = self;
+		[self.modalNavigationController presentModalViewController:securityView animated:NO];
+	}
+}
+
 - (void)initializeMyTimeViews
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -795,19 +822,12 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
 
-	if(passcode.length)
-	{
-		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
-		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
-		securityView.shouldConfirm = NO;
-		securityView.passcode = passcode;
-		securityView.delegate = self;
-		[self.modalNavigationController presentModalViewController:securityView animated:NO];
-	}
+	[self displaySecurityViewController];
 }
 
 - (void)securityViewControllerDone:(SecurityViewController *)viewController authenticated:(BOOL)authenticated
 {
+	displayingSecurityViewController = NO;
 	if(authenticated)
 	{
 		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
@@ -887,25 +907,5 @@ static BOOL tableViewIndexMoveOut(id self, SEL _cmd)
 	
     return YES;
 }
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-	BOOL ret = [super respondsToSelector:selector];
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s ? %s", __FILE__, selector, ret ? "YES" : "NO");)
-    return ret;
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
 
 @end

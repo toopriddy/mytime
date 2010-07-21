@@ -307,7 +307,24 @@
 		annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	}
 	annotationView.annotation = annotation;
-	
+	NSArray *returnVisits = [annotation.call objectForKey:CallReturnVisits];
+	if([returnVisits count])
+	{
+		NSDate *lastVisit = [[returnVisits objectAtIndex:0] objectForKey:CallReturnVisitDate];
+		NSTimeInterval interval = -[lastVisit timeIntervalSinceNow];
+		// if the user put a date in the future, fix this
+		if(interval < 0)
+			interval = 0;
+		int days = interval/(60*60*24);
+		MKPinAnnotationColor pinColor;
+		if(days > 14)
+			pinColor = MKPinAnnotationColorRed;
+		else if(days > 7)
+			pinColor = MKPinAnnotationColorPurple;
+		else
+			pinColor = MKPinAnnotationColorGreen;
+		annotationView.pinColor = pinColor;
+	}
     return annotationView;
 }
 
