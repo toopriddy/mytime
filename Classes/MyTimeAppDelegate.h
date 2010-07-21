@@ -46,6 +46,7 @@ typedef enum {
 	UINavigationController *modalNavigationController;
 	UrlActionType _actionSheetType;
 	BOOL forceEmail;
+	BOOL displayingSecurityViewController;
 }
 
 @property (nonatomic, retain) UIWindow *window;
