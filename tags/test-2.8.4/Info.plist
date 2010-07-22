@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mytime</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.yourcompany.MyTime</string>
+		</dict>
+	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>Icon.png</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.MyTime</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>2.8.0</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>MyTime Backup</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>CFBundleTypeIconFile</key>
+			<string>Icon.png</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>mytime/plist</string>
+			</array>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mytimedata</string>
+			</array>
+		</dict>
+	</array>
+ <key>UTExportedTypeDeclarations</key>
+
+        <array>
+
+            <dict>
+
+                <key>UTTypeIdentifier</key>
+
+                <string>public.jpeg</string>
+
+                <key>UTTypeReferenceURL</key>
+
+                <string>http://www.w3.org/Graphics/JPEG/</string>
+
+                <key>UTTypeDescription</key>
+
+                <string>JPEG image</string>
+
+                <key>UTTypeIconFile</key>
+
+                <string>public.jpeg.icns</string>
+
+                <key>UTTypeConformsTo</key>
+
+                <array>
+
+                    <string>public.image</string>
+
+                    <string>public.data</string>
+
+                </array>
+
+                <key>UTTypeTagSpecification</key>
+
+                <dict>
+
+                    <key>com.apple.ostype</key>
+
+                    <string>JPEG</string>
+
+                    <key>public.filename-extension</key>
+
+                    <array>
+
+                        <string>jpeg</string>
+
+                        <string>jpg</string>
+
+                    </array>
+
+                    <key>public.mime-type</key>
+
+                    <string>image/jpeg</string>
+
+                </dict>
+
+            </dict>
+
+        </array>
+</dict>
+</plist>
