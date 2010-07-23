@@ -47,7 +47,15 @@ static int sortByDate(id v1, id v2, void *context)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
 			self.emptyView.view.frame = self.tableView.bounds;
-			self.emptyView.imageView.image = self.tabBarItem.image;
+			if(_quickBuild)
+			{
+				self.emptyView.imageView.image = [UIImage imageNamed:@"rbcBig.png"];
+			}
+			else
+			{
+				self.emptyView.imageView.image = [UIImage imageNamed:@"timerBig.png"];
+			}
+			
 			self.emptyView.mainLabel.text = NSLocalizedString(@"No Hours", @"Text that appears at the Hours view when there are no entries configured");
 			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add hours", @"Text that appears at the Hours view when there are no entries configured");
 			[self.view addSubview:self.emptyView.view];

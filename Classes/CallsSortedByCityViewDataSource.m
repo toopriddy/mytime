@@ -36,9 +36,9 @@
 	return NSLocalizedString(@"Calls Sorted by City", @"View title");
 }
 
-- (UIImage *)tabBarImage 
+- (UIImage *)tabBarImageName
 {
-	return [UIImage imageNamed:@"city.png"];
+	return @"city";
 }
 
 - (void)dealloc

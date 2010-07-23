@@ -38,9 +38,9 @@
 	return NSLocalizedString(@"Calls Sorted by Street", @"view title");
 }
 
-- (UIImage *)tabBarImage 
+- (UIImage *)tabBarImageName
 {
-	return [UIImage imageNamed:@"street.png"];
+	return @"street";
 }
 
 - (void)dealloc
