@@ -33,7 +33,7 @@
 	return @"Set me!";
 }
 
-- (UIImage *)tabBarImageName
+- (NSString *)tabBarImageName
 {
 	return @"time";
 }
