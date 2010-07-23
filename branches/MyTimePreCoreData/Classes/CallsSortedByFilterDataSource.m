@@ -44,7 +44,7 @@
 	return NO;
 }
 
-- (UIImage *)tabBarImageName 
+- (NSString *)tabBarImageName 
 {
 	return @"category";
 }

@@ -46,7 +46,7 @@
 	return YES;
 }
 
-- (UIImage *)tabBarImageName 
+- (NSString *)tabBarImageName 
 {
 	return @"studies";
 }

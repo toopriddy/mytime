@@ -38,7 +38,7 @@
 	return NSLocalizedString(@"Deleted Calls Sorted by Street", @"view title");
 }
 
-- (UIImage *)tabBarImageName
+- (NSString *)tabBarImageName
 {
 	return @"deletedCalls";
 }

@@ -35,7 +35,7 @@
 	return NSLocalizedString(@"Calls Sorted by Name", @"View title");
 }
 
-- (UIImage *)tabBarImageName
+- (NSString *)tabBarImageName
 {
 	return @"people";
 }

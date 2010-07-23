@@ -32,7 +32,7 @@
 	return NSLocalizedString(@"Calls Sorted by Date", @"view title");
 }
 
-- (UIImage *)tabBarImageName
+- (NSString *)tabBarImageName
 {
 	return @"time";
 }
