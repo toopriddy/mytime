@@ -33,9 +33,9 @@
 	return @"Set me!";
 }
 
-- (UIImage *)tabBarImage 
+- (UIImage *)tabBarImageName
 {
-	return [UIImage imageNamed:@"time.png"];
+	return @"time";
 }
 
 
