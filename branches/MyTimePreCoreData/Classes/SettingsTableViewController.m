@@ -964,6 +964,9 @@
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+	// for some reason the MFMailComposeViewController is crashing when the email is not getting sent
+	[controller retain];
+	[controller autorelease];
 	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
 	[self autorelease];
 }
