@@ -2217,7 +2217,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// save
 	[self retain];
 	[self save];
-	
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.call];
 	
 	if(isNewCall)
 	{

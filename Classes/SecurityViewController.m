@@ -83,6 +83,7 @@
 	{
 		if([possiblePasscode isEqualToString:self.passcode])
 		{
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:YES];
@@ -92,6 +93,7 @@
 		{
 			// should implement a try again
 			
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:NO];
@@ -132,6 +134,7 @@
 				if([possiblePasscode isEqualToString:self.confirmPasscode])
 				{
 					self.passcode = possiblePasscode;
+					[self.input resignFirstResponder];
 					if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 					{
 						[self.delegate securityViewControllerDone:self authenticated:YES];
@@ -163,6 +166,7 @@
 		else
 		{
 			self.passcode = possiblePasscode;
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:YES];

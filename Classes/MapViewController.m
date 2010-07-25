@@ -76,6 +76,7 @@
 
 @interface MapViewController ()
 @property (nonatomic, retain) NSString *currentUser;
+- (void)callChanged:(NSNotification *)notification;
 @end
 
 @implementation MapViewController
@@ -96,6 +97,8 @@
 		
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
 		[[Geocache sharedInstance] addDelegate:self];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callChanged:) name:SettingsNotificationCallChanged object:nil];
 	}
 	return self;
 }
@@ -107,6 +110,7 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:SettingsNotificationCallChanged object:nil];
 	[[Geocache sharedInstance] removeDelegate:self];
 	self.currentUser = nil;
 	self.mapView = nil;
@@ -274,6 +278,26 @@
 		for(MapViewCallAnnotation *marker in removeMarkers)
 		{
 			[self.mapView removeAnnotation:marker];
+		}
+	}
+}
+
+- (void)callChanged:(NSNotification *)notification
+{
+	NSMutableDictionary *changedCall = notification.object;
+	NSArray *markers = [self.mapView annotations];
+	
+	for(MapViewCallAnnotation *marker in markers)
+	{
+		if ([marker isKindOfClass:[MKUserLocation class]])
+			continue;
+		
+		NSMutableDictionary *theCall = (NSMutableDictionary *)marker.call;
+		if(theCall == changedCall)
+		{
+			[self.mapView removeAnnotation:marker];
+			[self.mapView addAnnotation:marker];
+			return;
 		}
 	}
 }

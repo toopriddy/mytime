@@ -306,19 +306,28 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+	controller.mailComposeDelegate = nil;
 	if(result == MFMailComposeResultSent)
 	{
 		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
 	}
-	[self.modalNavigationController dismissModalViewControllerAnimated:NO];
 
 	if(forceEmail)
 	{
 		forceEmail = NO;
+		// for some reason the MFMailComposeViewController is crashing when the email is not getting sent and the dismiss is not animated
+		[controller retain];
+		[controller autorelease];
+		[self.modalNavigationController dismissModalViewControllerAnimated:NO];
 		[self.modalNavigationController.view removeFromSuperview];
 		self.modalNavigationController = nil;
 		[self initializeMyTimeViews];
 	}
+	else
+	{
+		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
+	}
+
 }
 
 - (void)checkAutoBackup
