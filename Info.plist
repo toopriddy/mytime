@@ -40,6 +40,8 @@
 	<string>2.8.6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIRequiresPersistentWiFi</key>
 	<true/>
 	<key>CFBundleDocumentTypes</key>
