@@ -338,6 +338,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 	[self.delegate save];
 
+	// stop trying to get a location... if they want to go back into the address view, they can startup the location then
+	self.delegate.locationManager = nil;
+	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
