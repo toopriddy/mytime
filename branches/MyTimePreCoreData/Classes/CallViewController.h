@@ -18,8 +18,9 @@
 #import "CallViewControllerDelegate.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "CoreLocation/CoreLocation.h"
 
-@interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate> 
+@interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, CLLocationManagerDelegate> 
 {
 	BOOL _initialView;
 	BOOL deleteCall;
@@ -47,6 +48,7 @@
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
 @property (nonatomic, assign) BOOL delayedAddReturnVisit;
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 /**
  * @returns the call's name

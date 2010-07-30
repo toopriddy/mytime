@@ -1956,6 +1956,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @synthesize currentIndexPath;
 @synthesize delayedAddReturnVisit;
 @synthesize call = _call;
+@synthesize locationManager;
 /******************************************************************
  *
  *   INIT
@@ -2012,6 +2013,13 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
 			
 			[returnVisits insertObject:visit atIndex:0];
+
+			// create a location manager and start getting updates for the location so that we can quickly 
+			// obtain the location in the address view
+			self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+			self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+			self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+			[self.locationManager startUpdatingLocation];
 		}
 		else
 		{
@@ -2134,6 +2142,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
     [_name release];
     self.call = nil;
 
+	if(self.locationManager)
+		self.locationManager.delegate = nil;
+	self.locationManager = nil;
+	
 	[super dealloc];
 }
 

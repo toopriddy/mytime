@@ -257,7 +257,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				case 1:
 				{
 					self.dataToImport = nil;
-					[self initializeMyTimeViews];
+					// dont reinit the views if they are still in existance
+					if(tabBarController == nil)
+						[self initializeMyTimeViews];
 					break;
 				}
 			}
