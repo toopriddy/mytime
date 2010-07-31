@@ -84,6 +84,7 @@
 		9018569A11F9518400F66841 /* timerBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 9018566911F9518400F66841 /* timerBig.png */; };
 		9018569B11F9518400F66841 /* timerBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9018566A11F9518400F66841 /* timerBig@2x.png */; };
 		901B756D11F80CF9004D1932 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 901B756C11F80CF9004D1932 /* Icon@2x.png */; };
+		901BDFA71203CA5900EF0195 /* deletedCallsBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 901BDFA61203CA5900EF0195 /* deletedCallsBig.png */; };
 		901F258110C244B00081A382 /* MultipleChoiceMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 901F258010C244B00081A382 /* MultipleChoiceMetadataViewController.m */; };
 		90226AFF1030B56500A94FEC /* SubmitDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226AFE1030B56500A94FEC /* SubmitDataFile.m */; };
 		90226B021030B87600A94FEC /* DownloadDataFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90226B011030B87600A94FEC /* DownloadDataFile.m */; };
@@ -295,6 +296,7 @@
 		9018566A11F9518400F66841 /* timerBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timerBig@2x.png"; sourceTree = "<group>"; };
 		90196F0B11345DC6005F0621 /* Korean */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Korean; path = Korean.lproj/Localizable.strings; sourceTree = "<group>"; };
 		901B756C11F80CF9004D1932 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		901BDFA61203CA5900EF0195 /* deletedCallsBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletedCallsBig.png; sourceTree = "<group>"; };
 		901F257F10C244B00081A382 /* MultipleChoiceMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleChoiceMetadataViewController.h; sourceTree = "<group>"; };
 		901F258010C244B00081A382 /* MultipleChoiceMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceMetadataViewController.m; sourceTree = "<group>"; };
 		90226AFD1030B56500A94FEC /* SubmitDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitDataFile.h; sourceTree = "<group>"; };
@@ -706,6 +708,7 @@
 				9018564511F9518400F66841 /* cityBig@2x.png */,
 				9018564611F9518400F66841 /* deletedCalls.png */,
 				9018564711F9518400F66841 /* deletedCalls@2x.png */,
+				901BDFA61203CA5900EF0195 /* deletedCallsBig.png */,
 				9018564811F9518400F66841 /* deletedCallsBig@2x.png */,
 				9018564911F9518400F66841 /* map.png */,
 				9018564A11F9518400F66841 /* map@2x.png */,
@@ -1101,6 +1104,7 @@
 				9018569911F9518400F66841 /* timer@2x.png in Resources */,
 				9018569A11F9518400F66841 /* timerBig.png in Resources */,
 				9018569B11F9518400F66841 /* timerBig@2x.png in Resources */,
+				901BDFA71203CA5900EF0195 /* deletedCallsBig.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
