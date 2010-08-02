@@ -192,7 +192,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name (sp)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Trinity", @"Brochures Publication Name (ti)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Keep on the Watch!", @"Brochures Publication Name (kp)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Whas Life Created?", @"Brochures Publication Name (lc)"),   PublicationTypeBrochure}
+,   {NSLocalizedString(@"Was Life Created?", @"Brochures Publication Name (lc)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"When Someone Dies", @"Brochures Publication Name (we)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"When We Die", @"Brochures Publication Name (ie)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Why Worship God", @"Brochures Publication Name (wj)"),   PublicationTypeBrochure}
