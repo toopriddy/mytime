@@ -1858,6 +1858,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:!self.deleteForever];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
+			[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.delegate.call];
 		}
 	}
 }

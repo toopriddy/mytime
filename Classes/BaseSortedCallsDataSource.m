@@ -198,6 +198,7 @@
 	[aliveCalls addObject:call];
 	[callsSorter restoreCallAtIndexPath:indexPath];
 	[[Settings sharedInstance] saveData];
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:call];
 }
 
 
