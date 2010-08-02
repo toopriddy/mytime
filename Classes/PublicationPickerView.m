@@ -182,6 +182,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Life on Earth", @"Brochures Publication Name (le)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Look!", @"Brochures Publication Name (mn)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Good News for People of All Nations", @"Brochures Publication Name "),   PublicationTypeBrochure}
+,   {NSLocalizedString(@"The Origin of Life", @"Brochures Publication Name (lf)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Our Problems", @"Brochures Publication Name (op)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Purpose of Life", @"Brochures Publication Name (pr)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Require", @"Brochures Publication Name (rq)"),   PublicationTypeBrochure}
@@ -191,6 +192,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name (sp)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Trinity", @"Brochures Publication Name (ti)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Keep on the Watch!", @"Brochures Publication Name (kp)"),   PublicationTypeBrochure}
+,   {NSLocalizedString(@"Whas Life Created?", @"Brochures Publication Name (lc)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"When Someone Dies", @"Brochures Publication Name (we)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"When We Die", @"Brochures Publication Name (ie)"),   PublicationTypeBrochure}
 ,   {NSLocalizedString(@"Why Worship God", @"Brochures Publication Name (wj)"),   PublicationTypeBrochure}
