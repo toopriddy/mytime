@@ -45,8 +45,7 @@
 
 
 @interface MapViewController : UIViewController <MKMapViewDelegate,
-                                                 CallViewControllerDelegate,
-                                                 GeocacheDelegate>
+                                                 CallViewControllerDelegate>
 {
     MKMapView *mapView;
 	NSMutableDictionary *call;

@@ -96,7 +96,7 @@
 		self.currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 		
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
-		[[Geocache sharedInstance] addDelegate:self];
+//		[[Geocache sharedInstance] addDelegate:self];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callChanged:) name:SettingsNotificationCallChanged object:nil];
 	}
@@ -111,7 +111,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:SettingsNotificationCallChanged object:nil];
-	[[Geocache sharedInstance] removeDelegate:self];
 	self.currentUser = nil;
 	self.mapView = nil;
 	self.call = nil;
@@ -286,6 +285,7 @@
 {
 	NSMutableDictionary *changedCall = notification.object;
 	NSArray *markers = [self.mapView annotations];
+	BOOL found = NO;
 	
 	for(MapViewCallAnnotation *marker in markers)
 	{
@@ -296,8 +296,53 @@
 		if(theCall == changedCall)
 		{
 			[self.mapView removeAnnotation:marker];
-			[self.mapView addAnnotation:marker];
+			
+			NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+			NSString *lookupType = [changedCall objectForKey:CallLocationType];
+			if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
+			   latLong == nil || 
+			   [latLong isEqualToString:@"nil"] ||
+			   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:changedCall])
+			{
+				// dont insert the marker back, it should be hidden or not there
+			}
+			else
+			{
+				// insert the marker back in the moved position
+				[self.mapView addAnnotation:marker];
+			}
+
 			return;
+		}
+	}
+
+	// well this call does not exist, lets see if it needs to get added
+	if(!found)
+	{
+		NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+		NSString *lookupType = [changedCall objectForKey:CallLocationType];
+		if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
+		   latLong == nil || 
+		   [latLong isEqualToString:@"nil"] ||
+		   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:changedCall])
+		{
+			// it shouldnt get added
+			return;
+		}
+		
+		if(latLong && ![latLong isEqualToString:@"nil"])
+		{
+			NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+			if(latLong && ![latLong isEqualToString:@"nil"])
+			{
+				MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:changedCall] autorelease];
+				marker.animatesDrop = YES;
+				[self.mapView addAnnotation:marker];
+				if([[self.mapView annotations] count] == 1)
+				{
+					[self.mapView setRegion:MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.01 , 0.01)) animated:YES];
+				}
+			}
 		}
 	}
 }
@@ -360,42 +405,6 @@
 	selectedMarker = annotation;
 	// push the element view controller onto the navigation stack to display it
 	[[self navigationController] pushViewController:controller animated:YES];
-}
-
-- (void)geocacheDone:(Geocache *)geocache forCall:(NSMutableDictionary *)theCall
-{
-	NSArray *markers = [self.mapView annotations];
-	BOOL found = NO;
-	
-	for(MapViewCallAnnotation *marker in markers)
-	{
-		if ([marker isKindOfClass:[MKUserLocation class]])
-			continue;
-		if(theCall == marker.call)
-		{
-			found = YES;
-			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-			if(latLong && ![latLong isEqualToString:@"nil"])
-			{
-				[[self.mapView viewForAnnotation:marker] setNeedsDisplay];
-			}
-		}
-	}
-	
-	if(!found)
-	{
-		NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-		if(latLong && ![latLong isEqualToString:@"nil"])
-		{
-			MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:theCall] autorelease];
-			marker.animatesDrop = YES;
-			[self.mapView addAnnotation:marker];
-			if([[self.mapView annotations] count] == 1)
-			{
-				[self.mapView setRegion:MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.01 , 0.01)) animated:YES];
-			}
-		}
-	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
