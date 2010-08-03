@@ -278,7 +278,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 					mailView.mailComposeDelegate = self;
-					[self.modalNavigationController presentModalViewController:mailView animated:YES];
+					[self.modalNavigationController.visibleViewController presentModalViewController:mailView animated:YES];
 					break;
 				}
 			}
@@ -327,7 +327,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 	else
 	{
-		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
+		[controller dismissModalViewControllerAnimated:YES];
 	}
 
 }
@@ -638,7 +638,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		self.modalNavigationController = [[[UINavigationController alloc] init] autorelease];
 
 		[self.window addSubview:self.modalNavigationController.view];
-		// make the window visible
+		// make the window visiblebel
 		[window makeKeyAndVisible];
 
 		[self.modalNavigationController presentModalViewController:mailView animated:YES];
@@ -660,7 +660,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		securityView.shouldConfirm = NO;
 		securityView.passcode = passcode;
 		securityView.delegate = self;
-		[self.modalNavigationController presentModalViewController:securityView animated:NO];
+		[self.modalNavigationController.visibleViewController presentModalViewController:securityView animated:NO];
 	}
 }
 
@@ -841,7 +841,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	displayingSecurityViewController = NO;
 	if(authenticated)
 	{
-		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
+		[viewController dismissModalViewControllerAnimated:YES];
 		[self checkAutoBackup];
 	}
 	else
