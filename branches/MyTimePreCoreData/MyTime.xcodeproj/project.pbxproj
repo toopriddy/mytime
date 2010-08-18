@@ -135,8 +135,6 @@
 		907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */; };
 		90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A60369117CCE50004E8D9A /* HourPickerViewController.m */; };
 		90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6040C117D508D004E8D9A /* libGenericTableViewController.a */; };
-		90ADA7AC0F1876C500C65E40 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */; };
-		90ADA7AD0F1876C500C65E40 /* marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA7AB0F1876C500C65E40 /* marker-blue.png */; };
 		90ADA7CB0F1877AB00C65E40 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7CA0F1877AB00C65E40 /* CoreLocation.framework */; };
 		90ADA7CF0F1877B300C65E40 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7CE0F1877B300C65E40 /* QuartzCore.framework */; };
 		90ADA7D30F1877C100C65E40 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7D20F1877C100C65E40 /* libsqlite3.dylib */; };
@@ -185,6 +183,7 @@
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
+		90F55BBA120FA91E00FBDD55 /* UIView+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F55BB9120FA91E00FBDD55 /* UIView+PriddySoftware.m */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
 		90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
@@ -397,8 +396,6 @@
 		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90ADA7A40F18760200C65E40 /* WebMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebMapViewController.h; sourceTree = "<group>"; };
 		90ADA7A50F18760200C65E40 /* WebMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebMapViewController.m; sourceTree = "<group>"; };
-		90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue-withletter.png"; path = "../MapView/Map/Resources/marker-blue-withletter.png"; sourceTree = SOURCE_ROOT; };
-		90ADA7AB0F1876C500C65E40 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue.png"; path = "../MapView/Map/Resources/marker-blue.png"; sourceTree = SOURCE_ROOT; };
 		90ADA7CA0F1877AB00C65E40 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		90ADA7CE0F1877B300C65E40 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		90ADA7D20F1877C100C65E40 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -495,6 +492,8 @@
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
+		90F55BB8120FA91D00FBDD55 /* UIView+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PriddySoftware.h"; sourceTree = "<group>"; };
+		90F55BB9120FA91E00FBDD55 /* UIView+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PriddySoftware.m"; sourceTree = "<group>"; };
 		90F6B288117EBB6400519165 /* HourPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerView.h; sourceTree = "<group>"; };
 		90F6B289117EBB6400519165 /* HourPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerView.m; sourceTree = "<group>"; };
 		90F6B50211814F9500519165 /* StatisticsCallsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsCallsTableViewController.h; sourceTree = "<group>"; };
@@ -607,6 +606,8 @@
 				90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */,
 				90E526AD116D886100D5EFBD /* NSData+PSCompress.h */,
 				90E526AE116D886100D5EFBD /* NSData+PSCompress.m */,
+				90F55BB8120FA91D00FBDD55 /* UIView+PriddySoftware.h */,
+				90F55BB9120FA91E00FBDD55 /* UIView+PriddySoftware.m */,
 				905A0E731029213B00875539 /* Settings.bundle */,
 			);
 			path = Classes;
@@ -651,8 +652,6 @@
 				90D02D7F0E538552001CEF0D /* map.html */,
 				9018563911F9518400F66841 /* images */,
 				90E75D1A0FE5D0AB00690CEE /* MetadataPickerView.xib */,
-				90ADA7AA0F1876C500C65E40 /* marker-blue-withletter.png */,
-				90ADA7AB0F1876C500C65E40 /* marker-blue.png */,
 				902FC4970E46B086006E39A8 /* Entitlements.plist */,
 				90C148EE0E3B937300C6EDAF /* Default.png */,
 				90EA4F35100275590046A2E4 /* whiteButton.png */,
@@ -1038,8 +1037,6 @@
 				90D02D800E538553001CEF0D /* map.html in Resources */,
 				9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */,
 				9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */,
-				90ADA7AC0F1876C500C65E40 /* marker-blue-withletter.png in Resources */,
-				90ADA7AD0F1876C500C65E40 /* marker-blue.png in Resources */,
 				90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */,
 				90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */,
 				90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */,
@@ -1231,6 +1228,7 @@
 				90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */,
 				90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */,
 				9073F9E711C406ED0007FC32 /* MapView.m in Sources */,
+				90F55BBA120FA91E00FBDD55 /* UIView+PriddySoftware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
