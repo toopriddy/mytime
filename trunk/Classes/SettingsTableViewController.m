@@ -964,6 +964,9 @@
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+	// for some reason the MFMailComposeViewController is crashing when the email is not getting sent
+	[controller retain];
+	[controller autorelease];
 	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
 	[self autorelease];
 }
@@ -1102,7 +1105,7 @@
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 		
-		URLCellController *cellController = [[URLCellController alloc] initWithTitle:NSLocalizedString(@"Please Donate, help me help you", @"More View Table Donation request") URL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=toopriddy%40gmail%2ecom&item_name=PG%20Software&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"]];
+		URLCellController *cellController = [[URLCellController alloc] initWithTitle:NSLocalizedString(@"Please Donate, help me help you", @"More View Table Donation request") URL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LCRTAWJDDBJJY"]];
 		[sectionController.cellControllers addObject:cellController];
 		[cellController release];
 	}	

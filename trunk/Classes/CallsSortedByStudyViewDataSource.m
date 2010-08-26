@@ -46,9 +46,9 @@
 	return YES;
 }
 
-- (UIImage *)tabBarImage 
+- (NSString *)tabBarImageName 
 {
-	return [UIImage imageNamed:@"studies.png"];
+	return @"studies";
 }
 
 - (void)dealloc

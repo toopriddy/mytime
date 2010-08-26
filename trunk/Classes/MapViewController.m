@@ -76,6 +76,7 @@
 
 @interface MapViewController ()
 @property (nonatomic, retain) NSString *currentUser;
+- (void)callChanged:(NSNotification *)notification;
 @end
 
 @implementation MapViewController
@@ -95,7 +96,9 @@
 		self.currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
 		
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
-		[[Geocache sharedInstance] addDelegate:self];
+//		[[Geocache sharedInstance] addDelegate:self];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callChanged:) name:SettingsNotificationCallChanged object:nil];
 	}
 	return self;
 }
@@ -107,7 +110,7 @@
 
 - (void)dealloc
 {
-	[[Geocache sharedInstance] removeDelegate:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:SettingsNotificationCallChanged object:nil];
 	self.currentUser = nil;
 	self.mapView = nil;
 	self.call = nil;
@@ -278,6 +281,72 @@
 	}
 }
 
+- (void)callChanged:(NSNotification *)notification
+{
+	NSMutableDictionary *changedCall = notification.object;
+	NSArray *markers = [self.mapView annotations];
+	BOOL found = NO;
+	
+	for(MapViewCallAnnotation *marker in markers)
+	{
+		if ([marker isKindOfClass:[MKUserLocation class]])
+			continue;
+		
+		NSMutableDictionary *theCall = (NSMutableDictionary *)marker.call;
+		if(theCall == changedCall)
+		{
+			[self.mapView removeAnnotation:marker];
+			
+			NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+			NSString *lookupType = [changedCall objectForKey:CallLocationType];
+			if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
+			   latLong == nil || 
+			   [latLong isEqualToString:@"nil"] ||
+			   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:changedCall])
+			{
+				// dont insert the marker back, it should be hidden or not there
+			}
+			else
+			{
+				// insert the marker back in the moved position
+				[self.mapView addAnnotation:marker];
+			}
+
+			return;
+		}
+	}
+
+	// well this call does not exist, lets see if it needs to get added
+	if(!found)
+	{
+		NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+		NSString *lookupType = [changedCall objectForKey:CallLocationType];
+		if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
+		   latLong == nil || 
+		   [latLong isEqualToString:@"nil"] ||
+		   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:changedCall])
+		{
+			// it shouldnt get added
+			return;
+		}
+		
+		if(latLong && ![latLong isEqualToString:@"nil"])
+		{
+			NSString *latLong = [changedCall objectForKey:CallLattitudeLongitude];
+			if(latLong && ![latLong isEqualToString:@"nil"])
+			{
+				MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:changedCall] autorelease];
+				marker.animatesDrop = YES;
+				[self.mapView addAnnotation:marker];
+				if([[self.mapView annotations] count] == 1)
+				{
+					[self.mapView setRegion:MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.01 , 0.01)) animated:YES];
+				}
+			}
+		}
+	}
+}
+
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views;
 {
 	for(MKAnnotationView *view in views)
@@ -307,7 +376,24 @@
 		annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	}
 	annotationView.annotation = annotation;
-	
+	NSArray *returnVisits = [annotation.call objectForKey:CallReturnVisits];
+	if([returnVisits count])
+	{
+		NSDate *lastVisit = [[returnVisits objectAtIndex:0] objectForKey:CallReturnVisitDate];
+		NSTimeInterval interval = -[lastVisit timeIntervalSinceNow];
+		// if the user put a date in the future, fix this
+		if(interval < 0)
+			interval = 0;
+		int days = interval/(60*60*24);
+		MKPinAnnotationColor pinColor;
+		if(days > 14)
+			pinColor = MKPinAnnotationColorRed;
+		else if(days > 7)
+			pinColor = MKPinAnnotationColorPurple;
+		else
+			pinColor = MKPinAnnotationColorGreen;
+		annotationView.pinColor = pinColor;
+	}
     return annotationView;
 }
 
@@ -319,42 +405,6 @@
 	selectedMarker = annotation;
 	// push the element view controller onto the navigation stack to display it
 	[[self navigationController] pushViewController:controller animated:YES];
-}
-
-- (void)geocacheDone:(Geocache *)geocache forCall:(NSMutableDictionary *)theCall
-{
-	NSArray *markers = [self.mapView annotations];
-	BOOL found = NO;
-	
-	for(MapViewCallAnnotation *marker in markers)
-	{
-		if ([marker isKindOfClass:[MKUserLocation class]])
-			continue;
-		if(theCall == marker.call)
-		{
-			found = YES;
-			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-			if(latLong && ![latLong isEqualToString:@"nil"])
-			{
-				[[self.mapView viewForAnnotation:marker] setNeedsDisplay];
-			}
-		}
-	}
-	
-	if(!found)
-	{
-		NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-		if(latLong && ![latLong isEqualToString:@"nil"])
-		{
-			MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:theCall] autorelease];
-			marker.animatesDrop = YES;
-			[self.mapView addAnnotation:marker];
-			if([[self.mapView annotations] count] == 1)
-			{
-				[self.mapView setRegion:MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.01 , 0.01)) animated:YES];
-			}
-		}
-	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

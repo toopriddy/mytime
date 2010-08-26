@@ -338,6 +338,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 	[self.delegate save];
 
+	// stop trying to get a location... if they want to go back into the address view, they can startup the location then
+	self.delegate.locationManager = nil;
+	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -1855,6 +1858,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			[self.delegate.delegate callViewController:self.delegate deleteCall:self.delegate.call keepInformation:!self.deleteForever];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
+			[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.delegate.call];
 		}
 	}
 }
@@ -1956,6 +1960,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 @synthesize currentIndexPath;
 @synthesize delayedAddReturnVisit;
 @synthesize call = _call;
+@synthesize locationManager;
 /******************************************************************
  *
  *   INIT
@@ -2012,6 +2017,13 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[visit setObject:[[[NSMutableArray alloc] init] autorelease] forKey:CallReturnVisitPublications];
 			
 			[returnVisits insertObject:visit atIndex:0];
+
+			// create a location manager and start getting updates for the location so that we can quickly 
+			// obtain the location in the address view
+			self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+			self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+			self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+			[self.locationManager startUpdatingLocation];
 		}
 		else
 		{
@@ -2134,6 +2146,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
     [_name release];
     self.call = nil;
 
+	if(self.locationManager)
+		self.locationManager.delegate = nil;
+	self.locationManager = nil;
+	
 	[super dealloc];
 }
 
@@ -2217,7 +2233,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// save
 	[self retain];
 	[self save];
-	
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.call];
 	
 	if(isNewCall)
 	{

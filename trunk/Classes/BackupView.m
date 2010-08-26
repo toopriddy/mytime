@@ -50,6 +50,7 @@
 		_outStream = nil;
 		_server = nil;
 		
+		[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 		[self setup];
 		[self autoresizesSubviews];
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -84,6 +85,7 @@
 
 - (void)dealloc 
 {
+	[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 	[self stop];
 	[super dealloc];
 }

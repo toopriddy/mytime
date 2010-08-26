@@ -35,9 +35,9 @@
 	return NSLocalizedString(@"Calls Sorted by Name", @"View title");
 }
 
-- (UIImage *)tabBarImage 
+- (NSString *)tabBarImageName
 {
-	return [UIImage imageNamed:@"people.png"];
+	return @"people";
 }
 
 - (void)dealloc

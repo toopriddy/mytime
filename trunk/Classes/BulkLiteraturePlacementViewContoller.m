@@ -69,7 +69,7 @@ static int sortByDate(id v1, id v2, void *context)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
 			self.emptyView.view.frame = self.tableView.bounds;
-			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.imageView.image = [UIImage imageNamed:@"bulkPlacementsBig.png"];
 			self.emptyView.mainLabel.text = NSLocalizedString(@"No Placements", @"Text that appears at the Bulk placements view when there are no entries configured");
 			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add street witnessing placements", @"Text that appears at the bulk placements view when there are no entries configured");
 			[self.view addSubview:self.emptyView.view];

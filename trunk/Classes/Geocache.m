@@ -21,17 +21,6 @@ static Geocache *instance = nil;
 
 @implementation Geocache
 
-- (void)addDelegate:(NSObject<GeocacheDelegate> *)delegate
-{
-	[_delegates addObject:delegate];
-}
-
-- (void)removeDelegate:(NSObject<GeocacheDelegate> *)delegate
-{
-	[_delegates removeObject:delegate];
-}
-
-
 - (void)startLookupProcess
 {
 	if(_lookupInProgress || _callsToLookup.count == 0)
@@ -55,13 +44,7 @@ static Geocache *instance = nil;
 {
 	[geocacheViewController removeFromSuperview];
 	
-	for(NSObject<GeocacheDelegate> *delegate in _delegates)
-	{
-		if([delegate respondsToSelector:@selector(geocacheDone:forCall:)])
-		{
-			[delegate geocacheDone:self forCall:geocacheViewController.call];
-		}
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:geocacheViewController.call];
 	_lookupInProgress = NO;
 	[self startLookupProcess];
 }
@@ -102,7 +85,6 @@ static Geocache *instance = nil;
 		{
             instance = [[self alloc] init]; // assignment not done here
 			instance->_callsToLookup = [[NSMutableArray alloc] init];
-			instance->_delegates = [[NSMutableArray alloc] init];
         }
     }
 

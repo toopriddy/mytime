@@ -20,7 +20,7 @@
 #import "PSLocalization.h"
 #import "MTTimeEntry.h"
 #import "MTUser.h"
-#import "MTTimeType+Extensions.h"
+#import "MTTimeType.h"
 
 @interface HourViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -46,7 +46,8 @@
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
 			self.emptyView.view.frame = self.tableView.bounds;
-			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.imageView.image = [UIImage imageNamed:[self.type.imageFileName stringByAppendingString:@"Big"]];
+			
 			self.emptyView.mainLabel.text = NSLocalizedString(@"No Hours", @"Text that appears at the Hours view when there are no entries configured");
 			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add hours", @"Text that appears at the Hours view when there are no entries configured");
 			[self.view addSubview:self.emptyView.view];
@@ -68,7 +69,7 @@
 	{
 		self.type = [MTTimeType timeTypeWithName:typeName];
 		self.title = self.type.name;
-		self.tabBarItem.image = [UIImage imageNamed:self.type.imageFile];
+		self.tabBarItem.image = [UIImage imageNamed:self.type.imageFileName];
 	}
 	return self;
 }

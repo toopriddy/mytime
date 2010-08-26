@@ -33,9 +33,9 @@
 	return @"Set me!";
 }
 
-- (UIImage *)tabBarImage 
+- (NSString *)tabBarImageName
 {
-	return [UIImage imageNamed:@"time.png"];
+	return @"time";
 }
 
 
@@ -198,6 +198,7 @@
 	[aliveCalls addObject:call];
 	[callsSorter restoreCallAtIndexPath:indexPath];
 	[[Settings sharedInstance] saveData];
+	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:call];
 }
 
 

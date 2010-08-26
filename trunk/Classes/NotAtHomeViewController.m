@@ -108,7 +108,7 @@
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
 			self.emptyView.view.frame = self.tableView.bounds;
-			self.emptyView.imageView.image = self.tabBarItem.image;
+			self.emptyView.imageView.image = [UIImage imageNamed:@"not-at-homeBig.png"];
 			self.emptyView.mainLabel.text = NSLocalizedString(@"No Territories", @"Text that appears at the Not-At-Homes view when there are no entries configured");
 			self.emptyView.subLabel.text = NSLocalizedString(@"Tap + to add a not-at-home territory", @"Text that appears at the Not-At-Homes view when there are no entries configured");
 			[self.view addSubview:self.emptyView.view];
