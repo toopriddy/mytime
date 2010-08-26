@@ -39,7 +39,11 @@
 #import "NSData+PSCompress.h"
 #import "MTSettings.h"
 #import "MTUser.h"
-#import "MTTimeType+Extensions.h"
+#import "MTTimeType.h"
+
+@interface MyTimeAppDelegate ()
+- (void)displaySecurityViewController;
+@end
 
 @implementation MyTimeAppDelegate
 
@@ -48,6 +52,9 @@
 @synthesize dataToImport;
 @synthesize settingsToRestore;
 @synthesize modalNavigationController;
+@synthesize managedObjectContext;
+@synthesize managedObjectModel;
+@synthesize persistentStoreCoordinator;
 
 + (MyTimeAppDelegate *)sharedInstance
 {
@@ -256,7 +263,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				case 1:
 				{
 					self.dataToImport = nil;
-					[self initializeMyTimeViews];
+					// dont reinit the views if they are still in existance
+					if(tabBarController == nil)
+						[self initializeMyTimeViews];
 					break;
 				}
 			}
@@ -275,7 +284,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					MFMailComposeViewController *mailView = [Settings sendEmailBackup];
 					mailView.mailComposeDelegate = self;
-					[self.modalNavigationController presentModalViewController:mailView animated:YES];
+					[self.modalNavigationController.visibleViewController presentModalViewController:mailView animated:YES];
 					break;
 				}
 			}
@@ -305,19 +314,28 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+	controller.mailComposeDelegate = nil;
 	if(result == MFMailComposeResultSent)
 	{
 		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
 	}
-	[self.modalNavigationController dismissModalViewControllerAnimated:NO];
 
 	if(forceEmail)
 	{
 		forceEmail = NO;
+		// for some reason the MFMailComposeViewController is crashing when the email is not getting sent and the dismiss is not animated
+		[controller retain];
+		[controller autorelease];
+		[self.modalNavigationController dismissModalViewControllerAnimated:NO];
 		[self.modalNavigationController.view removeFromSuperview];
 		self.modalNavigationController = nil;
 		[self initializeMyTimeViews];
 	}
+	else
+	{
+		[controller dismissModalViewControllerAnimated:YES];
+	}
+
 }
 
 - (void)checkAutoBackup
@@ -672,14 +690,15 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 - (void)displaySecurityViewController
 {
 	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
-	if(passcode.length)
+	if(passcode.length && !displayingSecurityViewController)
 	{
+		displayingSecurityViewController = YES;
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
 		securityView.promptText = NSLocalizedString(@"Enter Passcode", @"Prompt to enter a passcode to gain access to MyTime");
 		securityView.shouldConfirm = NO;
 		securityView.passcode = passcode;
 		securityView.delegate = self;
-		[self.modalNavigationController presentModalViewController:securityView animated:NO];
+		[self.modalNavigationController.visibleViewController presentModalViewController:securityView animated:NO];
 	}
 }
 
@@ -859,9 +878,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)securityViewControllerDone:(SecurityViewController *)viewController authenticated:(BOOL)authenticated
 {
+	displayingSecurityViewController = NO;
 	if(authenticated)
 	{
-		[self.modalNavigationController dismissModalViewControllerAnimated:YES];
+		[viewController dismissModalViewControllerAnimated:YES];
 		[self checkAutoBackup];
 	}
 	else
@@ -967,7 +987,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
         return persistentStoreCoordinator_;
     }
     
-    NSURL *storeURL = [NSURL fileURLWithPath:[[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"testcoredata.sqlite"]];
+    NSURL *storeURL = [NSURL fileURLWithPath:[[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"MyTime.sqlite"]];
     
     NSError *error = nil;
     persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

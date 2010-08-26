@@ -21,7 +21,7 @@
 // for the navigation and tab bar
 @property (readonly) NSString *name;
 @property (readonly) NSString *title;
-@property (readonly) UIImage *tabBarImage;
+@property (readonly) NSString *tabBarImageName;
 @property (readonly) BOOL showAddNewCall;
 @property (readonly) BOOL useNameAsMainLabel;
 

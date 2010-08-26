@@ -329,7 +329,6 @@
 	return 0;
 }
 
-
 // make the footer be as tall as the keyboard is tall when we are in landscape mode.
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -406,7 +405,7 @@
 		[self.locationMessage setOpaque:NO];
 		[self.locationMessage show];
 		
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] resignFirstResponder];
 		[tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 	}
 }
@@ -545,6 +544,7 @@
 		showReverseGeocoding = YES;
 		wasShowingReverseGeocoding = NO;
 		[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
 	}
 }
 //

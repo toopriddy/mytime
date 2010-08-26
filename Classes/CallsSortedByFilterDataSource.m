@@ -44,9 +44,9 @@
 	return NO;
 }
 
-- (UIImage *)tabBarImage 
+- (NSString *)tabBarImageName 
 {
-	return [UIImage imageNamed:@"category.png"];
+	return @"category";
 }
 
 - (void)dealloc

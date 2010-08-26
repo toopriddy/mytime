@@ -175,6 +175,7 @@ NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling S
 
 
 NSString *const SettingsNotificationUserChanged = @"settingsNotificationUserChanged";
+NSString *const SettingsNotificationCallChanged = @"settingsNotificationCallChanged";
 
 
 @implementation Settings

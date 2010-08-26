@@ -198,6 +198,8 @@ extern NSString *const UserDefaultsRemovePasscode;
 
 extern NSString *const SettingsNotificationUserChanged;
 
+extern NSString *const SettingsNotificationCallChanged;
+
 
 #define REVERSE_GEOCODING_ACCURACY 70
 

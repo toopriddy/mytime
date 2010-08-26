@@ -67,6 +67,7 @@
 		}
 		self.delegate = self;
 	}
+	[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	[[HTTPServer sharedHTTPServer] start];
 	
 	
@@ -84,6 +85,7 @@
 
 - (void)dealloc 
 {
+	[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 	[[HTTPServer sharedHTTPServer] stop];
 	[super dealloc];
 }

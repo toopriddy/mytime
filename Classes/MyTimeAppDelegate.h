@@ -47,6 +47,7 @@ typedef enum {
 	UINavigationController *modalNavigationController;
 	UrlActionType _actionSheetType;
 	BOOL forceEmail;
+	BOOL displayingSecurityViewController;
 @private
     NSManagedObjectContext *managedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;

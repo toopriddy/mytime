@@ -45,7 +45,7 @@
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
 			self.emptyView.view.frame = self.tableView.bounds;
-			self.emptyView.imageView.image = [self.dataSource tabBarImage];
+			self.emptyView.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@Big.png", [self.dataSource tabBarImageName]]];
 			self.emptyView.mainLabel.text = NSLocalizedString(@"No Calls", @"Text that appears at the sorted call views when there are no entries configured");
 			if([self.dataSource showAddNewCall])
 			{
@@ -100,7 +100,7 @@
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = [dataSource name];
-		self.tabBarItem.image = [dataSource tabBarImage];
+		self.tabBarItem.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [self.dataSource tabBarImageName]]];
 
 		// only show the add new call button if they want to
 		if([theDataSource showAddNewCall])
