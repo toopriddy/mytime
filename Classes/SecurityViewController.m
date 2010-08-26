@@ -24,6 +24,18 @@
 @synthesize label;
 @synthesize secondaryLabel;
 
+- (void)dealloc
+{
+	self.label = nil;
+	self.secondaryLabel = nil;
+	self.text1 = nil;
+	self.text2 = nil;
+	self.text3 = nil;
+	self.text4 = nil;
+	
+	[super dealloc];
+}
+
 - (void)reset
 {
 	self.text1.text = @"";
@@ -42,6 +54,17 @@
 @synthesize delegate;
 @synthesize passcode;
 @synthesize confirmPasscode;
+
+- (void)dealloc
+{
+	self.input = nil;
+	self.mainView = nil;
+	self.confirmView = nil;
+	self.confirmText = nil;
+	self.passcode = nil;
+	self.confirmPasscode = nil;
+	[super dealloc];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -83,6 +106,7 @@
 	{
 		if([possiblePasscode isEqualToString:self.passcode])
 		{
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:YES];
@@ -92,6 +116,7 @@
 		{
 			// should implement a try again
 			
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:NO];
@@ -132,6 +157,7 @@
 				if([possiblePasscode isEqualToString:self.confirmPasscode])
 				{
 					self.passcode = possiblePasscode;
+					[self.input resignFirstResponder];
 					if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 					{
 						[self.delegate securityViewControllerDone:self authenticated:YES];
@@ -163,6 +189,7 @@
 		else
 		{
 			self.passcode = possiblePasscode;
+			[self.input resignFirstResponder];
 			if(delegate && [delegate respondsToSelector:@selector(securityViewControllerDone:authenticated:)])
 			{
 				[self.delegate securityViewControllerDone:self authenticated:YES];
