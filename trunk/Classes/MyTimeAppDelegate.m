@@ -40,6 +40,7 @@
 #import "MTSettings.h"
 #import "MTUser.h"
 #import "MTTimeType.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 @interface MyTimeAppDelegate ()
 - (void)displaySecurityViewController;
@@ -377,14 +378,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) 
 		{
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-#warning fix me			
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+			[NSManagedObjectContext presentErrorDialog:error];
         } 
     }
 	
@@ -403,14 +397,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	{
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) 
 		{
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-#warning fix me			
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+			[NSManagedObjectContext presentErrorDialog:error];
         } 
     }
 }
@@ -997,7 +984,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 														 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil] 
 														   error:&error]) 
 	{
-#warning fix me			
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -1021,8 +1007,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+		[NSManagedObjectContext presentErrorDialog:error];
     }    
 	
     return persistentStoreCoordinator_;

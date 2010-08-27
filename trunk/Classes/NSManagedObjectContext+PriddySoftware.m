@@ -53,4 +53,15 @@
     
     return results;
 }
+
++ (void)presentErrorDialog:(NSError *)error
+{
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error Saving Data", @"This is a dialog message title whenever there is an error saving data; you should not see this normally") 
+													 message:[NSString stringWithFormat:@"%@\n %@ %@", NSLocalizedString(@"There was an error trying to save data, this is very bad... Please try again or quit the application.", @"This is a dialog message title whenever there is an error saving data; you should not see this normally"), error, [error userInfo]] 
+													delegate:nil
+										   cancelButtonTitle:NSLocalizedString(@"OK", @"Dismiss an Alert View") 
+										   otherButtonTitles:nil] autorelease];
+	[alert show];
+}
+
 @end

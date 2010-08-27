@@ -21,6 +21,7 @@
 #import "MTTimeEntry.h"
 #import "MTUser.h"
 #import "MTTimeType.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 @interface HourViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -145,7 +146,7 @@
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
-#warning fix me
+		[NSManagedObjectContext presentErrorDialog:error];
 		abort();
 	}
 	
@@ -178,7 +179,7 @@
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
-#warning fix me
+		[NSManagedObjectContext presentErrorDialog:error];
 		abort();
 	}
 
@@ -271,14 +272,7 @@
 		NSError *error = nil;
 		if (![context save:&error]) 
 		{
-#warning fix me			
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			abort();
+			[NSManagedObjectContext presentErrorDialog:error];
 		}
 		
 		[[self navigationController] popViewControllerAnimated:YES];
@@ -301,14 +295,7 @@
 		NSError *error = nil;
 		if (![context save:&error]) 
 		{
-#warning fix me			
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			abort();
+			[NSManagedObjectContext presentErrorDialog:error];
 		}
 		
 		[self dismissModalViewControllerAnimated:YES];
