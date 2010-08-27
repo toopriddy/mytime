@@ -12,4 +12,6 @@
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
 						 withPredicate:(id)stringOrPredicate, ...;
 
++ (void)presentErrorDialog:(NSError *)error;
+
 @end
