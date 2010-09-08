@@ -11,6 +11,9 @@
 @interface NSManagedObjectContext(PriddySoftware)
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
 						 withPredicate:(id)stringOrPredicate, ...;
+- (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
+					 propertiesToFetch:(NSArray *)propertiesToFetch
+						 withPredicate:(id)stringOrPredicate, ...;
 
 + (void)presentErrorDialog:(NSError *)error;
 

@@ -18,6 +18,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "SecurityViewController.h"
 #import <CoreData/CoreData.h>
+#import "MBProgressHUD.h"
 
 // for moving around the UITableViewIndex
 static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
@@ -38,7 +39,8 @@ typedef enum {
 										 SecurityViewControllerDelegate,
 										 MFMailComposeViewControllerDelegate,
 										 UINavigationControllerDelegate,
-                                         UIAlertViewDelegate> 
+                                         UIAlertViewDelegate,
+                                         MBProgressHUDDelegate> 
 {
 	UIWindow *window;
 	UITabBarController *tabBarController;
@@ -48,6 +50,8 @@ typedef enum {
 	UrlActionType _actionSheetType;
 	BOOL forceEmail;
 	BOOL displayingSecurityViewController;
+	MBProgressHUD *hud;
+	
 @private
     NSManagedObjectContext *managedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
@@ -58,6 +62,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableDictionary *dataToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
 @property (nonatomic, retain) UINavigationController *modalNavigationController;
+@property (nonatomic, retain) MBProgressHUD *hud;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

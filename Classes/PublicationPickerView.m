@@ -137,6 +137,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Bible DVD: 1&2 Corinthians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 ,   {NSLocalizedString(@"Bible DVD: Galatians, Ephesians, Philippians, Colossians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 ,   {NSLocalizedString(@"Bible DVD: 1&2 Thessalonians, 1&2 Timothy, Titus, Philemon", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+,   {NSLocalizedString(@"Bible DVD: Hebrews, James, 1&2 Peter", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
 
 
 ,   {NSLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
