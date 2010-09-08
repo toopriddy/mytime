@@ -63,14 +63,20 @@
 	}
 }
 
+- (void)userChanged
+{
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+}
+
 - (id)initWithTimeTypeName:(NSString *)typeName
 {
-#warning need to update when there is a user change	
 	if ([super init]) 
 	{
 		self.type = [MTTimeType timeTypeWithName:typeName];
 		self.title = self.type.name;
 		self.tabBarItem.image = [UIImage imageNamed:self.type.imageFileName];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:SettingsNotificationUserChanged object:[Settings sharedInstance]];
 	}
 	return self;
 }
@@ -78,6 +84,7 @@
 
 - (void)dealloc 
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	self.tableView.delegate = nil;
 	self.tableView.dataSource = nil;
 	self.tableView = nil;

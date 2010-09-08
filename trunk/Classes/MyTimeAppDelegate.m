@@ -40,6 +40,7 @@
 #import "MTSettings.h"
 #import "MTUser.h"
 #import "MTTimeType.h"
+#import "MTTimeEntry.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 
 @interface MyTimeAppDelegate ()
@@ -56,6 +57,7 @@
 @synthesize managedObjectContext;
 @synthesize managedObjectModel;
 @synthesize persistentStoreCoordinator;
+@synthesize hud;
 
 + (MyTimeAppDelegate *)sharedInstance
 {
@@ -78,6 +80,7 @@
 	self.tabBarController = nil;
 	self.dataToImport = nil;
 	self.settingsToRestore = nil;
+	self.hud = nil;
 	
 	[super dealloc];
 }
@@ -338,6 +341,88 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	}
 
 }
+
+- (void)hudWasHidden
+{
+}
+
+- (void)convertToCoreDataStoreTask
+{
+	int steps = 1;
+	[managedObjectContext_ release];
+	managedObjectContext_ = nil;
+	
+	[self.managedObjectContext processPendingChanges];
+	[[self.managedObjectContext undoManager] disableUndoRegistration];
+	for(NSDictionary *user in [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers])
+	{
+		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
+		
+		// HOURS
+		MTTimeType *hours = [MTTimeType hoursTypeForUser:mtUser];
+		for(NSDictionary *timeEntry in [user objectForKey:SettingsTimeEntries])
+		{
+			MTTimeEntry *mtTimeEntry = [NSEntityDescription insertNewObjectForEntityForName:[MTTimeEntry entityName]
+																	 inManagedObjectContext:self.managedObjectContext];
+			mtTimeEntry.date = [timeEntry objectForKey:SettingsTimeEntryDate];
+			mtTimeEntry.minutesValue = [[timeEntry objectForKey:SettingsTimeEntryMinutes] intValue];
+			mtTimeEntry.type = hours;
+		}
+		
+		// HOURS
+		MTTimeType *rbc = [MTTimeType rbcTypeForUser:mtUser];
+		for(NSDictionary *timeEntry in [user objectForKey:SettingsRBCTimeEntries])
+		{
+			MTTimeEntry *mtTimeEntry = [NSEntityDescription insertNewObjectForEntityForName:[MTTimeEntry entityName]
+																	 inManagedObjectContext:self.managedObjectContext];
+			mtTimeEntry.date = [timeEntry objectForKey:SettingsTimeEntryDate];
+			mtTimeEntry.minutesValue = [[timeEntry objectForKey:SettingsTimeEntryMinutes] intValue];
+			mtTimeEntry.type = rbc;
+		}
+		
+		
+		NSError *error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+	}
+	self.hud.progress = self.hud.progress + 1.0/steps;
+	 // Do your work
+	 [[self managedObjectContext] processPendingChanges];
+	 [[[self managedObjectContext] undoManager] enableUndoRegistration];
+
+	[managedObjectContext_ release];
+	managedObjectContext_ = nil;
+
+//	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"convertedToCoreData"];
+	[self performSelector:@selector(initializeMyTimeViews) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+}
+
+- (BOOL)convertToCoreDataStore
+{
+	if([[[NSUserDefaults standardUserDefaults] objectForKey:@"convertedToCoreData"] boolValue])
+	{
+		return NO;
+	}
+
+	// The hud will disable all input on the view (use the higest view possible in the view hierarchy)
+    self.hud = [[MBProgressHUD alloc] initWithView:window];
+	
+    // Set determinate mode
+    hud.mode = MBProgressHUDModeDeterminate;
+    hud.delegate = self;
+    [self.tabBarController.view addSubview:hud];
+    hud.labelText = @"Converting Data File";
+	
+    // Show the HUD while the provided method executes in a new thread
+    [hud showWhileExecuting:@selector(convertToCoreDataStoreTask) onTarget:self withObject:nil animated:YES];
+	
+	return YES;
+}
+
+
+
 
 - (void)checkAutoBackup
 {
@@ -670,6 +755,11 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		forceEmail = YES;
 		return;
 	}
+	
+	if([self convertToCoreDataStore])
+	{
+		return;
+	}
 
 	[self initializeMyTimeViews];
 }
@@ -693,6 +783,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+#warning need to convert data
+	
 	// Create a tabbar controller and an array to contain the view controllers
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
