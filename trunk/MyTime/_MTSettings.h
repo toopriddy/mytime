@@ -21,6 +21,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 @interface MTSettingsID : NSManagedObjectID {}
 @end
 
@@ -32,15 +42,97 @@
 
 
 
+@property (nonatomic, retain) NSNumber *lastLongitude;
+
+@property double lastLongitudeValue;
+- (double)lastLongitudeValue;
+- (void)setLastLongitudeValue:(double)value_;
+
+//- (BOOL)validateLastLongitude:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *thirdViewTitle;
+
+//- (BOOL)validateThirdViewTitle:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *lastStreet;
+
+//- (BOOL)validateLastStreet:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *mainAlertSheetShown;
+
+@property BOOL mainAlertSheetShownValue;
+- (BOOL)mainAlertSheetShownValue;
+- (void)setMainAlertSheetShownValue:(BOOL)value_;
+
+//- (BOOL)validateMainAlertSheetShown:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *statisticsAlertSheetShown;
+
+@property BOOL statisticsAlertSheetShownValue;
+- (BOOL)statisticsAlertSheetShownValue;
+- (void)setStatisticsAlertSheetShownValue:(BOOL)value_;
+
+//- (BOOL)validateStatisticsAlertSheetShown:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *fourthViewTitle;
+
+//- (BOOL)validateFourthViewTitle:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secretaryEmailNotes;
+
+//- (BOOL)validateSecretaryEmailNotes:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSString *lastApartmentNumber;
 
 //- (BOOL)validateLastApartmentNumber:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSString *lastCity;
+@property (nonatomic, retain) NSString *lastState;
 
-//- (BOOL)validateLastCity:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateLastState:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *timeAlertSheetShown;
+
+@property BOOL timeAlertSheetShownValue;
+- (BOOL)timeAlertSheetShownValue;
+- (void)setTimeAlertSheetShownValue:(BOOL)value_;
+
+//- (BOOL)validateTimeAlertSheetShown:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *passcode;
+
+//- (BOOL)validatePasscode:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *lastBackupDate;
+
+//- (BOOL)validateLastBackupDate:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secondViewTitle;
+
+//- (BOOL)validateSecondViewTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -56,6 +148,34 @@
 
 
 
+@property (nonatomic, retain) NSNumber *backupShouldIncludeAttachment;
+
+@property BOOL backupShouldIncludeAttachmentValue;
+- (BOOL)backupShouldIncludeAttachmentValue;
+- (void)setBackupShouldIncludeAttachmentValue:(BOOL)value_;
+
+//- (BOOL)validateBackupShouldIncludeAttachment:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *currentUser;
+
+//- (BOOL)validateCurrentUser:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secretaryEmailAddress;
+
+//- (BOOL)validateSecretaryEmailAddress:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *lastCity;
+
+//- (BOOL)validateLastCity:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *autobackupInterval;
 
 @property int autobackupIntervalValue;
@@ -63,12 +183,6 @@
 - (void)setAutobackupIntervalValue:(int)value_;
 
 //- (BOOL)validateAutobackupInterval:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *secretaryEmailAddress;
-
-//- (BOOL)validateSecretaryEmailAddress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -82,59 +196,39 @@
 
 
 
-@property (nonatomic, retain) NSString *lastStreet;
+@property (nonatomic, retain) NSNumber *bulkLiteratureAlertSheetShown;
 
-//- (BOOL)validateLastStreet:(id*)value_ error:(NSError**)error_;
+@property BOOL bulkLiteratureAlertSheetShownValue;
+- (BOOL)bulkLiteratureAlertSheetShownValue;
+- (void)setBulkLiteratureAlertSheetShownValue:(BOOL)value_;
 
-
-
-@property (nonatomic, retain) NSString *lastState;
-
-//- (BOOL)validateLastState:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateBulkLiteratureAlertSheetShown:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSNumber *lastLongitude;
+@property (nonatomic, retain) NSNumber *backupShouldCompressLink;
 
-@property double lastLongitudeValue;
-- (double)lastLongitudeValue;
-- (void)setLastLongitudeValue:(double)value_;
+@property BOOL backupShouldCompressLinkValue;
+- (BOOL)backupShouldCompressLinkValue;
+- (void)setBackupShouldCompressLinkValue:(BOOL)value_;
 
-//- (BOOL)validateLastLongitude:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *backupShouldIncludeAttachment;
-
-@property BOOL backupShouldIncludeAttachmentValue;
-- (BOOL)backupShouldIncludeAttachmentValue;
-- (void)setBackupShouldIncludeAttachmentValue:(BOOL)value_;
-
-//- (BOOL)validateBackupShouldIncludeAttachment:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateBackupShouldCompressLink:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSString *passcode;
+@property (nonatomic, retain) NSString *firstViewTitle;
 
-//- (BOOL)validatePasscode:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *currentUser;
-
-//- (BOOL)validateCurrentUser:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSString *secretaryEmailNotes;
+@property (nonatomic, retain) NSNumber *existingCallAlertSheetShown;
 
-//- (BOOL)validateSecretaryEmailNotes:(id*)value_ error:(NSError**)error_;
+@property BOOL existingCallAlertSheetShownValue;
+- (BOOL)existingCallAlertSheetShownValue;
+- (void)setExistingCallAlertSheetShownValue:(BOOL)value_;
 
-
-
-@property (nonatomic, retain) NSDate *lastBackupDate;
-
-//- (BOOL)validateLastBackupDate:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateExistingCallAlertSheetShown:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -147,12 +241,68 @@
 
 @interface _MTSettings (CoreDataGeneratedPrimitiveAccessors)
 
+- (NSNumber*)primitiveLastLongitude;
+- (void)setPrimitiveLastLongitude:(NSNumber*)value;
+
+- (double)primitiveLastLongitudeValue;
+- (void)setPrimitiveLastLongitudeValue:(double)value_;
+
+
+- (NSString*)primitiveThirdViewTitle;
+- (void)setPrimitiveThirdViewTitle:(NSString*)value;
+
+
+- (NSString*)primitiveLastStreet;
+- (void)setPrimitiveLastStreet:(NSString*)value;
+
+
+- (NSNumber*)primitiveMainAlertSheetShown;
+- (void)setPrimitiveMainAlertSheetShown:(NSNumber*)value;
+
+- (BOOL)primitiveMainAlertSheetShownValue;
+- (void)setPrimitiveMainAlertSheetShownValue:(BOOL)value_;
+
+
+- (NSNumber*)primitiveStatisticsAlertSheetShown;
+- (void)setPrimitiveStatisticsAlertSheetShown:(NSNumber*)value;
+
+- (BOOL)primitiveStatisticsAlertSheetShownValue;
+- (void)setPrimitiveStatisticsAlertSheetShownValue:(BOOL)value_;
+
+
+- (NSString*)primitiveFourthViewTitle;
+- (void)setPrimitiveFourthViewTitle:(NSString*)value;
+
+
+- (NSString*)primitiveSecretaryEmailNotes;
+- (void)setPrimitiveSecretaryEmailNotes:(NSString*)value;
+
+
 - (NSString*)primitiveLastApartmentNumber;
 - (void)setPrimitiveLastApartmentNumber:(NSString*)value;
 
 
-- (NSString*)primitiveLastCity;
-- (void)setPrimitiveLastCity:(NSString*)value;
+- (NSString*)primitiveLastState;
+- (void)setPrimitiveLastState:(NSString*)value;
+
+
+- (NSNumber*)primitiveTimeAlertSheetShown;
+- (void)setPrimitiveTimeAlertSheetShown:(NSNumber*)value;
+
+- (BOOL)primitiveTimeAlertSheetShownValue;
+- (void)setPrimitiveTimeAlertSheetShownValue:(BOOL)value_;
+
+
+- (NSString*)primitivePasscode;
+- (void)setPrimitivePasscode:(NSString*)value;
+
+
+- (NSDate*)primitiveLastBackupDate;
+- (void)setPrimitiveLastBackupDate:(NSDate*)value;
+
+
+- (NSString*)primitiveSecondViewTitle;
+- (void)setPrimitiveSecondViewTitle:(NSString*)value;
 
 
 - (NSString*)primitiveLastHouseNumber;
@@ -163,15 +313,30 @@
 - (void)setPrimitiveBackupEmail:(NSString*)value;
 
 
+- (NSNumber*)primitiveBackupShouldIncludeAttachment;
+- (void)setPrimitiveBackupShouldIncludeAttachment:(NSNumber*)value;
+
+- (BOOL)primitiveBackupShouldIncludeAttachmentValue;
+- (void)setPrimitiveBackupShouldIncludeAttachmentValue:(BOOL)value_;
+
+
+- (NSString*)primitiveCurrentUser;
+- (void)setPrimitiveCurrentUser:(NSString*)value;
+
+
+- (NSString*)primitiveSecretaryEmailAddress;
+- (void)setPrimitiveSecretaryEmailAddress:(NSString*)value;
+
+
+- (NSString*)primitiveLastCity;
+- (void)setPrimitiveLastCity:(NSString*)value;
+
+
 - (NSNumber*)primitiveAutobackupInterval;
 - (void)setPrimitiveAutobackupInterval:(NSNumber*)value;
 
 - (int)primitiveAutobackupIntervalValue;
 - (void)setPrimitiveAutobackupIntervalValue:(int)value_;
-
-
-- (NSString*)primitiveSecretaryEmailAddress;
-- (void)setPrimitiveSecretaryEmailAddress:(NSString*)value;
 
 
 - (NSNumber*)primitiveLastLattitude;
@@ -181,42 +346,29 @@
 - (void)setPrimitiveLastLattitudeValue:(double)value_;
 
 
-- (NSString*)primitiveLastStreet;
-- (void)setPrimitiveLastStreet:(NSString*)value;
+- (NSNumber*)primitiveBulkLiteratureAlertSheetShown;
+- (void)setPrimitiveBulkLiteratureAlertSheetShown:(NSNumber*)value;
+
+- (BOOL)primitiveBulkLiteratureAlertSheetShownValue;
+- (void)setPrimitiveBulkLiteratureAlertSheetShownValue:(BOOL)value_;
 
 
-- (NSString*)primitiveLastState;
-- (void)setPrimitiveLastState:(NSString*)value;
+- (NSNumber*)primitiveBackupShouldCompressLink;
+- (void)setPrimitiveBackupShouldCompressLink:(NSNumber*)value;
+
+- (BOOL)primitiveBackupShouldCompressLinkValue;
+- (void)setPrimitiveBackupShouldCompressLinkValue:(BOOL)value_;
 
 
-- (NSNumber*)primitiveLastLongitude;
-- (void)setPrimitiveLastLongitude:(NSNumber*)value;
-
-- (double)primitiveLastLongitudeValue;
-- (void)setPrimitiveLastLongitudeValue:(double)value_;
+- (NSString*)primitiveFirstViewTitle;
+- (void)setPrimitiveFirstViewTitle:(NSString*)value;
 
 
-- (NSNumber*)primitiveBackupShouldIncludeAttachment;
-- (void)setPrimitiveBackupShouldIncludeAttachment:(NSNumber*)value;
+- (NSNumber*)primitiveExistingCallAlertSheetShown;
+- (void)setPrimitiveExistingCallAlertSheetShown:(NSNumber*)value;
 
-- (BOOL)primitiveBackupShouldIncludeAttachmentValue;
-- (void)setPrimitiveBackupShouldIncludeAttachmentValue:(BOOL)value_;
-
-
-- (NSString*)primitivePasscode;
-- (void)setPrimitivePasscode:(NSString*)value;
-
-
-- (NSString*)primitiveCurrentUser;
-- (void)setPrimitiveCurrentUser:(NSString*)value;
-
-
-- (NSString*)primitiveSecretaryEmailNotes;
-- (void)setPrimitiveSecretaryEmailNotes:(NSString*)value;
-
-
-- (NSDate*)primitiveLastBackupDate;
-- (void)setPrimitiveLastBackupDate:(NSDate*)value;
+- (BOOL)primitiveExistingCallAlertSheetShownValue;
+- (void)setPrimitiveExistingCallAlertSheetShownValue:(BOOL)value_;
 
 
 

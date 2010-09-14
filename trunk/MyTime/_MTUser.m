@@ -29,6 +29,13 @@
 
 
 
+@dynamic name;
+
+
+
+
+
+
 @dynamic monthDisplayCount;
 
 
@@ -55,14 +62,7 @@
 
 
 
-@dynamic firstViewTitle;
-
-
-
-
-
-
-@dynamic name;
+@dynamic publisherType;
 
 
 
@@ -95,28 +95,7 @@
 
 
 
-@dynamic thirdViewTitle;
-
-
-
-
-
-
-@dynamic fourthViewTitle;
-
-
-
-
-
-
-@dynamic secondViewTitle;
-
-
-
-
-
-
-@dynamic publisherType;
+@dynamic selectedSortByAdditionalInformation;
 
 
 

@@ -85,99 +85,100 @@ extern NSString * const SettingsBulkLiterature;
 
 
 
-extern NSString * const SettingsLastLattitude;
-extern NSString * const SettingsLastLongitude;
+extern NSString * const SettingsLastLattitude; // Done
+extern NSString * const SettingsLastLongitude; // Done
 
-extern NSString * const SettingsLastCallStreetNumber;
-extern NSString * const SettingsLastCallApartmentNumber;
-extern NSString * const SettingsLastCallStreet;
-extern NSString * const SettingsLastCallCity;
-extern NSString * const SettingsLastCallState;
+extern NSString * const SettingsLastCallStreetNumber; // Done
+extern NSString * const SettingsLastCallApartmentNumber; // Done
+extern NSString * const SettingsLastCallStreet; // Done
+extern NSString * const SettingsLastCallCity; // Done
+extern NSString * const SettingsLastCallState; // Done
+
 extern NSString * const SettingsCurrentButtonBarName;
 
 //multiple users
-extern NSString * const SettingsPreferredMetadata;
+extern NSString * const SettingsPreferredMetadata; // Done
 //multiple users
-extern NSString * const SettingsSortedByMetadata;
+extern NSString * const SettingsSortedByMetadata; // Done
 
-extern NSString * const SettingsMetadata;
+extern NSString * const SettingsMetadata; // Deprecated
 //multiple users
-extern NSString * const SettingsOtherMetadata;
-	extern NSString * const SettingsMetadataName;
-	extern NSString * const SettingsMetadataType;
-	extern NSString * const SettingsMetadataValue;
-	extern NSString * const SettingsMetadataData;
+extern NSString * const SettingsOtherMetadata; // Done
+	extern NSString * const SettingsMetadataName; // Done
+	extern NSString * const SettingsMetadataType; // Done
+	extern NSString * const SettingsMetadataValue; // Done
+	extern NSString * const SettingsMetadataData; // Done
 		// for the MetadataType of multipleChoice, this is an array of NSStrings
 
 //multiple users
-extern NSString * const SettingsMonthDisplayCount;
+extern NSString * const SettingsMonthDisplayCount; // Done
 
-extern NSString * const SettingsMultipleUsersCurrentUser;
-extern NSString * const SettingsMultipleUsers;
-	extern NSString * const SettingsMultipleUsersName;
+extern NSString * const SettingsMultipleUsersCurrentUser; // Done
+extern NSString * const SettingsMultipleUsers; // Done
+	extern NSString * const SettingsMultipleUsersName; // Done
 
-extern NSString * const SettingsTimeAlertSheetShown;
-extern NSString * const SettingsStatisticsAlertSheetShown;
-extern NSString * const SettingsSecretaryEmailAddress;
-extern NSString * const SettingsSecretaryEmailNotes;
+extern NSString * const SettingsSecretaryEmailAddress; // Done
+extern NSString * const SettingsSecretaryEmailNotes; // Done
 
-extern NSString * const SettingsMainAlertSheetShown;
-extern NSString * const SettingsBulkLiteratureAlertSheetShown;
-extern NSString * const SettingsExistingCallAlertSheetShown;
-
-//multiple users
-extern NSString * const SettingsQuickNotes;
+extern NSString * const SettingsTimeAlertSheetShown; // Done
+extern NSString * const SettingsStatisticsAlertSheetShown; // Done
+extern NSString * const SettingsMainAlertSheetShown; // Done
+extern NSString * const SettingsBulkLiteratureAlertSheetShown; // Done
+extern NSString * const SettingsExistingCallAlertSheetShown; // Done
 
 //multiple users
-extern NSString * const SettingsTimeStartDate;
+extern NSString * const SettingsQuickNotes; // Done
+
 //multiple users
-extern NSString * const SettingsRBCTimeStartDate;
+extern NSString * const SettingsTimeStartDate; // Done
 //multiple users
-extern NSString * const SettingsTimeEntries;
+extern NSString * const SettingsRBCTimeStartDate; // Done
 //multiple users
-extern NSString * const SettingsRBCTimeEntries;
-	extern NSString * const SettingsTimeEntryDate;
-	extern NSString * const SettingsTimeEntryMinutes;
+extern NSString * const SettingsTimeEntries; // Done
+//multiple users
+extern NSString * const SettingsRBCTimeEntries; // Done
+	extern NSString * const SettingsTimeEntryDate; // Done
+	extern NSString * const SettingsTimeEntryMinutes; // Done
 
 //multiple users
 extern NSString * const SettingsStatisticsAdjustments;
 
-extern NSString * const SettingsPasscode;
+extern NSString * const SettingsPasscode; //Done
 
-extern NSString * const SettingsLastBackupDate;
-extern NSString * const SettingsAutoBackupInterval;
-extern NSString * const SettingsBackupEmailAddress;
-extern NSString * const SettingsBackupEmailDontIncludeAttachment;
-extern NSString * const SettingsBackupEmailUncompressedLink;
+extern NSString * const SettingsLastBackupDate; // Done
+extern NSString * const SettingsAutoBackupInterval; // Done
+extern NSString * const SettingsBackupEmailAddress; // Done
+extern NSString * const SettingsBackupEmailDontIncludeAttachment; // Done
+extern NSString * const SettingsBackupEmailUncompressedLink; // Done
 
 extern NSString * const SettingsDonated;
-extern NSString * const SettingsFirstView;
-extern NSString * const SettingsSecondView;
-extern NSString * const SettingsThirdView;
-extern NSString * const SettingsFourthView;
+extern NSString * const SettingsFirstView; // Done
+extern NSString * const SettingsSecondView; // Done
+extern NSString * const SettingsThirdView; // Done
+extern NSString * const SettingsFourthView; // Done
 
 //multiple users
-extern NSString * const SettingsNotAtHomeTerritories;
-	extern NSString * const NotAtHomeTerritoryName;
-	extern NSString * const NotAtHomeTerritoryOwnerId;
-	extern NSString * const NotAtHomeTerritoryOwnerEmailId;
-	extern NSString * const NotAtHomeTerritoryOwnerEmailAddress;
+extern NSString * const SettingsNotAtHomeTerritories; // Done
+	extern NSString * const NotAtHomeTerritoryName; // Done
+	extern NSString * const NotAtHomeTerritoryOwnerId; // Done
+	extern NSString * const NotAtHomeTerritoryOwnerEmailId; // Done
+	extern NSString * const NotAtHomeTerritoryOwnerEmailAddress; // Done
 	extern NSString * const NotAtHomeTerritoryStreets;
-	extern NSString * const NotAtHomeTerritoryCity;
-	extern NSString * const NotAtHomeTerritoryState;
-	extern NSString * const NotAtHomeTerritoryNotes;
-		extern NSString * const NotAtHomeTerritoryStreetName;
-		extern NSString * const NotAtHomeTerritoryStreetDate;
-		extern NSString * const NotAtHomeTerritoryStreetNotes;
-		extern NSString * const NotAtHomeTerritoryHouses;
-			extern NSString * const NotAtHomeTerritoryHouseNumber;
-			extern NSString * const NotAtHomeTerritoryHouseApartment;
-			extern NSString * const NotAtHomeTerritoryHouseNotes;
-			extern NSString * const NotAtHomeTerritoryHouseAttempts;
+	extern NSString * const NotAtHomeTerritoryCity; // Done
+	extern NSString * const NotAtHomeTerritoryState; // Done
+	extern NSString * const NotAtHomeTerritoryNotes; // Done
+		extern NSString * const NotAtHomeTerritoryStreetName; // Done
+		extern NSString * const NotAtHomeTerritoryStreetDate; // Done
+		extern NSString * const NotAtHomeTerritoryStreetNotes; // Done
+		extern NSString * const NotAtHomeTerritoryHouses; // Done
+			extern NSString * const NotAtHomeTerritoryHouseNumber; // Done
+			extern NSString * const NotAtHomeTerritoryHouseApartment; // Done
+			extern NSString * const NotAtHomeTerritoryHouseNotes; // Done
+			extern NSString * const NotAtHomeTerritoryHouseAttempts; // Done
 
 
 //multiple users
-extern NSString * const SettingsPublisherType;
+extern NSString * const SettingsPublisherType; // Done
 
 	extern NSString * const PublisherTypePublisher;
 	extern NSString * const PublisherTypeAuxilliaryPioneer;

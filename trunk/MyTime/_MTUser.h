@@ -19,9 +19,6 @@
 
 
 
-
-
-
 @interface MTUserID : NSManagedObjectID {}
 @end
 
@@ -30,6 +27,12 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTUserID*)objectID;
+
+
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -43,15 +46,9 @@
 
 
 
-@property (nonatomic, retain) NSString *firstViewTitle;
+@property (nonatomic, retain) NSString *publisherType;
 
-//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validatePublisherType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -65,27 +62,9 @@
 
 
 
-@property (nonatomic, retain) NSString *thirdViewTitle;
+@property (nonatomic, retain) NSString *selectedSortByAdditionalInformation;
 
-//- (BOOL)validateThirdViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *fourthViewTitle;
-
-//- (BOOL)validateFourthViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *secondViewTitle;
-
-//- (BOOL)validateSecondViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *publisherType;
-
-//- (BOOL)validatePublisherType:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateSelectedSortByAdditionalInformation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -178,6 +157,10 @@
 
 @interface _MTUser (CoreDataGeneratedPrimitiveAccessors)
 
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
 - (NSNumber*)primitiveMonthDisplayCount;
 - (void)setPrimitiveMonthDisplayCount:(NSNumber*)value;
 
@@ -185,12 +168,8 @@
 - (void)setPrimitiveMonthDisplayCountValue:(short)value_;
 
 
-- (NSString*)primitiveFirstViewTitle;
-- (void)setPrimitiveFirstViewTitle:(NSString*)value;
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSString*)primitivePublisherType;
+- (void)setPrimitivePublisherType:(NSString*)value;
 
 
 - (NSNumber*)primitiveOrder;
@@ -200,20 +179,8 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
-- (NSString*)primitiveThirdViewTitle;
-- (void)setPrimitiveThirdViewTitle:(NSString*)value;
-
-
-- (NSString*)primitiveFourthViewTitle;
-- (void)setPrimitiveFourthViewTitle:(NSString*)value;
-
-
-- (NSString*)primitiveSecondViewTitle;
-- (void)setPrimitiveSecondViewTitle:(NSString*)value;
-
-
-- (NSString*)primitivePublisherType;
-- (void)setPrimitivePublisherType:(NSString*)value;
+- (NSString*)primitiveSelectedSortByAdditionalInformation;
+- (void)setPrimitiveSelectedSortByAdditionalInformation:(NSString*)value;
 
 
 
