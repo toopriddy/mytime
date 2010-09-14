@@ -351,30 +351,155 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	int steps = 1;
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
+	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	
 	[self.managedObjectContext processPendingChanges];
 	[[self.managedObjectContext undoManager] disableUndoRegistration];
-	for(NSDictionary *user in [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers])
+	MTSettings *mtSettings = [MTSettings settings];
+	// SECRETARY SETTINGS
+	mtSettings.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
+	mtSettings.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];
+	
+	mtSettings.currentUser = [settings objectForKey:SettingsMultipleUsersCurrentUser];
+	
+	// PASSCODE
+	mtSettings.passcode = [settings objectForKey:SettingsPasscode];
+	
+	// BACKUP
+	mtSettings.autobackupInterval = [settings objectForKey:SettingsAutoBackupInterval];
+	mtSettings.lastBackupDate = [settings objectForKey:SettingsLastBackupDate];
+	mtSettings.backupEmail = [settings objectForKey:SettingsBackupEmailAddress];
+	mtSettings.backupShouldCompressLinkValue = ![[settings objectForKey:SettingsBackupEmailUncompressedLink] boolValue];
+	mtSettings.backupShouldIncludeAttachmentValue = ![[settings objectForKey:SettingsBackupEmailDontIncludeAttachment] boolValue];
+	mtSettings.firstViewTitle = [settings objectForKey:SettingsFirstView];
+	mtSettings.secondViewTitle = [settings objectForKey:SettingsSecondView];
+	mtSettings.thirdViewTitle = [settings objectForKey:SettingsThirdView];
+	mtSettings.fourthViewTitle = [settings objectForKey:SettingsFourthView];
+	
+	// POPUPS
+	mtSettings.timeAlertSheetShownValue = [settings objectForKey:SettingsTimeAlertSheetShown] != nil;
+	mtSettings.statisticsAlertSheetShownValue = [settings objectForKey:SettingsStatisticsAlertSheetShown] != nil;
+	mtSettings.mainAlertSheetShownValue = [settings objectForKey:SettingsMainAlertSheetShown] != nil;
+	mtSettings.bulkLiteratureAlertSheetShownValue = [settings objectForKey:SettingsBulkLiteratureAlertSheetShown] != nil;
+	mtSettings.existingCallAlertSheetShownValue = [settings objectForKey:SettingsExistingCallAlertSheetShown] != nil;
+
+	mtSettings.lastLattitude = [settings objectForKey:SettingsLastLattitude];
+	mtSettings.lastLongitude = [settings objectForKey:SettingsLastLongitude];
+
+	mtSettings.lastHouseNumber = [settings objectForKey:SettingsLastCallStreetNumber];
+	mtSettings.lastApartmentNumber = [settings objectForKey:SettingsLastCallApartmentNumber];
+	mtSettings.lastStreet = [settings objectForKey:SettingsLastCallStreet];
+	mtSettings.lastCity = [settings objectForKey:SettingsLastCallCity];
+	mtSettings.lastState = [settings objectForKey:SettingsLastCallState];
+	
+	for(NSMutableDictionary *user in [settings objectForKey:SettingsMultipleUsers])
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
+	
+		mtUser.publisherType = [user objectForKey:SettingsPublisherType];
+		mtUser.monthDisplayCount = [user objectForKey:SettingsMonthDisplayCount];
+		mtUser.selectedSortByAdditionalInformation = [user objectForKey:SettingsSortedByMetadata];
+		
+		// METADATA
+		double metadataOrder = 100;
+		for(NSDictionary *metadata in [user objectForKey:SettingsOtherMetadata])
+		{
+			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
+			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
+			mtAdditionalInformationType.value = [metadata objectForKey:SettingsMetadataValue];
+			mtAdditionalInformationType.type = [[metadata objectForKey:SettingsMetadataType] intValue];
+			mtAdditionalInformationType.order = metadataOrder;
+			mtAdditionalInformationType.alwaysShownValue = YES;
+			mtAdditionalInformationType.user = mtUser;
+			metadataOrder += 100;
+		}
+		double metadataOrder = 100;
+		for(NSDictionary *metadata in [user objectForKey:SettingsPreferredMetadata])
+		{
+			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
+			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
+			mtAdditionalInformationType.value = [metadata objectForKey:SettingsMetadataValue];
+			mtAdditionalInformationType.type = [[metadata objectForKey:SettingsMetadataType] intValue];
+			mtAdditionalInformationType.order = metadataOrder;
+			mtAdditionalInformationType.alwaysShownValue = NO;
+			mtAdditionalInformationType.user = mtUser;
+			metadataOrder += 100;
+		}
+		
+		// BULK PLACEMENTS
+		for(NSDictionary *bulkPlacement in [user objectForKey:SettingsBulkLiterature])
+		{
+			MTBulkPlacement *mtBulkPlacement = [MTBulkPlacement insertInManagedObjectContext:self.managedObjectContext];
+			mtBulkPlacement.user = mtUser;
+			mtBulkPlacement.date = [bulkPlacement objectForKey:BulkLiteratureDate];
+			
+			for(NSDictionary *bulkLiterature in [user objectForKey:BulkLiteratureArray])
+			{
+				MTBulkPlacement *mtBulkPlacement = [MTBulkPlacement insertInManagedObjectContext:self.managedObjectContext];
+				mtBulkPlacement.user = mtUser;
+				mtBulkPlacement.date = [bulkPlacement objectForKey:BulkLiteratureDate];
+				
+			}
+		}
+		
+		
+		// QUICK NOTES
+		for(NSString *note in [user objectForKey:SettingsQuickNotes])
+		{
+			MTPresentation *mtPresentation = [MTPresentation insertInManagedObjectContext:self.managedObjectContext];
+			mtPresentation.notes = note;
+			mtPresentation.user = mtUser;
+			mtPresentation.downloadedValue = NO;
+		}
+		
+		// TERRITORY
+		for(NSString *territory in [user objectForKey:SettingsNotAtHomeTerritories])
+		{
+			MTTerritory *mtTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
+			mtTerritory.name = [territory objectForKey:NotAtHomeTerritoryName];
+			mtTerritory.city = [territory objectForKey:NotAtHomeTerritoryCity];
+			mtTerritory.state = [territory objectForKey:NotAtHomeTerritoryState];
+			mtTerritory.notes = [territory objectForKey:NotAtHomeTerritoryNotes];
+			mtTerritory.ownerId = [territory objectForKey:NotAtHomeTerritoryOwnerId];
+			mtTerritory.ownerEmailId = [territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
+			mtTerritory.ownerEmailAddress = [territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
+			mtTerritory.user = mtUser;
+			for(NSString *street in [territory objectForKey:NotAtHomeTerritoryStreets])
+			{
+				MTTerritoryStreet *mtStreet = [MTTerritoryStreet insertInManagedObjectContext:self.managedObjectContext];
+				mtStreet.name = [street objectForKey:NotAtHomeTerritoryStreetName];
+				mtStreet.date = [street objectForKey:NotAtHomeTerritoryStreetDate];
+				mtStreet.notes = [street objectForKey:NotAtHomeTerritoryStreetNotes];
+				mtStreet.territory = mtTerritory;
+				for(NSString *house in [street objectForKey:NotAtHomeTerritoryHouses])
+				{
+					MTTerritoryHouse *mtHouse = [MTTerritoryHouse insertInManagedObjectContext:self.managedObjectContext];
+					mtHouse.number = [street objectForKey:NotAtHomeTerritoryHouseNumber];
+					mtHouse.apartment = [street objectForKey:NotAtHomeTerritoryHouseApartment];
+					mtHouse.notes = [street objectForKey:NotAtHomeTerritoryHouseNotes];
+					mtHouse.attempts = [street objectForKey:NotAtHomeTerritoryHouseAttempts];
+					mtHouse.street = mtStreet;
+				}
+			}
+		}
 		
 		// HOURS
 		MTTimeType *hours = [MTTimeType hoursTypeForUser:mtUser];
+		hours.startTimerDate = [user objectForKey:SettingsTimeStartDate];
 		for(NSDictionary *timeEntry in [user objectForKey:SettingsTimeEntries])
 		{
-			MTTimeEntry *mtTimeEntry = [NSEntityDescription insertNewObjectForEntityForName:[MTTimeEntry entityName]
-																	 inManagedObjectContext:self.managedObjectContext];
+			MTTimeEntry *mtTimeEntry = [MTTimeEntry insertInManagedObjectContext:self.managedObjectContext];
 			mtTimeEntry.date = [timeEntry objectForKey:SettingsTimeEntryDate];
 			mtTimeEntry.minutesValue = [[timeEntry objectForKey:SettingsTimeEntryMinutes] intValue];
 			mtTimeEntry.type = hours;
 		}
 		
-		// HOURS
+		// RBC HOURS
 		MTTimeType *rbc = [MTTimeType rbcTypeForUser:mtUser];
+		rbc.startTimerDate = [user objectForKey:SettingsRBCTimeStartDate];
 		for(NSDictionary *timeEntry in [user objectForKey:SettingsRBCTimeEntries])
 		{
-			MTTimeEntry *mtTimeEntry = [NSEntityDescription insertNewObjectForEntityForName:[MTTimeEntry entityName]
-																	 inManagedObjectContext:self.managedObjectContext];
+			MTTimeEntry *mtTimeEntry = [MTTimeEntry insertInManagedObjectContext:self.managedObjectContext];
 			mtTimeEntry.date = [timeEntry objectForKey:SettingsTimeEntryDate];
 			mtTimeEntry.minutesValue = [[timeEntry objectForKey:SettingsTimeEntryMinutes] intValue];
 			mtTimeEntry.type = rbc;
@@ -395,8 +520,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
 
-//	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"convertedToCoreData"];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"convertedToCoreData"];
 	[self performSelector:@selector(initializeMyTimeViews) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+	[self.hud performSelector:@selector(done) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
 }
 
 - (BOOL)convertToCoreDataStore
@@ -412,8 +538,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
     // Set determinate mode
     hud.mode = MBProgressHUDModeDeterminate;
     hud.delegate = self;
-    [self.tabBarController.view addSubview:hud];
     hud.labelText = @"Converting Data File";
+    [self.window addSubview:hud];
 	
     // Show the HUD while the provided method executes in a new thread
     [hud showWhileExecuting:@selector(convertToCoreDataStoreTask) onTarget:self withObject:nil animated:YES];
@@ -512,6 +638,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	
     // Set up the portraitWindow and content view
 	self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+	[window makeKeyAndVisible];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -783,8 +910,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-#warning need to convert data
-	
 	// Create a tabbar controller and an array to contain the view controllers
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];

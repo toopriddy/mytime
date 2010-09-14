@@ -13,6 +13,7 @@
 
 
 
+
 @interface MTAdditionalInformationTypeID : NSManagedObjectID {}
 @end
 
@@ -46,6 +47,16 @@
 
 
 
+@property (nonatomic, retain) NSNumber *order;
+
+@property double orderValue;
+- (double)orderValue;
+- (void)setOrderValue:(double)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *alwaysShown;
 
 @property BOOL alwaysShownValue;
@@ -67,8 +78,8 @@
 
 
 
-@property (nonatomic, retain) MTAdditionalInformation* additionalInformation;
-//- (BOOL)validateAdditionalInformation:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) NSSet* additionalInformation;
+- (NSMutableSet*)additionalInformationSet;
 
 
 
@@ -80,6 +91,11 @@
 @end
 
 @interface _MTAdditionalInformationType (CoreDataGeneratedAccessors)
+
+- (void)addAdditionalInformation:(NSSet*)value_;
+- (void)removeAdditionalInformation:(NSSet*)value_;
+- (void)addAdditionalInformationObject:(MTAdditionalInformation*)value_;
+- (void)removeAdditionalInformationObject:(MTAdditionalInformation*)value_;
 
 @end
 
@@ -100,6 +116,13 @@
 - (void)setPrimitiveName:(NSString*)value;
 
 
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (double)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(double)value_;
+
+
 - (NSNumber*)primitiveAlwaysShown;
 - (void)setPrimitiveAlwaysShown:(NSNumber*)value;
 
@@ -116,8 +139,8 @@
 
 
 
-- (MTAdditionalInformation*)primitiveAdditionalInformation;
-- (void)setPrimitiveAdditionalInformation:(MTAdditionalInformation*)value;
+- (NSMutableSet*)primitiveAdditionalInformation;
+- (void)setPrimitiveAdditionalInformation:(NSMutableSet*)value;
 
 
 

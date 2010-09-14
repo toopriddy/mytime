@@ -69,6 +69,32 @@
 
 
 
+@dynamic order;
+
+
+
+- (double)orderValue {
+	NSNumber *result = [self order];
+	return [result doubleValue];
+}
+
+- (void)setOrderValue:(double)value_ {
+	[self setOrder:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveOrderValue {
+	NSNumber *result = [self primitiveOrder];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveOrderValue:(double)value_ {
+	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
+}
+
+
+
+
+
 @dynamic alwaysShown;
 
 
@@ -123,6 +149,13 @@
 
 @dynamic additionalInformation;
 
+	
+- (NSMutableSet*)additionalInformationSet {
+	[self willAccessValueForKey:@"additionalInformation"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"additionalInformation"];
+	[self didAccessValueForKey:@"additionalInformation"];
+	return result;
+}
 	
 
 @dynamic user;

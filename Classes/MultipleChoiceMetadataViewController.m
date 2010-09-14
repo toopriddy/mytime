@@ -74,7 +74,7 @@
 		{
 			if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
 			{
-				self.data = [entry objectForKey:SettingsMetadataData];
+				self.data = [[[entry objectForKey:SettingsMetadataData] copy] autorelease];
 				break;
 			}
 		}
@@ -84,7 +84,7 @@
 			{
 				if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
 				{
-					self.data = [entry objectForKey:SettingsMetadataData];
+					self.data = [[[entry objectForKey:SettingsMetadataData] copy] autorelease];
 					break;
 				}
 			}
