@@ -31,6 +31,7 @@
 #import "SettingsTableViewController.h"
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
+#import "TutorialViewController.h"
 #import "Settings.h"
 #import "Geocache.h"
 #import <objc/runtime.h>
@@ -732,6 +733,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	HourViewController *quickBuildHourViewController = [[[HourViewController alloc] initForQuickBuild:YES] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:quickBuildHourViewController] autorelease]];
 
+	// TUTORIAL
+	TutorialViewController *tutorialViewController = [[[TutorialViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:tutorialViewController] autorelease]];
+	
 	// SETTINGS
 	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
 	UINavigationController *settingsNavigationController = [[[UINavigationController alloc] initWithRootViewController:settingsViewController] autorelease];
