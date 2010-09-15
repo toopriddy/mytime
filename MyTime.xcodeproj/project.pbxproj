@@ -177,6 +177,10 @@
 		90E75D1B0FE5D0AB00690CEE /* MetadataPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E75D1A0FE5D0AB00690CEE /* MetadataPickerView.xib */; };
 		90E75D1E0FE5D0BC00690CEE /* MetadataPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E75D1D0FE5D0BC00690CEE /* MetadataPickerViewController.m */; };
 		90E75D270FE5E2B800690CEE /* MetadataSortedCallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E75D260FE5E2B800690CEE /* MetadataSortedCallsViewController.m */; };
+		90E78160123FD95E00881C8F /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E7815F123FD95E00881C8F /* TutorialViewController.m */; };
+		90E78163123FD9BD00881C8F /* YouTubeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E78162123FD9BD00881C8F /* YouTubeTableViewCell.m */; };
+		90E78165123FD9D200881C8F /* YouTubeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E78164123FD9D200881C8F /* YouTubeTableViewCell.xib */; };
+		90E7818D1240084500881C8F /* tutorials.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E7818C1240084500881C8F /* tutorials.png */; };
 		90EA4CDA0FFEBB8F0046A2E4 /* UITableViewSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */; };
 		90EA4CDC0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */; };
 		90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */; };
@@ -482,6 +486,12 @@
 		90E75D1D0FE5D0BC00690CEE /* MetadataPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataPickerViewController.m; sourceTree = "<group>"; };
 		90E75D250FE5E2B800690CEE /* MetadataSortedCallsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataSortedCallsViewController.h; sourceTree = "<group>"; };
 		90E75D260FE5E2B800690CEE /* MetadataSortedCallsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataSortedCallsViewController.m; sourceTree = "<group>"; };
+		90E7815E123FD95E00881C8F /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		90E7815F123FD95E00881C8F /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		90E78161123FD9BD00881C8F /* YouTubeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeTableViewCell.h; sourceTree = "<group>"; };
+		90E78162123FD9BD00881C8F /* YouTubeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeTableViewCell.m; sourceTree = "<group>"; };
+		90E78164123FD9D200881C8F /* YouTubeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = YouTubeTableViewCell.xib; path = Classes/YouTubeTableViewCell.xib; sourceTree = "<group>"; };
+		90E7818C1240084500881C8F /* tutorials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials.png; sourceTree = "<group>"; };
 		90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewSwitchCell.h; sourceTree = "<group>"; };
 		90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewSwitchCell.m; sourceTree = "<group>"; };
 		90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UITableViewSwitchCell.xib; sourceTree = "<group>"; };
@@ -547,6 +557,7 @@
 				90C1496A0E3BA01000C6EDAF /* StatisticsView */,
 				90FBE8720E39882600FD8014 /* CallViews */,
 				9052CD3110866F57001FFA13 /* NotAtHomes */,
+				90E78159123FD90F00881C8F /* TutorialView */,
 				90FBE88E0E39938F00FD8014 /* Settings.h */,
 				90FBE88F0E39938F00FD8014 /* Settings.m */,
 				90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */,
@@ -667,6 +678,7 @@
 				90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */,
 				90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */,
 				90E2EDDE103BB5AA000C2032 /* SecurityView.xib */,
+				90E78164123FD9D200881C8F /* YouTubeTableViewCell.xib */,
 				90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */,
 				90E087B1117413FC00C5BDEA /* StatisticsNumberCell.xib */,
 				90DE47E910FAE6450003D14B /* EmptyListView.xib */,
@@ -743,6 +755,7 @@
 				9018566811F9518400F66841 /* timer@2x.png */,
 				9018566911F9518400F66841 /* timerBig.png */,
 				9018566A11F9518400F66841 /* timerBig@2x.png */,
+				90E7818C1240084500881C8F /* tutorials.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -884,6 +897,17 @@
 			name = "Multiple Users";
 			sourceTree = "<group>";
 		};
+		90E78159123FD90F00881C8F /* TutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				90E7815E123FD95E00881C8F /* TutorialViewController.h */,
+				90E7815F123FD95E00881C8F /* TutorialViewController.m */,
+				90E78161123FD9BD00881C8F /* YouTubeTableViewCell.h */,
+				90E78162123FD9BD00881C8F /* YouTubeTableViewCell.m */,
+			);
+			name = TutorialView;
+			sourceTree = "<group>";
+		};
 		90FBE8720E39882600FD8014 /* CallViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +1001,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MyTime" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1102,6 +1127,8 @@
 				9018569A11F9518400F66841 /* timerBig.png in Resources */,
 				9018569B11F9518400F66841 /* timerBig@2x.png in Resources */,
 				901BDFA71203CA5900EF0195 /* deletedCallsBig.png in Resources */,
+				90E78165123FD9D200881C8F /* YouTubeTableViewCell.xib in Resources */,
+				90E7818D1240084500881C8F /* tutorials.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,6 +1256,8 @@
 				90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */,
 				9073F9E711C406ED0007FC32 /* MapView.m in Sources */,
 				90F55BBA120FA91E00FBDD55 /* UIView+PriddySoftware.m in Sources */,
+				90E78160123FD95E00881C8F /* TutorialViewController.m in Sources */,
+				90E78163123FD9BD00881C8F /* YouTubeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1336,7 +1365,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E8BEFB51-7051-497B-8DAA-5BEDAEE1625A";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1379,7 +1408,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC8CC640-ED81-46AA-B313-4090C2817AA3";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1457,7 +1486,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7F39EFE7-6EE4-447B-81B3-496F8092B698";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -1478,7 +1507,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "7F39EFE7-6EE4-447B-81B3-496F8092B698";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7F39EFE7-6EE4-447B-81B3-496F8092B698";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
