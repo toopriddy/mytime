@@ -138,7 +138,19 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	exit(0);
+	if(alertViewTutorials)
+	{
+		alertViewTutorials = NO;
+		if(buttonIndex == 0)
+		{
+			self.tabBarController.selectedViewController = self.tabBarController.moreNavigationController;
+			[self.tabBarController setSelectedViewController:_tutorialViewController];
+		}
+	}
+	else
+	{
+		exit(0);
+	}
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
@@ -736,6 +748,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	// TUTORIAL
 	TutorialViewController *tutorialViewController = [[[TutorialViewController alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:tutorialViewController] autorelease]];
+	_tutorialViewController = tutorialViewController;
 	
 	// SETTINGS
 	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
@@ -822,6 +835,9 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			[[Settings sharedInstance] saveData];
 
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			alertSheet.delegate = self;
+			alertViewTutorials = YES;
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"Tutorials", @"Button to take the user directly to the tutorials view from the first popup in mytime")];
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 			alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
 			[alertSheet show];
