@@ -344,6 +344,7 @@
 		9045A7280E7C1590001B439C /* BackupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupView.m; sourceTree = "<group>"; };
 		9045A9FE0E7D99A4001B439C /* EventAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAgent.h; sourceTree = "<group>"; };
 		9045A9FF0E7D99A4001B439C /* EventAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAgent.m; sourceTree = "<group>"; };
+		904795F71241D7D000BF762A /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		904AF63C1170101000D497E7 /* StatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsTableViewController.h; sourceTree = "<group>"; };
 		904AF63D1170101000D497E7 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsTableViewController.m; sourceTree = "<group>"; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
@@ -1024,6 +1025,7 @@
 				Slovak,
 				Norwegian,
 				Korean,
+				Russian,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1292,6 +1294,7 @@
 				9053E0580E8DDD7100BA35F7 /* Italian */,
 				90AEB40D0E9C218A00943E6A /* Japanese */,
 				9064D8B40ED11A4900A0FBBB /* Portuguese */,
+				904795F71241D7D000BF762A /* Russian */,
 				9053E06F0E8DDDD400BA35F7 /* Spanish */,
 				903477630E8CAA0100BB6F2D /* Swedish */,
 				90E759350FE4426900690CEE /* Slovak */,
