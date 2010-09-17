@@ -142,7 +142,12 @@ extern NSString * const SettingsRBCTimeEntries; // Done
 	extern NSString * const SettingsTimeEntryMinutes; // Done
 
 //multiple users
-extern NSString * const SettingsStatisticsAdjustments;
+extern NSString * const SettingsStatisticsAdjustments; // Done
+			// dictionary 
+				// key is StatisticsTypeHours, CampaignTracts...
+				// value is Dictionary
+					// key timestamp (YYMM)
+					// value is adjustment
 
 extern NSString * const SettingsPasscode; //Done
 

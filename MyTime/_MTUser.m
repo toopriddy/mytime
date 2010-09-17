@@ -179,17 +179,6 @@
 }
 	
 
-@dynamic startTimestamps;
-
-	
-- (NSMutableSet*)startTimestampsSet {
-	[self willAccessValueForKey:@"startTimestamps"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"startTimestamps"];
-	[self didAccessValueForKey:@"startTimestamps"];
-	return result;
-}
-	
-
 
 
 @end
