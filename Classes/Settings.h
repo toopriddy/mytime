@@ -17,39 +17,40 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 //multiple users
-extern NSString * const SettingsCalls;
+extern NSString * const SettingsCalls; // Done
 //multiple users
-extern NSString * const SettingsDeletedCalls;
+extern NSString * const SettingsDeletedCalls; // Done
 
-	extern NSString * const CallName;
-	extern NSString * const CallStreetNumber;
-	extern NSString * const CallApartmentNumber;
-	extern NSString * const CallStreet;
-	extern NSString * const CallCity;
-	extern NSString * const CallState;
-	extern NSString * const CallLattitudeLongitude;
-	extern NSString * const CallLocationType;
-	extern NSString * const CallLocationTypeManual;
-	extern NSString * const CallLocationTypeGoogleMaps;
-	extern NSString * const CallLocationTypeDoNotShow;
+	extern NSString * const CallName; // Done
+	extern NSString * const CallStreetNumber; // Done
+	extern NSString * const CallApartmentNumber; // Done
+	extern NSString * const CallStreet; // Done
+	extern NSString * const CallCity; // Done
+	extern NSString * const CallState; // Done
+	extern NSString * const CallLattitudeLongitude; // Done
+	extern NSString * const CallLocationType; // Done
+		extern NSString * const CallLocationTypeManual;
+		extern NSString * const CallLocationTypeGoogleMaps;
+		extern NSString * const CallLocationTypeDoNotShow;
 
 
-	extern NSString * const CallMetadata;
-	extern NSString * const CallMetadataName;
-	extern NSString * const CallMetadataType;
-	extern NSString * const CallMetadataData;
-	extern NSString * const CallMetadataValue;
-	extern NSString * const CallReturnVisits;
-		extern NSString * const CallReturnVisitNotes;
-		extern NSString * const CallReturnVisitDate;
-		extern NSString * const CallReturnVisitType;
-		extern NSString * const CallReturnVisitPublications;
-		extern NSString * const CallReturnVisitPublicationTitle;
-		extern NSString * const CallReturnVisitPublicationType;
-		extern NSString * const CallReturnVisitPublicationName;
-		extern NSString * const CallReturnVisitPublicationYear;
-		extern NSString * const CallReturnVisitPublicationMonth;
-		extern NSString * const CallReturnVisitPublicationDay;
+	extern NSString * const CallMetadata; // Done
+		extern NSString * const CallMetadataName; // Done
+		extern NSString * const CallMetadataType; // Done
+		extern NSString * const CallMetadataData; // Done
+		extern NSString * const CallMetadataValue; // Done
+
+	extern NSString * const CallReturnVisits; // Done
+		extern NSString * const CallReturnVisitNotes; // Done
+		extern NSString * const CallReturnVisitDate; // Done
+		extern NSString * const CallReturnVisitType; // Done
+		extern NSString * const CallReturnVisitPublications; // Done
+		extern NSString * const CallReturnVisitPublicationTitle; // Done
+		extern NSString * const CallReturnVisitPublicationType; // Done
+		extern NSString * const CallReturnVisitPublicationName; // Done
+		extern NSString * const CallReturnVisitPublicationYear; // Done
+		extern NSString * const CallReturnVisitPublicationMonth; // Done
+		extern NSString * const CallReturnVisitPublicationDay; // Done
 
 		extern NSString * const CallReturnVisitTypeTransferedStudy;
 		extern NSString * const CallReturnVisitTypeTransferedNotAtHome;
@@ -59,16 +60,16 @@ extern NSString * const SettingsDeletedCalls;
 		extern NSString * const CallReturnVisitTypeNotAtHome;
 
 //multiple users
-extern NSString * const SettingsBulkLiterature;
-	extern NSString * const BulkLiteratureDate;
-	extern NSString * const BulkLiteratureArray;
-		extern NSString * const BulkLiteratureArrayCount;
-		extern NSString * const BulkLiteratureArrayTitle;
-		extern NSString * const BulkLiteratureArrayType;
-		extern NSString * const BulkLiteratureArrayName;
-		extern NSString * const BulkLiteratureArrayYear;
-		extern NSString * const BulkLiteratureArrayMonth;
-		extern NSString * const BulkLiteratureArrayDay;
+extern NSString * const SettingsBulkLiterature; // Done
+	extern NSString * const BulkLiteratureDate; // Done
+	extern NSString * const BulkLiteratureArray; // Done
+		extern NSString * const BulkLiteratureArrayCount; // Done
+		extern NSString * const BulkLiteratureArrayTitle; // Done
+		extern NSString * const BulkLiteratureArrayType; // Done
+		extern NSString * const BulkLiteratureArrayName; // Done
+		extern NSString * const BulkLiteratureArrayYear; // Done
+		extern NSString * const BulkLiteratureArrayMonth; // Done
+		extern NSString * const BulkLiteratureArrayDay; // Done
 
 #define AlternateLocalizedString(key, comment) (key)
 #define PublicationTypeHeading			@""
@@ -94,7 +95,7 @@ extern NSString * const SettingsLastCallStreet; // Done
 extern NSString * const SettingsLastCallCity; // Done
 extern NSString * const SettingsLastCallState; // Done
 
-extern NSString * const SettingsCurrentButtonBarName;
+extern NSString * const SettingsCurrentButtonBarName; // Done
 
 //multiple users
 extern NSString * const SettingsPreferredMetadata; // Done

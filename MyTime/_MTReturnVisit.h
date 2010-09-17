@@ -28,11 +28,7 @@
 
 
 
-@property (nonatomic, retain) NSNumber *type;
-
-@property short typeValue;
-- (short)typeValue;
-- (void)setTypeValue:(short)value_;
+@property (nonatomic, retain) NSString *type;
 
 //- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
 
@@ -72,11 +68,8 @@
 - (void)setPrimitiveNotes:(NSString*)value;
 
 
-- (NSNumber*)primitiveType;
-- (void)setPrimitiveType:(NSNumber*)value;
-
-- (short)primitiveTypeValue;
-- (void)setPrimitiveTypeValue:(short)value_;
+- (NSString*)primitiveType;
+- (void)setPrimitiveType:(NSString*)value;
 
 
 - (NSDate*)primitiveDate;
