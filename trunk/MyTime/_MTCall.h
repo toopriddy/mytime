@@ -19,6 +19,8 @@
 
 
 
+
+
 @interface MTCallID : NSManagedObjectID {}
 @end
 
@@ -27,32 +29,6 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTCallID*)objectID;
-
-
-
-@property (nonatomic, retain) NSNumber *deleted;
-
-@property BOOL deletedValue;
-- (BOOL)deletedValue;
-- (void)setDeletedValue:(BOOL)value_;
-
-//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *houseNumber;
-
-//- (BOOL)validateHouseNumber:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *lattitude;
-
-@property double lattitudeValue;
-- (double)lattitudeValue;
-- (void)setLattitudeValue:(double)value_;
-
-//- (BOOL)validateLattitude:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -68,25 +44,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *locationLookupType;
+@property (nonatomic, retain) NSString *street;
 
-@property short locationLookupTypeValue;
-- (short)locationLookupTypeValue;
-- (void)setLocationLookupTypeValue:(short)value_;
-
-//- (BOOL)validateLocationLookupType:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *state;
-
-//- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateStreet:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -100,9 +60,71 @@
 
 
 
-@property (nonatomic, retain) NSString *street;
+@property (nonatomic, retain) NSString *state;
 
-//- (BOOL)validateStreet:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *locationAquisitionAttempted;
+
+@property BOOL locationAquisitionAttemptedValue;
+- (BOOL)locationAquisitionAttemptedValue;
+- (void)setLocationAquisitionAttemptedValue:(BOOL)value_;
+
+//- (BOOL)validateLocationAquisitionAttempted:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *houseNumber;
+
+//- (BOOL)validateHouseNumber:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *deleted;
+
+@property BOOL deletedValue;
+- (BOOL)deletedValue;
+- (void)setDeletedValue:(BOOL)value_;
+
+//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *lattitude;
+
+@property double lattitudeValue;
+- (double)lattitudeValue;
+- (void)setLattitudeValue:(double)value_;
+
+//- (BOOL)validateLattitude:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *locationLookupType;
+
+@property short locationLookupTypeValue;
+- (short)locationLookupTypeValue;
+- (void)setLocationLookupTypeValue:(short)value_;
+
+//- (BOOL)validateLocationLookupType:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *locationAquired;
+
+@property BOOL locationAquiredValue;
+- (BOOL)locationAquiredValue;
+- (void)setLocationAquiredValue:(BOOL)value_;
+
+//- (BOOL)validateLocationAquired:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -140,24 +162,6 @@
 
 @interface _MTCall (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSNumber*)primitiveDeleted;
-- (void)setPrimitiveDeleted:(NSNumber*)value;
-
-- (BOOL)primitiveDeletedValue;
-- (void)setPrimitiveDeletedValue:(BOOL)value_;
-
-
-- (NSString*)primitiveHouseNumber;
-- (void)setPrimitiveHouseNumber:(NSString*)value;
-
-
-- (NSNumber*)primitiveLattitude;
-- (void)setPrimitiveLattitude:(NSNumber*)value;
-
-- (double)primitiveLattitudeValue;
-- (void)setPrimitiveLattitudeValue:(double)value_;
-
-
 - (NSString*)primitiveCity;
 - (void)setPrimitiveCity:(NSString*)value;
 
@@ -166,19 +170,8 @@
 - (void)setPrimitiveApartmentNumber:(NSString*)value;
 
 
-- (NSNumber*)primitiveLocationLookupType;
-- (void)setPrimitiveLocationLookupType:(NSNumber*)value;
-
-- (short)primitiveLocationLookupTypeValue;
-- (void)setPrimitiveLocationLookupTypeValue:(short)value_;
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
-- (NSString*)primitiveState;
-- (void)setPrimitiveState:(NSString*)value;
+- (NSString*)primitiveStreet;
+- (void)setPrimitiveStreet:(NSString*)value;
 
 
 - (NSNumber*)primitiveLongitude;
@@ -188,8 +181,51 @@
 - (void)setPrimitiveLongitudeValue:(double)value_;
 
 
-- (NSString*)primitiveStreet;
-- (void)setPrimitiveStreet:(NSString*)value;
+- (NSString*)primitiveState;
+- (void)setPrimitiveState:(NSString*)value;
+
+
+- (NSNumber*)primitiveLocationAquisitionAttempted;
+- (void)setPrimitiveLocationAquisitionAttempted:(NSNumber*)value;
+
+- (BOOL)primitiveLocationAquisitionAttemptedValue;
+- (void)setPrimitiveLocationAquisitionAttemptedValue:(BOOL)value_;
+
+
+- (NSString*)primitiveHouseNumber;
+- (void)setPrimitiveHouseNumber:(NSString*)value;
+
+
+- (NSNumber*)primitiveDeleted;
+- (void)setPrimitiveDeleted:(NSNumber*)value;
+
+- (BOOL)primitiveDeletedValue;
+- (void)setPrimitiveDeletedValue:(BOOL)value_;
+
+
+- (NSNumber*)primitiveLattitude;
+- (void)setPrimitiveLattitude:(NSNumber*)value;
+
+- (double)primitiveLattitudeValue;
+- (void)setPrimitiveLattitudeValue:(double)value_;
+
+
+- (NSNumber*)primitiveLocationLookupType;
+- (void)setPrimitiveLocationLookupType:(NSNumber*)value;
+
+- (short)primitiveLocationLookupTypeValue;
+- (void)setPrimitiveLocationLookupTypeValue:(short)value_;
+
+
+- (NSNumber*)primitiveLocationAquired;
+- (void)setPrimitiveLocationAquired:(NSNumber*)value;
+
+- (BOOL)primitiveLocationAquiredValue;
+- (void)setPrimitiveLocationAquiredValue:(BOOL)value_;
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
 
 
 

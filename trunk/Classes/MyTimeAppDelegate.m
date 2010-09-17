@@ -39,6 +39,18 @@
 #import "NSData+PSCompress.h"
 #import "MTSettings.h"
 #import "MTUser.h"
+#import "MTCall.h"
+#import "MTReturnVisit.h"
+#import "MTBulkPlacement.h"
+#import "MTPublication.h"
+#import "MTAdditionalInformation.h"
+#import "MTAdditionalInformationType.h"
+#import "MTPresentation.h"
+#import "MTStartTimestamp.h"
+#import "MTStatisticsAdjustment.h"
+#import "MTTerritory.h"
+#import "MTTerritoryStreet.h"
+#import "MTTerritoryHouse.h"
 #import "MTTimeType.h"
 #import "MTTimeEntry.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
@@ -356,6 +368,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	[self.managedObjectContext processPendingChanges];
 	[[self.managedObjectContext undoManager] disableUndoRegistration];
 	MTSettings *mtSettings = [MTSettings settings];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:[settings objectForKey:SettingsCurrentButtonBarName] forKey:SettingsCurrentButtonBarName];
+	
+	
 	// SECRETARY SETTINGS
 	mtSettings.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
 	mtSettings.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];
@@ -392,7 +408,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	mtSettings.lastCity = [settings objectForKey:SettingsLastCallCity];
 	mtSettings.lastState = [settings objectForKey:SettingsLastCallState];
 	
-	for(NSMutableDictionary *user in [settings objectForKey:SettingsMultipleUsers])
+	for(NSDictionary *user in [settings objectForKey:SettingsMultipleUsers])
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
 	
@@ -406,21 +422,19 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		{
 			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
 			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
-			mtAdditionalInformationType.value = [metadata objectForKey:SettingsMetadataValue];
-			mtAdditionalInformationType.type = [[metadata objectForKey:SettingsMetadataType] intValue];
-			mtAdditionalInformationType.order = metadataOrder;
+			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
+			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = YES;
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
 		}
-		double metadataOrder = 100;
+		metadataOrder = 100;
 		for(NSDictionary *metadata in [user objectForKey:SettingsPreferredMetadata])
 		{
 			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
 			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
-			mtAdditionalInformationType.value = [metadata objectForKey:SettingsMetadataValue];
-			mtAdditionalInformationType.type = [[metadata objectForKey:SettingsMetadataType] intValue];
-			mtAdditionalInformationType.order = metadataOrder;
+			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
+			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = NO;
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
@@ -435,13 +449,101 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			
 			for(NSDictionary *bulkLiterature in [user objectForKey:BulkLiteratureArray])
 			{
-				MTBulkPlacement *mtBulkPlacement = [MTBulkPlacement insertInManagedObjectContext:self.managedObjectContext];
-				mtBulkPlacement.user = mtUser;
-				mtBulkPlacement.date = [bulkPlacement objectForKey:BulkLiteratureDate];
-				
+				MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
+				mtPublication.bulkPlacement = mtBulkPlacement;
+				mtPublication.countValue = [[bulkPlacement objectForKey:BulkLiteratureArrayCount] intValue];
+				mtPublication.title = [bulkPlacement objectForKey:BulkLiteratureArrayTitle];
+				mtPublication.typeValue = [[bulkPlacement objectForKey:BulkLiteratureArrayType] intValue];
+				mtPublication.name = [bulkPlacement objectForKey:BulkLiteratureArrayName];
+				mtPublication.yearValue = [[bulkPlacement objectForKey:BulkLiteratureArrayYear] intValue];
+				mtPublication.monthValue = [[bulkPlacement objectForKey:BulkLiteratureArrayMonth] intValue];
+				mtPublication.dayValue = [[bulkPlacement objectForKey:BulkLiteratureArrayDay] intValue];
 			}
 		}
 		
+		// CALLS
+		NSString *callArray[2] = {SettingsCalls, SettingsDeletedCalls};
+		for(int i = 0; i < 2; i++)
+		{
+			for(NSDictionary *call in [user objectForKey:callArray[i]])
+			{
+				MTCall *mtCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
+				mtCall.user = mtUser;
+				mtCall.houseNumber = [call objectForKey:CallStreetNumber];
+				mtCall.apartmentNumber = [call objectForKey:CallApartmentNumber];
+				mtCall.street = [call objectForKey:CallStreet];
+				mtCall.city = [call objectForKey:CallCity];
+				mtCall.state = [call objectForKey:CallState];
+				mtCall.deletedValue = i == 1;
+				mtCall.name = [call objectForKey:CallName];
+				NSString *latLong = [call objectForKey:CallLattitudeLongitude];
+				if(latLong == nil)
+				{
+					mtCall.locationAquiredValue = NO;
+					mtCall.locationAquisitionAttemptedValue = NO;
+				}
+				else if([latLong isEqualToString:@"nil"])
+				{
+					mtCall.locationAquiredValue = NO;
+					mtCall.locationAquisitionAttemptedValue = YES;
+				}
+				else
+				{
+					NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+					mtCall.lattitudeValue = [[stringArray objectAtIndex:0] doubleValue];
+					mtCall.longitudeValue = [[stringArray objectAtIndex:1] doubleValue];
+					mtCall.locationAquisitionAttemptedValue = YES;
+					mtCall.locationAquiredValue = YES;
+				}
+				mtCall.locationLookupTypeValue = [[call objectForKey:CallLocationType] intValue];
+				
+				// RETURN VISITS
+				for(NSDictionary *returnVisit in [call objectForKey:CallReturnVisits])
+				{
+					MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
+					mtReturnVisit.call = mtCall;
+					mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
+					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
+					mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
+					// PUBLICATIONS
+					for(NSDictionary *publication in [call objectForKey:CallReturnVisitPublications])
+					{
+						MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
+						mtPublication.returnVisit = mtReturnVisit;
+						mtPublication.dayValue = [[publication objectForKey:CallReturnVisitPublicationDay] intValue];
+						mtPublication.monthValue = [[publication objectForKey:CallReturnVisitPublicationMonth] intValue];
+						mtPublication.yearValue = [[publication objectForKey:CallReturnVisitPublicationYear] intValue];
+						mtPublication.name = [publication objectForKey:CallReturnVisitPublicationName];
+						mtPublication.title = [publication objectForKey:CallReturnVisitPublicationTitle];
+						mtPublication.type = [publication objectForKey:CallReturnVisitPublicationType];
+						mtPublication.countValue = 1;
+					}
+				}
+
+				// ADDITIONAL INFORMATION
+				for(NSDictionary *additionalInformation in [call objectForKey:CallMetadata])
+				{
+					MTAdditionalInformation *mtAdditionalInformation = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
+					
+					mtAdditionalInformation.call = mtCall;
+					mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
+					mtAdditionalInformation.data = [[[additionalInformation objectForKey:CallMetadataData] copy] autorelease];
+					MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
+																																 name:[additionalInformation objectForKey:CallMetadataName] 
+																																 user:mtUser];
+					if(mtAdditionalInformationType == nil)
+					{
+						// we need to create one of these... this happens when the user deleted the additional information but calls still use it
+						mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationType:[[additionalInformation objectForKey:SettingsMetadataType] intValue] 
+																											  name:[additionalInformation objectForKey:SettingsMetadataName]
+																											  data:[additionalInformation objectForKey:SettingsMetadataData] 
+																											  user:mtUser];
+					}
+					mtAdditionalInformation.type = mtAdditionalInformationType;
+				}
+				
+			}			
+		}
 		
 		// QUICK NOTES
 		for(NSString *note in [user objectForKey:SettingsQuickNotes])
@@ -453,7 +555,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		}
 		
 		// TERRITORY
-		for(NSString *territory in [user objectForKey:SettingsNotAtHomeTerritories])
+		for(NSDictionary *territory in [user objectForKey:SettingsNotAtHomeTerritories])
 		{
 			MTTerritory *mtTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
 			mtTerritory.name = [territory objectForKey:NotAtHomeTerritoryName];
@@ -464,7 +566,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtTerritory.ownerEmailId = [territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
 			mtTerritory.ownerEmailAddress = [territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
 			mtTerritory.user = mtUser;
-			for(NSString *street in [territory objectForKey:NotAtHomeTerritoryStreets])
+			for(NSDictionary *street in [territory objectForKey:NotAtHomeTerritoryStreets])
 			{
 				MTTerritoryStreet *mtStreet = [MTTerritoryStreet insertInManagedObjectContext:self.managedObjectContext];
 				mtStreet.name = [street objectForKey:NotAtHomeTerritoryStreetName];
@@ -1021,10 +1123,12 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	tabBarController.viewControllers = array;
 	tabBarController.delegate = self;
 	tabBarController.moreNavigationController.delegate = self;
-	if([settings objectForKey:SettingsCurrentButtonBarName])
+	[[NSUserDefaults standardUserDefaults] objectForKey:SettingsCurrentButtonBarName];
+
+	if([[NSUserDefaults standardUserDefaults] objectForKey:SettingsCurrentButtonBarName])
 	{
 		NSArray *nameArray = [array valueForKeyPath:@"topViewController.title"];
-		NSUInteger index = [nameArray indexOfObject:[settings objectForKey:SettingsCurrentButtonBarName]];
+		NSUInteger index = [nameArray indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:SettingsCurrentButtonBarName]];
 		if(index != NSNotFound)
 		{
 			UIViewController *viewController = [array objectAtIndex:index];
@@ -1096,27 +1200,25 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	if(viewController != self.tabBarController.moreNavigationController)
 	{
-		[settings setObject:viewController.title forKey:SettingsCurrentButtonBarName];
+		[[NSUserDefaults standardUserDefaults] setObject:viewController.title forKey:SettingsCurrentButtonBarName];
 	}
 	else
 	{
-		[settings setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
+		[[NSUserDefaults standardUserDefaults] setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
 	}
 }
 
 - (void)tabBarController:(UITabBarController *)theTabBarController didSelectViewController:(UIViewController *)viewController
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	if(viewController != self.tabBarController.moreNavigationController)
 	{
-		[settings setObject:viewController.title forKey:SettingsCurrentButtonBarName];
+		[[NSUserDefaults standardUserDefaults] setObject:viewController.title forKey:SettingsCurrentButtonBarName];
 	}
 	else
 	{
-		[settings setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
+		[[NSUserDefaults standardUserDefaults] setObject:@"MoreViewController" forKey:SettingsCurrentButtonBarName];
 	}
 }
 

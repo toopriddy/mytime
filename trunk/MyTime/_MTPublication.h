@@ -4,8 +4,9 @@
 #import <CoreData/CoreData.h>
 
 
-@class MTReturnVisit;
 @class MTBulkPlacement;
+@class MTReturnVisit;
+
 
 
 
@@ -71,6 +72,16 @@
 
 
 
+@property (nonatomic, retain) NSNumber *count;
+
+@property short countValue;
+- (short)countValue;
+- (void)setCountValue:(short)value_;
+
+//- (BOOL)validateCount:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSString *title;
 
 //- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
@@ -78,13 +89,13 @@
 
 
 
+@property (nonatomic, retain) MTBulkPlacement* bulkPlacement;
+//- (BOOL)validateBulkPlacement:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) MTReturnVisit* returnVisit;
 //- (BOOL)validateReturnVisit:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) MTBulkPlacement* newRelationship;
-//- (BOOL)validateNewRelationship:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -128,19 +139,26 @@
 - (void)setPrimitiveDayValue:(short)value_;
 
 
+- (NSNumber*)primitiveCount;
+- (void)setPrimitiveCount:(NSNumber*)value;
+
+- (short)primitiveCountValue;
+- (void)setPrimitiveCountValue:(short)value_;
+
+
 - (NSString*)primitiveTitle;
 - (void)setPrimitiveTitle:(NSString*)value;
 
 
 
 
+- (MTBulkPlacement*)primitiveBulkPlacement;
+- (void)setPrimitiveBulkPlacement:(MTBulkPlacement*)value;
+
+
+
 - (MTReturnVisit*)primitiveReturnVisit;
 - (void)setPrimitiveReturnVisit:(MTReturnVisit*)value;
-
-
-
-- (MTBulkPlacement*)primitiveNewRelationship;
-- (void)setPrimitiveNewRelationship:(MTBulkPlacement*)value;
 
 
 @end

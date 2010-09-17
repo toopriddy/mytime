@@ -140,6 +140,32 @@
 
 
 
+@dynamic count;
+
+
+
+- (short)countValue {
+	NSNumber *result = [self count];
+	return [result shortValue];
+}
+
+- (void)setCountValue:(short)value_ {
+	[self setCount:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveCountValue {
+	NSNumber *result = [self primitiveCount];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveCountValue:(short)value_ {
+	[self setPrimitiveCount:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
 @dynamic title;
 
 
@@ -147,11 +173,11 @@
 
 
 
-@dynamic returnVisit;
+@dynamic bulkPlacement;
 
 	
 
-@dynamic newRelationship;
+@dynamic returnVisit;
 
 	
 
