@@ -360,7 +360,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)convertToCoreDataStoreTask
 {
-	int steps = 1;
+	double steps = 1;
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
@@ -371,6 +371,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	
 	[[NSUserDefaults standardUserDefaults] setObject:[settings objectForKey:SettingsCurrentButtonBarName] forKey:SettingsCurrentButtonBarName];
 	
+	steps = 1 + 9*[[settings objectForKey:SettingsMultipleUsers] count];
 	
 	// SECRETARY SETTINGS
 	mtSettings.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
@@ -408,6 +409,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	mtSettings.lastCity = [settings objectForKey:SettingsLastCallCity];
 	mtSettings.lastState = [settings objectForKey:SettingsLastCallState];
 	
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	self.hud.progress = self.hud.progress + 1.0/steps;
+	
+
 	for(NSDictionary *user in [settings objectForKey:SettingsMultipleUsers])
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
@@ -425,6 +434,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
 			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = YES;
+			mtAdditionalInformationType.name = [metadata objectForKey:SettingsMetadataName];
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
 		}
@@ -436,9 +446,17 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
 			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = NO;
+			mtAdditionalInformationType.name = [metadata objectForKey:SettingsMetadataName];
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
 		}
+
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
 		
 		// BULK PLACEMENTS
 		for(NSDictionary *bulkPlacement in [user objectForKey:SettingsBulkLiterature])
@@ -460,7 +478,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				mtPublication.dayValue = [[bulkPlacement objectForKey:BulkLiteratureArrayDay] intValue];
 			}
 		}
-		
+
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+	
 		// CALLS
 		NSString *callArray[2] = {SettingsCalls, SettingsDeletedCalls};
 		for(int i = 0; i < 2; i++)
@@ -524,10 +549,17 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				for(NSDictionary *additionalInformation in [call objectForKey:CallMetadata])
 				{
 					MTAdditionalInformation *mtAdditionalInformation = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
+
+					if([additionalInformation objectForKey:CallMetadataData])
+					{
+						NSLog(@"here");
+					}
 					
 					mtAdditionalInformation.call = mtCall;
 					mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
 					mtAdditionalInformation.data = [[[additionalInformation objectForKey:CallMetadataData] copy] autorelease];
+#warning have to convert the data here					
+					
 					MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
 																																 name:[additionalInformation objectForKey:CallMetadataName] 
 																																 user:mtUser];
@@ -544,7 +576,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				
 			}			
 		}
-		
+
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+	
 		// QUICK NOTES
 		for(NSString *note in [user objectForKey:SettingsQuickNotes])
 		{
@@ -553,7 +592,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtPresentation.user = mtUser;
 			mtPresentation.downloadedValue = NO;
 		}
-		
+
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+	
 		// TERRITORY
 		for(NSDictionary *territory in [user objectForKey:SettingsNotAtHomeTerritories])
 		{
@@ -584,7 +630,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				}
 			}
 		}
-		
+
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+	
 		// HOURS
 		MTTimeType *hours = [MTTimeType hoursTypeForUser:mtUser];
 		hours.startTimerDate = [user objectForKey:SettingsTimeStartDate];
@@ -596,6 +649,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtTimeEntry.type = hours;
 		}
 		
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+
 		// RBC HOURS
 		MTTimeType *rbc = [MTTimeType rbcTypeForUser:mtUser];
 		rbc.startTimerDate = [user objectForKey:SettingsRBCTimeStartDate];
@@ -607,17 +667,38 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			mtTimeEntry.type = rbc;
 		}
 		
-		
-		NSError *error = nil;
+		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
 			[NSManagedObjectContext presentErrorDialog:error];
 		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
+
+		// STATISTICS ADJUSTMENTS
+		NSDictionary *statisticsAdjustments = [user objectForKey:SettingsStatisticsAdjustments]; 
+		for(NSString *adjustmentCategory in statisticsAdjustments)
+		{
+			NSDictionary *adjustments = [statisticsAdjustments objectForKey:adjustmentCategory];
+			for(NSString *timestamp in adjustments)
+			{
+				MTStatisticsAdjustment *mtAdjustment = [MTStatisticsAdjustment insertInManagedObjectContext:self.managedObjectContext];
+				mtAdjustment.timestampValue = [timestamp intValue];
+				mtAdjustment.type = adjustmentCategory;
+				mtAdjustment.adjustmentValue = [[adjustments objectForKey:timestamp] intValue];
+				mtAdjustment.user = mtUser;
+			}
+		}
+		
+		error = nil;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		self.hud.progress = self.hud.progress + 1.0/steps;
 	}
-	self.hud.progress = self.hud.progress + 1.0/steps;
-	 // Do your work
-	 [[self managedObjectContext] processPendingChanges];
-	 [[[self managedObjectContext] undoManager] enableUndoRegistration];
+	
+	[[self managedObjectContext] processPendingChanges];
+	[[[self managedObjectContext] undoManager] enableUndoRegistration];
 
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;

@@ -11,7 +11,6 @@
 @class MTPresentation;
 @class MTAdditionalInformationType;
 @class MTCall;
-@class MTStartTimestamp;
 
 
 
@@ -104,11 +103,6 @@
 
 
 
-@property (nonatomic, retain) NSSet* startTimestamps;
-- (NSMutableSet*)startTimestampsSet;
-
-
-
 @end
 
 @interface _MTUser (CoreDataGeneratedAccessors)
@@ -147,11 +141,6 @@
 - (void)removeCalls:(NSSet*)value_;
 - (void)addCallsObject:(MTCall*)value_;
 - (void)removeCallsObject:(MTCall*)value_;
-
-- (void)addStartTimestamps:(NSSet*)value_;
-- (void)removeStartTimestamps:(NSSet*)value_;
-- (void)addStartTimestampsObject:(MTStartTimestamp*)value_;
-- (void)removeStartTimestampsObject:(MTStartTimestamp*)value_;
 
 @end
 
@@ -217,11 +206,6 @@
 
 - (NSMutableSet*)primitiveCalls;
 - (void)setPrimitiveCalls:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveStartTimestamps;
-- (void)setPrimitiveStartTimestamps:(NSMutableSet*)value;
 
 
 @end
