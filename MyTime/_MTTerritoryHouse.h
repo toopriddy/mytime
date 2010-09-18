@@ -4,8 +4,8 @@
 #import <CoreData/CoreData.h>
 
 
+@class MTTerritoryHouseAttempt;
 @class MTTerritoryStreet;
-
 
 
 
@@ -40,14 +40,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *attempts;
 
-@property short attemptsValue;
-- (short)attemptsValue;
-- (void)setAttemptsValue:(short)value_;
-
-//- (BOOL)validateAttempts:(id*)value_ error:(NSError**)error_;
-
+@property (nonatomic, retain) NSSet* attempts;
+- (NSMutableSet*)attemptsSet;
 
 
 
@@ -59,6 +54,11 @@
 @end
 
 @interface _MTTerritoryHouse (CoreDataGeneratedAccessors)
+
+- (void)addAttempts:(NSSet*)value_;
+- (void)removeAttempts:(NSSet*)value_;
+- (void)addAttemptsObject:(MTTerritoryHouseAttempt*)value_;
+- (void)removeAttemptsObject:(MTTerritoryHouseAttempt*)value_;
 
 @end
 
@@ -76,12 +76,10 @@
 - (void)setPrimitiveApartment:(NSString*)value;
 
 
-- (NSNumber*)primitiveAttempts;
-- (void)setPrimitiveAttempts:(NSNumber*)value;
 
-- (short)primitiveAttemptsValue;
-- (void)setPrimitiveAttemptsValue:(short)value_;
 
+- (NSMutableSet*)primitiveAttempts;
+- (void)setPrimitiveAttempts:(NSMutableSet*)value;
 
 
 

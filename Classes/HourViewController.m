@@ -180,9 +180,8 @@
 		timeEntry.minutes = [NSNumber numberWithInt:minutes];
 		timeEntry.date = date;
 		timeEntry.type = self.type;
-		
-		self.type.startTimerDate = nil;
 	}
+	self.type.startTimerDate = nil;
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{

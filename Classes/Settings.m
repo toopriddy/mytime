@@ -393,21 +393,99 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 	return string;
 }
 
-
-
-+ (MFMailComposeViewController *)sendPrintableEmailBackup
+NSString *emailFormattedStringForCall(NSDictionary *call) 
 {
-	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
-	[mailView setSubject:NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data")];
+	NSMutableString *string = [NSMutableString string];
+	NSString *value;
+	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]]];
 	
+	NSMutableString *top = [[NSMutableString alloc] init];
+	NSMutableString *bottom = [[NSMutableString alloc] init];
+	[Settings formatStreetNumber:[call objectForKey:CallStreetNumber]
+	                   apartment:[call objectForKey:CallApartmentNumber]
+					      street:[call objectForKey:CallStreet]
+							city:[call objectForKey:CallCity]
+						   state:[call objectForKey:CallState]
+						 topLine:top 
+				      bottomLine:bottom];
+	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
+	[top release];
+	[bottom release];
+	top = nil;
+	bottom = nil;
+	
+	// Add Metadata
+	// they had an array of publications, lets check them too
+	NSMutableArray *metadata = [call objectForKey:CallMetadata];
+	if(metadata != nil)
+	{
+		int j;
+		int endMetadata = [metadata count];
+		for(j = 0; j < endMetadata; ++j)
+		{
+			// METADATA
+			NSMutableDictionary *entry = [metadata objectAtIndex:j];
+			NSString *name = [entry objectForKey:CallMetadataName];
+			value = [entry objectForKey:CallMetadataValue];
+			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
+		}
+	}
+	[string appendString:@"\n"];
+	
+	
+	NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
+	NSMutableDictionary *visit;
+	
+	int i;
+	int end = [returnVisits count];
+	for(i = 0; i < end; ++i)
+	{
+		visit = [returnVisits objectAtIndex:i];
+		
+		// GROUP TITLE
+		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
+		// create dictionary entry for This Return Visit
+		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		{
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+		}
+		else
+		{
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		}
+		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
+		
+		value = [visit objectForKey:CallReturnVisitType];
+		if(value == nil || value.length == 0)
+			value = CallReturnVisitTypeReturnVisit;
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
+		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]]];
+		
+		// Publications
+		if([visit objectForKey:CallReturnVisitPublications] != nil)
+		{
+			// they had an array of publications, lets check them too
+			NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
+			int j;
+			int endPublications = [publications count];
+			for(j = 0; j < endPublications; ++j)
+			{
+				NSDictionary *publication = [publications objectAtIndex:j];
+				// PUBLICATION
+				[string appendString:[NSString stringWithFormat:@"%@<br>", [publication objectForKey:CallReturnVisitPublicationTitle]]];
+			}
+		}
+		[string appendString:@"<br>"];
+	}
+	return string;
+}
+
+NSString *emailFormattedStringForSettings()
+{
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	NSDictionary *settings = [[Settings sharedInstance] settings];
-
-	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
-	if(emailAddress && emailAddress.length)
-	{
-		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
-	}
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
 	for(NSDictionary *userSettings in allUserSettings)
@@ -421,7 +499,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
-
+		
 		// hours
 		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsTimeEntries])
@@ -435,7 +513,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
-
+		
 		// Bulk Placements
 		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *bulkPlacement in [userSettings objectForKey:SettingsBulkLiterature])
@@ -488,8 +566,24 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		}
 	}	
 	[string appendString:@"</body></html>"];
-	[mailView setMessageBody:string isHTML:YES];
-	[string release];
+	
+	return [string autorelease];
+}
+
++ (MFMailComposeViewController *)sendPrintableEmailBackup
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data")];
+	
+	NSDictionary *settings = [[Settings sharedInstance] settings];
+	
+	NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
+	
+	[mailView setMessageBody:emailFormattedStringForSettings() isHTML:YES];
 	return mailView;
 }
 
@@ -772,94 +866,4 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 
 
 @end
-
-NSString *emailFormattedStringForCall(NSDictionary *call) 
-{
-	NSMutableString *string = [NSMutableString string];
-	NSString *value;
-	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]]];
-	
-	NSMutableString *top = [[NSMutableString alloc] init];
-	NSMutableString *bottom = [[NSMutableString alloc] init];
-	[Settings formatStreetNumber:[call objectForKey:CallStreetNumber]
-	                   apartment:[call objectForKey:CallApartmentNumber]
-					      street:[call objectForKey:CallStreet]
-							city:[call objectForKey:CallCity]
-						   state:[call objectForKey:CallState]
-						 topLine:top 
-				      bottomLine:bottom];
-	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
-	[top release];
-	[bottom release];
-	top = nil;
-	bottom = nil;
-	
-	// Add Metadata
-	// they had an array of publications, lets check them too
-	NSMutableArray *metadata = [call objectForKey:CallMetadata];
-	if(metadata != nil)
-	{
-		int j;
-		int endMetadata = [metadata count];
-		for(j = 0; j < endMetadata; ++j)
-		{
-			// METADATA
-			NSMutableDictionary *entry = [metadata objectAtIndex:j];
-			NSString *name = [entry objectForKey:CallMetadataName];
-			value = [entry objectForKey:CallMetadataValue];
-			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
-		}
-	}
-	[string appendString:@"\n"];
-	
-	
-	NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
-	NSMutableDictionary *visit;
-	
-	int i;
-	int end = [returnVisits count];
-	for(i = 0; i < end; ++i)
-	{
-		visit = [returnVisits objectAtIndex:i];
-		
-		// GROUP TITLE
-		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
-		// create dictionary entry for This Return Visit
-		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
-		{
-			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
-		}
-		else
-		{
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
-		}
-		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
-		
-		value = [visit objectForKey:CallReturnVisitType];
-		if(value == nil || value.length == 0)
-			value = CallReturnVisitTypeReturnVisit;
-		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
-		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]]];
-		
-		// Publications
-		if([visit objectForKey:CallReturnVisitPublications] != nil)
-		{
-			// they had an array of publications, lets check them too
-			NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-			int j;
-			int endPublications = [publications count];
-			for(j = 0; j < endPublications; ++j)
-			{
-				NSDictionary *publication = [publications objectAtIndex:j];
-				// PUBLICATION
-				[string appendString:[NSString stringWithFormat:@"%@<br>", [publication objectForKey:CallReturnVisitPublicationTitle]]];
-			}
-		}
-		[string appendString:@"<br>"];
-	}
-	return string;
-}
-
 

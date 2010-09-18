@@ -10,6 +10,8 @@
 
 
 
+
+
 @interface MTAdditionalInformationID : NSManagedObjectID {}
 @end
 
@@ -21,15 +23,35 @@
 
 
 
-@property (nonatomic, retain) NSData *data;
+@property (nonatomic, retain) NSNumber *boolean;
 
-//- (BOOL)validateData:(id*)value_ error:(NSError**)error_;
+@property BOOL booleanValue;
+- (BOOL)booleanValue;
+- (void)setBooleanValue:(BOOL)value_;
+
+//- (BOOL)validateBoolean:(id*)value_ error:(NSError**)error_;
 
 
 
 @property (nonatomic, retain) NSString *value;
 
 //- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *number;
+
+@property long long numberValue;
+- (long long)numberValue;
+- (void)setNumberValue:(long long)value_;
+
+//- (BOOL)validateNumber:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *date;
+
+//- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -52,12 +74,26 @@
 
 @interface _MTAdditionalInformation (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSData*)primitiveData;
-- (void)setPrimitiveData:(NSData*)value;
+- (NSNumber*)primitiveBoolean;
+- (void)setPrimitiveBoolean:(NSNumber*)value;
+
+- (BOOL)primitiveBooleanValue;
+- (void)setPrimitiveBooleanValue:(BOOL)value_;
 
 
 - (NSString*)primitiveValue;
 - (void)setPrimitiveValue:(NSString*)value;
+
+
+- (NSNumber*)primitiveNumber;
+- (void)setPrimitiveNumber:(NSNumber*)value;
+
+- (long long)primitiveNumberValue;
+- (void)setPrimitiveNumberValue:(long long)value_;
+
+
+- (NSDate*)primitiveDate;
+- (void)setPrimitiveDate:(NSDate*)value;
 
 
 

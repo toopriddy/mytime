@@ -59,25 +59,6 @@
 
 
 
-- (short)typeValue {
-	NSNumber *result = [self type];
-	return [result shortValue];
-}
-
-- (void)setTypeValue:(short)value_ {
-	[self setType:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveTypeValue {
-	NSNumber *result = [self primitiveType];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveTypeValue:(short)value_ {
-	[self setPrimitiveType:[NSNumber numberWithShort:value_]];
-}
-
-
 
 
 
