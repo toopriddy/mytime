@@ -55,41 +55,8 @@
 
 
 
-@dynamic data;
-
-
-
-
-
-
 @dynamic name;
 
-
-
-
-
-
-@dynamic order;
-
-
-
-- (double)orderValue {
-	NSNumber *result = [self order];
-	return [result doubleValue];
-}
-
-- (void)setOrderValue:(double)value_ {
-	[self setOrder:[NSNumber numberWithDouble:value_]];
-}
-
-- (double)primitiveOrderValue {
-	NSNumber *result = [self primitiveOrder];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveOrderValue:(double)value_ {
-	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
-}
 
 
 
@@ -115,6 +82,32 @@
 
 - (void)setPrimitiveAlwaysShownValue:(BOOL)value_ {
 	[self setPrimitiveAlwaysShown:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic order;
+
+
+
+- (double)orderValue {
+	NSNumber *result = [self order];
+	return [result doubleValue];
+}
+
+- (void)setOrderValue:(double)value_ {
+	[self setOrder:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveOrderValue {
+	NSNumber *result = [self primitiveOrder];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveOrderValue:(double)value_ {
+	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
 }
 
 
@@ -147,6 +140,10 @@
 
 
 
+@dynamic user;
+
+	
+
 @dynamic additionalInformation;
 
 	
@@ -158,8 +155,15 @@
 }
 	
 
-@dynamic user;
+@dynamic multipleChoices;
 
+	
+- (NSMutableSet*)multipleChoicesSet {
+	[self willAccessValueForKey:@"multipleChoices"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"multipleChoices"];
+	[self didAccessValueForKey:@"multipleChoices"];
+	return result;
+}
 	
 
 

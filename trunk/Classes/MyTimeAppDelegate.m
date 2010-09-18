@@ -45,14 +45,16 @@
 #import "MTPublication.h"
 #import "MTAdditionalInformation.h"
 #import "MTAdditionalInformationType.h"
+#import "MTMultipleChoice.h"
 #import "MTPresentation.h"
-#import "MTStartTimestamp.h"
 #import "MTStatisticsAdjustment.h"
 #import "MTTerritory.h"
 #import "MTTerritoryStreet.h"
 #import "MTTerritoryHouse.h"
+#import "MTTerritoryHouseAttempt.h"
 #import "MTTimeType.h"
 #import "MTTimeEntry.h"
+#import "MetadataCustomViewController.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 
 @interface MyTimeAppDelegate ()
@@ -358,6 +360,275 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 }
 
+NSString *emailFormattedStringForCoreDataTimeEntry(MTTimeEntry *timeEntry)
+{
+	NSMutableString *string = [NSMutableString string];
+
+	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[timeEntry.date timeIntervalSinceReferenceDate]] autorelease];	
+	// create dictionary entry for This Return Visit
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+	{
+		[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+	}
+	else
+	{
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+	}
+	
+	[string appendString:[NSString stringWithFormat:@"%@ ", [dateFormatter stringFromDate:date]]];
+	
+	int minutes = timeEntry.minutesValue;
+	int hours = minutes / 60;
+	minutes %= 60;
+	if(hours && minutes)
+		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@ %d %@", @"You are localizing the time (I dont know if you need to even change this) as in '1 hour 34 minutes' or '2 hours 1 minute' %1$d is the hours number %2$@ is the label for hour(s) %3$d is the minutes number and 4$%@ is the label for minutes(s)"), hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours"), minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+	else if(hours)
+		[string appendString:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
+	else if(minutes || minutes == 0)
+		[string appendString:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
+	[string appendString:@"<br>"];
+	
+	return string;
+}
+
+NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territory)
+{
+	NSMutableString *string = [NSMutableString string];
+	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Territory Name/Number", @"used as a label when emailing not at homes"), territory.name]];
+	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"City", @"used as a label when emailing not at homes"), territory.city]];
+	[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", NSLocalizedString(@"State or Country", @"used as a label when emailing not at homes"), territory.state]];
+	NSString *notes = territory.notes;
+	if([notes length])
+	{
+		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+		[string appendString:notes];
+		[string appendFormat:@"<br><br>"];
+	}
+	[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Streets", @"used as a label when emailing not at homes")]];
+	for(MTTerritoryStreet *street in territory.streets)
+	{
+		[string appendString:[NSString stringWithFormat:@"<h4>%@: %@</h4>\n", NSLocalizedString(@"Street", @"used as a label when emailing not at homes"), street.name]];
+		// create dictionary entry for This Return Visit
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		{
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+		}
+		else
+		{
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		}
+		
+		[string appendString:[NSString stringWithFormat:@"%@<br>\n", [dateFormatter stringFromDate:street.date]]];
+		[dateFormatter release];
+		NSString *notes = street.notes;
+		if([notes length])
+		{
+			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+			[string appendString:notes];
+			[string appendFormat:@"<br><br>"];
+		}
+		
+		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
+		for(MTTerritoryHouse *house in street.houses)
+		{
+			NSMutableString *top = [[NSMutableString alloc] init];
+			[Settings formatStreetNumber:house.number
+							   apartment:house.apartment
+								 topLine:top];
+			
+			[string appendString:[NSString stringWithFormat:@"<b>%@: %@</b><br>\n", NSLocalizedString(@"House Number", @"used as a label when emailing not at homes"), top]];
+			[top release];
+			NSString *notes = house.notes;
+			if([notes length])
+			{
+				notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+				notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+				[string appendString:notes];
+				[string appendFormat:@"<br>"];
+			}
+			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
+			for(MTTerritoryHouseAttempt *attempt in house.attempts)
+			{
+				// create dictionary entry for This Return Visit
+				NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+				[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+				if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+				{
+					[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+				}
+				else
+				{
+					[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+				}
+				[string appendString:[NSString stringWithFormat:@" %@<br>\n", [dateFormatter stringFromDate:attempt.date]]];
+				[dateFormatter release];
+			}
+		}
+	}
+	[string appendString:@"<br><br>"];
+	return string;
+}
+
+NSString *emailFormattedStringForCoreDataCall(MTCall *call) 
+{
+	NSMutableString *string = [NSMutableString string];
+	NSString *value;
+	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), call.name]];
+	
+	NSMutableString *top = [[NSMutableString alloc] init];
+	NSMutableString *bottom = [[NSMutableString alloc] init];
+	[Settings formatStreetNumber:call.houseNumber
+	                   apartment:call.apartmentNumber
+					      street:call.street
+							city:call.city
+						   state:call.state
+						 topLine:top 
+				      bottomLine:bottom];
+	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
+	[top release];
+	[bottom release];
+	top = nil;
+	bottom = nil;
+	
+	// Add Metadata
+	// they had an array of publications, lets check them too
+	for(MTAdditionalInformation *additionalInformation in call.additionalInformation)
+	{
+		// METADATA
+		NSString *name = additionalInformation.type.name;
+		value = additionalInformation.value;
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
+	}
+	[string appendString:@"\n"];
+	
+	
+	for(MTReturnVisit *visit in call.returnVisits)
+	{
+		// GROUP TITLE
+		NSDate *date = visit.date;
+		// create dictionary entry for This Return Visit
+		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		{
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+		}
+		else
+		{
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		}
+		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
+		
+		value = visit.type;
+		if(value == nil || value.length == 0)
+			value = CallReturnVisitTypeReturnVisit;
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
+		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), visit.notes]];
+		
+		// Publications
+		for(MTPublication *publication in visit.publications)
+		{
+			[string appendString:[NSString stringWithFormat:@"%@<br>", publication.title]];
+		}
+		[string appendString:@"<br>"];
+	}
+	return string;
+}
+
+NSString *emailFormattedStringForCoreDataSettings()
+{
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
+	
+	for(MTUser *user in [managedObjectContext fetchObjectsForEntityName:@"User" withPredicate:nil])
+	{
+		// the specific user
+		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), user.name]];
+		
+		// calls
+		[string appendString:NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
+		for(MTCall *call in user.calls)
+		{
+			[string appendString:emailFormattedStringForCoreDataCall(call)];
+		}
+		
+		// hours
+		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
+		for(MTTimeEntry *timeEntry in [[MTTimeType hoursTypeForUser:user] timeEntries])
+		{
+			[string appendString:emailFormattedStringForCoreDataTimeEntry(timeEntry)];
+		}
+		
+		// quickbuild
+		[string appendString:NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
+		for(MTTimeEntry *timeEntry in [[MTTimeType rbcTypeForUser:user] timeEntries])
+		{
+			[string appendString:emailFormattedStringForCoreDataTimeEntry(timeEntry)];
+		}
+		
+		// Bulk Placements
+		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
+		for(MTBulkPlacement *bulkPlacement in user.bulkPlacements)
+		{
+			// create dictionary entry for This Return Visit
+			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
+			}
+			else
+			{
+				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
+			[string appendString:[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:bulkPlacement.date]]];
+			for(MTPublication *publication in bulkPlacement.publications)
+			{
+				NSString *name = publication.title;
+				int count = publication.countValue;
+				NSString *type = publication.type;
+				if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
+				   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
+				{
+					[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
+				}
+				else
+				{
+					if(count == 1)
+					{
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+					}
+					else
+					{	
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+					}
+				}
+				[string appendString:@"<br>"];
+			}
+			[string appendString:@"<br>"];
+		}
+		
+		// not at home
+		
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  label for sending a printable email backup.  this label is in the body of the email")];
+		for(MTTerritory *territory in user.territories)
+		{
+			[string appendString:emailFormattedStringForCoreDataNotAtHomeTerritory(territory)];
+		}
+	}	
+	[string appendString:@"</body></html>"];
+	
+	return [string autorelease];
+}
+
+
+
 - (void)convertToCoreDataStoreTask
 {
 	double steps = 1;
@@ -430,8 +701,16 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		for(NSDictionary *metadata in [user objectForKey:SettingsOtherMetadata])
 		{
 			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
-			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
 			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
+			if(mtAdditionalInformationType.typeValue == CHOICE)
+			{
+				for(NSString *choice in [metadata objectForKey:SettingsMetadataData])
+				{
+					MTMultipleChoice *mtChoice = [MTMultipleChoice insertInManagedObjectContext:self.managedObjectContext];
+					mtChoice.type = mtAdditionalInformationType;
+					mtChoice.name = choice;
+				}
+			}
 			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = YES;
 			mtAdditionalInformationType.name = [metadata objectForKey:SettingsMetadataName];
@@ -442,7 +721,15 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		for(NSDictionary *metadata in [user objectForKey:SettingsPreferredMetadata])
 		{
 			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
-			mtAdditionalInformationType.data = [metadata objectForKey:SettingsMetadataData];
+			if(mtAdditionalInformationType.typeValue == CHOICE)
+			{
+				for(NSString *choice in [metadata objectForKey:SettingsMetadataData])
+				{
+					MTMultipleChoice *mtChoice = [MTMultipleChoice insertInManagedObjectContext:self.managedObjectContext];
+					mtChoice.type = mtAdditionalInformationType;
+					mtChoice.name = choice;
+				}
+			}
 			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
 			mtAdditionalInformationType.orderValue = metadataOrder;
 			mtAdditionalInformationType.alwaysShownValue = NO;
@@ -471,7 +758,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				mtPublication.bulkPlacement = mtBulkPlacement;
 				mtPublication.countValue = [[bulkPlacement objectForKey:BulkLiteratureArrayCount] intValue];
 				mtPublication.title = [bulkPlacement objectForKey:BulkLiteratureArrayTitle];
-				mtPublication.typeValue = [[bulkPlacement objectForKey:BulkLiteratureArrayType] intValue];
+				mtPublication.type = [bulkPlacement objectForKey:BulkLiteratureArrayType];
 				mtPublication.name = [bulkPlacement objectForKey:BulkLiteratureArrayName];
 				mtPublication.yearValue = [[bulkPlacement objectForKey:BulkLiteratureArrayYear] intValue];
 				mtPublication.monthValue = [[bulkPlacement objectForKey:BulkLiteratureArrayMonth] intValue];
@@ -490,8 +777,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		NSString *callArray[2] = {SettingsCalls, SettingsDeletedCalls};
 		for(int i = 0; i < 2; i++)
 		{
+			int count = 0;
 			for(NSDictionary *call in [user objectForKey:callArray[i]])
 			{
+				count++;
 				MTCall *mtCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
 				mtCall.user = mtUser;
 				mtCall.houseNumber = [call objectForKey:CallStreetNumber];
@@ -515,10 +804,20 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				else
 				{
 					NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-					mtCall.lattitudeValue = [[stringArray objectAtIndex:0] doubleValue];
-					mtCall.longitudeValue = [[stringArray objectAtIndex:1] doubleValue];
-					mtCall.locationAquisitionAttemptedValue = YES;
-					mtCall.locationAquiredValue = YES;
+					if(stringArray.count == 2)
+					{
+						mtCall.lattitudeValue = [[stringArray objectAtIndex:0] doubleValue];
+						mtCall.longitudeValue = [[stringArray objectAtIndex:1] doubleValue];
+						mtCall.locationAquisitionAttemptedValue = YES;
+						mtCall.locationAquiredValue = YES;
+					}
+					else
+					{
+						// something was malformed... look it up again
+						mtCall.locationAquiredValue = NO;
+						mtCall.locationAquisitionAttemptedValue = NO;
+					}
+
 				}
 				mtCall.locationLookupTypeValue = [[call objectForKey:CallLocationType] intValue];
 				
@@ -556,10 +855,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					}
 					
 					mtAdditionalInformation.call = mtCall;
-					mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
-					mtAdditionalInformation.data = [[[additionalInformation objectForKey:CallMetadataData] copy] autorelease];
-#warning have to convert the data here					
-					
 					MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
 																																 name:[additionalInformation objectForKey:CallMetadataName] 
 																																 user:mtUser];
@@ -572,8 +867,36 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 																											  user:mtUser];
 					}
 					mtAdditionalInformation.type = mtAdditionalInformationType;
+
+					// since the CallMetadataData field had a meaning based on the type, we have to convert the different types
+					mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
+					switch(mtAdditionalInformationType.typeValue)
+					{
+						case PHONE:
+						case EMAIL:
+						case URL:
+						case STRING:
+						case CHOICE:
+						case NOTES:
+							// data is not used
+							break;
+						case SWITCH:
+							mtAdditionalInformation.booleanValue = [[additionalInformation objectForKey:CallMetadataData] boolValue];
+							break;
+						case DATE:
+							mtAdditionalInformation.date = [additionalInformation objectForKey:CallMetadataData];
+							break;
+						case NUMBER:
+							mtAdditionalInformation.numberValue = [[additionalInformation objectForKey:CallMetadataData] intValue];
+							break;
+					}
 				}
 				
+				error = nil;
+				if (![self.managedObjectContext save:&error]) 
+				{
+					[NSManagedObjectContext presentErrorDialog:error];
+				}
 			}			
 		}
 
@@ -625,8 +948,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					mtHouse.number = [street objectForKey:NotAtHomeTerritoryHouseNumber];
 					mtHouse.apartment = [street objectForKey:NotAtHomeTerritoryHouseApartment];
 					mtHouse.notes = [street objectForKey:NotAtHomeTerritoryHouseNotes];
-					mtHouse.attempts = [street objectForKey:NotAtHomeTerritoryHouseAttempts];
 					mtHouse.street = mtStreet;
+					for(NSDate *attempt in [street objectForKey:NotAtHomeTerritoryHouseAttempts])
+					{
+						MTTerritoryHouseAttempt *mtAttempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.managedObjectContext];
+						mtAttempt.date = attempt;
+						mtAttempt.house = mtHouse;
+					}
 				}
 			}
 		}

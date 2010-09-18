@@ -29,14 +29,66 @@
 
 
 
-@dynamic data;
+@dynamic boolean;
 
+
+
+- (BOOL)booleanValue {
+	NSNumber *result = [self boolean];
+	return [result boolValue];
+}
+
+- (void)setBooleanValue:(BOOL)value_ {
+	[self setBoolean:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveBooleanValue {
+	NSNumber *result = [self primitiveBoolean];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveBooleanValue:(BOOL)value_ {
+	[self setPrimitiveBoolean:[NSNumber numberWithBool:value_]];
+}
 
 
 
 
 
 @dynamic value;
+
+
+
+
+
+
+@dynamic number;
+
+
+
+- (long long)numberValue {
+	NSNumber *result = [self number];
+	return [result longLongValue];
+}
+
+- (void)setNumberValue:(long long)value_ {
+	[self setNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveNumberValue {
+	NSNumber *result = [self primitiveNumber];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveNumberValue:(long long)value_ {
+	[self setPrimitiveNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic date;
 
 
 

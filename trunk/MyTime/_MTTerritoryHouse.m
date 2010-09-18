@@ -52,29 +52,14 @@
 
 @dynamic attempts;
 
-
-
-- (short)attemptsValue {
-	NSNumber *result = [self attempts];
-	return [result shortValue];
+	
+- (NSMutableSet*)attemptsSet {
+	[self willAccessValueForKey:@"attempts"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"attempts"];
+	[self didAccessValueForKey:@"attempts"];
+	return result;
 }
-
-- (void)setAttemptsValue:(short)value_ {
-	[self setAttempts:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveAttemptsValue {
-	NSNumber *result = [self primitiveAttempts];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveAttemptsValue:(short)value_ {
-	[self setPrimitiveAttempts:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
+	
 
 @dynamic street;
 

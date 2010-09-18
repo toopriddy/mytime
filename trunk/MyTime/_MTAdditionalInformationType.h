@@ -4,9 +4,9 @@
 #import <CoreData/CoreData.h>
 
 
-@class MTAdditionalInformation;
 @class MTUser;
-
+@class MTAdditionalInformation;
+@class MTMultipleChoice;
 
 
 
@@ -35,25 +35,9 @@
 
 
 
-@property (nonatomic, retain) NSData *data;
-
-//- (BOOL)validateData:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *name;
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *order;
-
-@property double orderValue;
-- (double)orderValue;
-- (void)setOrderValue:(double)value_;
-
-//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -64,6 +48,16 @@
 - (void)setAlwaysShownValue:(BOOL)value_;
 
 //- (BOOL)validateAlwaysShown:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *order;
+
+@property double orderValue;
+- (double)orderValue;
+- (void)setOrderValue:(double)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -78,13 +72,18 @@
 
 
 
+@property (nonatomic, retain) MTUser* user;
+//- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSSet* additionalInformation;
 - (NSMutableSet*)additionalInformationSet;
 
 
 
-@property (nonatomic, retain) MTUser* user;
-//- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) NSSet* multipleChoices;
+- (NSMutableSet*)multipleChoicesSet;
 
 
 
@@ -97,6 +96,11 @@
 - (void)addAdditionalInformationObject:(MTAdditionalInformation*)value_;
 - (void)removeAdditionalInformationObject:(MTAdditionalInformation*)value_;
 
+- (void)addMultipleChoices:(NSSet*)value_;
+- (void)removeMultipleChoices:(NSSet*)value_;
+- (void)addMultipleChoicesObject:(MTMultipleChoice*)value_;
+- (void)removeMultipleChoicesObject:(MTMultipleChoice*)value_;
+
 @end
 
 @interface _MTAdditionalInformationType (CoreDataGeneratedPrimitiveAccessors)
@@ -108,19 +112,8 @@
 - (void)setPrimitiveTypeValue:(short)value_;
 
 
-- (NSData*)primitiveData;
-- (void)setPrimitiveData:(NSData*)value;
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-- (NSNumber*)primitiveOrder;
-- (void)setPrimitiveOrder:(NSNumber*)value;
-
-- (double)primitiveOrderValue;
-- (void)setPrimitiveOrderValue:(double)value_;
 
 
 - (NSNumber*)primitiveAlwaysShown;
@@ -128,6 +121,13 @@
 
 - (BOOL)primitiveAlwaysShownValue;
 - (void)setPrimitiveAlwaysShownValue:(BOOL)value_;
+
+
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (double)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(double)value_;
 
 
 - (NSNumber*)primitiveHidden;
@@ -139,13 +139,18 @@
 
 
 
+- (MTUser*)primitiveUser;
+- (void)setPrimitiveUser:(MTUser*)value;
+
+
+
 - (NSMutableSet*)primitiveAdditionalInformation;
 - (void)setPrimitiveAdditionalInformation:(NSMutableSet*)value;
 
 
 
-- (MTUser*)primitiveUser;
-- (void)setPrimitiveUser:(MTUser*)value;
+- (NSMutableSet*)primitiveMultipleChoices;
+- (void)setPrimitiveMultipleChoices:(NSMutableSet*)value;
 
 
 @end
