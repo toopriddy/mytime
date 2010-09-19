@@ -388,7 +388,7 @@ NSString *emailFormattedStringForCoreDataTimeEntry(MTTimeEntry *timeEntry)
 		[string appendString:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
 	else if(minutes || minutes == 0)
 		[string appendString:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-	[string appendString:@"<br>"];
+	[string appendString:@"<br>\n"];
 	
 	return string;
 }
@@ -405,10 +405,16 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 		[string appendString:notes];
-		[string appendFormat:@"<br><br>"];
+		[string appendFormat:@"<br><br>\n"];
 	}
 	[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Streets", @"used as a label when emailing not at homes")]];
-	for(MTTerritoryStreet *street in territory.streets)
+	
+	NSArray *streets = [territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryStreet entityName]
+															   propertiesToFetch:nil 
+															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																				  [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+																   withPredicate:@"territory == %@", territory];
+	for(MTTerritoryStreet *street in streets)
 	{
 		[string appendString:[NSString stringWithFormat:@"<h4>%@: %@</h4>\n", NSLocalizedString(@"Street", @"used as a label when emailing not at homes"), street.name]];
 		// create dictionary entry for This Return Visit
@@ -431,11 +437,16 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 			[string appendString:notes];
-			[string appendFormat:@"<br><br>"];
+			[string appendFormat:@"<br><br>\n"];
 		}
 		
 		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
-		for(MTTerritoryHouse *house in street.houses)
+		NSArray *houses = [territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]
+																   propertiesToFetch:nil 
+																 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																					  [NSSortDescriptor sortDescriptorWithKey:@"apartment" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																	   withPredicate:@"street == %@", street];
+		for(MTTerritoryHouse *house in houses)
 		{
 			NSMutableString *top = [[NSMutableString alloc] init];
 			[Settings formatStreetNumber:house.number
@@ -471,7 +482,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			}
 		}
 	}
-	[string appendString:@"<br><br>"];
+	[string appendString:@"<br><br>\n"];
 	return string;
 }
 
@@ -490,7 +501,7 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 						   state:call.state
 						 topLine:top 
 				      bottomLine:bottom];
-	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
+	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
 	[top release];
 	[bottom release];
 	top = nil;
@@ -498,17 +509,27 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 	
 	// Add Metadata
 	// they had an array of publications, lets check them too
-	for(MTAdditionalInformation *additionalInformation in call.additionalInformation)
+	// Publications
+	NSArray *additionalInformations = [call.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
+															   propertiesToFetch:nil 
+															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"type.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																				  [NSSortDescriptor sortDescriptorWithKey:@"value" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																   withPredicate:@"call == %@", call];
+	for(MTAdditionalInformation *additionalInformation in additionalInformations)
 	{
 		// METADATA
 		NSString *name = additionalInformation.type.name;
 		value = additionalInformation.value;
-		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
 	}
 	[string appendString:@"\n"];
 	
+	NSArray *returnVisits = [call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+															   propertiesToFetch:nil 
+															 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO] ]
+																   withPredicate:@"(call == %@)", call];
 	
-	for(MTReturnVisit *visit in call.returnVisits)
+	for(MTReturnVisit *visit in returnVisits)
 	{
 		// GROUP TITLE
 		NSDate *date = visit.date;
@@ -528,15 +549,27 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 		value = visit.type;
 		if(value == nil || value.length == 0)
 			value = CallReturnVisitTypeReturnVisit;
-		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
-		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), visit.notes]];
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
+		[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Notes", @"Call Metadata")]];
+		NSString *notes = visit.notes;
+		if([notes length])
+		{
+			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+			[string appendString:notes];
+			[string appendString:@"<br>\n"];
+		}
 		
 		// Publications
-		for(MTPublication *publication in visit.publications)
+		NSArray *publications = [call.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
+															  propertiesToFetch:nil 
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+																  withPredicate:@"returnVisit == %@", visit];
+		for(MTPublication *publication in publications)
 		{
-			[string appendString:[NSString stringWithFormat:@"%@<br>", publication.title]];
+			[string appendString:[NSString stringWithFormat:@"%@<br>\n", publication.title]];
 		}
-		[string appendString:@"<br>"];
+		[string appendString:@"<br>\n"];
 	}
 	return string;
 }
@@ -546,35 +579,60 @@ NSString *emailFormattedStringForCoreDataSettings()
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 	
-	for(MTUser *user in [managedObjectContext fetchObjectsForEntityName:@"User" withPredicate:nil])
+	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+															propertiesToFetch:nil 
+														  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+																withPredicate:nil];
+	for(MTUser *user in users)
 	{
 		// the specific user
 		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), user.name]];
 		
 		// calls
 		[string appendString:NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(MTCall *call in user.calls)
+		NSArray *calls = [managedObjectContext fetchObjectsForEntityName:[MTCall entityName]
+													   propertiesToFetch:nil 
+													 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																		  [NSSortDescriptor sortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																		  [NSSortDescriptor sortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																		  [NSSortDescriptor sortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																		  [NSSortDescriptor sortDescriptorWithKey:@"state" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																		  [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+														   withPredicate:@"(user == %@) AND (deleted == NO)", user];
+		for(MTCall *call in calls)
 		{
 			[string appendString:emailFormattedStringForCoreDataCall(call)];
 		}
 		
 		// hours
 		[string appendString:NSLocalizedString(@"<h2>Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(MTTimeEntry *timeEntry in [[MTTimeType hoursTypeForUser:user] timeEntries])
+		NSArray *hoursTimeEntries = [managedObjectContext fetchObjectsForEntityName:[MTTimeEntry entityName]
+																propertiesToFetch:nil 
+															  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO] ]
+																	withPredicate:@"type == %@", [MTTimeType hoursTypeForUser:user]];
+		for(MTTimeEntry *timeEntry in hoursTimeEntries)
 		{
 			[string appendString:emailFormattedStringForCoreDataTimeEntry(timeEntry)];
 		}
 		
 		// quickbuild
 		[string appendString:NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(MTTimeEntry *timeEntry in [[MTTimeType rbcTypeForUser:user] timeEntries])
+		NSArray *rbcTimeEntries = [managedObjectContext fetchObjectsForEntityName:[MTTimeEntry entityName]
+																propertiesToFetch:nil 
+															  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO] ]
+																	withPredicate:@"type == %@", [MTTimeType rbcTypeForUser:user]];
+		for(MTTimeEntry *timeEntry in rbcTimeEntries)
 		{
 			[string appendString:emailFormattedStringForCoreDataTimeEntry(timeEntry)];
 		}
 		
 		// Bulk Placements
 		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(MTBulkPlacement *bulkPlacement in user.bulkPlacements)
+		NSArray *bulkPlacements = [managedObjectContext fetchObjectsForEntityName:[MTBulkPlacement entityName]
+																propertiesToFetch:nil 
+															  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO] ]
+																	withPredicate:@"user == %@", user];
+		for(MTBulkPlacement *bulkPlacement in bulkPlacements)
 		{
 			// create dictionary entry for This Return Visit
 			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -587,8 +645,13 @@ NSString *emailFormattedStringForCoreDataSettings()
 			{
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
-			[string appendString:[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:bulkPlacement.date]]];
-			for(MTPublication *publication in bulkPlacement.publications)
+			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:bulkPlacement.date]]];
+			
+			NSArray *publications = [managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
+																  propertiesToFetch:nil 
+																withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+																	  withPredicate:@"bulkPlacement == %@", bulkPlacement];
+			for(MTPublication *publication in publications)
 			{
 				NSString *name = publication.title;
 				int count = publication.countValue;
@@ -609,15 +672,20 @@ NSString *emailFormattedStringForCoreDataSettings()
 						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 				}
-				[string appendString:@"<br>"];
+				[string appendString:@"<br>\n"];
 			}
-			[string appendString:@"<br>"];
+			[string appendString:@"<br>\n"];
 		}
 		
 		// not at home
-		
 		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  label for sending a printable email backup.  this label is in the body of the email")];
-		for(MTTerritory *territory in user.territories)
+		NSArray *territories = [managedObjectContext fetchObjectsForEntityName:[MTTerritory entityName]
+															 propertiesToFetch:nil 
+														   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+																				[NSSortDescriptor sortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+																				[NSSortDescriptor sortDescriptorWithKey:@"state" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																 withPredicate:@"user == %@", user];
+		for(MTTerritory *territory in territories)
 		{
 			[string appendString:emailFormattedStringForCoreDataNotAtHomeTerritory(territory)];
 		}
@@ -627,7 +695,17 @@ NSString *emailFormattedStringForCoreDataSettings()
 	return [string autorelease];
 }
 
-
+- (void)verifyCoreDataConversion
+{
+	NSString *old = emailFormattedStringForSettings();
+	NSString *new = emailFormattedStringForCoreDataSettings();
+	if(![old isEqualToString:new])
+	{
+		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		NSLog(@"Verification Failed");
+	}
+}
 
 - (void)convertToCoreDataStoreTask
 {
@@ -752,17 +830,17 @@ NSString *emailFormattedStringForCoreDataSettings()
 			mtBulkPlacement.user = mtUser;
 			mtBulkPlacement.date = [bulkPlacement objectForKey:BulkLiteratureDate];
 			
-			for(NSDictionary *bulkLiterature in [user objectForKey:BulkLiteratureArray])
+			for(NSDictionary *placement in [bulkPlacement objectForKey:BulkLiteratureArray])
 			{
 				MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
 				mtPublication.bulkPlacement = mtBulkPlacement;
-				mtPublication.countValue = [[bulkPlacement objectForKey:BulkLiteratureArrayCount] intValue];
-				mtPublication.title = [bulkPlacement objectForKey:BulkLiteratureArrayTitle];
-				mtPublication.type = [bulkPlacement objectForKey:BulkLiteratureArrayType];
-				mtPublication.name = [bulkPlacement objectForKey:BulkLiteratureArrayName];
-				mtPublication.yearValue = [[bulkPlacement objectForKey:BulkLiteratureArrayYear] intValue];
-				mtPublication.monthValue = [[bulkPlacement objectForKey:BulkLiteratureArrayMonth] intValue];
-				mtPublication.dayValue = [[bulkPlacement objectForKey:BulkLiteratureArrayDay] intValue];
+				mtPublication.countValue = [[placement objectForKey:BulkLiteratureArrayCount] intValue];
+				mtPublication.title = [placement objectForKey:BulkLiteratureArrayTitle];
+				mtPublication.type = [placement objectForKey:BulkLiteratureArrayType];
+				mtPublication.name = [placement objectForKey:BulkLiteratureArrayName];
+				mtPublication.yearValue = [[placement objectForKey:BulkLiteratureArrayYear] intValue];
+				mtPublication.monthValue = [[placement objectForKey:BulkLiteratureArrayMonth] intValue];
+				mtPublication.dayValue = [[placement objectForKey:BulkLiteratureArrayDay] intValue];
 			}
 		}
 
@@ -830,7 +908,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
 					mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
 					// PUBLICATIONS
-					for(NSDictionary *publication in [call objectForKey:CallReturnVisitPublications])
+					for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
 					{
 						MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
 						mtPublication.returnVisit = mtReturnVisit;
@@ -942,14 +1020,14 @@ NSString *emailFormattedStringForCoreDataSettings()
 				mtStreet.date = [street objectForKey:NotAtHomeTerritoryStreetDate];
 				mtStreet.notes = [street objectForKey:NotAtHomeTerritoryStreetNotes];
 				mtStreet.territory = mtTerritory;
-				for(NSString *house in [street objectForKey:NotAtHomeTerritoryHouses])
+				for(NSDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
 				{
 					MTTerritoryHouse *mtHouse = [MTTerritoryHouse insertInManagedObjectContext:self.managedObjectContext];
-					mtHouse.number = [street objectForKey:NotAtHomeTerritoryHouseNumber];
-					mtHouse.apartment = [street objectForKey:NotAtHomeTerritoryHouseApartment];
-					mtHouse.notes = [street objectForKey:NotAtHomeTerritoryHouseNotes];
+					mtHouse.number = [house objectForKey:NotAtHomeTerritoryHouseNumber];
+					mtHouse.apartment = [house objectForKey:NotAtHomeTerritoryHouseApartment];
+					mtHouse.notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
 					mtHouse.street = mtStreet;
-					for(NSDate *attempt in [street objectForKey:NotAtHomeTerritoryHouseAttempts])
+					for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
 					{
 						MTTerritoryHouseAttempt *mtAttempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.managedObjectContext];
 						mtAttempt.date = attempt;
@@ -972,9 +1050,9 @@ NSString *emailFormattedStringForCoreDataSettings()
 		for(NSDictionary *timeEntry in [user objectForKey:SettingsTimeEntries])
 		{
 			MTTimeEntry *mtTimeEntry = [MTTimeEntry insertInManagedObjectContext:self.managedObjectContext];
+			mtTimeEntry.type = hours;
 			mtTimeEntry.date = [timeEntry objectForKey:SettingsTimeEntryDate];
 			mtTimeEntry.minutesValue = [[timeEntry objectForKey:SettingsTimeEntryMinutes] intValue];
-			mtTimeEntry.type = hours;
 		}
 		
 		error = nil;
@@ -1028,6 +1106,9 @@ NSString *emailFormattedStringForCoreDataSettings()
 	[[self managedObjectContext] processPendingChanges];
 	[[[self managedObjectContext] undoManager] enableUndoRegistration];
 
+	[self verifyCoreDataConversion];
+	
+	
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
 
