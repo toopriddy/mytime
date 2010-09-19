@@ -14,6 +14,10 @@
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
 					 propertiesToFetch:(NSArray *)propertiesToFetch
 						 withPredicate:(id)stringOrPredicate, ...;
+- (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
+					 propertiesToFetch:(NSArray *)propertiesToFetch
+				   withSortDescriptors:(NSArray *)sortDescriptors
+						 withPredicate:(id)stringOrPredicate, ...;
 
 + (void)presentErrorDialog:(NSError *)error;
 

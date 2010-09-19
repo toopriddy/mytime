@@ -26,7 +26,7 @@
 	NSString *name = @"RBC";
 	NSLocalizedString(@"RBC", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds");
 	
-	MTTimeType *type = [MTTimeType timeTypeWithName:name];
+	MTTimeType *type = [MTTimeType timeTypeWithName:name user:user];
 	if(type == nil)
 	{
 		NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
@@ -57,7 +57,7 @@
 	NSString *name = @"Hours";
 	NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view");
 	
-	MTTimeType *type = [MTTimeType timeTypeWithName:name];
+	MTTimeType *type = [MTTimeType timeTypeWithName:name user:user];
 	if(type == nil)
 	{
 		NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];

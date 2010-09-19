@@ -302,7 +302,7 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 		[string appendString:[NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")]];
 	else if(minutes || minutes == 0)
 		[string appendString:[NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")]];
-	[string appendString:@"<br>"];
+	[string appendString:@"<br>\n"];
 
 	return string;
 }
@@ -319,10 +319,11 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 		[string appendString:notes];
-		[string appendFormat:@"<br><br>"];
+		[string appendFormat:@"<br><br>\n"];
 	}
 	[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Streets", @"used as a label when emailing not at homes")]];
-	for(NSMutableDictionary *street in [territory objectForKey:NotAtHomeTerritoryStreets])
+	for(NSMutableDictionary *street in [[territory objectForKey:NotAtHomeTerritoryStreets] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryStreetName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																														[NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryStreetDate ascending:YES], nil]])
 	{
 		[string appendString:[NSString stringWithFormat:@"<h4>%@: %@</h4>\n", NSLocalizedString(@"Street", @"used as a label when emailing not at homes"), [street objectForKey:NotAtHomeTerritoryStreetName]]];
 		NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[street objectForKey:NotAtHomeTerritoryStreetDate] timeIntervalSinceReferenceDate]];	
@@ -347,11 +348,12 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 			[string appendString:notes];
-			[string appendFormat:@"<br><br>"];
+			[string appendFormat:@"<br><br>\n"];
 		}
 		
 		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
-		for(NSMutableDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
+		for(NSMutableDictionary *house in [[street objectForKey:NotAtHomeTerritoryHouses] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryHouseNumber ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																													   [NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryHouseApartment ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]])
 		{
 			NSMutableString *top = [[NSMutableString alloc] init];
 			[Settings formatStreetNumber:[house objectForKey:NotAtHomeTerritoryHouseNumber]
@@ -366,10 +368,10 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 				notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 				notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 				[string appendString:notes];
-				[string appendFormat:@"<br>"];
+				[string appendFormat:@"<br>\n"];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
-			for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
+			for(NSDate *attempt in [[house objectForKey:NotAtHomeTerritoryHouseAttempts] sortedArrayUsingSelector:@selector(compare:)])
 			{
 				NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[attempt timeIntervalSinceReferenceDate]];	
 				// create dictionary entry for This Return Visit
@@ -389,7 +391,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 			}
 		}
 	}
-	[string appendString:@"<br><br>"];
+	[string appendString:@"<br><br>\n"];
 	return string;
 }
 
@@ -408,7 +410,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 						   state:[call objectForKey:CallState]
 						 topLine:top 
 				      bottomLine:bottom];
-	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
+	[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>%@<br>\n", NSLocalizedString(@"Address", @"Address label for call"), top, bottom]];
 	[top release];
 	[bottom release];
 	top = nil;
@@ -416,32 +418,20 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 	
 	// Add Metadata
 	// they had an array of publications, lets check them too
-	NSMutableArray *metadata = [call objectForKey:CallMetadata];
-	if(metadata != nil)
+	NSArray *metadata = [[call objectForKey:CallMetadata] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:CallMetadataName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																					   [NSSortDescriptor sortDescriptorWithKey:CallMetadataValue ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]];
+	for(NSDictionary *entry in metadata)
 	{
-		int j;
-		int endMetadata = [metadata count];
-		for(j = 0; j < endMetadata; ++j)
-		{
-			// METADATA
-			NSMutableDictionary *entry = [metadata objectAtIndex:j];
-			NSString *name = [entry objectForKey:CallMetadataName];
-			value = [entry objectForKey:CallMetadataValue];
-			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
-		}
+		// METADATA
+		NSString *name = [entry objectForKey:CallMetadataName];
+		value = [entry objectForKey:CallMetadataValue];
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""], value]];
 	}
 	[string appendString:@"\n"];
 	
 	
-	NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
-	NSMutableDictionary *visit;
-	
-	int i;
-	int end = [returnVisits count];
-	for(i = 0; i < end; ++i)
+	for(NSDictionary *visit in [call objectForKey:CallReturnVisits])
 	{
-		visit = [returnVisits objectAtIndex:i];
-		
 		// GROUP TITLE
 		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
 		// create dictionary entry for This Return Visit
@@ -460,24 +450,23 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		value = [visit objectForKey:CallReturnVisitType];
 		if(value == nil || value.length == 0)
 			value = CallReturnVisitTypeReturnVisit;
-		[string appendString:[NSString stringWithFormat:@"%@: %@<br>", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
-		[string appendString:[NSString stringWithFormat:@"%@:<br>%@<br>", NSLocalizedString(@"Notes", @"Call Metadata"), [visit objectForKey:CallReturnVisitNotes]]];
+		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
+		[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Notes", @"Call Metadata")]];
+		NSString *notes = [visit objectForKey:CallReturnVisitNotes];
+		if([notes length])
+		{
+			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+			[string appendString:notes];
+			[string appendString:@"<br>\n"];
+		}
 		
 		// Publications
-		if([visit objectForKey:CallReturnVisitPublications] != nil)
+		for(NSDictionary *publication in [[visit objectForKey:CallReturnVisitPublications] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:CallReturnVisitPublicationTitle ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
 		{
-			// they had an array of publications, lets check them too
-			NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-			int j;
-			int endPublications = [publications count];
-			for(j = 0; j < endPublications; ++j)
-			{
-				NSDictionary *publication = [publications objectAtIndex:j];
-				// PUBLICATION
-				[string appendString:[NSString stringWithFormat:@"%@<br>", [publication objectForKey:CallReturnVisitPublicationTitle]]];
-			}
+			[string appendString:[NSString stringWithFormat:@"%@<br>\n", [publication objectForKey:CallReturnVisitPublicationTitle]]];
 		}
-		[string appendString:@"<br>"];
+		[string appendString:@"<br>\n"];
 	}
 	return string;
 }
@@ -488,14 +477,19 @@ NSString *emailFormattedStringForSettings()
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
-	for(NSDictionary *userSettings in allUserSettings)
+	for(NSDictionary *userSettings in [allUserSettings sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:SettingsMultipleUsersName ascending:YES]]])
 	{
 		// the specific user
 		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]]];
 		
 		// calls
 		[string appendString:NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(NSDictionary *call in [userSettings objectForKey:SettingsCalls])
+		for(NSDictionary *call in [[userSettings objectForKey:SettingsCalls] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:CallStreet ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																										  [NSSortDescriptor sortDescriptorWithKey:CallStreetNumber ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																										  [NSSortDescriptor sortDescriptorWithKey:CallApartmentNumber ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																										  [NSSortDescriptor sortDescriptorWithKey:CallCity ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																										  [NSSortDescriptor sortDescriptorWithKey:CallState ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																										  [NSSortDescriptor sortDescriptorWithKey:CallName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]])
 		{
 			[string appendString:emailFormattedStringForCall(call)];
 		}
@@ -516,7 +510,7 @@ NSString *emailFormattedStringForSettings()
 		
 		// Bulk Placements
 		[string appendString:NSLocalizedString(@"<h2>Bulk Placements:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(NSDictionary *bulkPlacement in [userSettings objectForKey:SettingsBulkLiterature])
+		for(NSDictionary *bulkPlacement in [[userSettings objectForKey:SettingsBulkLiterature] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:BulkLiteratureDate ascending:NO]]])
 		{
 			NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[bulkPlacement objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
 			// create dictionary entry for This Return Visit
@@ -530,8 +524,8 @@ NSString *emailFormattedStringForSettings()
 			{
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
-			[string appendString:[NSString stringWithFormat:@"%@:<br>", [dateFormatter stringFromDate:date]]];
-			for(NSDictionary *publication in [bulkPlacement objectForKey:BulkLiteratureArray])
+			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:date]]];
+			for(NSDictionary *publication in [[bulkPlacement objectForKey:BulkLiteratureArray] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:CallReturnVisitPublicationTitle ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
 			{
 				NSString *name = [publication objectForKey:BulkLiteratureArrayTitle];
 				int count = [[publication objectForKey:BulkLiteratureArrayCount] intValue];
@@ -552,15 +546,17 @@ NSString *emailFormattedStringForSettings()
 						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 				}
-				[string appendString:@"<br>"];
+				[string appendString:@"<br>\n"];
 			}
-			[string appendString:@"<br>"];
+			[string appendString:@"<br>\n"];
 		}
 		
 		// not at home
 		
 		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  label for sending a printable email backup.  this label is in the body of the email")];
-		for(NSDictionary *territory in [userSettings objectForKey:SettingsNotAtHomeTerritories])
+		for(NSDictionary *territory in [[userSettings objectForKey:SettingsNotAtHomeTerritories] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																															  [NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryCity ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																															  [NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryState ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]])
 		{
 			[string appendString:emailFormattedStringForNotAtHomeTerritory(territory)];
 		}

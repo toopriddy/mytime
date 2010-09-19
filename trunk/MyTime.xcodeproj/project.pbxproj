@@ -136,6 +136,7 @@
 		90C1497F0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C1497E0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m */; };
 		90C4D55D0E857C4100E202E2 /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C4D55C0E857C4100E202E2 /* NotesViewController.m */; };
 		90C4D5B40E8581E500E202E2 /* UITableViewMultilineTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */; };
+		90CCEEDF12451813003A3367 /* NSString+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CCEEDE12451813003A3367 /* NSString+PriddySoftware.m */; };
 		90D02D800E538553001CEF0D /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 90D02D7F0E538552001CEF0D /* map.html */; };
 		90D02E9C0E53C638001CEF0D /* BaseSortedCallsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E9B0E53C638001CEF0D /* BaseSortedCallsDataSource.m */; };
 		90D031350E567B20001CEF0D /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D031340E567B20001CEF0D /* DatePickerViewController.m */; };
@@ -485,6 +486,8 @@
 		90C4D5620E857DE000E202E2 /* NotesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesViewControllerDelegate.h; sourceTree = "<group>"; };
 		90C4D5B20E8581E500E202E2 /* UITableViewMultilineTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMultilineTextCell.h; sourceTree = "<group>"; };
 		90C4D5B30E8581E500E202E2 /* UITableViewMultilineTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultilineTextCell.m; sourceTree = "<group>"; };
+		90CCEEDD12451813003A3367 /* NSString+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PriddySoftware.h"; sourceTree = "<group>"; };
+		90CCEEDE12451813003A3367 /* NSString+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PriddySoftware.m"; sourceTree = "<group>"; };
 		90D02D7F0E538552001CEF0D /* map.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
 		90D02E270E539CD0001CEF0D /* MapWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWebView.h; sourceTree = "<group>"; };
 		90D02E280E539CD0001CEF0D /* MapWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapWebView.m; sourceTree = "<group>"; };
@@ -706,6 +709,8 @@
 				90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */,
 				90E526AD116D886100D5EFBD /* NSData+PSCompress.h */,
 				90E526AE116D886100D5EFBD /* NSData+PSCompress.m */,
+				90CCEEDD12451813003A3367 /* NSString+PriddySoftware.h */,
+				90CCEEDE12451813003A3367 /* NSString+PriddySoftware.m */,
 				904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */,
 				904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */,
 				905A0E731029213B00875539 /* Settings.bundle */,
@@ -1482,6 +1487,7 @@
 				903DD0DD12447DBF00810586 /* _MTTimeEntry.m in Sources */,
 				903DD0DF12447DBF00810586 /* _MTTimeType.m in Sources */,
 				903DD0E112447DC000810586 /* _MTUser.m in Sources */,
+				90CCEEDF12451813003A3367 /* NSString+PriddySoftware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
