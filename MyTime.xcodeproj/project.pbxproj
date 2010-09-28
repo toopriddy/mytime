@@ -45,40 +45,6 @@
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
 		9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */; };
-		903DD08E12447DAA00810586 /* MTAdditionalInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD08D12447DAA00810586 /* MTAdditionalInformation.m */; };
-		903DD09012447DAB00810586 /* MTAdditionalInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD08F12447DAA00810586 /* MTAdditionalInformationType.m */; };
-		903DD09212447DAB00810586 /* MTBulkPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09112447DAB00810586 /* MTBulkPlacement.m */; };
-		903DD09412447DAC00810586 /* MTCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09312447DAB00810586 /* MTCall.m */; };
-		903DD09612447DAC00810586 /* MTMultipleChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09512447DAC00810586 /* MTMultipleChoice.m */; };
-		903DD09812447DAD00810586 /* MTPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09712447DAC00810586 /* MTPresentation.m */; };
-		903DD09A12447DAD00810586 /* MTPublication.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09912447DAD00810586 /* MTPublication.m */; };
-		903DD09C12447DAD00810586 /* MTReturnVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09B12447DAD00810586 /* MTReturnVisit.m */; };
-		903DD09E12447DAE00810586 /* MTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09D12447DAE00810586 /* MTSettings.m */; };
-		903DD0A012447DAE00810586 /* MTStatisticsAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD09F12447DAE00810586 /* MTStatisticsAdjustment.m */; };
-		903DD0A212447DAF00810586 /* MTTerritory.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0A112447DAF00810586 /* MTTerritory.m */; };
-		903DD0A412447DB000810586 /* MTTerritoryHouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0A312447DAF00810586 /* MTTerritoryHouse.m */; };
-		903DD0A612447DB000810586 /* MTTerritoryHouseAttempt.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0A512447DB000810586 /* MTTerritoryHouseAttempt.m */; };
-		903DD0A812447DB100810586 /* MTTerritoryStreet.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0A712447DB000810586 /* MTTerritoryStreet.m */; };
-		903DD0AA12447DB100810586 /* MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0A912447DB100810586 /* MTTimeEntry.m */; };
-		903DD0AC12447DB200810586 /* MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0AB12447DB100810586 /* MTTimeType.m */; };
-		903DD0AE12447DB200810586 /* MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0AD12447DB200810586 /* MTUser.m */; };
-		903DD0C112447DB800810586 /* _MTAdditionalInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0C012447DB800810586 /* _MTAdditionalInformation.m */; };
-		903DD0C312447DB800810586 /* _MTAdditionalInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0C212447DB800810586 /* _MTAdditionalInformationType.m */; };
-		903DD0C512447DB900810586 /* _MTBulkPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0C412447DB900810586 /* _MTBulkPlacement.m */; };
-		903DD0C712447DB900810586 /* _MTCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0C612447DB900810586 /* _MTCall.m */; };
-		903DD0C912447DBA00810586 /* _MTMultipleChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0C812447DBA00810586 /* _MTMultipleChoice.m */; };
-		903DD0CB12447DBA00810586 /* _MTPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0CA12447DBA00810586 /* _MTPresentation.m */; };
-		903DD0CD12447DBB00810586 /* _MTPublication.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0CC12447DBB00810586 /* _MTPublication.m */; };
-		903DD0CF12447DBB00810586 /* _MTReturnVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0CE12447DBB00810586 /* _MTReturnVisit.m */; };
-		903DD0D112447DBC00810586 /* _MTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0D012447DBC00810586 /* _MTSettings.m */; };
-		903DD0D312447DBC00810586 /* _MTStatisticsAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0D212447DBC00810586 /* _MTStatisticsAdjustment.m */; };
-		903DD0D512447DBD00810586 /* _MTTerritory.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0D412447DBD00810586 /* _MTTerritory.m */; };
-		903DD0D712447DBD00810586 /* _MTTerritoryHouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0D612447DBD00810586 /* _MTTerritoryHouse.m */; };
-		903DD0D912447DBE00810586 /* _MTTerritoryHouseAttempt.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0D812447DBD00810586 /* _MTTerritoryHouseAttempt.m */; };
-		903DD0DB12447DBE00810586 /* _MTTerritoryStreet.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0DA12447DBE00810586 /* _MTTerritoryStreet.m */; };
-		903DD0DD12447DBF00810586 /* _MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0DC12447DBE00810586 /* _MTTimeEntry.m */; };
-		903DD0DF12447DBF00810586 /* _MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0DE12447DBF00810586 /* _MTTimeType.m */; };
-		903DD0E112447DC000810586 /* _MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 903DD0E012447DBF00810586 /* _MTUser.m */; };
 		903FF237102A049900CC60B8 /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF231102A049900CC60B8 /* HTTPServer.m */; };
 		903FF238102A049900CC60B8 /* HTTPResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF233102A049900CC60B8 /* HTTPResponseHandler.m */; };
 		903FF239102A049900CC60B8 /* HttpMultipartResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF235102A049900CC60B8 /* HttpMultipartResponseHandler.m */; };
@@ -114,6 +80,40 @@
 		907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */; };
 		907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907BEA100FB212DA00178ED6 /* OverlayViewController.m */; };
 		907CDF3F103F9F9D00236342 /* QuickNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */; };
+		907D35D9124AE86200C73C58 /* MTAdditionalInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35D8124AE86100C73C58 /* MTAdditionalInformation.m */; };
+		907D35DB124AE86200C73C58 /* MTAdditionalInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35DA124AE86200C73C58 /* MTAdditionalInformationType.m */; };
+		907D35DD124AE86300C73C58 /* MTBulkPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35DC124AE86200C73C58 /* MTBulkPlacement.m */; };
+		907D35DF124AE86300C73C58 /* MTCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35DE124AE86300C73C58 /* MTCall.m */; };
+		907D35E1124AE86400C73C58 /* MTMultipleChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35E0124AE86400C73C58 /* MTMultipleChoice.m */; };
+		907D35E3124AE86400C73C58 /* MTPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35E2124AE86400C73C58 /* MTPresentation.m */; };
+		907D35E5124AE86500C73C58 /* MTPublication.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35E4124AE86500C73C58 /* MTPublication.m */; };
+		907D35E7124AE86500C73C58 /* MTReturnVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35E6124AE86500C73C58 /* MTReturnVisit.m */; };
+		907D35E9124AE86600C73C58 /* MTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35E8124AE86600C73C58 /* MTSettings.m */; };
+		907D35EB124AE86700C73C58 /* MTStatisticsAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35EA124AE86600C73C58 /* MTStatisticsAdjustment.m */; };
+		907D35ED124AE86700C73C58 /* MTTerritory.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35EC124AE86700C73C58 /* MTTerritory.m */; };
+		907D35EF124AE86800C73C58 /* MTTerritoryHouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35EE124AE86700C73C58 /* MTTerritoryHouse.m */; };
+		907D35F1124AE86800C73C58 /* MTTerritoryHouseAttempt.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35F0124AE86800C73C58 /* MTTerritoryHouseAttempt.m */; };
+		907D35F3124AE86900C73C58 /* MTTerritoryStreet.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35F2124AE86800C73C58 /* MTTerritoryStreet.m */; };
+		907D35F5124AE86900C73C58 /* MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35F4124AE86900C73C58 /* MTTimeEntry.m */; };
+		907D35F7124AE86A00C73C58 /* MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35F6124AE86900C73C58 /* MTTimeType.m */; };
+		907D35F9124AE86A00C73C58 /* MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D35F8124AE86A00C73C58 /* MTUser.m */; };
+		907D360C124AE87100C73C58 /* _MTAdditionalInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D360B124AE87100C73C58 /* _MTAdditionalInformation.m */; };
+		907D360E124AE87200C73C58 /* _MTAdditionalInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D360D124AE87100C73C58 /* _MTAdditionalInformationType.m */; };
+		907D3610124AE87200C73C58 /* _MTBulkPlacement.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D360F124AE87200C73C58 /* _MTBulkPlacement.m */; };
+		907D3612124AE87300C73C58 /* _MTCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3611124AE87200C73C58 /* _MTCall.m */; };
+		907D3614124AE87300C73C58 /* _MTMultipleChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3613124AE87300C73C58 /* _MTMultipleChoice.m */; };
+		907D3616124AE87400C73C58 /* _MTPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3615124AE87300C73C58 /* _MTPresentation.m */; };
+		907D3618124AE87400C73C58 /* _MTPublication.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3617124AE87400C73C58 /* _MTPublication.m */; };
+		907D361A124AE87500C73C58 /* _MTReturnVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3619124AE87400C73C58 /* _MTReturnVisit.m */; };
+		907D361C124AE87500C73C58 /* _MTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D361B124AE87500C73C58 /* _MTSettings.m */; };
+		907D361E124AE87600C73C58 /* _MTStatisticsAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D361D124AE87500C73C58 /* _MTStatisticsAdjustment.m */; };
+		907D3620124AE87600C73C58 /* _MTTerritory.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D361F124AE87600C73C58 /* _MTTerritory.m */; };
+		907D3622124AE87700C73C58 /* _MTTerritoryHouse.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3621124AE87600C73C58 /* _MTTerritoryHouse.m */; };
+		907D3624124AE87700C73C58 /* _MTTerritoryHouseAttempt.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3623124AE87700C73C58 /* _MTTerritoryHouseAttempt.m */; };
+		907D3626124AE87800C73C58 /* _MTTerritoryStreet.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3625124AE87800C73C58 /* _MTTerritoryStreet.m */; };
+		907D3628124AE87800C73C58 /* _MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3627124AE87800C73C58 /* _MTTimeEntry.m */; };
+		907D362A124AE87900C73C58 /* _MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D3629124AE87900C73C58 /* _MTTimeType.m */; };
+		907D362C124AE87900C73C58 /* _MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 907D362B124AE87900C73C58 /* _MTUser.m */; };
 		908AC79411AF54BD0009F22B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 908AC79311AF54BD0009F22B /* CoreData.framework */; };
 		9096713F11D46D77001F5C61 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E2B0E539D15001CEF0D /* MapView.m */; };
 		9096714411D46D96001F5C61 /* MapWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D02E280E539CD0001CEF0D /* MapWebView.m */; };
@@ -306,74 +306,6 @@
 		903477630E8CAA0100BB6F2D /* Swedish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9035FBFE1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedCallsSortedByStreetViewDataSource.h; sourceTree = "<group>"; };
 		9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedCallsSortedByStreetViewDataSource.m; sourceTree = "<group>"; };
-		903DD08D12447DAA00810586 /* MTAdditionalInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformation.m; sourceTree = "<group>"; };
-		903DD08F12447DAA00810586 /* MTAdditionalInformationType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformationType.m; sourceTree = "<group>"; };
-		903DD09112447DAB00810586 /* MTBulkPlacement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTBulkPlacement.m; sourceTree = "<group>"; };
-		903DD09312447DAB00810586 /* MTCall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTCall.m; sourceTree = "<group>"; };
-		903DD09512447DAC00810586 /* MTMultipleChoice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTMultipleChoice.m; sourceTree = "<group>"; };
-		903DD09712447DAC00810586 /* MTPresentation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTPresentation.m; sourceTree = "<group>"; };
-		903DD09912447DAD00810586 /* MTPublication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTPublication.m; sourceTree = "<group>"; };
-		903DD09B12447DAD00810586 /* MTReturnVisit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTReturnVisit.m; sourceTree = "<group>"; };
-		903DD09D12447DAE00810586 /* MTSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTSettings.m; sourceTree = "<group>"; };
-		903DD09F12447DAE00810586 /* MTStatisticsAdjustment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTStatisticsAdjustment.m; sourceTree = "<group>"; };
-		903DD0A112447DAF00810586 /* MTTerritory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritory.m; sourceTree = "<group>"; };
-		903DD0A312447DAF00810586 /* MTTerritoryHouse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryHouse.m; sourceTree = "<group>"; };
-		903DD0A512447DB000810586 /* MTTerritoryHouseAttempt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryHouseAttempt.m; sourceTree = "<group>"; };
-		903DD0A712447DB000810586 /* MTTerritoryStreet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryStreet.m; sourceTree = "<group>"; };
-		903DD0A912447DB100810586 /* MTTimeEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTimeEntry.m; sourceTree = "<group>"; };
-		903DD0AB12447DB100810586 /* MTTimeType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTimeType.m; sourceTree = "<group>"; };
-		903DD0AD12447DB200810586 /* MTUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTUser.m; sourceTree = "<group>"; };
-		903DD0AF12447DB200810586 /* MTAdditionalInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformation.h; sourceTree = "<group>"; };
-		903DD0B012447DB300810586 /* MTAdditionalInformationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformationType.h; sourceTree = "<group>"; };
-		903DD0B112447DB300810586 /* MTBulkPlacement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTBulkPlacement.h; sourceTree = "<group>"; };
-		903DD0B212447DB300810586 /* MTCall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTCall.h; sourceTree = "<group>"; };
-		903DD0B312447DB400810586 /* MTMultipleChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMultipleChoice.h; sourceTree = "<group>"; };
-		903DD0B412447DB400810586 /* MTPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTPresentation.h; sourceTree = "<group>"; };
-		903DD0B512447DB400810586 /* MTPublication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTPublication.h; sourceTree = "<group>"; };
-		903DD0B612447DB500810586 /* MTReturnVisit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTReturnVisit.h; sourceTree = "<group>"; };
-		903DD0B712447DB500810586 /* MTSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTSettings.h; sourceTree = "<group>"; };
-		903DD0B812447DB500810586 /* MTStatisticsAdjustment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTStatisticsAdjustment.h; sourceTree = "<group>"; };
-		903DD0B912447DB600810586 /* MTTerritory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritory.h; sourceTree = "<group>"; };
-		903DD0BA12447DB600810586 /* MTTerritoryHouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryHouse.h; sourceTree = "<group>"; };
-		903DD0BB12447DB600810586 /* MTTerritoryHouseAttempt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryHouseAttempt.h; sourceTree = "<group>"; };
-		903DD0BC12447DB700810586 /* MTTerritoryStreet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryStreet.h; sourceTree = "<group>"; };
-		903DD0BD12447DB700810586 /* MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTimeEntry.h; sourceTree = "<group>"; };
-		903DD0BE12447DB700810586 /* MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTimeType.h; sourceTree = "<group>"; };
-		903DD0BF12447DB700810586 /* MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTUser.h; sourceTree = "<group>"; };
-		903DD0C012447DB800810586 /* _MTAdditionalInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTAdditionalInformation.m; sourceTree = "<group>"; };
-		903DD0C212447DB800810586 /* _MTAdditionalInformationType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTAdditionalInformationType.m; sourceTree = "<group>"; };
-		903DD0C412447DB900810586 /* _MTBulkPlacement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTBulkPlacement.m; sourceTree = "<group>"; };
-		903DD0C612447DB900810586 /* _MTCall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTCall.m; sourceTree = "<group>"; };
-		903DD0C812447DBA00810586 /* _MTMultipleChoice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTMultipleChoice.m; sourceTree = "<group>"; };
-		903DD0CA12447DBA00810586 /* _MTPresentation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTPresentation.m; sourceTree = "<group>"; };
-		903DD0CC12447DBB00810586 /* _MTPublication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTPublication.m; sourceTree = "<group>"; };
-		903DD0CE12447DBB00810586 /* _MTReturnVisit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTReturnVisit.m; sourceTree = "<group>"; };
-		903DD0D012447DBC00810586 /* _MTSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTSettings.m; sourceTree = "<group>"; };
-		903DD0D212447DBC00810586 /* _MTStatisticsAdjustment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTStatisticsAdjustment.m; sourceTree = "<group>"; };
-		903DD0D412447DBD00810586 /* _MTTerritory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritory.m; sourceTree = "<group>"; };
-		903DD0D612447DBD00810586 /* _MTTerritoryHouse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryHouse.m; sourceTree = "<group>"; };
-		903DD0D812447DBD00810586 /* _MTTerritoryHouseAttempt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryHouseAttempt.m; sourceTree = "<group>"; };
-		903DD0DA12447DBE00810586 /* _MTTerritoryStreet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryStreet.m; sourceTree = "<group>"; };
-		903DD0DC12447DBE00810586 /* _MTTimeEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTimeEntry.m; sourceTree = "<group>"; };
-		903DD0DE12447DBF00810586 /* _MTTimeType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTimeType.m; sourceTree = "<group>"; };
-		903DD0E012447DBF00810586 /* _MTUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTUser.m; sourceTree = "<group>"; };
-		903DD0E212447DC000810586 /* _MTAdditionalInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTAdditionalInformation.h; sourceTree = "<group>"; };
-		903DD0E312447DC100810586 /* _MTAdditionalInformationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTAdditionalInformationType.h; sourceTree = "<group>"; };
-		903DD0E412447DC200810586 /* _MTBulkPlacement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTBulkPlacement.h; sourceTree = "<group>"; };
-		903DD0E512447DC200810586 /* _MTCall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTCall.h; sourceTree = "<group>"; };
-		903DD0E612447DC200810586 /* _MTMultipleChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTMultipleChoice.h; sourceTree = "<group>"; };
-		903DD0E712447DC200810586 /* _MTPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTPresentation.h; sourceTree = "<group>"; };
-		903DD0E812447DC300810586 /* _MTPublication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTPublication.h; sourceTree = "<group>"; };
-		903DD0E912447DC300810586 /* _MTReturnVisit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTReturnVisit.h; sourceTree = "<group>"; };
-		903DD0EA12447DC300810586 /* _MTSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTSettings.h; sourceTree = "<group>"; };
-		903DD0EB12447DC400810586 /* _MTStatisticsAdjustment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTStatisticsAdjustment.h; sourceTree = "<group>"; };
-		903DD0EC12447DC400810586 /* _MTTerritory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritory.h; sourceTree = "<group>"; };
-		903DD0ED12447DC400810586 /* _MTTerritoryHouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryHouse.h; sourceTree = "<group>"; };
-		903DD0F012447DC700810586 /* _MTTerritoryHouseAttempt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryHouseAttempt.h; sourceTree = "<group>"; };
-		903DD0F112447DC800810586 /* _MTTerritoryStreet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryStreet.h; sourceTree = "<group>"; };
-		903DD0F212447DC800810586 /* _MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeEntry.h; sourceTree = "<group>"; };
-		903DD0F312447DC800810586 /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
-		903DD0F412447DC900810586 /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
 		903FF231102A049900CC60B8 /* HTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPServer.m; sourceTree = "<group>"; };
 		903FF232102A049900CC60B8 /* HTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
 		903FF233102A049900CC60B8 /* HTTPResponseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPResponseHandler.m; sourceTree = "<group>"; };
@@ -445,6 +377,74 @@
 		907BEADB0FB250C900178ED6 /* MovableTableViewIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovableTableViewIndex.h; sourceTree = "<group>"; };
 		907CDF3D103F9F9D00236342 /* QuickNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickNotesViewController.h; sourceTree = "<group>"; };
 		907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickNotesViewController.m; sourceTree = "<group>"; };
+		907D35D8124AE86100C73C58 /* MTAdditionalInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformation.m; sourceTree = "<group>"; };
+		907D35DA124AE86200C73C58 /* MTAdditionalInformationType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAdditionalInformationType.m; sourceTree = "<group>"; };
+		907D35DC124AE86200C73C58 /* MTBulkPlacement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTBulkPlacement.m; sourceTree = "<group>"; };
+		907D35DE124AE86300C73C58 /* MTCall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTCall.m; sourceTree = "<group>"; };
+		907D35E0124AE86400C73C58 /* MTMultipleChoice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTMultipleChoice.m; sourceTree = "<group>"; };
+		907D35E2124AE86400C73C58 /* MTPresentation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTPresentation.m; sourceTree = "<group>"; };
+		907D35E4124AE86500C73C58 /* MTPublication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTPublication.m; sourceTree = "<group>"; };
+		907D35E6124AE86500C73C58 /* MTReturnVisit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTReturnVisit.m; sourceTree = "<group>"; };
+		907D35E8124AE86600C73C58 /* MTSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTSettings.m; sourceTree = "<group>"; };
+		907D35EA124AE86600C73C58 /* MTStatisticsAdjustment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTStatisticsAdjustment.m; sourceTree = "<group>"; };
+		907D35EC124AE86700C73C58 /* MTTerritory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritory.m; sourceTree = "<group>"; };
+		907D35EE124AE86700C73C58 /* MTTerritoryHouse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryHouse.m; sourceTree = "<group>"; };
+		907D35F0124AE86800C73C58 /* MTTerritoryHouseAttempt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryHouseAttempt.m; sourceTree = "<group>"; };
+		907D35F2124AE86800C73C58 /* MTTerritoryStreet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTerritoryStreet.m; sourceTree = "<group>"; };
+		907D35F4124AE86900C73C58 /* MTTimeEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTimeEntry.m; sourceTree = "<group>"; };
+		907D35F6124AE86900C73C58 /* MTTimeType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTTimeType.m; sourceTree = "<group>"; };
+		907D35F8124AE86A00C73C58 /* MTUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTUser.m; sourceTree = "<group>"; };
+		907D35FA124AE86A00C73C58 /* MTAdditionalInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformation.h; sourceTree = "<group>"; };
+		907D35FB124AE86B00C73C58 /* MTAdditionalInformationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAdditionalInformationType.h; sourceTree = "<group>"; };
+		907D35FC124AE86B00C73C58 /* MTBulkPlacement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTBulkPlacement.h; sourceTree = "<group>"; };
+		907D35FD124AE86C00C73C58 /* MTCall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTCall.h; sourceTree = "<group>"; };
+		907D35FE124AE86C00C73C58 /* MTMultipleChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMultipleChoice.h; sourceTree = "<group>"; };
+		907D35FF124AE86C00C73C58 /* MTPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTPresentation.h; sourceTree = "<group>"; };
+		907D3600124AE86D00C73C58 /* MTPublication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTPublication.h; sourceTree = "<group>"; };
+		907D3601124AE86D00C73C58 /* MTReturnVisit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTReturnVisit.h; sourceTree = "<group>"; };
+		907D3602124AE86E00C73C58 /* MTSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTSettings.h; sourceTree = "<group>"; };
+		907D3603124AE86E00C73C58 /* MTStatisticsAdjustment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTStatisticsAdjustment.h; sourceTree = "<group>"; };
+		907D3604124AE86E00C73C58 /* MTTerritory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritory.h; sourceTree = "<group>"; };
+		907D3605124AE86F00C73C58 /* MTTerritoryHouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryHouse.h; sourceTree = "<group>"; };
+		907D3606124AE86F00C73C58 /* MTTerritoryHouseAttempt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryHouseAttempt.h; sourceTree = "<group>"; };
+		907D3607124AE86F00C73C58 /* MTTerritoryStreet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTerritoryStreet.h; sourceTree = "<group>"; };
+		907D3608124AE87000C73C58 /* MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTimeEntry.h; sourceTree = "<group>"; };
+		907D3609124AE87000C73C58 /* MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTTimeType.h; sourceTree = "<group>"; };
+		907D360A124AE87000C73C58 /* MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTUser.h; sourceTree = "<group>"; };
+		907D360B124AE87100C73C58 /* _MTAdditionalInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTAdditionalInformation.m; sourceTree = "<group>"; };
+		907D360D124AE87100C73C58 /* _MTAdditionalInformationType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTAdditionalInformationType.m; sourceTree = "<group>"; };
+		907D360F124AE87200C73C58 /* _MTBulkPlacement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTBulkPlacement.m; sourceTree = "<group>"; };
+		907D3611124AE87200C73C58 /* _MTCall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTCall.m; sourceTree = "<group>"; };
+		907D3613124AE87300C73C58 /* _MTMultipleChoice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTMultipleChoice.m; sourceTree = "<group>"; };
+		907D3615124AE87300C73C58 /* _MTPresentation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTPresentation.m; sourceTree = "<group>"; };
+		907D3617124AE87400C73C58 /* _MTPublication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTPublication.m; sourceTree = "<group>"; };
+		907D3619124AE87400C73C58 /* _MTReturnVisit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTReturnVisit.m; sourceTree = "<group>"; };
+		907D361B124AE87500C73C58 /* _MTSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTSettings.m; sourceTree = "<group>"; };
+		907D361D124AE87500C73C58 /* _MTStatisticsAdjustment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTStatisticsAdjustment.m; sourceTree = "<group>"; };
+		907D361F124AE87600C73C58 /* _MTTerritory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritory.m; sourceTree = "<group>"; };
+		907D3621124AE87600C73C58 /* _MTTerritoryHouse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryHouse.m; sourceTree = "<group>"; };
+		907D3623124AE87700C73C58 /* _MTTerritoryHouseAttempt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryHouseAttempt.m; sourceTree = "<group>"; };
+		907D3625124AE87800C73C58 /* _MTTerritoryStreet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTerritoryStreet.m; sourceTree = "<group>"; };
+		907D3627124AE87800C73C58 /* _MTTimeEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTimeEntry.m; sourceTree = "<group>"; };
+		907D3629124AE87900C73C58 /* _MTTimeType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTTimeType.m; sourceTree = "<group>"; };
+		907D362B124AE87900C73C58 /* _MTUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _MTUser.m; sourceTree = "<group>"; };
+		907D362D124AE87A00C73C58 /* _MTAdditionalInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTAdditionalInformation.h; sourceTree = "<group>"; };
+		907D362E124AE87A00C73C58 /* _MTAdditionalInformationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTAdditionalInformationType.h; sourceTree = "<group>"; };
+		907D362F124AE87A00C73C58 /* _MTBulkPlacement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTBulkPlacement.h; sourceTree = "<group>"; };
+		907D3630124AE87B00C73C58 /* _MTCall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTCall.h; sourceTree = "<group>"; };
+		907D3631124AE87B00C73C58 /* _MTMultipleChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTMultipleChoice.h; sourceTree = "<group>"; };
+		907D3632124AE87B00C73C58 /* _MTPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTPresentation.h; sourceTree = "<group>"; };
+		907D3633124AE87C00C73C58 /* _MTPublication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTPublication.h; sourceTree = "<group>"; };
+		907D3634124AE87C00C73C58 /* _MTReturnVisit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTReturnVisit.h; sourceTree = "<group>"; };
+		907D3635124AE87D00C73C58 /* _MTSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTSettings.h; sourceTree = "<group>"; };
+		907D3636124AE87D00C73C58 /* _MTStatisticsAdjustment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTStatisticsAdjustment.h; sourceTree = "<group>"; };
+		907D3637124AE87E00C73C58 /* _MTTerritory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritory.h; sourceTree = "<group>"; };
+		907D3638124AE87E00C73C58 /* _MTTerritoryHouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryHouse.h; sourceTree = "<group>"; };
+		907D3639124AE87E00C73C58 /* _MTTerritoryHouseAttempt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryHouseAttempt.h; sourceTree = "<group>"; };
+		907D363A124AE87F00C73C58 /* _MTTerritoryStreet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTerritoryStreet.h; sourceTree = "<group>"; };
+		907D363B124AE87F00C73C58 /* _MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeEntry.h; sourceTree = "<group>"; };
+		907D363C124AE88000C73C58 /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
+		907D363D124AE88000C73C58 /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
 		908AC5EB10CD489900922E02 /* Norwegian */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		908AC79311AF54BD0009F22B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		909902B7122C40E900545B78 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoadingViewController.xib; path = Classes/LoadingViewController.xib; sourceTree = "<group>"; };
@@ -975,74 +975,74 @@
 		90E8575B1235A33E00CD3DBA /* MyTime */ = {
 			isa = PBXGroup;
 			children = (
-				903DD08D12447DAA00810586 /* MTAdditionalInformation.m */,
-				903DD08F12447DAA00810586 /* MTAdditionalInformationType.m */,
-				903DD09112447DAB00810586 /* MTBulkPlacement.m */,
-				903DD09312447DAB00810586 /* MTCall.m */,
-				903DD09512447DAC00810586 /* MTMultipleChoice.m */,
-				903DD09712447DAC00810586 /* MTPresentation.m */,
-				903DD09912447DAD00810586 /* MTPublication.m */,
-				903DD09B12447DAD00810586 /* MTReturnVisit.m */,
-				903DD09D12447DAE00810586 /* MTSettings.m */,
-				903DD09F12447DAE00810586 /* MTStatisticsAdjustment.m */,
-				903DD0A112447DAF00810586 /* MTTerritory.m */,
-				903DD0A312447DAF00810586 /* MTTerritoryHouse.m */,
-				903DD0A512447DB000810586 /* MTTerritoryHouseAttempt.m */,
-				903DD0A712447DB000810586 /* MTTerritoryStreet.m */,
-				903DD0A912447DB100810586 /* MTTimeEntry.m */,
-				903DD0AB12447DB100810586 /* MTTimeType.m */,
-				903DD0AD12447DB200810586 /* MTUser.m */,
-				903DD0AF12447DB200810586 /* MTAdditionalInformation.h */,
-				903DD0B012447DB300810586 /* MTAdditionalInformationType.h */,
-				903DD0B112447DB300810586 /* MTBulkPlacement.h */,
-				903DD0B212447DB300810586 /* MTCall.h */,
-				903DD0B312447DB400810586 /* MTMultipleChoice.h */,
-				903DD0B412447DB400810586 /* MTPresentation.h */,
-				903DD0B512447DB400810586 /* MTPublication.h */,
-				903DD0B612447DB500810586 /* MTReturnVisit.h */,
-				903DD0B712447DB500810586 /* MTSettings.h */,
-				903DD0B812447DB500810586 /* MTStatisticsAdjustment.h */,
-				903DD0B912447DB600810586 /* MTTerritory.h */,
-				903DD0BA12447DB600810586 /* MTTerritoryHouse.h */,
-				903DD0BB12447DB600810586 /* MTTerritoryHouseAttempt.h */,
-				903DD0BC12447DB700810586 /* MTTerritoryStreet.h */,
-				903DD0BD12447DB700810586 /* MTTimeEntry.h */,
-				903DD0BE12447DB700810586 /* MTTimeType.h */,
-				903DD0BF12447DB700810586 /* MTUser.h */,
-				903DD0C012447DB800810586 /* _MTAdditionalInformation.m */,
-				903DD0C212447DB800810586 /* _MTAdditionalInformationType.m */,
-				903DD0C412447DB900810586 /* _MTBulkPlacement.m */,
-				903DD0C612447DB900810586 /* _MTCall.m */,
-				903DD0C812447DBA00810586 /* _MTMultipleChoice.m */,
-				903DD0CA12447DBA00810586 /* _MTPresentation.m */,
-				903DD0CC12447DBB00810586 /* _MTPublication.m */,
-				903DD0CE12447DBB00810586 /* _MTReturnVisit.m */,
-				903DD0D012447DBC00810586 /* _MTSettings.m */,
-				903DD0D212447DBC00810586 /* _MTStatisticsAdjustment.m */,
-				903DD0D412447DBD00810586 /* _MTTerritory.m */,
-				903DD0D612447DBD00810586 /* _MTTerritoryHouse.m */,
-				903DD0D812447DBD00810586 /* _MTTerritoryHouseAttempt.m */,
-				903DD0DA12447DBE00810586 /* _MTTerritoryStreet.m */,
-				903DD0DC12447DBE00810586 /* _MTTimeEntry.m */,
-				903DD0DE12447DBF00810586 /* _MTTimeType.m */,
-				903DD0E012447DBF00810586 /* _MTUser.m */,
-				903DD0E212447DC000810586 /* _MTAdditionalInformation.h */,
-				903DD0E312447DC100810586 /* _MTAdditionalInformationType.h */,
-				903DD0E412447DC200810586 /* _MTBulkPlacement.h */,
-				903DD0E512447DC200810586 /* _MTCall.h */,
-				903DD0E612447DC200810586 /* _MTMultipleChoice.h */,
-				903DD0E712447DC200810586 /* _MTPresentation.h */,
-				903DD0E812447DC300810586 /* _MTPublication.h */,
-				903DD0E912447DC300810586 /* _MTReturnVisit.h */,
-				903DD0EA12447DC300810586 /* _MTSettings.h */,
-				903DD0EB12447DC400810586 /* _MTStatisticsAdjustment.h */,
-				903DD0EC12447DC400810586 /* _MTTerritory.h */,
-				903DD0ED12447DC400810586 /* _MTTerritoryHouse.h */,
-				903DD0F012447DC700810586 /* _MTTerritoryHouseAttempt.h */,
-				903DD0F112447DC800810586 /* _MTTerritoryStreet.h */,
-				903DD0F212447DC800810586 /* _MTTimeEntry.h */,
-				903DD0F312447DC800810586 /* _MTTimeType.h */,
-				903DD0F412447DC900810586 /* _MTUser.h */,
+				907D35D8124AE86100C73C58 /* MTAdditionalInformation.m */,
+				907D35DA124AE86200C73C58 /* MTAdditionalInformationType.m */,
+				907D35DC124AE86200C73C58 /* MTBulkPlacement.m */,
+				907D35DE124AE86300C73C58 /* MTCall.m */,
+				907D35E0124AE86400C73C58 /* MTMultipleChoice.m */,
+				907D35E2124AE86400C73C58 /* MTPresentation.m */,
+				907D35E4124AE86500C73C58 /* MTPublication.m */,
+				907D35E6124AE86500C73C58 /* MTReturnVisit.m */,
+				907D35E8124AE86600C73C58 /* MTSettings.m */,
+				907D35EA124AE86600C73C58 /* MTStatisticsAdjustment.m */,
+				907D35EC124AE86700C73C58 /* MTTerritory.m */,
+				907D35EE124AE86700C73C58 /* MTTerritoryHouse.m */,
+				907D35F0124AE86800C73C58 /* MTTerritoryHouseAttempt.m */,
+				907D35F2124AE86800C73C58 /* MTTerritoryStreet.m */,
+				907D35F4124AE86900C73C58 /* MTTimeEntry.m */,
+				907D35F6124AE86900C73C58 /* MTTimeType.m */,
+				907D35F8124AE86A00C73C58 /* MTUser.m */,
+				907D35FA124AE86A00C73C58 /* MTAdditionalInformation.h */,
+				907D35FB124AE86B00C73C58 /* MTAdditionalInformationType.h */,
+				907D35FC124AE86B00C73C58 /* MTBulkPlacement.h */,
+				907D35FD124AE86C00C73C58 /* MTCall.h */,
+				907D35FE124AE86C00C73C58 /* MTMultipleChoice.h */,
+				907D35FF124AE86C00C73C58 /* MTPresentation.h */,
+				907D3600124AE86D00C73C58 /* MTPublication.h */,
+				907D3601124AE86D00C73C58 /* MTReturnVisit.h */,
+				907D3602124AE86E00C73C58 /* MTSettings.h */,
+				907D3603124AE86E00C73C58 /* MTStatisticsAdjustment.h */,
+				907D3604124AE86E00C73C58 /* MTTerritory.h */,
+				907D3605124AE86F00C73C58 /* MTTerritoryHouse.h */,
+				907D3606124AE86F00C73C58 /* MTTerritoryHouseAttempt.h */,
+				907D3607124AE86F00C73C58 /* MTTerritoryStreet.h */,
+				907D3608124AE87000C73C58 /* MTTimeEntry.h */,
+				907D3609124AE87000C73C58 /* MTTimeType.h */,
+				907D360A124AE87000C73C58 /* MTUser.h */,
+				907D360B124AE87100C73C58 /* _MTAdditionalInformation.m */,
+				907D360D124AE87100C73C58 /* _MTAdditionalInformationType.m */,
+				907D360F124AE87200C73C58 /* _MTBulkPlacement.m */,
+				907D3611124AE87200C73C58 /* _MTCall.m */,
+				907D3613124AE87300C73C58 /* _MTMultipleChoice.m */,
+				907D3615124AE87300C73C58 /* _MTPresentation.m */,
+				907D3617124AE87400C73C58 /* _MTPublication.m */,
+				907D3619124AE87400C73C58 /* _MTReturnVisit.m */,
+				907D361B124AE87500C73C58 /* _MTSettings.m */,
+				907D361D124AE87500C73C58 /* _MTStatisticsAdjustment.m */,
+				907D361F124AE87600C73C58 /* _MTTerritory.m */,
+				907D3621124AE87600C73C58 /* _MTTerritoryHouse.m */,
+				907D3623124AE87700C73C58 /* _MTTerritoryHouseAttempt.m */,
+				907D3625124AE87800C73C58 /* _MTTerritoryStreet.m */,
+				907D3627124AE87800C73C58 /* _MTTimeEntry.m */,
+				907D3629124AE87900C73C58 /* _MTTimeType.m */,
+				907D362B124AE87900C73C58 /* _MTUser.m */,
+				907D362D124AE87A00C73C58 /* _MTAdditionalInformation.h */,
+				907D362E124AE87A00C73C58 /* _MTAdditionalInformationType.h */,
+				907D362F124AE87A00C73C58 /* _MTBulkPlacement.h */,
+				907D3630124AE87B00C73C58 /* _MTCall.h */,
+				907D3631124AE87B00C73C58 /* _MTMultipleChoice.h */,
+				907D3632124AE87B00C73C58 /* _MTPresentation.h */,
+				907D3633124AE87C00C73C58 /* _MTPublication.h */,
+				907D3634124AE87C00C73C58 /* _MTReturnVisit.h */,
+				907D3635124AE87D00C73C58 /* _MTSettings.h */,
+				907D3636124AE87D00C73C58 /* _MTStatisticsAdjustment.h */,
+				907D3637124AE87E00C73C58 /* _MTTerritory.h */,
+				907D3638124AE87E00C73C58 /* _MTTerritoryHouse.h */,
+				907D3639124AE87E00C73C58 /* _MTTerritoryHouseAttempt.h */,
+				907D363A124AE87F00C73C58 /* _MTTerritoryStreet.h */,
+				907D363B124AE87F00C73C58 /* _MTTimeEntry.h */,
+				907D363C124AE88000C73C58 /* _MTTimeType.h */,
+				907D363D124AE88000C73C58 /* _MTUser.h */,
 			);
 			path = MyTime;
 			sourceTree = "<group>";
@@ -1453,41 +1453,41 @@
 				90FD7BBE12272FED00660538 /* MyTime.xcdatamodeld in Sources */,
 				909902F1122C432200545B78 /* MBProgressHUD.m in Sources */,
 				90E8579C1235A38000CD3DBA /* MyTime.xcdatamodel in Sources */,
-				903DD08E12447DAA00810586 /* MTAdditionalInformation.m in Sources */,
-				903DD09012447DAB00810586 /* MTAdditionalInformationType.m in Sources */,
-				903DD09212447DAB00810586 /* MTBulkPlacement.m in Sources */,
-				903DD09412447DAC00810586 /* MTCall.m in Sources */,
-				903DD09612447DAC00810586 /* MTMultipleChoice.m in Sources */,
-				903DD09812447DAD00810586 /* MTPresentation.m in Sources */,
-				903DD09A12447DAD00810586 /* MTPublication.m in Sources */,
-				903DD09C12447DAD00810586 /* MTReturnVisit.m in Sources */,
-				903DD09E12447DAE00810586 /* MTSettings.m in Sources */,
-				903DD0A012447DAE00810586 /* MTStatisticsAdjustment.m in Sources */,
-				903DD0A212447DAF00810586 /* MTTerritory.m in Sources */,
-				903DD0A412447DB000810586 /* MTTerritoryHouse.m in Sources */,
-				903DD0A612447DB000810586 /* MTTerritoryHouseAttempt.m in Sources */,
-				903DD0A812447DB100810586 /* MTTerritoryStreet.m in Sources */,
-				903DD0AA12447DB100810586 /* MTTimeEntry.m in Sources */,
-				903DD0AC12447DB200810586 /* MTTimeType.m in Sources */,
-				903DD0AE12447DB200810586 /* MTUser.m in Sources */,
-				903DD0C112447DB800810586 /* _MTAdditionalInformation.m in Sources */,
-				903DD0C312447DB800810586 /* _MTAdditionalInformationType.m in Sources */,
-				903DD0C512447DB900810586 /* _MTBulkPlacement.m in Sources */,
-				903DD0C712447DB900810586 /* _MTCall.m in Sources */,
-				903DD0C912447DBA00810586 /* _MTMultipleChoice.m in Sources */,
-				903DD0CB12447DBA00810586 /* _MTPresentation.m in Sources */,
-				903DD0CD12447DBB00810586 /* _MTPublication.m in Sources */,
-				903DD0CF12447DBB00810586 /* _MTReturnVisit.m in Sources */,
-				903DD0D112447DBC00810586 /* _MTSettings.m in Sources */,
-				903DD0D312447DBC00810586 /* _MTStatisticsAdjustment.m in Sources */,
-				903DD0D512447DBD00810586 /* _MTTerritory.m in Sources */,
-				903DD0D712447DBD00810586 /* _MTTerritoryHouse.m in Sources */,
-				903DD0D912447DBE00810586 /* _MTTerritoryHouseAttempt.m in Sources */,
-				903DD0DB12447DBE00810586 /* _MTTerritoryStreet.m in Sources */,
-				903DD0DD12447DBF00810586 /* _MTTimeEntry.m in Sources */,
-				903DD0DF12447DBF00810586 /* _MTTimeType.m in Sources */,
-				903DD0E112447DC000810586 /* _MTUser.m in Sources */,
 				90CCEEDF12451813003A3367 /* NSString+PriddySoftware.m in Sources */,
+				907D35D9124AE86200C73C58 /* MTAdditionalInformation.m in Sources */,
+				907D35DB124AE86200C73C58 /* MTAdditionalInformationType.m in Sources */,
+				907D35DD124AE86300C73C58 /* MTBulkPlacement.m in Sources */,
+				907D35DF124AE86300C73C58 /* MTCall.m in Sources */,
+				907D35E1124AE86400C73C58 /* MTMultipleChoice.m in Sources */,
+				907D35E3124AE86400C73C58 /* MTPresentation.m in Sources */,
+				907D35E5124AE86500C73C58 /* MTPublication.m in Sources */,
+				907D35E7124AE86500C73C58 /* MTReturnVisit.m in Sources */,
+				907D35E9124AE86600C73C58 /* MTSettings.m in Sources */,
+				907D35EB124AE86700C73C58 /* MTStatisticsAdjustment.m in Sources */,
+				907D35ED124AE86700C73C58 /* MTTerritory.m in Sources */,
+				907D35EF124AE86800C73C58 /* MTTerritoryHouse.m in Sources */,
+				907D35F1124AE86800C73C58 /* MTTerritoryHouseAttempt.m in Sources */,
+				907D35F3124AE86900C73C58 /* MTTerritoryStreet.m in Sources */,
+				907D35F5124AE86900C73C58 /* MTTimeEntry.m in Sources */,
+				907D35F7124AE86A00C73C58 /* MTTimeType.m in Sources */,
+				907D35F9124AE86A00C73C58 /* MTUser.m in Sources */,
+				907D360C124AE87100C73C58 /* _MTAdditionalInformation.m in Sources */,
+				907D360E124AE87200C73C58 /* _MTAdditionalInformationType.m in Sources */,
+				907D3610124AE87200C73C58 /* _MTBulkPlacement.m in Sources */,
+				907D3612124AE87300C73C58 /* _MTCall.m in Sources */,
+				907D3614124AE87300C73C58 /* _MTMultipleChoice.m in Sources */,
+				907D3616124AE87400C73C58 /* _MTPresentation.m in Sources */,
+				907D3618124AE87400C73C58 /* _MTPublication.m in Sources */,
+				907D361A124AE87500C73C58 /* _MTReturnVisit.m in Sources */,
+				907D361C124AE87500C73C58 /* _MTSettings.m in Sources */,
+				907D361E124AE87600C73C58 /* _MTStatisticsAdjustment.m in Sources */,
+				907D3620124AE87600C73C58 /* _MTTerritory.m in Sources */,
+				907D3622124AE87700C73C58 /* _MTTerritoryHouse.m in Sources */,
+				907D3624124AE87700C73C58 /* _MTTerritoryHouseAttempt.m in Sources */,
+				907D3626124AE87800C73C58 /* _MTTerritoryStreet.m in Sources */,
+				907D3628124AE87800C73C58 /* _MTTimeEntry.m in Sources */,
+				907D362A124AE87900C73C58 /* _MTTimeType.m in Sources */,
+				907D362C124AE87900C73C58 /* _MTUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1705,7 +1705,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
@@ -1715,7 +1715,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EA93D52C-EF0D-402A-9E99-E89AB3EC457A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "056CCFA1-1F02-4E6A-8F22-EEABF68AE0F9";
 				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};

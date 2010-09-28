@@ -17,6 +17,7 @@
 #import "PSLocalization.h"
 #import "PSUrlString.h"
 #import "NSData+PSCompress.h"
+#import "MetadataCustomViewController.h"
 
 static Settings *instance = nil;
 
@@ -416,6 +417,20 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 	top = nil;
 	bottom = nil;
 	
+	NSString *latLong = [call objectForKey:CallLattitudeLongitude];
+	if(latLong != nil && ![latLong isEqualToString:@"nil"])
+	{
+		NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+		if(stringArray.count == 2)
+		{
+			[string appendFormat:@"%@, %@<br>\n", [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:0]], [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:1]]];
+		}
+	}
+	NSString *lookupType = [call objectForKey:CallLocationType];
+	if(lookupType == nil)
+		lookupType = CallLocationTypeGoogleMaps;
+	[string appendFormat:@"%@<br>\n", [[NSBundle mainBundle] localizedStringForKey:lookupType value:lookupType table:nil]];
+	
 	// Add Metadata
 	// they had an array of publications, lets check them too
 	NSArray *metadata = [[call objectForKey:CallMetadata] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:CallMetadataName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
@@ -477,7 +492,7 @@ NSString *emailFormattedStringForSettings()
 	NSDictionary *settings = [[Settings sharedInstance] settings];
 	
 	NSArray *allUserSettings = [settings objectForKey:SettingsMultipleUsers];
-	for(NSDictionary *userSettings in [allUserSettings sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:SettingsMultipleUsersName ascending:YES]]])
+	for(NSDictionary *userSettings in [allUserSettings sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:SettingsMultipleUsersName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
 	{
 		// the specific user
 		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]]];
@@ -559,6 +574,49 @@ NSString *emailFormattedStringForSettings()
 																															  [NSSortDescriptor sortDescriptorWithKey:NotAtHomeTerritoryState ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]])
 		{
 			[string appendString:emailFormattedStringForNotAtHomeTerritory(territory)];
+		}
+		
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Additional Information", @"Title for email section for the \"Additional Information\" info")];
+		NSString *keys[2] = {SettingsPreferredMetadata, SettingsOtherMetadata};
+		NSString *names[2];
+		names[0] = NSLocalizedString(@"Information Always Shown", @"Title in the 'Additional Information' for the entries that will always show in every call");
+		names[1] = NSLocalizedString(@"Other Information", @"Title in the 'Additional Information' for the entries that can be added per call");
+		
+		for(int i = 0; i < 2; i++)
+		{
+			[string appendFormat:@"  <h3>%@:</h3>\n", names[i]];
+			for(NSDictionary *type in [[userSettings objectForKey:keys[i]] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:SettingsMetadataName ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
+			{
+				NSString *localizedNameForMetadataType(MetadataType type);
+				int typeValue = [[type objectForKey:SettingsMetadataType] intValue];
+				[string appendFormat:@"    %@:%@<br>\n", [type objectForKey:SettingsMetadataName], localizedNameForMetadataType(typeValue)];
+				if(typeValue == CHOICE)
+				{
+					[string appendString:@"    <ul>\n"];
+					for(NSString *choice in [[type objectForKey:SettingsMetadataData] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)])
+					{
+						[string appendFormat:@"      <li>%@</li>\n", choice];
+					}
+					[string appendString:@"    </ul>\n"];
+				}
+			}	
+		}		
+		
+		// STATISTICS ADJUSTMENTS
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Statistics Adjustments", @"Title for email section for the data that the user changed in the statistics view")];
+		NSDictionary *statisticsAdjustments = [userSettings objectForKey:SettingsStatisticsAdjustments]; 
+		NSArray *statisticsAdjustmentCategories = [[statisticsAdjustments allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		for(NSDictionary *adjustmentCategory in statisticsAdjustmentCategories)
+		{
+			NSDictionary *adjustments = [statisticsAdjustments objectForKey:adjustmentCategory];
+			NSArray *adjustmentKeys = [[adjustments allKeys] sortedArrayUsingSelector:@selector(compare:)];
+			for(NSString *timestamp in adjustmentKeys)
+			{
+				NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+				[dateComponents setMonth:([timestamp intValue] % 99)];
+				[dateComponents setYear:([timestamp intValue] / 100)];
+				[string appendFormat:@"  %@: %@: %@<br>\n", adjustmentCategory, [dateComponents date], [adjustments objectForKey:timestamp]];
+			}
 		}
 	}	
 	[string appendString:@"</body></html>"];

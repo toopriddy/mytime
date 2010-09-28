@@ -54,25 +54,6 @@
 
 
 
-- (double)longitudeValue {
-	NSNumber *result = [self longitude];
-	return [result doubleValue];
-}
-
-- (void)setLongitudeValue:(double)value_ {
-	[self setLongitude:[NSNumber numberWithDouble:value_]];
-}
-
-- (double)primitiveLongitudeValue {
-	NSNumber *result = [self primitiveLongitude];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveLongitudeValue:(double)value_ {
-	[self setPrimitiveLongitude:[NSNumber numberWithDouble:value_]];
-}
-
-
 
 
 
@@ -146,49 +127,11 @@
 
 
 
-- (double)lattitudeValue {
-	NSNumber *result = [self lattitude];
-	return [result doubleValue];
-}
-
-- (void)setLattitudeValue:(double)value_ {
-	[self setLattitude:[NSNumber numberWithDouble:value_]];
-}
-
-- (double)primitiveLattitudeValue {
-	NSNumber *result = [self primitiveLattitude];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveLattitudeValue:(double)value_ {
-	[self setPrimitiveLattitude:[NSNumber numberWithDouble:value_]];
-}
-
-
 
 
 
 @dynamic locationLookupType;
 
-
-
-- (short)locationLookupTypeValue {
-	NSNumber *result = [self locationLookupType];
-	return [result shortValue];
-}
-
-- (void)setLocationLookupTypeValue:(short)value_ {
-	[self setLocationLookupType:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveLocationLookupTypeValue {
-	NSNumber *result = [self primitiveLocationLookupType];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveLocationLookupTypeValue:(short)value_ {
-	[self setPrimitiveLocationLookupType:[NSNumber numberWithShort:value_]];
-}
 
 
 

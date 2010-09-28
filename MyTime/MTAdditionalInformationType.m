@@ -15,7 +15,7 @@
 	return nil;
 }
 
-+ (MTAdditionalInformationType *)insertAdditionalInformationType:(int)type name:(NSString *)name data:(NSData *)data user:(MTUser *)user
++ (MTAdditionalInformationType *)insertAdditionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user
 {
 	double order = 0;
 	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
@@ -31,7 +31,6 @@
 	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:managedObjectContext];
 	mtAdditionalInformationType.typeValue = type;
 	mtAdditionalInformationType.name = name;
-	mtAdditionalInformationType.name = [[data copy] autorelease];
 	mtAdditionalInformationType.orderValue = order;
 	mtAdditionalInformationType.alwaysShownValue = NO;
 	mtAdditionalInformationType.user = user;

@@ -461,7 +461,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 				notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 				notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
 				[string appendString:notes];
-				[string appendFormat:@"<br>"];
+				[string appendFormat:@"<br>\n"];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
 			for(MTTerritoryHouseAttempt *attempt in house.attempts)
@@ -506,6 +506,13 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 	[bottom release];
 	top = nil;
 	bottom = nil;
+	
+	if(call.locationAquiredValue)
+	{
+		[string appendFormat:@"%@, %@<br>\n", call.lattitude, call.longitude];
+	}
+	NSString *lookupType = call.locationLookupType;
+	[string appendFormat:@"%@<br>\n", [[NSBundle mainBundle] localizedStringForKey:lookupType value:lookupType table:nil]];
 	
 	// Add Metadata
 	// they had an array of publications, lets check them too
@@ -689,7 +696,59 @@ NSString *emailFormattedStringForCoreDataSettings()
 		{
 			[string appendString:emailFormattedStringForCoreDataNotAtHomeTerritory(territory)];
 		}
-	}	
+
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Additional Information", @"Title for email section for the \"Additional Information\" info")];
+
+		NSString *names[2];
+		names[0] = NSLocalizedString(@"Information Always Shown", @"Title in the 'Additional Information' for the entries that will always show in every call");
+		names[1] = NSLocalizedString(@"Other Information", @"Title in the 'Additional Information' for the entries that can be added per call");
+		
+		for(int i = 0; i < 2; i++)
+		{
+			[string appendFormat:@"  <h3>%@:</h3>\n", names[i]];
+			NSArray *additionalInformation = [managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+																		   propertiesToFetch:nil 
+																		 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+																							  [NSSortDescriptor sortDescriptorWithKey:@"type" ascending:YES], nil]
+																			   withPredicate:(i == 0 ? @"user == %@ AND alwaysShown == YES AND hidden == NO" : @"user == %@ AND alwaysShown == NO AND hidden == NO"), user];
+			
+			for(MTAdditionalInformationType *type in additionalInformation)
+			{
+				NSString *localizedNameForMetadataType(MetadataType type);
+				
+				[string appendFormat:@"    %@:%@<br>\n", type.name, localizedNameForMetadataType(type.typeValue)];
+				if(type.typeValue == CHOICE)
+				{
+					NSArray *multipleChoices = [managedObjectContext fetchObjectsForEntityName:[MTMultipleChoice entityName]
+																			 propertiesToFetch:nil 
+																		   withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]
+																				 withPredicate:@"type == %@", type];
+					[string appendString:@"    <ul>\n"];
+					for(MTMultipleChoice *choice in multipleChoices)
+					{
+						[string appendFormat:@"      <li>%@</li>\n", choice.name];
+					}
+					[string appendString:@"    </ul>\n"];
+				}
+			}	
+		}	
+		
+		// STATISTICS ADJUSTMENTS
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Statistics Adjustments", @"Title for email section for the data that the user changed in the statistics view")];
+		NSArray *statisticsAdjustments = [managedObjectContext fetchObjectsForEntityName:[MTStatisticsAdjustment entityName]
+																	   propertiesToFetch:nil 
+																	 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"type" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																						  [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																		   withPredicate:@"user == %@", user];
+		for(MTStatisticsAdjustment *adjustment in statisticsAdjustments)
+		{
+			NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+			[dateComponents setMonth:(adjustment.timestampValue % 99)];
+			[dateComponents setYear:(adjustment.timestampValue / 100)];
+			[string appendFormat:@"  %@: %@: %@<br>\n", adjustment.type, [dateComponents date], adjustment.adjustment];
+		}
+		
+	}
 	[string appendString:@"</body></html>"];
 	
 	return [string autorelease];
@@ -770,9 +829,12 @@ NSString *emailFormattedStringForCoreDataSettings()
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
 	
-		mtUser.publisherType = [user objectForKey:SettingsPublisherType];
-		mtUser.monthDisplayCount = [user objectForKey:SettingsMonthDisplayCount];
-		mtUser.selectedSortByAdditionalInformation = [user objectForKey:SettingsSortedByMetadata];
+		if([user objectForKey:SettingsPublisherType])
+			mtUser.publisherType = [user objectForKey:SettingsPublisherType];
+		if([user objectForKey:SettingsMonthDisplayCount])
+			mtUser.monthDisplayCount = [user objectForKey:SettingsMonthDisplayCount];
+		if([user objectForKey:SettingsSortedByMetadata])
+			mtUser.selectedSortByAdditionalInformation = [user objectForKey:SettingsSortedByMetadata];
 		
 		// METADATA
 		double metadataOrder = 100;
@@ -790,7 +852,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 				}
 			}
 			mtAdditionalInformationType.orderValue = metadataOrder;
-			mtAdditionalInformationType.alwaysShownValue = YES;
+			mtAdditionalInformationType.alwaysShownValue = NO;
 			mtAdditionalInformationType.name = [metadata objectForKey:SettingsMetadataName];
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
@@ -799,6 +861,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 		for(NSDictionary *metadata in [user objectForKey:SettingsPreferredMetadata])
 		{
 			MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:self.managedObjectContext];
+			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
 			if(mtAdditionalInformationType.typeValue == CHOICE)
 			{
 				for(NSString *choice in [metadata objectForKey:SettingsMetadataData])
@@ -808,9 +871,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 					mtChoice.name = choice;
 				}
 			}
-			mtAdditionalInformationType.typeValue = [[metadata objectForKey:SettingsMetadataType] intValue];
 			mtAdditionalInformationType.orderValue = metadataOrder;
-			mtAdditionalInformationType.alwaysShownValue = NO;
+			mtAdditionalInformationType.alwaysShownValue = YES;
 			mtAdditionalInformationType.name = [metadata objectForKey:SettingsMetadataName];
 			mtAdditionalInformationType.user = mtUser;
 			metadataOrder += 100;
@@ -884,8 +946,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 					NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 					if(stringArray.count == 2)
 					{
-						mtCall.lattitudeValue = [[stringArray objectAtIndex:0] doubleValue];
-						mtCall.longitudeValue = [[stringArray objectAtIndex:1] doubleValue];
+						mtCall.lattitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:0]];
+						mtCall.longitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:1]];
 						mtCall.locationAquisitionAttemptedValue = YES;
 						mtCall.locationAquiredValue = YES;
 					}
@@ -897,7 +959,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 					}
 
 				}
-				mtCall.locationLookupTypeValue = [[call objectForKey:CallLocationType] intValue];
+				if([call objectForKey:CallLocationType])
+					mtCall.locationLookupType = [call objectForKey:CallLocationType];
 				
 				// RETURN VISITS
 				for(NSDictionary *returnVisit in [call objectForKey:CallReturnVisits])
@@ -906,7 +969,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 					mtReturnVisit.call = mtCall;
 					mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
 					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
-					mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
+					if([returnVisit objectForKey:CallReturnVisitType])
+						mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
 					// PUBLICATIONS
 					for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
 					{
@@ -927,11 +991,6 @@ NSString *emailFormattedStringForCoreDataSettings()
 				{
 					MTAdditionalInformation *mtAdditionalInformation = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
 
-					if([additionalInformation objectForKey:CallMetadataData])
-					{
-						NSLog(@"here");
-					}
-					
 					mtAdditionalInformation.call = mtCall;
 					MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
 																																 name:[additionalInformation objectForKey:CallMetadataName] 
@@ -941,8 +1000,17 @@ NSString *emailFormattedStringForCoreDataSettings()
 						// we need to create one of these... this happens when the user deleted the additional information but calls still use it
 						mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationType:[[additionalInformation objectForKey:SettingsMetadataType] intValue] 
 																											  name:[additionalInformation objectForKey:SettingsMetadataName]
-																											  data:[additionalInformation objectForKey:SettingsMetadataData] 
 																											  user:mtUser];
+						mtAdditionalInformationType.hiddenValue = YES;
+						if(mtAdditionalInformationType.typeValue == CHOICE)
+						{
+							for(NSString *choice in [additionalInformation objectForKey:SettingsMetadataData])
+							{
+								MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice insertInManagedObjectContext:self.managedObjectContext];
+								mtMultipleChoice.name = choice;
+								mtMultipleChoice.type = mtAdditionalInformationType;
+							}
+						}
 					}
 					mtAdditionalInformation.type = mtAdditionalInformationType;
 
@@ -954,9 +1022,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 						case EMAIL:
 						case URL:
 						case STRING:
-						case CHOICE:
 						case NOTES:
-							// data is not used
+						case CHOICE:
 							break;
 						case SWITCH:
 							mtAdditionalInformation.booleanValue = [[additionalInformation objectForKey:CallMetadataData] boolValue];
