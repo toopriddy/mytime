@@ -50,11 +50,7 @@
 
 
 
-@property (nonatomic, retain) NSNumber *longitude;
-
-@property double longitudeValue;
-- (double)longitudeValue;
-- (void)setLongitudeValue:(double)value_;
+@property (nonatomic, retain) NSDecimalNumber *longitude;
 
 //- (BOOL)validateLongitude:(id*)value_ error:(NSError**)error_;
 
@@ -92,21 +88,13 @@
 
 
 
-@property (nonatomic, retain) NSNumber *lattitude;
-
-@property double lattitudeValue;
-- (double)lattitudeValue;
-- (void)setLattitudeValue:(double)value_;
+@property (nonatomic, retain) NSDecimalNumber *lattitude;
 
 //- (BOOL)validateLattitude:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSNumber *locationLookupType;
-
-@property short locationLookupTypeValue;
-- (short)locationLookupTypeValue;
-- (void)setLocationLookupTypeValue:(short)value_;
+@property (nonatomic, retain) NSString *locationLookupType;
 
 //- (BOOL)validateLocationLookupType:(id*)value_ error:(NSError**)error_;
 
@@ -174,11 +162,8 @@
 - (void)setPrimitiveStreet:(NSString*)value;
 
 
-- (NSNumber*)primitiveLongitude;
-- (void)setPrimitiveLongitude:(NSNumber*)value;
-
-- (double)primitiveLongitudeValue;
-- (void)setPrimitiveLongitudeValue:(double)value_;
+- (NSDecimalNumber*)primitiveLongitude;
+- (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
 
 
 - (NSString*)primitiveState;
@@ -203,18 +188,12 @@
 - (void)setPrimitiveDeletedValue:(BOOL)value_;
 
 
-- (NSNumber*)primitiveLattitude;
-- (void)setPrimitiveLattitude:(NSNumber*)value;
-
-- (double)primitiveLattitudeValue;
-- (void)setPrimitiveLattitudeValue:(double)value_;
+- (NSDecimalNumber*)primitiveLattitude;
+- (void)setPrimitiveLattitude:(NSDecimalNumber*)value;
 
 
-- (NSNumber*)primitiveLocationLookupType;
-- (void)setPrimitiveLocationLookupType:(NSNumber*)value;
-
-- (short)primitiveLocationLookupTypeValue;
-- (void)setPrimitiveLocationLookupTypeValue:(short)value_;
+- (NSString*)primitiveLocationLookupType;
+- (void)setPrimitiveLocationLookupType:(NSString*)value;
 
 
 - (NSNumber*)primitiveLocationAquired;

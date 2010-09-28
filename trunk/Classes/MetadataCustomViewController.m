@@ -37,6 +37,18 @@ static MetadataInformation commonInformation[] = {
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
+NSString *localizedNameForMetadataType(MetadataType type)
+{
+	for(int i = 0; i < LAST_METADATA_TYPE; i++)
+	{
+		if(commonInformation[i].type == type)
+		{
+			return [[NSBundle mainBundle] localizedStringForKey:commonInformation[i].name value:commonInformation[i].name table:nil];
+		}
+	}
+	return nil;		   
+}
+
 @interface MetadataCustomViewController ()
 @property (nonatomic, assign) BOOL nameNeedsFocus;
 @property (nonatomic, assign) int selected;

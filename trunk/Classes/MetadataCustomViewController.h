@@ -26,7 +26,8 @@ typedef enum {
 	DATE,
 	URL,
 	CHOICE,
-	SWITCH
+	SWITCH,
+	LAST_METADATA_TYPE
 } MetadataType;
 
 typedef struct 
@@ -34,6 +35,8 @@ typedef struct
 	NSString *name;
 	MetadataType type;
 } MetadataInformation;
+
+NSString *localizedNameForMetadataType(MetadataType type);
 
 @class MetadataCustomViewController;
 
