@@ -871,6 +871,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		self.delegate.forceReload = YES;
 	}
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)multipleChoiceMetadataViewControllerDone:(MultipleChoiceMetadataViewController *)metadataCustomViewController

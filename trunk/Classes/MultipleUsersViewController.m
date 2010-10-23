@@ -15,29 +15,27 @@
 
 #import "MultipleUsersViewController.h"
 #import "TableViewCellController.h"
-#import "Settings.h"
+#import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
 #import "MetadataEditorViewController.h"
 #import "MetadataCustomViewController.h"
 #import "PSLocalization.h"
 
-@interface MultipleUsersCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
+@interface MultipleUsersCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate, UIActionSheetDelegate>
 {
 	MultipleUsersViewController *delegate;
 }
 @property (nonatomic, assign) MultipleUsersViewController *delegate;
+@property (nonatomic, retain) MTUser *user;
 @end
 @implementation MultipleUsersCellController
 @synthesize delegate;
+@synthesize user;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSMutableDictionary *user = [users objectAtIndex:indexPath.row];
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-	NSString *name = [user objectForKey:SettingsMultipleUsersName];
-	
 	NSString *commonIdentifier = @"MultipleUserCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
 	if(cell == nil)
@@ -45,10 +43,10 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
-	cell.textLabel.text = name;
+	cell.textLabel.text = self.user.name;
 	
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	cell.accessoryType = [currentUser isEqualToString:name] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = [[[MTUser currentUser] name] isEqualToString:self.user.name] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;
 }
@@ -58,45 +56,121 @@
 {
 	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
-		[self.delegate deleteUser:indexPath.row];
+		UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Are you sure that you want to DELETE ALL USER DATA for %@?\n\nYou can not recover from this action, you will DELETE all of your calls, hours, and other statistics for this user. Are you really sure you want to do this?", @"Multiple Users: question asked when the user wants to delete a user's data"), self.user.name]
+																 delegate:self
+														cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+												   destructiveButtonTitle:NSLocalizedString(@"Delete All Data", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
+														otherButtonTitles:nil] autorelease];
+		
+		alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+		[alertSheet showInView:self.delegate.view];
 	}
 }
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[self.delegate renameUser:metadataEditorViewController.tag toName:metadataEditorViewController.value];
+	NSString *newName = metadataEditorViewController.value;
+	NSString *oldName = self.user.name;
+	NSManagedObjectContext *managedObjectContext = self.delegate.managedObjectContext;
+	
+	if([oldName isEqualToString:newName])
+	{
+		[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+		return;
+	}
+	
+	if(newName.length == 0)
+	{
+		// we need to make sure that they entered in a name
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = NSLocalizedString(@"Please enter a name since you have more than one user of MyTime", @"Multiple Users: This message is displayed when fails to enter a username when there is more than one user in the system");
+		[alertSheet show];
+		return;
+	}
+	if([[managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+									  propertiesToFetch:nil 
+									withSortDescriptors:nil
+										  withPredicate:@"name == %@", newName] count])
+	{
+		// need to popup a warning that someone is already named that name
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
+		[alertSheet show];
+		return;
+	}
+	MTUser *currentUser = [MTUser currentUser];
+	if([currentUser.name isEqualToString:oldName])
+	{
+		[MTUser setCurrentUser:self.user];
+	}
+	self.user.name = newName;
+	
+	NSError *error = nil;
+	if (![managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	self.delegate.forceReload = YES;
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
+
+
+
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSMutableDictionary *user = [users objectAtIndex:indexPath.row];
-	NSString *username = [user objectForKey:SettingsMultipleUsersName];
 	if(tableView.editing)
 	{
-		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Your Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:username value:username] autorelease];
+		MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Your Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:self.user.name value:self.user.name] autorelease];
 		[p setAutocapitalizationType:UITextAutocapitalizationTypeWords];
 		p.delegate = self;
-		p.tag = indexPath.row;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
 		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
-		[self.delegate changeToUser:indexPath.row];
+		[MTUser setCurrentUser:self.user];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 		[self.delegate updateWithoutReload];
 		if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(multipleUsersViewController:selectedUser:)])
 		{
-			[self.delegate.delegate multipleUsersViewController:self.delegate selectedUser:username];
+			[self.delegate.delegate multipleUsersViewController:self.delegate selectedUser:self.user];
 		}
 		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
 }
 
-// Editing
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
+{
+	switch(button)
+	{
+			//delete
+		case 0:
+		{
+			NSString *oldName = self.user.name;
+			
+			[self.delegate.managedObjectContext deleteObject:self.user];
+			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
+			if([[[MTUser currentUser] name] isEqualToString:oldName])
+			{
+				[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+			}
+			NSError *error = nil;
+			if (![self.delegate.managedObjectContext save:&error]) 
+			{
+				[NSManagedObjectContext presentErrorDialog:error];
+			}
+			break;
+		}
+			//cancel
+		case 1:
+			[self.delegate.tableView reloadData];
+			break;
+	}
+}		
 
 @end
 
@@ -140,7 +214,10 @@
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[self.delegate addUser:metadataEditorViewController.value];
+	if([self.delegate addUser:metadataEditorViewController.value])
+	{
+		[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 
@@ -153,6 +230,45 @@
 	
 	[[self.delegate navigationController] pushViewController:p animated:YES];		
 	[self.delegate retainObject:self whileViewControllerIsManaged:p];
+}
+
+- (BOOL)addUser:(NSString *)name
+{
+	NSManagedObjectContext *managedObjectContext = self.delegate.managedObjectContext;
+	if([[managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+									  propertiesToFetch:nil 
+									withSortDescriptors:nil
+										  withPredicate:@"name == %@", name] count])
+	{
+		// need to popup a warning that someone is already named that name
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
+		[alertSheet show];
+		return NO;
+	}
+	MTUser *user = [MTUser insertInManagedObjectContext:managedObjectContext];
+	user.name = name;
+
+	NSError *error = nil;
+	if (![managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+
+	
+	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
+												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+													   withPredicate:nil];
+	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];
+	cellController.delegate = self.delegate;
+	cellController.user = user;
+	[[[self.delegate.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:[users indexOfObject:user]];
+	
+	
+	[self.delegate updateWithoutReload];
+	return YES;
 }
 
 
@@ -178,6 +294,7 @@
 
 @implementation MultipleUsersViewController
 @synthesize delegate;
+@synthesize managedObjectContext;
 
 - (id) init;
 {
@@ -202,148 +319,6 @@
 	[super dealloc];
 }
 
-- (BOOL)renameUser:(int)index toName:(NSString *)newName
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSString *oldName = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index] objectForKey:SettingsMultipleUsersName];
-
-	if([oldName isEqualToString:newName])
-	{
-		return YES;
-	}
-	
-	if(newName.length == 0 && users.count > 1)
-	{
-		// we need to make sure that they entered in a name
-		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-		alertSheet.title = NSLocalizedString(@"Please enter a name since you have more than one user of MyTime", @"Multiple Users: This message is displayed when fails to enter a username when there is more than one user in the system");
-		[alertSheet show];
-		return NO;
-	}
-	for(NSMutableDictionary *user in users)
-	{
-		if([newName isEqualToString:[user objectForKey:SettingsMultipleUsersName]])
-		{
-			// need to popup a warning that someone is already named that name
-			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
-			[alertSheet show];
-			return NO;
-		}
-	}
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-	if([currentUser isEqualToString:oldName])
-	{
-		[[[Settings sharedInstance] settings] setObject:newName forKey:SettingsMultipleUsersCurrentUser];
-	}
-	NSMutableDictionary *user = [[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index];
-	[user setObject:newName forKey:SettingsMultipleUsersName];
-
-	[[Settings sharedInstance] saveData];
-	return YES;
-}
-
-- (BOOL)addUser:(NSString *)name
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-
-	for(NSMutableDictionary *user in users)
-	{
-		if([name isEqualToString:[user objectForKey:SettingsMultipleUsersName]])
-		{
-			// need to popup a warning that someone is already named that name
-			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-			alertSheet.title = NSLocalizedString(@"There is already a user with this name", @"Multiple Users: This message is displayed when the user is renaming their name and it matches another user's name");
-			[alertSheet show];
-			return NO;
-		}
-	}
-	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];
-	cellController.delegate = self;
-	[[[self.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:users.count];
-	[users addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:name, SettingsMultipleUsersName, nil]];
-	[[Settings sharedInstance] saveData];
-
-
-	[self updateWithoutReload];
-	return YES;
-}
-
-- (void)deleteUser:(int)index
-{
-	NSString *name = [[[[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers] objectAtIndex:index] objectForKey:SettingsMultipleUsersName];
-	UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Are you sure that you want to DELETE ALL USER DATA for %@?\n\nYou can not recover from this action, you will DELETE all of your calls, hours, and other statistics for this user. Are you really sure you want to do this?", @"Multiple Users: question asked when the user wants to delete a user's data"), name]
-															 delegate:self
-												    cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
-											   destructiveButtonTitle:NSLocalizedString(@"Delete All Data", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
-												    otherButtonTitles:nil] autorelease];
-	
-	alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-	alertSheet.tag = index;
-	[alertSheet showInView:self.view];
-}
-
-- (void)initalizeDefaultUser
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	if(users == nil)
-	{
-		users = [NSMutableArray array];
-	}
-	NSString *username = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
-	[users addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:username, SettingsMultipleUsersName, nil]];
-	
-	[[[Settings sharedInstance] settings] setObject:users forKey:SettingsMultipleUsers];
-	[[[Settings sharedInstance] settings] setObject:username forKey:SettingsMultipleUsersCurrentUser];
-	
-	[self updateAndReload];
-}
-
-- (void)changeToUser:(int)index
-{
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	NSMutableDictionary *user = [users objectAtIndex:index];
-	
-	[[Settings sharedInstance] changeSettingsToUser:[user objectForKey:SettingsMultipleUsersName] save:YES];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
-{
-	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
-	switch(button)
-	{
-		//delete
-		case 0:
-		{
-			NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-			NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
-			NSMutableDictionary *user = [users objectAtIndex:actionSheet.tag];
-			BOOL changeUser = [currentUser isEqualToString:[user objectForKey:SettingsMultipleUsersName]];
-			
-			[users removeObjectAtIndex:actionSheet.tag];
-			[self deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
-			if(users.count == 0)
-			{
-				[self initalizeDefaultUser];
-			}
-			if(changeUser)
-			{
-				[self changeToUser:0];
-				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-			}
-			[[Settings sharedInstance] saveData];
-			break;
-		}
-		//cancel
-		case 1:
-			[self.tableView reloadData];
-			break;
-	}
-}		
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return(YES);
@@ -351,8 +326,6 @@
 
 - (void)navigationControlEdit:(id)sender 
 {
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
@@ -369,8 +342,6 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
@@ -387,11 +358,6 @@
 
 - (void)loadView 
 {
-	NSMutableArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-	if(users == nil)
-	{
-		[self initalizeDefaultUser];
-	}
 	[super loadView];
 
 	[self updateAndReload];
@@ -403,16 +369,20 @@
 {
 	[super constructSectionControllers];
 
-	NSArray *users = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsers];
-
+	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
+												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+													   withPredicate:nil];
+	
 	GenericTableViewSectionController *sectionController = [[MultipleUsersSectionController alloc] init];
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 
-	for(NSMutableDictionary *entry in users)
+	for(MTUser *user in users)
 	{
 		MultipleUsersCellController *cellController = [[MultipleUsersCellController alloc] init];
 		cellController.delegate = self;
+		cellController.user = user;
 		[sectionController.cellControllers addObject:cellController];
 		[cellController release];
 	}
@@ -424,6 +394,5 @@
 	[addCellController release];
 	
 }
-
 
 @end

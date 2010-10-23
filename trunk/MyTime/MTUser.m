@@ -2,6 +2,9 @@
 #import "MTSettings.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "Settings.h"
+
+NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 
 @implementation MTUser
 
@@ -53,6 +56,20 @@
 		}
 	}
 	return user;
+}
+
++ (void)setCurrentUser:(MTUser *)user
+{
+	MTSettings *settings = [MTSettings settings];
+	settings.currentUser = user.name;
+
+	NSError *error = nil;
+	if (![user.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
 }
 
 + (MTUser *)currentUser

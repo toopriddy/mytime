@@ -286,6 +286,8 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	{
 		self.delegate.forceReload = YES;
 	}
+
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -420,7 +422,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	// reload the table
 	[self.delegate updateWithoutReload];
 	
-	[self.delegate.navigationController popToViewController:self.delegate animated:YES];
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
