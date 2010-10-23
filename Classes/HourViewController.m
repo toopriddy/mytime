@@ -34,10 +34,15 @@
 @synthesize emptyView;
 @synthesize fetchedResultsController = fetchedResultsController_;
 @synthesize managedObjectContext = managedObjectContext_;
-@synthesize type = type_;
+@synthesize typeName = typeName_;
 
 - (void)updateEmptyView
 {
+	if(reloadData_)
+	{
+		reloadData_ = NO;
+		[self.tableView reloadData];
+	}
 	
 	if(self.fetchedResultsController.fetchedObjects.count == 0)
 	{
@@ -65,18 +70,21 @@
 
 - (void)userChanged
 {
+	[type_ release];
+	type_ = nil;
 	[fetchedResultsController_ release];
 	fetchedResultsController_ = nil;
+	reloadData_ = YES;
 }
 
 - (id)initWithTimeTypeName:(NSString *)typeName
 {
 	if ([super init]) 
 	{
-		self.type = [MTTimeType timeTypeWithName:typeName];
+		self.typeName = typeName;
 		self.title = self.type.name;
 		self.tabBarItem.image = [UIImage imageNamed:self.type.imageFileName];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:SettingsNotificationUserChanged object:[Settings sharedInstance]];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
 	return self;
 }
@@ -429,6 +437,14 @@
 }
 
 
+- (MTTimeType *)type
+{
+	if(type_ == nil)
+	{
+		type_ = [[MTTimeType timeTypeWithName:self.typeName] retain];
+	}
+	return [[type_ retain] autorelease];
+}
 
 #pragma mark -
 #pragma mark Fetched results controller
@@ -446,8 +462,7 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"TimeEntry" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
+    [fetchRequest setEntity:[MTTimeEntry entityInManagedObjectContext:self.managedObjectContext]];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"type == %@", self.type]];
     
     // Set the batch size to a suitable number.

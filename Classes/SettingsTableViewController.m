@@ -69,7 +69,7 @@
 	
 	cell.textLabel.text = NSLocalizedString(@"Current User", @"Settings label for the current user");
 
-	NSString *currentUser = [[[Settings sharedInstance] settings] objectForKey:SettingsMultipleUsersCurrentUser];
+	NSString *currentUser = [[MTUser currentUser] name];
 	if(currentUser == nil || currentUser.length == 0)
 	{
 		currentUser = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
@@ -84,11 +84,12 @@
 {
 	MultipleUsersViewController *viewController = [[[MultipleUsersViewController alloc] init] autorelease];
 	viewController.delegate = self;
+	viewController.managedObjectContext = [[[UIApplication sharedApplication] delegate] managedObjectContext];
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
 
-- (void) multipleUsersViewController:(MultipleUsersViewController *)viewController selectedUser:(NSString *)name
+- (void) multipleUsersViewController:(MultipleUsersViewController *)viewController selectedUser:(MTUser *)user
 {
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -309,6 +310,7 @@
 	{
 		self.delegate.forceReload = YES;
 	}
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 @end
 
@@ -537,6 +539,7 @@
 	{
 		self.delegate.forceReload = YES;
 	}
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 @end
 
@@ -592,6 +595,7 @@
 	{
 		self.delegate.forceReload = YES;
 	}
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 }
 @end
 

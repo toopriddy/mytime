@@ -26,6 +26,7 @@
 @private
 	UITableView *tableView_;
 
+	NSString *typeName_;
 	MTTimeType *type_;
 	
 	NSIndexPath *selectedIndexPath;
@@ -33,12 +34,14 @@
 
     NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
+	bool reloadData_;
 }
 
 @property (nonatomic, retain) EmptyListViewController *emptyView;
-@property (nonatomic,retain) UITableView *tableView;
-@property (nonatomic,retain) NSIndexPath *selectedIndexPath;
-@property (nonatomic,retain) MTTimeType *type;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) NSIndexPath *selectedIndexPath;
+@property (nonatomic, retain) NSString *typeName;
+@property (nonatomic, retain, readonly) MTTimeType *type;
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;

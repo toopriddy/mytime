@@ -760,9 +760,11 @@ NSString *emailFormattedStringForCoreDataSettings()
 	NSString *new = emailFormattedStringForCoreDataSettings();
 	if(![old isEqualToString:new])
 	{
-		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
-		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+//		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+//		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 		NSLog(@"Verification Failed");
+
+#warning need to make something that displays to the user a dialog and send an email to me		
 	}
 }
 
@@ -1169,6 +1171,10 @@ NSString *emailFormattedStringForCoreDataSettings()
 		}
 		self.hud.progress = self.hud.progress + 1.0/steps;
 	}
+
+	// make sure the current user is initalized
+	[MTUser currentUser];
+	
 	
 	[[self managedObjectContext] processPendingChanges];
 	[[[self managedObjectContext] undoManager] enableUndoRegistration];

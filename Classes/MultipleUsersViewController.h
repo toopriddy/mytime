@@ -15,21 +15,21 @@
 
 #import <Foundation/Foundation.h>
 #import "GenericTableViewController.h"
+#import <CoreData/CoreData.h>
+#import "MTUser.h"
 
 @class MultipleUsersViewController;
 
 @protocol MultipleUsersViewControllerDelegate
-- (void) multipleUsersViewController:(MultipleUsersViewController *)viewController selectedUser:(NSString *)name;
+- (void) multipleUsersViewController:(MultipleUsersViewController *)viewController selectedUser:(MTUser *)name;
 @end
 
-@interface MultipleUsersViewController : GenericTableViewController <UIActionSheetDelegate>
+@interface MultipleUsersViewController : GenericTableViewController
 {
 	id<NSObject, MultipleUsersViewControllerDelegate> delegate;
+	NSManagedObjectContext *managedObjectContext;
 }
 @property (nonatomic, assign) id<NSObject, MultipleUsersViewControllerDelegate> delegate;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
-- (BOOL)renameUser:(int)index toName:(NSString *)newName;
-- (BOOL)addUser:(NSString *)name;
-- (void)deleteUser:(int)index;
-- (void)changeToUser:(int)index;
 @end
