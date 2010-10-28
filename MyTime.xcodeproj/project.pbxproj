@@ -1367,7 +1367,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E8BEFB51-7051-497B-8DAA-5BEDAEE1625A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "056CCFA1-1F02-4E6A-8F22-EEABF68AE0F9";
 				SDKROOT = iphoneos4.1;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
@@ -1478,7 +1478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (K92W97W2LA)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
@@ -1488,7 +1488,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7F39EFE7-6EE4-447B-81B3-496F8092B698";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BF07ACF7-E1FA-4C6D-A4F1-8077415FDC0D";
 				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
