@@ -168,6 +168,7 @@
 	{
 		[it setController:self];
 	}
+	it.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
 	self.mapView = it;
 	[self.mapView setRegion:MKCoordinateRegionMake(point, MKCoordinateSpanMake(0.001 , 0.001)) animated:YES];
 	self.mapView.delegate = self;
@@ -187,7 +188,7 @@
 	}
 	else
 	{
-		if(defaultPointInitalized)
+		if(!markerMoved)
 		{
 			if(self.marker == nil)
 			{
@@ -221,7 +222,8 @@
     {
         annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID] autorelease];
     }
-    annotationView.animatesDrop = YES;
+    annotationView.animatesDrop = !markerDropped;
+	markerDropped = YES;
     annotationView.annotation = annotation;
 	if([annotationView respondsToSelector:@selector(setDraggable:)])
 	{
@@ -275,11 +277,11 @@
 		
 		MKAnnotationView *annotationView = [self.mapView viewForAnnotation:self.marker];
 		[annotationView setNeedsDisplay];
-		if(!markerMoved && !defaultPointInitalized)
+		if(!markerMoved)
 		{
-			point.latitude = newLocation.coordinate.latitude;
-			point.longitude = newLocation.coordinate.longitude;
-			
+			point = newLocation.coordinate;
+
+			self.marker.coordinate = point;
 			[[self.mapView viewForAnnotation:self.marker] setNeedsDisplay];
 			[self.mapView setRegion:MKCoordinateRegionMake(newLocation.coordinate , MKCoordinateSpanMake(0.001 , 0.001)) animated:YES];
 		}
@@ -343,6 +345,7 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 		pointInitalized = latLong != nil;
 		if(latLong && ![latLong isEqualToString:@"nil"])
 		{
+			markerMoved = YES;
 			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
 			point.latitude = [[stringArray objectAtIndex:0] doubleValue];
 			point.longitude = [[stringArray objectAtIndex:1] doubleValue];
