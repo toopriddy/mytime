@@ -29,8 +29,6 @@
 
 
 
-
-
 @interface MTSettingsID : NSManagedObjectID {}
 @end
 
@@ -87,12 +85,6 @@
 @property (nonatomic, retain) NSString *fourthViewTitle;
 
 //- (BOOL)validateFourthViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *secretaryEmailNotes;
-
-//- (BOOL)validateSecretaryEmailNotes:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -161,12 +153,6 @@
 @property (nonatomic, retain) NSString *currentUser;
 
 //- (BOOL)validateCurrentUser:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *secretaryEmailAddress;
-
-//- (BOOL)validateSecretaryEmailAddress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -274,10 +260,6 @@
 - (void)setPrimitiveFourthViewTitle:(NSString*)value;
 
 
-- (NSString*)primitiveSecretaryEmailNotes;
-- (void)setPrimitiveSecretaryEmailNotes:(NSString*)value;
-
-
 - (NSString*)primitiveLastApartmentNumber;
 - (void)setPrimitiveLastApartmentNumber:(NSString*)value;
 
@@ -322,10 +304,6 @@
 
 - (NSString*)primitiveCurrentUser;
 - (void)setPrimitiveCurrentUser:(NSString*)value;
-
-
-- (NSString*)primitiveSecretaryEmailAddress;
-- (void)setPrimitiveSecretaryEmailAddress:(NSString*)value;
 
 
 - (NSString*)primitiveLastCity;

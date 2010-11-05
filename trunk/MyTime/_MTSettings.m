@@ -128,13 +128,6 @@
 
 
 
-@dynamic secretaryEmailNotes;
-
-
-
-
-
-
 @dynamic lastApartmentNumber;
 
 
@@ -237,13 +230,6 @@
 
 
 @dynamic currentUser;
-
-
-
-
-
-
-@dynamic secretaryEmailAddress;
 
 
 

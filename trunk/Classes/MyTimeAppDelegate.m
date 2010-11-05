@@ -59,6 +59,8 @@
 
 @interface MyTimeAppDelegate ()
 - (void)displaySecurityViewController;
++ (NSString *)storeFileAndPath;
+
 @end
 
 @implementation MyTimeAppDelegate
@@ -754,6 +756,74 @@ NSString *emailFormattedStringForCoreDataSettings()
 	return [string autorelease];
 }
 
++ (MFMailComposeViewController *)sendPrintableEmailBackup
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Application Printable Backup", @"Email subject line for the email that has a printable version of the mytime data")];
+	
+	// attach the real records file
+	MTSettings *settings = [MTSettings settings];
+	NSString *emailAddress = settings.backupEmail;
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
+	
+	[mailView setMessageBody:emailFormattedStringForCoreDataSettings() isHTML:YES];
+	return mailView;
+}
+
+
++ (MFMailComposeViewController *)sendEmailBackup
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Application Data Backup", @"Email subject line for the email that has your backup data in it")];
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
+	
+	// attach the real records file
+	MTSettings *settings = [MTSettings settings];
+	if(settings.backupShouldIncludeAttachment)
+	{
+		[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[self class] storeFileAndPath]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+	}
+	
+	NSString *emailAddress = settings.backupEmail;
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
+	// now add the url that will allow importing
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:settings];
+	if(settings.backupShouldCompressLink)
+	{	
+		data = [data compress];
+		[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+	}
+	else
+	{
+		[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
+	}
+	
+	
+	int length = data.length;
+	unsigned char *bytes = (unsigned char *)data.bytes;
+	for(int i = 0; i < length; ++i)
+	{
+		[string appendFormat:@"%02X", *bytes++];
+	}
+	[string appendString:@"\">"];
+	[string appendString:NSLocalizedString(@"If you want to restore from your backup, click on this link from your iPhone/iTouch", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
+	[string appendString:@"</a><br><br>"];
+	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+	[string appendString:@"</body></html>"];
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	
+	return mailView;
+}
+
 - (void)verifyCoreDataConversion
 {
 	NSString *old = emailFormattedStringForSettings();
@@ -782,11 +852,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 	[[NSUserDefaults standardUserDefaults] setObject:[settings objectForKey:SettingsCurrentButtonBarName] forKey:SettingsCurrentButtonBarName];
 	
 	steps = 1 + 9*[[settings objectForKey:SettingsMultipleUsers] count];
-	
-	// SECRETARY SETTINGS
-	mtSettings.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
-	mtSettings.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];
-	
+		
 	mtSettings.currentUser = [settings objectForKey:SettingsMultipleUsersCurrentUser];
 	
 	// PASSCODE
@@ -831,6 +897,10 @@ NSString *emailFormattedStringForCoreDataSettings()
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
 	
+		// SECRETARY SETTINGS
+		mtUser.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
+		mtUser.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];
+		
 		if([user objectForKey:SettingsPublisherType])
 			mtUser.publisherType = [user objectForKey:SettingsPublisherType];
 		if([user objectForKey:SettingsMonthDisplayCount])
@@ -1826,6 +1896,10 @@ NSString *emailFormattedStringForCoreDataSettings()
     return managedObjectContext_;
 }
 
++ (NSString *)storeFileAndPath
+{
+	return [[MyTimeAppDelegate applicationDocumentsDirectory] stringByAppendingPathComponent: @"MyTime.sqlite"];
+}
 
 /**
  Returns the managed object model for the application.
@@ -1856,7 +1930,7 @@ NSString *emailFormattedStringForCoreDataSettings()
         return persistentStoreCoordinator_;
     }
     
-    NSURL *storeURL = [NSURL fileURLWithPath:[[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"MyTime.sqlite"]];
+    NSURL *storeURL = [NSURL fileURLWithPath:[[self class] storeFileAndPath]];
     
     NSError *error = nil;
     persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -1902,7 +1976,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 /**
  Returns the path to the application's Documents directory.
  */
-- (NSString *)applicationDocumentsDirectory 
++ (NSString *)applicationDocumentsDirectory 
 {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }

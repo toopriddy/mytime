@@ -18,6 +18,8 @@
 
 
 
+
+
 @interface MTUserID : NSManagedObjectID {}
 @end
 
@@ -26,12 +28,6 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTUserID*)objectID;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -45,9 +41,15 @@
 
 
 
-@property (nonatomic, retain) NSString *publisherType;
+@property (nonatomic, retain) NSString *name;
 
-//- (BOOL)validatePublisherType:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secretaryEmailAddress;
+
+//- (BOOL)validateSecretaryEmailAddress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -64,6 +66,18 @@
 @property (nonatomic, retain) NSString *selectedSortByAdditionalInformation;
 
 //- (BOOL)validateSelectedSortByAdditionalInformation:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secretaryEmailNotes;
+
+//- (BOOL)validateSecretaryEmailNotes:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *publisherType;
+
+//- (BOOL)validatePublisherType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -146,10 +160,6 @@
 
 @interface _MTUser (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
 - (NSNumber*)primitiveMonthDisplayCount;
 - (void)setPrimitiveMonthDisplayCount:(NSNumber*)value;
 
@@ -157,8 +167,12 @@
 - (void)setPrimitiveMonthDisplayCountValue:(short)value_;
 
 
-- (NSString*)primitivePublisherType;
-- (void)setPrimitivePublisherType:(NSString*)value;
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+- (NSString*)primitiveSecretaryEmailAddress;
+- (void)setPrimitiveSecretaryEmailAddress:(NSString*)value;
 
 
 - (NSNumber*)primitiveOrder;
@@ -170,6 +184,14 @@
 
 - (NSString*)primitiveSelectedSortByAdditionalInformation;
 - (void)setPrimitiveSelectedSortByAdditionalInformation:(NSString*)value;
+
+
+- (NSString*)primitiveSecretaryEmailNotes;
+- (void)setPrimitiveSecretaryEmailNotes:(NSString*)value;
+
+
+- (NSString*)primitivePublisherType;
+- (void)setPrimitivePublisherType:(NSString*)value;
 
 
 

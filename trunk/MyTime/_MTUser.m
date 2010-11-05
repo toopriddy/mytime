@@ -29,13 +29,6 @@
 
 
 
-@dynamic name;
-
-
-
-
-
-
 @dynamic monthDisplayCount;
 
 
@@ -62,7 +55,14 @@
 
 
 
-@dynamic publisherType;
+@dynamic name;
+
+
+
+
+
+
+@dynamic secretaryEmailAddress;
 
 
 
@@ -96,6 +96,20 @@
 
 
 @dynamic selectedSortByAdditionalInformation;
+
+
+
+
+
+
+@dynamic secretaryEmailNotes;
+
+
+
+
+
+
+@dynamic publisherType;
 
 
 

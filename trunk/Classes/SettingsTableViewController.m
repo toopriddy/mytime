@@ -26,6 +26,10 @@
 #import "MetadataEditorViewController.h"
 #import "QuickNotesViewController.h"
 #import "UITableViewSwitchCell.h"
+#import "MTSettings.h"
+#import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
+#import "MyTimeAppDelegate.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -508,7 +512,7 @@
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Secretary's Email", @"More->Settings view publisher type setting title");
-	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
+	NSString *value = [[MTUser currentUser] secretaryEmailAddress];
 	cell.detailTextLabel.text = value;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
@@ -517,7 +521,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
+	NSString *value = [[MTUser currentUser] secretaryEmailAddress];
 	
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Secretary's Email", @"More->Settings view publisher type setting title") type:EMAIL data:value value:value] autorelease];
 	viewController.delegate = self;
@@ -528,8 +532,14 @@
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[[[Settings sharedInstance] settings] setObject:[metadataEditorViewController value] forKey:SettingsSecretaryEmailAddress];
-	[[Settings sharedInstance] saveData];
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.secretaryEmailAddress = [metadataEditorViewController value];
+	NSError *error = nil;
+	if (![currentUser.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -572,7 +582,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
+	NSString *value = [[MTUser currentUser] secretaryEmailNotes];
 	
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Notes for Secretary", @"More->Settings view publisher type setting title") type:NOTES data:value value:value] autorelease];
 	viewController.delegate = self;
@@ -584,8 +594,15 @@
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[[[Settings sharedInstance] settings] setObject:[metadataEditorViewController value] forKey:SettingsSecretaryEmailNotes];
-	[[Settings sharedInstance] saveData];
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.secretaryEmailNotes = [metadataEditorViewController value];
+	NSError *error = nil;
+	if (![currentUser.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
+
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -624,10 +641,8 @@
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Publisher Type", @"More->Settings view publisher type setting title");
-	NSString *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
-	if(value == nil)
-		value = PublisherTypePioneer;
-	cell.detailTextLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""];
+	MTUser *currentUser = [MTUser currentUser];
+	cell.detailTextLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:currentUser.publisherType value:currentUser.publisherType table:@""];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;
@@ -635,11 +650,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
-	if(value == nil)
-		value = PublisherTypePioneer;
+	MTUser *currentUser = [MTUser currentUser];
 	
-	PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:value] autorelease];
+	PublisherTypeViewController *viewController = [[[PublisherTypeViewController alloc] initWithType:currentUser.publisherType] autorelease];
 	viewController.delegate = self;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
@@ -647,8 +660,15 @@
 
 - (void)publisherTypeViewControllerDone:(PublisherTypeViewController *)publisherTypeViewController
 {
-	[[[Settings sharedInstance] userSettings] setObject:publisherTypeViewController.type forKey:SettingsPublisherType];
-	[[Settings sharedInstance] saveData];
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.publisherType = publisherTypeViewController.type;
+	NSError *error = nil;
+	if (![currentUser.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
+	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -730,9 +750,9 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
-	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+	MTSettings *settings = [MTSettings settings];
 	cell.textLabel.text = NSLocalizedString(@"Passcode Lock", @"More->Settings view name for the Passcode Setting");
-	if(passcode.length == 0)
+	if(settings.passcode.length == 0)
 	{
 		cell.detailTextLabel.text = NSLocalizedString(@"Off", @"Off or disabled (used in the More->Settings->Passcode Lock Setting");
 	}
@@ -747,9 +767,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
-
-	if(passcode.length == 0)
+	MTSettings *settings = [MTSettings settings];
+	if(settings.passcode.length == 0)
 	{
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
 		securityView.promptText = NSLocalizedString(@"Enter a passcode", @"First Prompt to enter a passcode to limit access to MyTime");
@@ -766,7 +785,7 @@
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];
 		securityView.promptText = NSLocalizedString(@"Enter your passcode to disable", @"Prompt to enter a passcode turn off the passcode in MyTime");
 		securityView.shouldConfirm = NO;
-		securityView.passcode = passcode;
+		securityView.passcode = settings.passcode;
 		securityView.delegate = self;
 		securityView.title = NSLocalizedString(@"Disable Passcode", @"Title of the view you are presented from Settings->Passcode when you are disabling the passcode");
 		[[self.delegate navigationController] pushViewController:securityView animated:YES];
@@ -779,18 +798,22 @@
 	[self.delegate.navigationController popViewControllerAnimated:YES];
 	if(authenticated)
 	{
-		NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
-		if(passcode.length == 0)
+		MTSettings *settings = [MTSettings settings];
+		if(settings.passcode.length == 0)
 		{
 			// enabling the passcode
-			[[[Settings sharedInstance] settings] setObject:viewController.passcode forKey:SettingsPasscode];
-			[[Settings sharedInstance] saveData];
+			settings.passcode = viewController.passcode;
 		}
 		else
 		{
 			// disabling the passcode
-			[[[Settings sharedInstance] settings] removeObjectForKey:SettingsPasscode];
-			[[Settings sharedInstance] saveData];
+			settings.passcode = nil;
+		}
+		NSError *error = nil;
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+			abort();
 		}
 	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
@@ -985,7 +1008,7 @@
 	{
 		case 0: // Yes, email toopriddy@gmail.com
 		{
-			MFMailComposeViewController *mailView = [Settings sendEmailBackup];
+			MFMailComposeViewController *mailView = [MyTimeAppDelegate sendEmailBackup];
 			mailView.mailComposeDelegate = self;
 			[self retain];
 			[self.delegate.navigationController presentModalViewController:mailView animated:YES];
@@ -993,7 +1016,7 @@
 		}
 		case 1: // No, take me to the website
 		{
-			MFMailComposeViewController *mailView = [Settings sendPrintableEmailBackup];
+			MFMailComposeViewController *mailView = [MyTimeAppDelegate sendPrintableEmailBackup];
 			mailView.mailComposeDelegate = self;
 			[self retain];
 			[self.delegate.navigationController presentModalViewController:mailView animated:YES];
