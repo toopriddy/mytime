@@ -25,6 +25,7 @@
 
 @interface HourViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@property (nonatomic, retain) MTTimeType *type;
 @end
 
 @implementation HourViewController
@@ -35,6 +36,7 @@
 @synthesize fetchedResultsController = fetchedResultsController_;
 @synthesize managedObjectContext = managedObjectContext_;
 @synthesize typeName = typeName_;
+@synthesize type = type_;
 
 - (void)updateEmptyView
 {
@@ -70,8 +72,7 @@
 
 - (void)userChanged
 {
-	[type_ release];
-	type_ = nil;
+	self.type = nil;
 	[fetchedResultsController_ release];
 	fetchedResultsController_ = nil;
 	reloadData_ = YES;
@@ -89,17 +90,47 @@
 	return self;
 }
 
+- (void)removeViewMembers
+{
+	[type_ release];
+	type_ = nil;
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	self.emptyView = nil;
+	self.tableView.delegate = nil;
+	self.tableView.dataSource = nil;
+	self.tableView = nil;
+}
 
 - (void)dealloc 
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	self.tableView.delegate = nil;
-	self.tableView.dataSource = nil;
-	self.tableView = nil;
-	self.emptyView = nil;
-	
+	[self removeViewMembers];
+
+	self.managedObjectContext = nil;
+	self.selectedIndexPath = nil;
+	self.typeName = nil;
 	[super dealloc];
 }
+
+- (void)didReceiveMemoryWarning
+{
+	[type_ release];
+	type_ = nil;
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	[super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+	[super viewDidUnload];
+	[self removeViewMembers];
+}
+
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -205,6 +236,7 @@
 															   action:@selector(navigationControlStartTime:)] autorelease];
 	[self.navigationItem setLeftBarButtonItem:button animated:YES];
 	[self updatePrompt];
+	[self updateEmptyView];
 }
 
 - (void)loadView 

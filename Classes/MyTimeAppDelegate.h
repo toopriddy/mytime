@@ -68,11 +68,14 @@ typedef enum {
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (NSString *)applicationDocumentsDirectory;
++ (NSString *)applicationDocumentsDirectory;
 
 - (void)initializeMyTimeViews;
 
 + (MyTimeAppDelegate *)sharedInstance;
+
++ (MFMailComposeViewController *)sendEmailBackup;
++ (MFMailComposeViewController *)sendPrintableEmailBackup;
 
 @end
 

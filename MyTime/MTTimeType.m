@@ -18,6 +18,14 @@
 
 + (MTTimeType *)timeTypeWithName:(NSString *)name
 {
+	if([name isEqualToString:@"Hours"])
+	{
+		return [MTTimeType hoursTypeForUser:[MTUser currentUser]];
+	}
+	else if([name isEqualToString:@"RBC"])
+	{
+		return [MTTimeType rbcTypeForUser:[MTUser currentUser]];
+	}
 	return [MTTimeType timeTypeWithName:name user:[MTUser currentUser]];
 }
 

@@ -214,7 +214,7 @@
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	if([self.delegate addUser:metadataEditorViewController.value])
+	if([self addUser:metadataEditorViewController.value])
 	{
 		[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
 	}
@@ -265,7 +265,6 @@
 	cellController.delegate = self.delegate;
 	cellController.user = user;
 	[[[self.delegate.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:[users indexOfObject:user]];
-	
 	
 	[self.delegate updateWithoutReload];
 	return YES;
