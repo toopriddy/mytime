@@ -15,6 +15,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MapView.h"
+#import "MTCall.h"
 
 @class GeocacheViewController;
 @protocol GeocacheViewControllerDelegate<NSObject>
@@ -27,17 +28,17 @@
 {
 	BOOL inProgress;
 	MapView *mapView;
-	NSMutableDictionary *call;
+	MTCall *call;
 	UIActivityIndicatorView *progressView;
 	NSObject<GeocacheViewControllerDelegate> *_delegate;
 }
 
 @property (nonatomic, assign) NSObject<GeocacheViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MapView *mapView;
-@property (nonatomic, retain) NSMutableDictionary *call;
+@property (nonatomic, retain) MTCall *call;
 @property (nonatomic, retain) UIActivityIndicatorView *progressView;
 
-+ (BOOL)canLookupCall:(NSDictionary *)call;
-- (id)initWithCall:(NSMutableDictionary *)call;
++ (BOOL)canLookupCall:(MTCall *)call;
+- (id)initWithCall:(MTCall *)call;
 
 @end

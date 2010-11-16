@@ -16,6 +16,7 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 
+#if 0
 @implementation MapViewCallDetailController
 @synthesize delegate;
 @synthesize call;
@@ -83,3 +84,4 @@
 }
 
 @end
+#endif

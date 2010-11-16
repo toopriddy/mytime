@@ -16,6 +16,9 @@
 #import "Geocache.h"
 #import "GeocacheViewController.h"
 #import "Settings.h"
+#import "MyTimeAppDelegate.h"
+#import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 static Geocache *instance = nil;
 
@@ -30,7 +33,7 @@ static Geocache *instance = nil;
 	
 	[_geocacheViewController release];
 	
-	NSMutableDictionary *call = [[_callsToLookup objectAtIndex:0] retain];
+	MTCall *call = [[_callsToLookup objectAtIndex:0] retain];
 	[_callsToLookup removeObjectAtIndex:0];
 	
 	_geocacheViewController = [[GeocacheViewController alloc] initWithCall:call];
@@ -50,7 +53,7 @@ static Geocache *instance = nil;
 }
 
 
-- (void)lookupCall:(NSMutableDictionary *)call
+- (void)lookupCall:(MTCall *)call
 {
 	if([GeocacheViewController canLookupCall:call])
 	{
@@ -63,15 +66,13 @@ static Geocache *instance = nil;
 - (void)setWindow:(UIWindow*)window
 {
 	_window = [window retain];
-	NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
-	for(NSMutableDictionary *call in calls)
+	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
+	NSArray *calls = [managedObjectContext fetchObjectsForEntityName:[MTCall entityName]
+												   propertiesToFetch:[NSArray arrayWithObjects:@"houseNumber", @"apartmentNumber", @"street", @"city", @"state", nil] 
+													   withPredicate:@"(locationAquisitionAttempted == NO) AND (locationLookupType == %@)", CallLocationTypeGoogleMaps];
+	for(MTCall *call in calls)
 	{
-		if([call objectForKey:CallLattitudeLongitude] == nil &&
-		   ![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual] &&
-		   ![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeDoNotShow])
-		{
-			[self lookupCall:call];
-		}
+		[self lookupCall:call];
 	}
 }
 
