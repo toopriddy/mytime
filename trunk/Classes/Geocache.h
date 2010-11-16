@@ -15,6 +15,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GeocacheViewController.h"
+#import "MTCall.h"
 
 @interface Geocache : NSObject <GeocacheViewControllerDelegate>
 {
@@ -24,7 +25,7 @@
 	bool _lookupInProgress;
 }
 
-- (void)lookupCall:(NSMutableDictionary *)call;
+- (void)lookupCall:(MTCall *)call;
 - (void)setWindow:(UIWindow*)window;
 
 + (Geocache *)sharedInstance;

@@ -16,6 +16,7 @@
 #import "GeocacheViewController.h"
 #import "Settings.h"
 #import "NSObject+PriddySoftware.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 @implementation GeocacheViewController
 @synthesize mapView;
@@ -23,7 +24,7 @@
 @synthesize progressView;
 @synthesize delegate = _delegate;
 
-- (id)initWithCall:(NSMutableDictionary *)theCall
+- (id)initWithCall:(MTCall *)theCall
 {
 	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
 	self = [super initWithFrame:frame];
@@ -78,13 +79,13 @@
 }
 
 #define EMPTY_NSSTRING_IF_NULL(str) ((str) ? (str) : @"")
-+ (NSString *)getAddressFromCall:(NSDictionary *)theCall useHtml:(BOOL)useHtml
++ (NSString *)getAddressFromCall:(MTCall *)call useHtml:(BOOL)useHtml
 {
-	NSString *streetNumber = [theCall objectForKey:CallStreetNumber];
-	NSString *apartmentNumber = [theCall objectForKey:CallApartmentNumber];
-	NSString *street = [theCall objectForKey:CallStreet];
-	NSString *city = [theCall objectForKey:CallCity];
-	NSString *state = [theCall objectForKey:CallState];
+	NSString *streetNumber = call.houseNumber;
+	NSString *apartmentNumber = call.apartmentNumber;
+	NSString *street = call.street;
+	NSString *city = call.city;
+	NSString *state = call.state;
 	NSString *seperator = useHtml ? @"<br>" : @"";
 	
 	if(street && [street length] && 
@@ -105,10 +106,10 @@
 	return(nil);
 }
 
-+ (NSString *)getInfoFromCall:(NSDictionary *)theCall 
++ (NSString *)getInfoFromCall:(MTCall *)call 
 {
-	NSString *name = [theCall objectForKey:CallName];
-	NSString *address = [self getAddressFromCall:theCall useHtml:YES];
+	NSString *name = call.name;
+	NSString *address = [self getAddressFromCall:call useHtml:YES];
 	if(name || address)
 	{
 		name = EMPTY_NSSTRING_IF_NULL(name);
@@ -123,7 +124,7 @@
 	[super layoutSubviews];
 }
 
-+ (BOOL)canLookupCall:(NSDictionary *)call
++ (BOOL)canLookupCall:(MTCall *)call
 {
 	return [GeocacheViewController getAddressFromCall:call useHtml:NO] != NULL;
 }
@@ -166,47 +167,41 @@
 		NSString *latLong = [mapView.map evalJS:[NSString stringWithFormat:@"getResult(%d)", iter]];
 		NSString *address = [mapView.map evalJS:[NSString stringWithFormat:@"getAddress(%d)", iter]];
 		BOOL isAddressLookup = [[mapView.map evalJS:[NSString stringWithFormat:@"getIsAddressLookup(%d)", iter]] boolValue];
-		NSMutableDictionary *foundCall = call;
-		if(foundCall == nil)
-		{
-			NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
-			
-			while ( (foundCall = [e nextObject]) ) 
-			{
-				if(isAddressLookup)
-				{
-					NSString *str = [GeocacheViewController getAddressFromCall:foundCall useHtml:NO];
-					if(str && [str isEqualToString:address])
-					{
-						break;
-					}
-				}
-				else
-				{
-					NSString *str = [foundCall objectForKey:CallLattitudeLongitude];
-					if(str && [str isEqualToString:address])
-					{
-						break;
-					}
-				}
-			}
-		}
 		
-		if(foundCall)
+		// make sure the address has not changed
+		if(isAddressLookup && [address isEqualToString:[[self class] getAddressFromCall:call useHtml:NO]])
 		{
-			if(isAddressLookup)
+			if(latLong == nil || [latLong isEqualToString:@"nil"])
 			{
-				[foundCall setObject:latLong forKey:CallLattitudeLongitude];
-				[[Settings sharedInstance] saveData];
+				call.locationAquiredValue = NO;
+				call.locationAquisitionAttemptedValue = YES;
 			}
 			else
 			{
-//				[foundCall setObject:latLong forKey:CallLattitudeLongitude];
-//				[[Settings sharedInstance] saveData];
+				NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+				if(stringArray.count == 2)
+				{
+					call.lattitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:0]];
+					call.longitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:1]];
+					call.locationAquisitionAttemptedValue = YES;
+					call.locationAquiredValue = YES;
+				}
+				else
+				{
+					// something was malformed... look it up again
+					call.locationAquiredValue = NO;
+					call.locationAquisitionAttemptedValue = NO;
+				}
+				
 			}
+			
+			NSError *error = nil;
+			if (![call.managedObjectContext save:&error]) 
+			{
+				[NSManagedObjectContext presentErrorDialog:error];
+			}			
 		}
 	}
-
 	[self performSelector:@selector(timer) withObject:self afterDelay:1.0];
 }
 
@@ -214,64 +209,26 @@
 {
 	BOOL found = NO;
 	
-	if(call)
+	NSString *str = [GeocacheViewController getAddressFromCall:call useHtml:NO];
+	if(str)
 	{
-		NSString *str = [GeocacheViewController getAddressFromCall:call useHtml:NO];
-		if(str)
+		NSString *info = [GeocacheViewController getInfoFromCall:call];
+		NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
+		VERBOSE(NSLog(@"%@", script);)
+		
+		if([theWebView evalJS:script] == nil)
 		{
-			NSString *info = [GeocacheViewController getInfoFromCall:call];
-			NSString *latLong = [call objectForKey:CallLattitudeLongitude];
-			if(latLong == nil)
-			{
-				NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
-				VERBOSE(NSLog(@"%@", script);)
-				
-				if([theWebView evalJS:script] == nil)
-				{
-					NSLog(@"script failure");
-				}
-				found = YES;
-			}
+			NSLog(@"script failure");
 		}
-		else
-		{
-			[self stopProgressIndicator];
-			[call setObject:@"nil" forKey:CallLattitudeLongitude];
-			if(_delegate && [_delegate respondsToSelector:@selector(geocacheViewControllerDone:)])
-			{
-				[_delegate geocacheViewControllerDone:self];
-			}
-		}
+		found = YES;
 	}
 	else
 	{
-		NSEnumerator *e = [[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] objectEnumerator];
-		NSMutableDictionary *theCall;
-		
-		while ( (theCall = [e nextObject]) ) 
+		[self stopProgressIndicator];
+		if(_delegate && [_delegate respondsToSelector:@selector(geocacheViewControllerDone:)])
 		{
-			NSString *str = [GeocacheViewController getAddressFromCall:theCall useHtml:NO];
-			if(str)
-			{
-				NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-				if(latLong == nil)
-				{
-					NSString *info = [GeocacheViewController getInfoFromCall:theCall];
-					NSString *script = [NSString stringWithFormat:@"findLocationFromAddress(\"%@\", \"%@\");", info, str];
-					VERBOSE(NSLog(@"%@", script);)
-					
-					if([theWebView evalJS:script] == nil)
-					{
-						NSLog(@"script failure");
-					}
-					found = YES;
-				}
-			}
+			[_delegate geocacheViewControllerDone:self];
 		}
-	}
-	if(found)
-	{
-		[self performSelector:@selector(timer) withObject:self afterDelay:1.0];
 	}
 }
 

@@ -31,6 +31,7 @@
 #import "SettingsTableViewController.h"
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
+#import "TutorialViewController.h"
 #import "Settings.h"
 #import "Geocache.h"
 #import <objc/runtime.h>
@@ -163,7 +164,19 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	exit(0);
+	if(alertViewTutorials)
+	{
+		alertViewTutorials = NO;
+		if(buttonIndex == 0)
+		{
+			self.tabBarController.selectedViewController = self.tabBarController.moreNavigationController;
+			[self.tabBarController setSelectedViewController:_tutorialViewController];
+		}
+	}
+	else
+	{
+		exit(0);
+	}
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
@@ -337,7 +350,14 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 	controller.mailComposeDelegate = nil;
 	if(result == MFMailComposeResultSent)
 	{
-		[[[Settings sharedInstance] settings] setObject:[NSDate date] forKey:SettingsLastBackupDate];
+		MTSettings *settings = [MTSettings settings];
+		[settings setLastBackupDate:[NSDate date]];
+		NSError *error = nil;
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+			abort();
+		}
 	}
 
 	if(forceEmail)
@@ -824,6 +844,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 	return mailView;
 }
 
+NSString *emailFormattedStringForSettings();
+
 - (void)verifyCoreDataConversion
 {
 	NSString *old = emailFormattedStringForSettings();
@@ -1287,14 +1309,14 @@ NSString *emailFormattedStringForCoreDataSettings()
 
 - (void)checkAutoBackup
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	NSDate *lastBackupDate = [settings objectForKey:SettingsLastBackupDate];
+	MTSettings *settings = [MTSettings settings];
+	NSDate *lastBackupDate = settings.lastBackupDate;
 	NSDate *dateLimit = nil;
-	NSNumber *backupInterval = [settings objectForKey:SettingsAutoBackupInterval];
-	if(backupInterval && [backupInterval floatValue] > 0)
+	int autobackupInterval = settings.autobackupIntervalValue;
+	if(autobackupInterval)
 	{
 		// subtract the number of days from now
-		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-([backupInterval floatValue] * 60 * 60 * 24)];
+		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-(autobackupInterval * 60 * 60 * 24)];
 	}
 	if(lastBackupDate == nil || (dateLimit && lastBackupDate == [lastBackupDate earlierDate:dateLimit]) )
 	{
@@ -1317,8 +1339,6 @@ NSString *emailFormattedStringForCoreDataSettings()
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	// always save data before quitting
-	[[Settings sharedInstance] saveData];
-
     NSError *error = nil;
     if (managedObjectContext_ != nil) 
 	{
@@ -1336,8 +1356,6 @@ NSString *emailFormattedStringForCoreDataSettings()
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// always save data before quitting
-	[[Settings sharedInstance] saveData];
-
     NSError *error = nil;
     if (managedObjectContext_ != nil) 
 	{
@@ -1605,7 +1623,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
 	{
 		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
-		MFMailComposeViewController *mailView = [Settings sendEmailBackup];
+		MFMailComposeViewController *mailView = [MyTimeAppDelegate sendEmailBackup];
 		mailView.mailComposeDelegate = self;
 		self.modalNavigationController = [[[UINavigationController alloc] init] autorelease];
 
@@ -1628,7 +1646,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 
 - (void)displaySecurityViewController
 {
-	NSString *passcode = [[[Settings sharedInstance] settings] objectForKey:SettingsPasscode];
+	NSString *passcode = [[MTSettings settings] passcode];
 	if(passcode.length && !displayingSecurityViewController)
 	{
 		displayingSecurityViewController = YES;
@@ -1711,6 +1729,11 @@ NSString *emailFormattedStringForCoreDataSettings()
 	quickBuildHourViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:quickBuildHourViewController] autorelease]];
 
+	// TUTORIAL
+	TutorialViewController *tutorialViewController = [[[TutorialViewController alloc] init] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:tutorialViewController] autorelease]];
+	_tutorialViewController = tutorialViewController;
+	
 	// SETTINGS
 	SettingsTableViewController *settingsViewController = [[[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
 	UINavigationController *settingsNavigationController = [[[UINavigationController alloc] initWithRootViewController:settingsViewController] autorelease];
@@ -1719,18 +1742,18 @@ NSString *emailFormattedStringForCoreDataSettings()
 	
 	// get the buttons that we should show in the button bar
 	NSMutableArray *array = [NSMutableArray array];
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+	MTSettings *settings = [MTSettings settings];
 	UIViewController *controller;
-	controller = [self removeControllerFromArray:localViewControllersArray withName:[settings objectForKey:SettingsFirstView]];
+	controller = [self removeControllerFromArray:localViewControllersArray withName:settings.firstViewTitle];
 	if(controller)
 		[array addObject:controller];
-	controller = [self removeControllerFromArray:localViewControllersArray withName:[settings objectForKey:SettingsSecondView]];
+	controller = [self removeControllerFromArray:localViewControllersArray withName:settings.secondViewTitle];
 	if(controller)
 		[array addObject:controller];
-	controller = [self removeControllerFromArray:localViewControllersArray withName:[settings objectForKey:SettingsThirdView]];
+	controller = [self removeControllerFromArray:localViewControllersArray withName:settings.thirdViewTitle];
 	if(controller)
 		[array addObject:controller];
-	controller = [self removeControllerFromArray:localViewControllersArray withName:[settings objectForKey:SettingsFourthView]];
+	controller = [self removeControllerFromArray:localViewControllersArray withName:settings.fourthViewTitle];
 	if(controller)
 		[array addObject:controller];
 
@@ -1744,14 +1767,21 @@ NSString *emailFormattedStringForCoreDataSettings()
     }
 #endif
 	controller = [array objectAtIndex:0];
-	[settings setObject:controller.title forKey:SettingsFirstView];
+	settings.firstViewTitle = controller.title;
 	controller = [array objectAtIndex:1];
-	[settings setObject:controller.title forKey:SettingsSecondView];
+	settings.secondViewTitle = controller.title;
 	controller = [array objectAtIndex:2];
-	[settings setObject:controller.title forKey:SettingsThirdView];
+	settings.thirdViewTitle = controller.title;
 	controller = [array objectAtIndex:3];
-	[settings setObject:controller.title forKey:SettingsFourthView];
-
+	settings.fourthViewTitle = controller.title;
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
+	
+	
 	// set the tab bar controller view controller array to the localViewControllersArray
 	tabBarController.viewControllers = array;
 	tabBarController.delegate = self;
@@ -1784,20 +1814,33 @@ NSString *emailFormattedStringForCoreDataSettings()
 	if([defaults boolForKey:UserDefaultsRemovePasscode])
 	{
 		[defaults setBool:NO forKey:UserDefaultsRemovePasscode];
-		[settings removeObjectForKey:SettingsPasscode];
-		[[Settings sharedInstance] saveData];
+		settings.passcode = nil;
+		NSError *error = nil;
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+			abort();
+		}
 	}
 	
-	NSString *passcode = [settings objectForKey:SettingsPasscode];
+	NSString *passcode = settings.passcode;
 	
 	if(_actionSheetType == NORMAL_STARTUP)
 	{
-		if([settings objectForKey:SettingsMainAlertSheetShown] == nil)
+		if(!settings.mainAlertSheetShownValue)
 		{
-			[settings setObject:@"" forKey:SettingsMainAlertSheetShown];
-			[[Settings sharedInstance] saveData];
-
+			settings.mainAlertSheetShownValue = YES;
+			NSError *error = nil;
+			if (![settings.managedObjectContext save:&error]) 
+			{
+				[NSManagedObjectContext presentErrorDialog:error];
+				abort();
+			}
+			
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			alertSheet.delegate = self;
+			alertViewTutorials = YES;
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"Tutorials", @"Button to take the user directly to the tutorials view from the first popup in mytime")];
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 			alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
 			[alertSheet show];
@@ -1859,19 +1902,24 @@ NSString *emailFormattedStringForCoreDataSettings()
 {
 	if(changed)
 	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+		MTSettings *settings = [MTSettings settings];
 		UIViewController *controller;
 		
 		controller = [viewControllers objectAtIndex:0];
-		[settings setObject:controller.title forKey:SettingsFirstView];
+		settings.firstViewTitle = controller.title;
 		controller = [viewControllers objectAtIndex:1];
-		[settings setObject:controller.title forKey:SettingsSecondView];
+		settings.secondViewTitle = controller.title;
 		controller = [viewControllers objectAtIndex:2];
-		[settings setObject:controller.title forKey:SettingsThirdView];
+		settings.thirdViewTitle = controller.title;
 		controller = [viewControllers objectAtIndex:3];
-		[settings setObject:controller.title forKey:SettingsFourthView];
+		settings.fourthViewTitle = controller.title;
 		
-		[[Settings sharedInstance] saveData];
+		NSError *error = nil;
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+			abort();
+		}
 	}
 }
 

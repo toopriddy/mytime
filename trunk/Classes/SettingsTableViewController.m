@@ -88,7 +88,7 @@
 {
 	MultipleUsersViewController *viewController = [[[MultipleUsersViewController alloc] init] autorelease];
 	viewController.delegate = self;
-	viewController.managedObjectContext = [[[UIApplication sharedApplication] delegate] managedObjectContext];
+	viewController.managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
@@ -140,13 +140,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	[settings removeObjectForKey:SettingsMainAlertSheetShown];
-	[settings removeObjectForKey:SettingsTimeAlertSheetShown];
-	[settings removeObjectForKey:SettingsStatisticsAlertSheetShown];
-	[settings removeObjectForKey:SettingsExistingCallAlertSheetShown];
+	MTSettings *settings = [MTSettings settings];
+
+	settings.mainAlertSheetShownValue = NO;
+	settings.timeAlertSheetShownValue = NO;
+	settings.statisticsAlertSheetShownValue = NO;
+	settings.existingCallAlertSheetShownValue = NO;
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
 	
-	[[Settings sharedInstance] saveData];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
@@ -178,10 +184,8 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
-	int number = 2;
-	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
-	if(value)
-		number = [value intValue];
+	MTUser *user = [MTUser currentUser];
+	int number = user.monthDisplayCountValue;
 	if(number == 1)
 		cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d Month Displayed", @"Number of months shown in the statistics view, setting title"), number];
 	else
@@ -193,15 +197,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	int number = 2;
-	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
-	if(value)
-		number = [value intValue];
+	MTUser *user = [MTUser currentUser];
 	// open up the edit address view 
 	NumberViewController *viewController = [[[NumberViewController alloc] initWithTitle:NSLocalizedString(@"Month Count", @"Title for selecting the number of months shown in the statistics view")
 																		  singularLabel:NSLocalizedString(@"Month", @"Month singular") 
 																				  label:NSLocalizedString(@"Months", @"Months plural") 
-																				 number:number
+																				 number:user.monthDisplayCountValue
 																					min:1 
 																					max:12] autorelease];
 	viewController.delegate = self;
@@ -211,8 +212,14 @@
 
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
 {
-	[[[Settings sharedInstance] userSettings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsMonthDisplayCount];
-	[[Settings sharedInstance] saveData];
+	MTUser *user = [MTUser currentUser];
+	user.monthDisplayCountValue = numberViewController.numberPicker.number;
+	NSError *error = nil;
+	if (![user.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -283,8 +290,8 @@
 	}
 	
 	cell.textLabel.text = NSLocalizedString(@"Backup Address", @"More->Settings view backup email address");
-	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailAddress];
-	cell.detailTextLabel.text = value;
+	MTSettings *settings = [MTSettings settings];
+	cell.detailTextLabel.text = settings.backupEmail;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;
@@ -292,7 +299,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *value = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailAddress];
+	MTSettings *settings = [MTSettings settings];
+	NSString *value = settings.backupEmail;
 	
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Backup Address", @"More->Settings view backup email address") type:EMAIL data:value value:value] autorelease];
 	viewController.delegate = self;
@@ -303,8 +311,15 @@
 
 - (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
 {
-	[[[Settings sharedInstance] settings] setObject:[metadataEditorViewController value] forKey:SettingsBackupEmailAddress];
-	[[Settings sharedInstance] saveData];
+	MTSettings *settings = [MTSettings settings];
+	settings.backupEmail = [metadataEditorViewController value];
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
+	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -346,21 +361,22 @@
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.delegate = self;
 	cell.otherTextLabel.text = NSLocalizedString(@"Backup Attachment", @"More->Settings view backup attachment");
-	cell.booleanSwitch.on = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailDontIncludeAttachment] == nil;
+	MTSettings *settings = [MTSettings settings];
+	cell.booleanSwitch.on = settings.backupShouldIncludeAttachmentValue;
 	return cell;
 }
 
 - (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell
 {
-	if(uiTableViewSwitchCell.booleanSwitch.on)
+	MTSettings *settings = [MTSettings settings];
+	settings.backupShouldIncludeAttachmentValue = uiTableViewSwitchCell.booleanSwitch.on;
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
 	{
-		[[[Settings sharedInstance] settings] removeObjectForKey:SettingsBackupEmailDontIncludeAttachment];
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
 	}
-	else
-	{
-		[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithBool:YES] forKey:SettingsBackupEmailDontIncludeAttachment];
-	}
-	[[Settings sharedInstance] saveData];
+	
 }
 @end
 
@@ -392,21 +408,22 @@
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.delegate = self;
 	cell.otherTextLabel.text = NSLocalizedString(@"Compress Backup", @"More->Settings view Compress backup link");
-	cell.booleanSwitch.on = [[[Settings sharedInstance] settings] objectForKey:SettingsBackupEmailUncompressedLink] == nil;
+	MTSettings *settings = [MTSettings settings];
+	cell.booleanSwitch.on = settings.backupShouldCompressLinkValue;
 	return cell;
 }
 
 - (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell
 {
-	if(uiTableViewSwitchCell.booleanSwitch.on)
+	MTSettings *settings = [MTSettings settings];
+	settings.backupShouldCompressLinkValue = uiTableViewSwitchCell.booleanSwitch.on;
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
 	{
-		[[[Settings sharedInstance] settings] removeObjectForKey:SettingsBackupEmailUncompressedLink];
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
 	}
-	else
-	{
-		[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithBool:YES] forKey:SettingsBackupEmailUncompressedLink];
-	}
-	[[Settings sharedInstance] saveData];
+	
 }
 @end
 
@@ -432,9 +449,9 @@
 	}
 	
 	int number = 0;
-	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsAutoBackupInterval];
-	if(value)
-		number = [value intValue];
+	MTSettings *settings = [MTSettings settings];
+	number = settings.autobackupIntervalValue;
+	
 	if(number)
 	{
 		if(number == 1)
@@ -458,9 +475,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	int number = 0;
-	NSNumber *value = [[[Settings sharedInstance] settings] objectForKey:SettingsAutoBackupInterval];
-	if(value)
-		number = [value intValue];
+	MTSettings *settings = [MTSettings settings];
+	number = settings.autobackupIntervalValue;
 	// open up the edit address view 
 	NumberViewController *viewController = [[[NumberViewController alloc] initWithTitle:NSLocalizedString(@"Autobackup Interval", @"Title for selecting the number of days till you autobackup from the statistics view")
 																		  singularLabel:NSLocalizedString(@"Day", @"Day singular") 
@@ -475,8 +491,14 @@
 
 - (void)numberViewControllerDone:(NumberViewController *)numberViewController
 {
-	[[[Settings sharedInstance] settings] setObject:[NSNumber numberWithInt:numberViewController.numberPicker.number] forKey:SettingsAutoBackupInterval];
-	[[Settings sharedInstance] saveData];
+	MTSettings *settings = [MTSettings settings];
+	settings.autobackupIntervalValue = numberViewController.numberPicker.number;
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+		abort();
+	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{

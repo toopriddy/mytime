@@ -12,7 +12,7 @@
 //  MUST attribute the source (Priddy Software, LLC).  This file (in part or whole) 
 //  is NOT allowed to be used in a compiled or scripted program.
 //
-
+#if 0
 #import <UIKit/UIKit.h>
 #import "MapView.h"
 
@@ -30,3 +30,4 @@
 - (id)initWithTitle:(NSString *)theTitle;
 
 @end
+#endif

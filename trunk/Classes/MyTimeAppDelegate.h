@@ -47,10 +47,12 @@ typedef enum {
 	NSMutableDictionary *dataToImport;
 	NSMutableDictionary *settingsToRestore;
 	UINavigationController *modalNavigationController;
+	UIViewController *_tutorialViewController;
 	UrlActionType _actionSheetType;
 	BOOL forceEmail;
 	BOOL displayingSecurityViewController;
 	MBProgressHUD *hud;
+	BOOL alertViewTutorials;
 	
 @private
     NSManagedObjectContext *managedObjectContext_;

@@ -190,25 +190,4 @@
     return(self);
 }
 
-//	return(NSLocalizedString(@"Count:", @"'Count' label for Number Picker; this is the label that is beside the number in the picker"));
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-	BOOL ret = [super respondsToSelector:selector];
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s ? %s", __FILE__, selector, ret ? "YES" : "NO");)
-    return ret;
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
 @end
