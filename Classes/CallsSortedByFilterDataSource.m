@@ -75,10 +75,11 @@
 
 - (void)setSortedByMetadata:(NSString *)metadata
 {
-	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsSortedByMetadata];
-	[[Settings sharedInstance] saveData];
-	callsSorter.metadata = metadata;
-	[self refreshData];
+#warning fix me
+//	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsSortedByMetadata];
+//	[[Settings sharedInstance] saveData];
+//	callsSorter.metadata = metadata;
+//	[self refreshData];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector

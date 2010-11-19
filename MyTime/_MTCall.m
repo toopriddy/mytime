@@ -50,7 +50,7 @@
 
 
 
-@dynamic longitude;
+@dynamic mostRecentReturnVisitDate;
 
 
 
@@ -58,6 +58,13 @@
 
 
 @dynamic state;
+
+
+
+
+
+
+@dynamic longitude;
 
 
 
@@ -97,6 +104,20 @@
 
 
 
+@dynamic lattitude;
+
+
+
+
+
+
+@dynamic locationLookupType;
+
+
+
+
+
+
 @dynamic deleted;
 
 
@@ -118,20 +139,6 @@
 - (void)setPrimitiveDeletedValue:(BOOL)value_ {
 	[self setPrimitiveDeleted:[NSNumber numberWithBool:value_]];
 }
-
-
-
-
-
-@dynamic lattitude;
-
-
-
-
-
-
-@dynamic locationLookupType;
-
 
 
 

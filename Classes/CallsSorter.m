@@ -42,7 +42,11 @@
 @synthesize callsName;
 
 int sortByStreet(id v1, id v2, void *context);
+#if 0
 
+[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]
+[NSPredicate predicateWithFormat:@"street CONTAINS[cd] %@", searchText]
+#endif
 int sortByName(id v1, id v2, void *context)
 {
 	NSString *name1 = [v1 objectForKey:CallName];

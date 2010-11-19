@@ -19,6 +19,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "CoreLocation/CoreLocation.h"
+#import "MTCall.h"
 
 @interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, CLLocationManagerDelegate> 
 {
@@ -27,7 +28,7 @@
 	
     UITextField *_name;
 
-    NSMutableDictionary *_call;
+    MTCall *_call;
 	
 	NSIndexPath *currentIndexPath;
 	
@@ -44,31 +45,11 @@
 
 	id<CallViewControllerDelegate> delegate;
 }
-@property (nonatomic, retain) NSMutableDictionary *call;
+@property (nonatomic, retain) MTCall *call;
 @property (nonatomic, assign) id<CallViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
 @property (nonatomic, assign) BOOL delayedAddReturnVisit;
 @property (nonatomic, retain) CLLocationManager *locationManager;
-
-/**
- * @returns the call's name
- */
-- (NSString *)name;
-
-/**
- * @returns the call's street
- */
-- (NSString *)street;    
-
-/**
- * @returns the call's city
- */
-- (NSString *)city;
-
-/**
- * @returns the call's state
- */
-- (NSString *)state;
 
 /**
  * initialize this view with a watchtower at the current month/year
@@ -76,13 +57,9 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithCall:(NSMutableDictionary *)call;
-- (id) init;
+- (id)initWithCall:(MTCall *)call newCall:(BOOL)newCall;
 - (void)dealloc;
 
-- (void)save;
-
-- (GenericTableViewSectionController *)genericTableViewSectionControllerForReturnVisit:(NSMutableDictionary *)returnVisit;
 
 @end
 

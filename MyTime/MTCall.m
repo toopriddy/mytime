@@ -2,6 +2,69 @@
 
 @implementation MTCall
 
+- (void)addMyObservers
+{
+	registeredObservers_ = YES;
+	[self addObserver:self forKeyPath:@"apartmentNumber" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	[self addObserver:self forKeyPath:@"houseNumber" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	[self addObserver:self forKeyPath:@"street" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	[self addObserver:self forKeyPath:@"city" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	[self addObserver:self forKeyPath:@"state" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+}
+
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+	[self addMyObservers];
+}
+
+- (void)awakeFromInsert 
+{ 
+	[super awakeFromInsert];
+	[self addMyObservers];
+	
+	// lets go ahead and add the "Additional Information" always shown
+	MTUser *currentUser = [MTUser currentUser];
+	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
+	{
+		if(infoType.alwaysShownValue)
+		{
+			MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
+			info.call = self;
+			info.type = infoType;
+		}
+	}
+	MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
+	returnVisit.call = self;
+}
+
+- (void)didTurnIntoFault
+{
+	[super didTurnIntoFault];
+	if(registeredObservers_)
+	{
+		registeredObservers_ = NO;
+		[self removeObserver:self forKeyPath:@"apartmentNumber"]; 
+		[self removeObserver:self forKeyPath:@"houseNumber"]; 
+		[self removeObserver:self forKeyPath:@"street"]; 
+		[self removeObserver:self forKeyPath:@"city"]; 
+		[self removeObserver:self forKeyPath:@"state"]; 
+	}	
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	// lets just kill all precomputed values so that we dont have to figure out what was changed.
+	[addressNumber_ release];
+	[addressNumberAndStreet_ release];
+	[addressCityAndState_ release];
+	
+	addressNumber_ = nil;
+	addressNumberAndStreet_ = nil;
+	addressCityAndState_ = nil;
+}
+
+
 // Custom logic goes here.
 + (NSString *)topLineOfAddressWithHouseNumber:(NSString *)houseNumber apartmentNumber:(NSString *)apartmentNumber street:(NSString *)street
 {
@@ -37,40 +100,48 @@
 
 - (NSString *)addressNumber
 {
+	if(addressNumber_)
+		return addressNumber_;
+	
 	[self willAccessValueForKey:@"houseNumber"];
 	[self willAccessValueForKey:@"apartmentNumber"];
-	NSString *ret = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
-												  apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
-														   street:nil];
+	addressNumber_ = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
+												   apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
+															street:nil];
 	[self didAccessValueForKey:@"houseNumber"];
 	[self didAccessValueForKey:@"apartmentNumber"];
-	return ret;
+	return addressNumber_;
 }
 
 - (NSString *)addressNumberAndStreet
 {
+	if(addressNumber_)
+		return addressNumber_;
+	
 	[self willAccessValueForKey:@"houseNumber"];
 	[self willAccessValueForKey:@"apartmentNumber"];
 	[self willAccessValueForKey:@"street"];
-	NSString *ret = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
-												  apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
-														   street:[self primitiveValueForKey:@"street"]];
+	addressNumberAndStreet_ = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
+															apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
+																	 street:[self primitiveValueForKey:@"street"]];
 	[self didAccessValueForKey:@"houseNumber"];
 	[self didAccessValueForKey:@"apartmentNumber"];
 	[self didAccessValueForKey:@"street"];
-	return ret;
+	return addressNumberAndStreet_;
 }
 
 - (NSString *)addressCityAndState
 {
+	if(addressCityAndState_)
+		return addressCityAndState_;
+	
 	[self willAccessValueForKey:@"city"];
 	[self willAccessValueForKey:@"state"];
-	NSString *ret = [[self class] bottomLineOfAddressWithCity:[self primitiveValueForKey:@"city"]
-														state:[self primitiveValueForKey:@"street"]];
+	addressCityAndState_ = [[self class] bottomLineOfAddressWithCity:[self primitiveValueForKey:@"city"]
+															   state:[self primitiveValueForKey:@"state"]];
 	[self didAccessValueForKey:@"city"];
 	[self didAccessValueForKey:@"state"];
-	return ret;
+	return addressCityAndState_;
 }
-
 
 @end

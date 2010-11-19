@@ -18,27 +18,36 @@
 #import "CallViewController.h"
 #import "OverlayViewController.h"
 #import "EmptyListViewController.h"
+#import <CoreData/CoreData.h>
 
 @interface SortedCallsViewController : UIViewController <UITableViewDelegate, 
+                                                         UITableViewDataSource,
 														 CallViewControllerDelegate, 
 														 UISearchBarDelegate, 
-														 OverlayViewControllerDelegate> 
+														 OverlayViewControllerDelegate,
+                                                         NSFetchedResultsControllerDelegate> 
 {
 	UISearchBar *searchBar;
 	UITableView *tableView;
-	id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
+	id<SortedCallsViewDataSourceProtocol> dataSource;
 	NSIndexPath *indexPath;
 	BOOL searching;
 	OverlayViewController *ovController;
 	UIBarButtonItem *savedLeftButton;
 	BOOL savedHidesBackButton;
 	EmptyListViewController *emptyView;
+    NSFetchedResultsController *fetchedResultsController_;
+    NSManagedObjectContext *managedObjectContext_;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
-@property (nonatomic,retain) UITableView *tableView;
-@property (nonatomic,retain) id<SortedCallsViewDataSourceProtocol,UITableViewDataSource> dataSource;
-@property (nonatomic,retain) NSIndexPath *indexPath;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) id<SortedCallsViewDataSourceProtocol> dataSource;
+@property (nonatomic, retain) NSIndexPath *indexPath;
 
-- (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol,UITableViewDataSource>)theDataSource;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain, readonly) NSFetchedResultsController *fetchedResultsController;
+
+
+- (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource;
 
 @end

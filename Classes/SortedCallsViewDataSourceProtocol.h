@@ -24,27 +24,12 @@
 @property (readonly) NSString *tabBarImageName;
 @property (readonly) BOOL showAddNewCall;
 @property (readonly) BOOL useNameAsMainLabel;
+@property (readonly) BOOL showDisclosureIcon;
 
 // this property determines the style of table view displayed
 @property (readonly) UITableViewStyle tableViewStyle;
-
-// provides a standardized means of asking for the element at the specific
-// index path, regardless of the sorting or display technique for the specific
-// datasource
-- (NSMutableDictionary *)callForIndexPath:(NSIndexPath *)indexPath;
-
-- (void)setCall:(NSMutableDictionary *)call forIndexPath:(NSIndexPath *)indexPath;
-- (void)addCall:(NSMutableDictionary *)call;
-- (void)deleteCallAtIndexPath:(NSIndexPath *)indexPath keepInformation:(BOOL)keepInformation;
-- (void)restoreCallAtIndexPath:(NSIndexPath *)indexPath;
-- (void)filterUsingSearchText:(NSString *)searchText;
-
-
-
-// this optional protocol allows us to send the datasource this message, since it has the 
-// required information
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
-
-- (void)refreshData;
+@property (readonly) NSArray *sortDescriptors;
+@property (readonly) NSPredicate *predicate;
+@property (readonly) NSString *sectionNameKeyPath;
 
 @end

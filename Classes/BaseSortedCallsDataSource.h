@@ -16,13 +16,12 @@
 #import <UIKit/UIKit.h>
 #import "SortedCallsViewDataSourceProtocol.h"
 #import "CallsSorter.h"
+#import <CoreData/CoreData.h>
 
-
-@interface BaseSortedCallsDataSource : NSObject <UITableViewDataSource,SortedCallsViewDataSourceProtocol>  
+@interface BaseSortedCallsDataSource : NSObject <SortedCallsViewDataSourceProtocol>  
 {
-	CallsSorter *callsSorter;
+	SortCallsType _sortedBy;
 }
-@property (nonatomic, retain) CallsSorter *callsSorter;
 
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata;

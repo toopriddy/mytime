@@ -17,11 +17,13 @@
 #import "SortedCallsViewController.h"
 #import "CallTableCell.h"
 #import "Settings.h"
+#import "MTCall.h"
+#import "MTUser.h"
 
+@interface BaseSortedCallsDataSource ()
+@end
 
 @implementation BaseSortedCallsDataSource
-
-@synthesize callsSorter;
 
 - (NSString *)name 
 {
@@ -61,25 +63,8 @@
 	return NO;
 }
 
-- (NSMutableDictionary *)callForIndexPath:(NSIndexPath *)indexPath 
-{
-	return [callsSorter callForRowAtIndexPath:indexPath];
-}
-
-- (void)setCall:(NSMutableDictionary *)call forIndexPath:(NSIndexPath *)indexPath 
-{
-	[callsSorter setCall:call forIndexPath:indexPath];
-}
-
-- (void)addCall:(NSMutableDictionary *)call
-{
-	[callsSorter addCall:call];
-}
-
 - (void)dealloc
 {
-	DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	[callsSorter release];
 	[super dealloc];
 }
 
@@ -93,138 +78,130 @@
 	return [self initSortedBy:sortedBy withMetadata:metadata callsName:SettingsCalls];
 }
 
+NSArray *sortByStreet(NSArray *previousSorters)
+{
+	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																				    [NSSortDescriptor sortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedStandardCompare:)],
+														                            [NSSortDescriptor sortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedStandardCompare:)], nil]];
+}
+
+NSArray *sortByName(NSArray *previousSorters)
+{
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+}
+
+NSArray *sortByCity(NSArray *previousSorters)
+{
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+}
+
+NSArray *sortByDate(NSArray *previousSorters)
+{
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:NO]];
+}
+
+
+
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
 {
-	[super init];
-	callsSorter = [[CallsSorter alloc] initSortedBy:sortedBy withMetadata:metadata callsName:callsName];
+	if( (self = [super init]) )
+	{
+		_sortedBy = sortedBy;
+	}
 	return(self);
 }
 
-
-- (void)refreshData
+- (NSString *)sectionNameKeyPath
 {
-	[callsSorter refreshData];
-}
-
-- (void)filterUsingSearchText:(NSString *)searchText
-{
-	[callsSorter filterUsingSearchText:searchText];
-	[callsSorter refreshData];
-}
-
-
-// UITableViewDataSource methods
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	CallTableCell *cell = (CallTableCell *)[tableView dequeueReusableCellWithIdentifier:@"CallTableCell"];
-	if (cell == nil) 
+	switch(_sortedBy)
 	{
-		cell = [[[CallTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CallTableCell"] autorelease];
+		case CALLS_SORTED_BY_STREET:
+			// sort by street, city, then name
+			return @"street";
+		case CALLS_SORTED_BY_CITY:
+			return @"city";
+		case CALLS_SORTED_BY_NAME:
+		case CALLS_SORTED_BY_STUDY:
+			return @"name";
+//		case CALLS_SORTED_BY_DATE:
+//			return @"mostRecentReturnVisitDate";
+
+		case CALLS_SORTED_BY_METADATA:
+			break;
 	}
-    
-	// configure cell contents
-	// all the rows should show the disclosure indicator
-	if ([self showDisclosureIcon])
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	return nil;
+}
+
+- (NSPredicate *)predicate
+{
+	NSPredicate *filterPredicate = nil;
+	MTUser *currentUser = [MTUser currentUser];
 	
-	if([self useNameAsMainLabel])
+	// when we filter then we use a NSCompoundPredicate
+	
+	switch(_sortedBy)
 	{
-		[cell useNameAsMainLabel];
+		case CALLS_SORTED_BY_STREET:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			break;
+		case CALLS_SORTED_BY_DATE:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			break;
+		case CALLS_SORTED_BY_CITY:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			break;
+		case CALLS_SORTED_BY_NAME:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			break;
+		case CALLS_SORTED_BY_STUDY:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deleted == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Stusy')", currentUser];
+			break;
+		case CALLS_SORTED_BY_METADATA:
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			break;
 	}
-	else
+	return filterPredicate;
+}
+
+- (NSArray *)sortDescriptors
+{
+	NSArray *sortDescriptors = [NSArray array];
+	
+	// when we filter then we use a NSCompoundPredicate
+	
+	switch(_sortedBy)
 	{
-		[cell useStreetAsMainLabel];
+		case CALLS_SORTED_BY_STREET:
+			// sort by street, city, then name
+			sortDescriptors = sortByName(sortByCity(sortByStreet(sortDescriptors)));
+			break;
+		case CALLS_SORTED_BY_DATE:
+			// sort by Date, name, city, then street
+			sortDescriptors = sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))));
+			break;
+		case CALLS_SORTED_BY_CITY:
+			// sort by city, street, then name
+			sortDescriptors = sortByName(sortByStreet(sortByCity(sortDescriptors)));
+			break;
+		case CALLS_SORTED_BY_NAME:
+			// sort by name, street, then city
+			sortDescriptors = sortByCity(sortByStreet(sortByName(sortDescriptors)));
+			break;
+		case CALLS_SORTED_BY_STUDY:
+			// sort by name, street, then city
+			sortDescriptors = sortByCity(sortByStreet(sortByName(sortDescriptors)));
+			break;
+		case CALLS_SORTED_BY_METADATA:
+#warning fix me
+			sortDescriptors = sortByName(sortByStreet(sortByCity(sortDescriptors)));
+			break;
 	}
-	cell.call = [self callForIndexPath:indexPath];
-	return cell;
+	
+	return sortDescriptors;
 }
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
-{
-	return [callsSorter numberOfSections];
-}
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView 
-{
-	return [callsSorter sectionIndexTitles];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index 
-{
-	if([title isEqualToString:@"{search}"])
-	{
-		[tableView scrollRectToVisible:[[tableView tableHeaderView] bounds] animated:NO];
-		return -1;
-	}
-	return [callsSorter sectionForSectionIndexTitle:title atIndex:index];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
-{
-	return([callsSorter numberOfRowsInSection:section]);
-}
-
-- (void)deleteCallAtIndexPath:(NSIndexPath *)indexPath keepInformation:(BOOL)keepInformation
-{
-	// remove the call from the array
-	if(keepInformation)
-	{
-		NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-		NSMutableDictionary *call = [callsSorter callForRowAtIndexPath:indexPath];
-		NSMutableArray *deletedCalls = [settings objectForKey:SettingsDeletedCalls];
-		if(deletedCalls == nil)
-		{
-			deletedCalls = [NSMutableArray array];
-			[settings setObject:deletedCalls forKey:SettingsDeletedCalls];
-		}
-		[deletedCalls addObject:call];
-	}
-	[callsSorter deleteCallAtIndexPath:indexPath];
-	[[Settings sharedInstance] saveData];
-}
-
-- (void)restoreCallAtIndexPath:(NSIndexPath *)indexPath
-{
-	// remove the call from the array
-	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-	NSMutableDictionary *call = [callsSorter callForRowAtIndexPath:indexPath];
-	NSMutableArray *aliveCalls = [settings objectForKey:SettingsCalls];
-	if(aliveCalls == nil)
-	{
-		aliveCalls = [NSMutableArray array];
-		[settings setObject:aliveCalls forKey:SettingsCalls];
-	}
-	[aliveCalls addObject:call];
-	[callsSorter restoreCallAtIndexPath:indexPath];
-	[[Settings sharedInstance] saveData];
-	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:call];
-}
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
-{
-	return [callsSorter titleForHeaderInSection:section];
-}
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
-
-
 @end

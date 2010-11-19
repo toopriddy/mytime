@@ -15,8 +15,9 @@
 
 #import "CallTableCell.h"
 #import "Settings.h"
+#import "MTReturnVisit.h"
 #import "PSLocalization.h"
-
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 @implementation CallTableCell
 
@@ -79,6 +80,7 @@
 	self.mainLabel = nil;
 	self.secondaryLabel = nil;
 	self.infoLabel = nil;
+	self.call = nil;
 	[super dealloc];
 }
 
@@ -92,35 +94,33 @@
 	_nameAsMainLabel = false;
 }
 
-- (void)setCall:(NSMutableDictionary *)theCall
+- (void)setCall:(MTCall *)theCall
 {
-	call = theCall;
+	call = [theCall retain];
 	
-	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-	NSString *houseNumber = [call objectForKey:CallStreetNumber ];
-	NSString *apartmentNumber = [call objectForKey:CallApartmentNumber ];
-	NSString *street = [call objectForKey:CallStreet];
-
-	[Settings formatStreetNumber:houseNumber apartment:apartmentNumber street:street city:nil state:nil topLine:top bottomLine:nil];
-
+	NSString *top = [call addressNumberAndStreet];
 	if([top length] == 0)
-		[top setString:NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view")];
+		top =NSLocalizedString(@"(unknown street)", @"(unknown street) Placeholder Section title in the Sorted By Calls view");
 
 	NSString *info = @"";
-	if([[call objectForKey:CallReturnVisits] count] > 0)
+	NSArray *returnVisits = [call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+															   propertiesToFetch:[NSArray arrayWithObject:@"date"]
+																   withPredicate:[NSPredicate predicateWithFormat:@"(call == %@)", call]];
+	
+	if([returnVisits count])
 	{
-		NSMutableDictionary *returnVisit = [[call objectForKey:CallReturnVisits] objectAtIndex:0];
-		info = [returnVisit objectForKey:CallReturnVisitNotes];
+		MTReturnVisit *returnVisit = [returnVisits objectAtIndex:0];
+		info = returnVisit.notes;
 	}
 	if(_nameAsMainLabel)
 	{
-		mainLabel.text = [call objectForKey:CallName];
+		mainLabel.text = call.name;
 		secondaryLabel.text = top;
 	}
 	else
 	{
 		mainLabel.text = top;
-		secondaryLabel.text = [call objectForKey:CallName];
+		secondaryLabel.text = call.name;
 	}
 	infoLabel.text = info;
 }
@@ -165,26 +165,4 @@
 	frame = CGRectMake(boundsX + LEFT_OFFSET, INFO_TOP_OFFSET, width, INFO_HEIGHT);
 	[infoLabel setFrame:frame];
 }
-
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
-
-
 @end
