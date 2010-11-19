@@ -21,6 +21,7 @@
 
 
 
+
 @interface MTCallID : NSManagedObjectID {}
 @end
 
@@ -50,15 +51,21 @@
 
 
 
-@property (nonatomic, retain) NSDecimalNumber *longitude;
+@property (nonatomic, retain) NSDate *mostRecentReturnVisitDate;
 
-//- (BOOL)validateLongitude:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateMostRecentReturnVisitDate:(id*)value_ error:(NSError**)error_;
 
 
 
 @property (nonatomic, retain) NSString *state;
 
 //- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDecimalNumber *longitude;
+
+//- (BOOL)validateLongitude:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -78,16 +85,6 @@
 
 
 
-@property (nonatomic, retain) NSNumber *deleted;
-
-@property BOOL deletedValue;
-- (BOOL)deletedValue;
-- (void)setDeletedValue:(BOOL)value_;
-
-//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSDecimalNumber *lattitude;
 
 //- (BOOL)validateLattitude:(id*)value_ error:(NSError**)error_;
@@ -97,6 +94,16 @@
 @property (nonatomic, retain) NSString *locationLookupType;
 
 //- (BOOL)validateLocationLookupType:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *deleted;
+
+@property BOOL deletedValue;
+- (BOOL)deletedValue;
+- (void)setDeletedValue:(BOOL)value_;
+
+//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -162,12 +169,16 @@
 - (void)setPrimitiveStreet:(NSString*)value;
 
 
-- (NSDecimalNumber*)primitiveLongitude;
-- (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
+- (NSDate*)primitiveMostRecentReturnVisitDate;
+- (void)setPrimitiveMostRecentReturnVisitDate:(NSDate*)value;
 
 
 - (NSString*)primitiveState;
 - (void)setPrimitiveState:(NSString*)value;
+
+
+- (NSDecimalNumber*)primitiveLongitude;
+- (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
 
 
 - (NSNumber*)primitiveLocationAquisitionAttempted;
@@ -181,19 +192,19 @@
 - (void)setPrimitiveHouseNumber:(NSString*)value;
 
 
-- (NSNumber*)primitiveDeleted;
-- (void)setPrimitiveDeleted:(NSNumber*)value;
-
-- (BOOL)primitiveDeletedValue;
-- (void)setPrimitiveDeletedValue:(BOOL)value_;
-
-
 - (NSDecimalNumber*)primitiveLattitude;
 - (void)setPrimitiveLattitude:(NSDecimalNumber*)value;
 
 
 - (NSString*)primitiveLocationLookupType;
 - (void)setPrimitiveLocationLookupType:(NSString*)value;
+
+
+- (NSNumber*)primitiveDeleted;
+- (void)setPrimitiveDeleted:(NSNumber*)value;
+
+- (BOOL)primitiveDeletedValue;
+- (void)setPrimitiveDeletedValue:(BOOL)value_;
 
 
 - (NSNumber*)primitiveLocationAquired;

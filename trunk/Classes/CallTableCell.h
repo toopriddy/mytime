@@ -15,23 +15,22 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "MTCall.h"
 
 @interface CallTableCell : UITableViewCell {
-	NSMutableDictionary *call;
+	MTCall *call;
 	UILabel *mainLabel;
 	UILabel *secondaryLabel;
 	UILabel *infoLabel;
 	BOOL _nameAsMainLabel;
 }
 
-@property (nonatomic,retain) NSMutableDictionary *call;
-@property (nonatomic,retain) UILabel *mainLabel;
-@property (nonatomic,retain) UILabel *secondaryLabel;
-@property (nonatomic,retain) UILabel *infoLabel;
+@property (nonatomic, retain) MTCall *call;
+@property (nonatomic, retain) UILabel *mainLabel;
+@property (nonatomic, retain) UILabel *secondaryLabel;
+@property (nonatomic, retain) UILabel *infoLabel;
 
 + (float)height;
-
-- (void)setCall:(NSMutableDictionary *)call;
 
 - (void)useNameAsMainLabel;
 - (void)useStreetAsMainLabel;

@@ -17,7 +17,9 @@
 #import "Settings.h"
 #import "CallViewController.h"
 #import "MTUser.h"
+#import "MTReturnVisit.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+
 
 @implementation MapViewCallAnnotation
 @synthesize call = _call;
@@ -170,8 +172,8 @@
 		region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.1; // Add a little extra space on the sides
 		region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.1; // Add a little extra space on the sides
 		
-		region = [mapView regionThatFits:region];
-		[mapView setRegion:region];
+		region = [_mapView regionThatFits:region];
+		[_mapView setRegion:region];
 	}
 }
 
