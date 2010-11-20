@@ -14,6 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MTCall.h"
 
 @class LocationPickerViewController;
 
@@ -33,7 +34,7 @@
 	UITableViewCell *manualCell;
     UITableViewCell *googleMapsCell;
     UITableViewCell *doNotShowCell;
-	NSMutableDictionary *call;
+	MTCall *call;
 }
 
 @property (nonatomic,assign) id<LocationPickerViewControllerDelegate> delegate;
@@ -46,7 +47,7 @@
  * @param rect - the rect
  * @returns self
  */
-- (id) initWithCall:(NSMutableDictionary *)call;
+- (id) initWithCall:(MTCall *)call;
 
 @end
 

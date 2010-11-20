@@ -405,7 +405,6 @@
 	return _textFieldCell;
 }
 
-
 - (NSObject *)data
 {
 	switch(_type)
@@ -424,6 +423,16 @@
 			return [NSNumber numberWithInt:_numberPicker.number];
 	}
 	return nil;
+}
+
+- (NSDate *)date
+{
+	return (NSDate *)[self data];
+}
+
+- (BOOL)boolValue
+{
+	return [((NSNumber *)[self data]) boolValue];
 }
 
 - (NSString *)value

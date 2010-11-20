@@ -21,7 +21,7 @@
 #import "CoreLocation/CoreLocation.h"
 #import "MTCall.h"
 
-@interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, CLLocationManagerDelegate> 
+@interface CallViewController : GenericTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate> 
 {
 	BOOL _initialView;
 	BOOL deleteCall;
@@ -59,7 +59,7 @@
  */
 - (id)initWithCall:(MTCall *)call newCall:(BOOL)newCall;
 - (void)dealloc;
-
+- (void)save;
 
 @end
 

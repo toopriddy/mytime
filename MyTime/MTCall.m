@@ -1,4 +1,8 @@
 #import "MTCall.h"
+#import "MTUser.h"
+#import "MTAdditionalInformationType.h"
+#import "MTAdditionalInformation.h"
+#import "MTReturnVisit.h"
 
 @implementation MTCall
 
@@ -105,9 +109,9 @@
 	
 	[self willAccessValueForKey:@"houseNumber"];
 	[self willAccessValueForKey:@"apartmentNumber"];
-	addressNumber_ = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
-												   apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
-															street:nil];
+	addressNumber_ = [[[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
+													apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
+															 street:nil] retain];
 	[self didAccessValueForKey:@"houseNumber"];
 	[self didAccessValueForKey:@"apartmentNumber"];
 	return addressNumber_;
@@ -121,9 +125,9 @@
 	[self willAccessValueForKey:@"houseNumber"];
 	[self willAccessValueForKey:@"apartmentNumber"];
 	[self willAccessValueForKey:@"street"];
-	addressNumberAndStreet_ = [[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
-															apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
-																	 street:[self primitiveValueForKey:@"street"]];
+	addressNumberAndStreet_ = [[[self class] topLineOfAddressWithHouseNumber:[self primitiveValueForKey:@"houseNumber"]
+															 apartmentNumber:[self primitiveValueForKey:@"apartmentNumber"]
+																	  street:[self primitiveValueForKey:@"street"]] retain];
 	[self didAccessValueForKey:@"houseNumber"];
 	[self didAccessValueForKey:@"apartmentNumber"];
 	[self didAccessValueForKey:@"street"];
@@ -137,8 +141,8 @@
 	
 	[self willAccessValueForKey:@"city"];
 	[self willAccessValueForKey:@"state"];
-	addressCityAndState_ = [[self class] bottomLineOfAddressWithCity:[self primitiveValueForKey:@"city"]
-															   state:[self primitiveValueForKey:@"state"]];
+	addressCityAndState_ = [[[self class] bottomLineOfAddressWithCity:[self primitiveValueForKey:@"city"]
+																state:[self primitiveValueForKey:@"state"]] retain];
 	[self didAccessValueForKey:@"city"];
 	[self didAccessValueForKey:@"state"];
 	return addressCityAndState_;
