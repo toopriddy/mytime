@@ -47,6 +47,8 @@
 #import "MTAdditionalInformationType.h"
 #import "MTMultipleChoice.h"
 #import "MTPublication.h"
+#import "MTSettings.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -54,7 +56,7 @@
 
 @interface CallViewController ()
 @property (nonatomic, assign) BOOL showAddReturnVisit;
-- (GenericTableViewSectionController *)genericTableViewSectionControllerForReturnVisit:(NSMutableDictionary *)returnVisit;
+- (GenericTableViewSectionController *)genericTableViewSectionControllerForReturnVisit:(MTReturnVisit *)returnVisit;
 
 - (void)addReturnVisitAndEdit;
 @end
@@ -138,9 +140,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 @interface ReturnVisitCellController : CallViewCellController
 {
-	NSMutableDictionary *returnVisit;
+	MTReturnVisit *returnVisit;
 }
-@property (nonatomic, retain) NSMutableDictionary *returnVisit;
+@property (nonatomic, retain) MTReturnVisit *returnVisit;
 @end
 @implementation ReturnVisitCellController
 @synthesize returnVisit;
@@ -420,14 +422,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	else
 	{
-		NSString *latLong = [self.delegate.call objectForKey:CallLattitudeLongitude];
-		
 		// if they have not initialized the address then dont show the map program
 		// if they have initalized a latLong then include that
-		if(!((street == nil || [street isEqualToString:@""]) &&
-			 (city == nil || [city isEqualToString:@""]) &&
-			 (state == nil || [state isEqualToString:@""])) ||
-		   (latLong != nil && ![latLong isEqualToString:@"nil"]))
+		if(!(street.length == 0 &&
+			 city.length == 0 &&
+			 state.length == 0) ||
+		   !call.locationAquisitionAttemptedValue)
 		{
 			// pop up a alert sheet to display buttons to show in google maps?
 			//http://maps.google.com/?hl=en&q=kansas+city
@@ -445,10 +445,16 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				city = @"";
 			if(state == nil)
 				state = @"";
-			if(latLong == nil || [latLong isEqualToString:@"nil"])
+			
+			NSString *latLong;
+			if(!call.locationAquired)
+			{
 				latLong = @"";
+			}
 			else
-				latLong = [NSString stringWithFormat:@"@%@", [[latLong stringByReplacingOccurrencesOfString:@" " withString:@"" ] stringWithEscapedCharacters]];
+			{
+				latLong = [NSString stringWithFormat:@"@%@,%@", call.lattitude, call.longitude];
+			}
 #if 1		
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
@@ -492,13 +498,19 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)locationPickerViewControllerDone:(LocationPickerViewController *)locationPickerViewController
 {
-	[self.delegate.call setObject:locationPickerViewController.type forKey:CallLocationType];
+	MTCall *call = self.delegate.call;
+	call.locationLookupType = locationPickerViewController.type;
 	if([locationPickerViewController.type isEqualToString:CallLocationTypeManual])
 	{
 		[[Settings sharedInstance] saveData];
 		[[self.delegate navigationController] popViewControllerAnimated:NO];
 		
-		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:[self.delegate.call objectForKey:CallLattitudeLongitude]] autorelease];
+		CLLocationCoordinate2D location = {[call.longitude doubleValue], [call.lattitude doubleValue]};
+
+		MTSettings *settings = [MTSettings settings];
+		CLLocationCoordinate2D defaultPosition = {settings.lastLongitudeValue, settings.lastLattitudeValue};
+		
+		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:(call.locationAquiredValue ? &location : nil) defaultPosition:defaultPosition] autorelease];
 		controller.delegate = self;
 		[[self.delegate navigationController] pushViewController:controller animated:YES];
 		[self.delegate retainObject:self whileViewControllerIsManaged:controller];
@@ -528,13 +540,14 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)selectPositionMapViewControllerDone:(SelectPositionMapViewController *)selectPositionMapViewController
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	[settings setObject:[NSNumber numberWithFloat:selectPositionMapViewController.point.latitude] forKey:SettingsLastLattitude];
-	[settings setObject:[NSNumber numberWithFloat:selectPositionMapViewController.point.longitude] forKey:SettingsLastLongitude];
-	[[Settings sharedInstance] saveData];
+	MTSettings *settings = [MTSettings settings];
+	settings.lastLattitudeValue = selectPositionMapViewController.point.latitude;
+	settings.lastLongitudeValue = selectPositionMapViewController.point.longitude;
+	MTCall *call = self.delegate.call;
+	call.lattitude = [[[NSDecimalNumber alloc] initWithDouble:selectPositionMapViewController.point.latitude] autorelease];
+	call.longitude = [[[NSDecimalNumber alloc] initWithDouble:selectPositionMapViewController.point.longitude] autorelease];
 	
-	[self.delegate.call setObject:[NSString stringWithFormat:@"%f, %f", selectPositionMapViewController.point.latitude, selectPositionMapViewController.point.longitude] forKey:CallLattitudeLongitude];
-	[[Settings sharedInstance] saveData];
+	[self.delegate save];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -573,25 +586,19 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-	NSMutableDictionary *call = self.delegate.call;
-	NSString *locationType = [call objectForKey:CallLocationType];
-	if(locationType == nil)
-	{
-		locationType = CallLocationTypeGoogleMaps;
-	}
+	MTCall *call = self.delegate.call;
+	NSString *locationType = call.locationLookupType;
 	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:locationType value:locationType table:@""]];
 	
-	NSString *latLong = [call objectForKey:CallLattitudeLongitude];
 	// if this does not have a latitude/longitude then look it up
-	if(latLong && ![latLong isEqualToString:@"nil"])
+	if(call.locationAquiredValue)
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 		cell.editingAccessoryType = UITableViewCellAccessoryCheckmark;
 	}
 	
 	// if this does not have a latitude/longitude then look it up
-	if([locationType isEqualToString:CallLocationTypeGoogleMaps] &&
-	   [call objectForKey:CallLattitudeLongitude] == nil)
+	if(!call.locationAquiredValue && [call.locationLookupType isEqualToString:CallLocationTypeGoogleMaps])
 	{
 		// TODO: Need to have a spinnie show up here
 	}
@@ -628,8 +635,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (BOOL)isViewableWhenNotEditing
 {
-	NSArray *metadata = [self.delegate.call objectForKey:CallMetadata];
-	return metadata && [metadata count];
+	return self.delegate.call.additionalInformation.count;
 }
 @end
 
@@ -675,7 +681,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	self.delegate.forceReload = YES;
 }
 
-- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata removeAll:(BOOL)removeAll
+- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type removeAll:(BOOL)removeAll
 {
 	NSManagedObjectContext *moc = self.delegate.call.managedObjectContext;
 	for(MTAdditionalInformation *info in [moc fetchObjectsForEntityName:[MTAdditionalInformation entityName] 
@@ -760,11 +766,11 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			break;
 			
 		case SWITCH:
-			self.metadata.date = [[metadataEditorViewController data] boolValue];
+			self.metadata.booleanValue = [metadataEditorViewController boolValue];
 			break;
 			
 		case DATE:
-			self.metadata.date = [metadataEditorViewController data];
+			self.metadata.date = [metadataEditorViewController date];
 			break;
 	}
 	
@@ -942,7 +948,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		int type = self.metadata.type.typeValue;
 		NSString *name = self.metadata.type.name;
-		NSString *value = self.metadata.value
+		NSString *value = self.metadata.value;
 		
 		if(type != SWITCH)
 		{
@@ -951,13 +957,16 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				switch(type)
 				{
 					case CHOICE:
-						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value data:metadata.type.multipleChoices] autorelease];
+					{
+						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value choices:self.metadata.type.multipleChoices] autorelease];
 						p.delegate = self;
 						
 						[[self.delegate navigationController] pushViewController:p animated:YES];		
 						[self.delegate retainObject:self whileViewControllerIsManaged:p];
 						break;
+					}	
 					case DATE:
+					{
 						// make the new call view 
 						MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:type data:self.metadata.date value:value] autorelease];
 						p.delegate = self;
@@ -965,7 +974,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 						
 						[[self.delegate navigationController] pushViewController:p animated:YES];		
 						[self.delegate retainObject:self whileViewControllerIsManaged:p];
+						break;
+					}	
 					default:
+					{
 						// make the new call view 
 						MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:name type:type data:value value:value] autorelease];
 						p.delegate = self;
@@ -973,9 +985,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 						
 						[[self.delegate navigationController] pushViewController:p animated:YES];		
 						[self.delegate retainObject:self whileViewControllerIsManaged:p];
-				}
-				else 
-				{
+						break;
+					}
 				}
 			}
 			else
@@ -1122,7 +1133,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 	[self.delegate setShowAddReturnVisit:NO];
 	
-	MTReturnVisit *visit = [MTReturnVisit insertInManagedObjectContext:self.call.managedObjectContext];
+	MTReturnVisit *visit = [MTReturnVisit insertInManagedObjectContext:self.delegate.call.managedObjectContext];
 	visit.call = self.delegate.call;
 	
 	// now update the tableview
@@ -1238,16 +1249,16 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell.allowSelectionWhenNotEditing = NO;
 	}
 	BOOL initialVisit = NO;
-	if([returnVisit isEqual:[[managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
-														   propertiesToFetch:[NSArray array]]
-							 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]
-															withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
+	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																	  propertiesToFetch:[NSArray array]
+																	withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																		  withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
 	}
 	
 	cell.lastCell = initialVisit;
-	NSMutableString *notes = self.returnVisit.notes;
+	NSString *notes = self.returnVisit.notes;
 	
 	if(tableView.editing)
 	{
@@ -1299,9 +1310,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableArray *returnVisits = [self.delegate.call objectForKey:CallReturnVisits];
-	
-	if(editingStyle == UITableViewCellEditingStyleDelete && returnVisits.count != 1)
+	if(editingStyle == UITableViewCellEditingStyleDelete && self.delegate.call.returnVisits.count != 1)
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %d", index);)
 		
@@ -1443,10 +1452,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	}
 
 	BOOL initialVisit = NO;
-	if([returnVisit isEqual:[[managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
-														   propertiesToFetch:[NSArray array]]
-							 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]
-															withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
+	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																	   propertiesToFetch:[NSArray array]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
 	}
@@ -1473,16 +1482,13 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	DEBUG(NSLog(@"isStudyOnForReturnVisitAtIndex: %d", index);)
 	
 	// they clicked on the Change Type
-	NSString *type = [self.returnVisit objectForKey:CallReturnVisitType];
-	if(type == nil)
-		type = CallReturnVisitTypeReturnVisit;
+	NSString *type = self.returnVisit.type;
 	
-	[self.delegate.call fetch];
 	BOOL initialVisit = NO;
-	if([returnVisit isEqual:[[managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
-									 propertiesToFetch:[NSArray array]]
-							 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]
-										 withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
+	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																	   propertiesToFetch:[NSArray array]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
 	}
@@ -1759,20 +1765,22 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		if(self.delegate.delegate)
 		{
-			self.delegate.call.deletedValue = YES;
+			MTCall *call = self.delegate.call;
+			call.deletedValue = YES;
 			if(self.deleteForever)
 			{
-				[self.managedObjectContext deleteObject:self.call];
+				[call.managedObjectContext deleteObject:call];
 			}
 			[self.delegate save];
 			[self.delegate.navigationController popViewControllerAnimated:YES];
+
 			if(self.deleteForever)
 			{
 				[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:nil];
 			}
 			else
 			{
-				[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.call];
+				[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:call];
 			}
 
 		}
@@ -1894,7 +1902,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		
 		self.hidesBottomBarWhenPushed = YES;
 		
-        NSString *temp;
         DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
 
 		_setFirstResponderGroup = -1;
@@ -2210,7 +2217,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 			
-		for(NSMutableDictionary *entry in _call.additionalInformation)
+		NSArray *additionalInformations = [_call.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
+																			  propertiesToFetch:nil 
+																			withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"type.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																								 [NSSortDescriptor sortDescriptorWithKey:@"value" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																				  withPredicate:@"call == %@", _call];
+		for(MTAdditionalInformation *entry in additionalInformations)
 		{
 			CallMetadataCellController *cellController = [[[CallMetadataCellController alloc] init] autorelease];
 			cellController.metadata = entry;
@@ -2236,10 +2248,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	// RETURN VISITS
 	{
-		for(NSMutableDictionary *visit in [_call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
-																			  propertiesToFetch:nil
-																			withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
-																				  withPredicate:@"(call == %@)", _call])
+		for(MTReturnVisit *visit in [_call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																		propertiesToFetch:nil
+																	  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																			withPredicate:@"(call == %@)", _call])
 		{
 			[self.sectionControllers addObject:[self genericTableViewSectionControllerForReturnVisit:visit]];
 		}
@@ -2319,8 +2331,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// Publications
 	{
 		// they had an array of publications, lets check them too
-		NSMutableArray *publications = returnVisit.publications;
-		for(NSMutableDictionary *publication in publications)
+#warning need to do something about order here
+		for(MTPublication *publication in returnVisit.publications)
 		{
 			// PUBLICATION
 			ReturnVisitPublicationCellController *cellController = [[[ReturnVisitPublicationCellController alloc] init] autorelease];

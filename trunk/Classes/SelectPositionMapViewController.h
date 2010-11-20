@@ -57,6 +57,6 @@
 @property (nonatomic, assign) NSObject<SelectPositionMapViewControllerDelegate> *delegate;
 @property (nonatomic, readonly) CLLocationCoordinate2D point;
 
-- (id)initWithPosition:(NSString *)latLong defaultPosition:(CLLocationCoordinate2D)defaultPosition;
+- (id)initWithPosition:(CLLocationCoordinate2D *)position defaultPosition:(CLLocationCoordinate2D)defaultPosition;
 
 @end

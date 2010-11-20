@@ -78,7 +78,7 @@
 @synthesize point;
 @synthesize delegate;
 
-- (id)initWithPosition:(NSString *)latLong defaultPosition:(CLLocationCoordinate2D)defaultPosition
+- (id)initWithPosition:(CLLocationCoordinate2D *)position defaultPosition:(CLLocationCoordinate2D)defaultPosition
 {
 	self = [super init];
 	if (self)
@@ -87,12 +87,10 @@
 		self.title = NSLocalizedString(@"Select Location", @"Title for the view where you manually select the location for the call");
 		markerMoved = NO;
 		
-		pointInitalized = latLong != nil;
-		if(latLong && ![latLong isEqualToString:@"nil"])
+		pointInitalized = position != nil;
+		if(position)
 		{
-			NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-			point.latitude = [[stringArray objectAtIndex:0] doubleValue];
-			point.longitude = [[stringArray objectAtIndex:1] doubleValue];
+			point = *position;
 		}
 		else
 		{

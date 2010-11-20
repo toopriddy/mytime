@@ -22,7 +22,7 @@
 @property (nonatomic, retain) UITableViewCell *manualCell;
 @property (nonatomic, retain) UITableViewCell *googleMapsCell;
 @property (nonatomic, retain) UITableViewCell *doNotShowCell;
-@property (nonatomic, retain) NSMutableDictionary *call;
+@property (nonatomic, retain) MTCall *call;
 @end
 
 @implementation LocationPickerViewController
@@ -35,7 +35,7 @@
 @synthesize call;
 @synthesize doNotShowCell;
 
-- (id) initWithCall:(NSMutableDictionary *)theCall
+- (id) initWithCall:(MTCall *)theCall
 {
 	if ([super init]) 
 	{
@@ -45,11 +45,7 @@
 		// object. 
 		self.title = NSLocalizedString(@"Location", @"Select Location informatio type Type title");
 
-		if([call objectForKey:CallLocationType] == nil)
-		{
-			[call setObject:CallLocationTypeGoogleMaps forKey:CallLocationType];
-		}
-		self.type = [call objectForKey:CallLocationType];
+		self.type = call.locationLookupType;
 	}
 	return self;
 }
@@ -213,11 +209,11 @@
     switch(section)
     {
 		case 0:
-			return(googleMapsCell);
+			return googleMapsCell;
 		case 1:
-			return(manualCell);
+			return manualCell;
 		case 2:
-			return(doNotShowCell);
+			return doNotShowCell;
     }
 	return(nil);
 }

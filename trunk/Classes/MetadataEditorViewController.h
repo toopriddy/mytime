@@ -58,5 +58,6 @@
 - (void)navigationControlDone:(id)sender;
 
 - (NSString *)value;
-- (NSObject *)data;
+- (BOOL)boolValue;
+- (NSDate *)date;
 @end

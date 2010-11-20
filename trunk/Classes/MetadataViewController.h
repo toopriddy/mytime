@@ -15,14 +15,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MetadataCustomViewController.h"
+#import "MTAdditionalInformationType.h"
 
 @class MetadataViewController;
 
 @protocol MetadataViewControllerDelegate<NSObject>
 @required
-- (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata;
-- (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata;
-- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(NSDictionary *)metadata removeAll:(BOOL)removeAll;
+- (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata;
+- (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata;
+- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata removeAll:(BOOL)removeAll;
 @end
 
 #import "GenericTableViewController.h"

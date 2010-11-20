@@ -382,7 +382,7 @@
 	// get the element that is represented by the selected row.
 	MTCall *call = [self.fetchedResultsController objectAtIndexPath:newIndexPath];
 	
-	CallViewController *controller = [[[CallViewController alloc] initWithCall:call] autorelease];
+	CallViewController *controller = [[[CallViewController alloc] initWithCall:call newCall:NO] autorelease];
 	controller.delegate = self;
 	
 	self.indexPath = newIndexPath;
