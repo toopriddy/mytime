@@ -36,6 +36,8 @@
 	UIBarButtonItem *savedLeftButton;
 	BOOL savedHidesBackButton;
 	EmptyListViewController *emptyView;
+	
+	BOOL reloadData_;
     NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 }

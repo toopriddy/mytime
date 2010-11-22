@@ -1251,7 +1251,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	  propertiesToFetch:[NSArray array]
-																	withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																	withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
 																		  withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;

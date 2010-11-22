@@ -21,7 +21,7 @@
 #import "MovableTableViewIndex.h"
 #import "PSLocalization.h"
 #import "MTCall.h"
-
+#import "MTUser.h"
 
 
 @interface SortedCallsViewController ()
@@ -39,6 +39,12 @@
 
 - (void)updateEmptyView
 {
+	if(reloadData_)
+	{
+		reloadData_ = NO;
+		[self.tableView reloadData];
+	}
+	
 	if([self numberOfSectionsInTableView:nil] > 1 || [self tableView:nil numberOfRowsInSection:0])
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -74,11 +80,15 @@
 - (void)addCallCanceled
 {
 	[self dismissModalViewControllerAnimated:YES];
+#warning we should delete the call that was not added
 }
 
 - (void)navigationControlAdd:(id)sender
 {
-	CallViewController *controller = [[[CallViewController alloc] init] autorelease];
+	MTCall *call = [MTCall insertInManagedObjectContext:self.managedObjectContext];
+	call.user = [MTUser currentUser];
+	[call initializeNewCall];
+	CallViewController *controller = [[[CallViewController alloc] initWithCall:call newCall:YES] autorelease];
 	controller.delegate = self;
 	self.indexPath = nil;
 	
@@ -94,6 +104,13 @@
 	[temporaryBarButtonItem setTarget:self];
 	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 } 
+
+- (void)userChanged
+{
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	reloadData_ = YES;
+}
 
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource 
 {
@@ -119,20 +136,40 @@
 																					 action:@selector(navigationControlAdd:)] autorelease];
 			[self.navigationItem setRightBarButtonItem:button animated:NO];
 		}
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
 	return self;
 }
 
+- (void)removeViewMembers
+{
+	self.tableView.delegate = nil;
+	self.tableView.dataSource = nil;
+	self.tableView = nil;
+	self.emptyView = nil;
+	[ovController release];
+}
 
 - (void)dealloc 
 {
-	self.emptyView = nil;
-	[ovController release];
-	tableView.delegate = nil;
-	tableView.dataSource = nil;
-	[tableView release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[self removeViewMembers];
 	[dataSource release];
 	[super dealloc];
+}
+
+- (void)didReceiveMemoryWarning
+{
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	[super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+	[super viewDidUnload];
+	[self removeViewMembers];
 }
 
 - (void)loadView 

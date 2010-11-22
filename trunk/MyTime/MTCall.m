@@ -26,7 +26,10 @@
 { 
 	[super awakeFromInsert];
 	[self addMyObservers];
-	
+}
+
+- (void)initializeNewCall
+{
 	// lets go ahead and add the "Additional Information" always shown
 	MTUser *currentUser = [MTUser currentUser];
 	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
