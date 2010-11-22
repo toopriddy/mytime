@@ -14,5 +14,7 @@
 + (NSString *)topLineOfAddressWithHouseNumber:(NSString *)houseNumber apartmentNumber:(NSString *)apartmentNumber street:(NSString *)street;
 + (NSString *)bottomLineOfAddressWithCity:(NSString *)city state:(NSString *)state;
 
+- (void)initializeNewCall;
+
 // Custom logic goes here.
 @end

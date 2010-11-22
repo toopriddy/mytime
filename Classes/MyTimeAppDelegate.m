@@ -1061,7 +1061,9 @@ NSString *emailFormattedStringForSettings();
 				{
 					MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 					mtReturnVisit.call = mtCall;
+					
 					mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
+					NSLog(@"%@", mtReturnVisit.date);
 					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
 					if([returnVisit objectForKey:CallReturnVisitType])
 						mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];

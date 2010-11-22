@@ -10,7 +10,7 @@
 	[self addObserver:self forKeyPath:@"date" options:NSKeyValueObservingOptionNew context:nil]; 
 }
 
-- (void) awakeFromInsert 
+- (void)awakeFromInsert 
 {
 	[super awakeFromInsert];
 	self.date = [NSDate date];
