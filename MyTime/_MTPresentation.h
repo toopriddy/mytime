@@ -9,6 +9,7 @@
 
 
 
+
 @interface MTPresentationID : NSManagedObjectID {}
 @end
 
@@ -17,6 +18,16 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTPresentationID*)objectID;
+
+
+
+@property (nonatomic, retain) NSNumber *order;
+
+@property int orderValue;
+- (int)orderValue;
+- (void)setOrderValue:(int)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -49,6 +60,13 @@
 @end
 
 @interface _MTPresentation (CoreDataGeneratedPrimitiveAccessors)
+
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (int)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(int)value_;
+
 
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;

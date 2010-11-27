@@ -111,34 +111,15 @@
 
 
 
+@dynamic name;
+
+
+
+
+
+
 @dynamic locationLookupType;
 
-
-
-
-
-
-@dynamic deleted;
-
-
-
-- (BOOL)deletedValue {
-	NSNumber *result = [self deleted];
-	return [result boolValue];
-}
-
-- (void)setDeletedValue:(BOOL)value_ {
-	[self setDeleted:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveDeletedValue {
-	NSNumber *result = [self primitiveDeleted];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveDeletedValue:(BOOL)value_ {
-	[self setPrimitiveDeleted:[NSNumber numberWithBool:value_]];
-}
 
 
 
@@ -170,8 +151,34 @@
 
 
 
-@dynamic name;
+@dynamic uppercaseFirstLetterOfStreet;
 
+
+
+
+
+
+@dynamic deleted;
+
+
+
+- (BOOL)deletedValue {
+	NSNumber *result = [self deleted];
+	return [result boolValue];
+}
+
+- (void)setDeletedValue:(BOOL)value_ {
+	[self setDeleted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveDeletedValue {
+	NSNumber *result = [self primitiveDeleted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveDeletedValue:(BOOL)value_ {
+	[self setPrimitiveDeleted:[NSNumber numberWithBool:value_]];
+}
 
 
 

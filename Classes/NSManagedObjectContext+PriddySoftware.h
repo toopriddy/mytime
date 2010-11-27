@@ -19,6 +19,9 @@
 				   withSortDescriptors:(NSArray *)sortDescriptors
 						 withPredicate:(id)stringOrPredicate, ...;
 
+- (NSUInteger)countForFetchedObjectsForEntityName:(NSString *)newEntityName
+									withPredicate:(id)stringOrPredicate, ...;
+
 + (void)presentErrorDialog:(NSError *)error;
 
 @end

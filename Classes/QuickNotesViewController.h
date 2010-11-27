@@ -16,15 +16,17 @@
 #import <Foundation/Foundation.h>
 #import "GenericTableViewController.h"
 #import "NotesViewController.h"
+#import <CoreData/CoreData.h>
 
 @interface QuickNotesViewController : GenericTableViewController 
 {
-	NSMutableArray *returnVisitHistory;
 	id<NotesViewControllerDelegate> delegate;
 	BOOL editOnly;
+	NSManagedObjectContext *managedObjectContext;
 }
-@property (nonatomic, retain) NSMutableArray *returnVisitHistory;
 @property (nonatomic, assign) id<NotesViewControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL editOnly;
+
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @end

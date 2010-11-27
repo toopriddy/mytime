@@ -19,6 +19,10 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
 #import "UITableViewMultilineTextCell.h"
+#import "MTUser.h"
+#import "MTReturnVisit.h"
+#import "MTPresentation.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @interface QuickNotesCellController : NSObject<TableViewCellController>
@@ -132,7 +136,10 @@
 
 - (BOOL)isViewableWhenNotEditing
 {
- 	return [[[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes] count] != 0;
+	MTUser *currentUser = [MTUser currentUser];
+	NSManagedObjectContext *moc = currentUser.managedObjectContext;
+	return [moc countForFetchedObjectsForEntityName:[MTPresentation entityName] 
+									  withPredicate:@"user == %@", currentUser] != 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
@@ -153,17 +160,27 @@
 @interface OldQuickNotesCellController : QuickNotesCellController<NotesViewControllerDelegate>
 {
 	NSString *notes;
+	MTPresentation *presentation;
 	BOOL editing;
 	BOOL movable;
 	int row;
 	int section;
 }
 @property (nonatomic, retain) NSString *notes;
+@property (nonatomic, retain) MTPresentation *presentation;
 @property (nonatomic, assign) BOOL movable;
 @end
 @implementation OldQuickNotesCellController
 @synthesize notes;
+@synthesize presentation;
 @synthesize movable;
+
+- (void)dealloc
+{
+	self.notes = nil;
+	self.presentation = nil;
+	[super dealloc];
+}
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -172,21 +189,56 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-	// move the row
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *notesArray = [userSettings objectForKey:SettingsQuickNotes];
-
-	NSString *fromString = [[notesArray objectAtIndex:fromIndexPath.row] retain];
-	[notesArray removeObjectAtIndex:fromIndexPath.row];
-	[notesArray insertObject:fromString atIndex:toIndexPath.row];
-	[fromString release];
+	NSUInteger fromIndex = fromIndexPath.row;  
+    NSUInteger toIndex = toIndexPath.row;
+	NSManagedObjectContext *moc = self.presentation.managedObjectContext;
 	
-	[[Settings sharedInstance] saveData];																	
+	NSArray *presentations = [moc fetchObjectsForEntityName:[MTPresentation entityName]
+										  propertiesToFetch:[NSArray arrayWithObject:@"order"]
+										withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]] 
+											  withPredicate:@"user == %@", [MTUser currentUser]];
+	
+    self.presentation.orderValue = toIndex;
+	
+    NSUInteger start;
+	NSUInteger end;
+    int delta;
+	
+    if (fromIndex < toIndex) 
+	{
+        // move was down, need to shift up
+        delta = -1;
+        start = fromIndex + 1;
+        end = toIndex;
+    } 
+	else // fromIndex > toIndex
+	{ 
+        // move was up, need to shift down
+        delta = 1;
+        start = toIndex;
+        end = fromIndex - 1;
+    }
+	
+    for(NSUInteger i = start; i <= end; i++) 
+	{
+        MTPresentation *otherPresentation = [presentations objectAtIndex:i];  
+//        NSLog(@"Updated %@ / %@ from %i to %i", otherObject.name, otherObject.state, otherObject.displayOrderValue, otherObject.displayOrderValue + delta);  
+        otherPresentation.orderValue += delta;
+    }
+	
+	NSError *error = nil;
+	if (![self.presentation.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
 	
 	// move the cellController
 	GenericTableViewSectionController *fromSectionController = [self.delegate.displaySectionControllers objectAtIndex:fromIndexPath.section];
 	GenericTableViewSectionController *toSectionController = [self.delegate.displaySectionControllers objectAtIndex:toIndexPath.section];
-	NSObject *cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+	OldQuickNotesCellController *cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+
+	
 	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
 	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
 	[cellController release];
@@ -237,15 +289,15 @@
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if(editing)
 	{
-		NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-		NSMutableArray *quickNotes = [userSettings objectForKey:SettingsQuickNotes];
-		NSString *note = [NSString stringWithString:notesViewController.textView.text];
-		
-		[[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] objectAtIndex:row] setNotes:note];
+		self.notes = notesViewController.textView.text;
+		self.presentation.notes = self.notes;
 		
 		// now store the data and save it
-		[quickNotes replaceObjectAtIndex:row withObject:note];
-		[[Settings sharedInstance] saveData];
+		NSError *error = nil;
+		if (![self.presentation.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		
 		// reload the table
 		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
@@ -264,16 +316,18 @@
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableArray *quickNotes = [[[Settings sharedInstance] userSettings] objectForKey:SettingsQuickNotes];
-	
 	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %d", index);)
 		
-		[quickNotes removeObjectAtIndex:indexPath.row];
+		[self.presentation.managedObjectContext deleteObject:self.presentation];
 		
 		// save the data
-		[[Settings sharedInstance] saveData];
+		NSError *error = nil;
+		if (![self.presentation.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
 	}
@@ -335,24 +389,24 @@
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *quickNotes = [userSettings objectForKey:SettingsQuickNotes];
-	if(quickNotes == nil)
+
+	MTPresentation *presentation = [MTPresentation createMTPresentationInManagedObjectContext:self.delegate.managedObjectContext];
+	presentation.user = [MTUser currentUser];
+	presentation.notes = notesViewController.textView.text;
+	NSError *error = nil;
+	if (![self.delegate.managedObjectContext save:&error]) 
 	{
-		quickNotes = [NSMutableArray array];
-		[userSettings setObject:quickNotes forKey:SettingsQuickNotes];
+		[NSManagedObjectContext presentErrorDialog:error];
 	}
-	NSString *note = notesViewController.textView.text;
+	
 
 	OldQuickNotesCellController *cellController = [[[OldQuickNotesCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
-	cellController.notes = note;
-	[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] insertObject:cellController atIndex:quickNotes.count];
+	cellController.notes = presentation.notes;
+	cellController.presentation = presentation;
+	cellController.movable = YES;
+	[[[self.delegate.sectionControllers objectAtIndex:1] cellControllers] insertObject:cellController atIndex:row];
 
-	// now store the data and save it
-	[quickNotes addObject:[NSString stringWithString:note]];
-	[[Settings sharedInstance] saveData];
-	
 	// reload the table
 	[self.delegate updateWithoutReload];
 
@@ -398,13 +452,13 @@
 
 
 @implementation QuickNotesViewController
-@synthesize returnVisitHistory;
 @synthesize delegate;
 @synthesize editOnly;
+@synthesize managedObjectContext;
 
 - (void)dealloc
 {
-	self.returnVisitHistory = nil;
+	self.managedObjectContext = nil;
 	
 	[super dealloc];
 }
@@ -500,10 +554,8 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
+	NSManagedObjectContext *moc = self.managedObjectContext;
 	
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *notes = [userSettings objectForKey:SettingsQuickNotes];
-
 // Add A New Note section
 	{
 		GenericTableViewSectionController *sectionController = [[JustAddNoteSectionController alloc] init];
@@ -520,12 +572,16 @@
 		GenericTableViewSectionController *sectionController = [[FavoriteNotesSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
-		for(NSString *entry in notes)
+		for(MTPresentation *entry in [moc fetchObjectsForEntityName:[MTPresentation entityName]
+												  propertiesToFetch:nil 
+												withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]] 
+													  withPredicate:@"user == %@", [MTUser currentUser]])
 		{
 			OldQuickNotesCellController *cellController = [[OldQuickNotesCellController alloc] init];
 			cellController.delegate = self;
 			cellController.movable = YES;
-			cellController.notes = entry;
+			cellController.presentation = entry;
+			cellController.notes = entry.notes;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
@@ -541,19 +597,13 @@
 		GenericTableViewSectionController *sectionController = [[HistoryNotesSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
-		NSArray *tempReturnVisits = [[userSettings objectForKey:SettingsCalls] valueForKeyPath:CallReturnVisits];
-		NSMutableArray *returnVisits = [NSMutableArray array];
-		for(NSArray *entry in tempReturnVisits)
-		{
-			[returnVisits addObjectsFromArray:entry];
-		}
-		
-		self.returnVisitHistory = [NSMutableArray arrayWithArray:[returnVisits sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:CallReturnVisitDate ascending:NO] autorelease]]]];
-
 		int i = 0;
-		for(NSMutableDictionary *entry in self.returnVisitHistory)
+		for(MTReturnVisit *returnVisit in [moc fetchObjectsForEntityName:[MTReturnVisit entityName]
+													   propertiesToFetch:nil 
+													 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]] 
+														   withPredicate:@"call.user == %@", [MTUser currentUser]])
 		{
-			NSString *notes = [entry objectForKey:CallReturnVisitNotes];
+			NSString *notes = returnVisit.notes;
 			if(notes == nil || notes.length == 0)
 			{
 				continue;

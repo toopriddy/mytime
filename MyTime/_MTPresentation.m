@@ -29,6 +29,32 @@
 
 
 
+@dynamic order;
+
+
+
+- (int)orderValue {
+	NSNumber *result = [self order];
+	return [result intValue];
+}
+
+- (void)setOrderValue:(int)value_ {
+	[self setOrder:[NSNumber numberWithInt:value_]];
+}
+
+- (int)primitiveOrderValue {
+	NSNumber *result = [self primitiveOrder];
+	return [result intValue];
+}
+
+- (void)setPrimitiveOrderValue:(int)value_ {
+	[self setPrimitiveOrder:[NSNumber numberWithInt:value_]];
+}
+
+
+
+
+
 @dynamic notes;
 
 

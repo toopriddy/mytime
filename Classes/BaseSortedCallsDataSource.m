@@ -100,6 +100,11 @@ NSArray *sortByDate(NSArray *previousSorters)
 	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:NO]];
 }
 
+NSArray *sortByDeletedFlag(NSArray *previousSorters)
+{
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"deleted" ascending:NO]];
+}
+
 
 
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
@@ -117,7 +122,7 @@ NSArray *sortByDate(NSArray *previousSorters)
 	{
 		case CALLS_SORTED_BY_STREET:
 			// sort by street, city, then name
-			return @"street";
+			return @"uppercaseFirstLetterOfStreet";
 		case CALLS_SORTED_BY_CITY:
 			return @"city";
 		case CALLS_SORTED_BY_NAME:
@@ -159,7 +164,7 @@ NSArray *sortByDate(NSArray *previousSorters)
 			break;
 		case CALLS_SORTED_BY_STUDY:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deleted == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Stusy')", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deleted == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study')", currentUser];
 			break;
 		case CALLS_SORTED_BY_METADATA:
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];

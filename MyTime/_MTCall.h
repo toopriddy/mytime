@@ -22,6 +22,7 @@
 
 
 
+
 @interface MTCallID : NSManagedObjectID {}
 @end
 
@@ -91,19 +92,15 @@
 
 
 
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSString *locationLookupType;
 
 //- (BOOL)validateLocationLookupType:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *deleted;
-
-@property BOOL deletedValue;
-- (BOOL)deletedValue;
-- (void)setDeletedValue:(BOOL)value_;
-
-//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -117,9 +114,19 @@
 
 
 
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *uppercaseFirstLetterOfStreet;
 
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateUppercaseFirstLetterOfStreet:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *deleted;
+
+@property BOOL deletedValue;
+- (BOOL)deletedValue;
+- (void)setDeletedValue:(BOOL)value_;
+
+//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -196,15 +203,12 @@
 - (void)setPrimitiveLattitude:(NSDecimalNumber*)value;
 
 
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
 - (NSString*)primitiveLocationLookupType;
 - (void)setPrimitiveLocationLookupType:(NSString*)value;
-
-
-- (NSNumber*)primitiveDeleted;
-- (void)setPrimitiveDeleted:(NSNumber*)value;
-
-- (BOOL)primitiveDeletedValue;
-- (void)setPrimitiveDeletedValue:(BOOL)value_;
 
 
 - (NSNumber*)primitiveLocationAquired;
@@ -214,8 +218,15 @@
 - (void)setPrimitiveLocationAquiredValue:(BOOL)value_;
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSString*)primitiveUppercaseFirstLetterOfStreet;
+- (void)setPrimitiveUppercaseFirstLetterOfStreet:(NSString*)value;
+
+
+- (NSNumber*)primitiveDeleted;
+- (void)setPrimitiveDeleted:(NSNumber*)value;
+
+- (BOOL)primitiveDeletedValue;
+- (void)setPrimitiveDeletedValue:(BOOL)value_;
 
 
 

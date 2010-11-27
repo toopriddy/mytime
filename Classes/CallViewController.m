@@ -261,6 +261,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
+- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+	NSString *theText = [cell.value stringByReplacingCharactersInRange:range withString:string];
+	self.delegate.call.name = theText;
+	return YES;
+}
 @end
 
 /******************************************************************
@@ -427,7 +433,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		if(!(street.length == 0 &&
 			 city.length == 0 &&
 			 state.length == 0) ||
-		   !call.locationAquisitionAttemptedValue)
+		   call.locationAquired)
 		{
 			// pop up a alert sheet to display buttons to show in google maps?
 			//http://maps.google.com/?hl=en&q=kansas+city
@@ -474,10 +480,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			[[self navigationController] pushViewController:p animated:YES];
 #endif
 		}
-		else
-		{
-			[self.delegate.tableView deselectRowAtIndexPath:[self.delegate.tableView indexPathForSelectedRow] animated:YES];
-		}
+		[self.delegate.tableView deselectRowAtIndexPath:[self.delegate.tableView indexPathForSelectedRow] animated:YES];
 	}
 }
 
@@ -1294,6 +1297,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		// make the new call view 
 		QuickNotesViewController *p = [[[QuickNotesViewController alloc] init] autorelease];
 		p.delegate = self;
+		p.managedObjectContext = self.delegate.call.managedObjectContext;
 		[[self.delegate navigationController] pushViewController:p animated:YES];		
 		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
@@ -1454,7 +1458,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	   propertiesToFetch:[NSArray array]
-																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
 																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
@@ -1487,7 +1491,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	   propertiesToFetch:[NSArray array]
-																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
 																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
@@ -1930,7 +1934,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		_name = [[UITextField alloc] initWithFrame:CGRectZero];
 		_name.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		_name.returnKeyType = UIReturnKeyDone;
-		_name.delegate = self;
         // _name (make sure that it is initalized)
         //[_name setText:NSLocalizedString(@"Name", @"Name label for Call in editing mode")];
 		_name.placeholder = NSLocalizedString(@"Name", @"Name label for Call in editing mode");
@@ -1973,6 +1976,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 {
 	// Save the context.
 	NSError *error = nil;
+	[_call.managedObjectContext processPendingChanges];
 	if (![_call.managedObjectContext save:&error]) 
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
@@ -2159,14 +2163,6 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 {
 	[_name resignFirstResponder];
 }
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	NSString *theText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-	_call.name = theText;
-	return YES;
-}
-
 
 - (void)constructSectionControllers
 {
