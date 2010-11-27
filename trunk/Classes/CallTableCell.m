@@ -105,6 +105,7 @@
 	NSString *info = @"";
 	NSArray *returnVisits = [call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 															   propertiesToFetch:[NSArray arrayWithObject:@"date"]
+															 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
 																   withPredicate:[NSPredicate predicateWithFormat:@"(call == %@)", call]];
 	
 	if([returnVisits count])

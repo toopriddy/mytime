@@ -32,6 +32,8 @@
 {
 	// lets go ahead and add the "Additional Information" always shown
 	MTUser *currentUser = [MTUser currentUser];
+	self.user = currentUser;
+	self.deletedValue = NO;
 	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
 	{
 		if(infoType.alwaysShownValue)
@@ -151,4 +153,14 @@
 	return addressCityAndState_;
 }
 
+- (NSString *)uppercaseFirstLetterOfStreet 
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
+	NSString *street = self.street;
+	NSString *stringToReturn = @"";
+	if([street length])
+		stringToReturn = [[street uppercaseString] substringToIndex:1];
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
+    return stringToReturn;
+}
 @end

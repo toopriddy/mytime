@@ -270,6 +270,25 @@
 
 // UITableViewDataSource methods
 
+- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
+{
+	// it is only house number and apartment cell that uses this one, so lets scroll to the middle so that we will scroll up if this cell is selected
+	if(selected)
+	{
+		NSIndexPath *indexPath = [theTableView indexPathForCell:cell];
+		[theTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+	}
+}
+
+- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
+{
+	if(selected)
+	{
+		NSIndexPath *indexPath = [theTableView indexPathForCell:cell];
+		[theTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	}
+}
+
 #if 0
 - (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
 {

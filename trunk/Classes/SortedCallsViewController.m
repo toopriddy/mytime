@@ -86,8 +86,8 @@
 - (void)navigationControlAdd:(id)sender
 {
 	MTCall *call = [MTCall insertInManagedObjectContext:self.managedObjectContext];
-	call.user = [MTUser currentUser];
 	[call initializeNewCall];
+
 	CallViewController *controller = [[[CallViewController alloc] initWithCall:call newCall:YES] autorelease];
 	controller.delegate = self;
 	self.indexPath = nil;
@@ -469,13 +469,14 @@
 #pragma mark -
 #pragma mark Table view methods
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
     NSInteger count = [[self.fetchedResultsController sections] count];
     
-	if (count == 0) 
+//	if(count == 0) 
 	{
-		count = 1;
+//		count = 1;
 	}
 	
     return count;
@@ -486,7 +487,7 @@
 {
     NSInteger numberOfRows = 0;
 	
-    if ([[self.fetchedResultsController sections] count] > 0) 
+    if([[self.fetchedResultsController sections] count] > 0) 
 	{
         id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
         numberOfRows = [sectionInfo numberOfObjects];
@@ -540,7 +541,6 @@
     
 	NSArray *sortDescriptors = [dataSource sortDescriptors];
 	NSPredicate *filterPredicate = [dataSource predicate];
-//	MTUser *currentUser = [MTUser currentUser];
 	
 	// when we filter then we use a NSCompoundPredicate
     /*

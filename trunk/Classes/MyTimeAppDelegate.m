@@ -1151,7 +1151,7 @@ NSString *emailFormattedStringForSettings();
 		// QUICK NOTES
 		for(NSString *note in [user objectForKey:SettingsQuickNotes])
 		{
-			MTPresentation *mtPresentation = [MTPresentation insertInManagedObjectContext:self.managedObjectContext];
+			MTPresentation *mtPresentation = [MTPresentation createMTPresentationInManagedObjectContext:self.managedObjectContext];
 			mtPresentation.notes = note;
 			mtPresentation.user = mtUser;
 			mtPresentation.downloadedValue = NO;
@@ -1674,13 +1674,13 @@ NSString *emailFormattedStringForSettings();
 	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
 	streetViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:streetViewController] autorelease]];
-
+#if 0
 	// CALLS SORTED BY DATE
 	CallsSortedByDateViewDataSource *dateSortedDataSource = [[[CallsSortedByDateViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *dateViewController = [[[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource] autorelease];
 	dateViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
-
+#endif
 	// HOURS
 	HourViewController *hourViewController = [[[HourViewController alloc] initWithTimeTypeName:[[MTTimeType hoursType] name]] autorelease];
 	hourViewController.managedObjectContext = self.managedObjectContext;
@@ -1690,7 +1690,7 @@ NSString *emailFormattedStringForSettings();
 	StatisticsTableViewController *statisticsViewController = [[[StatisticsTableViewController alloc] init] autorelease];
 //	StatisticsViewController *statisticsViewController = [[[StatisticsViewController alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:statisticsViewController] autorelease]];
-
+#if 0
 	// CALLS SORTED BY CITY
 	CallsSortedByCityViewDataSource *citySortedDataSource = [[[CallsSortedByCityViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *cityViewController = [[[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource] autorelease];
@@ -1720,7 +1720,7 @@ NSString *emailFormattedStringForSettings();
 	SortedCallsViewController *deletedCallsStreetViewController = [[[SortedCallsViewController alloc] initWithDataSource:deletedCallsStreetSortedDataSource] autorelease];
 	deletedCallsStreetViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:deletedCallsStreetViewController] autorelease]];
-	
+#endif	
 	// ALL CALLS WEB VIEW
 	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];

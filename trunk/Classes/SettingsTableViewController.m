@@ -261,8 +261,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	MTSettings *settings = [MTSettings settings];
+		
 	QuickNotesViewController *viewController = [[[QuickNotesViewController alloc] init] autorelease];
 	viewController.editOnly = YES;
+	viewController.managedObjectContext = settings.managedObjectContext;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
