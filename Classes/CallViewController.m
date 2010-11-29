@@ -673,7 +673,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	self.delegate.forceReload = YES;
 }
 
-- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type
+- (void)metadataViewControllerRemoveMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type
 {
 	self.delegate.forceReload = YES;
 }

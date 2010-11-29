@@ -328,9 +328,11 @@ static MetadataInformation commonInformation[] = {
 		{
 			NSManagedObjectContext *moc = self.additionalInformationType.managedObjectContext;
 			MTAdditionalInformationType *type = self.additionalInformationType;
-			for(MTCall *call in [moc fetchObjectsForEntityName:[MTCall entityName] 
-											 propertiesToFetch:[NSArray arrayWithObject:@"name"]
-												 withPredicate:@"(user == %@) AND (additionalInformation.@count == 0 || (additionalInformation.@count > 0 && (NONE additionalInformation.type == %@)))", type.user, type])
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(user == %@) && (SUBQUERY(additionalInformation, $i, $i.type == %@).@count == 0)", type.user, type];
+			NSArray *calls = [moc fetchObjectsForEntityName:[MTCall entityName] 
+										  propertiesToFetch:[NSArray arrayWithObject:@"name"]
+											  withPredicate:predicate];
+			for(MTCall *call in calls)
 			{
 				MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:moc];
 				info.type = type;
@@ -343,7 +345,7 @@ static MetadataInformation commonInformation[] = {
 				[NSManagedObjectContext presentErrorDialog:error];
 			}
 			
-			// add the metadata to all of the calls
+			// Notify that we added the metadata to all of the calls
 			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerAddPreferredMetadata:metadata:)])
 			{
 				[self.delegate.delegate metadataViewControllerAddPreferredMetadata:self.delegate metadata:self.additionalInformationType];
