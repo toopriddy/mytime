@@ -16,6 +16,12 @@
 #import "MetadataViewController.h"
 #import "PublicationViewController.h"
 #import "Settings.h"
+#import "MTAdditionalInformation.h"
+#import "MTAdditionalInformationType.h"
+#import "MTCall.h"
+#import "MTUser.h"
+#import "MTMultipleChoice.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 #include "PSRemoveLocalizedString.h"
@@ -36,17 +42,27 @@ static MetadataInformation commonInformation[] = {
 #import "MetadataEditorViewController.h"
 #import "MetadataCustomViewController.h"
 
-@interface MetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate>
+@interface MetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate, UIAlertViewDelegate>
 {
+	MTAdditionalInformationType *_additionalInformationType;
 	MetadataViewController *delegate;
 	NSIndexPath *_indexPath;
+	BOOL alertViewDeletingOldValues;
+	BOOL alertViewNotAlwaysShown;
+	BOOL alertViewDeleting;
 }
+@property (nonatomic, retain) MTAdditionalInformationType *additionalInformationType;
 @property (nonatomic, assign) MetadataViewController *delegate;
 @property (nonatomic, retain) NSIndexPath *indexPath;
+@property (nonatomic, retain) MetadataCustomViewController *pendingMetadataCustomViewController;
+- (void)deleteAllAdditionalInformation;
+
 @end
 @implementation MetadataCellController
 @synthesize delegate;
 @synthesize indexPath = _indexPath;
+@synthesize additionalInformationType = _additionalInformationType;
+@synthesize pendingMetadataCustomViewController;
 
 - (void)dealloc
 {
@@ -62,9 +78,7 @@ static MetadataInformation commonInformation[] = {
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-
-	cell.textLabel.text = [[metadata objectAtIndex:indexPath.row] objectForKey:SettingsMetadataName];
+	cell.textLabel.text = self.additionalInformationType.name;
 
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	cell.accessoryType = UITableViewCellAccessoryNone;
@@ -72,42 +86,207 @@ static MetadataInformation commonInformation[] = {
 	return cell;
 }
 
+- (void)deleteAdditionalInformationType
+{
+	// delete all additional information associated with this type
+	[self deleteAllAdditionalInformation];
+	
+	// remove the Type
+	[self.additionalInformationType.managedObjectContext deleteObject:self.additionalInformationType];
+	NSError *error = nil;
+	if(![self.additionalInformationType.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	[self.delegate deleteDisplayRowAtIndexPath:self.indexPath];
+}
+
 // After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
 		int row = [indexPath row];
 		DEBUG(NSLog(@"tableView: editingStyleForRowAtIndexPath section=%d row=%d", indexPath.section, row);)
 
-		if(indexPath.section == 0)
+		// remove the metadata
+		// ask them if they want to remove all instances of the metadata from the calls			
+		BOOL used = NO;
+		for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
 		{
-			// remove something from shown metadata
-#warning should ask them if they want to remove all the metadata like this
-			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemovePreferredMetadata:metadata:removeAll:)])
+			if(info.value.length != 0)
 			{
-				[self.delegate.delegate metadataViewControllerRemovePreferredMetadata:self.delegate metadata:[metadata objectAtIndex:row] removeAll:NO];
+				used = YES;
+				break;
 			}
 		}
+		self.indexPath = indexPath;
 		
-		[metadata removeObjectAtIndex:row];
-		[[Settings sharedInstance] saveData];
+		if(used)
+		{
+			// lets leave this type hidden till we know what the user wants to do with it
+			alertViewDeleting = YES;
+	
+			UIAlertView *alertSheet = [[[UIAlertView alloc] initWithTitle:@""
+																  message:NSLocalizedString(@"This Additional Information was added to some of your calls. Do you want to remove it from your calls?", @"This message is presented when the user deletes an \"Additional Information\" that was added to at least one call and actually used") 
+																 delegate:self 
+														cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
+														otherButtonTitles:NSLocalizedString(@"Delete From All Calls", @"Button used to delete \"Additional Information\" from all calls with the message: This Additional Information was added to some of your calls. Do you want to remove it from your calls?"), nil] autorelease];
+			[alertSheet show];
+			return;
+		}
+		else
+		{
+			[self deleteAdditionalInformationType];
+		}
+	}
+}
 
-		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+- (void)setAdditionalInformationType:(MTAdditionalInformationType *)type forMetadataCustomViewController:(MetadataCustomViewController *)metadataCustomViewController
+{
+	if(self.additionalInformationType.typeValue == CHOICE)
+	{
+#warning fix me
+		self.additionalInformationType.multipleChoices = metadataCustomViewController.multipleChoices;
+	}
+	else
+	{
+		self.additionalInformationType.multipleChoices = nil;
+	}
+	self.additionalInformationType.typeValue = metadataCustomViewController.type;
+	self.additionalInformationType.name = metadataCustomViewController.name;
+	
+	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)deleteAllUnusedAdditionalInformation
+{
+	BOOL found = NO;
+	for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
+	{
+		if(info.value.length == 0)
+		{
+			found = YES;
+			[info.managedObjectContext deleteObject:info];
+		}
+	}
+	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemoveMetadata:metadata:)])
+	{
+		[self.delegate.delegate metadataViewControllerRemoveMetadata:self.delegate metadata:self.additionalInformationType];
+	}
+	
+	if(found)
+	{
+		NSError *error = nil;
+		if(![self.additionalInformationType.managedObjectContext save:&error])
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+	}
+}
+
+
+- (void)deleteAllAdditionalInformation
+{
+	for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
+	{
+		[info.managedObjectContext deleteObject:info];
+	}
+	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemoveMetadata:metadata:)])
+	{
+		[self.delegate.delegate metadataViewControllerRemoveMetadata:self.delegate metadata:self.additionalInformationType];
+	}
+	
+	NSError *error = nil;
+	if(![self.additionalInformationType.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(alertViewDeletingOldValues)
+	{
+		alertViewDeletingOldValues = NO;
+		if(buttonIndex == 0)
+		{
+			for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
+			{
+				info.booleanValue = NO;
+				info.date = nil;
+				info.value = @"";
+				info.number = nil;
+			}
+			[self setAdditionalInformationType:self.additionalInformationType forMetadataCustomViewController:self.pendingMetadataCustomViewController];
+			[self.delegate.navigationController popViewControllerAnimated:YES];
+		}
+		else
+		{
+			// do nothing, and dont pop the view controller
+		}
+	}
+	else if(alertViewNotAlwaysShown)
+	{
+		alertViewNotAlwaysShown = NO;
+		switch(buttonIndex)
+		{
+			case 0:
+				[self deleteAllUnusedAdditionalInformation];
+				break;
+			case 1:
+				[self deleteAllAdditionalInformation];
+				break;
+			default:
+				break;
+		}
+	}
+	else if(alertViewDeleting)
+	{
+		if(buttonIndex == 0)
+		{
+			[self deleteAdditionalInformationType];
+		}
+		else
+		{
+			[self.delegate updateAndReload];
+		}
 	}
 }
 
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-	NSMutableArray *data = metadataCustomViewController.type == CHOICE ? [NSMutableArray arrayWithArray:metadataCustomViewController.data] : nil;
-	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
-								  [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
-								  data, SettingsMetadataData, nil];
-	NSLog(@"Adding\n%@", entry);
-	[metadata replaceObjectAtIndex:self.indexPath.row withObject:entry];
-	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	if(self.additionalInformationType.typeValue != metadataCustomViewController.type)
+	{
+		// they changed the type of this particular additional information
+		// make sure that we fix the incompatible versions
+		switch(metadataCustomViewController.type)
+		{
+			case DATE:
+			case NUMBER:
+			case SWITCH:
+			{
+				alertViewDeletingOldValues = YES;
+				self.pendingMetadataCustomViewController = metadataCustomViewController;
+				// need to kick off a question to the user if they really want to delete all of the information in previously used AdditionalInformation
+				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+				alertSheet.delegate = self;
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"YES", @"YES button")];
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"NO", @"NO button")];
+				alertSheet.title = NSLocalizedString(@"You have changed the type of the Additional Information, this will reset any values you are currently using in any of your calls.  Are you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"");
+				[alertSheet show];
+				return;	
+			}
+			default:
+				// we can let the others go and just have their values replaced with the other applicable data
+				break;
+		}
+	}
+	
+	[self setAdditionalInformationType:self.additionalInformationType forMetadataCustomViewController:metadataCustomViewController];
+	
+	[self.delegate.navigationController popViewControllerAnimated:YES];
+
 }
 
 // Called after the user changes the selection.
@@ -115,25 +294,21 @@ static MetadataInformation commonInformation[] = {
 {
 	if(tableView.editing)
 	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
 		self.indexPath = [[indexPath copy] autorelease];
-		int row = indexPath.row;
-		NSMutableDictionary *metadataDictionary = [metadata objectAtIndex:row];
-		MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithName:[metadataDictionary objectForKey:SettingsMetadataName] 
-																						 type:[[metadataDictionary objectForKey:SettingsMetadataType] intValue]
-											                                             data:[metadataDictionary objectForKey:SettingsMetadataData]] autorelease];
+		MTAdditionalInformationType *type = self.additionalInformationType;
+		MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithName:type.name
+																						 type:type.typeValue
+																			  multipleChoices:type.multipleChoices] autorelease];
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];
 		[self.delegate retainObject:self whileViewControllerIsManaged:p];
 	}
 	else
 	{
-		NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
 		if(self.delegate.delegate)
 		{
-			[self.delegate.delegate metadataViewControllerAdd:self.delegate metadata:[metadata objectAtIndex:indexPath.row]];
+			[self.delegate.delegate metadataViewControllerAdd:self.delegate metadata:self.additionalInformationType];
 		}
-		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
 }
 
@@ -144,38 +319,67 @@ static MetadataInformation commonInformation[] = {
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-	NSMutableArray *fromMetadata;
-	NSMutableArray *toMetadata;
 	// move the row
-	fromMetadata = [[[Settings sharedInstance] userSettings] objectForKey:(fromIndexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-	toMetadata = [[[Settings sharedInstance] userSettings] objectForKey:(toIndexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-	NSMutableDictionary *entry = [[fromMetadata objectAtIndex:fromIndexPath.row] retain];
-	[fromMetadata removeObjectAtIndex:fromIndexPath.row];
-	[toMetadata insertObject:entry atIndex:toIndexPath.row];
+	self.additionalInformationType.alwaysShownValue = toIndexPath.section == 0;
 
 	if(fromIndexPath.section != toIndexPath.section)
 	{
 		if(toIndexPath.section == 0)
 		{
+			NSManagedObjectContext *moc = self.additionalInformationType.managedObjectContext;
+			MTAdditionalInformationType *type = self.additionalInformationType;
+			for(MTCall *call in [moc fetchObjectsForEntityName:[MTCall entityName] 
+											 propertiesToFetch:[NSArray arrayWithObject:@"name"]
+												 withPredicate:@"(user == %@) AND (additionalInformation.@count == 0 || (additionalInformation.@count > 0 && (NONE additionalInformation.type == %@)))", type.user, type])
+			{
+				MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:moc];
+				info.type = type;
+				info.call = call;
+			}
+			
+			NSError *error = nil;
+			if(![self.additionalInformationType.managedObjectContext save:&error])
+			{
+				[NSManagedObjectContext presentErrorDialog:error];
+			}
+			
 			// add the metadata to all of the calls
 			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerAddPreferredMetadata:metadata:)])
 			{
-				[self.delegate.delegate metadataViewControllerAddPreferredMetadata:self.delegate metadata:entry];
+				[self.delegate.delegate metadataViewControllerAddPreferredMetadata:self.delegate metadata:self.additionalInformationType];
 			}
 		}
 		else
 		{
 			// remove the metadata
-# warning we really should ask them if they want to remove all instances of the metadata from the calls			
-			if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(metadataViewControllerRemovePreferredMetadata:metadata:removeAll:)])
+			// ask them if they want to remove all instances of the metadata from the calls			
+			BOOL used = NO;
+			for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
 			{
-				[self.delegate.delegate metadataViewControllerRemovePreferredMetadata:self.delegate metadata:entry removeAll:NO];
+				if(info.value.length != 0)
+				{
+					used = YES;
+					break;
+				}
+			}
+			
+			if(used)
+			{
+				alertViewNotAlwaysShown = YES;
+				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+				alertSheet.delegate = self;
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"Remove Unused", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"Remove All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"Leave All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
+				alertSheet.title = NSLocalizedString(@"This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?", @"If the user has added this \"Additional Information\" to the \"Always Shown\" section then MyTime adds this additional information to all of the calls, so when the user wants to remove this particular \"Additional Information\" from the always shown section they have a choice to remove all of the additional information from their calls or just the additional information that has not already been filled out in their calls");
+				[alertSheet show];
+			}
+			else
+			{
+				[self deleteAllAdditionalInformation];
 			}
 		}
 	}
-	
-	[entry release];
-	[[Settings sharedInstance] saveData];																	
 	
 	// move the cellController
 	GenericTableViewSectionController *fromSectionController = [self.delegate.sectionControllers objectAtIndex:fromIndexPath.section];
@@ -184,12 +388,40 @@ static MetadataInformation commonInformation[] = {
 	[fromSectionController.cellControllers removeObjectAtIndex:fromIndexPath.row];
 	[toSectionController.cellControllers insertObject:cellController atIndex:toIndexPath.row];
 	[cellController release];
-
+	
 	// move the cellController in the displayList (the main list and the display list are the same)
 	cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
 	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
 	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
 	[cellController release];
+
+	// now to reorder the AdditionalInformationTypes
+	int i = 0; 
+	for(MetadataCellController *cell in fromSectionController.displayCellControllers)
+	{
+		if([cell isKindOfClass:[MetadataCellController class]])
+		{
+			cell.additionalInformationType.orderValue = i++;
+		}
+	}
+	// now rearrange the toSectionController if it was modified
+	if(fromSectionController != toSectionController)
+	{
+		i = 0;
+		for(MetadataCellController *cell in toSectionController.displayCellControllers)
+		{
+			if([cell isKindOfClass:[MetadataCellController class]])
+			{
+				cell.additionalInformationType.orderValue = i++;
+			}
+		}
+	}
+	
+	NSError *error = nil;
+	if(![self.additionalInformationType.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 }
 @end
 
@@ -244,20 +476,26 @@ static MetadataInformation commonInformation[] = {
 
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:(self.indexPath.section == 0 ? SettingsPreferredMetadata : SettingsOtherMetadata)];
-	NSMutableArray *data = metadataCustomViewController.type == CHOICE ? [NSMutableArray arrayWithArray:metadataCustomViewController.data] : nil;
-	NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObjectsAndKeys:metadataCustomViewController.name, SettingsMetadataName,
-	         							                                           [NSNumber numberWithInt:metadataCustomViewController.type], SettingsMetadataType,
-																				   data, SettingsMetadataData, nil];
-	[metadata addObject:entry];
-	[[Settings sharedInstance] saveData];																	
+	MTUser *currentUser = [MTUser currentUser];
+	MTAdditionalInformationType *type = [MTAdditionalInformationType insertAdditionalInformationType:metadataCustomViewController.type 
+																								name:metadataCustomViewController.name 
+																								user:currentUser];
+	type.alwaysShownValue = self.indexPath.section == 0;
+	type.hidden = NO;
+	NSError *error = nil;
+	if(![type.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	MetadataCellController *cellController = [[[MetadataCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
+	cellController.additionalInformationType = type;
 
 	GenericTableViewSectionController *sectionController = [self.delegate.sectionControllers objectAtIndex:self.indexPath.section];
 	[sectionController.cellControllers insertObject:cellController atIndex:(sectionController.cellControllers.count - 1)];
 	[self.delegate updateWithoutReload];
+	[self.delegate.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -297,18 +535,18 @@ static MetadataInformation commonInformation[] = {
 
 @synthesize delegate;
 
-+ (void)fixMetadata
++ (void)fixMetadataForUser:(NSMutableDictionary *)user
 {
-	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
-//#warning so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
+	NSMutableArray *preferredMetadata = [user objectForKey:SettingsPreferredMetadata];
+	// so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
 	if([preferredMetadata isKindOfClass:[NSString class]])
 	{
-		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsSortedByMetadata];
+		[(NSMutableDictionary *)user setObject:preferredMetadata forKey:SettingsSortedByMetadata];
 		preferredMetadata = nil;
 	}
-// end remove	
-	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMetadata];
+	// end remove	
+	NSMutableArray *otherMetadata = [user objectForKey:SettingsOtherMetadata];
+	NSMutableArray *metadata = [user objectForKey:SettingsMetadata];
 	if(metadata != nil || otherMetadata == nil)
 	{
 		otherMetadata = [NSMutableArray array];
@@ -318,24 +556,29 @@ static MetadataInformation commonInformation[] = {
 									  [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
 									  nil]];
 		}
-		[[[Settings sharedInstance] userSettings] setObject:otherMetadata forKey:SettingsOtherMetadata];
-		[[[Settings sharedInstance] userSettings] removeObjectForKey:SettingsMetadata];
+		[(NSMutableDictionary *)user setObject:otherMetadata forKey:SettingsOtherMetadata];
+		[(NSMutableDictionary *)user removeObjectForKey:SettingsMetadata];
 	}
 	if(preferredMetadata == nil)
 	{
 		preferredMetadata = [NSMutableArray array];
-		[[[Settings sharedInstance] userSettings] setObject:preferredMetadata forKey:SettingsPreferredMetadata];
+		[(NSMutableDictionary *)user setObject:preferredMetadata forKey:SettingsPreferredMetadata];
 	}
+}
+
++ (void)fixMetadata
+{
+	[MetadataViewController fixMetadataForUser:[[Settings sharedInstance] userSettings]];
 }
 
 + (NSArray *)metadataNames
 {
-	[[self class] fixMetadata];
-	NSMutableArray *array = [NSMutableArray array];
-	NSMutableArray *metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
-	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
-	metadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
-	[array addObjectsFromArray:[metadata valueForKey:SettingsMetadataName]];
+	MTUser *currentUser = [MTUser currentUser];
+	NSManagedObjectContext *moc = currentUser.managedObjectContext;
+	NSArray *array = [[moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+								   propertiesToFetch:nil 
+								 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:NO]]
+									   withPredicate:@"user == %@ && hidden == NO ", currentUser] valueForKey:@"name"];
 	return array;
 }
 
@@ -425,11 +668,8 @@ static MetadataInformation commonInformation[] = {
 {
 	[super constructSectionControllers];
 
-	[[self class] fixMetadata];
-
-	// we have to convert from the old style Metadata to the new one
-	NSMutableArray *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata];
-	NSMutableArray *otherMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata];
+	MTUser *currentUser = [MTUser currentUser];
+	NSManagedObjectContext *moc = currentUser.managedObjectContext;
 	
 	GenericTableViewSectionController *sectionController;
 
@@ -440,10 +680,14 @@ static MetadataInformation commonInformation[] = {
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 
-	for(NSMutableDictionary *entry in preferredMetadata)
+	for(MTAdditionalInformationType *entry in [moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+														   propertiesToFetch:nil 
+														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+															   withPredicate:@"user == %@ && alwaysShown == YES && hidden == NO ", currentUser])
 	{
 		MetadataCellController *cellController = [[MetadataCellController alloc] init];
 		cellController.delegate = self;
+		cellController.additionalInformationType = entry;
 		[sectionController.cellControllers addObject:cellController];
 		[cellController release];
 	}
@@ -454,37 +698,22 @@ static MetadataInformation commonInformation[] = {
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 
-	for(NSMutableDictionary *entry in otherMetadata)
+	for(MTAdditionalInformationType *entry in [moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+														   propertiesToFetch:nil 
+														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+															   withPredicate:@"user == %@ && alwaysShown == NO && hidden == NO ", currentUser])
 	{
 		MetadataCellController *cellController = [[MetadataCellController alloc] init];
 		cellController.delegate = self;
+		cellController.additionalInformationType = entry;
 		[sectionController.cellControllers addObject:cellController];
 		[cellController release];
 	}
+	
 	// add the "Add Additional User" cell at the end
 	AddMetadataCellController *addCellController = [[AddMetadataCellController alloc] init];
 	addCellController.delegate = self;
 	[sectionController.cellControllers addObject:addCellController];
 	[addCellController release];
-}
-
-
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
 }
 @end

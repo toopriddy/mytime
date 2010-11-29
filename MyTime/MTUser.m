@@ -22,6 +22,8 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	return nil;
 }
 
+#warning need to initialize the user with MTAdditionalInformationType defaults
+
 + (MTUser *)getOrCreateUserWithName:(NSString *)name
 {
 	MTUser *user = [MTUser userWithName:name];

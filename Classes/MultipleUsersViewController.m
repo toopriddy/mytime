@@ -179,6 +179,7 @@
 	MultipleUsersViewController *delegate;
 }
 @property (nonatomic, assign) MultipleUsersViewController *delegate;
+- (BOOL)addUser:(NSString *)name;
 @end
 @implementation AddMultipleUsersCellController
 @synthesize delegate;

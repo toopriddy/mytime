@@ -31,6 +31,7 @@
 #import "SettingsTableViewController.h"
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "MapViewController.h"
+#import "MetadataViewController.h"
 #import "TutorialViewController.h"
 #import "Settings.h"
 #import "Geocache.h"
@@ -919,6 +920,12 @@ NSString *emailFormattedStringForSettings();
 	{
 		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
 	
+		
+		// FIX METADATA
+		{
+			[MetadataViewController fixMetadataForUser:(NSMutableDictionary *)user];
+		}		
+		
 		// SECRETARY SETTINGS
 		mtUser.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
 		mtUser.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];

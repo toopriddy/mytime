@@ -502,7 +502,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 			}
 		}
 		NSArray *keys = [values allKeys];
-		[self.delegate.data addObjectsFromArray:keys];
+		[self.delegate.multipleChoices addObjectsFromArray:keys];
 		[self.delegate updateAndReload];
 	}
 	else
@@ -532,43 +532,42 @@ NSString *localizedNameForMetadataType(MetadataType type)
 @synthesize nameNeedsFocus;
 @synthesize selected;
 @synthesize startedWithSelected;
-@synthesize data;
+@synthesize multipleChoices = multipleChoices_;
 
 - (void)navigationControlDone:(id)sender
 {
 	// dont save the info if the selection is not Multiple Choice
 	if(commonInformation[selected].type != CHOICE)
 	{
-		self.data = nil;
+		self.multipleChoices = nil;
 	}
 	if(delegate && selected >= 0)
 	{
 		[delegate metadataCustomViewControllerDone:self];
 	}
-	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)dealloc
 {
 	self.name = nil;
-	self.data = nil;
+	self.multipleChoices = nil;
 	
 	[super dealloc];
 }
 
 - (id) init
 {
-	return [self initWithName:nil type:-1 data:nil];
+	return [self initWithName:nil type:-1 multipleChoices:nil];
 }
 
-- (id) initWithName:(NSString *)theName type:(MetadataType)type data:(NSMutableArray *)theData
+- (id) initWithName:(NSString *)theName type:(MetadataType)type multipleChoices:(NSMutableArray *)theData
 {
 	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
-		self.data = theData;
-		if(self.data == nil)
+		self.multipleChoices = theData;
+		if(self.multipleChoices == nil)
 		{
-			self.data = [NSMutableArray array];
+			self.multipleChoices = [NSMutableArray array];
 		}
 		
 		self.name = [NSMutableString stringWithString:theName ? theName : @""];
@@ -705,7 +704,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 		[sectionController release];
 
 
-		[MetadataCustomViewController addCellMultipleChoiceCellControllersToSectionController:sectionController tableController:self choices:self.data metadataDelegate:nil];
+		[MetadataCustomViewController addCellMultipleChoiceCellControllersToSectionController:sectionController tableController:self choices:self.multipleChoices metadataDelegate:nil];
 	}
 	// Type Section
 	{

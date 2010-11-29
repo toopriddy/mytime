@@ -60,13 +60,13 @@ NSString *localizedNameForMetadataType(MetadataType type);
 	int selected;
 	int startedWithSelected;
 	BOOL nameNeedsFocus;
-	NSMutableArray *data;
+	NSMutableArray *multipleChoices_;
 }
 
 @property (nonatomic, assign) id<MetadataCustomViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSMutableString *name;
 @property (readonly, getter = type) MetadataType type;
-@property (nonatomic, retain) NSMutableArray *data;
+@property (nonatomic, retain) NSMutableArray *multipleChoices;
 
 /**
  * initialize this view with the address information
@@ -75,7 +75,7 @@ NSString *localizedNameForMetadataType(MetadataType type);
  * @returns self
  */
 - (id) init;
-- (id) initWithName:(NSString *)theName type:(MetadataType)type data:(NSMutableArray *)theData;
+- (id) initWithName:(NSString *)theName type:(MetadataType)type multipleChoices:(NSSet *)multipleChoices;
 
 + (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController choices:(NSMutableArray *)data metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate;
 

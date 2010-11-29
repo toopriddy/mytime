@@ -2,6 +2,7 @@
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 
+#define ORDER_INCREMENT 100.0
 @implementation MTAdditionalInformationType
 
 + (MTAdditionalInformationType *)additionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user
@@ -31,7 +32,7 @@
 	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:managedObjectContext];
 	mtAdditionalInformationType.typeValue = type;
 	mtAdditionalInformationType.name = name;
-	mtAdditionalInformationType.orderValue = order;
+	mtAdditionalInformationType.orderValue = order + ORDER_INCREMENT;
 	mtAdditionalInformationType.alwaysShownValue = NO;
 	mtAdditionalInformationType.user = user;
 	
