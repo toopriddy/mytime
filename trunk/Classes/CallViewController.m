@@ -670,31 +670,11 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type
 {
-	NSManagedObjectContext *moc = self.delegate.call.managedObjectContext;
-	for(MTCall *call in [moc fetchObjectsForEntityName:[MTCall entityName] 
-									 propertiesToFetch:[NSArray array]
-										 withPredicate:@"user == %@ AND !(ANY additionalInformation.type == %@)", call.user, type])
-	{
-		MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:moc];
-		info.type = type;
-		info.call = call;
-	}
-	
-	[self.delegate save];
 	self.delegate.forceReload = YES;
 }
 
-- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type removeAll:(BOOL)removeAll
+- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)type
 {
-	NSManagedObjectContext *moc = self.delegate.call.managedObjectContext;
-	for(MTAdditionalInformation *info in [moc fetchObjectsForEntityName:[MTAdditionalInformation entityName] 
-													  propertiesToFetch:[NSArray array]
-														  withPredicate:@"call.user == %@ AND type == %@", self.delegate.call.user, type])
-	{
-		[moc deleteObject:info];
-	}
-	
-	[self.delegate save];
 	self.delegate.forceReload = YES;
 }
 
@@ -704,6 +684,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	MTCall *call = self.delegate.call;
 	NSManagedObjectContext *moc = call.managedObjectContext;
 	MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:moc];
+	info.call = self.delegate.call;
+	info.type = type;
 	
 	switch(info.type.typeValue)
 	{
@@ -745,6 +727,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[[[self.delegate.displaySectionControllers objectAtIndex:self.indexPath.section] cellControllers] insertObject:cellController atIndex:self.indexPath.row];
 	
 	[self.delegate save];
+
+	[self.delegate.navigationController popViewControllerAnimated:YES];
 
 	[self.delegate updateWithoutReload];
 }
@@ -961,7 +945,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				{
 					case CHOICE:
 					{
-						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value choices:self.metadata.type.multipleChoices] autorelease];
+						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value data:self.metadata.type.multipleChoices] autorelease];
 						p.delegate = self;
 						
 						[[self.delegate navigationController] pushViewController:p animated:YES];		

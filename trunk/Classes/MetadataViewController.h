@@ -23,7 +23,7 @@
 @required
 - (void)metadataViewControllerAdd:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata;
 - (void)metadataViewControllerAddPreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata;
-- (void)metadataViewControllerRemovePreferredMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata removeAll:(BOOL)removeAll;
+- (void)metadataViewControllerRemoveMetadata:(MetadataViewController *)metadataViewController metadata:(MTAdditionalInformationType *)metadata;
 @end
 
 #import "GenericTableViewController.h"
@@ -35,6 +35,7 @@
 @property (nonatomic,assign) id<MetadataViewControllerDelegate> delegate;
 
 + (NSArray *)metadataNames;
++ (void)fixMetadataForUser:(NSMutableDictionary *)user;
 
 /**
  * initialize this view with the address information
