@@ -18,6 +18,7 @@
 #import "Settings.h"
 #import "MTAdditionalInformation.h"
 #import "MTAdditionalInformationType.h"
+#import "MyTimeAppDelegate.h"
 #import "MTCall.h"
 #import "MTUser.h"
 #import "MTMultipleChoice.h"
@@ -42,7 +43,7 @@ static MetadataInformation commonInformation[] = {
 #import "MetadataEditorViewController.h"
 #import "MetadataCustomViewController.h"
 
-@interface MetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate, UIAlertViewDelegate>
+@interface MetadataCellController : NSObject<TableViewCellController, MetadataCustomViewControllerDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 {
 	MTAdditionalInformationType *_additionalInformationType;
 	MetadataViewController *delegate;
@@ -126,13 +127,12 @@ static MetadataInformation commonInformation[] = {
 		{
 			// lets leave this type hidden till we know what the user wants to do with it
 			alertViewDeleting = YES;
-	
-			UIAlertView *alertSheet = [[[UIAlertView alloc] initWithTitle:@""
-																  message:NSLocalizedString(@"This Additional Information was added to some of your calls. Do you want to remove it from your calls?", @"This message is presented when the user deletes an \"Additional Information\" that was added to at least one call and actually used") 
-																 delegate:self 
-														cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
-														otherButtonTitles:NSLocalizedString(@"Delete From All Calls", @"Button used to delete \"Additional Information\" from all calls with the message: This Additional Information was added to some of your calls. Do you want to remove it from your calls?"), nil] autorelease];
-			[alertSheet show];
+			UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"This Additional Information was added to some of your calls. Do you want to remove it from your calls?", @"This message is presented when the user deletes an \"Additional Information\" that was added to at least one call and actually used") 
+																	  delegate:self 
+															 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
+														destructiveButtonTitle:NSLocalizedString(@"Delete From All Calls", @"Button used to delete \"Additional Information\" from all calls with the message: This Additional Information was added to some of your calls. Do you want to remove it from your calls?")
+															 otherButtonTitles:nil] autorelease];
+			[actionSheet showInView:[[MyTimeAppDelegate sharedInstance] window]];
 			return;
 		}
 		else
@@ -155,6 +155,14 @@ static MetadataInformation commonInformation[] = {
 	}
 	self.additionalInformationType.typeValue = metadataCustomViewController.type;
 	self.additionalInformationType.name = metadataCustomViewController.name;
+	
+#warning need to kick out a message that the additionalInformationType has changed and the user needs to redisplay a value
+	
+	NSError *error = nil;
+	if(![self.additionalInformationType.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -204,7 +212,7 @@ static MetadataInformation commonInformation[] = {
 	}
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if(alertViewDeletingOldValues)
 	{
@@ -232,10 +240,10 @@ static MetadataInformation commonInformation[] = {
 		switch(buttonIndex)
 		{
 			case 0:
-				[self deleteAllUnusedAdditionalInformation];
+				[self deleteAllAdditionalInformation];
 				break;
 			case 1:
-				[self deleteAllAdditionalInformation];
+				[self deleteAllUnusedAdditionalInformation];
 				break;
 			default:
 				break;
@@ -258,28 +266,41 @@ static MetadataInformation commonInformation[] = {
 {
 	if(self.additionalInformationType.typeValue != metadataCustomViewController.type)
 	{
-		// they changed the type of this particular additional information
-		// make sure that we fix the incompatible versions
-		switch(metadataCustomViewController.type)
+		BOOL used = NO;
+		for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
 		{
-			case DATE:
-			case NUMBER:
-			case SWITCH:
+			if(info.value.length != 0)
 			{
-				alertViewDeletingOldValues = YES;
-				self.pendingMetadataCustomViewController = metadataCustomViewController;
-				// need to kick off a question to the user if they really want to delete all of the information in previously used AdditionalInformation
-				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-				alertSheet.delegate = self;
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"YES", @"YES button")];
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"NO", @"NO button")];
-				alertSheet.title = NSLocalizedString(@"You have changed the type of the Additional Information, this will reset any values you are currently using in any of your calls.  Are you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"");
-				[alertSheet show];
-				return;	
-			}
-			default:
-				// we can let the others go and just have their values replaced with the other applicable data
+				used = YES;
 				break;
+			}
+		}
+		
+//		if(used)
+		{
+			// they changed the type of this particular additional information
+			// make sure that we fix the incompatible versions
+			switch(metadataCustomViewController.type)
+			{
+				case DATE:
+				case NUMBER:
+				case SWITCH:
+				{
+					alertViewDeletingOldValues = YES;
+					self.pendingMetadataCustomViewController = metadataCustomViewController;
+					// need to kick off a question to the user if they really want to delete all of the information in previously used AdditionalInformation
+					UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You have changed the type of an Additional Information which is currently being, this will reset any values you are currently using in any of your calls. \nAre you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"")
+																			  delegate:self 
+																	 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
+																destructiveButtonTitle:NSLocalizedString(@"Yes change and reset data", @"YES button to change the type of additional information from the dialog: You have changed the type of the Additional Information, this will reset any values you are currently using in any of your calls.  Are you sure you want to do this?")
+																	 otherButtonTitles:nil] autorelease];
+					[actionSheet showInView:[[MyTimeAppDelegate sharedInstance] window]];
+					return;	
+				}
+				default:
+					// we can let the others go and just have their values replaced with the other applicable data
+					break;
+			}
 		}
 	}
 	
@@ -368,13 +389,12 @@ static MetadataInformation commonInformation[] = {
 			if(used)
 			{
 				alertViewNotAlwaysShown = YES;
-				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-				alertSheet.delegate = self;
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"Remove Unused", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"Remove All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"Leave All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")];
-				alertSheet.title = NSLocalizedString(@"This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?", @"If the user has added this \"Additional Information\" to the \"Always Shown\" section then MyTime adds this additional information to all of the calls, so when the user wants to remove this particular \"Additional Information\" from the always shown section they have a choice to remove all of the additional information from their calls or just the additional information that has not already been filled out in their calls");
-				[alertSheet show];
+				UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?", @"If the user has added this \"Additional Information\" to the \"Always Shown\" section then MyTime adds this additional information to all of the calls, so when the user wants to remove this particular \"Additional Information\" from the always shown section they have a choice to remove all of the additional information from their calls or just the additional information that has not already been filled out in their calls")
+																		  delegate:self 
+																 cancelButtonTitle:NSLocalizedString(@"Leave All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")
+															destructiveButtonTitle:NSLocalizedString(@"Remove All", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?")
+																 otherButtonTitles:NSLocalizedString(@"Remove Unused", @"Button used in the Alert View that is presented for:This Additional Information was added to all of your calls, do you want to remove it from all of your calls, or just remove the unused values from your calls?"), nil] autorelease];
+				[actionSheet showInView:[[MyTimeAppDelegate sharedInstance] window]];
 			}
 			else
 			{
@@ -483,7 +503,7 @@ static MetadataInformation commonInformation[] = {
 																								name:metadataCustomViewController.name 
 																								user:currentUser];
 	type.alwaysShownValue = self.indexPath.section == 0;
-	type.hidden = NO;
+	type.hiddenValue = NO;
 	NSError *error = nil;
 	if(![type.managedObjectContext save:&error])
 	{
