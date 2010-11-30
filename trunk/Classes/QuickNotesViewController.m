@@ -189,8 +189,12 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+	if([fromIndexPath isEqual:toIndexPath])
+		return;
+
 	NSUInteger fromIndex = fromIndexPath.row;  
     NSUInteger toIndex = toIndexPath.row;
+	
 	NSManagedObjectContext *moc = self.presentation.managedObjectContext;
 	
 	NSArray *presentations = [moc fetchObjectsForEntityName:[MTPresentation entityName]
