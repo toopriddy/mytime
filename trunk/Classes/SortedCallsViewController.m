@@ -26,6 +26,7 @@
 
 @interface SortedCallsViewController ()
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) MTCall *editingCall;
 @end
 
 @implementation SortedCallsViewController
@@ -34,6 +35,7 @@
 @synthesize dataSource;
 @synthesize indexPath;
 @synthesize emptyView;
+@synthesize editingCall;
 @synthesize managedObjectContext = managedObjectContext_;
 @synthesize fetchedResultsController = fetchedResultsController_;
 
@@ -80,15 +82,16 @@
 - (void)addCallCanceled
 {
 	[self dismissModalViewControllerAnimated:YES];
-#warning we should delete the call that was not added
+	[self.managedObjectContext deleteObject:self.editingCall];
+	self.editingCall = nil;
 }
 
 - (void)navigationControlAdd:(id)sender
 {
-	MTCall *call = [MTCall insertInManagedObjectContext:self.managedObjectContext];
-	[call initializeNewCall];
+	self.editingCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
+	[self.editingCall initializeNewCall];
 
-	CallViewController *controller = [[[CallViewController alloc] initWithCall:call newCall:YES] autorelease];
+	CallViewController *controller = [[[CallViewController alloc] initWithCall:editingCall newCall:YES] autorelease];
 	controller.delegate = self;
 	self.indexPath = nil;
 	
@@ -152,6 +155,7 @@
 
 - (void)dealloc 
 {
+	self.editingCall = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self removeViewMembers];
 	[dataSource release];

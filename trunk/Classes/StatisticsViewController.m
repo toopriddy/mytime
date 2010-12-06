@@ -344,8 +344,9 @@ static NSString *MONTHS[] = {
 						
 					NSString *type = [visit objectForKey:CallReturnVisitType];
 					BOOL isStudy = [type isEqualToString:CallReturnVisitTypeStudy];
-					BOOL isNotAtHome = [type isEqualToString:CallReturnVisitTypeNotAtHome];
+					BOOL countable = [type isEqualToString:CallReturnVisitTypeNotAtHome] || [type isEqualToString:CallReturnVisitTypeInitialVisit];
 					BOOL isTransfer = [type isEqualToString:CallReturnVisitTypeTransferedStudy] ||
+									  [type isEqualToString:CallReturnVisitTypeTransferedInitialVisit] ||
 									  [type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
 									  [type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
 					
@@ -354,7 +355,7 @@ static NSString *MONTHS[] = {
 						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						if(!isNotAtHome && !isTransfer)
+						if(!countable && !isTransfer)
 						{
 							_returnVisits[offset]++;
 							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month

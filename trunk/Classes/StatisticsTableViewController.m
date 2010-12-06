@@ -957,17 +957,17 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 					
 					NSString *type = [visit objectForKey:CallReturnVisitType];
 					BOOL isStudy = [type isEqualToString:CallReturnVisitTypeStudy];
-					BOOL isNotAtHome = [type isEqualToString:CallReturnVisitTypeNotAtHome];
+					BOOL dontCount = [type isEqualToString:CallReturnVisitTypeNotAtHome] || [type isEqualToString:CallReturnVisitTypeInitialVisit];
 					BOOL isTransfer = [type isEqualToString:CallReturnVisitTypeTransferedStudy] ||
-					[type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
-					[type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
+										[type isEqualToString:CallReturnVisitTypeTransferedInitialVisit] ||
+										[type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
+										[type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
 					
-					if(returnVisitsCount > 1 && i != returnVisitsCount)
+					if(i != returnVisitsCount)
 					{
-						// if this is not the first visit and
 						// if there are more than 1 visit then that means that any return visits
 						// this month are counted as return visits
-						if(!isNotAtHome && !isTransfer)
+						if(!dontCount && !isTransfer)
 						{
 							_returnVisits[offset]++;
 							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
