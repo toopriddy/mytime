@@ -19,9 +19,11 @@
 
 @interface ReturnVisitTypeViewController ()
 @property (nonatomic,retain) UITableView *theTableView;
+@property (nonatomic,retain) UITableViewCell *initialVisitCell;
 @property (nonatomic,retain) UITableViewCell *returnVisitCell;
 @property (nonatomic,retain) UITableViewCell *studyCell;
 @property (nonatomic,retain) UITableViewCell *notAtHomeCell;
+@property (nonatomic,retain) UITableViewCell *transferedInitialVisitCell;
 @property (nonatomic,retain) UITableViewCell *transferedReturnVisitCell;
 @property (nonatomic,retain) UITableViewCell *transferedStudyCell;
 @property (nonatomic,retain) UITableViewCell *transferedNotAtHomeCell;
@@ -32,9 +34,11 @@
 @synthesize delegate;
 @synthesize theTableView;
 @synthesize type;
+@synthesize initialVisitCell;
 @synthesize returnVisitCell;
 @synthesize studyCell;
 @synthesize notAtHomeCell;
+@synthesize transferedInitialVisitCell;
 @synthesize transferedReturnVisitCell;
 @synthesize transferedStudyCell;
 @synthesize transferedNotAtHomeCell;
@@ -62,9 +66,11 @@
 
 	self.theTableView = nil;
 
+	self.initialVisitCell = nil;
     self.returnVisitCell = nil;
     self.studyCell = nil;
     self.notAtHomeCell = nil;
+	self.transferedInitialVisitCell = nil;
     self.transferedReturnVisitCell = nil;
     self.transferedStudyCell = nil;
     self.transferedNotAtHomeCell = nil;
@@ -84,42 +90,54 @@
 - (void)updateSelection:(NSString *)newType
 {
 	UITableViewCell *selected = nil;
-	UITableViewCell *unselected1 = returnVisitCell;
-	UITableViewCell *unselected2 = studyCell;
-	UITableViewCell *unselected3 = notAtHomeCell;
-	UITableViewCell *unselected4 = transferedReturnVisitCell;
-	UITableViewCell *unselected5 = transferedStudyCell;
-	UITableViewCell *unselected6 = transferedNotAtHomeCell;
+	UITableViewCell *unselected1 = initialVisitCell;
+	UITableViewCell *unselected2 = returnVisitCell;
+	UITableViewCell *unselected3 = studyCell;
+	UITableViewCell *unselected4 = notAtHomeCell;
+	UITableViewCell *unselected5 = transferedInitialVisitCell;
+	UITableViewCell *unselected6 = transferedReturnVisitCell;
+	UITableViewCell *unselected7 = transferedStudyCell;
+	UITableViewCell *unselected8 = transferedNotAtHomeCell;
 	
-	if([newType isEqualToString:CallReturnVisitTypeReturnVisit])
+	if([newType isEqualToString:CallReturnVisitTypeInitialVisit])
+	{
+		selected = initialVisitCell;
+		unselected1 = nil;
+	}
+	else if([newType isEqualToString:CallReturnVisitTypeReturnVisit])
 	{
 		selected = returnVisitCell;
-		unselected1 = nil;
+		unselected2 = nil;
 	}
 	else if([newType isEqualToString:CallReturnVisitTypeStudy])
 	{
 		selected = studyCell;
-		unselected2 = nil;
+		unselected3 = nil;
 	}
 	else if([newType isEqualToString:CallReturnVisitTypeNotAtHome])
 	{
 		selected = notAtHomeCell;
-		unselected3 = nil;
+		unselected4 = nil;
+	}
+	else if([newType isEqualToString:CallReturnVisitTypeTransferedInitialVisit])
+	{
+		selected = transferedInitialVisitCell;
+		unselected5 = nil;
 	}
 	else if([newType isEqualToString:CallReturnVisitTypeTransferedReturnVisit])
 	{
 		selected = transferedReturnVisitCell;
-		unselected4 = nil;
+		unselected6 = nil;
 	}
 	else if([newType isEqualToString:CallReturnVisitTypeTransferedStudy])
 	{
 		selected = transferedStudyCell;
-		unselected5 = nil;
+		unselected7 = nil;
 	}
 	else if([newType isEqualToString:CallReturnVisitTypeTransferedNotAtHome])
 	{
 		selected = transferedNotAtHomeCell;
-		unselected6 = nil;
+		unselected8 = nil;
 	}
 
 	unselected1.accessoryType = UITableViewCellAccessoryNone;
@@ -128,6 +146,8 @@
 	unselected4.accessoryType = UITableViewCellAccessoryNone;
 	unselected5.accessoryType = UITableViewCellAccessoryNone;
 	unselected6.accessoryType = UITableViewCellAccessoryNone;
+	unselected7.accessoryType = UITableViewCellAccessoryNone;
+	unselected8.accessoryType = UITableViewCellAccessoryNone;
 	selected.accessoryType = UITableViewCellAccessoryCheckmark;
 
 	self.type = [NSString stringWithString:newType];
@@ -150,35 +170,42 @@
 	// set the tableview as the controller view
 	self.view = self.theTableView;
 
-	self.returnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
-	if(isInitialVisit)
-		returnVisitCell.textLabel.text = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
-	else
-		returnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeReturnVisit value:CallReturnVisitTypeReturnVisit table:@""];
+	self.initialVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell1"] autorelease];
+	initialVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeInitialVisit value:CallReturnVisitTypeInitialVisit table:@""];
+	initialVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	initialVisitCell.selected = NO;
+	
+	self.returnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell2"] autorelease];
+	returnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeReturnVisit value:CallReturnVisitTypeReturnVisit table:@""];
 	returnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	returnVisitCell.selected = NO;
 	
-	self.studyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.studyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell3"] autorelease];
 	studyCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeStudy value:CallReturnVisitTypeStudy table:@""];
 	studyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	studyCell.selected = NO;
 	
-	self.notAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.notAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell4"] autorelease];
 	notAtHomeCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeNotAtHome value:CallReturnVisitTypeNotAtHome table:@""];
 	notAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	notAtHomeCell.selected = NO;
 
-	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.transferedInitialVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell5"] autorelease];
+	transferedReturnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedInitialVisit value:CallReturnVisitTypeTransferedInitialVisit table:@""];
+	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	transferedReturnVisitCell.selected = NO;
+	
+	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell6"] autorelease];
 	transferedReturnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedReturnVisit value:CallReturnVisitTypeTransferedReturnVisit table:@""];
 	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedReturnVisitCell.selected = NO;
-
-	self.transferedStudyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
+	
+	self.transferedStudyCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell7"] autorelease];
 	transferedStudyCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedStudy value:CallReturnVisitTypeTransferedStudy table:@""];
 	transferedStudyCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedStudyCell.selected = NO;
 
-	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell"] autorelease];
+	self.transferedNotAtHomeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell8"] autorelease];
 	transferedNotAtHomeCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedNotAtHome value:CallReturnVisitTypeTransferedNotAtHome table:@""];
 	transferedNotAtHomeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 	transferedNotAtHomeCell.selected = NO;
@@ -212,22 +239,38 @@
 	switch(section)
 	{
 		case 0:
-			[self updateSelection:CallReturnVisitTypeReturnVisit];
+			switch(row)
+			{
+				case 0:
+					[self updateSelection:CallReturnVisitTypeInitialVisit];
+					break;
+				case 1:
+					[self updateSelection:CallReturnVisitTypeReturnVisit];
+					break;
+				case 2:
+					[self updateSelection:CallReturnVisitTypeStudy];
+					break;
+				case 3:
+					[self updateSelection:CallReturnVisitTypeNotAtHome];
+					break;
+			}
 			break;
 		case 1:
-			[self updateSelection:CallReturnVisitTypeStudy];
-			break;
-		case 2:
-			[self updateSelection:CallReturnVisitTypeNotAtHome];
-			break;
-		case 3:
-			[self updateSelection:CallReturnVisitTypeTransferedReturnVisit];
-			break;
-		case 4:
-			[self updateSelection:CallReturnVisitTypeTransferedStudy];
-			break;
-		case 5:
-			[self updateSelection:CallReturnVisitTypeTransferedNotAtHome];
+			switch(row)
+			{
+				case 0:
+					[self updateSelection:CallReturnVisitTypeTransferedInitialVisit];
+					break;
+				case 1:
+					[self updateSelection:CallReturnVisitTypeTransferedReturnVisit];
+					break;
+				case 2:
+					[self updateSelection:CallReturnVisitTypeTransferedStudy];
+					break;
+				case 3:
+					[self updateSelection:CallReturnVisitTypeTransferedNotAtHome];
+					break;
+			}
 			break;
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -245,18 +288,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
-	return 6;
+	return 2;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
 {
-	return 1;
+	return 4;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if(section == 3)
+	if(section == 1)
 	{
 		return NSLocalizedString(@"When Transfered To You:", @"This is the section title for transferred calls in the view that allows you to select a visit type for your call");
 	}
@@ -272,51 +315,32 @@
     switch(section)
     {
 		case 0:
-			return(returnVisitCell);
+			switch(row)
+			{
+				case 0:
+					return(initialVisitCell);
+				case 1:
+					return(returnVisitCell);
+				case 2:
+					return(studyCell);
+				case 3:
+					return(notAtHomeCell);
+			}
+			break;
 		case 1:
-			return(studyCell);
-		case 2:
-			return(notAtHomeCell);
-		case 3:
-			return(transferedReturnVisitCell);
-		case 4:
-			return(transferedStudyCell);
-		case 5:
-			return(transferedNotAtHomeCell);
-    }
+			switch(row)
+			{
+				case 0:
+					return(transferedInitialVisitCell);
+				case 1:
+					return(transferedReturnVisitCell);
+				case 2:
+					return(transferedStudyCell);
+				case 3:
+					return(transferedNotAtHomeCell);
+			}
+			break;
+	}
 	return(nil);
 }
-
-
-//
-//
-// UITableViewDelegate methods
-//
-//
-
-// NONE
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
 @end
-
-
-
-
-
-

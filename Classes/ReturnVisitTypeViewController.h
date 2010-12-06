@@ -30,9 +30,11 @@
 @private
 	UITableView *theTableView;
 
+	UITableViewCell *initialVisitCell;
 	UITableViewCell *returnVisitCell;
     UITableViewCell *studyCell;
     UITableViewCell *notAtHomeCell;
+    UITableViewCell *transferedInitialVisitCell;
     UITableViewCell *transferedReturnVisitCell;
     UITableViewCell *transferedStudyCell;
     UITableViewCell *transferedNotAtHomeCell;

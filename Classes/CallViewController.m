@@ -505,7 +505,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	call.locationLookupType = locationPickerViewController.type;
 	if([locationPickerViewController.type isEqualToString:CallLocationTypeManual])
 	{
-		[[Settings sharedInstance] saveData];
+		[self.delegate save];
 		[[self.delegate navigationController] popViewControllerAnimated:NO];
 		
 		CLLocationCoordinate2D location = {[call.longitude doubleValue], [call.lattitude doubleValue]};
@@ -535,7 +535,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		{
 			self.delegate.forceReload = YES;
 		}
-		[[Settings sharedInstance] saveData];
+		[self.delegate save];
 
 		[[self.delegate navigationController] popViewControllerAnimated:YES];
 	}
@@ -1414,7 +1414,18 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 - (BOOL)isViewableWhenNotEditing
 {
-	return ![returnVisit.type isEqualToString:CallReturnVisitTypeReturnVisit];
+	BOOL initialVisit = NO;
+	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																	   propertiesToFetch:[NSArray array]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
+	{
+		initialVisit = YES;
+	}
+	if(initialVisit)
+		return ![returnVisit.type isEqualToString:CallReturnVisitTypeInitialVisit];
+	else
+		return ![returnVisit.type isEqualToString:CallReturnVisitTypeReturnVisit];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1439,26 +1450,9 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell.allowSelectionWhenNotEditing = NO;
 	}
 
-	BOOL initialVisit = NO;
-	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
-																	   propertiesToFetch:[NSArray array]
-																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
-																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
-	{
-		initialVisit = YES;
-	}
 	NSString *type = returnVisit.type;
 	[cell setTitle:NSLocalizedString(@"Type", @"Return visit type label")];
-	// if this is the initial visit, then just say that it is the initial visit
-	if([type isEqualToString:CallReturnVisitTypeReturnVisit] && 
-	   initialVisit)
-	{
-		[cell setValue:NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type")];
-	}
-	else
-	{
-		[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""]];
-	}
+	[cell setValue:[[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""]];
 	
 	return cell;
 }
@@ -2092,7 +2086,12 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	if(!_newCall && !settings.existingCallAlertSheetShownValue)
 	{
 		settings.existingCallAlertSheetShownValue = YES;
-#warning save?
+		NSError *error = nil;
+		[settings.managedObjectContext processPendingChanges];
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];

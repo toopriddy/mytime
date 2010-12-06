@@ -323,6 +323,35 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				}
 			}
 			break;
+		case CONVERT_DATAFILE_FAILURE:
+			switch(button)
+			{
+				case 0:
+				{
+					[self.hud hide:YES];
+
+					forceEmail = YES;
+					MFMailComposeViewController *mailView = [self sendCoreDataConvertFailureEmail];
+					mailView.mailComposeDelegate = self;
+
+					self.modalNavigationController = [[[UINavigationController alloc] init] autorelease];
+					
+					[self.window addSubview:self.modalNavigationController.view];
+					// make the window visible
+					[window makeKeyAndVisible];
+					
+					[self.modalNavigationController presentModalViewController:mailView animated:YES];
+					forceEmail = YES;
+					break;
+				}
+				case 1:
+				{
+					[self initializeMyTimeViews];
+					[self.hud hide:YES];
+					break;
+				}
+			}
+			break;
 	}
 }
 
@@ -845,20 +874,55 @@ NSString *emailFormattedStringForCoreDataSettings()
 	return mailView;
 }
 
+- (MFMailComposeViewController *)sendCoreDataConvertFailureEmail
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Data Convert Failure", @"Email subject line for the email that will be sent to me when there is a failure in the data conversion in the 4.0 version of mytime")];
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	[string appendString:NSLocalizedString(@"MyTime encountered an error translating your data to the new format.<br><br><b>Your old data is still safe</b>, I have included it in this email for the author of MyTime to fix.  The author of MyTime will try to respond quickly to your problem with a fixed data file for you to use.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected a difference in your data between the old data file and the new one.  To be safe, dont depend on this.<br><br>", @"Email body for the email that will be sent to me when there is a failure in the data conversion in the 4.0 version of mytime")];
+	
+	// attach the old records file
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[self class] storeFileAndPath]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+	
+	[mailView setToRecipients:[NSArray arrayWithObject:@"toopriddy@gmail.com"]];
+
+	// now add the url that will allow importing
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
+	data = [data compress];
+	[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+	
+	int length = data.length;
+	unsigned char *bytes = (unsigned char *)data.bytes;
+	for(int i = 0; i < length; ++i)
+	{
+		[string appendFormat:@"%02X", *bytes++];
+	}
+	[string appendString:@"\">"];
+	[string appendString:NSLocalizedString(@"Data file link", @"This is the text that appears in the link of the email when you are wanting to restore from a backup.  this is the link that they press to open MyTime")];
+	[string appendString:@"</a><br><br>"];
+	[string appendString:NSLocalizedString(@"VERIFICATION CHECK: all data was contained in this email", @"This is a very important message that is at the end of the email used to transfer a call to another witness or if you are just emailing a backup to yourself, it verifies that all of the data is contained in the email, if it is not there then all of the data is not in the email and something bad happened :(")];
+	[string appendString:@"</body></html>"];
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	
+	return mailView;
+}
+
 NSString *emailFormattedStringForSettings();
 
-- (void)verifyCoreDataConversion
+- (BOOL)verifyCoreDataConversion
 {
 	NSString *old = emailFormattedStringForSettings();
 	NSString *new = emailFormattedStringForCoreDataSettings();
 	if(![old isEqualToString:new])
 	{
-//		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
-//		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 		NSLog(@"Verification Failed");
-
-#warning need to make something that displays to the user a dialog and send an email to me		
+		return NO;
 	}
+	return YES;
 }
 
 - (void)convertToCoreDataStoreTask
@@ -1064,7 +1128,10 @@ NSString *emailFormattedStringForSettings();
 					mtCall.locationLookupType = [call objectForKey:CallLocationType];
 				
 				// RETURN VISITS
-				for(NSDictionary *returnVisit in [call objectForKey:CallReturnVisits])
+				NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+				BOOL first = YES;
+				BOOL firstTransfer = YES;
+				for(NSDictionary *returnVisit in returnVisits)
 				{
 					MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 					mtReturnVisit.call = mtCall;
@@ -1074,6 +1141,25 @@ NSString *emailFormattedStringForSettings();
 					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
 					if([returnVisit objectForKey:CallReturnVisitType])
 						mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
+
+					// lets translate the initial visit which is classified as a return visit into an Initial Visit
+					if(first)
+					{
+						first = NO;
+						if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeReturnVisit])
+						{
+							mtReturnVisit.type = CallReturnVisitTypeInitialVisit;
+						}
+					}
+					// lets translate the transferred initial visit as well
+					if(firstTransfer)
+					{
+						firstTransfer = NO;
+						if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeTransferedReturnVisit])
+						{
+							mtReturnVisit.type = CallReturnVisitTypeTransferedInitialVisit;
+						}
+					}
 					// PUBLICATIONS
 					for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
 					{
@@ -1280,15 +1366,35 @@ NSString *emailFormattedStringForSettings();
 	[[self managedObjectContext] processPendingChanges];
 	[[[self managedObjectContext] undoManager] enableUndoRegistration];
 
-	[self verifyCoreDataConversion];
+	BOOL worked = [self verifyCoreDataConversion];
 	
 	
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
 
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"convertedToCoreData"];
-	[self performSelector:@selector(initializeMyTimeViews) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
-	[self.hud performSelector:@selector(done) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+	
+	if(worked)
+	{
+		[self performSelector:@selector(initializeMyTimeViews) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+		[self.hud performSelector:@selector(done) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		[self performSelector:@selector(showErrorConvertingData) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+	}
+}
+
+- (void)showErrorConvertingData
+{
+	// display 
+	_actionSheetType = CONVERT_DATAFILE_FAILURE;
+	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You have encountered a serious error when converting your old data file to the new format. The developer of MyTime can help you, press on the \"HELP!\" button below and email your datafile, he should be able to get back with you with a fixed data file.", @"This is the message you see when MyTime converts your data from the old format to the new one and has detected a failure") 
+															  delegate:self 
+													 cancelButtonTitle:NSLocalizedString(@"Ignore Fatal Error", @"button title the user sees when they have an error converting data") 
+												destructiveButtonTitle:NSLocalizedString(@"HELP! Fix My Data!", @"button title the user sees when they have an error converting data")
+													 otherButtonTitles:nil] autorelease];
+	[actionSheet showInView:hud];
 }
 
 - (BOOL)convertToCoreDataStore

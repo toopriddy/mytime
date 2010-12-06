@@ -61,7 +61,9 @@ extern NSString * const CallReturnVisitTypeTransferedReturnVisit;
 NSString * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
 NSString * const CallReturnVisitTypeTransferedNotAtHome = NSLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
 NSString * const CallReturnVisitTypeTransferedReturnVisit = NSLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedInitialVisit = NSLocalizedString(@"Transfered Initial Visit", @"return visit type name when this call is transfered from another witness");
 NSString * const CallReturnVisitTypeReturnVisit = NSLocalizedString(@"Return Visit", @"return visit type name");
+NSString * const CallReturnVisitTypeInitialVisit = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
 NSString * const CallReturnVisitTypeStudy = NSLocalizedString(@"Study", @"return visit type name");
 NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home", @"return visit type name");
 #include "PSAddLocalizedString.h"
@@ -444,8 +446,10 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 	}
 	[string appendString:@"\n"];
 	
-	
-	for(NSDictionary *visit in [call objectForKey:CallReturnVisits])
+	NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]];
+	BOOL first = YES;
+		
+	for(NSDictionary *visit in returnVisits)
 	{
 		// GROUP TITLE
 		NSDate *date = [visit objectForKey:CallReturnVisitDate];	
@@ -465,6 +469,14 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		value = [visit objectForKey:CallReturnVisitType];
 		if(value == nil || value.length == 0)
 			value = CallReturnVisitTypeReturnVisit;
+		// lets translate the initial visit which is classified as a return visit into an Initial Visit
+		if(visit == [returnVisits lastObject])
+		{
+			if([value isEqualToString:CallReturnVisitTypeReturnVisit])
+			{
+				value = CallReturnVisitTypeInitialVisit;
+			}
+		}
 		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
 		[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Notes", @"Call Metadata")]];
 		NSString *notes = [visit objectForKey:CallReturnVisitNotes];

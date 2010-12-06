@@ -3,6 +3,7 @@
 #import "MTAdditionalInformationType.h"
 #import "MTAdditionalInformation.h"
 #import "MTReturnVisit.h"
+#import "Settings.h"
 
 @implementation MTCall
 
@@ -45,6 +46,7 @@
 	}
 	MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 	returnVisit.call = self;
+	returnVisit.type = CallReturnVisitTypeInitialVisit;
 }
 
 - (void)didTurnIntoFault
