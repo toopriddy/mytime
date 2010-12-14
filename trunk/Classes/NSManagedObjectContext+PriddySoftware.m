@@ -8,7 +8,6 @@
 
 #import "NSManagedObjectContext+PriddySoftware.h"
 
-
 @implementation NSManagedObjectContext(PriddySoftware)
 // Convenience method to fetch the array of objects for a given Entity
 // name in the context, optionally limiting by a predicate or by a predicate
@@ -223,6 +222,76 @@
 		assert(false);
 	}
 
+}
+
+- (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames visitedObjects:(NSMutableArray *)visitedObjects
+{
+	NSDictionary *attributesByName = [[managedObject entity] attributesByName];
+	NSDictionary *relationshipsByName = [[managedObject entity] relationshipsByName];
+	NSMutableDictionary *valuesDictionary = [[managedObject dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
+	[valuesDictionary setObject:[[managedObject entity] name] forKey:@"ManagedObjectName"];
+	[visitedObjects addObject:managedObject];
+	for (NSString *relationshipName in [relationshipsByName allKeys]) 
+	{
+		// skip relationship names
+		if(skipRelationshipNames && [skipRelationshipNames indexOfObject:relationshipName] != NSNotFound)
+			continue;
+		
+		id namedRelationshipObject = [managedObject valueForKey:relationshipName];
+		NSRelationshipDescription *relationshipDescription = [relationshipsByName objectForKey:relationshipName];
+		if (![relationshipDescription isToMany]) 
+		{
+			if([visitedObjects containsObject:namedRelationshipObject])
+				continue;
+			
+			[valuesDictionary setValue:[self dictionaryFromManagedObject:namedRelationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects] forKey:relationshipName];
+			continue;
+		}
+		NSSet *relationshipObjects = namedRelationshipObject;
+		NSMutableArray *relationshipArray = [NSMutableArray array];
+		for (NSManagedObject *relationshipObject in relationshipObjects) 
+		{
+			if([visitedObjects containsObject:relationshipObject])
+				continue;
+			[relationshipArray addObject:[self dictionaryFromManagedObject:relationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects]];
+		}
+		[valuesDictionary setObject:relationshipArray forKey:relationshipName];
+	}
+	return [valuesDictionary autorelease];
+}
+
+- (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames
+{
+	return [self dictionaryFromManagedObject:managedObject skipRelationshipNames:skipRelationshipNames visitedObjects:[NSMutableArray array]];
+}
+
+- (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary
+{
+	NSManagedObjectContext *moc = self;
+	NSString *objectName = [structureDictionary objectForKey:@"ManagedObjectName"];
+	NSManagedObject *managedObject = [NSEntityDescription insertNewObjectForEntityForName:objectName inManagedObjectContext:moc];
+	NSDictionary *relationshipsByName = [[managedObject entity] relationshipsByName];
+	[managedObject setValuesForKeysWithDictionary:structureDictionary];
+	
+	for (NSString *relationshipName in [[[managedObject entity] relationshipsByName] allKeys]) 
+	{
+		NSRelationshipDescription *description = [relationshipsByName objectForKey:relationshipName];
+		if (![description isToMany]) 
+		{
+			NSDictionary *childStructureDictionary = [structureDictionary objectForKey:relationshipName];
+			NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary];
+			[managedObject setValue:childObject forKey:relationshipName];
+			continue;
+		}
+		NSMutableSet *relationshipSet = [managedObject mutableSetValueForKey:relationshipName];
+		NSArray *relationshipArray = [structureDictionary objectForKey:relationshipName];
+		for (NSDictionary *childStructureDictionary in relationshipArray) 
+		{
+			NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary];
+			[relationshipSet addObject:childObject];
+		}
+	}
+	return managedObject;
 }
 
 @end

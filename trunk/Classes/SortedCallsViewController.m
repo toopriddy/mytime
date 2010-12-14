@@ -369,41 +369,7 @@
 	DEBUG(NSLog(@"%s: viewDidAppear", __FILE__);)
 }
 
-//
-//
-// CallViewControllerDelegate methods
-// 
-//
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)call keepInformation:(BOOL)keepInformation
-{
-	if(indexPath)
-	{
-//		[dataSource deleteCallAtIndexPath:indexPath keepInformation:keepInformation];
-	}
-}
 
-- (void)callViewController:(CallViewController *)callViewController restoreCall:(NSMutableDictionary *)call
-{
-	if(indexPath)
-	{
-//		[dataSource restoreCallAtIndexPath:indexPath];
-	}
-}
-
-
-- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call
-{
-	if(self.indexPath != nil)
-	{
-//		[dataSource setCall:call forIndexPath:indexPath];
-//		[[Settings sharedInstance] saveData];
-	}
-	else
-	{
-//		[dataSource addCall:call];
-//		[[Settings sharedInstance] saveData];
-	}
-}
 
 //
 //

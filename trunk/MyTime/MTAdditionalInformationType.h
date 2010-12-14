@@ -4,4 +4,5 @@
 // Custom logic goes here.
 + (MTAdditionalInformationType *)additionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user;
 + (MTAdditionalInformationType *)insertAdditionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user;
++ (MTAdditionalInformationType *)insertAdditionalInformationTypeForUser:(MTUser *)user;
 @end

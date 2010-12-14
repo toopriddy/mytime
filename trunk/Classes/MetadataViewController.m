@@ -48,14 +48,12 @@ static MetadataInformation commonInformation[] = {
 	MTAdditionalInformationType *_additionalInformationType;
 	MetadataViewController *delegate;
 	NSIndexPath *_indexPath;
-	BOOL alertViewDeletingOldValues;
 	BOOL alertViewNotAlwaysShown;
 	BOOL alertViewDeleting;
 }
 @property (nonatomic, retain) MTAdditionalInformationType *additionalInformationType;
 @property (nonatomic, assign) MetadataViewController *delegate;
 @property (nonatomic, retain) NSIndexPath *indexPath;
-@property (nonatomic, retain) MetadataCustomViewController *pendingMetadataCustomViewController;
 - (void)deleteAllAdditionalInformation;
 
 @end
@@ -63,7 +61,6 @@ static MetadataInformation commonInformation[] = {
 @synthesize delegate;
 @synthesize indexPath = _indexPath;
 @synthesize additionalInformationType = _additionalInformationType;
-@synthesize pendingMetadataCustomViewController;
 
 - (void)dealloc
 {
@@ -142,31 +139,6 @@ static MetadataInformation commonInformation[] = {
 	}
 }
 
-- (void)setAdditionalInformationType:(MTAdditionalInformationType *)type forMetadataCustomViewController:(MetadataCustomViewController *)metadataCustomViewController
-{
-	if(self.additionalInformationType.typeValue == CHOICE)
-	{
-#warning fix me
-		self.additionalInformationType.multipleChoices = metadataCustomViewController.multipleChoices;
-	}
-	else
-	{
-		self.additionalInformationType.multipleChoices = nil;
-	}
-	self.additionalInformationType.typeValue = metadataCustomViewController.type;
-	self.additionalInformationType.name = metadataCustomViewController.name;
-	
-#warning need to kick out a message that the additionalInformationType has changed and the user needs to redisplay a value
-	
-	NSError *error = nil;
-	if(![self.additionalInformationType.managedObjectContext save:&error])
-	{
-		[NSManagedObjectContext presentErrorDialog:error];
-	}
-	
-	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
-}
-
 - (void)deleteAllUnusedAdditionalInformation
 {
 	BOOL found = NO;
@@ -214,27 +186,7 @@ static MetadataInformation commonInformation[] = {
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if(alertViewDeletingOldValues)
-	{
-		alertViewDeletingOldValues = NO;
-		if(buttonIndex == 0)
-		{
-			for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
-			{
-				info.booleanValue = NO;
-				info.date = nil;
-				info.value = @"";
-				info.number = nil;
-			}
-			[self setAdditionalInformationType:self.additionalInformationType forMetadataCustomViewController:self.pendingMetadataCustomViewController];
-			[self.delegate.navigationController popViewControllerAnimated:YES];
-		}
-		else
-		{
-			// do nothing, and dont pop the view controller
-		}
-	}
-	else if(alertViewNotAlwaysShown)
+	if(alertViewNotAlwaysShown)
 	{
 		alertViewNotAlwaysShown = NO;
 		switch(buttonIndex)
@@ -264,50 +216,10 @@ static MetadataInformation commonInformation[] = {
 
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
-	if(self.additionalInformationType.typeValue != metadataCustomViewController.type)
-	{
-		BOOL used = NO;
-		for(MTAdditionalInformation *info in self.additionalInformationType.additionalInformation)
-		{
-			if(info.value.length != 0)
-			{
-				used = YES;
-				break;
-			}
-		}
-		
-//		if(used)
-		{
-			// they changed the type of this particular additional information
-			// make sure that we fix the incompatible versions
-			switch(metadataCustomViewController.type)
-			{
-				case DATE:
-				case NUMBER:
-				case SWITCH:
-				{
-					alertViewDeletingOldValues = YES;
-					self.pendingMetadataCustomViewController = metadataCustomViewController;
-					// need to kick off a question to the user if they really want to delete all of the information in previously used AdditionalInformation
-					UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You have changed the type of an Additional Information which is currently being, this will reset any values you are currently using in any of your calls. \nAre you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"")
-																			  delegate:self 
-																	 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
-																destructiveButtonTitle:NSLocalizedString(@"Yes change and reset data", @"YES button to change the type of additional information from the dialog: You have changed the type of the Additional Information, this will reset any values you are currently using in any of your calls.  Are you sure you want to do this?")
-																	 otherButtonTitles:nil] autorelease];
-					[actionSheet showInView:[[MyTimeAppDelegate sharedInstance] window]];
-					return;	
-				}
-				default:
-					// we can let the others go and just have their values replaced with the other applicable data
-					break;
-			}
-		}
-	}
-	
-	[self setAdditionalInformationType:self.additionalInformationType forMetadataCustomViewController:metadataCustomViewController];
-	
 	[self.delegate.navigationController popViewControllerAnimated:YES];
-
+#warning need to kick out a message that the additionalInformationType has changed and the user needs to redisplay a value
+	
+	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 // Called after the user changes the selection.
@@ -317,9 +229,7 @@ static MetadataInformation commonInformation[] = {
 	{
 		self.indexPath = [[indexPath copy] autorelease];
 		MTAdditionalInformationType *type = self.additionalInformationType;
-		MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithName:type.name
-																						 type:type.typeValue
-																			  multipleChoices:type.multipleChoices] autorelease];
+		MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithAdditionalInformationType:type] autorelease];
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];
 		[self.delegate retainObject:self whileViewControllerIsManaged:p];
@@ -454,15 +364,18 @@ static MetadataInformation commonInformation[] = {
 	MetadataViewController *delegate;
 	NSIndexPath *_indexPath;
 }
+@property (nonatomic, retain) MTAdditionalInformationType *type;
 @property (nonatomic, assign) MetadataViewController *delegate;
 @property (nonatomic, retain) NSIndexPath *indexPath;
 @end
 @implementation AddMetadataCellController
 @synthesize delegate;
 @synthesize indexPath = _indexPath;
+@synthesize type;
 
 - (void)dealloc
 {
+	self.type = nil;
 	self.indexPath = nil;
 	[super dealloc];
 }
@@ -496,28 +409,25 @@ static MetadataInformation commonInformation[] = {
 	[self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
+- (void)metadataCustomViewControllerCancel:(MetadataCustomViewController *)metadataCustomViewController
+{
+	NSManagedObjectContext *moc = self.type.managedObjectContext;
+	[moc deleteObject:self.type];
+	[moc processPendingChanges];
+	
+	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
-	MTUser *currentUser = [MTUser currentUser];
-	MTAdditionalInformationType *type = [MTAdditionalInformationType insertAdditionalInformationType:metadataCustomViewController.type 
-																								name:metadataCustomViewController.name 
-																								user:currentUser];
-	type.alwaysShownValue = self.indexPath.section == 0;
-	type.hiddenValue = NO;
-	NSError *error = nil;
-	if(![type.managedObjectContext save:&error])
-	{
-		[NSManagedObjectContext presentErrorDialog:error];
-	}
-	
 	MetadataCellController *cellController = [[[MetadataCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
-	cellController.additionalInformationType = type;
+	cellController.additionalInformationType = self.type;
 
 	GenericTableViewSectionController *sectionController = [self.delegate.sectionControllers objectAtIndex:self.indexPath.section];
 	[sectionController.cellControllers insertObject:cellController atIndex:(sectionController.cellControllers.count - 1)];
 	[self.delegate updateWithoutReload];
-	[self.delegate.navigationController popViewControllerAnimated:YES];
+	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 
@@ -525,12 +435,16 @@ static MetadataInformation commonInformation[] = {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// open up the custom metadata type
+	self.type = [MTAdditionalInformationType insertAdditionalInformationTypeForUser:[MTUser currentUser]];
+	
 	self.indexPath = [[indexPath copy] autorelease];
-	MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] init] autorelease];
+	MetadataCustomViewController *p = [[[MetadataCustomViewController alloc] initWithAdditionalInformationType:self.type] autorelease];
+	p.newType = YES;
 	p.delegate = self;
 	
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	UINavigationController *nav = [[[UINavigationController alloc] initWithRootViewController:p] autorelease];
+	[[self.delegate navigationController] presentModalViewController:nav animated:YES];		
+	[self.delegate retainObject:self whileViewControllerIsManaged:nav];
 	return;
 }
 

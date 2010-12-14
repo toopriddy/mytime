@@ -8,6 +8,7 @@
 
 
 
+
 @interface MTMultipleChoiceID : NSManagedObjectID {}
 @end
 
@@ -16,6 +17,16 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTMultipleChoiceID*)objectID;
+
+
+
+@property (nonatomic, retain) NSNumber *order;
+
+@property int orderValue;
+- (int)orderValue;
+- (void)setOrderValue:(int)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -38,6 +49,13 @@
 @end
 
 @interface _MTMultipleChoice (CoreDataGeneratedPrimitiveAccessors)
+
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (int)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(int)value_;
+
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;

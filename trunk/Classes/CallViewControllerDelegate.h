@@ -14,17 +14,17 @@
 //
 
 
-
+@class MTCall;
 @class CallViewController;
 
 @protocol CallViewControllerDelegate<NSObject>
 
 @required
 
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)call keepInformation:(BOOL)keepInformation;
-- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call;
+- (void)callViewController:(CallViewController *)callViewController deleteCall:(MTCall *)call keepInformation:(BOOL)keepInformation;
+- (void)callViewController:(CallViewController *)callViewController saveCall:(MTCall *)call;
 
 @optional
-- (void)callViewController:(CallViewController *)callViewController restoreCall:(NSMutableDictionary *)call;
+- (void)callViewController:(CallViewController *)callViewController restoreCall:(MTCall *)call;
 
 @end

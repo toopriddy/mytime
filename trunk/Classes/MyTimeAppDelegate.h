@@ -20,9 +20,13 @@
 #import <CoreData/CoreData.h>
 #import "MBProgressHUD.h"
 
+@class MTCall;
+
 // for moving around the UITableViewIndex
 static BOOL tableViewIndexMoveIn(id self, SEL _cmd);
 static BOOL tableViewIndexMoveOut(id self, SEL _cmd);
+
+NSString *emailFormattedStringForCoreDataCall(MTCall *call);
 
 typedef enum {
 	NORMAL_STARTUP = 0,
