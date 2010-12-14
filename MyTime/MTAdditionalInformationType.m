@@ -1,6 +1,7 @@
 #import "MTAdditionalInformationType.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "MTUser.h"
 
 #define ORDER_INCREMENT 100.0
 @implementation MTAdditionalInformationType
@@ -18,20 +19,27 @@
 
 + (MTAdditionalInformationType *)insertAdditionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user
 {
+	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationTypeForUser:user];
+	
+	mtAdditionalInformationType.typeValue = type;
+	mtAdditionalInformationType.name = name;
+	
+	return mtAdditionalInformationType;
+}
+
++ (MTAdditionalInformationType *)insertAdditionalInformationTypeForUser:(MTUser *)user
+{
 	double order = 0;
-	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
-	for(MTAdditionalInformationType *type in [managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
-																		   propertiesToFetch:[NSArray arrayWithObject:@"order"]
-																			   withPredicate:@"(user == %@)", user])
+	for(MTAdditionalInformationType *type in [user.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+																				propertiesToFetch:[NSArray arrayWithObject:@"order"]
+																					withPredicate:@"(user == %@)", user])
 	{
 		double userOrder = type.orderValue;
 		if (userOrder > order)
 			order = userOrder;
 	}
 	
-	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:managedObjectContext];
-	mtAdditionalInformationType.typeValue = type;
-	mtAdditionalInformationType.name = name;
+	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:user.managedObjectContext];
 	mtAdditionalInformationType.orderValue = order + ORDER_INCREMENT;
 	mtAdditionalInformationType.alwaysShownValue = NO;
 	mtAdditionalInformationType.user = user;

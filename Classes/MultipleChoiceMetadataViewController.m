@@ -15,11 +15,11 @@
 
 #import "MultipleChoiceMetadataViewController.h"
 #import "MetadataCustomViewController.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
+#import "MTAdditionalInformationType.h"
 #import "PSLocalization.h"
-#import "Settings.h"
 
 @interface MultipleChoiceMetadataViewController ()
-@property (nonatomic, retain) NSMutableArray *data;
 @end
 
 
@@ -55,65 +55,32 @@
 @implementation MultipleChoiceMetadataViewController
 
 @synthesize delegate;
-@synthesize data;
+@synthesize additionalInformation = additionalInformation_;
 @synthesize value;
 
 - (void)dealloc
 {
-	self.data = nil;
+	self.additionalInformation = nil;
 	self.value = nil;
-	
 	[super dealloc];
 }
 
-- (id) initWithName:(NSString *)theName value:(NSString *)theValue data:(NSMutableArray *)theData
+- (id)initWithAdditionalInformation:(MTAdditionalInformation *)additionalInformation
 {
 	if ([super initWithStyle:UITableViewStyleGrouped]) 
 	{
-		for(NSDictionary *entry in [[[Settings sharedInstance] userSettings] objectForKey:SettingsPreferredMetadata])
-		{
-			if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
-			{
-				self.data = [[[entry objectForKey:SettingsMetadataData] copy] autorelease];
-				break;
-			}
-		}
-		if(self.data == nil)
-		{
-			for(NSDictionary *entry in [[[Settings sharedInstance] userSettings] objectForKey:SettingsOtherMetadata])
-			{
-				if([theName isEqualToString:[entry objectForKey:SettingsMetadataName]])
-				{
-					self.data = [[[entry objectForKey:SettingsMetadataData] copy] autorelease];
-					break;
-				}
-			}
-		}
-		if(self.data == nil)
-		{
-			self.data = theData;
-		}
-		if(self.data == nil)
-		{
-			self.data = [NSMutableArray arrayWithObject:theValue];
-		}
-		
-		self.value = theValue;
-		
+		self.additionalInformation = additionalInformation;
 		// set the title, and tab bar images from the dataSource
-		self.title = theName;
+		self.title = additionalInformation.type.name;
+		self.value = additionalInformation.value;
 	}
 	return self;
-}
-
-- (NSString *)name
-{
-	return self.title;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectValue:(NSString *)theValue atIndexPath:(NSIndexPath *)indexPath
 {
 	self.value = theValue;
+	self.additionalInformation.value = theValue;
 	int count = [tableView numberOfRowsInSection:indexPath.section];
 	for(int i = 0; i < count; ++i)
 	{
@@ -123,12 +90,23 @@
 			[[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:indexPath.section]] setAccessoryType:UITableViewCellAccessoryNone];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+	NSError *error = nil;
+	if(![self.additionalInformation.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	if(delegate && [delegate respondsToSelector:@selector(multipleChoiceMetadataViewControllerDone:)])
 	{
 		[delegate multipleChoiceMetadataViewControllerDone:self];
 	}
 	[[self navigationController] popViewControllerAnimated:YES];
+}
+
+- (NSString *)name
+{
+	return self.title;
 }
 
 - (NSString *)selectedMetadataValue
@@ -169,8 +147,12 @@
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	// show the back button when they are done editing
 	self.navigationItem.hidesBackButton = NO;
-	
-	[[Settings sharedInstance] saveData];
+
+	NSError *error = nil;
+	if(![self.additionalInformation.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	self.editing = NO;
 }	
 
@@ -215,8 +197,8 @@
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
-		
-		[MetadataCustomViewController addCellMultipleChoiceCellControllersToSectionController:sectionController tableController:self choices:self.data metadataDelegate:self];
+
+		[MetadataCustomViewController addCellMultipleChoiceCellControllersToSectionController:sectionController tableController:self fromType:self.additionalInformation.type metadataDelegate:self];
 	}
 }
 

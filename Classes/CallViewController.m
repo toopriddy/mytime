@@ -36,6 +36,7 @@
 #import "MetadataViewController.h"
 #import "MetadataEditorViewController.h"
 #import "Geocache.h"
+#import "MyTimeAppDelegate.h"
 #import "PSUrlString.h"
 #import "PSLocalization.h"
 #import "UITableViewButtonCell.h"
@@ -945,7 +946,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 				{
 					case CHOICE:
 					{
-						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithName:name value:value data:self.metadata.type.multipleChoices] autorelease];
+						MultipleChoiceMetadataViewController *p = [[[MultipleChoiceMetadataViewController alloc] initWithAdditionalInformation:self.metadata] autorelease];
 						p.delegate = self;
 						
 						[[self.delegate navigationController] pushViewController:p animated:YES];		
@@ -1844,13 +1845,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 	if(button == 0)
 	{
-		if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(callViewController:restoreCall:)])
-		{
-			self.delegate.call.deletedValue = NO;
-			[self.delegate save];
-			
-			[self.delegate.navigationController popViewControllerAnimated:YES];
-		}
+		self.delegate.call.deletedValue = NO;
+		[self.delegate save];
+
+		[self.delegate.navigationController popViewControllerAnimated:YES];
 	}
 }
 
@@ -2361,8 +2359,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 	// now add the url that will allow importing
 
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_call];
-	[string appendString:@"<a href=\"mytime://mytime/addCall?"];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[_call.managedObjectContext dictionaryFromManagedObject:_call skipRelationshipNames:[NSArray arrayWithObjects:@"call", @"user", @"additionalInformation", nil]]];
+	[string appendString:@"<a href=\"mytime://mytime/addCoreDataCall?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)

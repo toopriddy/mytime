@@ -15,6 +15,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GenericTableViewController.h"
+#import "MTAdditionalInformationType.h"
 
 typedef enum {
 	// do not reorder!!! dont add in the middle!!!
@@ -43,6 +44,8 @@ NSString *localizedNameForMetadataType(MetadataType type);
 @protocol MetadataCustomViewControllerDelegate
 @required
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController;
+@optional
+- (void)metadataCustomViewControllerCancel:(MetadataCustomViewController *)metadataCustomViewController;
 @end
 
 @protocol MultipleChoiceMetadataValueCellControllerDelegate
@@ -52,7 +55,8 @@ NSString *localizedNameForMetadataType(MetadataType type);
 - (NSString *)selectedMetadataValue;
 @end
 
-@interface MetadataCustomViewController : GenericTableViewController
+
+@interface MetadataCustomViewController : GenericTableViewController <UIActionSheetDelegate>
 {
 	id<MetadataCustomViewControllerDelegate> delegate;
 @private
@@ -60,13 +64,12 @@ NSString *localizedNameForMetadataType(MetadataType type);
 	int selected;
 	int startedWithSelected;
 	BOOL nameNeedsFocus;
-	NSMutableArray *multipleChoices_;
+	MTAdditionalInformationType *type_;
 }
-
+@property (nonatomic, assign) BOOL newType;
+@property (nonatomic, retain) MTAdditionalInformationType *type;
 @property (nonatomic, assign) id<MetadataCustomViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSMutableString *name;
-@property (readonly, getter = type) MetadataType type;
-@property (nonatomic, retain) NSMutableArray *multipleChoices;
 
 /**
  * initialize this view with the address information
@@ -74,11 +77,9 @@ NSString *localizedNameForMetadataType(MetadataType type);
  * @param rect - the rect
  * @returns self
  */
-- (id) init;
-- (id) initWithName:(NSString *)theName type:(MetadataType)type multipleChoices:(NSSet *)multipleChoices;
+- (id)initWithAdditionalInformationType:(MTAdditionalInformationType *)type;
 
-+ (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController choices:(NSMutableArray *)data metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate;
-
++ (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController fromType:(MTAdditionalInformationType *)type metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate;
 @end
 
 

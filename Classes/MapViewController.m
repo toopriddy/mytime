@@ -382,43 +382,4 @@
 	return YES;
 }
 
-//
-//
-// CallViewControllerDelegate methods
-// 
-//
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(MTCall *)thisCall keepInformation:(BOOL)keepInformation
-{
-	[self.mapView removeAnnotation:selectedMarker];
-	selectedMarker = nil;
-
-	thisCall.deletedValue = YES;
-	NSManagedObjectContext *moc = [thisCall.managedObjectContext retain];
-	if(!keepInformation)
-	{
-		[moc deleteObject:thisCall];
-	}
-	
-	NSError *error = nil;
-	if (![moc save:&error]) 
-	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
-	}
-	[moc release];
-}
-
-- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)newCall
-{
-#warning is this needed?
-#if 0
-	[[Settings sharedInstance] saveData];
-	[selectedMarker retain];
-	[self.mapView removeAnnotation:selectedMarker];
-	[self.mapView addAnnotation:selectedMarker];
-	[selectedMarker release];
-#endif
-}
-
-
 @end

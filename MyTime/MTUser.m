@@ -77,13 +77,18 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 + (MTUser *)currentUser
 {
 	MTSettings *settings = [MTSettings settings];
+	return [MTUser currentUserInManagedObjectContext:settings.managedObjectContext];
+}
+
++ (MTUser *)currentUserInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+	MTSettings *settings = [MTSettings settingsInManagedObjectContext:managedObjectContext];
 	MTUser *currentUser = [MTUser userWithName:settings.currentUser];
 
 	if(currentUser)
 		return currentUser;
 
 	// well the current user was not found, so lets check to see if there are any users at all
-	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"name"]
 													   withPredicate:nil];

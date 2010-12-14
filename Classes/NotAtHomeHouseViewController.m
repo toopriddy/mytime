@@ -558,6 +558,7 @@
 
 - (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call
 {
+#warning this is not getting called, this needs to be handleded elsewhere
 	// save the new call
 	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	NSMutableArray *calls = [userSettings objectForKey:SettingsCalls];

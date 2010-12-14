@@ -6,8 +6,12 @@
 
 + (MTSettings *)settings
 {
+	return [MTSettings settingsInManagedObjectContext:[[MyTimeAppDelegate sharedInstance] managedObjectContext]];
+}
+
++ (MTSettings *)settingsInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
 	MTSettings *settings;
-	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 	NSArray *array = [managedObjectContext fetchObjectsForEntityName:[MTSettings entityName] withPredicate:nil];
 
 	if(array == nil || [array count] == 0) 

@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 #import "GenericTableViewController.h"
 #import "MetadataEditorViewController.h"
+#import "MTAdditionalInformation.h"
 
 @class MultipleChoiceMetadataViewController;
 
@@ -28,13 +29,14 @@
 {
 	NSObject<MultipleChoiceMetadataViewControllerDelegate> *delegate;
 @private
-	NSMutableArray *data;
+	MTAdditionalInformation *additionalInformation_;
 	NSString *value;
 }
-@property (nonatomic, assign) NSObject<MultipleChoiceMetadataViewControllerDelegate> *delegate;
 @property (nonatomic, retain) NSString *value;
+@property (nonatomic, retain) MTAdditionalInformation *additionalInformation;
+@property (nonatomic, assign) NSObject<MultipleChoiceMetadataViewControllerDelegate> *delegate;
 
-- (id) initWithName:(NSString *)theName value:(NSString *)theValue data:(NSMutableArray *)theData;
+- (id)initWithAdditionalInformation:(MTAdditionalInformation *)additionalInformation;
 
 
 @end

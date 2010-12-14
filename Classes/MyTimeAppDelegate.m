@@ -62,6 +62,7 @@
 @interface MyTimeAppDelegate ()
 - (void)displaySecurityViewController;
 + (NSString *)storeFileAndPath;
+- (MFMailComposeViewController *)sendCoreDataConvertFailureEmail;
 
 @end
 
@@ -1195,7 +1196,7 @@ NSString *emailFormattedStringForSettings();
 						{
 							for(NSString *choice in [additionalInformation objectForKey:SettingsMetadataData])
 							{
-								MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice insertInManagedObjectContext:self.managedObjectContext];
+								MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:mtAdditionalInformationType];
 								mtMultipleChoice.name = choice;
 								mtMultipleChoice.type = mtAdditionalInformationType;
 							}

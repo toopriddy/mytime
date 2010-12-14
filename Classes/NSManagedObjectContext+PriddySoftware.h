@@ -22,6 +22,10 @@
 - (NSUInteger)countForFetchedObjectsForEntityName:(NSString *)newEntityName
 									withPredicate:(id)stringOrPredicate, ...;
 
+- (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames;
+- (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary;
+
+
 + (void)presentErrorDialog:(NSError *)error;
 
 @end

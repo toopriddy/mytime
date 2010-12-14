@@ -447,7 +447,6 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 	[string appendString:@"\n"];
 	
 	NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]];
-	BOOL first = YES;
 		
 	for(NSDictionary *visit in returnVisits)
 	{
