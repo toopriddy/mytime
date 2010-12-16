@@ -2359,7 +2359,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 	// now add the url that will allow importing
 
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[_call.managedObjectContext dictionaryFromManagedObject:_call skipRelationshipNames:[NSArray arrayWithObjects:@"call", @"user", @"additionalInformation", nil]]];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[_call.managedObjectContext dictionaryFromManagedObject:_call 
+																								 skipRelationshipNames:[NSArray arrayWithObjects:@"self.user", @"self.additionalInformation.type.user", @"self.additionalInformation.type.additionalInformation", nil]]];
 	[string appendString:@"<a href=\"mytime://mytime/addCoreDataCall?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;

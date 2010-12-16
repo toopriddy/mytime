@@ -31,6 +31,7 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call);
 typedef enum {
 	NORMAL_STARTUP = 0,
 	ADD_CALL,
+	ADD_CORE_DATA_CALL,
 	RESTORE_BACKUP,
 	AUTO_BACKUP,
 	ADD_NOT_AT_HOME_TERRITORY,
