@@ -224,54 +224,113 @@
 
 }
 
-- (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames visitedObjects:(NSMutableArray *)visitedObjects
+- (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames visitedObjects:(NSMutableArray *)visitedObjects currentPath:(NSString *)currentPath
 {
 	NSDictionary *attributesByName = [[managedObject entity] attributesByName];
 	NSDictionary *relationshipsByName = [[managedObject entity] relationshipsByName];
 	NSMutableDictionary *valuesDictionary = [[managedObject dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
 	[valuesDictionary setObject:[[managedObject entity] name] forKey:@"ManagedObjectName"];
+	visitedObjects = [NSMutableArray arrayWithArray:visitedObjects];
 	[visitedObjects addObject:managedObject];
+	
 	for (NSString *relationshipName in [relationshipsByName allKeys]) 
 	{
-		// skip relationship names
-		if(skipRelationshipNames && [skipRelationshipNames indexOfObject:relationshipName] != NSNotFound)
-			continue;
-		
+		NSString *newCurrentPath = [currentPath stringByAppendingFormat:@".%@", relationshipName];
+
 		id namedRelationshipObject = [managedObject valueForKey:relationshipName];
 		NSRelationshipDescription *relationshipDescription = [relationshipsByName objectForKey:relationshipName];
-		if (![relationshipDescription isToMany]) 
+		
+		// skip relationship names
+		if(skipRelationshipNames && [skipRelationshipNames indexOfObject:newCurrentPath] != NSNotFound)
 		{
-			if([visitedObjects containsObject:namedRelationshipObject])
-				continue;
-			
-			[valuesDictionary setValue:[self dictionaryFromManagedObject:namedRelationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects] forKey:relationshipName];
+#if 1
+			// go ahead and add these to skip later on
+			if (![relationshipDescription isToMany]) 
+			{
+				[visitedObjects addObject:namedRelationshipObject];
+			}
+			else
+			{
+				[visitedObjects addObjectsFromArray:namedRelationshipObject];
+			}
+#endif
 			continue;
 		}
-		NSSet *relationshipObjects = namedRelationshipObject;
-		NSMutableArray *relationshipArray = [NSMutableArray array];
-		for (NSManagedObject *relationshipObject in relationshipObjects) 
+		
+		if (![relationshipDescription isToMany]) 
 		{
-			if([visitedObjects containsObject:relationshipObject])
+			if(namedRelationshipObject == nil || [visitedObjects containsObject:namedRelationshipObject])
 				continue;
-			[relationshipArray addObject:[self dictionaryFromManagedObject:relationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects]];
+			
+			[valuesDictionary setValue:[self dictionaryFromManagedObject:namedRelationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects currentPath:newCurrentPath] forKey:relationshipName];
 		}
-		[valuesDictionary setObject:relationshipArray forKey:relationshipName];
+		else
+		{
+			NSSet *relationshipObjects = namedRelationshipObject;
+			NSMutableArray *relationshipArray = [NSMutableArray array];
+			for (NSManagedObject *relationshipObject in relationshipObjects) 
+			{
+				if([visitedObjects containsObject:relationshipObject])
+					continue;
+				[relationshipArray addObject:[self dictionaryFromManagedObject:relationshipObject skipRelationshipNames:skipRelationshipNames visitedObjects:visitedObjects currentPath:newCurrentPath]];
+			}
+			[valuesDictionary setObject:relationshipArray forKey:relationshipName];
+		}
 	}
 	return [valuesDictionary autorelease];
 }
 
 - (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames
 {
-	return [self dictionaryFromManagedObject:managedObject skipRelationshipNames:skipRelationshipNames visitedObjects:[NSMutableArray array]];
+	return [self dictionaryFromManagedObject:managedObject skipRelationshipNames:skipRelationshipNames visitedObjects:[NSMutableArray array] currentPath:@"self"];
 }
 
 - (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary
 {
+	return [self managedObjectFromDictionary:structureDictionary uniqueObjects:nil];
+}
+
+- (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary uniqueObjects:(NSDictionary *)uniqueObjects
+{
 	NSManagedObjectContext *moc = self;
 	NSString *objectName = [structureDictionary objectForKey:@"ManagedObjectName"];
+	NSArray *uniqueAttributeNames = [uniqueObjects objectForKey:objectName];
+	if(uniqueAttributeNames)
+	{
+		NSMutableArray *predicateArray = [NSMutableArray array];
+		
+		for(NSString *attributeName in uniqueAttributeNames)
+		{
+			NSObject *value = [structureDictionary objectForKey:attributeName];
+			if(value && ![value isKindOfClass:[NSNull class]])
+			{
+				[predicateArray addObject:[NSPredicate predicateWithFormat:@"%K == %@", attributeName, value]];
+			}
+		}
+		NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+		NSArray *foundManagedObjects = [self fetchObjectsForEntityName:objectName withPredicate:predicate];
+		if([foundManagedObjects count] == 1)
+		{
+			return [foundManagedObjects lastObject];
+		}
+	}
+	
+	// if we cant find a unique object, then just make one
 	NSManagedObject *managedObject = [NSEntityDescription insertNewObjectForEntityForName:objectName inManagedObjectContext:moc];
+	// set the attributes
+	NSEntityDescription *entityDescription = [NSEntityDescription entityForName:objectName inManagedObjectContext:self];
+	NSArray *attributeNames = [[entityDescription attributesByName] allKeys];
+	for(NSString *name in attributeNames)
+	{
+		NSObject *value = [structureDictionary objectForKey:name];
+		if(value && ![value isKindOfClass:[NSNull class]])
+		{
+			[managedObject setValue:value forKey:name];
+		}
+	}
+	
+	// now for the relationships
 	NSDictionary *relationshipsByName = [[managedObject entity] relationshipsByName];
-	[managedObject setValuesForKeysWithDictionary:structureDictionary];
 	
 	for (NSString *relationshipName in [[[managedObject entity] relationshipsByName] allKeys]) 
 	{
@@ -279,15 +338,18 @@
 		if (![description isToMany]) 
 		{
 			NSDictionary *childStructureDictionary = [structureDictionary objectForKey:relationshipName];
-			NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary];
-			[managedObject setValue:childObject forKey:relationshipName];
+			if(childStructureDictionary && ![childStructureDictionary isKindOfClass:[NSNull class]])
+			{
+				NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary uniqueObjects:uniqueObjects];
+				[managedObject setValue:childObject forKey:relationshipName];
+			}
 			continue;
 		}
 		NSMutableSet *relationshipSet = [managedObject mutableSetValueForKey:relationshipName];
 		NSArray *relationshipArray = [structureDictionary objectForKey:relationshipName];
 		for (NSDictionary *childStructureDictionary in relationshipArray) 
 		{
-			NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary];
+			NSManagedObject *childObject = [self managedObjectFromDictionary:childStructureDictionary uniqueObjects:uniqueObjects];
 			[relationshipSet addObject:childObject];
 		}
 	}

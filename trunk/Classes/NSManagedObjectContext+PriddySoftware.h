@@ -24,6 +24,7 @@
 
 - (NSDictionary *)dictionaryFromManagedObject:(NSManagedObject*)managedObject skipRelationshipNames:(NSArray *)skipRelationshipNames;
 - (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary;
+- (NSManagedObject*)managedObjectFromDictionary:(NSDictionary*)structureDictionary uniqueObjects:(NSDictionary *)uniqueObjects;
 
 
 + (void)presentErrorDialog:(NSError *)error;

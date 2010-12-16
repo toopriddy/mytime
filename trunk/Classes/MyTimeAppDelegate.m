@@ -235,6 +235,65 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				}
 			}
 			break;
+		case ADD_CORE_DATA_CALL:
+			switch(button)
+			{
+					//import
+				case 0:
+				{
+					MTCall *newCall = (MTCall *)[self.managedObjectContext managedObjectFromDictionary:dataToImport];
+					
+					// change all return visits to be transferrs so that we dont count the other person's work
+					for(MTReturnVisit *visit in newCall.returnVisits)
+					{
+						NSString *type = visit.type;
+						if(type == nil || [type isEqualToString:CallReturnVisitTypeReturnVisit])
+						{
+							visit.type = CallReturnVisitTypeTransferedReturnVisit;
+						}
+						else if([type isEqualToString:CallReturnVisitTypeInitialVisit])
+						{
+							visit.type = CallReturnVisitTypeTransferedInitialVisit;
+						}
+						else if([type isEqualToString:CallReturnVisitTypeNotAtHome])
+						{
+							visit.type = CallReturnVisitTypeTransferedNotAtHome;
+						}
+						else if([type isEqualToString:CallReturnVisitTypeStudy])
+						{
+							visit.type = CallReturnVisitTypeTransferedStudy;
+						}
+					}
+					newCall.user = [MTUser currentUser];
+					for(MTAdditionalInformation *info in newCall.additionalInformation)
+					{
+						if(info.type)
+						{
+							info.type.user = newCall.user;
+							info.type.hiddenValue = YES;
+						}
+					}
+					NSError *error = nil;
+					if (![self.managedObjectContext save:&error]) 
+					{
+						[NSManagedObjectContext presentErrorDialog:error];
+					}
+					self.dataToImport = nil;
+					
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup");
+					[alertSheet show];
+					break;
+				}
+					// cancel
+				case 1:
+				{
+					self.dataToImport = nil;
+					break;
+				}
+			}
+			break;
 		case ADD_NOT_AT_HOME_TERRITORY:
 			switch(button)
 			{
@@ -387,7 +446,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		if (![settings.managedObjectContext save:&error]) 
 		{
 			[NSManagedObjectContext presentErrorDialog:error];
-			abort();
 		}
 	}
 
@@ -1611,6 +1669,39 @@ NSString *emailFormattedStringForSettings();
 					[alertSheet showInView:window];
 				} while (false);
 			}
+			if([@"/addCoreDataCall" isEqualToString:path])
+			{
+				do 
+				{
+					NSData *dataStore = allocNSDataFromNSStringByteString(data);
+					if(dataStore == nil)
+						break;
+					@try
+					{
+						self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+					}
+					@catch (NSException *e) 
+					{
+						NSLog(@"%@", e);
+					}
+					[dataStore release];
+					DEBUG(NSLog(@"%@", dataToImport);)
+					
+					if(self.dataToImport == nil)
+						break;
+					
+					handled = YES;
+					_actionSheetType = ADD_CORE_DATA_CALL;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a call into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a call from an email when the call was transferred from another iphone/itouch")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Yes, add call", @"Transferr this call from another user")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
 			if([@"/addNotAtHomeTerritory" isEqualToString:path])
 			{
 				do 
@@ -1901,7 +1992,6 @@ NSString *emailFormattedStringForSettings();
 	if (![settings.managedObjectContext save:&error]) 
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
 	}
 	
 	
@@ -1942,7 +2032,6 @@ NSString *emailFormattedStringForSettings();
 		if (![settings.managedObjectContext save:&error]) 
 		{
 			[NSManagedObjectContext presentErrorDialog:error];
-			abort();
 		}
 	}
 	
@@ -1957,7 +2046,6 @@ NSString *emailFormattedStringForSettings();
 			if (![settings.managedObjectContext save:&error]) 
 			{
 				[NSManagedObjectContext presentErrorDialog:error];
-				abort();
 			}
 			
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
@@ -2042,7 +2130,6 @@ NSString *emailFormattedStringForSettings();
 		if (![settings.managedObjectContext save:&error]) 
 		{
 			[NSManagedObjectContext presentErrorDialog:error];
-			abort();
 		}
 	}
 }
