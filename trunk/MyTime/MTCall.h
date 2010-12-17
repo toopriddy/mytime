@@ -15,6 +15,7 @@
 + (NSString *)bottomLineOfAddressWithCity:(NSString *)city state:(NSString *)state;
 
 - (void)initializeNewCall;
+- (void)initializeNewCallWithoutReturnVisit;
 
 // Custom logic goes here.
 @end

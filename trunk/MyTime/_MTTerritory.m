@@ -43,6 +43,13 @@
 
 
 
+@dynamic name;
+
+
+
+
+
+
 @dynamic ownerEmailId;
 
 
@@ -51,13 +58,6 @@
 
 
 @dynamic notes;
-
-
-
-
-
-
-@dynamic name;
 
 
 

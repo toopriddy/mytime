@@ -51,7 +51,7 @@
 
 - (id)init
 {
-	[super initSortedBy:CALLS_SORTED_BY_STREET withMetadata:nil callsName:SettingsDeletedCalls];
+	[super initSortedBy:CALLS_SORTED_BY_DELETED withMetadata:nil callsName:SettingsDeletedCalls];
 	return(self);
 }
 

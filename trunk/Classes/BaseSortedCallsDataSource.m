@@ -121,6 +121,7 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	switch(_sortedBy)
 	{
 		case CALLS_SORTED_BY_STREET:
+		case CALLS_SORTED_BY_DELETED:
 			// sort by street, city, then name
 			return @"uppercaseFirstLetterOfStreet";
 		case CALLS_SORTED_BY_CITY:
@@ -148,26 +149,30 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	{
 		case CALLS_SORTED_BY_STREET:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_DATE:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_CITY:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_NAME:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
+			break;
+		case CALLS_SORTED_BY_DELETED:
+			// sort by street, city, then name
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == YES", currentUser];
 			break;
 		case CALLS_SORTED_BY_STUDY:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deleted == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study')", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deletedCall == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study')", currentUser];
 			break;
 		case CALLS_SORTED_BY_METADATA:
-			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deleted == NO", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 	}
 	return filterPredicate;
@@ -181,6 +186,7 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	
 	switch(_sortedBy)
 	{
+		case CALLS_SORTED_BY_DELETED:
 		case CALLS_SORTED_BY_STREET:
 			// sort by street, city, then name
 			sortDescriptors = sortByName(sortByCity(sortByStreet(sortDescriptors)));

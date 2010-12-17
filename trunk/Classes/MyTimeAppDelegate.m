@@ -63,6 +63,7 @@
 - (void)displaySecurityViewController;
 + (NSString *)storeFileAndPath;
 - (MFMailComposeViewController *)sendCoreDataConvertFailureEmail;
+- (MTCall *)createCoreDataCallWithUser:(MTUser *)mtUser call:(NSDictionary *)call deleted:(BOOL)deleted;
 
 @end
 
@@ -212,18 +213,18 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 							[visit setObject:CallReturnVisitTypeTransferedStudy forKey:CallReturnVisitType];
 						}
 					}
-					if(calls == nil)
-					{
-						calls = [NSMutableArray array];
-						[[[Settings sharedInstance] userSettings] setObject:calls forKey:SettingsCalls];
-					}
-					[calls addObject:newCall];
-					[[Settings sharedInstance] saveData];
+					MTCall *mtCall = [self createCoreDataCallWithUser:[MTUser currentUser] call:newCall deleted:NO];
 					self.dataToImport = nil;
 
+					// kick off the geocoder if not already done
+					if(![mtCall.locationLookupType isEqualToString:CallLocationTypeManual])
+					{
+						[[Geocache sharedInstance] lookupCall:mtCall];
+					}
+					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup");
+					alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
 					[alertSheet show];
 					break;
 				}
@@ -264,25 +265,40 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 							visit.type = CallReturnVisitTypeTransferedStudy;
 						}
 					}
-					newCall.user = [MTUser currentUser];
+
+					// fix the additional info types and move the temporary types that the other user had
+					// below everything else
+					MTUser *currentUser = [MTUser currentUser];
 					for(MTAdditionalInformation *info in newCall.additionalInformation)
 					{
 						if(info.type)
 						{
-							info.type.user = newCall.user;
+							info.type.orderValue = 1000 + info.type.orderValue;
+							info.type.user = currentUser;
 							info.type.hiddenValue = YES;
 						}
 					}
+
+					// add the always shown additional information
+					[newCall initializeNewCallWithoutReturnVisit];
+					
 					NSError *error = nil;
 					if (![self.managedObjectContext save:&error]) 
 					{
 						[NSManagedObjectContext presentErrorDialog:error];
 					}
+					
+					// kick off the geocoder if not already done
+					if(![newCall.locationLookupType isEqualToString:CallLocationTypeManual])
+					{
+						[[Geocache sharedInstance] lookupCall:newCall];
+					}
+					
 					self.dataToImport = nil;
 					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup");
+					alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
 					[alertSheet show];
 					break;
 				}
@@ -716,7 +732,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 																		  [NSSortDescriptor sortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
 																		  [NSSortDescriptor sortDescriptorWithKey:@"state" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
 																		  [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
-														   withPredicate:@"(user == %@) AND (deleted == NO)", user];
+														   withPredicate:@"(user == %@) AND (deletedCall == NO)", user];
 		for(MTCall *call in calls)
 		{
 			[string appendString:emailFormattedStringForCoreDataCall(call)];
@@ -984,6 +1000,158 @@ NSString *emailFormattedStringForSettings();
 	return YES;
 }
 
+- (MTCall *)createCoreDataCallWithUser:(MTUser *)mtUser call:(NSDictionary *)call deleted:(BOOL)deleted
+{
+	NSError *error;
+	MTCall *mtCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
+	mtCall.user = mtUser;
+	mtCall.houseNumber = [call objectForKey:CallStreetNumber];
+	mtCall.apartmentNumber = [call objectForKey:CallApartmentNumber];
+	mtCall.street = [call objectForKey:CallStreet];
+	mtCall.city = [call objectForKey:CallCity];
+	mtCall.state = [call objectForKey:CallState];
+	mtCall.deletedCallValue = deleted;
+	mtCall.name = [call objectForKey:CallName];
+	NSString *latLong = [call objectForKey:CallLattitudeLongitude];
+	if(latLong == nil)
+	{
+		mtCall.locationAquiredValue = NO;
+		mtCall.locationAquisitionAttemptedValue = NO;
+	}
+	else if([latLong isEqualToString:@"nil"])
+	{
+		mtCall.locationAquiredValue = NO;
+		mtCall.locationAquisitionAttemptedValue = YES;
+	}
+	else
+	{
+		NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
+		if(stringArray.count == 2)
+		{
+			mtCall.lattitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:0]];
+			mtCall.longitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:1]];
+			mtCall.locationAquisitionAttemptedValue = YES;
+			mtCall.locationAquiredValue = YES;
+		}
+		else
+		{
+			// something was malformed... look it up again
+			mtCall.locationAquiredValue = NO;
+			mtCall.locationAquisitionAttemptedValue = NO;
+		}
+		
+	}
+	if([call objectForKey:CallLocationType])
+		mtCall.locationLookupType = [call objectForKey:CallLocationType];
+	
+	// RETURN VISITS
+	NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+	BOOL first = YES;
+	BOOL firstTransfer = YES;
+	for(NSDictionary *returnVisit in returnVisits)
+	{
+		MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
+		mtReturnVisit.call = mtCall;
+		
+		mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
+		NSLog(@"%@", mtReturnVisit.date);
+		mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
+		if([returnVisit objectForKey:CallReturnVisitType])
+			mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
+		
+		// lets translate the initial visit which is classified as a return visit into an Initial Visit
+		if(first)
+		{
+			first = NO;
+			if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeReturnVisit])
+			{
+				mtReturnVisit.type = CallReturnVisitTypeInitialVisit;
+			}
+		}
+		// lets translate the transferred initial visit as well
+		if(firstTransfer)
+		{
+			firstTransfer = NO;
+			if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeTransferedReturnVisit])
+			{
+				mtReturnVisit.type = CallReturnVisitTypeTransferedInitialVisit;
+			}
+		}
+		// PUBLICATIONS
+		for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
+		{
+			MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
+			mtPublication.returnVisit = mtReturnVisit;
+			mtPublication.dayValue = [[publication objectForKey:CallReturnVisitPublicationDay] intValue];
+			mtPublication.monthValue = [[publication objectForKey:CallReturnVisitPublicationMonth] intValue];
+			mtPublication.yearValue = [[publication objectForKey:CallReturnVisitPublicationYear] intValue];
+			mtPublication.name = [publication objectForKey:CallReturnVisitPublicationName];
+			mtPublication.title = [publication objectForKey:CallReturnVisitPublicationTitle];
+			mtPublication.type = [publication objectForKey:CallReturnVisitPublicationType];
+			mtPublication.countValue = 1;
+		}
+	}
+	
+	// ADDITIONAL INFORMATION
+	for(NSDictionary *additionalInformation in [call objectForKey:CallMetadata])
+	{
+		MTAdditionalInformation *mtAdditionalInformation = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
+		
+		mtAdditionalInformation.call = mtCall;
+		MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
+																													 name:[additionalInformation objectForKey:CallMetadataName] 
+																													 user:mtUser];
+		if(mtAdditionalInformationType == nil)
+		{
+			// we need to create one of these... this happens when the user deleted the additional information but calls still use it
+			mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationType:[[additionalInformation objectForKey:SettingsMetadataType] intValue] 
+																								  name:[additionalInformation objectForKey:SettingsMetadataName]
+																								  user:mtUser];
+			mtAdditionalInformationType.hiddenValue = YES;
+			if(mtAdditionalInformationType.typeValue == CHOICE)
+			{
+				for(NSString *choice in [additionalInformation objectForKey:SettingsMetadataData])
+				{
+					MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:mtAdditionalInformationType];
+					mtMultipleChoice.name = choice;
+					mtMultipleChoice.type = mtAdditionalInformationType;
+				}
+			}
+		}
+		mtAdditionalInformation.type = mtAdditionalInformationType;
+		
+		// since the CallMetadataData field had a meaning based on the type, we have to convert the different types
+		mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
+		switch(mtAdditionalInformationType.typeValue)
+		{
+			case PHONE:
+			case EMAIL:
+			case URL:
+			case STRING:
+			case NOTES:
+			case CHOICE:
+				break;
+			case SWITCH:
+				mtAdditionalInformation.booleanValue = [[additionalInformation objectForKey:CallMetadataData] boolValue];
+				break;
+			case DATE:
+				mtAdditionalInformation.date = [additionalInformation objectForKey:CallMetadataData];
+				break;
+			case NUMBER:
+				mtAdditionalInformation.numberValue = [[additionalInformation objectForKey:CallMetadataData] intValue];
+				break;
+		}
+	}
+	
+	error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
+	return mtCall;
+}
+
 - (void)convertToCoreDataStoreTask
 {
 	double steps = 1;
@@ -1145,151 +1313,8 @@ NSString *emailFormattedStringForSettings();
 			for(NSDictionary *call in [user objectForKey:callArray[i]])
 			{
 				count++;
-				MTCall *mtCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
-				mtCall.user = mtUser;
-				mtCall.houseNumber = [call objectForKey:CallStreetNumber];
-				mtCall.apartmentNumber = [call objectForKey:CallApartmentNumber];
-				mtCall.street = [call objectForKey:CallStreet];
-				mtCall.city = [call objectForKey:CallCity];
-				mtCall.state = [call objectForKey:CallState];
-				mtCall.deletedValue = i == 1;
-				mtCall.name = [call objectForKey:CallName];
-				NSString *latLong = [call objectForKey:CallLattitudeLongitude];
-				if(latLong == nil)
-				{
-					mtCall.locationAquiredValue = NO;
-					mtCall.locationAquisitionAttemptedValue = NO;
-				}
-				else if([latLong isEqualToString:@"nil"])
-				{
-					mtCall.locationAquiredValue = NO;
-					mtCall.locationAquisitionAttemptedValue = YES;
-				}
-				else
-				{
-					NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-					if(stringArray.count == 2)
-					{
-						mtCall.lattitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:0]];
-						mtCall.longitude = [NSDecimalNumber decimalNumberWithString:[stringArray objectAtIndex:1]];
-						mtCall.locationAquisitionAttemptedValue = YES;
-						mtCall.locationAquiredValue = YES;
-					}
-					else
-					{
-						// something was malformed... look it up again
-						mtCall.locationAquiredValue = NO;
-						mtCall.locationAquisitionAttemptedValue = NO;
-					}
-
-				}
-				if([call objectForKey:CallLocationType])
-					mtCall.locationLookupType = [call objectForKey:CallLocationType];
 				
-				// RETURN VISITS
-				NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
-				BOOL first = YES;
-				BOOL firstTransfer = YES;
-				for(NSDictionary *returnVisit in returnVisits)
-				{
-					MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
-					mtReturnVisit.call = mtCall;
-					
-					mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
-					NSLog(@"%@", mtReturnVisit.date);
-					mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
-					if([returnVisit objectForKey:CallReturnVisitType])
-						mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
-
-					// lets translate the initial visit which is classified as a return visit into an Initial Visit
-					if(first)
-					{
-						first = NO;
-						if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeReturnVisit])
-						{
-							mtReturnVisit.type = CallReturnVisitTypeInitialVisit;
-						}
-					}
-					// lets translate the transferred initial visit as well
-					if(firstTransfer)
-					{
-						firstTransfer = NO;
-						if([mtReturnVisit.type isEqualToString:CallReturnVisitTypeTransferedReturnVisit])
-						{
-							mtReturnVisit.type = CallReturnVisitTypeTransferedInitialVisit;
-						}
-					}
-					// PUBLICATIONS
-					for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
-					{
-						MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
-						mtPublication.returnVisit = mtReturnVisit;
-						mtPublication.dayValue = [[publication objectForKey:CallReturnVisitPublicationDay] intValue];
-						mtPublication.monthValue = [[publication objectForKey:CallReturnVisitPublicationMonth] intValue];
-						mtPublication.yearValue = [[publication objectForKey:CallReturnVisitPublicationYear] intValue];
-						mtPublication.name = [publication objectForKey:CallReturnVisitPublicationName];
-						mtPublication.title = [publication objectForKey:CallReturnVisitPublicationTitle];
-						mtPublication.type = [publication objectForKey:CallReturnVisitPublicationType];
-						mtPublication.countValue = 1;
-					}
-				}
-
-				// ADDITIONAL INFORMATION
-				for(NSDictionary *additionalInformation in [call objectForKey:CallMetadata])
-				{
-					MTAdditionalInformation *mtAdditionalInformation = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
-
-					mtAdditionalInformation.call = mtCall;
-					MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType additionalInformationType:[[additionalInformation objectForKey:CallMetadataType] intValue] 
-																																 name:[additionalInformation objectForKey:CallMetadataName] 
-																																 user:mtUser];
-					if(mtAdditionalInformationType == nil)
-					{
-						// we need to create one of these... this happens when the user deleted the additional information but calls still use it
-						mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationType:[[additionalInformation objectForKey:SettingsMetadataType] intValue] 
-																											  name:[additionalInformation objectForKey:SettingsMetadataName]
-																											  user:mtUser];
-						mtAdditionalInformationType.hiddenValue = YES;
-						if(mtAdditionalInformationType.typeValue == CHOICE)
-						{
-							for(NSString *choice in [additionalInformation objectForKey:SettingsMetadataData])
-							{
-								MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:mtAdditionalInformationType];
-								mtMultipleChoice.name = choice;
-								mtMultipleChoice.type = mtAdditionalInformationType;
-							}
-						}
-					}
-					mtAdditionalInformation.type = mtAdditionalInformationType;
-
-					// since the CallMetadataData field had a meaning based on the type, we have to convert the different types
-					mtAdditionalInformation.value = [additionalInformation objectForKey:CallMetadataValue];
-					switch(mtAdditionalInformationType.typeValue)
-					{
-						case PHONE:
-						case EMAIL:
-						case URL:
-						case STRING:
-						case NOTES:
-						case CHOICE:
-							break;
-						case SWITCH:
-							mtAdditionalInformation.booleanValue = [[additionalInformation objectForKey:CallMetadataData] boolValue];
-							break;
-						case DATE:
-							mtAdditionalInformation.date = [additionalInformation objectForKey:CallMetadataData];
-							break;
-						case NUMBER:
-							mtAdditionalInformation.numberValue = [[additionalInformation objectForKey:CallMetadataData] intValue];
-							break;
-					}
-				}
-				
-				error = nil;
-				if (![self.managedObjectContext save:&error]) 
-				{
-					[NSManagedObjectContext presentErrorDialog:error];
-				}
+				[self createCoreDataCallWithUser:mtUser call:call deleted:i == 1];
 			}			
 		}
 
@@ -1919,13 +1944,14 @@ NSString *emailFormattedStringForSettings();
 	SortedCallsViewController *studyViewController = [[[SortedCallsViewController alloc] initWithDataSource:studySortedDataSource] autorelease];
 	studyViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:studyViewController] autorelease]];
+#endif	
 
 	// Deleted Calls
 	DeletedCallsSortedByStreetViewDataSource *deletedCallsStreetSortedDataSource = [[[DeletedCallsSortedByStreetViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *deletedCallsStreetViewController = [[[SortedCallsViewController alloc] initWithDataSource:deletedCallsStreetSortedDataSource] autorelease];
 	deletedCallsStreetViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:deletedCallsStreetViewController] autorelease]];
-#endif	
+
 	// ALL CALLS WEB VIEW
 	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];

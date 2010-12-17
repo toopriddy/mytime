@@ -104,6 +104,16 @@
 
 
 
+@property (nonatomic, retain) NSNumber *deletedCall;
+
+@property BOOL deletedCallValue;
+- (BOOL)deletedCallValue;
+- (void)setDeletedCallValue:(BOOL)value_;
+
+//- (BOOL)validateDeletedCall:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *locationAquired;
 
 @property BOOL locationAquiredValue;
@@ -117,16 +127,6 @@
 @property (nonatomic, retain) NSString *uppercaseFirstLetterOfStreet;
 
 //- (BOOL)validateUppercaseFirstLetterOfStreet:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *deleted;
-
-@property BOOL deletedValue;
-- (BOOL)deletedValue;
-- (void)setDeletedValue:(BOOL)value_;
-
-//- (BOOL)validateDeleted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -211,6 +211,13 @@
 - (void)setPrimitiveLocationLookupType:(NSString*)value;
 
 
+- (NSNumber*)primitiveDeletedCall;
+- (void)setPrimitiveDeletedCall:(NSNumber*)value;
+
+- (BOOL)primitiveDeletedCallValue;
+- (void)setPrimitiveDeletedCallValue:(BOOL)value_;
+
+
 - (NSNumber*)primitiveLocationAquired;
 - (void)setPrimitiveLocationAquired:(NSNumber*)value;
 
@@ -220,13 +227,6 @@
 
 - (NSString*)primitiveUppercaseFirstLetterOfStreet;
 - (void)setPrimitiveUppercaseFirstLetterOfStreet:(NSString*)value;
-
-
-- (NSNumber*)primitiveDeleted;
-- (void)setPrimitiveDeleted:(NSNumber*)value;
-
-- (BOOL)primitiveDeletedValue;
-- (void)setPrimitiveDeletedValue:(BOOL)value_;
 
 
 

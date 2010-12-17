@@ -140,7 +140,7 @@
 		MTUser *currentUser = [MTUser currentUser];
 		NSArray *calls = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTCall entityName]
 																   propertiesToFetch:[NSArray arrayWithObjects:@"name", @"lattitude", @"longitude", nil]
-																	   withPredicate:[NSPredicate predicateWithFormat:@"(user == %@) AND (locationLookupType != %@) AND (locationAquired == YES) AND (deleted == NO)", currentUser, CallLocationTypeDoNotShow]];
+																	   withPredicate:[NSPredicate predicateWithFormat:@"(user == %@) AND (locationLookupType != %@) AND (locationAquired == YES) AND (deletedCall == NO)", currentUser, CallLocationTypeDoNotShow]];
 					
 		CLLocationCoordinate2D topLeftCoord;
 		topLeftCoord.latitude = -90;
@@ -276,7 +276,7 @@
 			[self.mapView removeAnnotation:marker];
 			
 			if(!changedCall.locationAquiredValue ||
- 			   changedCall.deleted ||
+ 			   changedCall.deletedCallValue ||
 			   [changedCall.locationLookupType isEqualToString:CallLocationTypeDoNotShow])
 			{
 				// dont insert the marker back, it should be hidden or not there
@@ -293,7 +293,7 @@
 
 	// well this call does not exist, lets see if it needs to get added
 	if(!changedCall.locationAquiredValue ||
-	   changedCall.deletedValue ||
+	   changedCall.deletedCallValue ||
 	   [changedCall.locationLookupType isEqualToString:CallLocationTypeDoNotShow])
 	{
 		// it shouldnt get added
