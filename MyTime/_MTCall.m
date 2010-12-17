@@ -125,6 +125,32 @@
 
 
 
+@dynamic deletedCall;
+
+
+
+- (BOOL)deletedCallValue {
+	NSNumber *result = [self deletedCall];
+	return [result boolValue];
+}
+
+- (void)setDeletedCallValue:(BOOL)value_ {
+	[self setDeletedCall:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveDeletedCallValue {
+	NSNumber *result = [self primitiveDeletedCall];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveDeletedCallValue:(BOOL)value_ {
+	[self setPrimitiveDeletedCall:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic locationAquired;
 
 
@@ -153,32 +179,6 @@
 
 @dynamic uppercaseFirstLetterOfStreet;
 
-
-
-
-
-
-@dynamic deleted;
-
-
-
-- (BOOL)deletedValue {
-	NSNumber *result = [self deleted];
-	return [result boolValue];
-}
-
-- (void)setDeletedValue:(BOOL)value_ {
-	[self setDeleted:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveDeletedValue {
-	NSNumber *result = [self primitiveDeleted];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveDeletedValue:(BOOL)value_ {
-	[self setPrimitiveDeleted:[NSNumber numberWithBool:value_]];
-}
 
 
 

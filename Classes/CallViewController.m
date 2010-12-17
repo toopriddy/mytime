@@ -1749,7 +1749,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		if(self.delegate.delegate)
 		{
 			MTCall *call = self.delegate.call;
-			call.deletedValue = YES;
+			call.deletedCallValue = YES;
 			if(self.deleteForever)
 			{
 				[call.managedObjectContext deleteObject:call];
@@ -1845,7 +1845,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	VERBOSE(NSLog(@"alertSheet: button:%d", button);)
 	if(button == 0)
 	{
-		self.delegate.call.deletedValue = NO;
+		self.delegate.call.deletedCallValue = NO;
 		[self.delegate save];
 
 		[self.delegate.navigationController popViewControllerAnimated:YES];
@@ -2242,7 +2242,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			sectionController.isViewableWhenNotEditing = NO;
 			[self.sectionControllers addObject:sectionController];
 			
-			if(_call.deletedValue)
+			if(_call.deletedCallValue)
 			{
 				RestoreCallCellController *cellController = [[[RestoreCallCellController alloc] init] autorelease];
 				cellController.delegate = self;
@@ -2257,7 +2257,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			
 			DeleteCallCellController *cellController = [[[DeleteCallCellController alloc] init] autorelease];
 			cellController.delegate = self;
-			cellController.deleteForever = _call.deletedValue;
+			cellController.deleteForever = _call.deletedCallValue;
 			[sectionController.cellControllers addObject:cellController];
 		}		
 	}
@@ -2341,7 +2341,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 	if(deleteCall && result != MFMailComposeResultCancelled)
 	{
-		_call.deletedValue = YES;
+		_call.deletedCallValue = YES;
 		[self.navigationController popViewControllerAnimated:YES];
 	}
 }

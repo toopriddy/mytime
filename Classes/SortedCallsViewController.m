@@ -44,6 +44,7 @@
 	if(reloadData_)
 	{
 		reloadData_ = NO;
+		self.fetchedResultsController = nil;
 		[self.tableView reloadData];
 	}
 	
@@ -617,6 +618,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
     [self.tableView endUpdates];
+	[self updateEmptyView];
 }
 
 

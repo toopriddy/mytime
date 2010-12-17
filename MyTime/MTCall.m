@@ -34,7 +34,7 @@
 	// lets go ahead and add the "Additional Information" always shown
 	MTUser *currentUser = [MTUser currentUser];
 	self.user = currentUser;
-	self.deletedValue = NO;
+	self.deletedCallValue = NO;
 	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
 	{
 		if(infoType.alwaysShownValue)
@@ -47,6 +47,23 @@
 	MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 	returnVisit.call = self;
 	returnVisit.type = CallReturnVisitTypeInitialVisit;
+}
+
+- (void)initializeNewCallWithoutReturnVisit
+{
+	// lets go ahead and add the "Additional Information" always shown
+	MTUser *currentUser = [MTUser currentUser];
+	self.user = currentUser;
+	self.deletedCallValue = NO;
+	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
+	{
+		if(infoType.alwaysShownValue)
+		{
+			MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
+			info.call = self;
+			info.type = infoType;
+		}
+	}
 }
 
 - (void)didTurnIntoFault
@@ -162,6 +179,9 @@
 	NSString *stringToReturn = @"";
 	if([street length])
 		stringToReturn = [[street uppercaseString] substringToIndex:1];
+	else
+		stringToReturn = @"#";
+
     [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
     return stringToReturn;
 }
