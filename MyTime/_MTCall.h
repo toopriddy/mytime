@@ -23,6 +23,7 @@
 
 
 
+
 @interface MTCallID : NSManagedObjectID {}
 @end
 
@@ -37,6 +38,12 @@
 @property (nonatomic, retain) NSString *city;
 
 //- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *uppercaseFirstLetterOfName;
+
+//- (BOOL)validateUppercaseFirstLetterOfName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -166,6 +173,10 @@
 
 - (NSString*)primitiveCity;
 - (void)setPrimitiveCity:(NSString*)value;
+
+
+- (NSString*)primitiveUppercaseFirstLetterOfName;
+- (void)setPrimitiveUppercaseFirstLetterOfName:(NSString*)value;
 
 
 - (NSString*)primitiveApartmentNumber;

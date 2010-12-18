@@ -128,7 +128,7 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 			return @"city";
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
-			return @"name";
+			return @"uppercaseFirstLetterOfName";
 //		case CALLS_SORTED_BY_DATE:
 //			return @"mostRecentReturnVisitDate";
 
@@ -169,7 +169,7 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 			break;
 		case CALLS_SORTED_BY_STUDY:
 			// sort by street, city, then name
-			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deletedCall == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study')", currentUser];
+			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deletedCall == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study').@count > 0", currentUser];
 			break;
 		case CALLS_SORTED_BY_METADATA:
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
