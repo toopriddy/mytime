@@ -25,10 +25,9 @@
 														 CallViewControllerDelegate, 
 														 UISearchBarDelegate, 
 														 OverlayViewControllerDelegate,
-                                                         NSFetchedResultsControllerDelegate> 
+                                                         NSFetchedResultsControllerDelegate, 
+                                                         UISearchDisplayDelegate> 
 {
-	UISearchBar *searchBar;
-	UITableView *tableView;
 	id<SortedCallsViewDataSourceProtocol> dataSource;
 	NSIndexPath *indexPath;
 	BOOL searching;
@@ -41,6 +40,11 @@
 	BOOL reloadData_;
     NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
+
+	// The saved state of the search UI if a memory warning removed the view.
+    NSString		*savedSearchTerm;
+    NSInteger		savedScopeButtonIndex;
+    BOOL			searchWasActive;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic, retain) UITableView *tableView;
@@ -49,6 +53,10 @@
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSFetchedResultsController *fetchedResultsController;
+
+@property (nonatomic, copy) NSString *savedSearchTerm;
+@property (nonatomic) NSInteger savedScopeButtonIndex;
+@property (nonatomic) BOOL searchWasActive;
 
 
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource;

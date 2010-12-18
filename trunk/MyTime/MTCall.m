@@ -175,14 +175,29 @@
 - (NSString *)uppercaseFirstLetterOfStreet 
 {
     [self willAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
-	NSString *street = self.street;
+	NSString *value = self.street;
 	NSString *stringToReturn = @"";
-	if([street length])
-		stringToReturn = [[street uppercaseString] substringToIndex:1];
+	if([value length])
+		stringToReturn = [[value uppercaseString] substringToIndex:1];
 	else
 		stringToReturn = @"#";
 
     [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
     return stringToReturn;
 }
+
+- (NSString *)uppercaseFirstLetterOfName
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfName"];
+	NSString *value = self.name;
+	NSString *stringToReturn = @"";
+	if([value length])
+		stringToReturn = [[value uppercaseString] substringToIndex:1];
+	else
+		stringToReturn = @"#";
+	
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfName"];
+    return stringToReturn;
+}
+
 @end

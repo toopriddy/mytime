@@ -22,11 +22,14 @@
 #import "PSLocalization.h"
 #import "MTCall.h"
 #import "MTUser.h"
-
+#import "MTReturnVisit.h"
+#import "MTPublication.h"
+#import "MTAdditionalInformation.h"
 
 @interface SortedCallsViewController ()
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) MTCall *editingCall;
+@property (nonatomic, retain) UISearchDisplayController *mySearchDisplayController;
 @end
 
 @implementation SortedCallsViewController
@@ -38,6 +41,10 @@
 @synthesize editingCall;
 @synthesize managedObjectContext = managedObjectContext_;
 @synthesize fetchedResultsController = fetchedResultsController_;
+@synthesize savedSearchTerm;
+@synthesize savedScopeButtonIndex;
+@synthesize searchWasActive;
+@synthesize mySearchDisplayController;
 
 - (void)updateEmptyView
 {
@@ -147,6 +154,10 @@
 
 - (void)removeViewMembers
 {
+	self.mySearchDisplayController.delegate = nil;
+	self.mySearchDisplayController.searchResultsDataSource = nil;
+	self.mySearchDisplayController.searchResultsDelegate = nil;
+	self.mySearchDisplayController = nil;
 	self.tableView.delegate = nil;
 	self.tableView.dataSource = nil;
 	self.tableView = nil;
@@ -171,10 +182,31 @@
 	[super didReceiveMemoryWarning];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // save the state of the search UI so that it can be restored if the view is re-created
+    self.searchWasActive = [self.searchDisplayController isActive];
+    self.savedSearchTerm = [self.searchDisplayController.searchBar text];
+    self.savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
+}
+
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
 	[self removeViewMembers];
+}
+
+- (void)viewDidLoad
+{
+	// restore search settings if they were saved in didReceiveMemoryWarning.
+    if (self.savedSearchTerm)
+	{
+        [self.searchDisplayController setActive:self.searchWasActive];
+        [self.searchDisplayController.searchBar setSelectedScopeButtonIndex:self.savedScopeButtonIndex];
+        [self.searchDisplayController.searchBar setText:savedSearchTerm];
+        
+        self.savedSearchTerm = nil;
+    }
 }
 
 - (void)loadView 
@@ -184,13 +216,18 @@
 	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
 														  style:[dataSource tableViewStyle]] autorelease];
 
-	searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44.0)] autorelease];
+	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44.0)] autorelease];
 	searchBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	searchBar.delegate = self;
+//	searchBar.delegate = self;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	tableView.tableHeaderView = searchBar;
 
+	self.mySearchDisplayController = [[[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self] autorelease];
+	self.mySearchDisplayController.delegate = self;
+	self.mySearchDisplayController.searchResultsDataSource = self;
+	self.mySearchDisplayController.searchResultsDelegate = self;
+	
 	searching = NO;
 
 	// set the autoresizing mask so that the table will always fill the view
@@ -207,140 +244,6 @@
 	
 	// set the tableview as the controller view
 	self.view = tableView;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-	[tableView.tableHeaderView resignFirstResponder];
-}
-
-#pragma mark -
-#pragma mark Search Bar 
-
-- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar 
-{
-	//This method is called again when the user clicks back from teh detail view.
-	//So the overlay is displayed on the results, which is something we do not want to happen.
-	if(searching)
-		return;
-
-// move the index out of the way
-	for ( UIView *view in tableView.subviews ) 
-	{
-		if ( [view respondsToSelector:@selector(moveIndexOut)] ) 
-		{
-			MovableTableViewIndex *index = (MovableTableViewIndex *)view;
-			[index moveIndexOut];
-		}
-	}
-		
-	//Add the overlay view.
-	if(ovController == nil)
-	{
-		ovController = [[OverlayViewController alloc] init];
-	}
-	
-	CGFloat yaxis = self.navigationController.navigationBar.frame.size.height;
-	CGFloat width = self.view.frame.size.width;
-	CGFloat height = self.view.frame.size.height;
-	
-	//Parameters x = origion on x-axis, y = origon on y-axis.
-	CGRect frame = CGRectMake(0, yaxis, width, height);
-	ovController.view.frame = frame;	
-	ovController.view.backgroundColor = [UIColor blackColor];
-	ovController.view.alpha = 0.5;
-	
-	ovController.delegate = self;
-	
-	[tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
-	
-	tableView.sectionIndexMinimumDisplayRowCount = NSIntegerMax;
-	searching = YES;
-	tableView.scrollEnabled = NO;
-
-	savedLeftButton = [self.navigationItem.leftBarButtonItem retain];
-	self.navigationItem.leftBarButtonItem = nil;
-	savedHidesBackButton = self.navigationItem.hidesBackButton;
-	self.navigationItem.hidesBackButton = YES;
-	//Add the done button.
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
-											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-											   target:self action:@selector(overlayViewControllerDone:)] autorelease];
-}
-
-- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText 
-{
-#warning fix me!
-//	[dataSource filterUsingSearchText:searchText];
-
-	if(searchText.length > 0) 
-	{
-		[ovController.view removeFromSuperview];
-		searching = YES;
-		tableView.scrollEnabled = YES;
-	}
-	else 
-	{
-		[self.tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
-		
-		searching = NO;
-		tableView.scrollEnabled = NO;
-	}
-	
-	[self.tableView reloadData];
-}
-
-- (void)overlayViewControllerDone:(OverlayViewController *)overlay 
-{
-	searchBar.text = @"";
-	[searchBar resignFirstResponder];
-
-	// move the index back
-	for ( UIView *view in tableView.subviews ) 
-	{
-		if ( [view respondsToSelector:@selector(moveIndexIn)] ) 
-		{
-			MovableTableViewIndex *index = (MovableTableViewIndex *)view;
-			[index moveIndexIn];
-		}
-	}	
-	searching = NO;
-	tableView.scrollEnabled = YES;
-
-	// only show the add new call button if they want to
-	if([dataSource showAddNewCall])
-	{
-		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-																				 target:self
-																				 action:@selector(navigationControlAdd:)] autorelease];
-		[self.navigationItem setRightBarButtonItem:button animated:NO];
-	}
-	if(savedLeftButton)
-	{
-		self.navigationItem.leftBarButtonItem = savedLeftButton;
-		[savedLeftButton release];
-		savedLeftButton = nil;
-	}
-	self.navigationItem.hidesBackButton = savedHidesBackButton;
-
-	
-	tableView.sectionIndexMinimumDisplayRowCount = 6;
-	[ovController.view removeFromSuperview];
-	[ovController release];
-	ovController = nil;
-	
-	[dataSource filterUsingSearchText:@""];
-	[tableView reloadData];
-}
-
-
-
-
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return([CallTableCell height]);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -372,11 +275,13 @@
 
 
 
-//
-//
-// UITableViewDelegate methods
-//
-//
+#pragma mark -
+#pragma mark Table view methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return([CallTableCell height]);
+}
+
 // the user selected a row in the table.
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath 
 {
@@ -423,7 +328,6 @@
 	cell.call = [self.fetchedResultsController objectAtIndexPath:theIndexPath];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
 	CallTableCell *cell = (CallTableCell *)[theTableView dequeueReusableCellWithIdentifier:@"CallTableCell"];
@@ -435,11 +339,6 @@
     [self configureCell:cell atIndexPath:theIndexPath];
 	return cell;
 }
-
-
-#pragma mark -
-#pragma mark Table view methods
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
@@ -499,9 +398,94 @@
 #endif
 }
 
+#pragma mark -
+#pragma mark Content Filtering
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	/*
+	 Update the filtered array based on the search text and scope.
+	 */
+	
+	self.fetchedResultsController.delegate = nil;
+	self.fetchedResultsController = nil;
+	
+#if 0	
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+	for (Product *product in listContent)
+	{
+		if ([scope isEqualToString:@"All"] || [product.type isEqualToString:scope])
+		{
+			NSComparisonResult result = [product.name compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+            if (result == NSOrderedSame)
+			{
+				[self.filteredListContent addObject:product];
+            }
+		}
+	}
+#endif
+}
+
+
+#pragma mark -
+#pragma mark Search Bar 
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+	self.fetchedResultsController.delegate = nil;
+	self.fetchedResultsController = nil;
+	[self.tableView reloadData];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString 
+							   scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] 
+							   scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
 
 #pragma mark -
 #pragma mark Fetched results controller
+- (void)addPredicatesForEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+{
+	NSDictionary *attributesByName = [entity attributesByName];
+	for(NSString *attributeName in [attributesByName allKeys])
+	{
+		NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
+		if(attributeDescription.attributeType == NSStringAttributeType  && !attributeDescription.isTransient)
+		{
+			NSString *fullAttributePath = path.length ? [NSString stringWithFormat:@"%@.%@", path, attributeName] : attributeName;
+			[predicateArray addObject:[NSPredicate predicateWithFormat:@"%K CONTAINS[cd] %@", fullAttributePath, searchString]];
+		}
+	}
+}
+
+- (void)addPredicatesForCollectionEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+{
+	NSDictionary *attributesByName = [entity attributesByName];
+	for(NSString *attributeName in [attributesByName allKeys])
+	{
+		NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
+		if(attributeDescription.attributeType == NSStringAttributeType && !attributeDescription.isTransient)
+		{
+			[predicateArray addObject:[NSPredicate predicateWithFormat:@"SUBQUERY(%K, $s, $s.%K CONTAINS[cd] %@).@count > 0", path, attributeName, searchString]];
+		}
+	}
+}
+
 
 - (NSFetchedResultsController *)fetchedResultsController 
 {
@@ -520,9 +504,48 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    [fetchRequest setEntity:[MTCall entityInManagedObjectContext:self.managedObjectContext]];
-	[fetchRequest setPredicate:filterPredicate];
+	NSEntityDescription *callEntity = [MTCall entityInManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:callEntity];
 	
+	NSMutableArray *predicateArray = [NSMutableArray array];
+	NSString *searchString = self.searchDisplayController.searchBar.text;
+	if(searchString.length)
+	{
+		// Base call strings
+		[self addPredicatesForEntity:[MTCall entityInManagedObjectContext:self.managedObjectContext] 
+						   forSearch:searchString 
+					  predicateArray:predicateArray 
+								path:nil];
+		// return visits
+		[self addPredicatesForCollectionEntity:[MTReturnVisit entityInManagedObjectContext:self.managedObjectContext] 
+									 forSearch:searchString 
+								predicateArray:predicateArray 
+										  path:@"returnVisits"];
+#if 0
+		// return visits's publications
+		[self addPredicatesForCollectionEntity:[MTPublication entityInManagedObjectContext:self.managedObjectContext] 
+									 forSearch:searchString 
+								predicateArray:predicateArray 
+										  path:@"returnVisits.publications"];
+#endif
+		// additionalInformation
+		[self addPredicatesForCollectionEntity:[MTAdditionalInformation entityInManagedObjectContext:self.managedObjectContext] 
+									 forSearch:searchString 
+								predicateArray:predicateArray 
+										  path:@"additionalInformation"];
+		
+		// finally add the filter predicate for this view
+		if(filterPredicate)
+		{
+			filterPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:filterPredicate, [NSCompoundPredicate orPredicateWithSubpredicates:predicateArray], nil]];
+		}
+		else
+		{
+			filterPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicateArray];
+		}
+	}
+	[fetchRequest setPredicate:filterPredicate];
+
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
