@@ -14,7 +14,6 @@
 //
 
 #import "HourPickerView.h"
-#import "Settings.h"
 #import <QuartzCore/QuartzCore.h>
 #import <QuartzCore/CALayer.h>
 
@@ -67,7 +66,6 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    VERBOSE(NSLog(@"pickerView didSelectRow:%d ", row);)
 	NSString *newText = nil;
 	UILabel *changedLabel = nil;
 	

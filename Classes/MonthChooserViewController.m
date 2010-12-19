@@ -12,13 +12,14 @@
 //  MUST attribute the source (Priddy Software, LLC).  This file (in part or whole) 
 //  is NOT allowed to be used in a compiled or scripted program.
 //
-
+#warning move the notes into a property to get CoreData out of this file
 #import "MonthChooserViewController.h"
 #import "PublicationViewController.h"
-#import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 #import "NotesViewController.h"
 #import "UITableViewMultilineTextCell.h"
+#import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @interface MonthChooserViewController ()
@@ -99,7 +100,7 @@
 
 	self.emailAddress = [[[UITableViewTextFieldCell alloc] init] autorelease];
 	_emailAddress.delegate = self;
-	_emailAddress.textField.text = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
+	_emailAddress.textField.text = [[MTUser currentUser] secretaryEmailAddress];
 	_emailAddress.textField.keyboardType = UIKeyboardTypeEmailAddress;
 	_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's email address", @"email address for the congregation secretary");
 	_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -137,8 +138,14 @@
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
 	[self.navigationController popToViewController:self animated:YES];
-	[[[Settings sharedInstance] settings] setObject:notesViewController.textView.text forKey:SettingsSecretaryEmailNotes];
-	[[Settings sharedInstance] saveData];
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.secretaryEmailNotes = notesViewController.textView.text;
+	NSError *error = nil;
+	if(![currentUser.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+		 
 	[self.theTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -158,7 +165,7 @@
 				{
 					[_emailAddress.textField resignFirstResponder];
 					// make the new call view 
-					NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes]] autorelease];
+					NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[[MTUser currentUser] secretaryEmailNotes]] autorelease];
 
 					p.delegate = self;
 
@@ -234,7 +241,7 @@
 	if(section == 0 && row == 1)
 	{
 		float height;
-		height = [UITableViewMultilineTextCell heightForWidth:250 withText:[[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes]];
+		height = [UITableViewMultilineTextCell heightForWidth:250 withText:[[MTUser currentUser] secretaryEmailNotes]];
 		return(height);
 	}
 	if(row == -1)
@@ -265,7 +272,7 @@
 					{
 						cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 					}
-					NSMutableString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
+					NSMutableString *notes = [[MTUser currentUser] secretaryEmailNotes];
 					cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 					if([notes length] == 0)

@@ -24,6 +24,4 @@
 @property (nonatomic,retain) UILabel *topLabel;
 @property (nonatomic,retain) UILabel *bottomLabel;
 
-- (void)setStreetNumber:(NSString *)streetNumber apartment:(NSString *)apartment street:(NSString *)street city:(NSString *)city state:(NSString *)state;
-
 @end

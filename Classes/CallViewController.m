@@ -371,11 +371,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		cell = [[[AddressTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddressCell"] autorelease];
 	}
 	MTCall *call = self.delegate.call;
-	[cell setStreetNumber:call.houseNumber
-				apartment:call.apartmentNumber
-	               street:call.street
-				     city:call.city
-					state:call.state];
+	cell.topLabel.text = call.addressNumberAndStreet;
+	cell.bottomLabel.text = call.addressCityAndState;
 	
 	return cell;
 }
@@ -1540,8 +1537,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
         VERBOSE(NSLog(@"creating a new publication entry and adding it");)
         // if we are adding a publication then create the NSDictionary and add it to the end
         // of the publications array
-		editedPublication = [MTPublication insertInManagedObjectContext:self.delegate.call.managedObjectContext];
-		editedPublication.returnVisit = returnVisit;
+		editedPublication = [MTPublication createPublicationForReturnVisit:returnVisit];
     }
     VERBOSE(NSLog(@"_editingPublication was = %@", editedPublication);)
 	PublicationPickerView *picker = [publicationViewController publicationPicker];
@@ -2308,8 +2304,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// Publications
 	{
 		// they had an array of publications, lets check them too
-#warning need to do something about order here
-		for(MTPublication *publication in returnVisit.publications)
+		for(MTPublication *publication in [returnVisit.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
+																					propertiesToFetch:[NSArray arrayWithObject:@"order"]
+																				  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+																						withPredicate:@"returnVisit == %@", returnVisit])
 		{
 			// PUBLICATION
 			ReturnVisitPublicationCellController *cellController = [[[ReturnVisitPublicationCellController alloc] init] autorelease];

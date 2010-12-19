@@ -14,7 +14,6 @@
 //
 
 #import "AddressTableCell.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 
@@ -51,21 +50,10 @@
 
 - (void)dealloc
 {
-	DEBUG(NSLog(@"%s: dealloc", __FILE__);)
 	self.topLabel = nil;
 	self.bottomLabel = nil;
 
 	[super dealloc];
-}
-
-- (void)setStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state;
-{
-	NSMutableString *top = [[[NSMutableString alloc] init] autorelease];
-	NSMutableString *bottom = [[[NSMutableString alloc] init] autorelease];
-	[Settings formatStreetNumber:houseNumber apartment:apartmentNumber street:street city:city state:state topLine:top bottomLine:bottom];
-
-	topLabel.text = top;
-	bottomLabel.text = bottom;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated 
@@ -104,27 +92,6 @@
 	lrect.size.width = contentRect.size.width - lrect.origin.x;
 	[bottomLabel setFrame: lrect];
 }
-
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
-
 
 @end
 

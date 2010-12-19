@@ -69,26 +69,26 @@
 
 
 
-@dynamic year;
+@dynamic order;
 
 
 
-- (short)yearValue {
-	NSNumber *result = [self year];
+- (short)orderValue {
+	NSNumber *result = [self order];
 	return [result shortValue];
 }
 
-- (void)setYearValue:(short)value_ {
-	[self setYear:[NSNumber numberWithShort:value_]];
+- (void)setOrderValue:(short)value_ {
+	[self setOrder:[NSNumber numberWithShort:value_]];
 }
 
-- (short)primitiveYearValue {
-	NSNumber *result = [self primitiveYear];
+- (short)primitiveOrderValue {
+	NSNumber *result = [self primitiveOrder];
 	return [result shortValue];
 }
 
-- (void)setPrimitiveYearValue:(short)value_ {
-	[self setPrimitiveYear:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveOrderValue:(short)value_ {
+	[self setPrimitiveOrder:[NSNumber numberWithShort:value_]];
 }
 
 
@@ -115,6 +115,32 @@
 
 - (void)setPrimitiveDayValue:(short)value_ {
 	[self setPrimitiveDay:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic year;
+
+
+
+- (short)yearValue {
+	NSNumber *result = [self year];
+	return [result shortValue];
+}
+
+- (void)setYearValue:(short)value_ {
+	[self setYear:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveYearValue {
+	NSNumber *result = [self primitiveYear];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveYearValue:(short)value_ {
+	[self setPrimitiveYear:[NSNumber numberWithShort:value_]];
 }
 
 

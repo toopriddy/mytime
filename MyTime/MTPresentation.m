@@ -5,7 +5,7 @@
 @implementation MTPresentation
 
 // Custom logic goes here.
-+ (MTPresentation *)createMTPresentationInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
++ (MTPresentation *)createPresentationInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
 	// first find the highest ordering index
 	int order = 0;

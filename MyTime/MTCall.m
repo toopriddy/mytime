@@ -116,11 +116,11 @@
 
 + (NSString *)bottomLineOfAddressWithCity:(NSString *)city state:(NSString *)state
 {
-	if(city && state)
+	if(city && city.length && state && state.length)
 		return [NSString stringWithFormat:NSLocalizedString(@"%@, %@", @"City and state(or country) as represented in an address (usually right under the house number and street)"), city, state];
-	else if(city)
+	else if(city && city.length)
 		return [[city copy] autorelease];
-	else if(state)
+	else if(state && state.length)
 		return [[state copy] autorelease];
 	else
 		return @"";

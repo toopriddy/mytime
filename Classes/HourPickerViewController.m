@@ -14,7 +14,6 @@
 //
 
 #import "HourPickerViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 @implementation HourPickerViewController
@@ -65,7 +64,6 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-	VERBOSE(NSLog(@"navigationControlDone:");)
 	if(delegate)
 	{
 		[delegate hourPickerViewControllerDone:self];

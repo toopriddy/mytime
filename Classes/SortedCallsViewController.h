@@ -16,7 +16,6 @@
 #import <UIKit/UIKit.h>
 #import "SortedCallsViewDataSourceProtocol.h"
 #import "CallViewController.h"
-#import "OverlayViewController.h"
 #import "EmptyListViewController.h"
 #import <CoreData/CoreData.h>
 
@@ -24,21 +23,21 @@
                                                          UITableViewDataSource,
 														 CallViewControllerDelegate, 
 														 UISearchBarDelegate, 
-														 OverlayViewControllerDelegate,
                                                          NSFetchedResultsControllerDelegate, 
                                                          UISearchDisplayDelegate> 
 {
 	id<SortedCallsViewDataSourceProtocol> dataSource;
 	NSIndexPath *indexPath;
 	BOOL searching;
-	OverlayViewController *ovController;
 	UIBarButtonItem *savedLeftButton;
 	BOOL savedHidesBackButton;
 	EmptyListViewController *emptyView;
 	MTCall *editingCall;
+	UITableView *tableView_;
 	
 	BOOL reloadData_;
     NSFetchedResultsController *fetchedResultsController_;
+    NSFetchedResultsController *searchFetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 
 	// The saved state of the search UI if a memory warning removed the view.

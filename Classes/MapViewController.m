@@ -369,7 +369,7 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
 	MapViewCallAnnotation *annotation = (MapViewCallAnnotation *)view.annotation;
-	CallViewController *controller = [[[CallViewController alloc] initWithCall:annotation.call] autorelease];
+	CallViewController *controller = [[[CallViewController alloc] initWithCall:annotation.call newCall:NO] autorelease];
 	controller.delegate = self;
 	selectedMarker = annotation;
 	// push the element view controller onto the navigation stack to display it
