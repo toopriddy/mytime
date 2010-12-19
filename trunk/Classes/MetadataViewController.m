@@ -428,6 +428,7 @@ static MetadataInformation commonInformation[] = {
 	[sectionController.cellControllers insertObject:cellController atIndex:(sectionController.cellControllers.count - 1)];
 	[self.delegate updateWithoutReload];
 	[self.delegate.navigationController dismissModalViewControllerAnimated:YES];
+	[self.delegate.tableView scrollToRowAtIndexPath:self.indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 

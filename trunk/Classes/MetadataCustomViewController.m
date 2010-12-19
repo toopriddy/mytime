@@ -422,7 +422,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 {
 	int position = [self.type.multipleChoices count];
 
-	MTMultipleChoice *choice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:self.type];
+	MTMultipleChoice *choice = [MTMultipleChoice createMultipleChoiceForAdditionalInformationType:self.type];
 	choice.name = metadataEditorViewController.value;
 	choice.type = self.type;
 	
@@ -508,7 +508,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 		// go through all of the calls and add the values as options for this particular metadata
 		for(NSString *value in [type.additionalInformation valueForKeyPath:@"@distinctUnionOfObjects.value"])
 		{
-			MTMultipleChoice *choice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:type];
+			MTMultipleChoice *choice = [MTMultipleChoice createMultipleChoiceForAdditionalInformationType:type];
 			choice.type = type;
 			choice.name = value;
 		}

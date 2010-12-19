@@ -394,7 +394,7 @@
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 
-	MTPresentation *presentation = [MTPresentation createMTPresentationInManagedObjectContext:self.delegate.managedObjectContext];
+	MTPresentation *presentation = [MTPresentation createPresentationInManagedObjectContext:self.delegate.managedObjectContext];
 	presentation.user = [MTUser currentUser];
 	presentation.notes = notesViewController.textView.text;
 	NSError *error = nil;

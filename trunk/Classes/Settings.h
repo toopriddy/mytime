@@ -210,13 +210,7 @@ extern NSString *const SettingsNotificationUserChanged;
 extern NSString *const SettingsNotificationCallChanged;
 
 
-#define REVERSE_GEOCODING_ACCURACY 70
-
-extern int debugging;
-
-#define DEBUG(a) if(debugging) { a }
-#define VERBOSE(a) if(debugging > 1) { a }
-#define VERY_VERBOSE(a) if(debugging > 2) { a }
+#define REVERSE_GEOCODING_ACCURACY 80
 
 NSString *emailFormattedStringForCall(NSDictionary *_call);
 NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);

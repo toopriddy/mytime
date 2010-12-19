@@ -5,7 +5,7 @@
 @implementation MTMultipleChoice
 
 // Custom logic goes here.
-+ (MTMultipleChoice *)createMTMultipleChoiceForAdditionalInformationType:(MTAdditionalInformationType *)type
++ (MTMultipleChoice *)createMultipleChoiceForAdditionalInformationType:(MTAdditionalInformationType *)type
 {
 	// first find the highest ordering index
 	int order = 0;

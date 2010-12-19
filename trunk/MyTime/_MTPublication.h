@@ -15,6 +15,7 @@
 
 
 
+
 @interface MTPublicationID : NSManagedObjectID {}
 @end
 
@@ -48,13 +49,13 @@
 
 
 
-@property (nonatomic, retain) NSNumber *year;
+@property (nonatomic, retain) NSNumber *order;
 
-@property short yearValue;
-- (short)yearValue;
-- (void)setYearValue:(short)value_;
+@property short orderValue;
+- (short)orderValue;
+- (void)setOrderValue:(short)value_;
 
-//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -65,6 +66,16 @@
 - (void)setDayValue:(short)value_;
 
 //- (BOOL)validateDay:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *year;
+
+@property short yearValue;
+- (short)yearValue;
+- (void)setYearValue:(short)value_;
+
+//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -118,11 +129,11 @@
 - (void)setPrimitiveName:(NSString*)value;
 
 
-- (NSNumber*)primitiveYear;
-- (void)setPrimitiveYear:(NSNumber*)value;
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
 
-- (short)primitiveYearValue;
-- (void)setPrimitiveYearValue:(short)value_;
+- (short)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(short)value_;
 
 
 - (NSNumber*)primitiveDay;
@@ -130,6 +141,13 @@
 
 - (short)primitiveDayValue;
 - (void)setPrimitiveDayValue:(short)value_;
+
+
+- (NSNumber*)primitiveYear;
+- (void)setPrimitiveYear:(NSNumber*)value;
+
+- (short)primitiveYearValue;
+- (void)setPrimitiveYearValue:(short)value_;
 
 
 - (NSNumber*)primitiveCount;

@@ -6,3 +6,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #endif
+
+extern int debugging;
+
+#define DEBUG(a) if(debugging) { a }
+#define VERBOSE(a) if(debugging > 1) { a }
+#define VERY_VERBOSE(a) if(debugging > 2) { a }
+

@@ -488,7 +488,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		}
 		
 		// Publications
-		for(NSDictionary *publication in [[visit objectForKey:CallReturnVisitPublications] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:CallReturnVisitPublicationTitle ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
+		for(NSDictionary *publication in [visit objectForKey:CallReturnVisitPublications])
 		{
 			[string appendString:[NSString stringWithFormat:@"%@<br>\n", [publication objectForKey:CallReturnVisitPublicationTitle]]];
 		}
@@ -551,7 +551,7 @@ NSString *emailFormattedStringForSettings()
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:date]]];
-			for(NSDictionary *publication in [[bulkPlacement objectForKey:BulkLiteratureArray] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:CallReturnVisitPublicationTitle ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]])
+			for(NSDictionary *publication in [bulkPlacement objectForKey:BulkLiteratureArray])
 			{
 				NSString *name = [publication objectForKey:BulkLiteratureArrayTitle];
 				int count = [[publication objectForKey:BulkLiteratureArrayCount] intValue];
@@ -726,7 +726,7 @@ NSString *emailFormattedStringForSettings()
 	if(save)
 		[self saveData];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationUserChanged object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationUserChanged object:self];
 }
 
 - (BOOL)hasOldData

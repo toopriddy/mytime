@@ -193,7 +193,6 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				//import
 				case 0:
 				{
-					NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
 					NSMutableDictionary *newCall = [NSMutableDictionary dictionaryWithDictionary:dataToImport];
 					
 					// change all return visits to be transferrs so that we dont count the other person's work
@@ -351,22 +350,20 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				{
 					[self.settingsToRestore writeToFile:[Settings filename] atomically: YES];
 					self.settingsToRestore = nil;
-					if([Settings isInitialized])
+					[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"convertedToCoreData"];
+					[[NSUserDefaults standardUserDefaults] synchronize];
+					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+					BOOL exists = [fileManager fileExistsAtPath:[[self class] storeFileAndPath]];
+					if(exists && ![fileManager removeItemAtPath:[[self class] storeFileAndPath] error:nil])
 					{
-						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-						alertSheet.delegate = self;
-						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-						alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
-						[alertSheet show];
+						NSLog(@"deleted file");
 					}
-					else
-					{
-						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-						[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-						alertSheet.title = NSLocalizedString(@"MyTime backup restored.", @"This message is displayed after a successful restore of a backup");
-						[alertSheet show];
-						[self initializeMyTimeViews];
-					}
+						
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					alertSheet.delegate = self;
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
+					[alertSheet show];
 					break;
 				}
 				// cancel
@@ -697,7 +694,7 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 		// Publications
 		NSArray *publications = [call.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
 															  propertiesToFetch:nil 
-															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES] ]
 																  withPredicate:@"returnVisit == %@", visit];
 		for(MTPublication *publication in publications)
 		{
@@ -783,7 +780,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 			
 			NSArray *publications = [managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
 																  propertiesToFetch:nil 
-																withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+																withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES] ]
 																	  withPredicate:@"bulkPlacement == %@", bulkPlacement];
 			for(MTPublication *publication in publications)
 			{
@@ -1080,8 +1077,7 @@ NSString *emailFormattedStringForSettings();
 		// PUBLICATIONS
 		for(NSDictionary *publication in [returnVisit objectForKey:CallReturnVisitPublications])
 		{
-			MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
-			mtPublication.returnVisit = mtReturnVisit;
+			MTPublication *mtPublication = [MTPublication createPublicationForReturnVisit:mtReturnVisit];
 			mtPublication.dayValue = [[publication objectForKey:CallReturnVisitPublicationDay] intValue];
 			mtPublication.monthValue = [[publication objectForKey:CallReturnVisitPublicationMonth] intValue];
 			mtPublication.yearValue = [[publication objectForKey:CallReturnVisitPublicationYear] intValue];
@@ -1112,7 +1108,7 @@ NSString *emailFormattedStringForSettings();
 			{
 				for(NSString *choice in [additionalInformation objectForKey:SettingsMetadataData])
 				{
-					MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice createMTMultipleChoiceForAdditionalInformationType:mtAdditionalInformationType];
+					MTMultipleChoice *mtMultipleChoice = [MTMultipleChoice createMultipleChoiceForAdditionalInformationType:mtAdditionalInformationType];
 					mtMultipleChoice.name = choice;
 					mtMultipleChoice.type = mtAdditionalInformationType;
 				}
@@ -1286,8 +1282,7 @@ NSString *emailFormattedStringForSettings();
 			
 			for(NSDictionary *placement in [bulkPlacement objectForKey:BulkLiteratureArray])
 			{
-				MTPublication *mtPublication = [MTPublication insertInManagedObjectContext:self.managedObjectContext];
-				mtPublication.bulkPlacement = mtBulkPlacement;
+				MTPublication *mtPublication = [MTPublication createPublicationForBulkPlacement:mtBulkPlacement];
 				mtPublication.countValue = [[placement objectForKey:BulkLiteratureArrayCount] intValue];
 				mtPublication.title = [placement objectForKey:BulkLiteratureArrayTitle];
 				mtPublication.type = [placement objectForKey:BulkLiteratureArrayType];
@@ -1328,7 +1323,7 @@ NSString *emailFormattedStringForSettings();
 		// QUICK NOTES
 		for(NSString *note in [user objectForKey:SettingsQuickNotes])
 		{
-			MTPresentation *mtPresentation = [MTPresentation createMTPresentationInManagedObjectContext:self.managedObjectContext];
+			MTPresentation *mtPresentation = [MTPresentation createPresentationInManagedObjectContext:self.managedObjectContext];
 			mtPresentation.notes = note;
 			mtPresentation.user = mtUser;
 			mtPresentation.downloadedValue = NO;
@@ -1567,25 +1562,6 @@ NSString *emailFormattedStringForSettings();
 
 - (void)commonApplicationInitialization
 {
-	// dynamically add a method to UITableViewIndex that lets us move around the index
-	Class tvi = NSClassFromString(@"UITableViewIndex");
-	if ( class_addMethod(tvi, @selector(moveIndexIn), (IMP)tableViewIndexMoveIn, "v@:") ) 
-	{
-		NSLog(@"Added method moveIndexIn to UITableViewIndex");
-	} 
-	else 
-	{
-		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
-	}
-	if ( class_addMethod(tvi, @selector(moveIndexOut), (IMP)tableViewIndexMoveOut, "v@:") ) 
-	{
-		NSLog(@"Added method moveIndexIn to UITableViewIndex");
-	} 
-	else 
-	{
-		NSLog(@"Error adding method moveIndexIn to UITableViewIndex");
-	}
-	
 	//	application.networkActivityIndicatorVisible = NO;
 	
     // Set up the portraitWindow and content view
