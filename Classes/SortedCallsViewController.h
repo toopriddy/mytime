@@ -34,6 +34,7 @@
 	EmptyListViewController *emptyView;
 	MTCall *editingCall;
 	UITableView *tableView_;
+	UILabel *footerLabel_;
 	
 	BOOL reloadData_;
     NSFetchedResultsController *fetchedResultsController_;
