@@ -31,6 +31,8 @@
 @property (nonatomic, retain) NSFetchedResultsController *searchFetchedResultsController;
 @property (nonatomic, retain) MTCall *editingCall;
 @property (nonatomic, retain) UISearchDisplayController *mySearchDisplayController;
+@property (nonatomic, retain) UILabel *footerLabel;
+
 @end
 
 @implementation SortedCallsViewController
@@ -47,15 +49,18 @@
 @synthesize savedScopeButtonIndex;
 @synthesize searchWasActive;
 @synthesize mySearchDisplayController;
+@synthesize footerLabel = footerLabel_;
 
 - (void)updateEmptyView
 {
 	if(reloadData_)
 	{
 		reloadData_ = NO;
-		self.fetchedResultsController.delegate = nil;
-		self.fetchedResultsController = nil;
 		[self.tableView reloadData];
+		if(self.searchWasActive)
+		{
+			[self.searchDisplayController.searchResultsTableView reloadData];
+		}
 	}
 	
 	if([self numberOfSectionsInTableView:nil] > 1 || [self tableView:nil numberOfRowsInSection:0])
@@ -121,8 +126,13 @@
 
 - (void)userChanged
 {
+	fetchedResultsController_.delegate = nil;
 	[fetchedResultsController_ release];
 	fetchedResultsController_ = nil;
+	searchFetchedResultsController_.delegate = nil;
+	[searchFetchedResultsController_ release];
+	searchFetchedResultsController_ = nil;
+	
 	reloadData_ = YES;
 }
 
@@ -174,6 +184,9 @@
 
 - (void)didReceiveMemoryWarning
 {
+	self.searchWasActive = [self.searchDisplayController isActive];
+	self.savedSearchTerm = [self.searchDisplayController.searchBar text];
+	self.savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
 	
 	fetchedResultsController_.delegate = nil;
 	[fetchedResultsController_ release];
@@ -225,6 +238,13 @@
 //	searchBar.delegate = self;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	self.tableView.tableHeaderView = searchBar;
+	
+	self.footerLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0 , 0 , 320 , 60)] autorelease];
+	self.tableView.tableFooterView = self.footerLabel;
+	self.footerLabel.font = [UIFont systemFontOfSize:20];
+	self.footerLabel.textColor = [UIColor grayColor];
+	self.footerLabel.textAlignment = UITextAlignmentCenter;
+	self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have"), self.fetchedResultsController.fetchedObjects.count];
 
 	self.mySearchDisplayController = [[[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self] autorelease];
 	self.mySearchDisplayController.delegate = self;
@@ -251,19 +271,14 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-//	self.title = [dataSource name];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 
-//	self.title = [dataSource title];
 	self.indexPath = nil;
 	
-	// force the tableview to load
-//a	[tableView reloadData];
-
 	[self updateEmptyView];
 }
 
@@ -299,7 +314,8 @@
 // the user selected a row in the table.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath 
 {
-//	[self.tableView.tableHeaderView resignFirstResponder];
+	// make the keyboard disappear when you click on any row
+	[self.tableView.tableHeaderView resignFirstResponder];
 
 	// create a custom navigation bar button and set it to always say "back"
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
@@ -674,6 +690,7 @@
 {
     UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
     [tableView endUpdates];
+	self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have"), self.fetchedResultsController.fetchedObjects.count];
 	if(tableView == self.tableView)
 	{
 		[self updateEmptyView];
