@@ -279,9 +279,9 @@
 	self.indexPath = nil;
 	int callCount = self.fetchedResultsController.fetchedObjects.count;
 	if(callCount == 1)
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
+		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
 	else
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
+		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
 	
 	[self updateEmptyView];
 }
@@ -696,9 +696,9 @@
     [tableView endUpdates];
 	int callCount = self.fetchedResultsController.fetchedObjects.count;
 	if(callCount == 1)
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
+		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
 	else
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%U Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
+		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
 	if(tableView == self.tableView)
 	{
 		[self updateEmptyView];
