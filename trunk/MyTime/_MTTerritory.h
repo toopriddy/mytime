@@ -15,6 +15,7 @@
 
 
 
+
 @interface MTTerritoryID : NSManagedObjectID {}
 @end
 
@@ -38,7 +39,11 @@
 
 
 
-@property (nonatomic, retain) NSString *ownerEmailId;
+@property (nonatomic, retain) NSNumber *ownerEmailId;
+
+@property long long ownerEmailIdValue;
+- (long long)ownerEmailIdValue;
+- (void)setOwnerEmailIdValue:(long long)value_;
 
 //- (BOOL)validateOwnerEmailId:(id*)value_ error:(NSError**)error_;
 
@@ -62,9 +67,19 @@
 
 
 
-@property (nonatomic, retain) NSString *ownerId;
+@property (nonatomic, retain) NSNumber *ownerId;
+
+@property long long ownerIdValue;
+- (long long)ownerIdValue;
+- (void)setOwnerIdValue:(long long)value_;
 
 //- (BOOL)validateOwnerId:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *date;
+
+//- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -100,8 +115,11 @@
 - (void)setPrimitiveCity:(NSString*)value;
 
 
-- (NSString*)primitiveOwnerEmailId;
-- (void)setPrimitiveOwnerEmailId:(NSString*)value;
+- (NSNumber*)primitiveOwnerEmailId;
+- (void)setPrimitiveOwnerEmailId:(NSNumber*)value;
+
+- (long long)primitiveOwnerEmailIdValue;
+- (void)setPrimitiveOwnerEmailIdValue:(long long)value_;
 
 
 - (NSString*)primitiveNotes;
@@ -116,8 +134,15 @@
 - (void)setPrimitiveState:(NSString*)value;
 
 
-- (NSString*)primitiveOwnerId;
-- (void)setPrimitiveOwnerId:(NSString*)value;
+- (NSNumber*)primitiveOwnerId;
+- (void)setPrimitiveOwnerId:(NSNumber*)value;
+
+- (long long)primitiveOwnerIdValue;
+- (void)setPrimitiveOwnerIdValue:(long long)value_;
+
+
+- (NSDate*)primitiveDate;
+- (void)setPrimitiveDate:(NSDate*)value;
 
 
 

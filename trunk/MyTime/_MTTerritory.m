@@ -47,6 +47,25 @@
 
 
 
+- (long long)ownerEmailIdValue {
+	NSNumber *result = [self ownerEmailId];
+	return [result longLongValue];
+}
+
+- (void)setOwnerEmailIdValue:(long long)value_ {
+	[self setOwnerEmailId:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveOwnerEmailIdValue {
+	NSNumber *result = [self primitiveOwnerEmailId];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveOwnerEmailIdValue:(long long)value_ {
+	[self setPrimitiveOwnerEmailId:[NSNumber numberWithLongLong:value_]];
+}
+
+
 
 
 
@@ -72,6 +91,32 @@
 
 
 @dynamic ownerId;
+
+
+
+- (long long)ownerIdValue {
+	NSNumber *result = [self ownerId];
+	return [result longLongValue];
+}
+
+- (void)setOwnerIdValue:(long long)value_ {
+	[self setOwnerId:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveOwnerIdValue {
+	NSNumber *result = [self primitiveOwnerId];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveOwnerIdValue:(long long)value_ {
+	[self setPrimitiveOwnerId:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic date;
 
 
 
