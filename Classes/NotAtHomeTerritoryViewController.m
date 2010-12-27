@@ -16,10 +16,11 @@
 #import "NotAtHomeTerritoryViewController.h"
 #import "UITableViewTextFieldCell.h"
 #import "NotesViewController.h"
-#import "Settings.h"
 #import "NotAtHomeStreetViewController.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "UITableViewMultilineTextCell.h"
+#import "MTTerritoryStreet.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "PSLocalization.h"
 
@@ -155,20 +156,13 @@
 		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryName];
-	if(name == nil)
-	{
-		name = [[NSMutableString alloc] init];
-		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryName];
-		[name release];
-	}
 	self.textField = cell.textField;
 	[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleTextFieldChanged:)
                                                  name:UITextFieldTextDidChangeNotification
                                                object:self.textField];
 	[self.delegate.allTextFields addObject:self.textField];
-	cell.textField.text = name;
+	cell.textField.text = self.delegate.territory.name;
 	cell.delegate = self;
 	if(self.delegate.obtainFocus)
 	{
@@ -194,7 +188,7 @@
 
 - (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryName];
+	self.delegate.territory.name = self.textField.text;
 	if(!self.delegate.newTerritory)
 		self.delegate.title = self.textField.text;
 }
@@ -283,14 +277,7 @@
                                                object:self.textField];
 	
 	[self.delegate.allTextFields addObject:self.textField];
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
-	if(name == nil)
-	{
-		name = [[NSMutableString alloc] init];
-		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryCity];
-		[name release];
-	}
-	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
+	cell.textField.text = self.delegate.territory.city;
 	cell.delegate = self;
 
 	return cell;
@@ -309,7 +296,7 @@
 
 - (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryCity];
+	self.delegate.territory.city = self.textField.text;
 }
 
 @end
@@ -401,15 +388,7 @@
                                                object:self.textField];
 	
 	[self.delegate.allTextFields addObject:self.textField];
-	
-	NSMutableString *name = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
-	if(name == nil)
-	{
-		name = [[NSMutableString alloc] init];
-		[self.delegate.territory setObject:name forKey:NotAtHomeTerritoryState];
-		[name release];
-	}
-	cell.textField.text = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
+	cell.textField.text = self.delegate.territory.state;
 	cell.delegate = self;
 	
 	return cell;
@@ -428,7 +407,7 @@
 
 - (void)handleTextFieldChanged:(NSNotification *)note 
 {
-	[self.delegate.territory setObject:self.textField.text forKey:NotAtHomeTerritoryState];
+	self.delegate.territory.state = self.textField.text;
 }
 
 @end
@@ -519,16 +498,14 @@
 
 - (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	NSString *previousEmail = [self.delegate.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
+	NSString *previousEmail = self.delegate.territory.ownerEmailAddress;
 	NSMutableString *emailAddress = [NSMutableString stringWithString:previousEmail ? previousEmail : @""];
 	[emailAddress replaceCharactersInRange:range withString:string];
 
-	[self.delegate.territory setObject:emailAddress forKey:NotAtHomeTerritoryOwnerEmailAddress];
-	[self.delegate.territory removeObjectForKey:NotAtHomeTerritoryOwnerId];
-	[self.delegate.territory removeObjectForKey:NotAtHomeTerritoryOwnerEmailId];
+	self.delegate.territory.ownerEmailAddress = emailAddress;
+	self.delegate.territory.ownerId = nil;
+	self.delegate.territory.ownerEmailId = nil;
 
-	[[Settings sharedInstance] saveData];
-	
 	return YES;
 }
 
@@ -544,9 +521,9 @@
 	if(ABMultiValueGetCount(emails) == 1)
 	{
 		[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
-		[self.delegate.territory setObject:[NSNumber numberWithInt:ABRecordGetRecordID(person)] forKey:NotAtHomeTerritoryOwnerId];
-		[self.delegate.territory setObject:[NSNumber numberWithInt:ABMultiValueGetIdentifierAtIndex(emails, 0)] forKey:NotAtHomeTerritoryOwnerEmailId];
-		[self.delegate.territory setObject:[self.delegate ownerEmailAddress] forKey:NotAtHomeTerritoryOwnerEmailAddress];
+		self.delegate.territory.ownerIdValue = ABRecordGetRecordID(person);
+		self.delegate.territory.ownerEmailIdValue = ABMultiValueGetIdentifierAtIndex(emails, 0);
+		self.delegate.territory.ownerEmailAddress = [self.delegate ownerEmailAddress];
 		
 		[self.delegate updateAndReload];
 		CFRelease(emails);
@@ -562,9 +539,9 @@
                               identifier:(ABMultiValueIdentifier)identifier
 {
 	[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
-	[self.delegate.territory setObject:[NSNumber numberWithInt:ABRecordGetRecordID(person)] forKey:NotAtHomeTerritoryOwnerId];
-	[self.delegate.territory setObject:[NSNumber numberWithInt:identifier] forKey:NotAtHomeTerritoryOwnerEmailId];
-	[self.delegate.territory setObject:[self.delegate ownerEmailAddress] forKey:NotAtHomeTerritoryOwnerEmailAddress];
+	self.delegate.territory.ownerIdValue = ABRecordGetRecordID(person);
+	self.delegate.territory.ownerEmailIdValue = identifier;
+	self.delegate.territory.ownerEmailAddress = [self.delegate ownerEmailAddress];
 	
 	[self.delegate updateAndReload];
     return NO;
@@ -587,8 +564,8 @@
 - (void)notesViewControllerDone:(NotesViewController *)notesViewController
 {
     VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    [self.delegate.territory setObject:[notesViewController notes] forKey:NotAtHomeTerritoryNotes];
-	[[Settings sharedInstance] saveData];
+    self.delegate.territory.notes = [notesViewController notes];
+
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
 	{
@@ -604,7 +581,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:[self.delegate.territory objectForKey:NotAtHomeTerritoryNotes]];
+	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:self.delegate.territory.notes];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
@@ -625,7 +602,7 @@
 		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 	}
 	
-	NSMutableString *notes = [self.delegate.territory objectForKey:NotAtHomeTerritoryNotes];
+	NSString *notes = self.delegate.territory.notes;
 	
 	if([notes length] == 0)
 		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
@@ -637,7 +614,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *notes = [self.delegate.territory objectForKey:NotAtHomeTerritoryNotes];
+	NSString *notes = self.delegate.territory.notes;
 	// make the new call view 
 	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
 	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
@@ -659,9 +636,12 @@
 @interface NAHTerritoryStreetCellController : NotAtHomeTerritoryViewCellController <NotAtHomeStreetViewControllerDelegate>
 {
 @private	
+	MTTerritoryStreet *street;
 }
+@property (nonatomic, retain) MTTerritoryStreet *street;
 @end
 @implementation NAHTerritoryStreetCellController
+@synthesize street;
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -676,16 +656,15 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
 	}
-	NSDictionary *street = [[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row];
-	cell.textLabel.text = [street objectForKey:NotAtHomeTerritoryStreetName];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [[street objectForKey:NotAtHomeTerritoryHouses] count]];
+	cell.textLabel.text = street.name;
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", street.houses.count];
 	return cell;
 }
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:[[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] objectAtIndex:indexPath.row] territory:self.delegate.territory];
+	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:street];
 	controller.delegate = self;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
@@ -694,7 +673,6 @@
 
 - (void)notAtHomeStreetViewControllerDone:(NotAtHomeStreetViewController *)notAtHomeStreetViewController
 {
-	[[Settings sharedInstance] saveData];
 	[self.delegate.navigationController popViewControllerAnimated:YES];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -713,11 +691,8 @@
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", indexPath);)
 		
-		[[self.delegate.territory objectForKey:NotAtHomeTerritoryStreets] removeObjectAtIndex:indexPath.row];
-		
-		// save the data
-		// save the data
-		[[Settings sharedInstance] saveData];
+		[self.street.managedObjectContext deleteObject:self.street];
+		self.street = nil;
 		
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
@@ -737,9 +712,12 @@
 {
 @private	
 	int section;
+	MTTerritoryStreet *temporaryStreet;
 }
+@property (nonatomic, retain) MTTerritoryStreet *temporaryStreet;
 @end
 @implementation NAHTerritoryAddStreetCellController
+@synthesize temporaryStreet;
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -760,13 +738,16 @@
 
 - (void)notAtHomeDetailCanceled
 {
+	[self.temporaryStreet.managedObjectContext deleteObject:self.temporaryStreet];
+	self.temporaryStreet = nil;
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithTerritory:self.delegate.territory] autorelease];
+	self.temporaryStreet = [MTTerritoryStreet insertInManagedObjectContext:self.delegate.territory.managedObjectContext];
+	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithStreet:self.temporaryStreet] autorelease];
 	controller.delegate = self;
 
 	section = indexPath.section;
@@ -789,23 +770,10 @@
 
 - (void)notAtHomeStreetViewControllerDone:(NotAtHomeStreetViewController *)notAtHomeStreetViewController
 {
-	NSMutableArray *streets = [self.delegate.territory objectForKey:NotAtHomeTerritoryStreets];
-	if(streets == nil)
-	{
-		streets = [[NSMutableArray alloc] init];
-		[self.delegate.territory setObject:streets forKey:NotAtHomeTerritoryStreets];
-		[streets release];
-	}
-	[streets addObject:notAtHomeStreetViewController.street];
-	[[Settings sharedInstance] saveData];
-	
-	NAHTerritoryStreetCellController *cellController = [[NAHTerritoryStreetCellController alloc] init];
-	cellController.delegate = self.delegate;
-	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:([streets count] - 1)];
-	[cellController release];
+	self.temporaryStreet = nil;
 	
 	[self.delegate dismissModalViewControllerAnimated:YES];
-	[self.delegate updateWithoutReload];
+	[self.delegate updateAndReload];
 }
 
 @end
@@ -816,7 +784,7 @@
 @synthesize delegate;
 @synthesize owner;
 @synthesize tag;
-@synthesize newTerritory;
+@synthesize newTerritory = newTerritory_;
 @synthesize allTextFields;
 @synthesize obtainFocus;
 
@@ -841,11 +809,11 @@
 
 - (NSString *)ownerEmailAddress
 {
-	NSString *name = [[[self.territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress] retain] autorelease];
-	NSNumber *ownerId = [self.territory objectForKey:NotAtHomeTerritoryOwnerId];
+	NSString *name = [[self.territory.ownerEmailAddress retain] autorelease];
+	NSNumber *ownerId = self.territory.ownerId;
 	if(ownerId)
 	{
-		NSNumber *ownerEmailId = [self.territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
+		NSNumber *ownerEmailId = self.territory.ownerEmailId;
 		if(addressBook == nil)
 			addressBook = ABAddressBookCreate();
 		
@@ -881,11 +849,11 @@
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 	if(deleteAfterEmailing && result != MFMailComposeResultCancelled)
 	{
-		[delegate notAtHomeTerritoryViewController:self deleteTerritory:self.territory];
 		[self.navigationController popViewControllerAnimated:YES];
 	}
 }
 
+NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territory);
 
 - (BOOL)sendEmail
 {
@@ -894,13 +862,14 @@
 	
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	[string appendString:NSLocalizedString(@"This not at home territory has been turned over to you, here are the details.  If you are a MyTime user, please view this email on your iPhone/iTouch and scroll all the way down to the end of the email and click on the link to import this not at home territory into MyTime.<br><br>", @"This is the first part of the body of the email message that is sent to a user when you click on a Not At Home Territory and then click on the action button in the upper left corner and select transfer or email details")];
-	[string appendString:emailFormattedStringForNotAtHomeTerritory(self.territory)];
+	[string appendString:emailFormattedStringForCoreDataNotAtHomeTerritory(self.territory)];
 	[string appendString:NSLocalizedString(@"You are able to import this not at home territory into MyTime if you click on the link below while viewing this email from your iPhone/iTouch.  Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br>", @"This is the second part of the body of the email message that is sent to a user when you click on a Not At Home Territory and then click on the action button in the upper left corner and select transfer or email details")];
 	
 	// now add the url that will allow importing
 	
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.territory];
-	[string appendString:@"<a href=\"mytime://mytime/addNotAtHomeTerritory?"];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[self.territory.managedObjectContext dictionaryFromManagedObject:self.territory 
+																										  skipRelationshipNames:[NSArray arrayWithObjects:@"self.user", nil]]];
+	[string appendString:@"<a href=\"mytime://mytime/addCoreDataNotAtHomeTerritory?"];
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
 	for(int i = 0; i < length; ++i)
@@ -966,22 +935,22 @@
 	[alertSheet showInView:self.view];
 }
 
-- (id)initWithTerritory:(NSMutableDictionary *)theTerritory
+- (id)initWithTerritory:(MTTerritory *)theTerritory
+{
+	return [self initWithTerritory:theTerritory newTerritory:NO];
+}
+
+- (id)initWithTerritory:(MTTerritory *)theTerritory newTerritory:(BOOL)newTerritory
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
-		if(theTerritory == nil)
-		{
-			newTerritory = YES;
-			theTerritory = [[[NSMutableDictionary alloc] init] autorelease];
-		}
 		self.obtainFocus = newTerritory;
 		self.allTextFields = [NSMutableArray array];
 		
 		self.territory = theTerritory;
 		if(!newTerritory)
 		{
-			self.title = [theTerritory objectForKey:NotAtHomeTerritoryName];
+			self.title = self.territory.name;
 			UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction 
 																					 target:self 
 																					 action:@selector(navigationControlAction:)] autorelease];
@@ -993,11 +962,6 @@
 	return self;
 }
 
-- (id)init
-{
-	return [self initWithTerritory:nil];
-}
-
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
@@ -1007,8 +971,6 @@
 		CFRelease(addressBook);
 		addressBook = nil;
 	}
-	
-//	self.owner = nil;
 }
 
 - (void)loadView
@@ -1104,11 +1066,17 @@
 		sectionController.title = NSLocalizedString(@"Streets", @"Title of the section in the Not-At-Homes territory view that allows you to add/edit streets in the territory");
 		[sectionController release];
 
-		for(NSDictionary *street in [self.territory objectForKey:NotAtHomeTerritoryStreets])
+		NSArray *streets = [self.territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryStreet entityName]
+																		propertiesToFetch:nil 
+																	  withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																						   [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+																			withPredicate:@"territory == %@", self.territory];
+		for(MTTerritoryStreet *street in streets)
 		{
 			// Add Territory Street
 			NAHTerritoryStreetCellController *cellController = [[NAHTerritoryStreetCellController alloc] init];
 			cellController.delegate = self;
+			cellController.street = street;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}

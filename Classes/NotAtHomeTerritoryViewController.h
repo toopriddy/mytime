@@ -17,12 +17,12 @@
 #import <AddressBook/AddressBook.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "MTTerritory.h"
 
 @class NotAtHomeTerritoryViewController;
 
 @protocol NotAtHomeTerritoryViewControllerDelegate
 - (void)notAtHomeTerritoryViewControllerDone:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController;
-- (void)notAtHomeTerritoryViewController:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController deleteTerritory:(NSMutableDictionary *)territory;
 @end
 
 @interface NotAtHomeTerritoryViewController : GenericTableViewController <UIActionSheetDelegate,
@@ -32,11 +32,11 @@
 	ABAddressBookRef addressBook;
 	
 	NSMutableArray *allTextFields;
-	NSMutableDictionary *territory;
+	MTTerritory *territory;
 	id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 	UITextField *owner;
 	int tag;
-	BOOL newTerritory;
+	BOOL newTerritory_;
 	BOOL obtainFocus;
 	BOOL deleteAfterEmailing;
 }
@@ -45,10 +45,11 @@
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) NSMutableArray *allTextFields;
 @property (nonatomic, retain) UITextField *owner;
-@property (nonatomic, retain) NSMutableDictionary *territory;
+@property (nonatomic, retain) MTTerritory *territory;
 @property (nonatomic, assign) id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 
-- (id)initWithTerritory:(NSMutableDictionary *)theTerritory;
+- (id)initWithTerritory:(MTTerritory *)theTerritory;
+- (id)initWithTerritory:(MTTerritory *)theTerritory newTerritory:(BOOL)newTerritory;
 
 - (NSString *)ownerEmailAddress;
 

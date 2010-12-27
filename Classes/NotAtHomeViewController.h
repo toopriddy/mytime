@@ -16,13 +16,22 @@
 #import <UIKit/UIKit.h>
 #import "NotAtHomeTerritoryViewController.h"
 #import "EmptyListViewController.h"
+#import "MTTerritory.h"
+#import <CoreData/CoreData.h>
 
-@interface NotAtHomeViewController : UITableViewController <NotAtHomeTerritoryViewControllerDelegate>
+@interface NotAtHomeViewController : UITableViewController <NotAtHomeTerritoryViewControllerDelegate, NSFetchedResultsControllerDelegate>
 {
 @private
-	NSMutableArray *entries;
 	EmptyListViewController *emptyView;
+    NSFetchedResultsController *fetchedResultsController_;
+    NSManagedObjectContext *managedObjectContext_;
+	bool reloadData_;
+	MTTerritory *temporaryTerritory;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
-@property (nonatomic, readonly) NSMutableArray *entries;
+@property (nonatomic, retain) MTTerritory *temporaryTerritory;
+
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
 @end

@@ -15,40 +15,33 @@
 
 #import "NotAtHomeViewController.h"
 #import "NotAtHomeTerritoryViewController.h"
-#import "Settings.h"
+#import "MTTerritory.h"
+#import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 #import "QuartzCore/CAGradientLayer.h"
+
 @implementation NotAtHomeViewController
 @synthesize emptyView;
-@synthesize entries;
-
-- (NSMutableArray *)entries
-{
-	if(entries == nil)
-	{
-		NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-		entries = [[userSettings objectForKey:SettingsNotAtHomeTerritories] retain];
-		if(entries == nil)
-		{
-			entries = [[NSMutableArray alloc] init];
-			[userSettings setObject:entries forKey:SettingsNotAtHomeTerritories];
-		}
-	}
-	
-	return entries;
-}
+@synthesize fetchedResultsController = fetchedResultsController_;
+@synthesize managedObjectContext = managedObjectContext_;
+@synthesize temporaryTerritory;
 
 - (void)notAtHomeDetailCanceled
 {
+	[self.managedObjectContext deleteObject:self.temporaryTerritory];
+	self.temporaryTerritory = nil;
 	[self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)navigationControlAdd:(id)sender
 {
-	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] init] autorelease];
+	self.temporaryTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
+	self.temporaryTerritory.user = [MTUser currentUser];
+	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:self.temporaryTerritory] autorelease];
 	controller.tag = -1;
 	controller.delegate = self;
-	
+
 	// push the element view controller onto the navigation stack to display it
 	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 
@@ -67,29 +60,15 @@
 {
 	if(notAtHomeTerritoryViewController.tag >= 0)
 	{
-		[[Settings sharedInstance] saveData];
-		
-		[self.tableView reloadData];
 		[[self navigationController] popViewControllerAnimated:YES];
 	}
 	else
 	{
-		[self.entries addObject:notAtHomeTerritoryViewController.territory];
-		[[Settings sharedInstance] saveData];
-		
-		[self.tableView reloadData];
 		[self dismissModalViewControllerAnimated:YES];
+		self.temporaryTerritory = nil;
 	}
 
 }
-
-- (void)notAtHomeTerritoryViewController:(NotAtHomeTerritoryViewController *)notAtHomeTerritoryViewController deleteTerritory:(NSMutableDictionary *)territory
-{
-	[self.entries removeObjectIdenticalTo:territory];
-	[[Settings sharedInstance] saveData];
-	[self.tableView reloadData];
-}
-
 
 - (void)loadView
 {
@@ -100,10 +79,16 @@
 
 - (void)updateEmptyView
 {
-	if(self.entries.count == 0)
+	if(reloadData_)
 	{
-		self.tableView.scrollEnabled = NO;
+		reloadData_ = NO;
+		[self.tableView reloadData];
+	}
+	
+	if(self.fetchedResultsController.fetchedObjects.count == 0)
+	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		self.tableView.scrollEnabled = NO;
 		if(self.emptyView == nil)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
@@ -131,9 +116,10 @@
 
 - (void)userChanged
 {
-	[entries release];
-	entries = nil;
-	[self.tableView reloadData];
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	reloadData_ = YES;
 }
 
 - (id)init
@@ -149,7 +135,7 @@
 																				 action:@selector(navigationControlAdd:)] autorelease];
 		[self.navigationItem setRightBarButtonItem:button animated:NO];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:SettingsNotificationUserChanged object:[Settings sharedInstance]];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
 	return self;
 }
@@ -158,10 +144,11 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[entries release];
-	entries = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
 	self.emptyView = nil;
-	
+	self.temporaryTerritory = nil;
+
 	[super dealloc];
 }
 
@@ -170,62 +157,39 @@
 	return(YES);
 }
 
-/******************************************************************
- *
- *   TABLE DELEGATE FUNCTIONS
- *
- ******************************************************************/
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {
-    DEBUG(NSLog(@"numberOfRowsInTable:");)
-	int count = self.entries.count;
-
-    DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
-	return count;
+	MTTerritory *territory = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	
+	cell.textLabel.text = territory.name;
+	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
+
+#pragma mark -
+#pragma mark Table view DataSource 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
+    return [[self.fetchedResultsController sections] count];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	int row = [indexPath row];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d ", row);)
 	NSString *identifier = @"NotAtHomeTerritoryCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
 	if (cell == nil) 
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
 	}
-	NSMutableArray *theEntries = self.entries;
-
-	if(row >= theEntries.count)
-		return nil;
-	NSMutableDictionary *entry = [theEntries objectAtIndex:row];
-	
-	cell.textLabel.text = [entry objectForKey:NotAtHomeTerritoryName];
-	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	
+	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
-	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:[self.entries objectAtIndex:row]] autorelease];
-	controller.tag = row;
-	controller.delegate = self;
-	
-	// push the element view controller onto the navigation stack to display it
-	[[self navigationController] pushViewController:controller animated:YES];
-}
-
-- (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    DEBUG(NSLog(@"table: deleteRow: %d", indexPath.row);)
-	[self.entries removeObjectAtIndex:indexPath.row];
-
-	[[Settings sharedInstance] saveData];
-	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-	[self updateEmptyView];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -239,22 +203,177 @@
 }
 
 
-- (BOOL)respondsToSelector:(SEL)selector
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
+    if (editingStyle == UITableViewCellEditingStyleDelete) 
+	{
+        // Delete the managed object for the given index path
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+
+        // Save the context.
+        NSError *error = nil;
+        if (![context save:&error]) 
+		{
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }   
 }
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+#pragma mark -
+#pragma mark Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
+    int row = [indexPath row];
+	MTTerritory *territory = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	
+	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:territory] autorelease];
+	controller.tag = row;
+	controller.delegate = self;
+	
+	// push the element view controller onto the navigation stack to display it
+	[[self navigationController] pushViewController:controller animated:YES];
 }
 
-- (void)forwardInvocation:(NSInvocation*)invocation
+
+#pragma mark -
+#pragma mark Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController 
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
+    if (fetchedResultsController_ != nil) 
+	{
+        return fetchedResultsController_;
+    }
+    
+	MTUser *currentUser = [MTUser currentUser];
+    /*
+     Set up the fetched results controller.
+	 */
+    // Create the fetch request for the entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    [fetchRequest setEntity:[MTTerritory entityInManagedObjectContext:self.managedObjectContext]];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"user == %@", currentUser]];
+    [fetchRequest setPropertiesToFetch:[NSArray arrayWithObjects:@"name", @"date", nil]];
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO], nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext 
+																								  sectionNameKeyPath:nil 
+																										   cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    [aFetchedResultsController release];
+    [fetchRequest release];
+    [sortDescriptors release];
+    
+    NSError *error = nil;
+    if (![fetchedResultsController_ performFetch:&error]) 
+	{
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return fetchedResultsController_;
+}    
+
+
+#pragma mark -
+#pragma mark Fetched results controller delegate
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView beginUpdates];
 }
+
+
+- (void)controller:(NSFetchedResultsController *)controller 
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex 
+	 forChangeType:(NSFetchedResultsChangeType)type 
+{
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller 
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath 
+	 forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath 
+{
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView endUpdates];
+	[self updateEmptyView];
+}
+
+
+/*
+ // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
+ 
+ - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+ // In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+ }
+ */
 
 @end
