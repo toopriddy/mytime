@@ -21,8 +21,13 @@
 #import "UITableViewMultilineTextCell.h"
 #import "NotAtHomeHouseCell.h"
 #import "NotAtHomeHouseViewController.h"
-#import "Settings.h"
+#import "MTTerritoryHouse.h"
 #import <AddressBookUI/AddressBookUI.h>
+#import "Settings.h"
+#import "PSTextFieldCellController.h"
+#import "PSDateCellController.h"
+#import "PSTextViewCellController.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @interface NotAtHomeStreetViewCellController : NSObject<TableViewCellController>
@@ -41,276 +46,6 @@
 
 
 /******************************************************************
- *
- *   NAHStreetNameCellController
- *
- ******************************************************************/
-#pragma mark NAHStreetNameCellController
-
-@interface NAHStreetNameCellController : NotAtHomeStreetViewCellController<UITableViewTextFieldCellDelegate>
-{
-	UITextField *textField;
-}
-@property (nonatomic, retain) UITextField *textField;
-@end
-@implementation NAHStreetNameCellController
-@synthesize textField;
-
-- (void)dealloc
-{
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	
-	[super dealloc];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	NSString *commonIdentifier = @"StreetNameCell";
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"Street Name", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
-		cell.textField.returnKeyType = UIReturnKeyDone;
-		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
-		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	NSMutableString *name = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
-	if(name == nil)
-	{
-		name = [[NSMutableString alloc] init];
-		[self.delegate.street setObject:name forKey:NotAtHomeTerritoryStreetName];
-		[name release];
-	}
-	self.textField = cell.textField;
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextFieldChanged:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self.textField];
-	[self.delegate.allTextFields addObject:self.textField];
-	cell.textField.text = name;
-	cell.delegate = self;
-	if(self.delegate.obtainFocus)
-	{
-		[cell.textField performSelector:@selector(becomeFirstResponder)
-							 withObject:nil
-							 afterDelay:0.0000001];
-		self.delegate.obtainFocus = NO;
-	}
-	
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-}
-
-- (void)handleTextFieldChanged:(NSNotification *)note 
-{
-	[self.delegate.street setObject:self.textField.text forKey:NotAtHomeTerritoryStreetName];
-	if(!self.delegate.newStreet)
-		self.delegate.title = self.textField.text;
-}
-
-
-@end
-
-
-/******************************************************************
- *
- *   NAHStreetDateCellController
- *
- ******************************************************************/
-#pragma mark NAHStreetDateCellController
-
-@interface NAHStreetDateCellController : NotAtHomeStreetViewCellController<DatePickerViewControllerDelegate>
-{
-}
-@end
-@implementation NAHStreetDateCellController
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *identifier = @"ChangeDateCell";
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
-		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	}
-	
-	NSDate *date = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetDate];	
-	// create dictionary entry for This Return Visit
-	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-	if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
-	{
-		[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
-	}
-	else
-	{
-		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
-	}
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	cell.textLabel.text = [dateFormatter stringFromDate:date];
-	
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	DEBUG(NSLog(@"changeDateOfReturnVisitAtIndex: %d", index);)
-	
-	// make the new call view 
-	DatePickerViewController *p = [[[DatePickerViewController alloc] initWithDate:[self.delegate.street objectForKey:NotAtHomeTerritoryStreetDate]] autorelease];
-	p.delegate = self;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
-}
-
-- (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
-{
-    [self.delegate.street setObject:[datePickerViewController date] forKey:NotAtHomeTerritoryStreetDate];
-	[[Settings sharedInstance] saveData];
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		self.delegate.forceReload = YES;
-	}
-	[[self.delegate navigationController] popViewControllerAnimated:YES];
-}
-
-@end
-
-/******************************************************************
- *
- *   NAHStreetNotesCellController
- *
- ******************************************************************/
-#pragma mark NAHStreetNotesCellController
-
-@interface NAHStreetNotesCellController : NotAtHomeStreetViewCellController<NotesViewControllerDelegate>
-{
-}
-@end
-@implementation NAHStreetNotesCellController
-
-- (void)notesViewControllerDone:(NotesViewController *)notesViewController
-{
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    [self.delegate.street setObject:[notesViewController notes] forKey:NotAtHomeTerritoryStreetNotes];
-	[[Settings sharedInstance] saveData];
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		self.delegate.forceReload = YES;
-	}
-	
-	[self.delegate.navigationController popViewControllerAnimated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:[self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes]];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
-	}
-	
-	NSMutableString *notes = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes];
-	
-	if([notes length] == 0)
-		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
-	else
-		[cell setText:notes];
-	
-	return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *notes = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetNotes];
-	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
-	p.delegate = self;
-	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
-}
-@end
-
-
-/******************************************************************
 *
 *   NAHStreetHouseCellController
 *
@@ -320,11 +55,11 @@
 @interface NAHStreetHouseCellController : UIViewController<TableViewCellController, NotAtHomeHouseCellDelegate, NotAtHomeHouseViewControllerDelegate>
 {
 	NotAtHomeStreetViewController *delegate;
-	NSMutableDictionary *house;
+	MTTerritoryHouse *house;
 	NSIndexPath *savedIndexPath;
 }
 @property (nonatomic, assign) NotAtHomeStreetViewController *delegate;
-@property (nonatomic, retain) NSMutableDictionary *house;
+@property (nonatomic, retain) MTTerritoryHouse *house;
 @property (nonatomic, copy) NSIndexPath *savedIndexPath;
 @end
 @implementation NAHStreetHouseCellController
@@ -375,13 +110,11 @@
 	}
 
 	
-	self.house = [[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row];
-	
 	cell.delegate = self;
-	cell.attempts = [[self.house objectForKey:NotAtHomeTerritoryHouseAttempts] count];
+	cell.attempts = self.house.attempts.count;
 	NSMutableString *string = [[NSMutableString alloc] init];
-	[Settings formatStreetNumber:[self.house objectForKey:NotAtHomeTerritoryHouseNumber] 
-					   apartment:[self.house objectForKey:NotAtHomeTerritoryHouseApartment] 
+	[Settings formatStreetNumber:self.house.number 
+					   apartment:self.house.apartment
 						 topLine:string];
 	cell.houseLabel.text = string;
 	[string release];
@@ -391,9 +124,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] objectAtIndex:indexPath.row]
-																							street:self.delegate.street
-																						 territory:self.delegate.territory];
+	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:self.house newHouse:NO];
 	controller.delegate = self;
 	self.savedIndexPath = indexPath;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
@@ -407,10 +138,12 @@
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", indexPath);)
 		
-		[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] removeObjectAtIndex:indexPath.row];
-		
-		// save the data
-		[[Settings sharedInstance] saveData];
+		[self.house.managedObjectContext deleteObject:self.house];
+		NSError *error = nil;
+		if(![self.delegate.street.managedObjectContext save:&error])
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
@@ -419,10 +152,14 @@
 
 - (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
-	[[self.delegate.street objectForKey:NotAtHomeTerritoryHouses] removeObjectAtIndex:self.savedIndexPath.row];
+	[self.house.managedObjectContext deleteObject:self.house];
 	
 	// save the data
-	[[Settings sharedInstance] saveData];
+	NSError *error = nil;
+	if(![self.delegate.street.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	[[self retain] autorelease];
 	[self.delegate deleteDisplayRowAtIndexPath:self.savedIndexPath];
@@ -431,17 +168,14 @@
 
 - (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
-	[[Settings sharedInstance] saveData];
+	NSError *error = nil;
+	if(![self.delegate.street.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+
 	[self.delegate.navigationController popViewControllerAnimated:YES];
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		self.delegate.forceReload = YES;
-	}
+	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.savedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 @end
 
@@ -456,14 +190,23 @@
 {
 @private	
 	int section;
+	MTTerritoryHouse *temporaryHouse;
+	NSIndexPath *savedIndexPath;
 }
+@property (nonatomic, retain) MTTerritoryHouse *temporaryHouse;
+@property (nonatomic, copy) NSIndexPath *savedIndexPath;
 @end
 @implementation NAHStreetAddHouseCellController
+@synthesize temporaryHouse;
+@synthesize savedIndexPath;
 
 - (void)dealloc
 {
+	self.temporaryHouse = nil;
+	self.savedIndexPath = nil;
 	[super dealloc];
 }
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return UITableViewCellEditingStyleInsert;
@@ -484,11 +227,17 @@
 - (void)notAtHomeDetailCanceled
 {
 	[self.delegate dismissModalViewControllerAnimated:YES];
+	self.temporaryHouse = nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] initWithStreet:self.delegate.street territory:self.delegate.territory] autorelease];
+	MTTerritoryHouse *house = [MTTerritoryHouse insertInManagedObjectContext:self.delegate.street.managedObjectContext];
+	house.street = self.delegate.street;
+	self.temporaryHouse = house;
+	self.savedIndexPath = indexPath;
+	
+	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] initWithHouse:house newHouse:YES] autorelease];
 	controller.delegate = self;
 
 	section = indexPath.section;
@@ -511,27 +260,29 @@
 
 - (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
-	NSMutableArray *houses = [self.delegate.street objectForKey:NotAtHomeTerritoryHouses];
-	if(houses == nil)
+#warning fix me
+	NSError *error = nil;
+	if(![self.delegate.street.managedObjectContext save:&error])
 	{
-		houses = [[NSMutableArray alloc] init];
-		[self.delegate.street setObject:houses forKey:NotAtHomeTerritoryHouses];
-		[houses release];
+		[NSManagedObjectContext presentErrorDialog:error];
 	}
-	[houses addObject:notAtHomeHouseViewController.house];
-	[[Settings sharedInstance] saveData];
-	
+#if 0
 	NAHStreetHouseCellController *cellController = [[NAHStreetHouseCellController alloc] init];
 	cellController.delegate = self.delegate;
 	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:([houses count] - 1)];
 	[cellController release];
-	
+#endif	
 	[self.delegate dismissModalViewControllerAnimated:YES];
-	[self.delegate updateWithoutReload];
+	[self.delegate updateAndReload];
 }	
 
 - (void)notAtHomeHouseViewControllerDeleteHouse:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
+	NSError *error = nil;
+	if(![self.delegate.street.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }
 
@@ -542,10 +293,9 @@
 @synthesize street;
 @synthesize delegate;
 @synthesize tag;
-@synthesize newStreet;
+@synthesize newStreet = newStreet_;
 @synthesize allTextFields;
 @synthesize obtainFocus;
-@synthesize territory;
 
 - (void)navigationControlDone:(id)sender 
 {
@@ -560,35 +310,22 @@
 {
 }
 
-- (id)initWithStreet:(NSMutableDictionary *)theStreet territory:(NSDictionary *)theTerritory
+- (id)initWithStreet:(MTTerritoryStreet *)theStreet newStreet:(BOOL)newStreet
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
 		self.allTextFields = [NSMutableArray array];
-		self.territory = theTerritory;
-		
-		if(theStreet == nil)
-		{
-			newStreet = YES;
-			theStreet = [[[NSMutableDictionary alloc] init] autorelease];
-			[theStreet setObject:[NSDate date] forKey:NotAtHomeTerritoryStreetDate];
-		}
-		self.obtainFocus = newStreet;
 		self.street = theStreet;
+		self.obtainFocus = newStreet;
 		if(!newStreet)
 		{
-			self.title = [theStreet objectForKey:NotAtHomeTerritoryName];
+			self.title = self.street.name;
 		}
 		self.hidesBottomBarWhenPushed = YES;
 		self.editing = YES;
 	}
 	return self;
-}
-
-- (id)initWithTerritory:(NSDictionary *)theTerritory
-{
-	return [self initWithStreet:nil territory:theTerritory];
 }
 
 - (void)didReceiveMemoryWarning
@@ -615,7 +352,6 @@
 - (void)dealloc
 {
 	self.street = nil;
-	self.territory = nil;
 	self.allTextFields = nil;
 	
 	[super dealloc];
@@ -640,26 +376,45 @@
 
 		{
 			// Street Name
-			NAHStreetNameCellController *cellController = [[NAHStreetNameCellController alloc] init];
-			cellController.delegate = self;
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.street;
+			cellController.modelPath = @"name";
+			cellController.placeholder = NSLocalizedString(@"Street Name", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
+			cellController.returnKeyType = UIReturnKeyDone;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.obtainFocus = self.obtainFocus;
+			self.obtainFocus = NO;
 			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
 		}
 		
 		{
 			// Street Date
-			NAHStreetDateCellController *cellController = [[NAHStreetDateCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSDateCellController *cellController = [[[PSDateCellController alloc] init] autorelease];
+			cellController.model = self.street;
+			cellController.modelPath = @"date";
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[cellController setDateFormat:@"EEE, d/M/yyy h:mma"];
+			}
+			else
+			{
+				[cellController setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
+			
+			[self addCellController:cellController toSection:sectionController];
+			
 		}
 
 		{
 			// Street Notes
-			NAHStreetNotesCellController *cellController = [[NAHStreetNotesCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextViewCellController *cellController = [[[PSTextViewCellController alloc] init] autorelease];
+			cellController.model = self.street;
+			cellController.modelPath = @"notes";
+			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
+			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
 		}
 		
 	}
@@ -670,11 +425,16 @@
 		sectionController.title = NSLocalizedString(@"Houses", @"Title of the section in the Not-At-Homes street view that allows you to add/edit houses in the street");
 		[sectionController release];
 
-		for(NSDictionary *house in [self.street objectForKey:NotAtHomeTerritoryHouses])
+		NSArray *houses = [street.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]
+															   propertiesToFetch:[NSArray arrayWithObjects:@"number", @"apartment", @"date", nil] 
+															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+																   withPredicate:@"street == %@", street];
+		for(MTTerritoryHouse *house in houses)
 		{
 			// House
 			NAHStreetHouseCellController *cellController = [[NAHStreetHouseCellController alloc] init];
 			cellController.delegate = self;
+			cellController.house = house;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}

@@ -50,6 +50,13 @@
 
 
 
+@dynamic date;
+
+
+
+
+
+
 @dynamic attempts;
 
 	
