@@ -22,51 +22,9 @@
 #import "MTTerritoryStreet.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import <AddressBookUI/AddressBookUI.h>
+#import "PSTextFieldCellController.h"
+#import "PSTextViewCellController.h"
 #import "PSLocalization.h"
-
-@interface SelectRowNextResponder : UIResponder <UITextFieldDelegate>
-{
-	UITableView *tableView;
-	NSIndexPath *indexPath;
-}
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) NSIndexPath *indexPath;
-
-- (id)initWithTable:(UITableView *)theTableView indexPath:(NSIndexPath *)theIndexPath;
-@end
-
-@implementation SelectRowNextResponder
-
-@synthesize tableView;
-@synthesize indexPath;
-- (void)dealloc
-{
-	self.tableView = nil;
-	self.indexPath = nil;
-	[super dealloc];
-}
-
-- (id)initWithTable:(UITableView *)theTableView indexPath:(NSIndexPath *)theIndexPath
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if((self = [super init]))
-	{
-		self.tableView = theTableView;
-		self.indexPath = theIndexPath;
-	}
-	return self;
-}
-
-- (BOOL)becomeFirstResponder 
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	[self.tableView deselectRowAtIndexPath:nil animated:NO];
-	[self.tableView selectRowAtIndexPath:self.indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-	[self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:self.indexPath];
-	return NO;
-}
-@end
-
 
 @interface NotAtHomeTerritoryViewCellController : NSObject<TableViewCellController>
 {
@@ -82,335 +40,6 @@
 }
 @end
 
-
-/******************************************************************
- *
- *   NAHTerritoryNameCellController
- *
- ******************************************************************/
-#pragma mark NAHTerritoryNameCellController
-
-@interface NAHTerritoryNameCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
-{
-@private	
-	SelectRowNextResponder *nextRowResponder;
-	UITextField *textField;
-}
-@property (nonatomic, retain) UITextField *textField;
-@property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
-@end
-@implementation NAHTerritoryNameCellController
-@synthesize nextRowResponder;
-@synthesize textField;
-
-- (void)dealloc
-{
-	self.nextRowResponder = nil;
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	
-	[super dealloc];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	NSString *commonIdentifier = @"NameCell";
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-	if(self.nextRowResponder == nil)
-	{
-		self.nextRowResponder = [[[SelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]] autorelease];
-	}
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"Territory Name/Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
-		cell.nextKeyboardResponder = self.nextRowResponder;
-		cell.textField.returnKeyType = UIReturnKeyNext;
-		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
-		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	self.textField = cell.textField;
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextFieldChanged:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self.textField];
-	[self.delegate.allTextFields addObject:self.textField];
-	cell.textField.text = self.delegate.territory.name;
-	cell.delegate = self;
-	if(self.delegate.obtainFocus)
-	{
-		[cell.textField performSelector:@selector(becomeFirstResponder)
-							 withObject:nil
-							 afterDelay:0.0000001];
-		self.delegate.obtainFocus = NO;
-	}
-	
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-}
-
-- (void)handleTextFieldChanged:(NSNotification *)note 
-{
-	self.delegate.territory.name = self.textField.text;
-	if(!self.delegate.newTerritory)
-		self.delegate.title = self.textField.text;
-}
-
-
-
-@end
-
-
-/******************************************************************
- *
- *   NAHTerritoryCityCellController
- *
- ******************************************************************/
-#pragma mark NAHTerritoryCityCellController
-
-@interface NAHTerritoryCityCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
-{
-	SelectRowNextResponder *nextRowResponder;
-	UITextField *textField;
-}
-@property (nonatomic, retain) UITextField *textField;
-@property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
-@end
-@implementation NAHTerritoryCityCellController
-@synthesize nextRowResponder;
-@synthesize textField;
-
-- (void)dealloc
-{
-	self.nextRowResponder = nil;
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	
-	[super dealloc];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *commonIdentifier = @"CityCell";
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-	if(self.nextRowResponder == nil)
-	{
-		self.nextRowResponder = [[[SelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]] autorelease];
-	}
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"City", @"City");
-		cell.textField.returnKeyType = UIReturnKeyNext;
-		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
-		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-		cell.nextKeyboardResponder = self.nextRowResponder;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	self.textField = cell.textField;
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextFieldChanged:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self.textField];
-	
-	[self.delegate.allTextFields addObject:self.textField];
-	cell.textField.text = self.delegate.territory.city;
-	cell.delegate = self;
-
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-}
-
-- (void)handleTextFieldChanged:(NSNotification *)note 
-{
-	self.delegate.territory.city = self.textField.text;
-}
-
-@end
-
-
-/******************************************************************
- *
- *   NAHNAHTerritoryStateCellController
- *
- ******************************************************************/
-#pragma mark NAHTerritoryStateCellController
-
-@interface NAHTerritoryStateCellController : NotAtHomeTerritoryViewCellController<UITableViewTextFieldCellDelegate>
-{
-	SelectRowNextResponder *nextRowResponder;
-	UITextField *textField;
-}
-@property (nonatomic, retain) UITextField *textField;
-@property (nonatomic, retain) SelectRowNextResponder *nextRowResponder;
-@end
-@implementation NAHTerritoryStateCellController
-@synthesize nextRowResponder;
-@synthesize textField;
-
-- (void)dealloc
-{
-	self.nextRowResponder = nil;
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	
-	[super dealloc];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *commonIdentifier = @"StateCell";
-	if(self.textField)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:UITextFieldTextDidChangeNotification
-													  object:self.textField];
-		
-		[self.delegate.allTextFields removeObject:self.textField];
-		self.textField = nil;
-	}
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-	if(self.nextRowResponder == nil)
-	{
-		self.nextRowResponder = [[[SelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]] autorelease];
-	}
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
-		cell.textField.returnKeyType = UIReturnKeyDone;
-		cell.textField.clearButtonMode = UITextFieldViewModeAlways;
-		cell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-		cell.nextKeyboardResponder = self.nextRowResponder;
-
-		// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
-		if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
-		{
-			cell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-			cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-		}
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	self.textField = cell.textField;
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextFieldChanged:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self.textField];
-	
-	[self.delegate.allTextFields addObject:self.textField];
-	cell.textField.text = self.delegate.territory.state;
-	cell.delegate = self;
-	
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[[(UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath] textField] becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-}
-
-- (void)handleTextFieldChanged:(NSNotification *)note 
-{
-	self.delegate.territory.state = self.textField.text;
-}
-
-@end
 
 
 /******************************************************************
@@ -549,84 +178,6 @@
 @end
 
 /******************************************************************
- *
- *   NAHTerritoryNotesCellController
- *
- ******************************************************************/
-#pragma mark NAHTerritoryNotesCellController
-
-@interface NAHTerritoryNotesCellController : NotAtHomeTerritoryViewCellController<NotesViewControllerDelegate>
-{
-}
-@end
-@implementation NAHTerritoryNotesCellController
-
-- (void)notesViewControllerDone:(NotesViewController *)notesViewController
-{
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    self.delegate.territory.notes = [notesViewController notes];
-
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		self.delegate.forceReload = YES;
-	}
-	
-	[self.delegate.navigationController popViewControllerAnimated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:self.delegate.territory.notes];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
-	}
-	
-	NSString *notes = self.delegate.territory.notes;
-	
-	if([notes length] == 0)
-		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
-	else
-		[cell setText:notes];
-
-	return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *notes = self.delegate.territory.notes;
-	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
-	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
-	p.delegate = self;
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
-}
-@end
-
-
-
-/******************************************************************
 *
 *   NAHTerritoryStreetCellController
 *
@@ -664,7 +215,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:street];
+	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:street newStreet:NO];
 	controller.delegate = self;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
@@ -673,6 +224,12 @@
 
 - (void)notAtHomeStreetViewControllerDone:(NotAtHomeStreetViewController *)notAtHomeStreetViewController
 {
+	NSError *error = nil;
+	if(![self.delegate.territory.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+
 	[self.delegate.navigationController popViewControllerAnimated:YES];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -694,6 +251,11 @@
 		[self.street.managedObjectContext deleteObject:self.street];
 		self.street = nil;
 		
+		NSError *error = nil;
+		if(![self.delegate.territory.managedObjectContext save:&error])
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
 	}
@@ -740,6 +302,11 @@
 {
 	[self.temporaryStreet.managedObjectContext deleteObject:self.temporaryStreet];
 	self.temporaryStreet = nil;
+	NSError *error = nil;
+	if(![self.delegate.territory.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }
 
@@ -747,7 +314,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	self.temporaryStreet = [MTTerritoryStreet insertInManagedObjectContext:self.delegate.territory.managedObjectContext];
-	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithStreet:self.temporaryStreet] autorelease];
+	self.temporaryStreet.territory = self.delegate.territory;
+	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithStreet:self.temporaryStreet newStreet:YES] autorelease];
 	controller.delegate = self;
 
 	section = indexPath.section;
@@ -771,6 +339,11 @@
 - (void)notAtHomeStreetViewControllerDone:(NotAtHomeStreetViewController *)notAtHomeStreetViewController
 {
 	self.temporaryStreet = nil;
+	NSError *error = nil;
+	if(![self.delegate.territory.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	[self.delegate dismissModalViewControllerAnimated:YES];
 	[self.delegate updateAndReload];
@@ -784,7 +357,6 @@
 @synthesize delegate;
 @synthesize owner;
 @synthesize tag;
-@synthesize newTerritory = newTerritory_;
 @synthesize allTextFields;
 @synthesize obtainFocus;
 
@@ -948,6 +520,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		self.allTextFields = [NSMutableArray array];
 		
 		self.territory = theTerritory;
+
 		if(!newTerritory)
 		{
 			self.title = self.territory.name;
@@ -1022,34 +595,67 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 
 		{
 			// Territory Name
-			NAHTerritoryNameCellController *cellController = [[NAHTerritoryNameCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.territory;
+			cellController.modelPath = @"name";
+			cellController.placeholder = NSLocalizedString(@"Territory Name/Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.returnKeyType = UIReturnKeyNext;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.obtainFocus = self.obtainFocus;
+			self.obtainFocus = NO;
+			
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		{
 			// Territory City
-			NAHTerritoryCityCellController *cellController = [[NAHTerritoryCityCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.territory;
+			cellController.modelPath = @"city";
+			cellController.placeholder = NSLocalizedString(@"City", @"City");
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.returnKeyType = UIReturnKeyNext;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		{
 			// Territory State
-			NAHTerritoryStateCellController *cellController = [[NAHTerritoryStateCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.territory;
+			cellController.modelPath = @"state";
+			cellController.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
+			cellController.returnKeyType = UIReturnKeyDone;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectNextRowResponderIncrement = 1;
+
+			// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
+			if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
+			{
+				cellController.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+				cellController.autocorrectionType = UITextAutocorrectionTypeNo;
+			}
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			
+			[self addCellController:cellController toSection:sectionController];
 		}
 
 		{
 			// Territory Notes
-			NAHTerritoryNotesCellController *cellController = [[NAHTerritoryNotesCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextViewCellController *cellController = [[[PSTextViewCellController alloc] init] autorelease];
+			cellController.model = self.territory;
+			cellController.modelPath = @"notes";
+			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
+			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+			
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		{
@@ -1066,6 +672,14 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		sectionController.title = NSLocalizedString(@"Streets", @"Title of the section in the Not-At-Homes territory view that allows you to add/edit streets in the territory");
 		[sectionController release];
 
+		{
+			// Add Territory Street
+			NAHTerritoryAddStreetCellController *cellController = [[NAHTerritoryAddStreetCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 		NSArray *streets = [self.territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryStreet entityName]
 																		propertiesToFetch:nil 
 																	  withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
@@ -1080,15 +694,6 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-		
-		{
-			// Add Territory Street
-			NAHTerritoryAddStreetCellController *cellController = [[NAHTerritoryAddStreetCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
 	}
 }
 

@@ -38,7 +38,7 @@
 {
 	self.temporaryTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
 	self.temporaryTerritory.user = [MTUser currentUser];
-	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:self.temporaryTerritory] autorelease];
+	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:self.temporaryTerritory newTerritory:YES] autorelease];
 	controller.tag = -1;
 	controller.delegate = self;
 
@@ -67,7 +67,11 @@
 		[self dismissModalViewControllerAnimated:YES];
 		self.temporaryTerritory = nil;
 	}
-
+	NSError *error = nil;
+	if(![self.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 }
 
 - (void)loadView
@@ -214,17 +218,11 @@
 
         // Save the context.
         NSError *error = nil;
-        if (![context save:&error]) 
+		if(![context save:&error])
 		{
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }   
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+	}   
 }
 
 #pragma mark -

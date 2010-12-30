@@ -11,6 +11,7 @@
 
 
 
+
 @interface MTTerritoryHouseID : NSManagedObjectID {}
 @end
 
@@ -37,6 +38,12 @@
 @property (nonatomic, retain) NSString *apartment;
 
 //- (BOOL)validateApartment:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *date;
+
+//- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -74,6 +81,10 @@
 
 - (NSString*)primitiveApartment;
 - (void)setPrimitiveApartment:(NSString*)value;
+
+
+- (NSDate*)primitiveDate;
+- (void)setPrimitiveDate:(NSDate*)value;
 
 
 

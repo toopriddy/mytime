@@ -36,12 +36,10 @@
 	id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 	UITextField *owner;
 	int tag;
-	BOOL newTerritory_;
 	BOOL obtainFocus;
 	BOOL deleteAfterEmailing;
 }
 @property (nonatomic, assign) BOOL obtainFocus;
-@property (nonatomic, readonly) BOOL newTerritory;
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) NSMutableArray *allTextFields;
 @property (nonatomic, retain) UITextField *owner;
