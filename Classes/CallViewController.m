@@ -2018,7 +2018,10 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	
 	if(isNewCall)
 	{
-		[self dismissModalViewControllerAnimated:YES];
+		if([self.delegate respondsToSelector:@selector(callViewController:newCallDone:)])
+		{
+			[self.delegate callViewController:self newCallDone:_call];
+		}
 	}
 	else
 	{

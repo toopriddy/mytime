@@ -27,6 +27,7 @@
 #import "PSTextFieldCellController.h"
 #import "PSDateCellController.h"
 #import "PSTextViewCellController.h"
+#import "MTTerritoryHouseAttempt.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
@@ -77,17 +78,23 @@
 
 - (void)notAtHomeHouseCellAttemptsChanged:(NotAtHomeHouseCell *)cell
 {
-	NSMutableArray *attempts = [self.house objectForKey:NotAtHomeTerritoryHouseAttempts];
-	if(attempts.count > cell.attempts)
+	int count = [self.house.attempts count];
+	if(count > cell.attempts)
 	{
-		[attempts removeLastObject];
+		MTTerritoryHouseAttempt *attempt = [[self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
+																					 propertiesToFetch:nil 
+																				   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil]
+																						 withPredicate:@"house == %@", self.house] lastObject];
+		if(attempt)
+		{
+			[attempt.managedObjectContext deleteObject:attempt];
+		}
 	}
 	else
 	{
-		[attempts addObject:[NSDate date]];
+		MTTerritoryHouseAttempt *attempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.house.managedObjectContext];
+		attempt.house = self.house;
 	}
-
-	[[Settings sharedInstance] saveData];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -315,7 +322,7 @@
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
-		self.allTextFields = [NSMutableArray array];
+		self.allTextFields = [NSMutableSet set];
 		self.street = theStreet;
 		self.obtainFocus = newStreet;
 		if(!newStreet)
@@ -379,13 +386,14 @@
 			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
 			cellController.model = self.street;
 			cellController.modelPath = @"name";
-			cellController.placeholder = NSLocalizedString(@"Street Name", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
+			cellController.placeholder = NSLocalizedString(@"Street Name", @"This is the territory idetifier that is on the Territories->New/edit territory");
 			cellController.returnKeyType = UIReturnKeyDone;
 			cellController.clearButtonMode = UITextFieldViewModeAlways;
 			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.selectNextRowResponderIncrement = 1;
 			cellController.obtainFocus = self.obtainFocus;
+			cellController.allTextFields = self.allTextFields;
 			self.obtainFocus = NO;
 			[sectionController.cellControllers addObject:cellController];
 		}
@@ -405,7 +413,6 @@
 			}
 			
 			[self addCellController:cellController toSection:sectionController];
-			
 		}
 
 		{

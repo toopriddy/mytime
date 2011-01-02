@@ -21,10 +21,8 @@
 
 @required
 
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(MTCall *)call keepInformation:(BOOL)keepInformation;
-- (void)callViewController:(CallViewController *)callViewController saveCall:(MTCall *)call;
-
 @optional
 - (void)callViewController:(CallViewController *)callViewController restoreCall:(MTCall *)call;
+- (void)callViewController:(CallViewController *)callViewController newCallDone:(MTCall *)call;
 
 @end

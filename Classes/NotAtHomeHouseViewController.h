@@ -15,6 +15,7 @@
 
 #import "GenericTableViewController.h"
 #import <AddressBook/AddressBook.h>
+#import "MTTerritoryHouse.h"
 
 @class NotAtHomeHouseViewController;
 
@@ -26,9 +27,7 @@
 @interface NotAtHomeHouseViewController : GenericTableViewController 
 {
 @private	
-	NSMutableDictionary *house;
-	NSDictionary *territory;
-	NSDictionary *street;
+	MTTerritoryHouse *house;
 	NSObject<NotAtHomeHouseViewControllerDelegate> *delegate;
 	int tag;
 	BOOL newHouse;
@@ -37,14 +36,11 @@
 }
 @property (nonatomic, readonly) BOOL newHouse;
 @property (nonatomic, assign) int tag;
-@property (nonatomic, retain) NSMutableDictionary *house;
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSMutableArray *allTextFields;
-@property (nonatomic, retain) NSDictionary *territory;
-@property (nonatomic, retain) NSDictionary *street;
+@property (nonatomic, retain) MTTerritoryHouse *house;
 @property (nonatomic, assign) NSObject<NotAtHomeHouseViewControllerDelegate> *delegate;
 
-- (id)initWithHouse:(NSMutableDictionary *)theHouse street:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory;
-- (id)initWithStreet:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory;
+- (id)initWithHouse:(MTTerritoryHouse *)theHouse newHouse:(BOOL)newHouse;
 
 @end
