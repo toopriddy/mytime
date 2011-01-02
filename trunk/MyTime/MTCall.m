@@ -209,7 +209,7 @@
 {
     [self willAccessValueForKey:@"dateSortedSectionIndex"];
 	NSString *stringToReturn = @"";
-	NSTimeInterval interval = [self.mostRecentReturnVisitDate timeIntervalSinceNow];
+	NSTimeInterval interval = -[self.mostRecentReturnVisitDate timeIntervalSinceNow];
 	if(interval < DAY_INTERVAL)
 	{
 		stringToReturn = NSLocalizedString(@"Day Old", @"section title for calls older than this time interval");
