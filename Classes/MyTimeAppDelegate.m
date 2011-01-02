@@ -1883,13 +1883,13 @@ NSString *emailFormattedStringForSettings();
 	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
 	streetViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:streetViewController] autorelease]];
-#if 0
+
 	// CALLS SORTED BY DATE
 	CallsSortedByDateViewDataSource *dateSortedDataSource = [[[CallsSortedByDateViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *dateViewController = [[[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource] autorelease];
 	dateViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
-#endif
+
 	// HOURS
 	HourViewController *hourViewController = [[[HourViewController alloc] initWithTimeTypeName:[[MTTimeType hoursType] name]] autorelease];
 	hourViewController.managedObjectContext = self.managedObjectContext;
