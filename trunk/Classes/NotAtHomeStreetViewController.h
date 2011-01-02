@@ -30,14 +30,14 @@
 	id<NotAtHomeStreetViewControllerDelegate> delegate;
 	int tag;
 	BOOL newStreet_;
-	NSMutableArray *allTextFields;
+	NSMutableSet *allTextFields;
 	BOOL obtainFocus;
 }
 @property (nonatomic, assign) BOOL newStreet;
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) MTTerritoryStreet *street;
 @property (nonatomic, assign) BOOL obtainFocus;
-@property (nonatomic, retain) NSMutableArray *allTextFields;
+@property (nonatomic, retain) NSMutableSet *allTextFields;
 @property (nonatomic, assign) id<NotAtHomeStreetViewControllerDelegate> delegate;
 
 - (id)initWithStreet:(MTTerritoryStreet *)theStreet newStreet:(BOOL)newStreet;

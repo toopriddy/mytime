@@ -98,7 +98,7 @@
 	if(cell == nil)
 	{
 		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:self.owner reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Not At Home View when you press on the Add button and enter in the territory's information");
+		cell.textField.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Territories View when you press on the Add button and enter in the territory's information");
 	}
 	cell.delegate = self;
 	cell.textField.text = [self.delegate ownerEmailAddress];
@@ -327,7 +327,7 @@
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	
-	controller.title = NSLocalizedString(@"Add Street", @"Title for the a new street in the Not At Home view");
+	controller.title = NSLocalizedString(@"Add Street", @"Title for the a new street in the Territories view");
 	[self.delegate presentModalViewController:navigationController animated:YES];
 	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
 	[temporaryBarButtonItem setTarget:self];
@@ -517,7 +517,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.obtainFocus = newTerritory;
-		self.allTextFields = [NSMutableArray array];
+		self.allTextFields = [NSMutableSet set];
 		
 		self.territory = theTerritory;
 
@@ -598,13 +598,14 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
 			cellController.model = self.territory;
 			cellController.modelPath = @"name";
-			cellController.placeholder = NSLocalizedString(@"Territory Name/Number", @"This is the territory idetifier that is on the Not At Home->New/edit territory");
+			cellController.placeholder = NSLocalizedString(@"Territory Name/Number", @"This is the territory idetifier that is on the Territories->New/edit territory");
 			cellController.selectNextRowResponderIncrement = 1;
 			cellController.returnKeyType = UIReturnKeyNext;
 			cellController.clearButtonMode = UITextFieldViewModeAlways;
 			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.obtainFocus = self.obtainFocus;
+			cellController.allTextFields = self.allTextFields;
 			self.obtainFocus = NO;
 			
 			[self addCellController:cellController toSection:sectionController];
@@ -621,6 +622,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.clearButtonMode = UITextFieldViewModeAlways;
 			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.allTextFields = self.allTextFields;
 
 			[self addCellController:cellController toSection:sectionController];
 		}
@@ -635,6 +637,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.clearButtonMode = UITextFieldViewModeAlways;
 			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
 			cellController.selectNextRowResponderIncrement = 1;
+			cellController.allTextFields = self.allTextFields;
 
 			// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
 			if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])

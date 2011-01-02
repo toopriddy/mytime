@@ -24,6 +24,13 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "CallViewController.h"
 #import "Geocache.h"
+#import "MTCall.h"
+#import "MTTerritory.h"
+#import "MTTerritoryStreet.h"
+#import "MTTerritoryHouse.h"
+#import "MTTerritoryHouseAttempt.h"
+#import "PSTextViewCellController.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @interface NotAtHomeHouseViewCellController : NSObject<TableViewCellController>
@@ -127,16 +134,8 @@
 	self.textField2 = apartmentTextField;
 	[self.delegate.allTextFields addObject:self.textField2];
 
-	NSMutableString *houseNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
-	NSMutableString *apartment = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
-	if(houseNumber == nil)
-	{
-		[self.delegate.house setObject:(houseNumber = [NSMutableString string]) forKey:NotAtHomeTerritoryHouseNumber];
-	}
-	if(apartment == nil)
-	{
-		[self.delegate.house setObject:(apartment = [NSMutableString string]) forKey:NotAtHomeTerritoryHouseApartment];
-	}
+	NSString *houseNumber = self.delegate.house.number;
+	NSString *apartment = self.delegate.house.apartment;
 	
 	streetTextField.text = houseNumber;
 	apartmentTextField.text = apartment;
@@ -167,26 +166,28 @@
 {
 	UITextField *streetTextField = [cell textFieldAtIndex:0];
 	UITextField *apartmentTextField = [cell textFieldAtIndex:1];
-	NSMutableString *houseNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
-	NSMutableString *apartment = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
 	
 	if(textField == streetTextField)
 	{
-		[houseNumber setString:@""];
+		self.delegate.house.number = @"";
 	}
 	else if(textField == apartmentTextField)
 	{
-		[apartment setString:@""];
+		self.delegate.house.apartment = @"";
 	}
 	
 	if(!self.delegate.newHouse)
 	{
-		NSMutableString *string = [[NSMutableString alloc] init];
-		[Settings formatStreetNumber:houseNumber
-						   apartment:apartment
-							 topLine:string];
-		self.delegate.title = string;
-		[string release];
+		self.delegate.title = [MTCall topLineOfAddressWithHouseNumber:self.delegate.house.number 
+													  apartmentNumber:self.delegate.house.apartment 
+															   street:nil];
+	}
+
+	// save the data
+	NSError *error = nil;
+	if(![self.delegate.house.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
 	}
 	
 	return YES;
@@ -196,107 +197,34 @@
 {
 	UITextField *streetTextField = [cell textFieldAtIndex:0];
 	UITextField *apartmentTextField = [cell textFieldAtIndex:1];
-	NSMutableString *houseNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
-	NSMutableString *apartment = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
-
+	MTTerritoryHouse *house = self.delegate.house;
 	if(textField == streetTextField)
 	{
-		[houseNumber replaceCharactersInRange:range withString:string];
+		house.number = [textField.text stringByReplacingCharactersInRange:range withString:string];
 	}
 	else if(textField == apartmentTextField)
 	{
-		[apartment replaceCharactersInRange:range withString:string];
+		house.apartment = [textField.text stringByReplacingCharactersInRange:range withString:string];
 	}
 	
 	if(!self.delegate.newHouse)
 	{
-		NSMutableString *string = [[NSMutableString alloc] init];
-		[Settings formatStreetNumber:houseNumber
-						   apartment:apartment
-							 topLine:string];
-		self.delegate.title = string;
-		[string release];
+		self.delegate.title = [MTCall topLineOfAddressWithHouseNumber:self.delegate.house.number 
+													  apartmentNumber:self.delegate.house.apartment 
+															   street:nil];
 	}
+	// save the data
+	NSError *error = nil;
+	if(![self.delegate.house.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
 	return YES;
 }
 
 @end
 
-/******************************************************************
- *
- *   NAHHouseNotesCellController
- *
- ******************************************************************/
-#pragma mark NAHHouseNotesCellController
-
-@interface NAHHouseNotesCellController : NotAtHomeHouseViewCellController<NotesViewControllerDelegate>
-{
-}
-@end
-@implementation NAHHouseNotesCellController
-
-- (void)notesViewControllerDone:(NotesViewController *)notesViewController
-{
-    VERBOSE(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-    [self.delegate.house setObject:[notesViewController notes] forKey:NotAtHomeTerritoryHouseNotes];
-	[[Settings sharedInstance] saveData];
-	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
-	if(selectedRow)
-	{
-		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
-	}
-	else
-	{
-		self.delegate.forceReload = YES;
-	}
-	
-	[self.delegate.navigationController popViewControllerAnimated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return [UITableViewMultilineTextCell heightForWidth:(tableView.bounds.size.width - 90) withText:[self.delegate.house objectForKey:NotAtHomeTerritoryHouseNotes]];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewMultilineTextCell *cell = (UITableViewMultilineTextCell *)[tableView dequeueReusableCellWithIdentifier:@"NotesCell"];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
-	}
-	
-	NSMutableString *notes = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNotes];
-	
-	if([notes length] == 0)
-		[cell setText:NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views")];
-	else
-		[cell setText:notes];
-	
-	return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *notes = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNotes];
-	// make the new call view 
-	NotesViewController *p = [[[NotesViewController alloc] initWithNotes:notes] autorelease];
-	p.delegate = self;
-	p.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
-	[[self.delegate navigationController] pushViewController:p animated:YES];		
-	[self.delegate retainObject:self whileViewControllerIsManaged:p];
-}
-@end
 
 /******************************************************************
  *
@@ -307,9 +235,18 @@
 
 @interface NAHHouseAttemptCellController : NotAtHomeHouseViewCellController <DatePickerViewControllerDelegate>
 {
+	MTTerritoryHouseAttempt *attempt;
 }
+@property (nonatomic, retain) MTTerritoryHouseAttempt *attempt;
 @end
 @implementation NAHHouseAttemptCellController
+@synthesize attempt;
+
+- (void)dealloc
+{
+	self.attempt = nil;
+	[super dealloc];
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -325,7 +262,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 
-	NSDate *date = [[self.delegate.house objectForKey:NotAtHomeTerritoryHouseAttempts] objectAtIndex:indexPath.row];	
+	NSDate *date = attempt.date;	
 	// create dictionary entry for This Return Visit
 	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -347,7 +284,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	DatePickerViewController *controller = [[DatePickerViewController alloc] initWithDate:[[self.delegate.house objectForKey:NotAtHomeTerritoryHouseAttempts] objectAtIndex:indexPath.row]];
+	DatePickerViewController *controller = [[DatePickerViewController alloc] initWithDate:attempt.date];
 	controller.delegate = self;
 	controller.tag = indexPath.row;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
@@ -361,11 +298,14 @@
 	{
 		DEBUG(NSLog(@"deleteReturnVisitAtIndex: %@", indexPath);)
 		
-		[[self.delegate.house objectForKey:NotAtHomeTerritoryHouseAttempts] removeObjectAtIndex:indexPath.row];
+		[self.attempt.managedObjectContext deleteObject:self.attempt];
 		
 		// save the data
-		// save the data
-		[[Settings sharedInstance] saveData];
+		NSError *error = nil;
+		if(![self.delegate.house.managedObjectContext save:&error])
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 		
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
@@ -374,8 +314,15 @@
 
 - (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
 {
-	[[self.delegate.house objectForKey:NotAtHomeTerritoryHouseAttempts] replaceObjectAtIndex:datePickerViewController.tag withObject:datePickerViewController.date];
-	[[Settings sharedInstance] saveData];
+	self.attempt.date = datePickerViewController.date;
+
+	// save the data
+	NSError *error = nil;
+	if(![self.delegate.house.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
 	[[self retain] autorelease];
 	
 	[self.delegate updateAndReload];
@@ -444,8 +391,16 @@
 
 - (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
 {
-    [[self.delegate.house objectForKey:NotAtHomeTerritoryHouseAttempts] addObject:[datePickerViewController date]];
-	[[Settings sharedInstance] saveData];
+	MTTerritoryHouseAttempt *attempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.delegate.house.managedObjectContext];
+	attempt.date = datePickerViewController.date;
+	attempt.house = self.delegate.house;
+	// save the data
+	NSError *error = nil;
+	if(![self.delegate.house.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
 	[[self retain] autorelease];
 	
 	[self.delegate updateAndReload];
@@ -464,12 +419,16 @@
 @interface NAHHouseConvertToCallCellController : NotAtHomeHouseViewCellController <CallViewControllerDelegate>
 {
 @private	
+	MTCall *temporaryCall;
 }
+@property (nonatomic, retain) MTCall *temporaryCall;
 @end
 @implementation NAHHouseConvertToCallCellController
+@synthesize temporaryCall;
 
 - (void)dealloc
 {
+	self.temporaryCall = nil;
 	[super dealloc];
 }
 
@@ -500,31 +459,59 @@
 - (void)notAtHomeDetailCanceled
 {
 	[self.delegate dismissModalViewControllerAnimated:YES];
+	[self.temporaryCall.managedObjectContext deleteObject:self.temporaryCall];
 }
+
+- (void)delegateLater
+{
+	// remove this house, pop view controller to the street
+	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notAtHomeHouseViewControllerDeleteHouse:)])
+	{
+		[self.delegate.delegate notAtHomeHouseViewControllerDeleteHouse:self.delegate];
+	}
+	[self autorelease];
+}
+
+- (void)callViewController:(CallViewController *)callViewController newCallDone:(MTCall *)call
+{
+	// save the new call
+	NSError *error = nil;
+	if(![self.delegate.house.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
+	if(![call.locationLookupType isEqualToString:CallLocationTypeManual])
+	{
+		[[Geocache sharedInstance] lookupCall:call];
+	}
+	
+	// get outfrom underneeth the call
+	[self retain];
+	[self performSelector:@selector(delegateLater) withObject:nil afterDelay:0];
+
+	[self.delegate dismissModalViewControllerAnimated:YES];	
+}
+
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	CallViewController *controller = [[[CallViewController alloc] init] autorelease];
-	controller.delegate = self;
-
 	// setup the address from the not at home information
-	NSString *state = [self.delegate.territory objectForKey:NotAtHomeTerritoryState];
-	NSString *city = [self.delegate.territory objectForKey:NotAtHomeTerritoryCity];
-	NSString *street = [self.delegate.street objectForKey:NotAtHomeTerritoryStreetName];
-	NSString *streetNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber];
-	NSString *apartmentNumber = [self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment];
-	if(state)
-		[controller.call setObject:[self.delegate.territory objectForKey:NotAtHomeTerritoryState] forKey:CallState];
-	if(city)
-		[controller.call setObject:[self.delegate.territory objectForKey:NotAtHomeTerritoryCity] forKey:CallCity];
-	if(street)
-		[controller.call setObject:[self.delegate.street objectForKey:NotAtHomeTerritoryStreetName] forKey:CallStreet];
-	if(streetNumber)
-		[controller.call setObject:[self.delegate.house objectForKey:NotAtHomeTerritoryHouseNumber] forKey:CallStreetNumber];
-	if(apartmentNumber)
-		[controller.call setObject:[self.delegate.house objectForKey:NotAtHomeTerritoryHouseApartment] forKey:CallApartmentNumber];
+	MTTerritoryHouse *house = self.delegate.house;
+	MTTerritoryStreet *street = house.street;
+	MTTerritory *territory = street.territory;
+	self.temporaryCall = [MTCall insertInManagedObjectContext:house.managedObjectContext];
+	self.temporaryCall.state = territory.state;
+	self.temporaryCall.city = territory.city;
+	self.temporaryCall.street = street.name;
+	self.temporaryCall.houseNumber = house.number;
+	self.temporaryCall.apartmentNumber = house.apartment;
+	self.temporaryCall.user = territory.user;
 	
+	CallViewController *controller = [[[CallViewController alloc] initWithCall:self.temporaryCall newCall:YES] autorelease];
+	controller.delegate = self;
+		
 	// push the element view controller onto the navigation stack to display it
 	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 	
@@ -541,46 +528,6 @@
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
 }
 
-- (void)callViewController:(CallViewController *)callViewController deleteCall:(NSMutableDictionary *)call keepInformation:(BOOL)keepInformation
-{
-	assert(false);
-}
-
-- (void)delegateLater
-{
-	// remove this house, pop view controller to the street
-	if(self.delegate.delegate && [self.delegate.delegate respondsToSelector:@selector(notAtHomeHouseViewControllerDeleteHouse:)])
-	{
-		[self.delegate.delegate notAtHomeHouseViewControllerDeleteHouse:self.delegate];
-	}
-	[self autorelease];
-}
-
-- (void)callViewController:(CallViewController *)callViewController saveCall:(NSMutableDictionary *)call
-{
-#warning this is not getting called, this needs to be handleded elsewhere
-	// save the new call
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	NSMutableArray *calls = [userSettings objectForKey:SettingsCalls];
-	if(calls == nil)
-	{
-		calls = [NSMutableArray array];
-		[userSettings setObject:calls forKey:SettingsCalls];
-	}
-	[calls addObject:call];
-		
-	[[Settings sharedInstance] saveData];
-
-	if(![[call objectForKey:CallLocationType] isEqualToString:CallLocationTypeManual])
-	{
-		[[Geocache sharedInstance] lookupCall:call];
-	}
-	
-	// get outfrom underneeth the call
-	[self retain];
-	[self performSelector:@selector(delegateLater) withObject:nil afterDelay:0];
-}
-
 @end
 
 @implementation NotAtHomeHouseViewController
@@ -590,12 +537,11 @@
 @synthesize newHouse;
 @synthesize obtainFocus;
 @synthesize allTextFields;
-@synthesize territory;
-@synthesize street;
 	 
 - (void)navigationControlDone:(id)sender 
 {
 	VERBOSE(NSLog(@"navigationControlDone:");)
+	[self resignAllFirstResponders];
 	if(delegate)
 	{
 		[delegate notAtHomeHouseViewControllerDone:self];
@@ -606,43 +552,26 @@
 {
 }
 
-- (id)initWithHouse:(NSMutableDictionary *)theHouse street:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory
+- (id)initWithHouse:(MTTerritoryHouse *)theHouse newHouse:(BOOL)isNewHouse
 {
 	if( (self = [super initWithStyle:UITableViewStyleGrouped]))
 	{
 		self.navigationItem.hidesBackButton = YES;
 		self.allTextFields = [NSMutableArray array];
-		self.street = theStreet;
-		self.territory = theTerritory;
-		
-		if(theHouse == nil)
-		{
-			newHouse = YES;
-			theHouse = [[[NSMutableDictionary alloc] init] autorelease];
-			[theHouse setObject:[NSMutableArray arrayWithObject:[NSDate date]] forKey:NotAtHomeTerritoryHouseAttempts];
-		}
-		self.obtainFocus = newHouse;
+		newHouse = isNewHouse;
+		self.obtainFocus = isNewHouse;
 		self.house = theHouse;
-		if(!newHouse)
+
+		if(!isNewHouse)
 		{
-			NSMutableString *houseNumber = [self.house objectForKey:NotAtHomeTerritoryHouseNumber];
-			NSMutableString *apartment = [self.house objectForKey:NotAtHomeTerritoryHouseApartment];
-			NSMutableString *string = [[NSMutableString alloc] init];
-			[Settings formatStreetNumber:houseNumber
-							   apartment:apartment
-								 topLine:string];
-			self.title = string;
-			[string release];
+			self.title = [MTCall topLineOfAddressWithHouseNumber:self.house.number 
+												 apartmentNumber:self.house.apartment 
+														  street:nil];
 		}
 		self.hidesBottomBarWhenPushed = YES;
 		self.editing = YES;
 	}
 	return self;
-}
-
-- (id)initWithStreet:(NSDictionary *)theStreet territory:(NSDictionary *)theTerritory
-{
-	return [self initWithHouse:nil street:theStreet territory:theTerritory];
 }
 
 - (void)didReceiveMemoryWarning
@@ -669,18 +598,21 @@
 - (void)dealloc
 {
 	self.house = nil;
-	self.territory = nil;
-	self.street = nil;
 	
 	[super dealloc];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)resignAllFirstResponders
 {
 	for(UITextField *textField in self.allTextFields)
 	{
 		[textField resignFirstResponder];
 	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
 }
 
 - (void)constructSectionControllers
@@ -702,10 +634,11 @@
 		
 		{
 			// House Notes
-			NAHHouseNotesCellController *cellController = [[NAHHouseNotesCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSTextViewCellController *cellController = [[[PSTextViewCellController alloc] init] autorelease];
+			cellController.model = self.house;
+			cellController.modelPath = @"notes";
+			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
+			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
 		}
 	}
 
@@ -731,11 +664,16 @@
 		sectionController.title = NSLocalizedString(@"Attempts", @"Title of the section in the Not-At-Homes house view that allows you to add/edit attempts for the house");
 		[sectionController release];
 
-		for(NSDictionary *attempt in [self.house objectForKey:NotAtHomeTerritoryHouseAttempts])
+		NSArray *attempts = [self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
+																	 propertiesToFetch:nil 
+																   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil]
+																		 withPredicate:@"house == %@", self.house];
+		for(MTTerritoryHouseAttempt *attempt in attempts)
 		{
 			// House
 			NAHHouseAttemptCellController *cellController = [[NAHHouseAttemptCellController alloc] init];
 			cellController.delegate = self;
+			cellController.attempt = attempt;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}

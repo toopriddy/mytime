@@ -17,6 +17,7 @@
 #import "NotAtHomeTerritoryViewController.h"
 #import "MTTerritory.h"
 #import "MTUser.h"
+#import "MTSettings.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 #import "QuartzCore/CAGradientLayer.h"
@@ -38,6 +39,10 @@
 {
 	self.temporaryTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
 	self.temporaryTerritory.user = [MTUser currentUser];
+	MTSettings *settings = [MTSettings settings];
+	self.temporaryTerritory.state = settings.lastState;
+	self.temporaryTerritory.city = settings.lastCity;
+	
 	NotAtHomeTerritoryViewController *controller = [[[NotAtHomeTerritoryViewController alloc] initWithTerritory:self.temporaryTerritory newTerritory:YES] autorelease];
 	controller.tag = -1;
 	controller.delegate = self;
@@ -49,7 +54,7 @@
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	
-	controller.title = NSLocalizedString(@"Add New Territory", @"Title for the a new territory in the Not At Home view");
+	controller.title = NSLocalizedString(@"Add New Territory", @"Title for the a new territory in the Territories view");
 	[self presentModalViewController:navigationController animated:YES];
 	[temporaryBarButtonItem setAction:@selector(notAtHomeDetailCanceled)];
 	[temporaryBarButtonItem setTarget:self];
@@ -132,7 +137,7 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  This is the title of the Not At Home view");
+		self.title = NSLocalizedString(@"Territories", @"View title for the previously named 'Not At Homes' but it is representing the user's territory now");
 		self.tabBarItem.image = [UIImage imageNamed:@"not-at-home.png"];
 		UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																				 target:self

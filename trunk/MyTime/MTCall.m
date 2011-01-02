@@ -200,4 +200,39 @@
     return stringToReturn;
 }
 
+#define DAY_INTERVAL (60 * 60 * 24)
+#define WEEK_INTERVAL (DAY_INTERVAL * 7)
+#define MONTH_INTERVAL (WEEK_INTERVAL * 4)
+#define YEAR_INTERVAL (DAY_INTERVAL * 365)
+
+- (NSString *)dateSortedSectionIndex
+{
+    [self willAccessValueForKey:@"dateSortedSectionIndex"];
+	NSString *stringToReturn = @"";
+	NSTimeInterval interval = [self.mostRecentReturnVisitDate timeIntervalSinceNow];
+	if(interval < DAY_INTERVAL)
+	{
+		stringToReturn = NSLocalizedString(@"Day Old", @"section title for calls older than this time interval");
+	}
+	else if(interval < WEEK_INTERVAL)
+	{
+		stringToReturn = NSLocalizedString(@"Days Old", @"section title for calls older than this time interval");
+	}
+	else if(interval < MONTH_INTERVAL)
+	{
+		stringToReturn = NSLocalizedString(@"Weeks Old", @"section title for calls older than this time interval");
+	}
+	else if(interval < YEAR_INTERVAL)
+	{
+		stringToReturn = NSLocalizedString(@"Months Old", @"section title for calls older than this time interval");
+	}
+	else
+	{
+		stringToReturn = NSLocalizedString(@"Years Old", @"section title for calls older than this time interval");
+	}
+	
+    [self didAccessValueForKey:@"dateSortedSectionIndex"];
+    return stringToReturn;
+}
+
 @end

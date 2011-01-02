@@ -588,7 +588,12 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 				[string appendFormat:@"<br>\n"];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
-			for(MTTerritoryHouseAttempt *attempt in house.attempts)
+
+			NSArray *attempts = [house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
+																	  propertiesToFetch:nil 
+																	withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil]
+																		  withPredicate:@"house == %@", house];
+			for(MTTerritoryHouseAttempt *attempt in attempts)
 			{
 				// create dictionary entry for This Return Visit
 				NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -808,8 +813,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 			[string appendString:@"<br>\n"];
 		}
 		
-		// not at home
-		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedStringWithDefaultValue(@"Not At Home Territory", @"", [NSBundle mainBundle], @"Not At Home", @"This would normally be \"Not At Home\" representing the list of houses you did not meet someone at, but there is confusion between not at home territories and not at home return visit types.  I added the Territory word to make them seperate, but you do not have to include the word \"Territory\" in your translation.  label for sending a printable email backup.  this label is in the body of the email")];
+		// Territories
+		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Territories", @"View title for the previously named 'Not At Homes' but it is representing the user's territory now")];
 		NSArray *territories = [managedObjectContext fetchObjectsForEntityName:[MTTerritory entityName]
 															 propertiesToFetch:nil 
 														   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]

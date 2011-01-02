@@ -129,8 +129,8 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 		case CALLS_SORTED_BY_NAME:
 		case CALLS_SORTED_BY_STUDY:
 			return @"uppercaseFirstLetterOfName";
-//		case CALLS_SORTED_BY_DATE:
-//			return @"mostRecentReturnVisitDate";
+		case CALLS_SORTED_BY_DATE:
+			return @"dateSortedSectionIndex";
 
 		case CALLS_SORTED_BY_METADATA:
 			break;

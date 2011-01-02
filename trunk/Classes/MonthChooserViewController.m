@@ -272,7 +272,7 @@
 					{
 						cell = [[[UITableViewMultilineTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotesCell"] autorelease];
 					}
-					NSMutableString *notes = [[MTUser currentUser] secretaryEmailNotes];
+					NSString *notes = [[MTUser currentUser] secretaryEmailNotes];
 					cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 					if([notes length] == 0)

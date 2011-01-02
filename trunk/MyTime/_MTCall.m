@@ -57,7 +57,7 @@
 
 
 
-@dynamic mostRecentReturnVisitDate;
+@dynamic longitude;
 
 
 
@@ -71,7 +71,14 @@
 
 
 
-@dynamic longitude;
+@dynamic dateSortedSectionIndex;
+
+
+
+
+
+
+@dynamic mostRecentReturnVisitDate;
 
 
 

@@ -102,6 +102,11 @@
 	self.editingCall = nil;
 }
 
+- (void)callViewController:(CallViewController *)callViewController newCallDone:(MTCall *)call
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)navigationControlAdd:(id)sender
 {
 	self.editingCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];

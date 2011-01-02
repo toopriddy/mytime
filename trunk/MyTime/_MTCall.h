@@ -24,6 +24,7 @@
 
 
 
+
 @interface MTCallID : NSManagedObjectID {}
 @end
 
@@ -59,9 +60,9 @@
 
 
 
-@property (nonatomic, retain) NSDate *mostRecentReturnVisitDate;
+@property (nonatomic, retain) NSDecimalNumber *longitude;
 
-//- (BOOL)validateMostRecentReturnVisitDate:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateLongitude:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -71,9 +72,15 @@
 
 
 
-@property (nonatomic, retain) NSDecimalNumber *longitude;
+@property (nonatomic, retain) NSString *dateSortedSectionIndex;
 
-//- (BOOL)validateLongitude:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateDateSortedSectionIndex:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *mostRecentReturnVisitDate;
+
+//- (BOOL)validateMostRecentReturnVisitDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -187,16 +194,20 @@
 - (void)setPrimitiveStreet:(NSString*)value;
 
 
-- (NSDate*)primitiveMostRecentReturnVisitDate;
-- (void)setPrimitiveMostRecentReturnVisitDate:(NSDate*)value;
+- (NSDecimalNumber*)primitiveLongitude;
+- (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
 
 
 - (NSString*)primitiveState;
 - (void)setPrimitiveState:(NSString*)value;
 
 
-- (NSDecimalNumber*)primitiveLongitude;
-- (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
+- (NSString*)primitiveDateSortedSectionIndex;
+- (void)setPrimitiveDateSortedSectionIndex:(NSString*)value;
+
+
+- (NSDate*)primitiveMostRecentReturnVisitDate;
+- (void)setPrimitiveMostRecentReturnVisitDate:(NSDate*)value;
 
 
 - (NSNumber*)primitiveLocationAquisitionAttempted;
