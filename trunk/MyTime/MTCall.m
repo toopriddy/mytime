@@ -5,6 +5,8 @@
 #import "MTReturnVisit.h"
 #import "Settings.h"
 
+NSArray *dateSortedSectionIndexTitlesSingleton = nil;
+
 @implementation MTCall
 
 - (void)addMyObservers
@@ -47,6 +49,7 @@
 	MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 	returnVisit.call = self;
 	returnVisit.type = CallReturnVisitTypeInitialVisit;
+	self.mostRecentReturnVisitDate = returnVisit.date;
 }
 
 - (void)initializeNewCallWithoutReturnVisit
@@ -205,34 +208,60 @@
 #define MONTH_INTERVAL (WEEK_INTERVAL * 4)
 #define YEAR_INTERVAL (DAY_INTERVAL * 365)
 
-- (NSString *)dateSortedSectionIndex
++ (NSArray *)dateSortedSectionIndexTitles
+{
+	if(dateSortedSectionIndexTitlesSingleton)
+	{
+		return dateSortedSectionIndexTitlesSingleton;
+	}
+	dateSortedSectionIndexTitlesSingleton = [[NSArray arrayWithObjects:
+											 NSLocalizedString(@"Very Old", @"section title for calls older than this time interval"), 
+											 NSLocalizedString(@"Years Old", @"section title for calls older than this time interval"),
+											 NSLocalizedString(@"Months Old", @"section title for calls older than this time interval"),
+											 NSLocalizedString(@"Weeks Old", @"section title for calls older than this time interval"),
+											 NSLocalizedString(@"Days Old", @"section title for calls older than this time interval"),
+											 NSLocalizedString(@"Day Old", @"section title for calls older than this time interval"),
+											 nil] retain];
+	return dateSortedSectionIndexTitlesSingleton;
+}
+
++ (NSString *)stringForDateSortedIndex:(int)index
+{
+	return [[[self class] dateSortedSectionIndexTitles] objectAtIndex:index];
+}
+
+- (NSNumber *)dateSortedSectionIndex
 {
     [self willAccessValueForKey:@"dateSortedSectionIndex"];
-	NSString *stringToReturn = @"";
 	NSTimeInterval interval = -[self.mostRecentReturnVisitDate timeIntervalSinceNow];
+	int index;
 	if(interval < DAY_INTERVAL)
 	{
-		stringToReturn = NSLocalizedString(@"Day Old", @"section title for calls older than this time interval");
+		index = 5;
 	}
 	else if(interval < WEEK_INTERVAL)
 	{
-		stringToReturn = NSLocalizedString(@"Days Old", @"section title for calls older than this time interval");
+		index = 4;
 	}
 	else if(interval < MONTH_INTERVAL)
 	{
-		stringToReturn = NSLocalizedString(@"Weeks Old", @"section title for calls older than this time interval");
+		index = 3;
 	}
 	else if(interval < YEAR_INTERVAL)
 	{
-		stringToReturn = NSLocalizedString(@"Months Old", @"section title for calls older than this time interval");
+		index = 2;
+	}
+	else if(interval < 2 * YEAR_INTERVAL)
+	{
+		index = 1;
 	}
 	else
 	{
-		stringToReturn = NSLocalizedString(@"Years Old", @"section title for calls older than this time interval");
+		index = 0;
 	}
 	
     [self didAccessValueForKey:@"dateSortedSectionIndex"];
-    return stringToReturn;
+    return [NSNumber numberWithInt:index];
 }
 
 @end

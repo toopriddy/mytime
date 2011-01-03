@@ -215,6 +215,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
 	NotAtHomeStreetViewController *controller = [[NotAtHomeStreetViewController alloc] initWithStreet:street newStreet:NO];
 	controller.delegate = self;
 	[self.delegate.navigationController pushViewController:controller animated:YES];
@@ -313,6 +314,8 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
+
 	self.temporaryStreet = [MTTerritoryStreet insertInManagedObjectContext:self.delegate.territory.managedObjectContext];
 	self.temporaryStreet.territory = self.delegate.territory;
 	NotAtHomeStreetViewController *controller = [[[NotAtHomeStreetViewController alloc] initWithStreet:self.temporaryStreet newStreet:YES] autorelease];
@@ -576,12 +579,17 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 	return(YES);
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)resignAllFirstResponders
 {
 	for(UITextField *textField in self.allTextFields)
 	{
 		[textField resignFirstResponder];
 	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
 }
 
 - (void)constructSectionControllers

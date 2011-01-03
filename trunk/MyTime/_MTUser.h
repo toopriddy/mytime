@@ -20,6 +20,7 @@
 
 
 
+
 @interface MTUserID : NSManagedObjectID {}
 @end
 
@@ -28,6 +29,12 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTUserID*)objectID;
+
+
+
+@property (nonatomic, retain) NSDate *pioneerStartDate;
+
+//- (BOOL)validatePioneerStartDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -159,6 +166,10 @@
 @end
 
 @interface _MTUser (CoreDataGeneratedPrimitiveAccessors)
+
+- (NSDate*)primitivePioneerStartDate;
+- (void)setPrimitivePioneerStartDate:(NSDate*)value;
+
 
 - (NSNumber*)primitiveMonthDisplayCount;
 - (void)setPrimitiveMonthDisplayCount:(NSNumber*)value;

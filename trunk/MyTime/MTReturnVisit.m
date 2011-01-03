@@ -13,8 +13,8 @@
 - (void)awakeFromInsert 
 {
 	[super awakeFromInsert];
-	self.date = [NSDate date];
 	[self addMyObservers];
+	self.date = [NSDate date];
 }
 
 - (void)awakeFromFetch
@@ -37,6 +37,17 @@
     }
 }
 
+- (void)setCall:(MTCall *)newCall
+{
+	[self willChangeValueForKey:@"call"];
+	[self setPrimitiveCall:newCall];
+	[self didChangeValueForKey:@"call"];
+	
+	if(newCall && self.date == [self.date laterDate:newCall.mostRecentReturnVisitDate])
+	{
+		newCall.mostRecentReturnVisitDate = self.date;
+	}
+}
 
 - (void)didTurnIntoFault
 {

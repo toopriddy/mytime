@@ -97,7 +97,7 @@ NSArray *sortByCity(NSArray *previousSorters)
 
 NSArray *sortByDate(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:NO]];
+	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:YES], nil]];
 }
 
 NSArray *sortByDeletedFlag(NSArray *previousSorters)
@@ -105,7 +105,19 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"deleted" ascending:NO]];
 }
 
+- (NSArray *)sectionIndexTitles
+{
+	return [MTCall dateSortedSectionIndexTitles];
+}
 
+- (NSString *)sectionNameForIndex:(int)index
+{
+	if(_sortedBy == CALLS_SORTED_BY_DATE)
+	{
+		return [MTCall stringForDateSortedIndex:index];
+	}
+	return nil;
+}
 
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
 {

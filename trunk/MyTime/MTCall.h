@@ -14,6 +14,9 @@
 + (NSString *)topLineOfAddressWithHouseNumber:(NSString *)houseNumber apartmentNumber:(NSString *)apartmentNumber street:(NSString *)street;
 + (NSString *)bottomLineOfAddressWithCity:(NSString *)city state:(NSString *)state;
 
++ (NSArray *)dateSortedSectionIndexTitles;
++ (NSString *)stringForDateSortedIndex:(int)index;
+
 - (void)initializeNewCall;
 - (void)initializeNewCallWithoutReturnVisit;
 

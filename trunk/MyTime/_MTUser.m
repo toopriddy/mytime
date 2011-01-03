@@ -29,6 +29,13 @@
 
 
 
+@dynamic pioneerStartDate;
+
+
+
+
+
+
 @dynamic monthDisplayCount;
 
 

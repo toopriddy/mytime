@@ -32,7 +32,7 @@
 @property (nonatomic, retain) UIView *containerView;
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, assign) id<DatePickerViewControllerDelegate> delegate;
-
+@property (nonatomic, assign) UIDatePickerMode datePickerMode;
 
 - (id) init;
 // initialize this view given the curent configuration

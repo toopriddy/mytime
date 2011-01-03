@@ -402,12 +402,18 @@
 {
 	// Display the types' names as section headings.
 	//    return [[[fetchedResultsController sections] objectAtIndex:section] valueForKey:@"name"];
-	
+
 	NSFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 	NSArray *sections = fetchController.sections;
-    if(sections.count > 0) 
+	if(sections.count > 0) 
 	{
 		id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+		NSString *name;
+		if(( name = [self.dataSource sectionNameForIndex:[[sectionInfo name] intValue]]))
+		{
+			return name;
+		}
+		
 		return [sectionInfo name];
 	}
 	return nil;
@@ -418,7 +424,16 @@
 	if(tableView == self.tableView)
 	{
 		NSMutableArray *array = [NSMutableArray arrayWithObject:@"{search}"];
-		[array addObjectsFromArray:[self.fetchedResultsController sectionIndexTitles]];
+		NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
+		if(alternateIndexTitles)
+		{
+			[array addObjectsFromArray:alternateIndexTitles];
+		}
+		else
+		{
+			[array addObjectsFromArray:[self.fetchedResultsController sectionIndexTitles]];
+		}
+
 		return array;
 	}
 	else
@@ -437,6 +452,11 @@
 			return -1;
 		}
 		index--;
+	}
+	NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
+	if(alternateIndexTitles)
+	{
+		return index;
 	}
 	return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];
 }

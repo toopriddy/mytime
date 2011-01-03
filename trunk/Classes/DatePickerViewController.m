@@ -23,6 +23,7 @@
 @synthesize delegate;
 @synthesize tag;
 @synthesize tableView;
+@synthesize datePickerMode;
 
 - (id) init
 {
@@ -37,7 +38,7 @@
 		containerView = nil;
 		datePicker = nil;
 		delegate = nil;
-		
+		self.datePickerMode = UIDatePickerModeDateAndTime;
 		// set the title, and tab bar images from the dataSource
 		// object.
         
@@ -47,7 +48,8 @@
 
 		self.datePicker = [[[UIDatePicker alloc] initWithFrame:CGRectZero] autorelease];
 		datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-		datePicker.date = date;
+		if(date)
+			datePicker.date = date;
 	}
 	return self;
 }
@@ -96,20 +98,24 @@
 
 	pickerRect.origin.y += pickerRect.size.height;
 	pickerRect.size.height = [containerView bounds].size.height - pickerRect.size.height;
-#if 1
-	self.tableView = [[[UITableView alloc] initWithFrame:pickerRect style:UITableViewStyleGrouped] autorelease];
-	self.tableView.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
-	self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	self.tableView.delegate = self;
-	self.tableView.dataSource = self;
-	self.tableView.sectionHeaderHeight = pickerRect.size.height/2 - self.tableView.rowHeight - 20;
-	[containerView addSubview:self.tableView];
-#else	
-	UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
-	v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
-	v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	[containerView addSubview: v];
-#endif
+
+	if(self.datePickerMode == UIDatePickerModeDateAndTime)
+	{
+		self.tableView = [[[UITableView alloc] initWithFrame:pickerRect style:UITableViewStyleGrouped] autorelease];
+		self.tableView.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
+		self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+		self.tableView.delegate = self;
+		self.tableView.dataSource = self;
+		self.tableView.sectionHeaderHeight = pickerRect.size.height/2 - self.tableView.rowHeight - 20;
+		[containerView addSubview:self.tableView];
+	}
+	else
+	{
+		UIImageView *v = [[[UIImageView alloc] initWithFrame:pickerRect] autorelease];
+		v.backgroundColor = [UIColor colorWithRed:40.0/256.0 green:42.0/256.0 blue:56.0/256.0 alpha:1.0];
+		v.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+		[containerView addSubview: v];
+	}
 	self.view = containerView;
 	
 	// add DONE button
@@ -117,6 +123,12 @@
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
+}
+
+- (void)setDatePickerMode:(UIDatePickerMode)mode
+{
+	datePickerMode = mode;
+	self.datePicker.datePickerMode = mode;
 }
 
 // date

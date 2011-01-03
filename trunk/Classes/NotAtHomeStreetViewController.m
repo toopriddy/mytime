@@ -83,7 +83,7 @@
 	{
 		MTTerritoryHouseAttempt *attempt = [[self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
 																					 propertiesToFetch:nil 
-																				   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil]
+																				   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
 																						 withPredicate:@"house == %@", self.house] lastObject];
 		if(attempt)
 		{
@@ -131,6 +131,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
+
 	NotAtHomeHouseViewController *controller = [[NotAtHomeHouseViewController alloc] initWithHouse:self.house newHouse:NO];
 	controller.delegate = self;
 	self.savedIndexPath = indexPath;
@@ -239,10 +241,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
+
 	MTTerritoryHouse *house = [MTTerritoryHouse insertInManagedObjectContext:self.delegate.street.managedObjectContext];
 	house.street = self.delegate.street;
 	self.temporaryHouse = house;
 	self.savedIndexPath = indexPath;
+	// add an attempt now
+	[house addAttemptsObject:[MTTerritoryHouseAttempt insertInManagedObjectContext:house.managedObjectContext]];
 	
 	NotAtHomeHouseViewController *controller = [[[NotAtHomeHouseViewController alloc] initWithHouse:house newHouse:YES] autorelease];
 	controller.delegate = self;
@@ -364,12 +370,17 @@
 	[super dealloc];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)resignAllFirstResponders
 {
 	for(UITextField *textField in self.allTextFields)
 	{
 		[textField resignFirstResponder];
 	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
 }
 
 - (void)constructSectionControllers
@@ -422,6 +433,7 @@
 			cellController.modelPath = @"notes";
 			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
 			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 	}

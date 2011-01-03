@@ -72,7 +72,11 @@
 
 
 
-@property (nonatomic, retain) NSString *dateSortedSectionIndex;
+@property (nonatomic, retain) NSNumber *dateSortedSectionIndex;
+
+@property short dateSortedSectionIndexValue;
+- (short)dateSortedSectionIndexValue;
+- (void)setDateSortedSectionIndexValue:(short)value_;
 
 //- (BOOL)validateDateSortedSectionIndex:(id*)value_ error:(NSError**)error_;
 
@@ -202,8 +206,11 @@
 - (void)setPrimitiveState:(NSString*)value;
 
 
-- (NSString*)primitiveDateSortedSectionIndex;
-- (void)setPrimitiveDateSortedSectionIndex:(NSString*)value;
+- (NSNumber*)primitiveDateSortedSectionIndex;
+- (void)setPrimitiveDateSortedSectionIndex:(NSNumber*)value;
+
+- (short)primitiveDateSortedSectionIndexValue;
+- (void)setPrimitiveDateSortedSectionIndexValue:(short)value_;
 
 
 - (NSDate*)primitiveMostRecentReturnVisitDate;

@@ -72,6 +72,8 @@
                                                object:self.textField];
 	[self.allTextFields addObject:self.textField];
 	cell.textField.text = [self.model valueForKeyPath:self.modelPath];
+	if(self.title)
+		cell.titleLabel.text = self.title;
 	cell.delegate = self;
 	if(self.obtainFocus)
 	{
