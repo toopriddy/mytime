@@ -1942,6 +1942,7 @@ NSString *emailFormattedStringForSettings();
 	
 	// BULK LITERATURE
 	BulkLiteraturePlacementViewContoller *bulkLiteraturePlacementViewContoller = [[[BulkLiteraturePlacementViewContoller alloc] init] autorelease];
+	bulkLiteraturePlacementViewContoller.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:bulkLiteraturePlacementViewContoller] autorelease]];
 	
 	// QUICK BUILD HOURS

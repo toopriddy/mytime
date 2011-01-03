@@ -446,7 +446,6 @@
 		906143AC0E51312E0072BA7B /* HourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourViewController.m; sourceTree = "<group>"; };
 		906143CF0E5144ED0072BA7B /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		906143D00E5144ED0072BA7B /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
-		906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewControllerDelegate.h; sourceTree = "<group>"; };
 		9064D8B40ED11A4900A0FBBB /* Portuguese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Portuguese; path = Portuguese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90674D330F1ABBB800D524C0 /* GeocacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocacheViewController.m; sourceTree = "<group>"; };
 		90674D340F1ABBB800D524C0 /* GeocacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocacheViewController.h; sourceTree = "<group>"; };
@@ -525,7 +524,6 @@
 		90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulkLiteraturePlacementViewContoller.m; sourceTree = "<group>"; };
 		90D031F50E56944C001CEF0D /* LiteraturePlacementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewController.h; sourceTree = "<group>"; };
 		90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiteraturePlacementViewController.m; sourceTree = "<group>"; };
-		90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteraturePlacementViewControllerDelegate.h; sourceTree = "<group>"; };
 		90D0F3C00FD3336100107ADB /* PSLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLocalization.h; sourceTree = "<group>"; };
 		90D0F3C10FD333D600107ADB /* PSLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLocalization.m; sourceTree = "<group>"; };
 		90D0F4860FD34A8500107ADB /* PSRemoveLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRemoveLocalizedString.h; sourceTree = "<group>"; };
@@ -899,7 +897,6 @@
 				906143AC0E51312E0072BA7B /* HourViewController.m */,
 				906143CF0E5144ED0072BA7B /* TimePickerViewController.h */,
 				906143D00E5144ED0072BA7B /* TimePickerViewController.m */,
-				906143E40E5149570072BA7B /* TimePickerViewControllerDelegate.h */,
 			);
 			name = HourView;
 			sourceTree = "<group>";
@@ -992,7 +989,6 @@
 				90D031D70E568BC7001CEF0D /* BulkLiteraturePlacementViewContoller.m */,
 				90D031F50E56944C001CEF0D /* LiteraturePlacementViewController.h */,
 				90D031F60E56944C001CEF0D /* LiteraturePlacementViewController.m */,
-				90D031FD0E56954E001CEF0D /* LiteraturePlacementViewControllerDelegate.h */,
 			);
 			name = BulkPlacementsView;
 			sourceTree = "<group>";

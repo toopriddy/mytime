@@ -35,6 +35,7 @@
 	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	assert(self.dateFormat.length != 0); // you forgot to include a date format
 	[dateFormatter setDateFormat:self.dateFormat];
 	cell.accessoryType = self.accessoryType;
 	if([self.title length])

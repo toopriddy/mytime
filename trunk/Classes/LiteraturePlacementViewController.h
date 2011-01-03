@@ -16,7 +16,13 @@
 #import <UIKit/UIKit.h>
 #import "PublicationViewControllerDelegate.h"
 #import "DatePickerViewControllerDelegate.h"
-#import "LiteraturePlacementViewControllerDelegate.h"
+
+@class LiteraturePlacementViewController;
+
+@protocol LiteraturePlacementViewControllerDelegate<NSObject>
+@required
+- (void)literaturePlacementViewControllerDone:(LiteraturePlacementViewController *)literaturePlacementViewController;
+@end
 
 @interface LiteraturePlacementViewController : UIViewController <UITableViewDelegate, 
                                                                     UITableViewDataSource, 
@@ -24,7 +30,7 @@
 																	DatePickerViewControllerDelegate> 
 {
 	UITableView *tableView;
-	NSMutableDictionary *placements;
+	MTBulkPlacement *bulkPlacement;
 	
 	NSIndexPath *selectedIndexPath;
 	

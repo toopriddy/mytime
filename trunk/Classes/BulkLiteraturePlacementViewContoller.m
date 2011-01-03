@@ -17,6 +17,9 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "LiteraturePlacementViewController.h"
 #import "Settings.h"
+#import "MTUser.h"
+#import "MTPublication.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 /* NSMutableArray bulkLiterature
@@ -45,26 +48,24 @@ extern NSString const * const BulkLiteratureArrayDay;
 
 @implementation BulkLiteraturePlacementViewContoller
 
-@synthesize tableView;
-@synthesize entries;
 @synthesize selectedIndexPath;
 @synthesize emptyView;
-
-static int sortByDate(id v1, id v2, void *context)
-{
-	// ok, we need to compare the dates of the calls since we have
-	// at least one call for each of 
-	NSDate *date1 = [v1 objectForKey:BulkLiteratureDate];
-	NSDate *date2 = [v2 objectForKey:BulkLiteratureDate];
-	return(-[date1 compare:date2]);
-}
+@synthesize fetchedResultsController = fetchedResultsController_;
+@synthesize managedObjectContext = managedObjectContext_;
+@synthesize temporaryBulkPlacement;
 
 - (void)updateEmptyView
 {
-	if(self.entries.count == 0)
+	if(reloadData_)
 	{
-		self.tableView.scrollEnabled = NO;
+		reloadData_ = NO;
+		[self.tableView reloadData];
+	}
+	
+	if(self.fetchedResultsController.fetchedObjects.count == 0)
+	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		self.tableView.scrollEnabled = NO;
 		if(self.emptyView == nil)
 		{
 			self.emptyView = [[[EmptyListViewController alloc] initWithNibName:@"EmptyListView" bundle:nil] autorelease];
@@ -84,41 +85,11 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 }
 
-// sort the time entries and remove the 3 month old entries
-- (void)reloadData
+- (void)userChanged
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-	self.entries = [settings objectForKey:SettingsBulkLiterature];
-	if(self.entries == nil)
-	{
-		self.entries = [NSMutableArray array];
-		[settings setObject:self.entries forKey:SettingsBulkLiterature];
-	}
-	
-	int i;
-	NSArray *sortedArray = [entries sortedArrayUsingFunction:sortByDate context:NULL];
-	[sortedArray retain];
-	[self.entries setArray:sortedArray];
-	[sortedArray release];
-	
-	// remove all entries that are older than 3 months
-	// remove all entries that are older than 3 months
-	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	[comps setMonth:-25];
-	NSDate *now = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
-	int count = [entries count];
-	for(i = 0; i < count; ++i)
-	{
-		DEBUG(NSLog(@"Comparing %d to %d", now, [[entries objectAtIndex:i] objectForKey:BulkLiteratureDate]);)
-		if([now compare:[[self.entries objectAtIndex:i] objectForKey:BulkLiteratureDate]] > 0)
-		{
-			[self.entries removeObjectAtIndex:i];
-			--i;
-			count = [self.entries count];
-		}
-	}
-	
-	[tableView reloadData];
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	reloadData_ = YES;
 }
 
 - (id)init
@@ -129,18 +100,39 @@ static int sortByDate(id v1, id v2, void *context)
 		// object. 
 		self.title = NSLocalizedString(@"Bulk Placements", @"Title for Bulk Placements view");
 		self.tabBarItem.image = [UIImage imageNamed:@"bulkPlacements.png"];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
 	return self;
 }
 
+- (void)removeViewMembers
+{
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	self.emptyView = nil;
+}
 
 - (void)dealloc 
 {
-	tableView.delegate = nil;
-	tableView.dataSource = nil;
-	self.tableView = nil;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[self removeViewMembers];
 	
 	[super dealloc];
+}
+
+- (void)didReceiveMemoryWarning
+{
+	fetchedResultsController_.delegate = nil;
+	[fetchedResultsController_ release];
+	fetchedResultsController_ = nil;
+	[super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+	[super viewDidUnload];
+	[self removeViewMembers];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -150,12 +142,15 @@ static int sortByDate(id v1, id v2, void *context)
 
 - (void)literaturePlacementCanceled
 {
+	[self.temporaryBulkPlacement.managedObjectContext deleteObject:self.temporaryBulkPlacement];
+	self.temporaryBulkPlacement = nil;
 	[self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)navigationControlAdd:(id)sender 
 {
-	LiteraturePlacementViewController *controller = [[[LiteraturePlacementViewController alloc] init] autorelease];
+	self.temporaryBulkPlacement = [MTBulkPlacement insertInManagedObjectContext:self.managedObjectContext];
+	LiteraturePlacementViewController *controller = [[[LiteraturePlacementViewController alloc] initWithBulkPlacement:self.temporaryBulkPlacement] autorelease];
 	self.selectedIndexPath = nil;
 	controller.delegate = self;
 
@@ -172,116 +167,53 @@ static int sortByDate(id v1, id v2, void *context)
 	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 }
 
-- (void)loadView 
-{
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-												  style:UITableViewStylePlain] autorelease];
-	tableView.editing = YES;
-	tableView.allowsSelectionDuringEditing = YES;
-	
-	// set the autoresizing mask so that the table will always fill the view
-	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	tableView.delegate = self;
-	tableView.dataSource = self;
-	
-	// set the tableview as the controller view
-	self.view = tableView;
 
+- (void)loadView
+{
+	[super loadView];
+	self.tableView.allowsSelectionDuringEditing = YES;
+	self.tableView.editing = YES;
+	
 	// add + button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																			 target:self
 																			 action:@selector(navigationControlAdd:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
+	
 }
-
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	if(selectedIndexPath)
-	{
-		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-		selectedIndexPath = nil;
-	}
-	// force the tableview to load
-	[self reloadData];
 	[self updateEmptyView];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[tableView flashScrollIndicators];
-	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
-
-#if 0
-	NSMutableDictionary *settings = [[Settings sharedInstance] userSettings];
-	if([settings objectForKey:SettingsBulkLiteratureAlertSheetShown] == nil)
-	{
-		[settings setObject:@"" forKey:SettingsBulkLiteratureAlertSheetShown];
-		[[Settings sharedInstance] saveData];
-		
-		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-//		alertSheet.title = SLocalizedString(@"You can delete literature placement entries just like you can delete emails, podcasts and other things in 'tables' on the iPhone/iTouch: Swipe the row in the table from left to right and a delete button will pop up.", @"This is a note displayed when they first see the Bulk Literature Placement view");
-		[alertSheet show];
-		
-	}
-#endif	
 }
 
 - (void)literaturePlacementViewControllerDone:(LiteraturePlacementViewController *)literaturePlacementController 
 {
 	if(selectedIndexPath != nil)
 	{
-		[self.entries replaceObjectAtIndex:[selectedIndexPath row] withObject:[literaturePlacementController placements]];
+		// existing entry
 		[[self navigationController] popViewControllerAnimated:YES];
 	}
 	else
 	{
-		[self.entries addObject:[literaturePlacementController placements]];
+		// new entry
 		[[self navigationController] dismissModalViewControllerAnimated:YES];
 	}
-	[self reloadData];
 
 	// save the data
-	[[Settings sharedInstance] saveData];
+	NSError *error = nil;
+	if(![self.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 }
 
-/******************************************************************
- *
- *   TABLE DELEGATE FUNCTIONS
- *
- ******************************************************************/
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)configureCell:(UITableViewTitleAndValueCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    DEBUG(NSLog(@"numberOfRowsInTable:");)
-	int count = [self.entries count];
-    DEBUG(NSLog(@"numberOfRowsInTable: %d", count);)
-	return(count);
-}
-
-- (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d ", row);)
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"HourTableCell"];
-	if (cell == nil) 
-	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HourTableCell"] autorelease];
-	}
-	else
-	{
-		[cell setValue:@""];
-		[cell setTitle:@""];
-	}
-
-	NSMutableDictionary *entry = [self.entries objectAtIndex:row];
-
-
-	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[entry objectForKey:SettingsTimeEntryDate] timeIntervalSinceReferenceDate]] autorelease];	
+	MTBulkPlacement *bulkPlacement = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	
+	
+	NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[bulkPlacement.date timeIntervalSinceReferenceDate]] autorelease];	
 	// create dictionary entry for This Return Visit
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
@@ -294,21 +226,17 @@ static int sortByDate(id v1, id v2, void *context)
 		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 	}
 	[cell setTitle:[dateFormatter stringFromDate:date]];
-
-	NSMutableArray *publications = [entry objectForKey:BulkLiteratureArray];
-	int i;
-	int count = [publications count];
+	
 	int number = 0;
-	for(i = 0; i < count; ++i)
+	for(MTPublication *publication in bulkPlacement.publications)
 	{
-		NSDictionary *publication = [publications objectAtIndex:i];
-		if([PublicationTypeTwoMagazine isEqualToString:[publication objectForKey:BulkLiteratureArrayType]])
+		if([PublicationTypeTwoMagazine isEqualToString:publication.type])
 		{
-			number += [[publication objectForKey:BulkLiteratureArrayCount] intValue] * 2;
+			number += [publication.count intValue] * 2;
 		}
 		else
 		{
-			number += [[publication objectForKey:BulkLiteratureArrayCount] intValue];
+			number += [publication.count intValue];
 		}
 	}
 	if(number == 1)
@@ -321,60 +249,221 @@ static int sortByDate(id v1, id v2, void *context)
 	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+#pragma mark -
+#pragma mark Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
+    return [[self.fetchedResultsController sections] count];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *CellIdentifier = @"BulkPlacementCell";
 	
+	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) 
+	{
+		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+	}
+	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
-	self.selectedIndexPath = indexPath;
-
-	LiteraturePlacementViewController *viewController = [[[LiteraturePlacementViewController alloc] initWithPlacements:[self.entries objectAtIndex:[indexPath row]]] autorelease];
-	viewController.delegate = self;
-
-	[[self navigationController] pushViewController:viewController animated:YES];
-}
-
-- (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-	[self.entries removeObjectAtIndex:[indexPath row]];
-	[[Settings sharedInstance] saveData];
-	[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-	[self updateEmptyView];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return(YES);
+	return YES;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return(UITableViewCellEditingStyleDelete);
+	return UITableViewCellEditingStyleDelete;
 }
 
-
-
-- (BOOL)respondsToSelector:(SEL)selector
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
+    if (editingStyle == UITableViewCellEditingStyleDelete) 
+	{
+        // Delete the managed object for the given index path
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        // Save the context.
+        NSError *error = nil;
+        if (![context save:&error]) 
+		{
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+		
+		// display the "no entries" picture
+		[self updateEmptyView];
+    }   
 }
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+#pragma mark -
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
+	self.selectedIndexPath = indexPath;
+	MTBulkPlacement *bulkPlacement = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	LiteraturePlacementViewController *viewController = [[[LiteraturePlacementViewController alloc] initWithBulkPlacement:bulkPlacement] autorelease];
+	viewController.delegate = self;
+	
+	[[self navigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)forwardInvocation:(NSInvocation*)invocation
+
+#pragma mark -
+#pragma mark Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController 
 {
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
+    if (fetchedResultsController_ != nil) 
+	{
+        return fetchedResultsController_;
+    }
+    
+    /*
+     Set up the fetched results controller.
+	 */
+    // Create the fetch request for the entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    [fetchRequest setEntity:[MTBulkPlacement entityInManagedObjectContext:self.managedObjectContext]];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"user == %@", [MTUser currentUser]]];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext 
+																								  sectionNameKeyPath:nil 
+																										   cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    [aFetchedResultsController release];
+    [fetchRequest release];
+    [sortDescriptor release];
+    [sortDescriptors release];
+    
+    NSError *error = nil;
+    if (![fetchedResultsController_ performFetch:&error]) 
+	{
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return fetchedResultsController_;
+}    
+
+
+#pragma mark -
+#pragma mark Fetched results controller delegate
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView beginUpdates];
 }
+
+
+- (void)controller:(NSFetchedResultsController *)controller 
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex 
+	 forChangeType:(NSFetchedResultsChangeType)type 
+{
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller 
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath 
+	 forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath 
+{
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) 
+	{
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
+{
+    [self.tableView endUpdates];
+	[self updateEmptyView];
+}
+
+
+/*
+ // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
+ 
+ - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+ // In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+ }
+ */
+
 
 @end

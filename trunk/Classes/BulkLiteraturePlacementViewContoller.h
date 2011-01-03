@@ -15,23 +15,29 @@
 
 #import <UIKit/UIKit.h>
 #import "PublicationViewControllerDelegate.h"
-#import "LiteraturePlacementViewControllerDelegate.h"
+#import "LiteraturePlacementViewController.h"
 #import "EmptyListViewController.h"
+#import "MTBulkPlacement.h"
 
-@interface BulkLiteraturePlacementViewContoller : UIViewController <UITableViewDelegate, 
-                                                                    UITableViewDataSource, 
-																	LiteraturePlacementViewControllerDelegate> 
+@interface BulkLiteraturePlacementViewContoller : UITableViewController <NSFetchedResultsControllerDelegate, 
+                                                                         LiteraturePlacementViewControllerDelegate> 
 {
-	UITableView *tableView;
-	NSMutableArray *entries;
-	
 	NSIndexPath *selectedIndexPath;
 	EmptyListViewController *emptyView;
+
+	MTBulkPlacement *temporaryBulkPlacement;
+	
+    NSFetchedResultsController *fetchedResultsController_;
+    NSManagedObjectContext *managedObjectContext_;
+	bool reloadData_;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
-@property (nonatomic,retain) UITableView *tableView;
-@property (nonatomic,retain) NSMutableArray *entries;
-@property (nonatomic,retain) NSIndexPath *selectedIndexPath;
+@property (nonatomic, retain) NSIndexPath *selectedIndexPath;
+@property (nonatomic, retain) MTBulkPlacement *temporaryBulkPlacement;
+
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
 
 /**
  * initialize this view with a watchtower at the current month/year
@@ -41,5 +47,4 @@
  */
 - (id)init;
 - (void)dealloc;
-- (void)reloadData;
 @end
