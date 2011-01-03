@@ -16,8 +16,9 @@
 	NSObject *model_;
 	NSString *path_;
 }
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, retain) NSObject *model;
-@property (nonatomic, retain) NSString *modelPath;
+@property (nonatomic, copy) NSString *modelPath;
 @property (nonatomic, assign) BOOL indentWhileEditing;
 @property (nonatomic, assign) UITableViewCellEditingStyle editingStyle;
 @property (nonatomic, assign) UITableViewCellSelectionStyle selectionStyle;

@@ -30,6 +30,7 @@
 #import "MTUser.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
+#import "PSDateCellController.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -1150,7 +1151,8 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
-	
+	MTSettings *settings = [MTSettings settings];
+	MTUser *user = [MTUser currentUser];
 	// Donate
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
@@ -1253,7 +1255,17 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-
+		
+		// Pioneer Start Date
+		{
+			PSDateCellController *cellController = [[PSDateCellController alloc] init];
+			cellController.model = user;
+			cellController.modelPath = @"pioneerStartDate";
+			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
+			cellController.datePickerMode = UIDatePickerModeDate;
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
 		// Passcode
 		{
 			PasscodeCellController *cellController = [[PasscodeCellController alloc] init];

@@ -75,6 +75,25 @@
 
 
 
+- (short)dateSortedSectionIndexValue {
+	NSNumber *result = [self dateSortedSectionIndex];
+	return [result shortValue];
+}
+
+- (void)setDateSortedSectionIndexValue:(short)value_ {
+	[self setDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveDateSortedSectionIndexValue {
+	NSNumber *result = [self primitiveDateSortedSectionIndex];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveDateSortedSectionIndexValue:(short)value_ {
+	[self setPrimitiveDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
+}
+
+
 
 
 

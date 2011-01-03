@@ -370,6 +370,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
 	DatePickerViewController *controller = [[[DatePickerViewController alloc] init] autorelease];
 	controller.delegate = self;
 	
@@ -497,6 +498,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.delegate resignAllFirstResponders];
 	// setup the address from the not at home information
 	MTTerritoryHouse *house = self.delegate.house;
 	MTTerritoryStreet *street = house.street;
@@ -639,6 +641,7 @@
 			cellController.modelPath = @"notes";
 			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
 			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+			[self addCellController:cellController toSection:sectionController];
 		}
 	}
 

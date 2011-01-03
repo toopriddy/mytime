@@ -31,5 +31,7 @@
 @property (readonly) NSArray *sortDescriptors;
 @property (readonly) NSPredicate *predicate;
 @property (readonly) NSString *sectionNameKeyPath;
+- (NSString *)sectionNameForIndex:(int)index;
+- (NSArray *)sectionIndexTitles;
 
 @end

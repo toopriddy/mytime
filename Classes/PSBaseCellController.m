@@ -57,6 +57,7 @@
 
 
 @implementation PSBaseCellController
+@synthesize title;
 @synthesize model = model_;
 @synthesize modelPath = modelPath_;
 @synthesize indentWhileEditing;
@@ -72,6 +73,7 @@
 
 - (void)dealloc
 {
+	self.title = nil;
 	self.model = nil;
 	self.modelPath = nil;
 //	self.navigationController = nil;

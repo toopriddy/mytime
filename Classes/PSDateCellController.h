@@ -14,5 +14,6 @@
 {
 }
 @property (nonatomic, copy) NSString *dateFormat;
+@property (nonatomic, assign) UIDatePickerMode datePickerMode;
 
 @end
