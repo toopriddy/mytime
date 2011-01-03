@@ -1263,6 +1263,15 @@
 			cellController.modelPath = @"pioneerStartDate";
 			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
 			cellController.datePickerMode = UIDatePickerModeDate;
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[cellController setDateFormat:@"d/M/yyy"];
+			}
+			else
+			{
+				[cellController setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
+			
 			[self addCellController:cellController toSection:sectionController];
 		}
 		

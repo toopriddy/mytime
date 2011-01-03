@@ -14,8 +14,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TimePickerViewControllerDelegate.h"
 #import "NumberedPickerView.h"
+
+@class TimePickerViewController;
+@protocol TimePickerViewControllerDelegate<NSObject>
+@required
+- (void)timePickerViewControllerDone:(TimePickerViewController *)timePickerViewController;
+@end
 
 @interface  TimePickerViewController : UIViewController 
 {

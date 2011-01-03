@@ -383,12 +383,9 @@
 
 
 
+#pragma mark -
+#pragma mark Table view data source
 
-/******************************************************************
- *
- *   TABLE DELEGATE FUNCTIONS
- *
- ******************************************************************/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
     return [[self.fetchedResultsController sections] count];
