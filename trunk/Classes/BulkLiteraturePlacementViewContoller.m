@@ -117,7 +117,10 @@ extern NSString const * const BulkLiteratureArrayDay;
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self removeViewMembers];
-	
+	self.selectedIndexPath = nil;
+	self.temporaryBulkPlacement = nil;
+	self.managedObjectContext = nil;
+
 	[super dealloc];
 }
 
@@ -150,6 +153,7 @@ extern NSString const * const BulkLiteratureArrayDay;
 - (void)navigationControlAdd:(id)sender 
 {
 	self.temporaryBulkPlacement = [MTBulkPlacement insertInManagedObjectContext:self.managedObjectContext];
+	self.temporaryBulkPlacement.user = [MTUser currentUser];
 	LiteraturePlacementViewController *controller = [[[LiteraturePlacementViewController alloc] initWithBulkPlacement:self.temporaryBulkPlacement] autorelease];
 	self.selectedIndexPath = nil;
 	controller.delegate = self;
@@ -184,6 +188,11 @@ extern NSString const * const BulkLiteratureArrayDay;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	if(self.selectedIndexPath)
+	{
+		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+		self.selectedIndexPath = nil;
+	}
 	[self updateEmptyView];
 }
 
@@ -354,8 +363,7 @@ extern NSString const * const BulkLiteratureArrayDay;
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -370,7 +378,6 @@ extern NSString const * const BulkLiteratureArrayDay;
     
     [aFetchedResultsController release];
     [fetchRequest release];
-    [sortDescriptor release];
     [sortDescriptors release];
     
     NSError *error = nil;
@@ -438,7 +445,7 @@ extern NSString const * const BulkLiteratureArrayDay;
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:(UITableViewTitleAndValueCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:

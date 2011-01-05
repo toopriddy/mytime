@@ -17,7 +17,10 @@
 #import "UITableViewTitleAndValueCell.h"
 #import "DatePickerViewController.h"
 #import "PublicationViewController.h"
-#import "Settings.h"
+#import "PublicationTypeViewController.h"
+#import "PSDateCellController.h"
+#import "MTPublication.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 /* NSMutableArray bulkLiterature
@@ -34,37 +37,208 @@
  * these are the standard names for the elements in the Call NSMutableDictionary
  */
 
-@implementation LiteraturePlacementViewController
+/******************************************************************
+ *
+ *   PUBLICATION
+ *
+ ******************************************************************/
+#pragma mark BulkPlacementPublicationCellController
 
-@synthesize tableView;
-@synthesize placements;
+@interface BulkPlacementPublicationCellController : NSObject<TableViewCellController, PublicationViewControllerDelegate, PublicationTypeViewControllerDelegate>
+{
+	LiteraturePlacementViewController *delegate;
+	MTPublication *publication;
+	NSIndexPath *selectedIndexPath;
+}
+@property (nonatomic, retain) MTPublication *publication;
+@property (nonatomic, assign) LiteraturePlacementViewController *delegate;
+@property (nonatomic, copy) NSIndexPath *selectedIndexPath;
+@end
+
+@implementation BulkPlacementPublicationCellController
+@synthesize publication;
 @synthesize delegate;
 @synthesize selectedIndexPath;
 
-
-- (id)init
+- (void)dealloc
 {
-	return([self initWithPlacements:nil]);
+	self.selectedIndexPath = nil;
+	self.publication = nil;
+	[super dealloc];
 }
 
-- (id)initWithPlacements:(NSMutableDictionary *)thePlacements
+// After a row has the minus or plus button invoked (based on the UITableViewCellEditingStyle for the cell), the dataSource must commit the change
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ([super init]) 
+	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
-		self.placements = [NSMutableDictionary dictionaryWithDictionary:thePlacements];
+		// this is the entry that we need to delete
+		[self.publication.managedObjectContext deleteObject:self.publication];
 		
-		NSMutableArray *literature = [placements objectForKey:BulkLiteratureArray];
-		if(literature == nil)
+		// save the data
+		NSError *error = nil;
+		if(![self.publication.managedObjectContext save:&error])
 		{
-			literature = [NSMutableArray array];
-			[placements setObject:literature forKey:BulkLiteratureArray];
+			[NSManagedObjectContext presentErrorDialog:error];
 		}
 		
-		if([placements objectForKey:BulkLiteratureDate] == nil)
-			[placements setObject:[NSDate date] forKey:BulkLiteratureDate];
+		[[self retain] autorelease];
+		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+	}
+	else if(editingStyle == UITableViewCellEditingStyleInsert)
+	{
+		[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+	}
+}
+
+
+- (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController
+{
+	MTPublication *editedPublication = self.publication;
+	bool newPublication = (editedPublication == nil);
+    if(newPublication)
+    {
+        // if we are adding a publication then create the NSDictionary and add it to the end
+        // of the publications array
+		editedPublication = [MTPublication createPublicationForBulkPlacement:self.delegate.bulkPlacement];
+    }
+	PublicationPickerView *picker = [publicationViewController publicationPicker];
+	
+    editedPublication.name = [picker publication];
+    editedPublication.title = [picker publicationTitle];
+    editedPublication.type = [picker publicationType];
+    editedPublication.yearValue = [picker year];
+    editedPublication.monthValue = [picker month];
+    editedPublication.dayValue =  [picker day];
+	
+	// save the data
+	NSError *error = nil;
+	if(![editedPublication.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	
+	if(newPublication)
+	{
+		// PUBLICATION
+		BulkPlacementPublicationCellController *cellController = [[[BulkPlacementPublicationCellController alloc] init] autorelease];
+		cellController.delegate = self.delegate;
+		cellController.publication = editedPublication;
+		[[[self.delegate.displaySectionControllers objectAtIndex:self.selectedIndexPath.section] cellControllers] insertObject:cellController atIndex:self.selectedIndexPath.row];
 		
+		[self.delegate updateWithoutReload];
+	}
+	else
+	{
+		
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+	}		
+	[[self.delegate navigationController] popToViewController:self.delegate animated:YES];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return self.publication != nil ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleInsert;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(self.publication)
+	{
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"PublicationCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc ] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PublicationCell"] autorelease];
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.allowSelectionWhenNotEditing = NO;
+		}
+		
+		NSString *name = self.publication.title;
+		name = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
+		int count = [self.publication.count intValue];
+		NSString *type = self.publication.type;
+		type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""];
+		if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
+		   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
+		{
+			[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
+		}
+		else
+		{
+			if(count == 1)
+			{
+				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+			}
+			else
+			{	
+				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+			}
+		}
+		
+		return cell;
+	}
+	else
+	{
+		
+		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"AddPublicationCell"];
+		if(cell == nil)
+		{
+			cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddPublicationCell"] autorelease];
+			cell.editingAccessoryType = UITableViewCellAccessoryNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			[cell setValue:NSLocalizedString(@"Add placed publications", @"Action Button in the Day's Bulk Literature Placement View called 'Add placed publications'")];
+		}
+		return cell;
+	}
+}
+
+
+// Called after the user changes the selection.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	self.selectedIndexPath = [[indexPath copy] autorelease];
+	if(self.publication)
+	{
+		// make the new call view 
+		PublicationViewController *p = [[[PublicationViewController alloc] initWithPublication:self.publication.name
+																						  year:self.publication.yearValue
+																						 month:self.publication.monthValue
+																						   day:self.publication.dayValue] autorelease];
+		
+		p.delegate = self;
+		[[self.delegate navigationController] pushViewController:p animated:YES];
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	}
+	else
+	{
+		// make the new call view 
+		PublicationTypeViewController *p = [[[PublicationTypeViewController alloc] initShowingCount:YES] autorelease];
+		p.delegate = self;
+		
+		[[self.delegate navigationController] pushViewController:p animated:YES];		
+		[self.delegate retainObject:self whileViewControllerIsManaged:p];
+	}
+}
+
+@end
+
+
+
+
+@implementation LiteraturePlacementViewController
+@synthesize delegate;
+@synthesize selectedIndexPath;
+@synthesize bulkPlacement;
+
+- (id)initWithBulkPlacement:(MTBulkPlacement *)theBulkPlacement;
+{
+	if ([super initWithStyle:UITableViewStyleGrouped]) 
+	{
 		self.hidesBottomBarWhenPushed = YES;
-		 
+		self.bulkPlacement = theBulkPlacement;
+		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Placements", @"View Title and ButtonBar Title for the Day's Bulk Placed Publications");
@@ -75,10 +249,6 @@
 
 - (void)dealloc 
 {
-	tableView.delegate = nil;
-	tableView.dataSource = nil;
-	self.tableView = nil;
-	self.placements = nil;
 	self.selectedIndexPath = nil;
 	
 	[super dealloc];
@@ -100,23 +270,11 @@
 
 - (void)loadView 
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.tableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-												  style:UITableViewStyleGrouped] autorelease];
-	tableView.editing = YES;
-	tableView.allowsSelectionDuringEditing = YES;
+	[super loadView];
 	
-	// set the autoresizing mask so that the table will always fill the view
-	tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+	self.tableView.editing = YES;
+	self.tableView.allowsSelectionDuringEditing = YES;
 	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	tableView.delegate = self;
-	tableView.dataSource = self;
-	
-	// set the tableview as the controller view
-	self.view = tableView;
-
 	// add + button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
@@ -127,321 +285,78 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[tableView flashScrollIndicators];
-	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+	[self.tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	selectedIndexPath = nil;
 	// force the tableview to load
 	[tableView reloadData];
 }
 
-
-/******************************************************************
- *
- *   TABLE DELEGATE FUNCTIONS
- *
- ******************************************************************/
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)constructSectionControllers
 {
-	return(2);
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    DEBUG(NSLog(@"numberOfRowsInSection:%d", section);)
-	if(section == 0) // Date
-	{
-		return(1);
-	}
-	// literature placements plus an add entry
-	return([[placements objectForKey:BulkLiteratureArray] count] + 1);
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    VERBOSE(NSLog(@"LiteraturePlacementView tableView: titleForHeaderInSection:%d", section);)
+	[super constructSectionControllers];
 	
-	if(section == 1)
 	{
-		return(NSLocalizedString(@"Placements:", @"Placements Group title for the Day's Bulk Literature Placements"));
-	}
-
-    return(@"");
-} 
-
-- (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-	int section = [indexPath section];
-    VERBOSE(NSLog(@"tableView: cellForRow:%d ", row);)
-	UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:@"HourTableCell"];
-	if (cell == nil) 
-	{
-		cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HourTableCell"] autorelease];
-	}
-	else
-	{
-		[cell setValue:@""];
-		[cell setTitle:@""];
-	}
-
-
-    VERBOSE(NSLog(@"LiteraturePlacementView preferencesTable: cellForRow:%d inGroup:%d", row, section);)
-	if(section == 0)
-	{
-		NSDate *date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[[placements objectForKey:BulkLiteratureDate] timeIntervalSinceReferenceDate]] autorelease];	
-		// create dictionary entry for This Return Visit
-		[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
-		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
 		{
-			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
-		}
-		else
-		{
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
-		}
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		[cell setTitle:[dateFormatter stringFromDate:date]];
-	}
-	else
-	{
-		if(row == [[placements objectForKey:BulkLiteratureArray] count])
-		{
-			[cell setValue:NSLocalizedString(@"Add placed publications", @"Action Button in the Day's Bulk Literature Placement View called 'Add placed publications'")];
-		}
-		else
-		{
-			NSMutableDictionary *entry = [[placements objectForKey:BulkLiteratureArray] objectAtIndex:row];
-			NSString *name = [entry objectForKey:BulkLiteratureArrayTitle];
-			name = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
-			int count = [[entry objectForKey:BulkLiteratureArrayCount] intValue];
-			NSString *type = [entry objectForKey:BulkLiteratureArrayType];
-			type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""];
-			if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
-			   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
+			// Street Date
+			PSDateCellController *cellController = [[[PSDateCellController alloc] init] autorelease];
+			cellController.model = self.bulkPlacement;
+			cellController.modelPath = @"date";
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 			{
-				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
+				[cellController setDateFormat:@"EEE, d/M/yyy h:mma"];
 			}
 			else
 			{
-				if(count == 1)
-				{
-					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
-				}
-				else
-				{	
-					[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
-				}
+				[cellController setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
-		}
-	}
-	return(cell);
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableRowSelected: didSelectRowAtIndexPath row%d", row);)
-	self.selectedIndexPath = indexPath;
-
-	switch(section)
-	{
-		case 0:
-		{
-			DatePickerViewController *viewController = [[[DatePickerViewController alloc] initWithDate:[placements objectForKey:BulkLiteratureDate]] autorelease];
-			viewController.delegate = self;
-
-			[[self navigationController] pushViewController:viewController animated:YES];
-			return;
-		}
-		case 1:
-		{
-			PublicationViewController *viewController;
-			if(row == [[placements objectForKey:BulkLiteratureArray] count])
-			{
-				// make the new call view 
-				viewController = [[[PublicationViewController alloc] initShowingCount:YES] autorelease];
-			}
-			else
-			{
-				NSMutableDictionary *entry = [[placements objectForKey:BulkLiteratureArray] objectAtIndex:row];
-				viewController = [[[PublicationViewController alloc] initWithPublication: [entry objectForKey:BulkLiteratureArrayName]
-																	   year: [[entry objectForKey:BulkLiteratureArrayYear] intValue]
-																	  month: [[entry objectForKey:BulkLiteratureArrayMonth] intValue]
-																		day: [[entry objectForKey:BulkLiteratureArrayDay] intValue]
-																  showCount: YES
-																	 number: [[entry objectForKey:BulkLiteratureArrayCount] intValue]] autorelease];
-			}
-			viewController.delegate = self;
-			[[self navigationController] pushViewController:viewController animated:YES];
-			return;
-		}
-	}
-}
-
-- (void)tableView:(UITableView *)theTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int row = [indexPath row];
-    int section = [indexPath section];
-    DEBUG(NSLog(@"tableView: commitEditingStyle section=%d row=%d", section, row);)
-	switch(editingStyle)
-	{
-		case UITableViewCellEditingStyleInsert:
-			[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-			[self tableView:tableView didSelectRowAtIndexPath:indexPath];
-			break;
 			
-		case UITableViewCellEditingStyleDelete:
-			DEBUG(NSLog(@"table: deleteRow: %d", [indexPath row]);)
-			if([indexPath row] < [[placements objectForKey:BulkLiteratureArray] count])
-			{
-				[[placements objectForKey:BulkLiteratureArray] removeObjectAtIndex:[indexPath row]];
-
-				[[Settings sharedInstance] saveData];
-				[theTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-			}
-			else
-			{
-				[theTableView reloadData];
-			}
-			break;
+			[self addCellController:cellController toSection:sectionController];
+		}
 	}
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return([indexPath section] == 1);
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int section = [indexPath section];	
-	int row = [indexPath row];
-	if(section == 1)
+	
 	{
-		if(row == [[placements objectForKey:BulkLiteratureArray] count])
-			return(UITableViewCellEditingStyleInsert);
-		else
-			return(UITableViewCellEditingStyleDelete);
-	}
-	return(UITableViewCellEditingStyleNone);
-}
-
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	if([indexPath section] == 1 && 
-	   [indexPath row] != [[placements objectForKey:BulkLiteratureArray] count])
-		return(UITableViewCellAccessoryDisclosureIndicator);
-	else
-		return(UITableViewCellAccessoryNone);
-}
-
-
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
-
-- (NSMutableDictionary *)placements
-{
-	return([[placements retain] autorelease]);
-}
-
-
-
-/******************************************************************
- *
- *   PUBLICATION VIEW CALLBACKS
- *
- ******************************************************************/
-- (void)publicationViewControllerDone:(PublicationViewController *)publicationViewController
-{
-    DEBUG(NSLog(@"LiteraturePlacementView addNewPublicationSaveAction:");)
-    NSMutableDictionary *publication;
-	BOOL newRow = NO;
-    if([selectedIndexPath row] == [[placements objectForKey:BulkLiteratureArray] count])
-    {
-        VERBOSE(NSLog(@"creating a new publication entry and adding it");)
-        // if we are adding a publication then create the NSDictionary and add it to the end
-        // of the publications array
-        publication = [[[NSMutableDictionary alloc] init] autorelease];
-        [[placements objectForKey:BulkLiteratureArray] addObject:publication];
-		newRow = YES;
-    }
-	else
-	{
-        publication = [[[NSMutableDictionary alloc] init] autorelease];
-        [[placements objectForKey:BulkLiteratureArray] replaceObjectAtIndex:[selectedIndexPath row] withObject:publication ];
-	}
-
-	DEBUG(NSLog(@"EditingPlacements %@",placements);)
-	PublicationPickerView *picker = [publicationViewController publicationPicker];
-    [publication setObject:[picker publication] forKey:BulkLiteratureArrayName];
-    [publication setObject:[picker publicationTitle] forKey:BulkLiteratureArrayTitle];
-    [publication setObject:[picker publicationType] forKey:BulkLiteratureArrayType];
-    [publication setObject:[[[NSNumber alloc] initWithInt:[picker year]] autorelease] forKey:BulkLiteratureArrayYear];
-    [publication setObject:[[[NSNumber alloc] initWithInt:[picker month]] autorelease] forKey:BulkLiteratureArrayMonth];
-    [publication setObject:[[[NSNumber alloc] initWithInt:[picker day]] autorelease] forKey:BulkLiteratureArrayDay];
-    [publication setObject:[[[NSNumber alloc] initWithInt:publicationViewController.countPicker.number] autorelease] forKey:BulkLiteratureArrayCount];
-
-    VERBOSE(NSLog(@"publication is = %@", publication);)
-
-	if(newRow)
-	{
-		[tableView beginUpdates];
-			[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-			[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationRight];
-		[tableView endUpdates];
-	}
-	else
-	{
-		[tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-		[tableView reloadData];
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		sectionController.title = NSLocalizedString(@"Placements:", @"Placements Group title for the Day's Bulk Literature Placements");
+		[sectionController release];
+		
+		NSArray *publications = [self.bulkPlacement.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
+															  propertiesToFetch:nil 
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES] ]
+																  withPredicate:@"bulkPlacement == %@", self.bulkPlacement];
+		for(MTPublication *publication in publications)
+		{
+			// Add Territory Street
+			BulkPlacementPublicationCellController *cellController = [[BulkPlacementPublicationCellController alloc] init];
+			cellController.delegate = self;
+			cellController.publication = publication;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		{
+			// Add Territory Street
+			BulkPlacementPublicationCellController *cellController = [[BulkPlacementPublicationCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 	}
 }
 
 
 
 
-/******************************************************************
- *
- *   DATE PICKER VIEW CALLBACKS
- *
- ******************************************************************/
 
-- (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
-{
-    DEBUG(NSLog(@"CallView datePickerViewControllerDone:");)
-    VERBOSE(NSLog(@"date is now = %@", [datePickerViewController date]);)
-
-    [placements setObject:[datePickerViewController date] forKey:BulkLiteratureDate];
-    
-	[tableView reloadData];
-	[[self navigationController] popViewControllerAnimated:YES];
-}
 
 @end

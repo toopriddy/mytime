@@ -14,7 +14,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TimePickerViewControllerDelegate.h"
+#import "TimePickerViewController.h"
 #import "EmptyListViewController.h"
 #import "MTTimeType.h"
 

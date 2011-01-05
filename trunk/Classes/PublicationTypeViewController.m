@@ -29,11 +29,14 @@
 
 - (id) init;
 {
+	return [super initShowingCount:NO];
+}
+
+- (id) initShowingCount:(BOOL)shouldShowCount;
+{
 	if ([super init]) 
 	{
-		theTableView = nil;
-		delegate = nil;
-		
+		showCount = shouldShowCount;
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Select Type", @"Publication Type title");
@@ -145,7 +148,7 @@
 	// make the new call view 
 	if([PublicationPickerView areTherePublicationsForFilter:filter])
 	{
-		PublicationViewController *p = [[[PublicationViewController alloc] initShowingCount:NO filteredToType:filter] autorelease];
+		PublicationViewController *p = [[[PublicationViewController alloc] initShowingCount:showCount filteredToType:filter] autorelease];
 		p.delegate = self;
 
 		[[self navigationController] pushViewController:p animated:YES];
