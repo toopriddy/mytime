@@ -16,6 +16,8 @@
 #import <UIKit/UIKit.h>
 #import "PublicationViewControllerDelegate.h"
 #import "DatePickerViewControllerDelegate.h"
+#import "GenericTableViewController.h"
+#import "MTBulkPlacement.h"
 
 @class LiteraturePlacementViewController;
 
@@ -24,10 +26,7 @@
 - (void)literaturePlacementViewControllerDone:(LiteraturePlacementViewController *)literaturePlacementViewController;
 @end
 
-@interface LiteraturePlacementViewController : UIViewController <UITableViewDelegate, 
-                                                                    UITableViewDataSource, 
-																	PublicationViewControllerDelegate,
-																	DatePickerViewControllerDelegate> 
+@interface LiteraturePlacementViewController : GenericTableViewController
 {
 	UITableView *tableView;
 	MTBulkPlacement *bulkPlacement;
@@ -36,10 +35,9 @@
 	
 	id<LiteraturePlacementViewControllerDelegate> delegate;
 }
-@property (nonatomic,retain) UITableView *tableView;
-@property (nonatomic,retain) NSMutableDictionary *placements;
-@property (nonatomic,retain) NSIndexPath *selectedIndexPath;
-@property (nonatomic,assign) id<LiteraturePlacementViewControllerDelegate> delegate;
+@property (nonatomic, retain) MTBulkPlacement *bulkPlacement;
+@property (nonatomic, retain) NSIndexPath *selectedIndexPath;
+@property (nonatomic, assign) id<LiteraturePlacementViewControllerDelegate> delegate;
 
 /**
  * initialize this view with a watchtower at the current month/year
@@ -47,14 +45,6 @@
  * @param rect - the rect
  * @returns self
  */
-- (id)init;
-- (id)initWithPlacements:(NSMutableDictionary *)placements;
-- (void)dealloc;
+- (id)initWithBulkPlacement:(MTBulkPlacement *)theBulkPlacement;
 
-/**
- * get the placements from this view
- * @return placements from this view
- */
-- (NSMutableDictionary *)placements;
- 
 @end

@@ -30,7 +30,7 @@
 	id<PublicationTypeViewControllerDelegate> delegate;
 @private
 	UITableView *theTableView;
-
+	BOOL showCount;
 }
 
 @property (nonatomic,assign) id<PublicationTypeViewControllerDelegate> delegate;
@@ -43,6 +43,7 @@
  * @returns self
  */
 - (id) init;
+- (id) initShowingCount:(BOOL)showCount;
 
 @end
 
