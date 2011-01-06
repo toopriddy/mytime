@@ -27,12 +27,12 @@
 @synthesize delegate;
 @synthesize theTableView;
 
-- (id) init;
+- (id)init;
 {
-	return [super initShowingCount:NO];
+	return [self initShowingCount:NO];
 }
 
-- (id) initShowingCount:(BOOL)shouldShowCount;
+- (id)initShowingCount:(BOOL)shouldShowCount;
 {
 	if ([super init]) 
 	{

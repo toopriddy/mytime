@@ -17,6 +17,14 @@
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSUrlString.h"
+#import "MTUser.h"
+#import "MTCall.h"
+#import "MTReturnVisit.h"
+#import "MTPublication.h"
+#import "MTBulkPlacement.h"
+#import "MTTimeType.h"
+#import "MTTimeEntry.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 #import "StatisticsNumberCell.h"
 #import "HourPickerViewController.h"
@@ -1129,7 +1137,27 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	
 	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
 	
+	
+	
+	
+	MTUser *currentUser = [MTUser currentUser];
+	NSManagedObjectContext *moc = currentUser.managedObjectContext;
+	
+	NSDateComponents *startOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
+	[startOfDataCollectionComponents setMonth:_thisMonth];
+	[startOfDataCollectionComponents setYear:_thisYear - 1];
+	NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+	NSDate *startOfDataCollection = [gregorian dateFromComponents:startOfDataCollectionComponents];
+	
+	int nextMonth = _thisMonth == 12 ? 1 : _thisMonth + 1;
+	int nextMonthsYear = _thisYear = _thisMonth == 12 ? _thisYear + 1 : _thisYear;
+	NSDateComponents *endOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
+	[endOfDataCollectionComponents setMonth:nextMonth];
+	[endOfDataCollectionComponents setYear:nextMonthsYear];
+	NSDate *endOfDataCollection = [gregorian dateFromComponents:endOfDataCollectionComponents];
+	
 	BOOL newServiceYear = _thisMonth >= 9;
+	
 	
 	//Start with Adjustments
 	NSMutableDictionary *adjustmentTypes = [userSettings objectForKey:SettingsStatisticsAdjustments];
@@ -1226,17 +1254,15 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	}
 	
 	// Hours entries
-	NSArray *timeEntries = [userSettings objectForKey:SettingsTimeEntries];
-	int timeIndex;
-	int timeCount = [timeEntries count];
-	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
 	{
-		NSDictionary *timeEntry = [timeEntries objectAtIndex:timeIndex];
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSArray *timeEntries = [moc fetchObjectsForEntityName:[MTTimeEntry entityName]
+												withPredicate:@"type == %@ && date > %@ && date < %@", [MTTimeType hoursTypeForUser:currentUser], startOfDataCollection, endOfDataCollection];
 		
-		NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
-		NSNumber *minutes = [timeEntry objectForKey:SettingsTimeEntryMinutes];
-		if(date && minutes)
+		for(MTTimeEntry *timeEntry in timeEntries)
 		{
+			NSDate *date = timeEntry.date;	
+			int minutes = timeEntry.minutesValue;
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
@@ -1248,7 +1274,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				offset = _thisMonth - month;
 			}
 			else if(year == _thisYear - 1 &&
-			        month > _thisMonth)
+					month > _thisMonth)
 			{
 				offset = 12 - month + _thisMonth;
 			}
@@ -1256,29 +1282,27 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				continue;
 			
 			// we found a valid month
-			_minutes[offset] += [minutes intValue];
+			_minutes[offset] += minutes;
 			
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				_serviceYearMinutes += [minutes intValue];
+				_serviceYearMinutes += minutes;
 			}
 		}
+		[pool drain];
 	}
 
-
 	// QUICK BUILD
-	
-	timeEntries = [userSettings objectForKey:SettingsRBCTimeEntries];
-	timeCount = [timeEntries count];
-	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
 	{
-		NSDictionary *timeEntry = [timeEntries objectAtIndex:timeIndex];
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSArray *timeEntries = [moc fetchObjectsForEntityName:[MTTimeEntry entityName]
+												withPredicate:@"type == %@ && date > %@ && date < %@", [MTTimeType rbcTypeForUser:currentUser], startOfDataCollection, endOfDataCollection];
 		
-		NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
-		NSNumber *minutes = [timeEntry objectForKey:SettingsTimeEntryMinutes];
-		if(date && minutes)
+		for(MTTimeEntry *timeEntry in timeEntries)
 		{
+			NSDate *date = timeEntry.date;	
+			int minutes = timeEntry.minutesValue;
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
@@ -1298,30 +1322,31 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			if(offset < 0 || offset > 11)
 				continue;
 			
-			_quickBuildMinutes[offset] += [minutes intValue];
+			_quickBuildMinutes[offset] += minutes;
 			
 			// newServiceYear means that the months that are added are above the current month
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				_serviceYearQuickBuildMinutes += [minutes intValue];
+				_serviceYearQuickBuildMinutes += minutes;
 			}
 		}
-	}
+		[pool drain];
+	}	
 	
-	
-	// go through all of the bulk publications
-	NSArray *bulkArray = [userSettings objectForKey:SettingsBulkLiterature];
-	NSEnumerator *bulkArrayEnumerator = [bulkArray objectEnumerator];
-	NSDictionary *entry;
-	
-	while( (entry = [bulkArrayEnumerator nextObject]) ) // ASSIGNMENT, NOT COMPARISON 
 	{
-		NSDate *date = [entry objectForKey:BulkLiteratureDate];
-		int offset = -1;
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSArray *bulkPlacementPublications = [moc fetchObjectsForEntityName:[MTPublication entityName]
+														  propertiesToFetch:[NSArray arrayWithObjects:@"type", @"count", nil]
+														withSortDescriptors:nil
+															  withPredicate:@"bulkPlacement.user == %@ && bulkPlacement.date > %@ && bulkPlacement.date < %@", currentUser, startOfDataCollection, endOfDataCollection];
 		
-		if(date != nil)
+		
+		for(MTPublication *publication in bulkPlacementPublications) // ASSIGNMENT, NOT COMPARISON 
 		{
+			NSDate *date = publication.bulkPlacement.date;
+			int offset = -1;
+			
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
@@ -1337,16 +1362,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			{
 				offset = 12 - month + _thisMonth;
 			}
-		}
-		
-		if(offset >= 0)
-		{
-			NSEnumerator *publicationEnumerator = [[entry objectForKey:BulkLiteratureArray] objectEnumerator];
-			NSMutableDictionary *publication;
-			while( (publication = [publicationEnumerator nextObject]) )
+			
+			if(offset >= 0)
 			{
-				int number =[[publication objectForKey:BulkLiteratureArrayCount] intValue];
-				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
+				int number = publication.countValue;
+				NSString *type = publication.type;
 				if(type != nil)
 				{
 					if([type isEqualToString:PublicationTypeBook] || 
@@ -1401,6 +1421,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				
 			}
 		}
+		[pool drain];
 	}
 	
 	[self countCalls:[userSettings objectForKey:SettingsCalls]];
@@ -1420,6 +1441,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 {
 	[super constructSectionControllers];
 	
+	MTUser *currentUser = [MTUser currentUser];
 	// save off this month and last month for quick compares
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:[NSDate date]];
 	_thisMonth = [dateComponents month];
@@ -1555,7 +1577,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 	// how many months do they want to show?
 	int shownMonths = 2;
-	NSNumber *value = [[[Settings sharedInstance] userSettings] objectForKey:SettingsMonthDisplayCount];
+	NSNumber *value = currentUser.monthDisplayCount;
 	if(value)
 		shownMonths = [value intValue];
 	

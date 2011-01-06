@@ -110,6 +110,7 @@
     editedPublication.yearValue = [picker year];
     editedPublication.monthValue = [picker month];
     editedPublication.dayValue =  [picker day];
+    editedPublication.countValue =  [publicationViewController count];
 	
 	// save the data
 	NSError *error = nil;
@@ -205,7 +206,9 @@
 		PublicationViewController *p = [[[PublicationViewController alloc] initWithPublication:self.publication.name
 																						  year:self.publication.yearValue
 																						 month:self.publication.monthValue
-																						   day:self.publication.dayValue] autorelease];
+																						   day:self.publication.dayValue
+																					 showCount:YES
+																						number:self.publication.countValue] autorelease];
 		
 		p.delegate = self;
 		[[self.delegate navigationController] pushViewController:p animated:YES];

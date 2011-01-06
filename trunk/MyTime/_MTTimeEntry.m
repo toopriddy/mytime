@@ -29,6 +29,13 @@
 
 
 
+@dynamic notes;
+
+
+
+
+
+
 @dynamic minutes;
 
 

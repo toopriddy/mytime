@@ -14,6 +14,13 @@
 //
 
 #import "StatisticsViewController.h"
+#import "MTUser.h"
+#import "MTCall.h"
+#import "MTReturnVisit.h"
+#import "MTPublication.h"
+#import "MTTimeEntry.h"
+#import "MTTimeType.h"
+#import "MTBulkPlacement.h"
 #import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSUrlString.h"
@@ -502,181 +509,178 @@ static NSString *MONTHS[] = {
 	_serviceYearBibleStudies = 0;
 	_serviceYearCampaignTracts = 0;
 	
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
+	MTUser *currentUser = [MTUser currentUser];
+	
+	NSDateComponents *startOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
+	[startOfDataCollectionComponents setMonth:_thisMonth];
+	[startOfDataCollectionComponents setYear:_thisYear - 1];
+	NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+	NSDate *startOfDataCollection = [gregorian dateFromComponents:startOfDataCollectionComponents];
+	
+	int nextMonth = _thisMonth == 12 ? 1 : _thisMonth + 1;
+	int nextMonthsYear = _thisYear = _thisMonth == 12 ? _thisYear + 1 : _thisYear;
+	NSDateComponents *endOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
+	[endOfDataCollectionComponents setMonth:nextMonth];
+	[endOfDataCollectionComponents setYear:nextMonthsYear];
+	NSDate *endOfDataCollection = [gregorian dateFromComponents:endOfDataCollectionComponents];
 	
 	BOOL newServiceYear = _thisMonth >= 9;
-	NSArray *timeEntries = [userSettings objectForKey:SettingsTimeEntries];
-	int timeIndex;
-	int timeCount = [timeEntries count];
-	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
+	
+	MTUser *currentUser = [MTUser currentUser];
+
+	
+	NSArray *timeEntries = [self.managedObjectContext fetchObjectsForEntityName:[MTTimeEntry entityName]
+															withSortDescriptors:nil
+																  withPredicate:@"type == %@ && date > %@ && date < %@", [MTTimeType hoursTypeForUser:currentUser], startOfDataCollection, endOfDataCollection];
+	
+	for(MTTimeEntry *timeEntry in timeEntries)
 	{
-		NSDictionary *timeEntry = [timeEntries objectAtIndex:timeIndex];
+		NSDate *date = timeEntry.date;	
+		int minutes = timeEntry.minutesValue;
+		NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+		int month = [dateComponents month];
+		int year = [dateComponents year];
 
-		NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
-		NSNumber *minutes = [timeEntry objectForKey:SettingsTimeEntryMinutes];
-		if(date && minutes)
+		int offset = -1;
+		if(year == _thisYear && 
+		   month <= _thisMonth)
 		{
-			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
-			int month = [dateComponents month];
-			int year = [dateComponents year];
+			offset = _thisMonth - month;
+		}
+		else if(year == _thisYear - 1 &&
+				month > _thisMonth)
+		{
+			offset = 12 - month + _thisMonth;
+		}
+		if(offset < 0 || offset > 11)
+			continue;
 
-			int offset = -1;
-			if(year == _thisYear && 
-			   month <= _thisMonth)
-			{
-				offset = _thisMonth - month;
-			}
-			else if(year == _thisYear - 1 &&
-			        month > _thisMonth)
-			{
-				offset = 12 - month + _thisMonth;
-			}
-			if(offset < 0 || offset > 11)
-				continue;
+		// we found a valid month
+		_minutes[offset] += minutes;
 
-			// we found a valid month
-			_minutes[offset] += [minutes intValue];
-
-			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-			{
-				_serviceYearMinutes += [minutes intValue];
-			}
+		if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+		   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+		{
+			_serviceYearMinutes += minutes;
 		}
 	}
 
 	// QUICK BUILD
+	NSArray *timeEntries = [self.managedObjectContext fetchObjectsForEntityName:[MTTimeEntry entityName]
+															withSortDescriptors:nil
+																  withPredicate:@"type == %@ && date > %@ && date < %@", [MTTimeType rbcTypeForUser:currentUser], startOfDataCollection, endOfDataCollection];
 	
-	timeEntries = [userSettings objectForKey:SettingsRBCTimeEntries];
-	timeCount = [timeEntries count];
-	for(timeIndex = 0; timeIndex < timeCount; ++timeIndex)
+	for(MTTimeEntry *timeEntry in timeEntries)
 	{
-		NSDictionary *timeEntry = [timeEntries objectAtIndex:timeIndex];
+		NSDate *date = timeEntry.date;	
+		int minutes = timeEntry.minutesValue;
+		
+		NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+		int month = [dateComponents month];
+		int year = [dateComponents year];
 
-		NSDate *date = [timeEntry objectForKey:SettingsTimeEntryDate];	
-		NSNumber *minutes = [timeEntry objectForKey:SettingsTimeEntryMinutes];
-		if(date && minutes)
+		int offset = -1;
+		if(year == _thisYear && 
+		   month <= _thisMonth)
 		{
-			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
-			int month = [dateComponents month];
-			int year = [dateComponents year];
+			offset = _thisMonth - month;
+		}
+		// if this call was made last year and in a month after this month
+		else if(year == _thisYear - 1 &&
+				_thisMonth < month)
+		{
+			offset = 12 - month + _thisMonth;
+		}
+		if(offset < 0 || offset > 11)
+			continue;
 
-			int offset = -1;
-			if(year == _thisYear && 
-			   month <= _thisMonth)
-			{
-				offset = _thisMonth - month;
-			}
-			// if this call was made last year and in a month after this month
-			else if(year == _thisYear - 1 &&
-					_thisMonth < month)
-			{
-				offset = 12 - month + _thisMonth;
-			}
-			if(offset < 0 || offset > 11)
-				continue;
+		_quickBuildMinutes[offset] += minutes;
 
-			_quickBuildMinutes[offset] += [minutes intValue];
-
-			// newServiceYear means that the months that are added are above the current month
-			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-			{
-				_serviceYearQuickBuildMinutes += [minutes intValue];
-			}
+		// newServiceYear means that the months that are added are above the current month
+		if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+		   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+		{
+			_serviceYearQuickBuildMinutes += minutes;
 		}
 	}
 
 
 	// go through all of the bulk publications
-	NSArray *bulkArray = [userSettings objectForKey:SettingsBulkLiterature];
-	NSEnumerator *bulkArrayEnumerator = [bulkArray objectEnumerator];
-	NSDictionary *entry;
+	NSArray *bulkPlacementPublications = [self.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
+																			propertiesToFetch:[NSArray arrayWithObjects:@"type", @"count", nil]
+																		  withSortDescriptors:nil
+																				withPredicate:@"bulkPlacement.user == %@ && bulkPlacement.date > %@ && bulkPlacement.date < %@", currentUser, startOfDataCollection, endOfDataCollection];
 	
-	while( (entry = [bulkArrayEnumerator nextObject]) ) // ASSIGNMENT, NOT COMPARISON 
+	
+	for(MTPublication *publication in bulkPlacementPublications) // ASSIGNMENT, NOT COMPARISON 
 	{
-		NSDate *date = [entry objectForKey:BulkLiteratureDate];
+		NSDate *date = publication.bulkPlacement.date;
 		int offset = -1;
 			
-		if(date != nil)
-		{
-			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
-			int month = [dateComponents month];
-			int year = [dateComponents year];
+		NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
+		int month = [dateComponents month];
+		int year = [dateComponents year];
 
-			if(year == _thisYear && 
-			   month <= _thisMonth)
+		if(year == _thisYear && 
+		   month <= _thisMonth)
+		{
+			offset = _thisMonth - month;
+		}
+		// if this call was made last year and in a month after this month
+		else if(year == _thisYear - 1 &&
+				_thisMonth < month)
+		{
+			offset = 12 - month + _thisMonth;
+		}
+		assert(offset >= 0);
+		int number = publication.countValue;
+		NSString *type = publication.type;
+		if([type isEqualToString:PublicationTypeBook] || 
+		   [type isEqualToString:PublicationTypeDVDBible] || 
+		   [type isEqualToString:PublicationTypeDVDBook])
+		{
+			_books[offset] += number;
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+				(!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				offset = _thisMonth - month;
-			}
-			// if this call was made last year and in a month after this month
-			else if(year == _thisYear - 1 &&
-					_thisMonth < month)
-			{
-				offset = 12 - month + _thisMonth;
+				_serviceYearBooks += number;
 			}
 		}
-		
-		if(offset >= 0)
+		else if([type isEqualToString:PublicationTypeBrochure] || 
+				[type isEqualToString:PublicationTypeDVDBrochure])
 		{
-			NSEnumerator *publicationEnumerator = [[entry objectForKey:BulkLiteratureArray] objectEnumerator];
-			NSMutableDictionary *publication;
-			while( (publication = [publicationEnumerator nextObject]) )
+			_brochures[offset] += number;
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				int number =[[publication objectForKey:BulkLiteratureArrayCount] intValue];
-				NSString *type = [publication objectForKey:BulkLiteratureArrayType];
-				if(type != nil)
-				{
-					if([type isEqualToString:PublicationTypeBook] || 
-					   [type isEqualToString:PublicationTypeDVDBible] || 
-					   [type isEqualToString:PublicationTypeDVDBook])
-					{
-						_books[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-							(!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearBooks += number;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeBrochure] || 
-							[type isEqualToString:PublicationTypeDVDBrochure])
-					{
-						_brochures[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearBrochures += number;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeMagazine])
-					{
-						_magazines[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearMagazines += number;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeTwoMagazine])
-					{
-						_magazines[offset] += number*2;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearMagazines += number*2;
-						}
-					}
-					else if([type isEqualToString:PublicationTypeCampaignTract])
-					{
-						_campaignTracts[offset] += number;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearCampaignTracts += number;
-						}
-					}
-				}
-				
+				_serviceYearBrochures += number;
+			}
+		}
+		else if([type isEqualToString:PublicationTypeMagazine])
+		{
+			_magazines[offset] += number;
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			{
+				_serviceYearMagazines += number;
+			}
+		}
+		else if([type isEqualToString:PublicationTypeTwoMagazine])
+		{
+			_magazines[offset] += number*2;
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			{
+				_serviceYearMagazines += number*2;
+			}
+		}
+		else if([type isEqualToString:PublicationTypeCampaignTract])
+		{
+			_campaignTracts[offset] += number;
+			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+			{
+				_serviceYearCampaignTracts += number;
 			}
 		}
 	}
@@ -1204,32 +1208,4 @@ static NSString *MONTHS[] = {
 	
 	return cell;
 }
-
-
-//
-//
-// UITableViewDelegate methods
-//
-//
-
-// NONE
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
 @end
