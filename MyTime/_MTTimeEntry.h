@@ -9,6 +9,7 @@
 
 
 
+
 @interface MTTimeEntryID : NSManagedObjectID {}
 @end
 
@@ -17,6 +18,12 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTTimeEntryID*)objectID;
+
+
+
+@property (nonatomic, retain) NSString *notes;
+
+//- (BOOL)validateNotes:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -49,6 +56,10 @@
 @end
 
 @interface _MTTimeEntry (CoreDataGeneratedPrimitiveAccessors)
+
+- (NSString*)primitiveNotes;
+- (void)setPrimitiveNotes:(NSString*)value;
+
 
 - (NSNumber*)primitiveMinutes;
 - (void)setPrimitiveMinutes:(NSNumber*)value;

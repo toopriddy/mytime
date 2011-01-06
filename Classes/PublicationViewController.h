@@ -47,6 +47,11 @@
 - (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)showCount number:(int)number;
 - (id) initWithPublication: (NSString *)publication year: (int)year month: (int)month day: (int)day showCount:(BOOL)doShowCount number:(int)number filter:(NSString *)filter;
 
+/**
+ * @return number of publications
+ */
+- (int)count;
+
 - (void)navigationControlDone:(id)sender;
 
 @end
