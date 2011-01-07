@@ -910,203 +910,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	return YES;
 }
 
-- (void)countCalls:(NSMutableArray *)calls
-{
-	int callIndex;
-	BOOL newServiceYear = _thisMonth >= 9;
-	
-	// go through all of the calls and see what the counts are for this month and last month
-	for(callIndex = 0; callIndex < [calls count]; ++callIndex)
-	{
-		NSDictionary *call = [calls objectAtIndex:callIndex];
-		if([call objectForKey:CallReturnVisits] != nil)
-		{
-			// lets check all of the ReturnVisits to make sure that everything was 
-			// initialized correctly
-			NSMutableArray *returnVisits = [call objectForKey:CallReturnVisits];
-			NSMutableDictionary *visit;
-			
-			BOOL studyAlreadyConducted[12];
-			memset(studyAlreadyConducted, 0, sizeof(studyAlreadyConducted));
-			
-			int previousServiceYearBibleStudies = _serviceYearBibleStudies;
-			
-			int i;
-			int returnVisitsCount = [returnVisits count];
-			for(i = returnVisitsCount; i > 0; --i)
-			{
-				visit = [returnVisits objectAtIndex:i-1];
-				NSDate *date = [visit objectForKey:CallReturnVisitDate];
-				
-				if(date != nil)
-				{
-					date = [[[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[date timeIntervalSinceReferenceDate]] autorelease];	
-					NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
-					int month = [dateComponents month];
-					int year = [dateComponents year];
-					
-					int offset = -1;
-					
-					if(year == _thisYear && 
-					   month <= _thisMonth)
-					{
-						offset = _thisMonth - month;
-					}
-					// if this call was made last year and in a month after this month
-					else if(year == _thisYear - 1 &&
-							_thisMonth < month)
-					{
-						offset = 12 - month + _thisMonth;
-					}
-					
-					// this month's information should not be counted
-					if(offset < 0 || offset > 11)
-						continue;
-					
-					NSString *type = [visit objectForKey:CallReturnVisitType];
-					BOOL isStudy = [type isEqualToString:CallReturnVisitTypeStudy];
-					BOOL dontCount = [type isEqualToString:CallReturnVisitTypeNotAtHome] || [type isEqualToString:CallReturnVisitTypeInitialVisit];
-					BOOL isTransfer = [type isEqualToString:CallReturnVisitTypeTransferedStudy] ||
-										[type isEqualToString:CallReturnVisitTypeTransferedInitialVisit] ||
-										[type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
-										[type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
-					
-					if(i != returnVisitsCount)
-					{
-						// if there are more than 1 visit then that means that any return visits
-						// this month are counted as return visits
-						if(!dontCount && !isTransfer)
-						{
-							_returnVisits[offset]++;
-							if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-							   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-							{
-								_serviceYearReturnVisits++;
-							}
-						}
-					}
-					else if(isStudy)
-					{
-						// go ahead and count studies as return visits
-						_returnVisits[offset]++;
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearReturnVisits++;
-						}
-					}
-					
-					if(!studyAlreadyConducted[offset] && 
-					   isStudy)
-					{
-						studyAlreadyConducted[offset] = YES;
-						_bibleStudies[offset]++;
-						if(_individualCalls[offset] == nil)
-						{
-							_individualCalls[offset] = [[NSMutableArray alloc] init];
-						}
-						[_individualCalls[offset] addObject:call];
-						
-						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-						{
-							_serviceYearBibleStudies++;
-						}
-					}
-					
-					// we only care about counting this month's or last month's returnVisits' calls
-					// go through all of the calls and see if we need to count the statistics
-					if([visit objectForKey:CallReturnVisitPublications] != nil)
-					{
-						// they had an array of publications, lets check them too
-						NSMutableArray *publications = [visit objectForKey:CallReturnVisitPublications];
-						NSMutableDictionary *publication;
-						int j;
-						int endPublications = [publications count];
-						for(j = 0; j < endPublications; ++j)
-						{
-							publication = [publications objectAtIndex:j];
-							NSString *type;
-							if((type = [publication objectForKey:CallReturnVisitPublicationType]) != nil)
-							{
-								if([type isEqualToString:PublicationTypeBook] ||
-								   [type isEqualToString:PublicationTypeDVDBible] || 
-								   [type isEqualToString:PublicationTypeDVDBook])
-								{
-									if(!isTransfer)
-									{
-										_books[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearBooks++;
-										}
-									}
-								}
-								else if([type isEqualToString:PublicationTypeBrochure] ||
-										[type isEqualToString:PublicationTypeDVDBrochure])
-								{
-									if(!isTransfer)
-									{
-										_brochures[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearBrochures++;
-										}
-									}
-								}
-								else if([type isEqualToString:PublicationTypeMagazine])
-								{
-									if(!isTransfer)
-									{
-										_magazines[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearMagazines++;
-										}
-									}
-								}
-								else if([type isEqualToString:PublicationTypeTwoMagazine])
-								{
-									if(!isTransfer)
-									{
-										_magazines[offset] += 2;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearMagazines += 2;
-										}
-									}
-								}
-								else if([type isEqualToString:PublicationTypeCampaignTract])
-								{
-									if(!isTransfer)
-									{
-										_campaignTracts[offset]++;
-										if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
-										   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
-										{
-											_serviceYearCampaignTracts++;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			// if this is someone we studied with this service year, then count them
-			if(previousServiceYearBibleStudies != _serviceYearBibleStudies) 
-			{
-				_serviceYearStudyIndividuals++;
-				[_serviceYearStudyIndividualCalls addObject:call];
-			}
-		}
-	}
-}
-
 - (void)computeStatisticsDeletingOldEntries:(BOOL)deleteOldEntries
 {
 	memset(_books, 0, sizeof(_books));
@@ -1158,7 +961,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	
 	BOOL newServiceYear = _thisMonth >= 9;
 	
-	
+#error fix me	
 	//Start with Adjustments
 	NSMutableDictionary *adjustmentTypes = [userSettings objectForKey:SettingsStatisticsAdjustments];
 	for(NSString *key in [adjustmentTypes allKeys])
@@ -1424,8 +1227,139 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		[pool drain];
 	}
 	
-	[self countCalls:[userSettings objectForKey:SettingsCalls]];
-	[self countCalls:[userSettings objectForKey:SettingsDeletedCalls]];
+	{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSMutableArray *studies = [NSMutableArray arrayWithObjects:[NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], nil];
+		NSArray *returnVisits = [moc fetchObjectsForEntityName:[MTReturnVisit entityName]
+												 withPredicate:@"call.user == %@ && date > %@ && date < %@", currentUser, startOfDataCollection, endOfDataCollection];
+		
+		for(MTReturnVisit *returnVisit in returnVisits)
+		{
+			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:returnVisit.date];
+			int month = [dateComponents month];
+			int year = [dateComponents year];
+			
+			int offset = -1;
+			
+			if(year == _thisYear && 
+			   month <= _thisMonth)
+			{
+				offset = _thisMonth - month;
+			}
+			// if this call was made last year and in a month after this month
+			else if(year == _thisYear - 1 &&
+					_thisMonth < month)
+			{
+				offset = 12 - month + _thisMonth;
+			}
+			
+			// this month's information should not be counted
+			if(offset < 0 || offset > 11)
+				continue;
+			
+			NSString *type = returnVisit.type;
+			BOOL isStudy = [type isEqualToString:CallReturnVisitTypeStudy];
+			BOOL isReturnVisit = isStudy || [type isEqualToString:CallReturnVisitTypeReturnVisit];
+			BOOL isTransfer = [type isEqualToString:CallReturnVisitTypeTransferedStudy] ||
+								[type isEqualToString:CallReturnVisitTypeTransferedInitialVisit] ||
+								[type isEqualToString:CallReturnVisitTypeTransferedReturnVisit] ||
+								[type isEqualToString:CallReturnVisitTypeTransferedNotAtHome];
+			
+			if(isReturnVisit)
+			{
+				_returnVisits[offset]++;
+				if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+				   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+				{
+					_serviceYearReturnVisits++;
+				}
+			}
+			
+			if(isStudy)
+			{
+				[[studies objectAtIndex:offset] addObject:returnVisit.call];
+			}
+			
+			if(!isTransfer)
+			{
+				for(MTPublication *publication in returnVisit.publications)
+				{
+					NSString *type = publication.type;
+					
+					if([type isEqualToString:PublicationTypeBook] ||
+					   [type isEqualToString:PublicationTypeDVDBible] || 
+					   [type isEqualToString:PublicationTypeDVDBook])
+					{
+						_books[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBooks++;
+						}
+					}
+					else if([type isEqualToString:PublicationTypeBrochure] ||
+							[type isEqualToString:PublicationTypeDVDBrochure])
+					{
+						_brochures[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearBrochures++;
+						}
+					}
+					else if([type isEqualToString:PublicationTypeMagazine])
+					{
+						_magazines[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearMagazines++;
+						}
+					}
+					else if([type isEqualToString:PublicationTypeTwoMagazine])
+					{
+						_magazines[offset] += 2;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearMagazines += 2;
+						}
+					}
+					else if([type isEqualToString:PublicationTypeCampaignTract])
+					{
+						_campaignTracts[offset]++;
+						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+						{
+							_serviceYearCampaignTracts++;
+						}
+					}
+				}
+			}
+		}
+		int offset = 0;
+		NSMutableSet *serviceYearStudies = [NSMutableSet set];
+		for(NSSet *calls in studies)
+		{
+			int count = calls.count;
+			if(count)
+			{
+				_bibleStudies[offset] += count;
+				_individualCalls[offset] = [[calls allObjects] retain];
+				
+				if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
+				   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
+				{
+					_serviceYearBibleStudies++;
+					[serviceYearStudies unionSet:calls];
+				}
+			}
+			offset++;
+		}
+		[_serviceYearStudyIndividualCalls setArray:[serviceYearStudies allObjects]];
+		_serviceYearStudyIndividuals = [serviceYearStudies count];
+		[pool drain];
+	}
 }
 
 - (BOOL)showYearInformation
