@@ -75,7 +75,7 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[self.calls objectAtIndex:indexPath.row] objectForKey:CallName];
+    cell.textLabel.text = [[self.calls objectAtIndex:indexPath.row] name];
 	if(cell.textLabel.text.length == 0)
 	{
 		cell.textLabel.text = NSLocalizedString(@"(Study not named?)", @"name you see if you have a study who is not named yet and you go to Statistics->Study Individuals->");
