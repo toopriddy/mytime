@@ -2,7 +2,16 @@
 #import "MTSettings.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
-#import "Settings.h"
+#import "PSLocalization.h"
+
+#include "PSRemoveLocalizedString.h"
+NSString * const PublisherTypePublisher = NSLocalizedString(@"Publisher", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeAuxilliaryPioneer = NSLocalizedString(@"Auxilliary Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypePioneer = NSLocalizedString(@"Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeSpecialPioneer = NSLocalizedString(@"Special Pioneer", @"publisher type selected in the More->Settings->Publisher Type setting");
+NSString * const PublisherTypeTravelingServant = NSLocalizedString(@"Traveling Servant", @"publisher type selected in the More->Settings->Publisher Type setting");
+#include "PSAddLocalizedString.h"
+
 
 NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 

@@ -693,8 +693,8 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		
 		NSArray *streets = [self.territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryStreet entityName]
 																		propertiesToFetch:nil 
-																	  withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																						   [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+																	  withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																						   [NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:YES], nil]
 																			withPredicate:@"territory == %@", self.territory];
 		for(MTTerritoryStreet *street in streets)
 		{

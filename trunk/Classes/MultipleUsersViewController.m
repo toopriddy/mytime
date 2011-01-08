@@ -260,7 +260,7 @@
 	
 	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
 													   withPredicate:nil];
 	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
@@ -371,7 +371,7 @@
 
 	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
 													   withPredicate:nil];
 	
 	GenericTableViewSectionController *sectionController = [[MultipleUsersSectionController alloc] init];

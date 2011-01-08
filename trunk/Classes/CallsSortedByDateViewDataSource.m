@@ -16,7 +16,6 @@
 #import "SortedCallsViewController.h"
 #import "CallsSortedByDateViewDataSource.h"
 #import "CallTableCell.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 

@@ -16,7 +16,6 @@
 #import "SortedCallsViewController.h"
 #import "DeletedCallsSortedByStreetViewDataSource.h"
 #import "CallTableCell.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 
@@ -51,7 +50,7 @@
 
 - (id)init
 {
-	[super initSortedBy:CALLS_SORTED_BY_DELETED withMetadata:nil callsName:SettingsDeletedCalls];
+	[super initSortedBy:CALLS_SORTED_BY_DELETED withMetadata:nil];
 	return(self);
 }
 

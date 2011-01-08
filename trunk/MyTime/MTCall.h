@@ -1,5 +1,12 @@
 #import "_MTCall.h"
 
+extern NSString *const MTNotificationCallChanged;
+
+extern NSString * const CallLocationTypeManual;
+extern NSString * const CallLocationTypeGoogleMaps;
+extern NSString * const CallLocationTypeDoNotShow;
+
+
 @interface MTCall : _MTCall 
 {
 	NSString *addressNumber_;

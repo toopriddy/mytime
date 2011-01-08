@@ -334,7 +334,7 @@
 		
 		NSArray *publications = [self.bulkPlacement.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
 															  propertiesToFetch:nil 
-															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES] ]
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
 																  withPredicate:@"bulkPlacement == %@", self.bulkPlacement];
 		for(MTPublication *publication in publications)
 		{

@@ -15,6 +15,7 @@
 
 #import "ReturnVisitTypeViewController.h"
 #import "Settings.h"
+#import "MTReturnVisit.h"
 #import "PSLocalization.h"
 
 @interface ReturnVisitTypeViewController ()

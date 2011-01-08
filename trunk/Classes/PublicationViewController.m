@@ -14,7 +14,6 @@
 //
 
 #import "PublicationViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 @implementation PublicationViewController

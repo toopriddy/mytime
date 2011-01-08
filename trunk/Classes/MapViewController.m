@@ -14,7 +14,6 @@
 //
 
 #import "MapViewController.h"
-#import "Settings.h"
 #import "CallViewController.h"
 #import "MTUser.h"
 #import "MTReturnVisit.h"
@@ -95,7 +94,7 @@
 		
 		self.tabBarItem.image = [UIImage imageNamed:@"map.png"];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callChanged:) name:SettingsNotificationCallChanged object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callChanged:) name:MTNotificationCallChanged object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
 	return self;
@@ -109,7 +108,7 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MTNotificationUserChanged object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:SettingsNotificationCallChanged object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:MTNotificationCallChanged object:nil];
 	self.mapView = nil;
 	self.call = nil;
 	

@@ -215,6 +215,7 @@
 	{
 		case kRestoreBackup:
 		{
+#warning fix me
 			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 			[settings removeAllObjects];
 			[settings addEntriesFromDictionary:[NSKeyedUnarchiver unarchiveObjectWithData:payload]];

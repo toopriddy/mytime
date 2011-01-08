@@ -81,6 +81,7 @@ typedef enum {
 - (void)initializeMyTimeViews;
 
 + (MyTimeAppDelegate *)sharedInstance;
++ (NSString *)storeFileAndPath;
 
 + (MFMailComposeViewController *)sendEmailBackup;
 + (MFMailComposeViewController *)sendPrintableEmailBackup;

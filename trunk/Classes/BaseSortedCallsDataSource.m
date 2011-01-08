@@ -16,9 +16,9 @@
 #import "BaseSortedCallsDataSource.h"
 #import "SortedCallsViewController.h"
 #import "CallTableCell.h"
-#import "Settings.h"
 #import "MTCall.h"
 #import "MTUser.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 @interface BaseSortedCallsDataSource ()
 @end
@@ -73,41 +73,40 @@
 	return [self initSortedBy:sortedBy withMetadata:nil];
 }
 
-- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata
-{
-	return [self initSortedBy:sortedBy withMetadata:metadata callsName:SettingsCalls];
-}
-
 NSArray *sortByStreet(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																				    [NSSortDescriptor sortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedStandardCompare:)],
-														                            [NSSortDescriptor sortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedStandardCompare:)], nil]];
+	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																				    [NSSortDescriptor psSortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedStandardCompare:)],
+														                            [NSSortDescriptor psSortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedStandardCompare:)], nil]];
 }
 
 NSArray *sortByName(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
 }
 
 NSArray *sortByCity(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor psSortDescriptorWithKey:@"city" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
 }
 
 NSArray *sortByDate(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:YES], nil]];
+	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"mostRecentReturnVisitDate" ascending:YES], nil]];
 }
 
 NSArray *sortByDeletedFlag(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObject:[NSSortDescriptor sortDescriptorWithKey:@"deleted" ascending:NO]];
+	return [previousSorters arrayByAddingObject:[NSSortDescriptor psSortDescriptorWithKey:@"deleted" ascending:NO]];
 }
 
 - (NSArray *)sectionIndexTitles
 {
-	return [MTCall dateSortedSectionIndexTitles];
+	if(_sortedBy == CALLS_SORTED_BY_DATE)
+	{
+		return [MTCall dateSortedSectionIndexTitles];
+	}
+	return nil;
 }
 
 - (NSString *)sectionNameForIndex:(int)index
@@ -119,7 +118,7 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return nil;
 }
 
-- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
+- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata
 {
 	if( (self = [super init]) )
 	{

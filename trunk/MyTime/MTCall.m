@@ -3,7 +3,15 @@
 #import "MTAdditionalInformationType.h"
 #import "MTAdditionalInformation.h"
 #import "MTReturnVisit.h"
-#import "Settings.h"
+#import "PSLocalization.h"
+NSString *const MTNotificationCallChanged = @"settingsNotificationCallChanged";
+
+#include "PSRemoveLocalizedString.h"
+NSString * const CallLocationTypeManual = NSLocalizedString(@"Manually pick Location", @"Label for picking the location lookup type");
+NSString * const CallLocationTypeGoogleMaps = NSLocalizedString(@"Locate using google Maps", @"Label for picking the location lookup type");
+NSString * const CallLocationTypeDoNotShow = NSLocalizedString(@"Do not show in map", @"Label for picking the location lookup type when they do not want the return visit to show up in the map");
+#include "PSAddLocalizedString.h"
+
 
 NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 

@@ -83,7 +83,7 @@
 	{
 		MTTerritoryHouseAttempt *attempt = [[self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
 																					 propertiesToFetch:nil 
-																				   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+																				   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:YES], nil]
 																						 withPredicate:@"house == %@", self.house] lastObject];
 		if(attempt)
 		{
@@ -446,7 +446,7 @@
 
 		NSArray *houses = [street.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]
 															   propertiesToFetch:[NSArray arrayWithObjects:@"number", @"apartment", @"date", nil] 
-															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES], nil]
+															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:YES], nil]
 																   withPredicate:@"street == %@", street];
 		for(MTTerritoryHouse *house in houses)
 		{

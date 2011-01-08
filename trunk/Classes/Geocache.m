@@ -15,7 +15,6 @@
 
 #import "Geocache.h"
 #import "GeocacheViewController.h"
-#import "Settings.h"
 #import "MyTimeAppDelegate.h"
 #import "MTUser.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
@@ -47,7 +46,7 @@ static Geocache *instance = nil;
 {
 	[geocacheViewController removeFromSuperview];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:geocacheViewController.call];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationCallChanged object:geocacheViewController.call];
 	_lookupInProgress = NO;
 	[self startLookupProcess];
 }

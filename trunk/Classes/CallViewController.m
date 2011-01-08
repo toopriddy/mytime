@@ -14,7 +14,6 @@
 //
 
 #import "CallViewController.h"
-#import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "AddressViewController.h"
@@ -62,17 +61,6 @@
 - (void)addReturnVisitAndEdit;
 @end
 
-
-int sortReturnVisitsByDate(id v1, id v2, void *context)
-{
-	// for speed sake we are going to assume that the first entry in the array
-	// is the most recent entry	
-	// ok, we need to compare the dates of the calls since we have
-	// at least one call for each of 
-	NSDate *date1 = [v1 objectForKey:CallReturnVisitDate];
-	NSDate *date2 = [v2 objectForKey:CallReturnVisitDate];
-	return [date2 compare:date1];
-}
 
 @interface SelectAddressView : UIResponder <UITextFieldDelegate>
 {
@@ -400,17 +388,17 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		   (state == nil || [state isEqualToString:@""]))
 		{
 			askAboutReverseGeocoding = YES;
-			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
+			MTSettings *settings = [MTSettings settings];
 			// if they are in an apartment territory then just null out the apartment number
-			streetNumber = [settings objectForKey:SettingsLastCallStreetNumber];
-			apartmentNumber = [settings objectForKey:SettingsLastCallApartmentNumber];
+			streetNumber = settings.lastHouseNumber;
+			apartmentNumber = settings.lastApartmentNumber;
 			if(apartmentNumber.length)
 				apartmentNumber = @"";
 			else
 				streetNumber = @"";
-			street = [settings objectForKey:SettingsLastCallStreet];
-			city = [settings objectForKey:SettingsLastCallCity];
-			state = [settings objectForKey:SettingsLastCallState];
+			street = settings.lastStreet;
+			city = settings.lastCity;
+			state = settings.lastState;
 		}
 		// open up the edit address view 
 		AddressViewController *viewController = [[[AddressViewController alloc] initWithStreetNumber:streetNumber
@@ -1236,7 +1224,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	  propertiesToFetch:[NSArray array]
-																	withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																	withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]
 																		  withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
@@ -1415,7 +1403,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	   propertiesToFetch:[NSArray array]
-																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]
 																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
@@ -1467,7 +1455,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	BOOL initialVisit = NO;
 	if([returnVisit isEqual:[[returnVisit.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																	   propertiesToFetch:[NSArray array]
-																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]
 																		   withPredicate:@"(call == %@)", self.delegate.call] lastObject]])
 	{
 		initialVisit = YES;
@@ -1755,11 +1743,11 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 
 			if(self.deleteForever)
 			{
-				[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:nil];
+				[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationCallChanged object:nil];
 			}
 			else
 			{
-				[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:call];
+				[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationCallChanged object:call];
 			}
 
 		}
@@ -2014,7 +2002,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	// save
 	[self retain];
 	[self save];
-	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationCallChanged object:self.call];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationCallChanged object:self.call];
 	
 	if(isNewCall)
 	{
@@ -2195,8 +2183,8 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 			
 		NSArray *additionalInformations = [_call.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
 																			  propertiesToFetch:nil 
-																			withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"type.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																								 [NSSortDescriptor sortDescriptorWithKey:@"value" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																			withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"type.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																								 [NSSortDescriptor psSortDescriptorWithKey:@"value" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
 																				  withPredicate:@"call == %@", _call];
 		for(MTAdditionalInformation *entry in additionalInformations)
 		{
@@ -2226,7 +2214,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 	{
 		for(MTReturnVisit *visit in [_call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 																		propertiesToFetch:nil
-																	  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]
+																	  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]
 																			withPredicate:@"(call == %@)", _call])
 		{
 			[self.sectionControllers addObject:[self genericTableViewSectionControllerForReturnVisit:visit]];
@@ -2309,7 +2297,7 @@ int sortReturnVisitsByDate(id v1, id v2, void *context)
 		// they had an array of publications, lets check them too
 		for(MTPublication *publication in [returnVisit.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
 																					propertiesToFetch:[NSArray arrayWithObject:@"order"]
-																				  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+																				  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
 																						withPredicate:@"returnVisit == %@", returnVisit])
 		{
 			// PUBLICATION

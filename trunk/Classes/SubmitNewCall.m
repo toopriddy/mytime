@@ -14,7 +14,10 @@
 //
 
 #import "SubmitNewCall.h"
-#import "Settings.h"
+#import "MTCall.h"
+#import "MTReturnVisit.h"
+#import "MyTimeAppDelegate.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "HTTPServer.h"
 
 
@@ -62,40 +65,41 @@
 - (void)sendPage
 {
 	NSString *errorString = nil;
-	NSMutableDictionary *call = [NSMutableDictionary dictionary];
-	NSMutableArray *returnVisits = [NSMutableArray array];
-	[call setObject:returnVisits forKey:CallReturnVisits];
+	NSManagedObjectContext *moc = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
+	MTCall *call = [MTCall insertInManagedObjectContext:moc];
+	[call initializeNewCallWithoutReturnVisit];
+
 	int found = 0;
 	for(NSDictionary *entry in self.variableArray)
 	{
 		if([@"name" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallName];
+			call.name = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 		else if([@"apartment" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallApartmentNumber];
+			call.apartmentNumber = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 		else if([@"number" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallStreetNumber];
+			call.houseNumber = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 		else if([@"street" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallStreet];
+			call.street = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 		else if([@"city" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallCity];
+			call.city = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 		else if([@"state" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			[call setObject:[entry objectForKey:MultipartVariableValue] forKey:CallState];
+			call.state = [entry objectForKey:MultipartVariableValue];
 			found++;
 		}
 	}
@@ -146,9 +150,10 @@
 		{
 			NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 			NSDate *date = [gregorian dateFromComponents:comps];
-			NSMutableDictionary *returnVisit = [NSMutableDictionary dictionaryWithObjectsAndKeys:notes, CallReturnVisitNotes,
-												date, CallReturnVisitDate, nil];
-			[returnVisits addObject:returnVisit];
+			MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:call.managedObjectContext];
+			returnVisit.call = call;
+			returnVisit.notes = notes;
+			returnVisit.date = date;
 		}
 		else
 		{
@@ -156,16 +161,10 @@
 		}
 	}
 
-	if(found)
+	NSError *error = nil;
+	if(![moc save:&error])
 	{
-		NSMutableArray *calls = [[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls];
-		if(calls == nil)
-		{
-			calls = [NSMutableArray array];
-			[[[Settings sharedInstance] userSettings] setObject:calls forKey:SettingsCalls];
-		}
-		[calls addObject:call];
-		[[Settings sharedInstance] saveData];
+		[NSManagedObjectContext presentErrorDialog:error];
 	}
 	
 	NSData *fileData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"]];
