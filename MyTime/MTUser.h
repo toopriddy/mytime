@@ -1,5 +1,12 @@
 #import "_MTUser.h"
 
+extern NSString * const PublisherTypePublisher;
+extern NSString * const PublisherTypeAuxilliaryPioneer;
+extern NSString * const PublisherTypePioneer;
+extern NSString * const PublisherTypeSpecialPioneer;
+extern NSString * const PublisherTypeTravelingServant;
+
+
 extern NSString *const MTNotificationUserChanged;
 
 @interface MTUser : _MTUser {}

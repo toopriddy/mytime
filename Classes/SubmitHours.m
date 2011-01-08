@@ -14,8 +14,11 @@
 //
 
 #import "SubmitHours.h"
-#import "Settings.h"
 #import "HTTPServer.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
+#import "MTTimeEntry.h"
+#import "MTTimeType.h"
+#import "MyTimeAppDelegate.h"
 
 @implementation SubmitHours
 
@@ -99,18 +102,18 @@
 	{
 		NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 		NSDate *date = [gregorian dateFromComponents:comps];
-		NSMutableDictionary *entry = [NSMutableDictionary dictionary];
-		[entry setObject:date forKey:SettingsTimeEntryDate];
-		[entry setObject:[[[NSNumber alloc] initWithInt:([minutes intValue] + [hours intValue]*60)] autorelease] forKey:SettingsTimeEntryMinutes];
 		
-		NSMutableArray *timeEntries = [[[Settings sharedInstance] userSettings] objectForKey:SettingsTimeEntries];
-		if(timeEntries == nil)
+		NSManagedObjectContext *moc = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
+		MTTimeEntry *entry = [MTTimeEntry insertInManagedObjectContext:moc];
+		entry.date = date;
+		entry.minutesValue = [minutes intValue] + [hours intValue]*60;
+		entry.type = [MTTimeType hoursType];
+		
+		NSError *error = nil;
+		if(![moc save:&error])
 		{
-			timeEntries = [NSMutableArray array];
-			[[[Settings sharedInstance] userSettings] setObject:timeEntries forKey:SettingsTimeEntries];
+			[NSManagedObjectContext presentErrorDialog:error];
 		}
-		[timeEntries addObject:entry];
-		[[Settings sharedInstance] saveData];
 	}
 	NSData *fileData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"]];
 	CFHTTPMessageRef response = CFHTTPMessageCreateResponse(kCFAllocatorDefault, 200, NULL, kCFHTTPVersion1_0);

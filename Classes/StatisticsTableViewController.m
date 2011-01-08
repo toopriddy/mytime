@@ -14,9 +14,9 @@
 //
 
 #import "StatisticsTableViewController.h"
-#import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSUrlString.h"
+#import "MTSettings.h"
 #import "MTUser.h"
 #import "MTCall.h"
 #import "MTReturnVisit.h"
@@ -24,6 +24,7 @@
 #import "MTBulkPlacement.h"
 #import "MTTimeType.h"
 #import "MTTimeEntry.h"
+#import "MTStatisticsAdjustment.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 #import "StatisticsNumberCell.h"
@@ -184,11 +185,13 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	BOOL displayIfZero;
 	int ps_timestamp;
 	NSMutableDictionary *ps_adjustments;
+	MTStatisticsAdjustment *adjustment;
 	NSString *ps_adjustmentName;
 	NSArray *calls;
 	StatisticsTableViewController *delegate;
 	int *ps_serviceYearValue;
 }
+@property (nonatomic, retain) MTStatisticsAdjustment *adjustment;
 @property (nonatomic, assign) StatisticsTableViewController *delegate;
 @property (nonatomic, retain) NSArray *calls;
 @property (nonatomic, retain) NSString *title;
@@ -196,15 +199,14 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 @property (nonatomic, assign) int section;
 @property (nonatomic, assign) BOOL displayIfZero;
 @property (nonatomic, assign) int timestamp;
-@property (nonatomic, retain, readonly) NSMutableDictionary *adjustments;
 @property (nonatomic, assign) NSString *adjustmentName;
 @end
 @implementation StatisticsCellController
+@synthesize adjustment;
 @synthesize array = ps_array;
 @synthesize section = ps_section;
 @synthesize title = ps_title;
 @synthesize timestamp = ps_timestamp;
-@synthesize adjustments = ps_adjustments;
 @synthesize adjustmentName = ps_adjustmentName;
 @synthesize displayIfZero;
 @synthesize calls;
@@ -228,8 +230,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 {
 	self.calls = nil;
 	self.title = nil;
-	[ps_adjustments release];
-	ps_adjustments = nil;
+	self.adjustment = nil;
 	self.adjustmentName = nil;
 	[super dealloc];
 }
@@ -282,47 +283,56 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	return cell;
 }
 
-- (NSMutableDictionary *)adjustments
+- (MTStatisticsAdjustment *)adjustmentForTimestamp:(int)stamp
 {
-	if(ps_adjustments == nil)
+	MTUser *currentUser = [MTUser currentUser];
+	NSManagedObjectContext *moc = currentUser.managedObjectContext;
+	MTStatisticsAdjustment *it = [[moc fetchObjectsForEntityName:[MTStatisticsAdjustment entityName] 
+												   withPredicate:@"user == %@ && timestamp = %d && type == %@", currentUser, stamp, self.adjustmentName] lastObject];
+	if(it == nil)
 	{
-		// make sure that the main adjustments is there
-		NSMutableDictionary *allAdjustments = [[[Settings sharedInstance] userSettings] objectForKey:SettingsStatisticsAdjustments];
-		if(allAdjustments == nil)
-		{
-			// go add the timestamp
-			allAdjustments = [NSMutableDictionary dictionary];
-			[[[Settings sharedInstance] userSettings] setObject:allAdjustments forKey:SettingsStatisticsAdjustments];
-		}
-		// make sure the type of adjustment is there
-		NSMutableDictionary *temp = [allAdjustments objectForKey:self.adjustmentName];
-		if(temp == nil)
-		{
-			// go add the timestamp
-			temp = [NSMutableDictionary dictionary];
-			[allAdjustments setObject:temp forKey:self.adjustmentName];
-		}
-		
-		ps_adjustments = [temp retain];
+		it = [MTStatisticsAdjustment insertInManagedObjectContext:moc];
+		it.user = currentUser;
+		it.timestampValue = self.timestamp;
+		it.type = self.adjustmentName;
+		it.adjustmentValue = 0;
 	}
-	return [[ps_adjustments retain] autorelease];
+	
+	return it;
+}
+
+- (MTStatisticsAdjustment *)adjustment
+{
+	if(adjustment)
+		return adjustment;
+
+	adjustment = [self adjustmentForTimestamp:self.timestamp];
+	[adjustment retain];
+	return adjustment;
+}
+
+- (void)setStatisticsAdjustment:(MTStatisticsAdjustment *)adjustment difference:(int)difference andChange:(int)change
+{
+	if(ps_serviceYearValue)
+		*ps_serviceYearValue += change;
+	
+	self.adjustment.adjustmentValue = difference;
+	NSError *error = nil;
+	if(![self.adjustment.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 }
 
 - (void)statisticsNumberCellValueChanged:(StatisticsNumberCell *)cell
 {
-	NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
-	int value = [[self.adjustments objectForKey:stamp] intValue];
+	int value = self.adjustment.adjustmentValue;
 	int difference = value + cell.statistic - self.array[self.section];
 	int change = cell.statistic - self.array[self.section];
 	self.array[self.section] = cell.statistic;
 
-	if(ps_serviceYearValue)
-		*ps_serviceYearValue += change;
-	
-	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
-	[[Settings sharedInstance] saveData];
+	[self setStatisticsAdjustment:self.adjustment difference:difference andChange:change];
 }
-
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -439,17 +449,12 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (void)hourPickerViewControllerDone:(HourPickerViewController *)hourPickerViewController
 {
-	NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
-	int value = [[self.adjustments objectForKey:stamp] intValue];
+	int value = self.adjustment.adjustmentValue;
 	int difference = value + hourPickerViewController.minutes - self.array[self.section];
 	int change = hourPickerViewController.minutes - self.array[self.section];
 	self.array[self.section] = hourPickerViewController.minutes;
 	
-	if(ps_serviceYearValue)
-		*ps_serviceYearValue += change;
-	
-	[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
-	[[Settings sharedInstance] saveData];
+	[self setStatisticsAdjustment:self.adjustment difference:difference andChange:change];
 	[[self.delegate navigationController] popViewControllerAnimated:YES];
 }
 		   
@@ -465,13 +470,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			int minutes = self.array[self.section] % 60;
 			
 			// take off the minutes off of this month
-			NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
-			int value = [[self.adjustments objectForKey:stamp] intValue];
+			int value = self.adjustment.adjustmentValue;
 			int difference = value - minutes + 60; // take off the minutes and add an hour
+			int change = 60 - minutes;
 			self.array[self.section] = self.array[self.section] - minutes + 60;			
-			[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
-			[[Settings sharedInstance] saveData];
-			
+			[self setStatisticsAdjustment:self.adjustment difference:difference andChange:change];
 			
 			[self.delegate updateAndReload];
 			break;
@@ -482,11 +485,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			int minutes = self.array[self.section] % 60;
 			
 			// take off the minutes off of this month
-			NSString *stamp = [NSString stringWithFormat:@"%d", self.timestamp];
-			int value = [[self.adjustments objectForKey:stamp] intValue];
+			int value = self.adjustment.adjustmentValue;
 			int difference = value - minutes;
 			self.array[self.section] = self.array[self.section] - minutes;			
-			[self.adjustments setObject:[NSNumber numberWithInt:difference] forKey:stamp];
+			[self setStatisticsAdjustment:self.adjustment difference:difference andChange:0];
 			
 			// now move it to the next month
 			int year = self.timestamp/100;
@@ -496,12 +498,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				month = 1;
 				year++;
 			}
-			stamp = [NSString stringWithFormat:@"%d", (month + year*100)];
-			value = [[self.adjustments objectForKey:stamp] intValue];
-			[self.adjustments setObject:[NSNumber numberWithInt:(value + minutes)] forKey:stamp];
 			
-			
-			[[Settings sharedInstance] saveData];
+			MTStatisticsAdjustment *newAdjustment = [self adjustmentForTimestamp:(month + year*100)];
+			value = newAdjustment.adjustmentValue;
+			[self setStatisticsAdjustment:newAdjustment difference:(value + minutes) andChange:0];
 			
 			[self.delegate updateAndReload];
 			break;
@@ -534,11 +534,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-	if([settings objectForKey:SettingsStatisticsAlertSheetShown] == nil)
+	MTSettings *settings = [MTSettings settings];
+	if(!settings.statisticsAlertSheetShownValue)
 	{
-		[settings setObject:@"" forKey:SettingsStatisticsAlertSheetShown];
-		[[Settings sharedInstance] saveData];
+		settings.statisticsAlertSheetShownValue = YES;
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
@@ -556,7 +555,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 {
 	// add notes if there are any
 	int index;
-	NSString *emailAddress = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress];
+	MTUser *currentUser = [MTUser currentUser];
+	NSString *emailAddress = currentUser.secretaryEmailAddress;
 	if(emailAddress == nil || emailAddress.length == 0)
 		return;
 	
@@ -569,7 +569,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
 	
-	NSString *notes = [[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailNotes];
+	NSString *notes = currentUser.secretaryEmailNotes;
 	if([notes length])
 	{
 		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
@@ -586,6 +586,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:<br>", @"Text used in the email that is sent to the congregation secretary, the <br> you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]]];
 			[string appendString:@"</h3>"];
 			
+			// BOOKS
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]]];
+			// BROCHURES
+			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]]];
 			// HOURS
 			NSString *count = @"0";
 			int hours = _minutes[index] / 60;
@@ -598,10 +602,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
 			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count]];
 			
-			// BOOKS
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]]];
-			// BROCHURES
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]]];
 			// MAGAZINES
 			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index]]];
 			// RETURN VISITS
@@ -640,8 +640,13 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 - (void)monthChooserViewControllerSendEmail:(MonthChooserViewController *)monthChooserViewController
 {
 	NSString *emailAddress = monthChooserViewController.emailAddress.textField.text;
-	[[[Settings sharedInstance] settings] setObject:emailAddress forKey:SettingsSecretaryEmailAddress];
-	[[Settings sharedInstance] saveData];
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.secretaryEmailAddress = emailAddress;
+	NSError *error = nil;
+	if(![currentUser.managedObjectContext save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
 	
 	NSArray *selectedMonths = monthChooserViewController.selected;
 	NSArray *monthNames = monthChooserViewController.months;
@@ -707,6 +712,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	}
 	else
 	{
+#if 0
 		[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 		switch(button)
 		{
@@ -798,6 +804,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				break;
 			}
 		}
+#endif
 	}
 }
 
@@ -825,7 +832,9 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		monthGuess = [months objectAtIndex:1];
 	}	
 	UIActionSheet *actionSheet;
-	if([[[Settings sharedInstance] settings] objectForKey:SettingsSecretaryEmailAddress])
+	MTUser *currentUser = [MTUser currentUser];
+	
+	if([currentUser.secretaryEmailAddress length])
 	{
 		actionSheet = [[[UIActionSheet alloc] initWithTitle:@""
 												   delegate:self
@@ -938,10 +947,6 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	[_serviceYearStudyIndividualCalls release];
 	_serviceYearStudyIndividualCalls = [[NSMutableArray alloc] init];
 	
-	NSMutableDictionary *userSettings = [[Settings sharedInstance] userSettings];
-	
-	
-	
 	
 	MTUser *currentUser = [MTUser currentUser];
 	NSManagedObjectContext *moc = currentUser.managedObjectContext;
@@ -949,11 +954,13 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSDateComponents *startOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
 	[startOfDataCollectionComponents setMonth:_thisMonth];
 	[startOfDataCollectionComponents setYear:_thisYear - 1];
+	int startOfDataCollectionTimestamp = (_thisYear - 1) * 100 + _thisMonth;
 	NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 	NSDate *startOfDataCollection = [gregorian dateFromComponents:startOfDataCollectionComponents];
 	
 	int nextMonth = _thisMonth == 12 ? 1 : _thisMonth + 1;
-	int nextMonthsYear = _thisYear = _thisMonth == 12 ? _thisYear + 1 : _thisYear;
+	int nextMonthsYear = _thisMonth == 12 ? _thisYear + 1 : _thisYear;
+	int endOfDataCollectionTimestamp = nextMonthsYear * 100 + nextMonth;
 	NSDateComponents *endOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
 	[endOfDataCollectionComponents setMonth:nextMonth];
 	[endOfDataCollectionComponents setYear:nextMonthsYear];
@@ -961,92 +968,85 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	
 	BOOL newServiceYear = _thisMonth >= 9;
 	
-#error fix me	
 	//Start with Adjustments
-	NSMutableDictionary *adjustmentTypes = [userSettings objectForKey:SettingsStatisticsAdjustments];
-	for(NSString *key in [adjustmentTypes allKeys])
 	{
-		int dummyArray[kMonthsShown];
-		int *array = dummyArray;
-		int *serviceYearValue;
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSArray *adjustments = [moc fetchObjectsForEntityName:[MTStatisticsAdjustment entityName]
+												withPredicate:@"user == %@ && timestamp > %u && timestamp < %u", currentUser, startOfDataCollectionTimestamp, endOfDataCollectionTimestamp];
 		
-		if([key isEqualToString:StatisticsTypeHours])
+		for(MTStatisticsAdjustment *adjustment in adjustments)
 		{
-			array = _minutes;
-			serviceYearValue = &_serviceYearMinutes;
-		}
-		else if([key isEqualToString:StatisticsTypeBooks])
-		{
-			array = _books;
-			serviceYearValue = &_serviceYearBooks;
-		}
-		else if([key isEqualToString:StatisticsTypeBrochures])
-		{
-			array = _brochures;
-			serviceYearValue = &_serviceYearBrochures;
-		}
-		else if([key isEqualToString:StatisticsTypeMagazines])
-		{
-			array = _magazines;
-			serviceYearValue = &_serviceYearMagazines;
-		}
-		else if([key isEqualToString:StatisticsTypeReturnVisits])
-		{
-			array = _returnVisits;
-			serviceYearValue = &_serviceYearReturnVisits;
-		}
-		else if([key isEqualToString:StatisticsTypeBibleStudies])
-		{
-			array = _bibleStudies;
-			serviceYearValue = &_serviceYearBibleStudies;
-		}
-		else if([key isEqualToString:StatisticsTypeCampaignTracts])
-		{
-			array = _campaignTracts;
-			serviceYearValue = &_serviceYearCampaignTracts;
-		}
-		else if([key isEqualToString:StatisticsTypeRBCHours])
-		{
-			array = _quickBuildMinutes;
-			serviceYearValue = &_serviceYearQuickBuildMinutes;
-		}
-		assert(array);// you should handle this
-		assert(serviceYearValue);// you should handle this
+			NSString *key = adjustment.type;
+			int dummyArray[kMonthsShown];
+			int *array = dummyArray;
+			int *serviceYearValue;
+			
+			if([key isEqualToString:StatisticsTypeHours])
+			{
+				array = _minutes;
+				serviceYearValue = &_serviceYearMinutes;
+			}
+			else if([key isEqualToString:StatisticsTypeBooks])
+			{
+				array = _books;
+				serviceYearValue = &_serviceYearBooks;
+			}
+			else if([key isEqualToString:StatisticsTypeBrochures])
+			{
+				array = _brochures;
+				serviceYearValue = &_serviceYearBrochures;
+			}
+			else if([key isEqualToString:StatisticsTypeMagazines])
+			{
+				array = _magazines;
+				serviceYearValue = &_serviceYearMagazines;
+			}
+			else if([key isEqualToString:StatisticsTypeReturnVisits])
+			{
+				array = _returnVisits;
+				serviceYearValue = &_serviceYearReturnVisits;
+			}
+			else if([key isEqualToString:StatisticsTypeBibleStudies])
+			{
+				array = _bibleStudies;
+				serviceYearValue = &_serviceYearBibleStudies;
+			}
+			else if([key isEqualToString:StatisticsTypeCampaignTracts])
+			{
+				array = _campaignTracts;
+				serviceYearValue = &_serviceYearCampaignTracts;
+			}
+			else if([key isEqualToString:StatisticsTypeRBCHours])
+			{
+				array = _quickBuildMinutes;
+				serviceYearValue = &_serviceYearQuickBuildMinutes;
+			}
+			assert(array);// you should handle this
+			assert(serviceYearValue);// you should handle this
 
-		NSMutableDictionary *adjustments = [adjustmentTypes objectForKey:key];
-		for(int section = 0; section < 12; ++section)
-		{
-			int month = _thisMonth - section;
-			int year;
-			int timestamp;
+			int timestamp = adjustment.timestampValue;
+			int month = timestamp % 100;
+			int year = timestamp / 100;
+
 			int offset = -1;
-			if(month < 1)
-			{
-				month = 12 + month;
-				timestamp = (_thisYear - 1) * 100 + month;
-				year = _thisYear - 1;
-			}
-			else
-			{
-				year = _thisYear;
-				timestamp = _thisYear * 100 + month;
-			}
 			if(year == _thisYear && 
 			   month <= _thisMonth)
 			{
 				offset = _thisMonth - month;
 			}
-			// if this call was made last year and in a month after this month
 			else if(year == _thisYear - 1 &&
-					_thisMonth < month)
+					month > _thisMonth)
 			{
 				offset = 12 - month + _thisMonth;
 			}
-			int value = [[adjustments objectForKey:[NSString stringWithFormat:@"%d", timestamp]] intValue];
+			if(offset < 0 || offset > 11)
+				continue;
+
+			int value = adjustment.adjustmentValue;
 			if(value == 0)
 				continue;
 			
-			array[section] += value;
+			array[offset] += value;
 						
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
@@ -1054,6 +1054,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				*serviceYearValue += value;
 			}
 		}
+		[pool drain];
 	}
 	
 	// Hours entries
@@ -1364,7 +1365,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (BOOL)showYearInformation
 {
-	NSString *type = [[[Settings sharedInstance] userSettings] objectForKey:SettingsPublisherType];
+	NSString *type = [[MTUser currentUser] publisherType];
 	return type == nil || 
 	[type isEqualToString:PublisherTypePioneer] ||
 	[type isEqualToString:PublisherTypeSpecialPioneer] ||

@@ -76,6 +76,8 @@
 		9029C5E612D643A30034A227 /* _MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9029C5E512D643A30034A227 /* _MTTimeEntry.m */; };
 		9029C5E812D643A40034A227 /* _MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 9029C5E712D643A30034A227 /* _MTTimeType.m */; };
 		9029C5EA12D643A40034A227 /* _MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9029C5E912D643A40034A227 /* _MTUser.m */; };
+		9029C73612D6CFAE0034A227 /* tutorials.png in Resources */ = {isa = PBXBuildFile; fileRef = 9029C73512D6CFAE0034A227 /* tutorials.png */; };
+		9029C74D12D6D2EF0034A227 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9029C74C12D6D2EF0034A227 /* Icon@2x.png */; };
 		902FC4980E46B086006E39A8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FC4970E46B086006E39A8 /* Entitlements.plist */; };
 		9032C7540F30DACA005FA8D0 /* Geocache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9032C7530F30DACA005FA8D0 /* Geocache.m */; };
 		9035FC001103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035FBFF1103F00500C9F5C7 /* DeletedCallsSortedByStreetViewDataSource.m */; };
@@ -375,6 +377,8 @@
 		9029C5F912D643A90034A227 /* _MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeEntry.h; sourceTree = "<group>"; };
 		9029C5FA12D643AA0034A227 /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
 		9029C5FB12D643AA0034A227 /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
+		9029C73512D6CFAE0034A227 /* tutorials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials.png; sourceTree = "<group>"; };
+		9029C74C12D6D2EF0034A227 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
@@ -682,13 +686,13 @@
 				90FBE8720E39882600FD8014 /* CallViews */,
 				9052CD3110866F57001FFA13 /* NotAtHomes */,
 				909125E2128C70F3009551DC /* TutorialView */,
+				904FEBD411B74C4000DED4F2 /* TableViewCells */,
+				909902EA122C42FE00545B78 /* MBProgressHUD */,
+				90DE47DA10FAE59B0003D14B /* EmptyListViewController.h */,
 				90FBE88E0E39938F00FD8014 /* Settings.h */,
 				90FBE88F0E39938F00FD8014 /* Settings.m */,
 				90FBEA4F0E3AA8A100FD8014 /* CallsSorter.h */,
 				90FBEA500E3AA8A100FD8014 /* CallsSorter.m */,
-				904FEBD411B74C4000DED4F2 /* TableViewCells */,
-				90DE47DA10FAE59B0003D14B /* EmptyListViewController.h */,
-				909902EA122C42FE00545B78 /* MBProgressHUD */,
 				90DE47DB10FAE59B0003D14B /* EmptyListViewController.m */,
 				906140380E4ABBBC0072BA7B /* PublicationPickerView.h */,
 				906140390E4ABBBC0072BA7B /* PublicationPickerView.m */,
@@ -786,6 +790,7 @@
 				90EA4F36100275590046A2E4 /* blueButton.png */,
 				9007C1FE0EE0657C00FE19D5 /* redButton.png */,
 				90C148EF0E3B937300C6EDAF /* Icon.png */,
+				9029C74C12D6D2EF0034A227 /* Icon@2x.png */,
 				90DE47EF10FAEA330003D14B /* EmptyGradient.png */,
 				90DE453D10FA5B780003D14B /* BlueMinusButtonWhiteOutlineSmall.png */,
 				90DE453E10FA5B780003D14B /* BluePlusButtonWhiteOutlineSmall.png */,
@@ -1203,6 +1208,7 @@
 				90FD7B7F12272FA400660538 /* timer@2x.png */,
 				90FD7B8112272FA400660538 /* timerBig.png */,
 				90FD7B8212272FA400660538 /* timerBig@2x.png */,
+				9029C73512D6CFAE0034A227 /* tutorials.png */,
 				90592DB512CC4ABC00ECBFFF /* BlueMinusButtonAppleLike.png */,
 				90592DB612CC4ABC00ECBFFF /* BluePlusButtonAppleLike.png */,
 			);
@@ -1367,6 +1373,8 @@
 				909125F9128C710B009551DC /* YouTubeTableViewCell.xib in Resources */,
 				90592DB712CC4ABC00ECBFFF /* BlueMinusButtonAppleLike.png in Resources */,
 				90592DB812CC4ABC00ECBFFF /* BluePlusButtonAppleLike.png in Resources */,
+				9029C73612D6CFAE0034A227 /* tutorials.png in Resources */,
+				9029C74D12D6D2EF0034A227 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1642,7 +1650,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E8BEFB51-7051-497B-8DAA-5BEDAEE1625A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E79F51DB-1B0E-42A5-9150-08F36E89742B";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
@@ -1685,7 +1693,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC8CC640-ED81-46AA-B313-4090C2817AA3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0EF5CF3-F928-4C78-A4C5-D72C2AB0FA25";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv6 armv7";
@@ -1753,7 +1761,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
@@ -1763,7 +1771,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "056CCFA1-1F02-4E6A-8F22-EEABF68AE0F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -1774,8 +1782,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1783,8 +1791,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "031A42CF-AE33-40BC-B4F4-2589D514D18C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "031A42CF-AE33-40BC-B4F4-2589D514D18C";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7";
 			};

@@ -14,7 +14,6 @@
 //
 
 #import "SettingsTableViewController.h"
-#import "Settings.h"
 #import "BackupView.h"
 #import "NumberViewController.h"
 #import "PSUrlString.h"
@@ -1151,7 +1150,6 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
-	MTSettings *settings = [MTSettings settings];
 	MTUser *user = [MTUser currentUser];
 	// Donate
 	{

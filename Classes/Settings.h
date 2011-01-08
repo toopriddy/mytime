@@ -16,6 +16,8 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "MTPublication.h"
+
 //multiple users
 extern NSString * const SettingsCalls; // Done
 //multiple users
@@ -29,9 +31,6 @@ extern NSString * const SettingsDeletedCalls; // Done
 	extern NSString * const CallState; // Done
 	extern NSString * const CallLattitudeLongitude; // Done
 	extern NSString * const CallLocationType; // Done
-		extern NSString * const CallLocationTypeManual;
-		extern NSString * const CallLocationTypeGoogleMaps;
-		extern NSString * const CallLocationTypeDoNotShow;
 
 
 	extern NSString * const CallMetadata; // Done
@@ -52,14 +51,6 @@ extern NSString * const SettingsDeletedCalls; // Done
 		extern NSString * const CallReturnVisitPublicationMonth; // Done
 		extern NSString * const CallReturnVisitPublicationDay; // Done
 
-		extern NSString * const CallReturnVisitTypeTransferedStudy;
-		extern NSString * const CallReturnVisitTypeTransferedNotAtHome;
-		extern NSString * const CallReturnVisitTypeTransferedInitialVisit;
-		extern NSString * const CallReturnVisitTypeTransferedReturnVisit;
-		extern NSString * const CallReturnVisitTypeInitialVisit;
-		extern NSString * const CallReturnVisitTypeReturnVisit;
-		extern NSString * const CallReturnVisitTypeStudy;
-		extern NSString * const CallReturnVisitTypeNotAtHome;
 
 //multiple users
 extern NSString * const SettingsBulkLiterature; // Done
@@ -73,18 +64,6 @@ extern NSString * const SettingsBulkLiterature; // Done
 		extern NSString * const BulkLiteratureArrayMonth; // Done
 		extern NSString * const BulkLiteratureArrayDay; // Done
 
-#define AlternateLocalizedString(key, comment) (key)
-#define PublicationTypeHeading			@""
-#define PublicationTypeDVDBible			AlternateLocalizedString(@"Bible DVD", @"Publication Type name")
-#define PublicationTypeDVDBook			AlternateLocalizedString(@"DVD", @"Publication Type name")
-#define PublicationTypeDVDBrochure		AlternateLocalizedString(@"DVD Brochure", @"Publication Type name")
-#define PublicationTypeDVDNotCount		AlternateLocalizedString(@"DVD (not counted)", @"Publication Type name") 
-#define PublicationTypeBook				AlternateLocalizedString(@"Book", @"Publication Type name")
-#define PublicationTypeBrochure			AlternateLocalizedString(@"Brochure", @"Publication Type name")
-#define PublicationTypeTwoMagazine		AlternateLocalizedString(@"TwoMagazine", @"Publication Type name")
-#define PublicationTypeMagazine			AlternateLocalizedString(@"Magazine", @"Publication Type name")
-#define PublicationTypeTract			AlternateLocalizedString(@"Tract", @"Publication Type name")
-#define PublicationTypeCampaignTract	AlternateLocalizedString(@"Campaign Tract", @"Publication Type name")
 
 
 
@@ -188,11 +167,6 @@ extern NSString * const SettingsNotAtHomeTerritories; // Done
 //multiple users
 extern NSString * const SettingsPublisherType; // Done
 
-	extern NSString * const PublisherTypePublisher;
-	extern NSString * const PublisherTypeAuxilliaryPioneer;
-	extern NSString * const PublisherTypePioneer;
-	extern NSString * const PublisherTypeSpecialPioneer;
-	extern NSString * const PublisherTypeTravelingServant;
 
 
 // these are in the UserDefaults
@@ -205,9 +179,8 @@ extern NSString *const UserDefaultsRemovePasscode;
 
 // notifications
 
-extern NSString *const SettingsNotificationUserChanged;
+//extern NSString *const SettingsNotificationUserChanged;
 
-extern NSString *const SettingsNotificationCallChanged;
 
 
 #define REVERSE_GEOCODING_ACCURACY 80
@@ -232,6 +205,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 + (void)formatStreetNumber:(NSString *)houseNumber apartment:(NSString *)apartmentNumber street:(NSString *)street city:(NSString *)city state:(NSString *)state topLine:(NSMutableString *)top bottomLine:(NSMutableString *)bottom;
 
 + (NSString *)filename;
++ (NSString *)outOfWayFilename;
 - (void)readData;
 - (void)saveData;
 

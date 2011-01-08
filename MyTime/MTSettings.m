@@ -1,6 +1,7 @@
 #import "MTSettings.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "PSLocalization.h"
 
 @implementation MTSettings
 

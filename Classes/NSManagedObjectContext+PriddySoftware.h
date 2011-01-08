@@ -8,6 +8,12 @@
 
 #import <CoreData/CoreData.h>
 
+@interface NSSortDescriptor(PriddySoftware)
++ (id)psSortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending;
++ (id)psSortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending selector:(SEL)selector;
+@end
+
+
 @interface NSManagedObjectContext(PriddySoftware)
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName
 						 withPredicate:(id)stringOrPredicate, ...;

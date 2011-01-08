@@ -13,7 +13,7 @@
 //  is NOT allowed to be used in a compiled or scripted program.
 //
 #import "PublicationPickerView.h"
-#import "Settings.h"
+#import "MTPublication.h"
 #import "PSLocalization.h"
 
 #define YEAR_OFFSET 1900

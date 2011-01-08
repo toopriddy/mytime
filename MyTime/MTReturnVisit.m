@@ -1,6 +1,17 @@
 #import "MTReturnVisit.h"
 #import "MTCall.h"
 
+#include "PSRemoveLocalizedString.h"
+NSString * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedNotAtHome = NSLocalizedString(@"Transfered Not At Home", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedReturnVisit = NSLocalizedString(@"Transfered Return Visit", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeTransferedInitialVisit = NSLocalizedString(@"Transfered Initial Visit", @"return visit type name when this call is transfered from another witness");
+NSString * const CallReturnVisitTypeReturnVisit = NSLocalizedString(@"Return Visit", @"return visit type name");
+NSString * const CallReturnVisitTypeInitialVisit = NSLocalizedString(@"Initial Visit", @"This is used to signify the first visit which is not counted as a return visit.  This is in the view where you get to pick the visit type");
+NSString * const CallReturnVisitTypeStudy = NSLocalizedString(@"Study", @"return visit type name");
+NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home", @"return visit type name");
+#include "PSAddLocalizedString.h"
+
 @implementation MTReturnVisit
 
 // Custom logic goes here.

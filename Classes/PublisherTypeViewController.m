@@ -14,7 +14,7 @@
 //
 
 #import "PublisherTypeViewController.h"
-#import "Settings.h"
+#import "MTUser.h"
 #import "PSLocalization.h"
 
 @interface PublisherTypeViewController ()

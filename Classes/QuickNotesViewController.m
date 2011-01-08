@@ -199,7 +199,7 @@
 	
 	NSArray *presentations = [moc fetchObjectsForEntityName:[MTPresentation entityName]
 										  propertiesToFetch:[NSArray arrayWithObject:@"order"]
-										withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]] 
+										withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]] 
 											  withPredicate:@"user == %@", [MTUser currentUser]];
 	
     self.presentation.orderValue = toIndex;
@@ -578,7 +578,7 @@
 		[sectionController release];
 		for(MTPresentation *entry in [moc fetchObjectsForEntityName:[MTPresentation entityName]
 												  propertiesToFetch:nil 
-												withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]] 
+												withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]] 
 													  withPredicate:@"user == %@", [MTUser currentUser]])
 		{
 			OldQuickNotesCellController *cellController = [[OldQuickNotesCellController alloc] init];
@@ -604,7 +604,7 @@
 		int i = 0;
 		for(MTReturnVisit *returnVisit in [moc fetchObjectsForEntityName:[MTReturnVisit entityName]
 													   propertiesToFetch:nil 
-													 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]] 
+													 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]] 
 														   withPredicate:@"call.user == %@", [MTUser currentUser]])
 		{
 			NSString *notes = returnVisit.notes;

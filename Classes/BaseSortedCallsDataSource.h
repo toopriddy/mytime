@@ -23,7 +23,6 @@
 	SortCallsType _sortedBy;
 }
 
-- (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata callsName:(NSString *)callsName;
 - (id)initSortedBy:(SortCallsType)sortedBy withMetadata:(NSString *)metadata;
 - (id)initSortedBy:(SortCallsType)sortedBy;
 - (void)dealloc;

@@ -14,8 +14,8 @@
 //
 
 #import "SubmitDataFile.h"
-#import "Settings.h"
 #import "HTTPServer.h"
+#import "MyTimeAppDelegate.h"
 
 @implementation SubmitDataFile
 
@@ -61,6 +61,7 @@
 - (void)sendPage
 {
 	NSString *errorString = nil;
+	BOOL reallyQuit = NO;
 	
 	for(NSDictionary *entry in self.variableArray)
 	{
@@ -68,8 +69,7 @@
 		{
 			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
 			
-			
-			NSString *filename = @"records.plist";
+			NSString *filename = [MyTimeAppDelegate storeFileAndPath];
 			NSFileManager *fileManager = [NSFileManager defaultManager];
 			NSString *directory = [paths objectAtIndex:0];
 			if(![fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])
@@ -86,8 +86,7 @@
 					NSLog(@"did not write file");
 				}
 			}
-			[[Settings sharedInstance] readData];
-
+			reallyQuit = YES;
 		}
 	}
 	
@@ -116,6 +115,10 @@
 		CFRelease(response);
 		CFRelease(headerData);
 		[server closeHandler:self];
+	}
+	if(reallyQuit)
+	{
+		exit(0);
 	}
 }
 

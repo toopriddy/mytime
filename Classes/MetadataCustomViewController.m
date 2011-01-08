@@ -238,7 +238,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
 	// move the row
-	NSMutableArray *sortedArray = [NSMutableArray arrayWithArray:[type.multipleChoices sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]]];
+	NSMutableArray *sortedArray = [NSMutableArray arrayWithArray:[type.multipleChoices sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]]];
 	MTMultipleChoice *movedChoice = [[sortedArray objectAtIndex:fromIndexPath.row] retain];
 	[sortedArray removeObjectAtIndex:fromIndexPath.row];
 	[sortedArray insertObject:movedChoice atIndex:toIndexPath.row];
@@ -768,7 +768,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 
 + (void)addCellMultipleChoiceCellControllersToSectionController:(GenericTableViewSectionController *)sectionController tableController:(GenericTableViewController *)viewController fromType:(MTAdditionalInformationType *)type metadataDelegate:(NSObject<MultipleChoiceMetadataValueCellControllerDelegate> *)metadataDelegate
 {
-	NSArray *sortedArray = [[type.multipleChoices allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]];
+	NSArray *sortedArray = [[type.multipleChoices allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
 	
 	for(MTMultipleChoice *choice in sortedArray)
 	{

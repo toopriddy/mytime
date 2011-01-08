@@ -669,7 +669,7 @@
 
 		NSArray *attempts = [self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]
 																	 propertiesToFetch:nil 
-																   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil]
+																   withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO], nil]
 																		 withPredicate:@"house == %@", self.house];
 		for(MTTerritoryHouseAttempt *attempt in attempts)
 		{

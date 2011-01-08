@@ -252,11 +252,6 @@ int sortByMetadata(id v1, id v2, void *context)
 
 - (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata
 {
-	return [self initSortedBy:theSortedBy withMetadata:metadata callsName:SettingsCalls];
-}
-
-- (id)initSortedBy:(SortCallsType)theSortedBy withMetadata:(NSString *)metadata callsName:(NSString *)theCallsName
-{
 	[super init];
 	sortedBy = theSortedBy;
 	self.callsName = [theCallsName copy];

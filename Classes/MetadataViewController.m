@@ -514,7 +514,7 @@ static MetadataInformation commonInformation[] = {
 	NSManagedObjectContext *moc = currentUser.managedObjectContext;
 	NSArray *array = [[moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
 								   propertiesToFetch:nil 
-								 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:NO]]
+								 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
 									   withPredicate:@"user == %@ && hidden == NO ", currentUser] valueForKey:@"name"];
 	return array;
 }
@@ -619,7 +619,7 @@ static MetadataInformation commonInformation[] = {
 
 	for(MTAdditionalInformationType *entry in [moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
 														   propertiesToFetch:nil 
-														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
 															   withPredicate:@"user == %@ && alwaysShown == YES && hidden == NO ", currentUser])
 	{
 		MetadataCellController *cellController = [[MetadataCellController alloc] init];
@@ -637,7 +637,7 @@ static MetadataInformation commonInformation[] = {
 
 	for(MTAdditionalInformationType *entry in [moc fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
 														   propertiesToFetch:nil 
-														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]
+														 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
 															   withPredicate:@"user == %@ && alwaysShown == NO && hidden == NO ", currentUser])
 	{
 		MetadataCellController *cellController = [[MetadataCellController alloc] init];

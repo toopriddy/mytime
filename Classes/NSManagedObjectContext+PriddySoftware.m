@@ -8,6 +8,17 @@
 
 #import "NSManagedObjectContext+PriddySoftware.h"
 
+@implementation NSSortDescriptor(PriddySoftware)
++ (id)psSortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending
+{
+	return [[[NSSortDescriptor alloc] initWithKey:key ascending:ascending] autorelease];
+}
++ (id)psSortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending selector:(SEL)selector
+{
+	return [[[NSSortDescriptor alloc] initWithKey:key ascending:ascending selector:selector] autorelease];
+}
+@end
+
 @implementation NSManagedObjectContext(PriddySoftware)
 // Convenience method to fetch the array of objects for a given Entity
 // name in the context, optionally limiting by a predicate or by a predicate

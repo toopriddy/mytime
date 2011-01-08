@@ -16,7 +16,6 @@
 #import "BulkLiteraturePlacementViewContoller.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "LiteraturePlacementViewController.h"
-#import "Settings.h"
 #import "MTUser.h"
 #import "MTPublication.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
@@ -363,7 +362,7 @@ extern NSString const * const BulkLiteratureArrayDay;
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO], nil];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO], nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     

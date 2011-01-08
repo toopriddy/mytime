@@ -17,7 +17,6 @@
 #import "SortedCallsViewController.h"
 #import "CallTableCell.h"
 #import "CallViewController.h"
-#import "Settings.h"
 #import "MovableTableViewIndex.h"
 #import "PSLocalization.h"
 #import "MTCall.h"
