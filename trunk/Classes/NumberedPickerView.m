@@ -14,7 +14,6 @@
 //
 
 #import "NumberedPickerView.h"
-#import "Settings.h"
 #import <QuartzCore/QuartzCore.h>
 #import <QuartzCore/CALayer.h>
 

@@ -13,7 +13,6 @@
 //  is NOT allowed to be used in a compiled or scripted program.
 //
 #import "UITableViewMultiTextFieldCell.h"
-#import "Settings.h"
 
 #define TITLE_LEFT_OFFSET 10
 #define TITLE_TOP_OFFSET 6

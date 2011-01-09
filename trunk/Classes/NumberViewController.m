@@ -14,7 +14,6 @@
 //
 
 #import "NumberViewController.h"
-#import "Settings.h"
 
 @implementation NumberViewController
 @synthesize numberPicker;

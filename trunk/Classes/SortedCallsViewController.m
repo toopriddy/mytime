@@ -62,14 +62,7 @@
 		}
 	}
 	
-	if([self numberOfSectionsInTableView:nil] > 1 || [self tableView:nil numberOfRowsInSection:0])
-	{
-		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-		self.tableView.scrollEnabled = YES;
-		[self.emptyView.view removeFromSuperview];
-		self.emptyView = nil;
-	}
-	else
+	if(self.fetchedResultsController.fetchedObjects.count == 0)
 	{
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		self.tableView.scrollEnabled = NO;
@@ -90,6 +83,13 @@
 
 			[self.view addSubview:self.emptyView.view];
 		}
+	}
+	else
+	{
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+		self.tableView.scrollEnabled = YES;
+		[self.emptyView.view removeFromSuperview];
+		self.emptyView = nil;
 	}
 }
 

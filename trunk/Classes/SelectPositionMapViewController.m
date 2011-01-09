@@ -14,7 +14,6 @@
 //
 
 #import "SelectPositionMapViewController.h"
-#import "Settings.h"
 #import "CallViewController.h"
 #import "PSLocalization.h"
 

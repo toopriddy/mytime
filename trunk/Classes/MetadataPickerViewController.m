@@ -15,7 +15,6 @@
 
 #import "MetadataPickerViewController.h"
 #import "MetadataViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 @implementation MetadataPickerViewController

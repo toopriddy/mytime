@@ -14,7 +14,6 @@
 //
 
 #import "UITableViewMultilineTextCell.h"
-#import "Settings.h"
 
 @implementation UITableViewMultilineTextCell
 @synthesize textView;

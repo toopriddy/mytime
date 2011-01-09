@@ -14,7 +14,6 @@
 //
 
 #import "DatePickerViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 @implementation DatePickerViewController

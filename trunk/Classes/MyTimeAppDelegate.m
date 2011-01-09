@@ -64,6 +64,7 @@
 + (NSString *)storeFileAndPath;
 - (MFMailComposeViewController *)sendCoreDataConvertFailureEmail;
 - (MTCall *)createCoreDataCallWithUser:(MTUser *)mtUser call:(NSDictionary *)call deleted:(BOOL)deleted;
+- (MTTerritory *)createCoreDataTerritoryWithUser:(MTUser *)mtUser territory:(NSDictionary *)territory;
 
 @end
 
@@ -310,28 +311,29 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			}
 			break;
 		case ADD_NOT_AT_HOME_TERRITORY:
-#warning fix me and remove Settings
 			switch(button)
 			{
 					//import
 				case 0:
 				{
-					NSMutableArray *territories = [[[Settings sharedInstance] userSettings] objectForKey:SettingsNotAtHomeTerritories];
 					NSMutableDictionary *newTerritory = [NSMutableDictionary dictionaryWithDictionary:dataToImport];
+										
+					MTTerritory *mtTerritory = [self createCoreDataTerritoryWithUser:[MTUser currentUser] territory:newTerritory];
 					
-					if(territories == nil)
+					// add the user to make it correct
+					mtTerritory.user = [MTUser currentUser];
+					
+					NSError *error = nil;
+					if (![self.managedObjectContext save:&error]) 
 					{
-						territories = [NSMutableArray array];
-						[[[Settings sharedInstance] userSettings] setObject:territories forKey:SettingsNotAtHomeTerritories];
+						[NSManagedObjectContext presentErrorDialog:error];
 					}
 					
-					[territories addObject:newTerritory];
-					[[Settings sharedInstance] saveData];
 					self.dataToImport = nil;
 					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-					alertSheet.title = NSLocalizedString(@"Please quit mytime to complete the import/restore.", @"This message is displayed after a successful import of a call or a restore of a backup");
+					alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
 					[alertSheet show];
 					break;
 				}
@@ -342,6 +344,39 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					break;
 				}
 			}
+			break;
+		case ADD_CORE_DATA_NOT_AT_HOME_TERRITORY:
+			switch(button)
+		{
+				//import
+			case 0:
+			{
+				MTTerritory *territory = (MTTerritory *)[self.managedObjectContext managedObjectFromDictionary:dataToImport];
+
+				// add the user to make it correct
+				territory.user = [MTUser currentUser];
+				
+				NSError *error = nil;
+				if (![self.managedObjectContext save:&error]) 
+				{
+					[NSManagedObjectContext presentErrorDialog:error];
+				}
+				
+				self.dataToImport = nil;
+				
+				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+				[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+				alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
+				[alertSheet show];
+				break;
+			}
+				// cancel
+			case 1:
+			{
+				self.dataToImport = nil;
+				break;
+			}
+		}
 			break;
 		case RESTORE_BACKUP:
 			switch(button)
@@ -940,7 +975,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 	[string appendString:NSLocalizedString(@"MyTime encountered an error translating your data to the new format.<br><br><b>Your old data is still safe</b>, I have included it in this email for the author of MyTime to fix.  The author of MyTime will try to respond quickly to your problem with a fixed data file for you to use.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected a difference in your data between the old data file and the new one.  To be safe, dont depend on this.<br><br>", @"Email body for the email that will be sent to me when there is a failure in the data conversion in the 4.0 version of mytime")];
 	
 	// attach the old records file
-	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[self class] storeFileAndPath]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings outOfWayFilename]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
 	
 	[mailView setToRecipients:[NSArray arrayWithObject:@"toopriddy@gmail.com"]];
 
@@ -1141,6 +1176,41 @@ NSString *emailFormattedStringForSettings();
 	return mtCall;
 }
 
+- (MTTerritory *)createCoreDataTerritoryWithUser:(MTUser *)mtUser territory:(NSDictionary *)territory
+{
+	MTTerritory *mtTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
+	mtTerritory.name = [territory objectForKey:NotAtHomeTerritoryName];
+	mtTerritory.city = [territory objectForKey:NotAtHomeTerritoryCity];
+	mtTerritory.state = [territory objectForKey:NotAtHomeTerritoryState];
+	mtTerritory.notes = [territory objectForKey:NotAtHomeTerritoryNotes];
+	mtTerritory.ownerId = [territory objectForKey:NotAtHomeTerritoryOwnerId];
+	mtTerritory.ownerEmailId = [territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
+	mtTerritory.ownerEmailAddress = [territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
+	mtTerritory.user = mtUser;
+	for(NSDictionary *street in [territory objectForKey:NotAtHomeTerritoryStreets])
+	{
+		MTTerritoryStreet *mtStreet = [MTTerritoryStreet insertInManagedObjectContext:self.managedObjectContext];
+		mtStreet.name = [street objectForKey:NotAtHomeTerritoryStreetName];
+		mtStreet.date = [street objectForKey:NotAtHomeTerritoryStreetDate];
+		mtStreet.notes = [street objectForKey:NotAtHomeTerritoryStreetNotes];
+		mtStreet.territory = mtTerritory;
+		for(NSDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
+		{
+			MTTerritoryHouse *mtHouse = [MTTerritoryHouse insertInManagedObjectContext:self.managedObjectContext];
+			mtHouse.number = [house objectForKey:NotAtHomeTerritoryHouseNumber];
+			mtHouse.apartment = [house objectForKey:NotAtHomeTerritoryHouseApartment];
+			mtHouse.notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
+			mtHouse.street = mtStreet;
+			for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
+			{
+				MTTerritoryHouseAttempt *mtAttempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.managedObjectContext];
+				mtAttempt.date = attempt;
+				mtAttempt.house = mtHouse;
+			}
+		}
+	}
+	return mtTerritory;
+}
 - (void)convertToCoreDataStoreTask
 {
 //	double steps = 1;
@@ -1221,7 +1291,7 @@ NSString *emailFormattedStringForSettings();
 		
 		// FIX METADATA
 		{
-			[MetadataViewController fixMetadataForUser:(NSMutableDictionary *)user];
+			[MetadataViewController DONOTUSEfixMetadataForUserDONOTUSE:(NSMutableDictionary *)user];
 		}		
 		
 		// SECRETARY SETTINGS
@@ -1350,37 +1420,8 @@ NSString *emailFormattedStringForSettings();
 		// TERRITORY
 		for(NSDictionary *territory in [user objectForKey:SettingsNotAtHomeTerritories])
 		{
-			MTTerritory *mtTerritory = [MTTerritory insertInManagedObjectContext:self.managedObjectContext];
-			mtTerritory.name = [territory objectForKey:NotAtHomeTerritoryName];
-			mtTerritory.city = [territory objectForKey:NotAtHomeTerritoryCity];
-			mtTerritory.state = [territory objectForKey:NotAtHomeTerritoryState];
-			mtTerritory.notes = [territory objectForKey:NotAtHomeTerritoryNotes];
-			mtTerritory.ownerId = [territory objectForKey:NotAtHomeTerritoryOwnerId];
-			mtTerritory.ownerEmailId = [territory objectForKey:NotAtHomeTerritoryOwnerEmailId];
-			mtTerritory.ownerEmailAddress = [territory objectForKey:NotAtHomeTerritoryOwnerEmailAddress];
-			mtTerritory.user = mtUser;
-			for(NSDictionary *street in [territory objectForKey:NotAtHomeTerritoryStreets])
-			{
-				MTTerritoryStreet *mtStreet = [MTTerritoryStreet insertInManagedObjectContext:self.managedObjectContext];
-				mtStreet.name = [street objectForKey:NotAtHomeTerritoryStreetName];
-				mtStreet.date = [street objectForKey:NotAtHomeTerritoryStreetDate];
-				mtStreet.notes = [street objectForKey:NotAtHomeTerritoryStreetNotes];
-				mtStreet.territory = mtTerritory;
-				for(NSDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
-				{
-					MTTerritoryHouse *mtHouse = [MTTerritoryHouse insertInManagedObjectContext:self.managedObjectContext];
-					mtHouse.number = [house objectForKey:NotAtHomeTerritoryHouseNumber];
-					mtHouse.apartment = [house objectForKey:NotAtHomeTerritoryHouseApartment];
-					mtHouse.notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
-					mtHouse.street = mtStreet;
-					for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
-					{
-						MTTerritoryHouseAttempt *mtAttempt = [MTTerritoryHouseAttempt insertInManagedObjectContext:self.managedObjectContext];
-						mtAttempt.date = attempt;
-						mtAttempt.house = mtHouse;
-					}
-				}
-			}
+			[self createCoreDataTerritoryWithUser:mtUser territory:territory];
+
 			self.hud.progress = self.hud.progress + 1.0/steps;
 		}
 
@@ -1523,25 +1564,24 @@ NSString *emailFormattedStringForSettings();
 - (void)checkAutoBackup
 {
 	MTSettings *settings = [MTSettings settings];
-	NSDate *lastBackupDate = settings.lastBackupDate;
-	NSDate *dateLimit = nil;
 	int autobackupInterval = settings.autobackupIntervalValue;
 	if(autobackupInterval)
 	{
+		NSDate *lastBackupDate = settings.lastBackupDate;
+		NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:-(autobackupInterval * 60 * 60 * 24)];
 		// subtract the number of days from now
-		dateLimit = [NSDate dateWithTimeIntervalSinceNow:-(autobackupInterval * 60 * 60 * 24)];
-	}
-	if(lastBackupDate == nil || (dateLimit && lastBackupDate == [lastBackupDate earlierDate:dateLimit]) )
-	{
-		_actionSheetType = AUTO_BACKUP;
-		UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"It has been a while since you did an email backup, want to do it now? It just takes 2 seconds.", @"This is the message the user is presented with when they have not backed up their mytime data ever, or they are past their autobackup interval")
-																 delegate:self
-														cancelButtonTitle:nil
-												   destructiveButtonTitle:NSLocalizedString(@"I don't want to backup", @"button to not send the email backup.  I want to have this to have the sense of sounding very bad, like: I dont care about my data, dont backup")
-														otherButtonTitles:NSLocalizedString(@"Send email backup", @"button to send the email backup"), nil] autorelease];
-		
-		alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-		[alertSheet showInView:window];
+		if(lastBackupDate == nil || (dateLimit && lastBackupDate == [lastBackupDate earlierDate:dateLimit]) )
+		{
+			_actionSheetType = AUTO_BACKUP;
+			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"It has been a while since you did an email backup, want to do it now? It just takes 2 seconds.", @"This is the message the user is presented with when they have not backed up their mytime data ever, or they are past their autobackup interval")
+																	 delegate:self
+															cancelButtonTitle:nil
+													   destructiveButtonTitle:NSLocalizedString(@"I don't want to backup", @"button to not send the email backup.  I want to have this to have the sense of sounding very bad, like: I dont care about my data, dont backup")
+															otherButtonTitles:NSLocalizedString(@"Send email backup", @"button to send the email backup"), nil] autorelease];
+			
+			alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+			[alertSheet showInView:window];
+		}
 	}
 }
 
@@ -1745,6 +1785,39 @@ NSString *emailFormattedStringForSettings();
 					
 					handled = YES;
 					_actionSheetType = ADD_NOT_AT_HOME_TERRITORY;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a not at home territory into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a not at home territory from an email when the call was transferred from another iphone/itouch")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Yes, add territory", @"Transferr this call from another user")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
+			if([@"/addCoreDataNotAtHomeTerritory" isEqualToString:path])
+			{
+				do 
+				{
+					NSData *dataStore = allocNSDataFromNSStringByteString(data);
+					if(dataStore == nil)
+						break;
+					@try
+					{
+						self.dataToImport = [NSKeyedUnarchiver unarchiveObjectWithData:dataStore];
+					}
+					@catch (NSException *e) 
+					{
+						NSLog(@"%@", e);
+					}
+					[dataStore release];
+					DEBUG(NSLog(@"%@", dataToImport);)
+					
+					if(self.dataToImport == nil)
+						break;
+					
+					handled = YES;
+					_actionSheetType = ADD_CORE_DATA_NOT_AT_HOME_TERRITORY;
 					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to import a not at home territory into MyTime, are you sure you want to do this?", @"This message gets displayed when the user is trying to add a not at home territory from an email when the call was transferred from another iphone/itouch")
 																			 delegate:self
 																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")

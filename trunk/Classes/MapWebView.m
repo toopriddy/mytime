@@ -30,7 +30,6 @@
  */
 
 #import "MapWebView.h"
-#import "Settings.h"
 
 #define DEFAULT_ZOOM_LEVEL	17
 

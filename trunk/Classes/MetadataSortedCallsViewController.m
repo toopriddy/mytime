@@ -15,7 +15,6 @@
 
 #import "MetadataSortedCallsViewController.h"
 #import "CallsSortedByFilterDataSource.h"
-#import "Settings.h"
 #import "MyTimeAppDelegate.h"
 
 @implementation MetadataSortedCallsViewController

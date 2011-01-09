@@ -23,13 +23,17 @@
 #import "NotAtHomeHouseViewController.h"
 #import "MTTerritoryHouse.h"
 #import <AddressBookUI/AddressBookUI.h>
-#import "Settings.h"
 #import "PSTextFieldCellController.h"
 #import "PSDateCellController.h"
 #import "PSTextViewCellController.h"
 #import "MTTerritoryHouseAttempt.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "MTCall.h"
 #import "PSLocalization.h"
+
+@interface NotAtHomeStreetViewController ()
+- (void)resignAllFirstResponders;
+@end
 
 @interface NotAtHomeStreetViewCellController : NSObject<TableViewCellController>
 {
@@ -119,12 +123,7 @@
 	
 	cell.delegate = self;
 	cell.attempts = self.house.attempts.count;
-	NSMutableString *string = [[NSMutableString alloc] init];
-	[Settings formatStreetNumber:self.house.number 
-					   apartment:self.house.apartment
-						 topLine:string];
-	cell.houseLabel.text = string;
-	[string release];
+	cell.houseLabel.text = [MTCall topLineOfAddressWithHouseNumber:self.house.number apartmentNumber:self.house.apartment street:nil];
 
 	return cell;
 }

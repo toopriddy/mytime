@@ -35,7 +35,7 @@
 @property (nonatomic,assign) id<MetadataViewControllerDelegate> delegate;
 
 + (NSArray *)metadataNames;
-+ (void)fixMetadataForUser:(NSMutableDictionary *)user;
++ (void)DONOTUSEfixMetadataForUserDONOTUSE:(NSMutableDictionary *)user;
 
 /**
  * initialize this view with the address information

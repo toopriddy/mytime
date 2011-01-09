@@ -14,7 +14,6 @@
 //
 
 #import "GeocacheViewController.h"
-#import "Settings.h"
 #import "NSObject+PriddySoftware.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 
