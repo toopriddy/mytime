@@ -14,7 +14,6 @@
 //
 
 #import "MetadataEditorViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 #import "UITableViewSwitchCell.h"
 

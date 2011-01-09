@@ -26,6 +26,11 @@
 #import "PSTextViewCellController.h"
 #import "PSLocalization.h"
 
+@interface NotAtHomeTerritoryViewController ()
+- (void)resignAllFirstResponders;
+@end
+
+
 @interface NotAtHomeTerritoryViewCellController : NSObject<TableViewCellController>
 {
 	NotAtHomeTerritoryViewController *delegate;

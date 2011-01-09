@@ -14,7 +14,6 @@
 //
 
 #import "CallTableCell.h"
-#import "Settings.h"
 #import "MTReturnVisit.h"
 #import "PSLocalization.h"
 #import "NSManagedObjectContext+PriddySoftware.h"

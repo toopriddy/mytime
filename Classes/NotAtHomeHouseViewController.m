@@ -20,7 +20,6 @@
 #import "UITableViewMultiTextFieldCell.h"
 #import "UITableViewMultilineTextCell.h"
 #import "UITableViewTitleAndValueCell.h"
-#import "Settings.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "CallViewController.h"
 #import "Geocache.h"
@@ -32,6 +31,11 @@
 #import "PSTextViewCellController.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
+
+@interface NotAtHomeHouseViewController ()
+- (void)resignAllFirstResponders;
+@end
+
 
 @interface NotAtHomeHouseViewCellController : NSObject<TableViewCellController>
 {

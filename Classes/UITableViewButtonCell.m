@@ -14,7 +14,6 @@
 //
 
 #import "UITableViewButtonCell.h"
-#import "Settings.h"
 
 @implementation UITableViewButtonCell
 

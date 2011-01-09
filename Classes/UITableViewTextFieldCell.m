@@ -14,7 +14,6 @@
 //
 
 #import "UITableViewTextFieldCell.h"
-#import "Settings.h"
 
 #define TITLE_LEFT_OFFSET 10
 #define TITLE_TOP_OFFSET 6

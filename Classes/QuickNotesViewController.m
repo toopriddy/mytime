@@ -15,7 +15,6 @@
 
 #import "QuickNotesViewController.h"
 #import "TableViewCellController.h"
-#import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
 #import "UITableViewMultilineTextCell.h"

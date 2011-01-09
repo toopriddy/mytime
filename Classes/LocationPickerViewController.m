@@ -14,7 +14,6 @@
 //
 
 #import "LocationPickerViewController.h"
-#import "Settings.h"
 #import "PSLocalization.h"
 
 @interface LocationPickerViewController ()

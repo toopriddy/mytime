@@ -31,7 +31,6 @@
 
 #import "MapView.h"
 #import "MapWebView.h"
-#import "Settings.h"
 
 #define DROPPED_TOUCH_MOVED_EVENTS_RATIO  (0.8)
 #define ZOOM_IN_TOUCH_SPACING_RATIO       (0.75)

@@ -17,7 +17,6 @@
 #import "MetadataEditorViewController.h"
 #import "UITableViewTextFieldCell.h"
 #import "PublicationViewController.h"
-#import "Settings.h"
 #import "UITableViewTextFieldCell.h"
 #import "MTMultipleChoice.h"
 #import "MTAdditionalInformation.h"

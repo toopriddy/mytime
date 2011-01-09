@@ -701,8 +701,8 @@ NSString *emailFormattedStringForSettings()
 	
 	self.userSettings = user;
 	[self.settings setObject:username forKey:SettingsMultipleUsersCurrentUser];
-	if(save)
-		[self saveData];
+//	if(save)
+//		[self saveData];
 	
 //	[[NSNotificationCenter defaultCenter] postNotificationName:SettingsNotificationUserChanged object:self];
 }
@@ -801,7 +801,11 @@ NSString *emailFormattedStringForSettings()
 - (void)saveData
 {
 	VERY_VERBOSE(NSLog(@"saveData");)
-	[self.settings writeToFile:[Settings filename] atomically: YES];
+	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Settings SAVE should not be called" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	[errorAlert show];
+	[errorAlert release];
+	
+//	[self.settings writeToFile:[Settings filename] atomically: YES];
 }
 
 - (id)copyWithZone:(NSZone *)zone

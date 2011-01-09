@@ -15,9 +15,9 @@
 
 #import "MetadataViewController.h"
 #import "PublicationViewController.h"
-#import "Settings.h"
 #import "MTAdditionalInformation.h"
 #import "MTAdditionalInformationType.h"
+#import "Settings.h"
 #import "MyTimeAppDelegate.h"
 #import "MTCall.h"
 #import "MTUser.h"
@@ -37,7 +37,6 @@ static MetadataInformation commonInformation[] = {
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 #import "TableViewCellController.h"
-#import "Settings.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
 #import "MetadataEditorViewController.h"
@@ -472,7 +471,7 @@ static MetadataInformation commonInformation[] = {
 
 @synthesize delegate;
 
-+ (void)fixMetadataForUser:(NSMutableDictionary *)user
++ (void)DONOTUSEfixMetadataForUserDONOTUSE:(NSMutableDictionary *)user
 {
 	NSMutableArray *preferredMetadata = [user objectForKey:SettingsPreferredMetadata];
 	// so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
@@ -505,7 +504,7 @@ static MetadataInformation commonInformation[] = {
 
 + (void)fixMetadata
 {
-	[MetadataViewController fixMetadataForUser:[[Settings sharedInstance] userSettings]];
+	[MetadataViewController DONOTUSEfixMetadataForUserDONOTUSE:[[Settings sharedInstance] userSettings]];
 }
 
 + (NSArray *)metadataNames

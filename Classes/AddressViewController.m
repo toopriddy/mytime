@@ -14,10 +14,13 @@
 //
 
 #import "AddressViewController.h"
-#import "Settings.h"
 #import "UITableViewTextFieldCell.h"
-#import "PSLocalization.h"
+#import "MTSettings.h"
+#import "MTCall.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "PSLocalization.h"
+
+#define REVERSE_GEOCODING_ACCURACY 80
 
 
 @interface SaveAndDone : UIResponder <UITextFieldDelegate>
@@ -153,14 +156,13 @@
 		self.city = @"";
 	if(self.state == nil)
 		self.state = @"";
-	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-
-	[settings setObject:self.streetNumber forKey:SettingsLastCallStreetNumber];
-	[settings setObject:self.apartmentNumber forKey:SettingsLastCallApartmentNumber];
-	[settings setObject:self.street forKey:SettingsLastCallStreet];
-	[settings setObject:self.street forKey:SettingsLastCallStreet];
-	[settings setObject:self.city forKey:SettingsLastCallCity];
-	[settings setObject:self.state forKey:SettingsLastCallState];
+	
+	MTSettings *settings = [MTSettings settings];
+	settings.lastHouseNumber = self.streetNumber;
+	settings.lastApartmentNumber = self.apartmentNumber;
+	settings.lastStreet = self.street;
+	settings.lastCity = self.city;
+	settings.lastState = self.state;
 
 	if(delegate)
 	{
@@ -453,8 +455,7 @@
 	if(stateName == nil)
 		stateName = [placemark country];
 
-	NSMutableString *topLine = [NSMutableString string];
-	[Settings formatStreetNumber:houseNumber apartment:nil street:streetName topLine:topLine];
+	NSString *topLine = [MTCall topLineOfAddressWithHouseNumber:houseNumber apartmentNumber:nil street:streetName];
 
 	self.locationMessage = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Would you like to use this address?", @"This is a success message you see when you make a new Call -> press on the address -> press on automatically lookup address")
 													   message:[NSString stringWithFormat:@"%@\n%@\n%@",

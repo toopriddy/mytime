@@ -14,7 +14,6 @@
 //
 
 #import "UITableViewTitleAndValueCell.h"
-#import "Settings.h"
 
 @implementation UITableViewTitleAndValueCell
 

@@ -183,8 +183,6 @@ extern NSString *const UserDefaultsRemovePasscode;
 
 
 
-#define REVERSE_GEOCODING_ACCURACY 80
-
 NSString *emailFormattedStringForCall(NSDictionary *_call);
 NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 
@@ -207,9 +205,9 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory);
 + (NSString *)filename;
 + (NSString *)outOfWayFilename;
 - (void)readData;
-- (void)saveData;
+//- (void)saveData;
 
-- (void)changeSettingsToUser:(NSString *)username save:(BOOL)save;
+//- (void)changeSettingsToUser:(NSString *)username save:(BOOL)save;
 
 - (id)copyWithZone:(NSZone *)zone;
 - (id)retain;

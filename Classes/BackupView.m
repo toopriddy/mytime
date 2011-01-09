@@ -15,6 +15,7 @@
 
 #import "BackupView.h"
 #import "Settings.h"
+#import "MyTimeAppDelegate.h"
 #import "PSLocalization.h"
 
 @implementation BackupView
@@ -215,18 +216,36 @@
 	{
 		case kRestoreBackup:
 		{
-#warning fix me
-			NSMutableDictionary *settings = [[Settings sharedInstance] settings];
-			[settings removeAllObjects];
-			[settings addEntriesFromDictionary:[NSKeyedUnarchiver unarchiveObjectWithData:payload]];
-			[[Settings sharedInstance] saveData];
-			self.title = NSLocalizedString(@"Restored Backup, restart MyTime to see the changes", @"initial message when trying to transfer backup files");
+
+			NSMutableDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
+			if(dictionary)
+			{
+				[dictionary writeToFile:[Settings filename] atomically: YES];
+				NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+				BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
+				if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
+				{
+					NSLog(@"deleted file");
+				}
+			}
+			else
+			{
+				NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+				BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
+				if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
+				{
+					NSLog(@"deleted file");
+				}
+				[payload writeToFile:[MyTimeAppDelegate storeFileAndPath] atomically:YES];
+			}
+			exit(0);
 			break;
 		}
 
 		case kRetrieveBackup:
 		{
-			NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[Settings sharedInstance] settings]];
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			NSData *data = [fileManager contentsAtPath:[MyTimeAppDelegate storeFileAndPath]];
 			self.title = NSLocalizedString(@"Sending Settings to the Backup Application", @"initial message when trying to transfer backup files");
 			[agent sendMessageWithType:kRetrieveBackupReply flags:0 payload:[NSArray arrayWithObject:data]];
 			self.title = NSLocalizedString(@"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup", @"backup connected message");
