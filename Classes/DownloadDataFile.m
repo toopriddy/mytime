@@ -15,7 +15,7 @@
 
 #import "DownloadDataFile.h"
 #import "HTTPServer.h"
-
+#import "MyTimeAppDelegate.h"
 @implementation DownloadDataFile
 
 //
@@ -49,7 +49,7 @@
 					 url:(NSURL *)requestURL
 			headerFields:(NSDictionary *)requestHeaderFields
 {
-	if ([requestURL.path isEqualToString:@"/records.plist"])
+	if ([requestURL.path isEqualToString:@"/MyTime.mytimedb"])
 	{
 		return YES;
 	}
@@ -59,12 +59,9 @@
 
 - (void)startResponse
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-	NSString *filename = @"records.plist";
-	
-	NSData *fileData = [NSData dataWithContentsOfFile:[[paths objectAtIndex:0] stringByAppendingPathComponent:filename]];
+	NSData *fileData = [NSData dataWithContentsOfFile:[MyTimeAppDelegate storeFileAndPath]];
 	CFHTTPMessageRef response = CFHTTPMessageCreateResponse(kCFAllocatorDefault, 200, NULL, kCFHTTPVersion1_0);
-	CFHTTPMessageSetHeaderFieldValue(response, (CFStringRef)@"Content-Type", (CFStringRef)@"bin/plist");
+	CFHTTPMessageSetHeaderFieldValue(response, (CFStringRef)@"Content-Type", (CFStringRef)@"mytime/sqlite");
 	CFHTTPMessageSetHeaderFieldValue(response, (CFStringRef)@"Connection", (CFStringRef)@"close");
 	CFHTTPMessageSetHeaderFieldValue(response,
 									 (CFStringRef)@"Content-Length",
