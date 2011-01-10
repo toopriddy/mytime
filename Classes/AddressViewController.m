@@ -427,6 +427,7 @@
 		[self.locationMessage show];
 		
 		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] resignFirstResponder];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 		[tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 	}
 }

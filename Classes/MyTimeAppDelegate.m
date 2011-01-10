@@ -59,6 +59,16 @@
 #import "MetadataCustomViewController.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 
+BOOL isIOS4OrGreater(void)
+{
+	NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"4.0" options: NSNumericSearch];
+	if (order == NSOrderedSame || order == NSOrderedDescending) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 @interface MyTimeAppDelegate ()
 - (void)displaySecurityViewController;
 + (NSString *)storeFileAndPath;
@@ -74,6 +84,7 @@
 @synthesize tabBarController;
 @synthesize dataToImport;
 @synthesize settingsToRestore;
+@synthesize fileToRestore;
 @synthesize modalNavigationController;
 @synthesize managedObjectContext;
 @synthesize managedObjectModel;
@@ -347,41 +358,41 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			break;
 		case ADD_CORE_DATA_NOT_AT_HOME_TERRITORY:
 			switch(button)
-		{
-				//import
-			case 0:
 			{
-				MTTerritory *territory = (MTTerritory *)[self.managedObjectContext managedObjectFromDictionary:dataToImport];
-
-				// add the user to make it correct
-				territory.user = [MTUser currentUser];
-				
-				NSError *error = nil;
-				if (![self.managedObjectContext save:&error]) 
+					//import
+				case 0:
 				{
-					[NSManagedObjectContext presentErrorDialog:error];
+					MTTerritory *territory = (MTTerritory *)[self.managedObjectContext managedObjectFromDictionary:dataToImport];
+
+					// add the user to make it correct
+					territory.user = [MTUser currentUser];
+					
+					NSError *error = nil;
+					if (![self.managedObjectContext save:&error]) 
+					{
+						[NSManagedObjectContext presentErrorDialog:error];
+					}
+					
+					self.dataToImport = nil;
+					
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
+					[alertSheet show];
+					break;
 				}
-				
-				self.dataToImport = nil;
-				
-				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-				[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-				alertSheet.title = NSLocalizedString(@"Import successful", @"This message is displayed after a successful import of a call or a restore of a backup");
-				[alertSheet show];
-				break;
+					// cancel
+				case 1:
+				{
+					self.dataToImport = nil;
+					break;
+				}
 			}
-				// cancel
-			case 1:
-			{
-				self.dataToImport = nil;
-				break;
-			}
-		}
 			break;
 		case RESTORE_BACKUP:
 			switch(button)
 			{
-				//import
+					//import
 				case 0:
 				{
 					[self.settingsToRestore writeToFile:[Settings filename] atomically: YES];
@@ -392,7 +403,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					{
 						NSLog(@"deleted file");
 					}
-						
+					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 					alertSheet.delegate = self;
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
@@ -400,7 +411,40 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					[alertSheet show];
 					break;
 				}
-				// cancel
+					// cancel
+				case 1:
+				{
+					self.settingsToRestore = nil;
+					// dont reinit the views if they are still in existance
+					if(tabBarController == nil)
+						[self initializeMyTimeViews];
+					break;
+				}
+			}
+			break;
+		case RESTORE_CORE_DATA_BACKUP:
+			switch(button)
+			{
+					//import
+				case 0:
+				{
+					NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+					BOOL exists = [fileManager fileExistsAtPath:[[self class] storeFileAndPath]];
+					if(exists && ![fileManager removeItemAtPath:[[self class] storeFileAndPath] error:nil])
+					{
+						NSLog(@"deleted file");
+					}
+					[fileManager moveItemAtPath:self.fileToRestore toPath:[[self class] storeFileAndPath] error:nil];
+					self.fileToRestore = nil;
+					
+					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+					alertSheet.delegate = self;
+					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+					alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
+					[alertSheet show];
+					break;
+				}
+					// cancel
 				case 1:
 				{
 					self.dataToImport = nil;
@@ -927,7 +971,7 @@ NSString *emailFormattedStringForCoreDataSettings()
 	// attach the real records file
 	NSData *data = [[NSFileManager defaultManager] contentsAtPath:[[self class] storeFileAndPath]];
 	MTSettings *settings = [MTSettings settings];
-	if(settings.backupShouldIncludeAttachment)
+	if(settings.backupShouldIncludeAttachmentValue)
 	{
 		[mailView addAttachmentData:data mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
 	}
@@ -938,14 +982,14 @@ NSString *emailFormattedStringForCoreDataSettings()
 		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
 	}
 	// now add the url that will allow importing
-	if(settings.backupShouldCompressLink)
+	if(settings.backupShouldCompressLinkValue)
 	{	
 		data = [data compress];
-		[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+		[string appendString:@"<a href=\"mytime://mytime/restoreCompressedCoreDataBackup?"];
 	}
 	else
 	{
-		[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
+		[string appendString:@"<a href=\"mytime://mytime/restoreCoreDataBackup?"];
 	}
 	
 	
@@ -1218,8 +1262,9 @@ NSString *emailFormattedStringForSettings();
 	managedObjectContext_ = nil;
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
 	
-	[self.managedObjectContext processPendingChanges];
-	[[self.managedObjectContext undoManager] disableUndoRegistration];
+	NSManagedObjectContext *moc = self.managedObjectContext;
+	[moc processPendingChanges];
+	[[moc undoManager] disableUndoRegistration];
 	MTSettings *mtSettings = [MTSettings settings];
 	
 	[[NSUserDefaults standardUserDefaults] setObject:[settings objectForKey:SettingsCurrentButtonBarName] forKey:SettingsCurrentButtonBarName];
@@ -1237,11 +1282,23 @@ NSString *emailFormattedStringForSettings();
 	mtSettings.backupEmail = [settings objectForKey:SettingsBackupEmailAddress];
 	mtSettings.backupShouldCompressLinkValue = ![[settings objectForKey:SettingsBackupEmailUncompressedLink] boolValue];
 	mtSettings.backupShouldIncludeAttachmentValue = ![[settings objectForKey:SettingsBackupEmailDontIncludeAttachment] boolValue];
-	mtSettings.firstViewTitle = [settings objectForKey:SettingsFirstView];
-	mtSettings.secondViewTitle = [settings objectForKey:SettingsSecondView];
-	mtSettings.thirdViewTitle = [settings objectForKey:SettingsThirdView];
-	mtSettings.fourthViewTitle = [settings objectForKey:SettingsFourthView];
-	
+	if([[settings objectForKey:SettingsFirstView] isKindOfClass:[NSString class]])
+	{
+		mtSettings.firstViewTitle = [settings objectForKey:SettingsFirstView];
+	}
+	if([[settings objectForKey:SettingsSecondView] isKindOfClass:[NSString class]])
+	{
+		mtSettings.secondViewTitle = [settings objectForKey:SettingsSecondView];
+	}
+	if([[settings objectForKey:SettingsThirdView] isKindOfClass:[NSString class]])
+	{
+		mtSettings.thirdViewTitle = [settings objectForKey:SettingsThirdView];
+	}
+	if([[settings objectForKey:SettingsFourthView] isKindOfClass:[NSString class]])
+	{
+		mtSettings.fourthViewTitle = [settings objectForKey:SettingsFourthView];
+	}
+		
 	// POPUPS
 	mtSettings.timeAlertSheetShownValue = [settings objectForKey:SettingsTimeAlertSheetShown] != nil;
 	mtSettings.statisticsAlertSheetShownValue = [settings objectForKey:SettingsStatisticsAlertSheetShown] != nil;
@@ -1284,14 +1341,15 @@ NSString *emailFormattedStringForSettings();
 	self.hud.progress = self.hud.progress + 1.0/steps;
 
 	
-	for(NSDictionary *user in [settings objectForKey:SettingsMultipleUsers])
+	for(NSMutableDictionary *user in [settings objectForKey:SettingsMultipleUsers])
 	{
-		MTUser *mtUser = [MTUser getOrCreateUserWithName:[user objectForKey:SettingsMultipleUsersName]];
+		MTUser *mtUser = [MTUser createUserInManagedObjectContext:moc];
+		mtUser.name = [user objectForKey:SettingsMultipleUsersName];
 	
 		
 		// FIX METADATA
 		{
-			[MetadataViewController DONOTUSEfixMetadataForUserDONOTUSE:(NSMutableDictionary *)user];
+			[MTAdditionalInformationType initalizeOldStyleStorageDefaultAdditionalInformationTypesForUser:user];
 		}		
 		
 		// SECRETARY SETTINGS
@@ -1679,6 +1737,20 @@ NSString *emailFormattedStringForSettings();
 				[alertSheet showInView:window];
 			}
 		}
+		else if([extension isEqualToString:@"mytimedb"])
+		{
+			self.fileToRestore = path;
+			handled = YES;
+			_actionSheetType = RESTORE_CORE_DATA_BACKUP;
+			UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"This message gets displayed when the user is trying to restore from a backup from the email program")
+																	 delegate:self
+															cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+													   destructiveButtonTitle:NSLocalizedString(@"Restore from Backup", @"Yes restore from the backup please")
+															otherButtonTitles:nil] autorelease];
+			
+			alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+			[alertSheet showInView:window];
+		}
 		else
 		{
 			// other types of files go here
@@ -1834,30 +1906,75 @@ NSString *emailFormattedStringForSettings();
 			{
 				do 
 				{
-					NSData *dataStore = allocNSDataFromNSStringByteString(data);
-					if(dataStore == nil)
-						break;
-					
-					@try
 					{
-						NSData *theData = compressed ? [dataStore decompress] : dataStore;
-						self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:theData];
-					}
-					@catch (NSException *e) 
-					{
-						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-						alertSheet.title = [NSString stringWithFormat:@"%@", e];
-						[alertSheet show];
+						NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+						NSData *dataStore = allocNSDataFromNSStringByteString(data);
+						[dataStore autorelease];
+						if(dataStore == nil)
+							break;
 						
-					}
-					[dataStore release];
-					DEBUG(NSLog(@"%@", self.settingsToRestore);)
-					
+						@try
+						{
+							NSData *theData = compressed ? [dataStore decompress] : dataStore;
+							self.settingsToRestore = [NSKeyedUnarchiver unarchiveObjectWithData:theData];
+						}
+						@catch (NSException *e) 
+						{
+							UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+							alertSheet.title = [NSString stringWithFormat:@"%@", e];
+							[alertSheet show];
+							
+						}
+						DEBUG(NSLog(@"%@", self.settingsToRestore);)
+						[pool drain];
+					}					
 					if(self.settingsToRestore == nil)
 						break;
 					
 					handled = YES;
 					_actionSheetType = RESTORE_BACKUP;
+					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"This message gets displayed when the user is trying to restore from a backup from the email program")
+																			 delegate:self
+																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
+															   destructiveButtonTitle:NSLocalizedString(@"Restore from Backup", @"Yes restore from the backup please")
+																	otherButtonTitles:nil] autorelease];
+					
+					alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+					[alertSheet showInView:window];
+				} while (false);
+			}
+			if((compressed = [@"/restoreCompressedCoreDataBackup" isEqualToString:path]) ||
+			   [@"/restoreCoreDataBackup" isEqualToString:path])
+			{
+				do 
+				{
+					{
+						NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+						NSData *dataStore = allocNSDataFromNSStringByteString(data);
+						[dataStore autorelease];
+						
+						if(dataStore == nil)
+							break;
+						
+						@try
+						{
+							NSData *theData = compressed ? [dataStore decompress] : dataStore;
+							dataStore = theData;
+						}
+						@catch (NSException *e) 
+						{
+							UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+							alertSheet.title = [NSString stringWithFormat:@"%@", e];
+							[alertSheet show];
+							
+						}
+						self.fileToRestore = [NSTemporaryDirectory() stringByAppendingPathComponent:@"MyTime.sqlite"];
+						[dataStore writeToFile:self.fileToRestore atomically:NO];
+						
+						[pool drain];
+					}
+					handled = YES;
+					_actionSheetType = RESTORE_CORE_DATA_BACKUP;
 					UIActionSheet *alertSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You are trying to restore all MyTime data from a backup, are you sure you want to do this?  THIS WILL DELETE ALL OF YOUR CURRENT DATA", @"This message gets displayed when the user is trying to restore from a backup from the email program")
 																			 delegate:self
 																	cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")

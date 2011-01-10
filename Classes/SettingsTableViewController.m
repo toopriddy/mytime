@@ -1131,6 +1131,17 @@
 
 @implementation SettingsTableViewController
 
+- (void)userChanged
+{
+	[self updateAndReload];
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
 	if( (self = [super initWithStyle:style]) )
@@ -1138,6 +1149,8 @@
 		self.title = NSLocalizedString(@"Settings", @"'Settings' ButtonBar View text and Statistics View Title");
 		UIImage *image = [UIImage imageNamed:@"settings.png"];
 		self.tabBarItem.image = image;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
+
 	}
 	return self;
 }

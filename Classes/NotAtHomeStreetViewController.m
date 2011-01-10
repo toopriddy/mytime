@@ -272,18 +272,11 @@
 
 - (void)notAtHomeHouseViewControllerDone:(NotAtHomeHouseViewController *)notAtHomeHouseViewController
 {
-#warning fix me
 	NSError *error = nil;
 	if(![self.delegate.street.managedObjectContext save:&error])
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
-#if 0
-	NAHStreetHouseCellController *cellController = [[NAHStreetHouseCellController alloc] init];
-	cellController.delegate = self.delegate;
-	[[[self.delegate.sectionControllers objectAtIndex:section] cellControllers] insertObject:cellController atIndex:([houses count] - 1)];
-	[cellController release];
-#endif	
 	[self.delegate dismissModalViewControllerAnimated:YES];
 	[self.delegate updateAndReload];
 }	

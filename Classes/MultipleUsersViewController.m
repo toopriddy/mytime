@@ -61,7 +61,7 @@
 														cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 												   destructiveButtonTitle:NSLocalizedString(@"Delete All Data", @"Transferr this call to another MyTime user and delete it off of this iphone, but keep the data")
 														otherButtonTitles:nil] autorelease];
-		
+		alertSheet.tag = indexPath.row;
 		alertSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 		[alertSheet showInView:self.delegate.view];
 	}
@@ -101,11 +101,11 @@
 		return;
 	}
 	MTUser *currentUser = [MTUser currentUser];
-	if([currentUser.name isEqualToString:oldName])
+	self.user.name = newName;
+	if(currentUser == self.user)
 	{
 		[MTUser setCurrentUser:self.user];
 	}
-	self.user.name = newName;
 	
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
@@ -150,24 +150,27 @@
 			//delete
 		case 0:
 		{
-			NSString *oldName = self.user.name;
+			MTUser *currentUser = [MTUser currentUser];
 			
 			[self.delegate.managedObjectContext deleteObject:self.user];
-			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
-			if([[[MTUser currentUser] name] isEqualToString:oldName])
-			{
-				[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-			}
 			NSError *error = nil;
 			if (![self.delegate.managedObjectContext save:&error]) 
 			{
 				[NSManagedObjectContext presentErrorDialog:error];
 			}
+			[[self retain] autorelease];
+			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
+			if(self.user = currentUser)
+			{
+				[MTUser setCurrentUser:nil];
+				[MTUser currentUser];
+				[self.delegate updateAndReload];
+			}
 			break;
 		}
 			//cancel
 		case 1:
-			[self.delegate.tableView reloadData];
+			[self.delegate updateAndReload];
 			break;
 	}
 }		
@@ -177,12 +180,21 @@
 @interface AddMultipleUsersCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
 {
 	MultipleUsersViewController *delegate;
+	NSIndexPath *selectedIndexPath;
 }
+@property (nonatomic, copy) NSIndexPath *selectedIndexPath;
 @property (nonatomic, assign) MultipleUsersViewController *delegate;
 - (BOOL)addUser:(NSString *)name;
 @end
 @implementation AddMultipleUsersCellController
 @synthesize delegate;
+@synthesize selectedIndexPath;
+
+- (void)dealloc
+{
+	self.selectedIndexPath = nil;
+	[super dealloc];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -225,6 +237,7 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	self.selectedIndexPath = indexPath;
 	// make the new call view 
 	MetadataEditorViewController *p = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Your Name", @"The title used in the Settings->Multiple Users screen") type:STRING data:@"" value:@""] autorelease];
 	p.delegate = self;
@@ -248,8 +261,9 @@
 		[alertSheet show];
 		return NO;
 	}
-	MTUser *user = [MTUser insertInManagedObjectContext:managedObjectContext];
+	MTUser *user = [MTUser createUserInManagedObjectContext:managedObjectContext];
 	user.name = name;
+	[user initalizeUser];
 
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
@@ -257,15 +271,10 @@
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
 
-	
-	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
-												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
-													   withPredicate:nil];
 	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];
 	cellController.delegate = self.delegate;
 	cellController.user = user;
-	[[[self.delegate.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:[users indexOfObject:user]];
+	[[[self.delegate.sectionControllers objectAtIndex:0] cellControllers] insertObject:cellController atIndex:[self.selectedIndexPath row]];
 	
 	[self.delegate updateWithoutReload];
 	return YES;
@@ -371,7 +380,7 @@
 
 	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ]
+												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
 													   withPredicate:nil];
 	
 	GenericTableViewSectionController *sectionController = [[MultipleUsersSectionController alloc] init];

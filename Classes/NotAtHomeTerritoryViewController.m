@@ -429,6 +429,8 @@
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 	if(deleteAfterEmailing && result != MFMailComposeResultCancelled)
 	{
+		// delete territory
+		[self.territory.managedObjectContext deleteObject:self.territory];
 		[self.navigationController popViewControllerAnimated:YES];
 	}
 }

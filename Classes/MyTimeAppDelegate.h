@@ -33,6 +33,7 @@ typedef enum {
 	ADD_CALL,
 	ADD_CORE_DATA_CALL,
 	RESTORE_BACKUP,
+	RESTORE_CORE_DATA_BACKUP,
 	AUTO_BACKUP,
 	ADD_NOT_AT_HOME_TERRITORY,
 	ADD_CORE_DATA_NOT_AT_HOME_TERRITORY,
@@ -53,6 +54,7 @@ typedef enum {
 	UITabBarController *tabBarController;
 	NSMutableDictionary *dataToImport;
 	NSMutableDictionary *settingsToRestore;
+	NSString *fileToRestore;
 	UINavigationController *modalNavigationController;
 	UIViewController *_tutorialViewController;
 	UrlActionType _actionSheetType;
@@ -70,6 +72,7 @@ typedef enum {
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *dataToImport;
 @property (nonatomic, retain) NSMutableDictionary *settingsToRestore;
+@property (nonatomic, retain) NSString *fileToRestore;
 @property (nonatomic, retain) UINavigationController *modalNavigationController;
 @property (nonatomic, retain) MBProgressHUD *hud;
 

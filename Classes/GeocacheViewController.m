@@ -80,8 +80,8 @@
 #define EMPTY_NSSTRING_IF_NULL(str) ((str) ? (str) : @"")
 + (NSString *)getAddressFromCall:(MTCall *)call useHtml:(BOOL)useHtml
 {
-	NSString *streetNumber = call.houseNumber;
 	NSString *apartmentNumber = call.apartmentNumber;
+	NSString *streetNumber = call.houseNumber; // for some reason if this call is first 3.0 devices will bomb.
 	NSString *street = call.street;
 	NSString *city = call.city;
 	NSString *state = call.state;
@@ -228,6 +228,10 @@
 		{
 			[_delegate geocacheViewControllerDone:self];
 		}
+	}
+	if(found)
+	{
+		[self performSelector:@selector(timer) withObject:self afterDelay:1.0];
 	}
 }
 

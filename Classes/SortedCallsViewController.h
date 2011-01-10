@@ -45,6 +45,8 @@
     NSString		*savedSearchTerm;
     NSInteger		savedScopeButtonIndex;
     BOOL			searchWasActive;
+
+	bool coreDataHasChangeContentBug;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic, retain) UITableView *tableView;

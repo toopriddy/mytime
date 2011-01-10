@@ -21,6 +21,7 @@
 #define kRetrieveBackup				0x0002
 #define kRetrieveBackupReply		0x8002
 #define kPushTranslation			0x0003
+#define kRestoreCoreDataBackup		0x0004
 
 /*
  * format of the kRestoreBackup message

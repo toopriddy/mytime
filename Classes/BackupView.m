@@ -16,6 +16,7 @@
 #import "BackupView.h"
 #import "Settings.h"
 #import "MyTimeAppDelegate.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @implementation BackupView
@@ -143,6 +144,7 @@
 				_agent = [[EventAgent alloc] initWithInputStream:_inStream outputStream:_outStream];
 				_agent.delegate = self;
 				[_agent setMessageDelegate:self forType:kRestoreBackup];
+				[_agent setMessageDelegate:self forType:kRestoreCoreDataBackup];
 				[_agent setMessageDelegate:self forType:kRetrieveBackup];
 				[_agent setMessageDelegate:self forType:kPushTranslation];
 			}
@@ -216,35 +218,49 @@
 	{
 		case kRestoreBackup:
 		{
-
-			NSMutableDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
-			if(dictionary)
+			NSMutableDictionary *dictionary = nil;
+			@try
 			{
-				[dictionary writeToFile:[Settings filename] atomically: YES];
-				NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-				BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
-				if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
-				{
-					NSLog(@"deleted file");
-				}
+				dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
 			}
-			else
+			@catch (NSException *e) 
 			{
-				NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-				BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
-				if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
-				{
-					NSLog(@"deleted file");
-				}
-				[payload writeToFile:[MyTimeAppDelegate storeFileAndPath] atomically:YES];
+				dictionary = nil;
+			}
+			
+			[dictionary writeToFile:[Settings filename] atomically: YES];
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
+			if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
+			{
+				NSLog(@"deleted file");
 			}
 			exit(0);
 			break;
 		}
-
+			
+		case kRestoreCoreDataBackup:
+		{
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			BOOL exists = [fileManager fileExistsAtPath:[MyTimeAppDelegate storeFileAndPath]];
+			if(exists && ![fileManager removeItemAtPath:[MyTimeAppDelegate storeFileAndPath] error:nil])
+			{
+				NSLog(@"deleted file");
+			}
+			[payload writeToFile:[MyTimeAppDelegate storeFileAndPath] atomically:YES];
+			exit(0);
+			break;
+		}
+			
 		case kRetrieveBackup:
 		{
 			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			NSManagedObjectContext *moc = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
+			NSError *error = nil;
+			if(![moc save:&error])
+			{
+				[NSManagedObjectContext presentErrorDialog:error];
+			}
 			NSData *data = [fileManager contentsAtPath:[MyTimeAppDelegate storeFileAndPath]];
 			self.title = NSLocalizedString(@"Sending Settings to the Backup Application", @"initial message when trying to transfer backup files");
 			[agent sendMessageWithType:kRetrieveBackupReply flags:0 payload:[NSArray arrayWithObject:data]];
@@ -254,7 +270,15 @@
 
 		case kPushTranslation:
 		{
-			NSMutableDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
+			NSMutableDictionary *dictionary = nil;
+			@try
+			{
+				dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:payload];
+			}
+			@catch (NSException *e) 
+			{
+				dictionary = nil;
+			}
 			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
 
 			
