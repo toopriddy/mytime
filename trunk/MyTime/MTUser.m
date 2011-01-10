@@ -1,5 +1,6 @@
 #import "MTUser.h"
 #import "MTSettings.h"
+#import "MTAdditionalInformationType.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
@@ -31,42 +32,29 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	return nil;
 }
 
-#warning need to initialize the user with MTAdditionalInformationType defaults
-
-+ (MTUser *)getOrCreateUserWithName:(NSString *)name
++ (MTUser *)createUserInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-	MTUser *user = [MTUser userWithName:name];
-	if(user == nil)
+	// first find the highest ordering index
+	double order = 0;
+	for(MTUser *user in [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+													  propertiesToFetch:[NSArray arrayWithObject:@"order"]
+														  withPredicate:nil])
 	{
-		// no users exist, so create one and set it as the default user
-		NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
-		
-		// first find the highest ordering index
-		double order = 0;
-		for(MTUser *user in [managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
-													   propertiesToFetch:[NSArray arrayWithObject:@"order"]
-														   withPredicate:nil])
-		{
-			double userOrder = user.orderValue;
-			if (userOrder > order)
-				order = userOrder;
-		}
-		
-		
-		user = [NSEntityDescription insertNewObjectForEntityForName:[MTUser entityName]
-											 inManagedObjectContext:managedObjectContext];
-		user.name = name;
-		user.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between users.
-		
-		// find the last user index
-		
-		NSError *error = nil;
-		if (![managedObjectContext save:&error]) 
-		{
-			[NSManagedObjectContext presentErrorDialog:error];
-		}
+		double userOrder = user.orderValue;
+		if (userOrder > order)
+			order = userOrder;
 	}
+	
+	
+	MTUser *user = [NSEntityDescription insertNewObjectForEntityForName:[MTUser entityName]
+												 inManagedObjectContext:managedObjectContext];
+	user.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between users.
 	return user;
+}
+
+- (void)initalizeUser
+{
+	[MTAdditionalInformationType initalizeDefaultAdditionalInformationTypesForUser:self];
 }
 
 + (void)setCurrentUser:(MTUser *)user
@@ -75,7 +63,7 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	settings.currentUser = user.name;
 
 	NSError *error = nil;
-	if (![user.managedObjectContext save:&error]) 
+	if (![settings.managedObjectContext save:&error]) 
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
 	}

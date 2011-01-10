@@ -17,26 +17,6 @@
 #import "GenericTableViewController.h"
 #import "MTAdditionalInformationType.h"
 
-typedef enum {
-	// do not reorder!!! dont add in the middle!!!
-	EMAIL,
-	PHONE,
-	STRING,
-	NOTES,
-	NUMBER,
-	DATE,
-	URL,
-	CHOICE,
-	SWITCH,
-	LAST_METADATA_TYPE
-} MetadataType;
-
-typedef struct 
-{
-	NSString *name;
-	MetadataType type;
-} MetadataInformation;
-
 NSString *localizedNameForMetadataType(MetadataType type);
 
 @class MetadataCustomViewController;

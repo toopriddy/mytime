@@ -970,12 +970,14 @@
 						if(value)
 						{
 							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+							[tableView deselectRowAtIndexPath:indexPath animated:YES];
 						}
 						break;
 					case EMAIL:
 						if(value)
 						{
 							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", value]]];
+							[tableView deselectRowAtIndexPath:indexPath animated:YES];
 						}
 						break;
 					case URL:
@@ -987,6 +989,7 @@
 							else
 								url = [NSString stringWithFormat:@"http://%@", value];
 							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+							[tableView deselectRowAtIndexPath:indexPath animated:YES];
 						}
 						break;
 				}

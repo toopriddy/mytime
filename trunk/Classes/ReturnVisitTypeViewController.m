@@ -191,9 +191,9 @@
 	notAtHomeCell.selected = NO;
 
 	self.transferedInitialVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell5"] autorelease];
-	transferedReturnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedInitialVisit value:CallReturnVisitTypeTransferedInitialVisit table:@""];
-	transferedReturnVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
-	transferedReturnVisitCell.selected = NO;
+	transferedInitialVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedInitialVisit value:CallReturnVisitTypeTransferedInitialVisit table:@""];
+	transferedInitialVisitCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	transferedInitialVisitCell.selected = NO;
 	
 	self.transferedReturnVisitCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnVisitCell6"] autorelease];
 	transferedReturnVisitCell.textLabel.text = [[PSLocalization localizationBundle] localizedStringForKey:CallReturnVisitTypeTransferedReturnVisit value:CallReturnVisitTypeTransferedReturnVisit table:@""];

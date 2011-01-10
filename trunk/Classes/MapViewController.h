@@ -44,11 +44,15 @@
 	BOOL _shouldReloadMarkers;
 	BOOL _reloadMapView;
 	
+	MKCoordinateRegion savedRegion;
+	BOOL hasSavedRegion;
+	MTCall *selectedCall_;
 	MapViewCallAnnotation *selectedMarker;
 }
 
 @property (nonatomic, retain) MKMapView *mapView;
 @property (nonatomic, retain) MTCall *call;
+@property (nonatomic, retain) MTCall *selectedCall;
 
 - (id)initWithTitle:(NSString *)theTitle call:(MTCall *)call;
 - (id)initWithTitle:(NSString *)theTitle;

@@ -135,6 +135,7 @@
 {
 	if ([super init]) 
 	{
+		coreDataHasChangeContentBug = !isIOS4OrGreater();
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Territories", @"View title for the previously named 'Not At Homes' but it is representing the user's territory now");
@@ -309,7 +310,10 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
 {
-    [self.tableView beginUpdates];
+	if(!coreDataHasChangeContentBug)
+	{
+		[self.tableView beginUpdates];
+	}
 }
 
 
@@ -318,17 +322,19 @@
 		   atIndex:(NSUInteger)sectionIndex 
 	 forChangeType:(NSFetchedResultsChangeType)type 
 {
-    
-    switch(type) 
+	if(!coreDataHasChangeContentBug)
 	{
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+		switch(type) 
+		{
+			case NSFetchedResultsChangeInsert:
+				[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
+	}
 }
 
 
@@ -338,45 +344,45 @@
 	 forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath 
 {
-    
-    UITableView *tableView = self.tableView;
-    
-    switch(type) 
+	if(!coreDataHasChangeContentBug)
 	{
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+		
+		UITableView *tableView = self.tableView;
+		
+		switch(type) 
+		{
+			case NSFetchedResultsChangeInsert:
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeUpdate:
+				[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+				break;
+				
+			case NSFetchedResultsChangeMove:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
+	}
 }
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
-    [self.tableView endUpdates];
+	if(coreDataHasChangeContentBug)
+	{
+		[self.tableView reloadData];
+	}
+	else
+	{
+		[self.tableView endUpdates];
+	}
 	[self updateEmptyView];
 }
-
-
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
 
 @end

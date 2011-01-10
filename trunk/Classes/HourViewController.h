@@ -35,6 +35,8 @@
     NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 	bool reloadData_;
+
+	bool coreDataHasChangeContentBug;
 }
 
 @property (nonatomic, retain) EmptyListViewController *emptyView;

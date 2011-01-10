@@ -74,12 +74,15 @@
 @implementation MapViewController
 @synthesize mapView = _mapView;
 @synthesize call = _call;
+@synthesize selectedCall = selectedCall_;
 
 - (void)userChanged
 {
 	_reloadMapView = YES;
 	[self.mapView removeFromSuperview];
 	self.mapView = nil;
+	self.selectedCall = nil;
+	hasSavedRegion = NO;
 }
 
 - (id)initWithTitle:(NSString *)theTitle call:(MTCall *)theCall
@@ -111,6 +114,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MTNotificationCallChanged object:nil];
 	self.mapView = nil;
 	self.call = nil;
+	self.selectedCall = nil;
 	
 	[super dealloc];
 }
@@ -123,14 +127,16 @@
 	_mapView.showsUserLocation = YES;
 	
 	[self.view addSubview:_mapView];
-		
+	
+	MKCoordinateRegion region;
+	
 	if(_call)
 	{
 		if(_call.locationAquired)
 		{
 			MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:_call] autorelease];
 			[_mapView addAnnotation:marker];
-			[_mapView setRegion:MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.001 , 0.001)) animated:YES];
+			region = MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.001 , 0.001));
 		}
 	}
 	else
@@ -153,7 +159,11 @@
 		{
 			MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:call] autorelease];
 			[_mapView addAnnotation:marker];
-
+			if(self.selectedCall == call)
+			{
+				[_mapView selectAnnotation:marker animated:NO];
+				self.selectedCall = nil;
+			}
 			CLLocationCoordinate2D point = marker.coordinate;
 			point.latitude = [call.lattitude doubleValue];
 			point.longitude = [call.longitude doubleValue];
@@ -165,16 +175,52 @@
 			bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, point.latitude);
 			found = YES;
 		}
-		MKCoordinateRegion region;
+		self.selectedCall = nil;
 		region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5;
 		region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5;
 		region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.1; // Add a little extra space on the sides
 		region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.1; // Add a little extra space on the sides
 		
 		region = [_mapView regionThatFits:region];
-		[_mapView setRegion:region];
 	}
+	
+	// if we were previously loaded with a region use that one
+	if(hasSavedRegion)
+	{
+		region = savedRegion;
+	}
+	
+	[_mapView setRegion:region];
 }
+
+- (void)didReceiveMemoryWarning 
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Relinquish ownership any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload 
+{
+	hasSavedRegion = YES;
+	savedRegion = [self.mapView region];
+	MapViewCallAnnotation *annotation = (MapViewCallAnnotation *)[self.mapView.selectedAnnotations lastObject];
+	if([annotation isKindOfClass:[MapViewCallAnnotation class]])
+	{
+		self.selectedCall = annotation.call;
+	}
+	else
+	{
+		self.selectedCall = nil;
+	}
+	self.mapView = nil;
+	
+    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+    // For example: self.myOutlet = nil;
+}
+
+
 
 - (void)loadView
 {
@@ -199,7 +245,9 @@
 	
 	if(_reloadMapView)
 	{
-		_reloadMapView = YES;
+		_reloadMapView = NO;
+		hasSavedRegion = NO;
+		
 		// we should blow away all markers and recreate them
 		[self.mapView removeFromSuperview];
 		self.mapView = nil;
@@ -207,56 +255,6 @@
 		
 		_shouldReloadMarkers = NO;
 	}
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-#warning need to test this
-#if 0
-	if(_shouldReloadMarkers)
-	{
-		_shouldReloadMarkers = NO;
-		NSArray *markers = [self.mapView annotations];
-		
-		NSMutableArray *removeMarkers = [NSMutableArray array];
-		for(MapViewCallAnnotation *marker in markers)
-		{
-			if ([marker isKindOfClass:[MKUserLocation class]])
-				continue;
-
-			MTCall *theCall = (NSMutableDictionary *)marker.call;
-			NSString *latLong = [theCall objectForKey:CallLattitudeLongitude];
-			NSString *lookupType = [theCall objectForKey:CallLocationType];
-			if([lookupType isEqualToString:CallLocationTypeDoNotShow] || 
-			   latLong == nil || 
-			   [latLong isEqualToString:@"nil"] ||
-			   ![[[[Settings sharedInstance] userSettings] objectForKey:SettingsCalls] containsObject:theCall])
-			{
-				// make the detail view go away
-				[self.mapView deselectAnnotation:marker animated:NO];
-				
-				[removeMarkers addObject:marker];
-				continue;
-			}
-			
-			if(latLong && ![latLong isEqualToString:@"nil"])
-			{
-#if 0
-				CLLocationCoordinate2D point;
-				NSArray *stringArray = [latLong componentsSeparatedByString:@", "];
-				point.latitude = [[stringArray objectAtIndex:0] doubleValue];
-				point.longitude = [[stringArray objectAtIndex:1] doubleValue];
-				[marker setCoordinate:point];
-#endif				
-				[[self.mapView viewForAnnotation:marker] setNeedsDisplay];
-			}
-		}
-		for(MapViewCallAnnotation *marker in removeMarkers)
-		{
-			[self.mapView removeAnnotation:marker];
-		}
-	}
-#endif	
 }
 
 - (void)callChanged:(NSNotification *)notification

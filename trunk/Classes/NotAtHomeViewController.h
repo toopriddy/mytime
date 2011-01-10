@@ -27,6 +27,8 @@
     NSManagedObjectContext *managedObjectContext_;
 	bool reloadData_;
 	MTTerritory *temporaryTerritory;
+
+	bool coreDataHasChangeContentBug;
 }
 @property (nonatomic, retain) EmptyListViewController *emptyView;
 @property (nonatomic, retain) MTTerritory *temporaryTerritory;

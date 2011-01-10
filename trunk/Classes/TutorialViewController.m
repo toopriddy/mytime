@@ -236,6 +236,12 @@
 				// this video is for a newer version of mytime
 				return;
 			}
+			if([buildVersion intValue] == [onlineVersion intValue])
+			{
+				continue;
+			}
+			// the version number is greater so it is ok to use this old video
+			break;
 		}
 		
 		[self.videos addObject:[NSDictionary dictionaryWithObjectsAndKeys:[attributeDict objectForKey:@"url"], @"url", 

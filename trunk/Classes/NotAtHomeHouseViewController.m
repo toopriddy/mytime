@@ -508,6 +508,7 @@
 	MTTerritoryStreet *street = house.street;
 	MTTerritory *territory = street.territory;
 	self.temporaryCall = [MTCall insertInManagedObjectContext:house.managedObjectContext];
+	[self.temporaryCall initializeNewCall];
 	self.temporaryCall.state = territory.state;
 	self.temporaryCall.city = territory.city;
 	self.temporaryCall.street = street.name;

@@ -144,6 +144,7 @@
 {
 	if ([self init]) 
 	{
+		coreDataHasChangeContentBug = !isIOS4OrGreater();
 		// retain the data source
 		self.dataSource = theDataSource;
 		
@@ -659,8 +660,11 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
 {
-    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
-    [tableView beginUpdates];
+	if(!coreDataHasChangeContentBug)
+	{
+		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		[tableView beginUpdates];
+	}
 }
 
 
@@ -669,18 +673,21 @@
 		   atIndex:(NSUInteger)sectionIndex 
 	 forChangeType:(NSFetchedResultsChangeType)type 
 {
-    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
-    
-    switch(type) 
+	if(!coreDataHasChangeContentBug)
 	{
-        case NSFetchedResultsChangeInsert:
-            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		
+		switch(type) 
+		{
+			case NSFetchedResultsChangeInsert:
+				[tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
+	}
 }
 
 
@@ -690,54 +697,53 @@
 	 forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath 
 {
-    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
-    
-    switch(type) 
+	if(!coreDataHasChangeContentBug)
 	{
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self fetchedResultsController:controller configureCell:[tableView cellForRowAtIndexPath:theIndexPath] atIndexPath:theIndexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		
+		switch(type) 
+		{
+			case NSFetchedResultsChangeInsert:
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeUpdate:
+				[self fetchedResultsController:controller configureCell:[tableView cellForRowAtIndexPath:theIndexPath] atIndexPath:theIndexPath];
+				break;
+				
+			case NSFetchedResultsChangeMove:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
+	}
 }
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
-    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
-    [tableView endUpdates];
-	int callCount = self.fetchedResultsController.fetchedObjects.count;
-	if(callCount == 1)
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
+	UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+	if(coreDataHasChangeContentBug)
+	{
+		[tableView reloadData];
+	}
 	else
-		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
+	{
+		[tableView endUpdates];
+		int callCount = self.fetchedResultsController.fetchedObjects.count;
+		if(callCount == 1)
+			self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
+		else
+			self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
+	}
 	if(tableView == self.tableView)
 	{
 		[self updateEmptyView];
 	}
 }
-
-
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
-
 
 @end

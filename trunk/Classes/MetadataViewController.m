@@ -25,14 +25,6 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
-#include "PSRemoveLocalizedString.h"
-static MetadataInformation commonInformation[] = {
-	{NSLocalizedString(@"Email", @"Call Metadata"), EMAIL}
-,	{NSLocalizedString(@"Phone", @"Call Metadata"), PHONE}
-,	{NSLocalizedString(@"Mobile Phone", @"Call Metadata"), PHONE}
-,	{NSLocalizedString(@"Notes", @"Call Metadata"), NOTES}
-};
-#include "PSAddLocalizedString.h"
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
@@ -470,42 +462,6 @@ static MetadataInformation commonInformation[] = {
 @implementation MetadataViewController
 
 @synthesize delegate;
-
-+ (void)DONOTUSEfixMetadataForUserDONOTUSE:(NSMutableDictionary *)user
-{
-	NSMutableArray *preferredMetadata = [user objectForKey:SettingsPreferredMetadata];
-	// so I goofed and sent out a beta build that had SettingsPreferredMetadata redefined and should have renamed it.... remove me after release
-	if([preferredMetadata isKindOfClass:[NSString class]])
-	{
-		[(NSMutableDictionary *)user setObject:preferredMetadata forKey:SettingsSortedByMetadata];
-		preferredMetadata = nil;
-	}
-	// end remove	
-	NSMutableArray *otherMetadata = [user objectForKey:SettingsOtherMetadata];
-	NSMutableArray *metadata = [user objectForKey:SettingsMetadata];
-	if(metadata != nil || otherMetadata == nil)
-	{
-		otherMetadata = [NSMutableArray array];
-		for(int i = 0; i < ARRAY_SIZE(commonInformation); i++)
-		{
-			[otherMetadata addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[[PSLocalization localizationBundle] localizedStringForKey:commonInformation[i].name value:commonInformation[i].name table:@""], SettingsMetadataName, 
-									  [NSNumber numberWithInt:commonInformation[i].type], SettingsMetadataType,
-									  nil]];
-		}
-		[(NSMutableDictionary *)user setObject:otherMetadata forKey:SettingsOtherMetadata];
-		[(NSMutableDictionary *)user removeObjectForKey:SettingsMetadata];
-	}
-	if(preferredMetadata == nil)
-	{
-		preferredMetadata = [NSMutableArray array];
-		[(NSMutableDictionary *)user setObject:preferredMetadata forKey:SettingsPreferredMetadata];
-	}
-}
-
-+ (void)fixMetadata
-{
-	[MetadataViewController DONOTUSEfixMetadataForUserDONOTUSE:[[Settings sharedInstance] userSettings]];
-}
 
 + (NSArray *)metadataNames
 {
