@@ -18,6 +18,7 @@
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
+#import "UIAlertViewQuitter.h"
 
 @implementation BackupView
 
@@ -235,7 +236,11 @@
 			{
 				NSLog(@"deleted file");
 			}
-			exit(0);
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
+			[alertSheet show];
 			break;
 		}
 			
@@ -248,7 +253,11 @@
 				NSLog(@"deleted file");
 			}
 			[payload writeToFile:[MyTimeAppDelegate storeFileAndPath] atomically:YES];
-			exit(0);
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
+			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+			alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
+			[alertSheet show];
 			break;
 		}
 			

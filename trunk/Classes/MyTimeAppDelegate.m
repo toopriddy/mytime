@@ -58,6 +58,7 @@
 #import "MTTimeEntry.h"
 #import "MetadataCustomViewController.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "UIAlertViewQuitter.h"
 
 BOOL isIOS4OrGreater(void)
 {
@@ -179,18 +180,10 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if(alertViewTutorials)
+	if(buttonIndex == 0)
 	{
-		alertViewTutorials = NO;
-		if(buttonIndex == 0)
-		{
-			self.tabBarController.selectedViewController = self.tabBarController.moreNavigationController;
-			[self.tabBarController setSelectedViewController:_tutorialViewController];
-		}
-	}
-	else
-	{
-		exit(0);
+		self.tabBarController.selectedViewController = self.tabBarController.moreNavigationController;
+		[self.tabBarController setSelectedViewController:_tutorialViewController];
 	}
 }
 
@@ -405,7 +398,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					}
 					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-					alertSheet.delegate = self;
+					alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 					alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
 					[alertSheet show];
@@ -438,7 +431,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					self.fileToRestore = nil;
 					
 					UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
-					alertSheet.delegate = self;
+					alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
 					[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 					alertSheet.title = NSLocalizedString(@"Backup restored, press OK to quit mytime. You will have to restart to use your restored data", @"This message is displayed after a successful import of a call or a restore of a backup");
 					[alertSheet show];
@@ -928,12 +921,15 @@ NSString *emailFormattedStringForCoreDataSettings()
 																	 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"type" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
 																						  [NSSortDescriptor psSortDescriptorWithKey:@"timestamp" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
 																		   withPredicate:@"user == %@", user];
+		NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 		for(MTStatisticsAdjustment *adjustment in statisticsAdjustments)
 		{
 			NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-			[dateComponents setMonth:(adjustment.timestampValue % 99)];
+			[dateComponents setMonth:(adjustment.timestampValue % 100)];
 			[dateComponents setYear:(adjustment.timestampValue / 100)];
-			[string appendFormat:@"  %@: %@: %@<br>\n", adjustment.type, [dateComponents date], adjustment.adjustment];
+			NSDate *date = [gregorian dateFromComponents:dateComponents];
+			[string appendFormat:@"  %@: %@: %@<br>\n", adjustment.type, date, adjustment.adjustment];
+			[dateComponents release];
 		}
 		
 	}
@@ -969,29 +965,61 @@ NSString *emailFormattedStringForCoreDataSettings()
 	[string appendString:NSLocalizedString(@"You are able to restore all of your MyTime data as of the sent date of this email if you click on the link below while viewing this email from your iPhone/iTouch. Please make sure that at the end of this email there is a \"VERIFICATION CHECK:\" right after the link, it verifies that all data is contained within this email<br><br>WARNING: CLICKING ON THE LINK BELOW WILL DELETE YOUR CURRENT DATA AND RESTORE FROM THE BACKUP<br><br>", @"This is the body of the email that is sent when you go to More->Settings->Email Backup")];
 	
 	// attach the real records file
-	NSData *data = [[NSFileManager defaultManager] contentsAtPath:[[self class] storeFileAndPath]];
-	MTSettings *settings = [MTSettings settings];
-	if(settings.backupShouldIncludeAttachmentValue)
+	NSData *data = nil;
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	// it could be that they are sending the original file because of a conversion failure, use the old file instead
+	if([fileManager fileExistsAtPath:[Settings filename]])
 	{
-		[mailView addAttachmentData:data mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
-	}
-	
-	NSString *emailAddress = settings.backupEmail;
-	if(emailAddress && emailAddress.length)
-	{
-		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
-	}
-	// now add the url that will allow importing
-	if(settings.backupShouldCompressLinkValue)
-	{	
-		data = [data compress];
-		[string appendString:@"<a href=\"mytime://mytime/restoreCompressedCoreDataBackup?"];
+		NSDictionary *settings = [[Settings sharedInstance] settings];
+		if(![settings objectForKey:SettingsBackupEmailDontIncludeAttachment])
+		{
+			[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings filename]] mimeType:@"mytime/plist" fileName:@"backup.mytimedata"];
+		}
+		
+		NSString *emailAddress = [settings objectForKey:SettingsBackupEmailAddress];
+		if(emailAddress && emailAddress.length)
+		{
+			[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+		}
+		// now add the url that will allow importing
+		data = [NSKeyedArchiver archivedDataWithRootObject:settings];
+		if(![settings objectForKey:SettingsBackupEmailUncompressedLink])
+		{	
+			data = [data compress];
+			[string appendString:@"<a href=\"mytime://mytime/restoreCompressedBackup?"];
+		}
+		else
+		{
+			[string appendString:@"<a href=\"mytime://mytime/restoreBackup?"];
+		}
 	}
 	else
 	{
-		[string appendString:@"<a href=\"mytime://mytime/restoreCoreDataBackup?"];
+		data = [fileManager contentsAtPath:[[self class] storeFileAndPath]];
+		MTSettings *settings = [MTSettings settings];
+		if(settings.backupShouldIncludeAttachmentValue)
+		{
+			[mailView addAttachmentData:data mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+		}
+		NSString *emailAddress = settings.backupEmail;
+		if(emailAddress && emailAddress.length)
+		{
+			[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+		}
+		// now add the url that will allow importing
+		if(settings.backupShouldCompressLinkValue)
+		{	
+			data = [data compress];
+			[string appendString:@"<a href=\"mytime://mytime/restoreCompressedCoreDataBackup?"];
+		}
+		else
+		{
+			[string appendString:@"<a href=\"mytime://mytime/restoreCoreDataBackup?"];
+		}
+		
+		
 	}
-	
+
 	
 	int length = data.length;
 	unsigned char *bytes = (unsigned char *)data.bytes;
@@ -1019,7 +1047,9 @@ NSString *emailFormattedStringForCoreDataSettings()
 	[string appendString:NSLocalizedString(@"MyTime encountered an error translating your data to the new format.<br><br><b>Your old data is still safe</b>, I have included it in this email for the author of MyTime to fix.  The author of MyTime will try to respond quickly to your problem with a fixed data file for you to use.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected a difference in your data between the old data file and the new one.  To be safe, dont depend on this.<br><br>", @"Email body for the email that will be sent to me when there is a failure in the data conversion in the 4.0 version of mytime")];
 	
 	// attach the old records file
-	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings outOfWayFilename]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[Settings outOfWayFilename]] mimeType:@"mytime/plist" fileName:@"backup.mytimedata"];
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[MyTimeAppDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"new"]] mimeType:@"mytime/text" fileName:@"verifyNew.txt"];
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[[MyTimeAppDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"old"]] mimeType:@"mytime/text" fileName:@"verifyOld.txt"];
 	
 	[mailView setToRecipients:[NSArray arrayWithObject:@"toopriddy@gmail.com"]];
 
@@ -1058,8 +1088,8 @@ NSString *emailFormattedStringForSettings();
 	hud.progress = 1.0;
 	if(![old isEqualToString:new])
 	{
-		[old writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
-		[new writeToFile:[NSHomeDirectory() stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		[old writeToFile:[[MyTimeAppDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"old"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+		[new writeToFile:[[MyTimeAppDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"new"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 		NSLog(@"Verification Failed");
 		return NO;
 	}
@@ -1444,13 +1474,25 @@ NSString *emailFormattedStringForSettings();
 		for(int i = 0; i < 2; i++)
 		{
 			int count = 0;
+			NSMutableArray *deleteArray = [NSMutableArray array];
 			for(NSDictionary *call in [user objectForKey:callArray[i]])
 			{
 				count++;
-				
-				[self createCoreDataCallWithUser:mtUser call:call deleted:i == 1];
+				// there was someone who had an error with the webserver and the calls were corrupted, make sure things are correct
+				if(![call isKindOfClass:[NSDictionary class]])
+				{
+					[deleteArray addObject:call];
+				}
+				else 
+				{
+					[self createCoreDataCallWithUser:mtUser call:call deleted:i == 1];
+				}
 				self.hud.progress = self.hud.progress + 1.0/steps;
 			}			
+			if(deleteArray.count)
+			{
+				[[user objectForKey:callArray[i]] removeObjectsInArray:deleteArray];
+			}
 		}
 
 		error = nil;
@@ -1609,6 +1651,14 @@ NSString *emailFormattedStringForSettings();
     hud.labelText = NSLocalizedString(@"Converting Data File", @"this message is presented to the user when they are upgrading their MyTime and MyTime is converting their old database file to a new one");
 	hud.detailsLabelText = NSLocalizedString(@"Please wait. This might take a minute or two.", @"this message is presented to the user when they are upgrading their MyTime and MyTime is converting their old database file to a new one");
     [self.window addSubview:hud];
+
+	// make sure that the data that is there is gone
+	NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+	BOOL exists = [fileManager fileExistsAtPath:[[self class] storeFileAndPath]];
+	if(exists && ![fileManager removeItemAtPath:[[self class] storeFileAndPath] error:nil])
+	{
+		NSLog(@"deleted file");
+	}
 	
     // Show the HUD while the provided method executes in a new thread
     [hud showWhileExecuting:@selector(convertToCoreDataStoreTask) onTarget:self withObject:nil animated:YES];
@@ -2264,7 +2314,6 @@ NSString *emailFormattedStringForSettings();
 			
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 			alertSheet.delegate = self;
-			alertViewTutorials = YES;
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"Tutorials", @"Button to take the user directly to the tutorials view from the first popup in mytime")];
 			[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
 			alertSheet.title = NSLocalizedString(@"Please visit mytime.googlecode.com to see the FAQ and feature requests.\nA lot of work has been put into MyTime, if you find this application useful then you are welcome to donate.  Is English not your native language and you want to help to translate? Email me (look in the More view and Settings)", @"Information for the user to know what is going on with this and new releases");
