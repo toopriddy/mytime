@@ -373,6 +373,10 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 
 NSString *emailFormattedStringForCall(NSDictionary *call) 
 {
+	if(![call isKindOfClass:[NSDictionary class]])
+	{
+		return @"";
+	}
 	NSMutableString *string = [NSMutableString string];
 	NSString *value;
 	[string appendString:[NSString stringWithFormat:@"<h3>%@: %@</h3>\n", NSLocalizedString(@"Name", @"Name label for Call in editing mode"), [call objectForKey:CallName]]];
@@ -589,6 +593,7 @@ NSString *emailFormattedStringForSettings()
 		[string appendFormat:@"<h2>%@:</h2>\n", NSLocalizedString(@"Statistics Adjustments", @"Title for email section for the data that the user changed in the statistics view")];
 		NSDictionary *statisticsAdjustments = [userSettings objectForKey:SettingsStatisticsAdjustments]; 
 		NSArray *statisticsAdjustmentCategories = [[statisticsAdjustments allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 		for(NSDictionary *adjustmentCategory in statisticsAdjustmentCategories)
 		{
 			NSDictionary *adjustments = [statisticsAdjustments objectForKey:adjustmentCategory];
@@ -596,9 +601,11 @@ NSString *emailFormattedStringForSettings()
 			for(NSString *timestamp in adjustmentKeys)
 			{
 				NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-				[dateComponents setMonth:([timestamp intValue] % 99)];
+				[dateComponents setMonth:([timestamp intValue] % 100)];
 				[dateComponents setYear:([timestamp intValue] / 100)];
-				[string appendFormat:@"  %@: %@: %@<br>\n", adjustmentCategory, [dateComponents date], [adjustments objectForKey:timestamp]];
+				NSDate *date = [gregorian dateFromComponents:dateComponents];
+				[string appendFormat:@"  %@: %@: %@<br>\n", adjustmentCategory, date, [adjustments objectForKey:timestamp]];
+				[dateComponents release];
 			}
 		}
 	}	
@@ -879,14 +886,12 @@ NSString *emailFormattedStringForSettings()
 	}
 	if(bottom)
 	{
-		if(city != nil && [city length])
-		{
-			[bottom appendFormat:@"%@", city];
-		}
-		if(state != nil && [state length])
-		{
-			[bottom appendFormat:@", %@", state];
-		}
+		if(city && city.length && state && state.length)
+			[bottom appendFormat:NSLocalizedString(@"%@, %@", @"City and state(or country) as represented in an address (usually right under the house number and street)"), city, state];
+		else if(city && city.length)
+			[bottom appendString:city];
+		else if(state && state.length)
+			[bottom appendString:state];
 	}
 }
 

@@ -167,6 +167,7 @@
 		90E4E38612D96C270042C8B2 /* _MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E4E38512D96C260042C8B2 /* _MTTimeEntry.m */; };
 		90E4E38812D96C270042C8B2 /* _MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E4E38712D96C270042C8B2 /* _MTTimeType.m */; };
 		90E4E38A12D96C280042C8B2 /* _MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E4E38912D96C270042C8B2 /* _MTUser.m */; };
+		90E4E99B12DD58B10042C8B2 /* UIAlertViewQuitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E4E99A12DD58B10042C8B2 /* UIAlertViewQuitter.m */; };
 		90E526AF116D886100D5EFBD /* NSData+PSCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E526AE116D886100D5EFBD /* NSData+PSCompress.m */; };
 		90E526D0116D8DAC00D5EFBD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E526CF116D8DAC00D5EFBD /* libz.dylib */; };
 		90E6D1D50EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D1D40EECF3DC008B4A9C /* CallsSortedByStudyViewDataSource.m */; };
@@ -549,6 +550,8 @@
 		90E4E39912D96C2D0042C8B2 /* _MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeEntry.h; sourceTree = "<group>"; };
 		90E4E39A12D96C2D0042C8B2 /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
 		90E4E39B12D96C2E0042C8B2 /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
+		90E4E99912DD58B10042C8B2 /* UIAlertViewQuitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertViewQuitter.h; sourceTree = "<group>"; };
+		90E4E99A12DD58B10042C8B2 /* UIAlertViewQuitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAlertViewQuitter.m; sourceTree = "<group>"; };
 		90E526AD116D886100D5EFBD /* NSData+PSCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+PSCompress.h"; sourceTree = "<group>"; };
 		90E526AE116D886100D5EFBD /* NSData+PSCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+PSCompress.m"; sourceTree = "<group>"; };
 		90E526CF116D8DAC00D5EFBD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -727,6 +730,8 @@
 				904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */,
 				904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */,
 				905A0E731029213B00875539 /* Settings.bundle */,
+				90E4E99912DD58B10042C8B2 /* UIAlertViewQuitter.h */,
+				90E4E99A12DD58B10042C8B2 /* UIAlertViewQuitter.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1528,6 +1533,7 @@
 				90E4E38612D96C270042C8B2 /* _MTTimeEntry.m in Sources */,
 				90E4E38812D96C270042C8B2 /* _MTTimeType.m in Sources */,
 				90E4E38A12D96C280042C8B2 /* _MTUser.m in Sources */,
+				90E4E99B12DD58B10042C8B2 /* UIAlertViewQuitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1637,7 +1643,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E79F51DB-1B0E-42A5-9150-08F36E89742B";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv6";
 			};
 			name = "AdHoc Distribution";
 		};
@@ -1680,7 +1686,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0EF5CF3-F928-4C78-A4C5-D72C2AB0FA25";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Distribution;
 		};
@@ -1757,7 +1763,7 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Debug;
 		};
@@ -1778,7 +1784,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Release;
 		};
