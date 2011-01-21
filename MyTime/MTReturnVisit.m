@@ -41,7 +41,7 @@ NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home"
 	{
 		id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 		if(newValue != [NSNull null] && 
-		   newValue == [newValue laterDate:self.call.mostRecentReturnVisitDate])
+		   (newValue == [newValue laterDate:self.call.mostRecentReturnVisitDate] || [[self primitiveDate] isEqual:self.call.mostRecentReturnVisitDate]))
 		{
 		   self.call.mostRecentReturnVisitDate = newValue;
 		}

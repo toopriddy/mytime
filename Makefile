@@ -46,7 +46,7 @@ test-zip:
 	cd build/AdHoc\ Distribution-iphoneos/ && ditto -ck --keepParent MyTime.app.dSYM MyTime-${VERSION}AdHoc.app.dSYM.zip 
 	cd build/AdHoc\ Distribution-iphoneos/ && mv MyTime.ipa MyTime-${VERSION}.ipa
 
-test: build/AdHoc\ Distribution-iphoneos/MyTime.app zip test-zip
+test: zip build/AdHoc\ Distribution-iphoneos/MyTime.app zip test-zip
 	svn copy https://mytime.googlecode.com/svn/trunk https://mytime.googlecode.com/svn/tags/test-${VERSION} -m "${VERSION} to beta testers"
 
 release-zip:

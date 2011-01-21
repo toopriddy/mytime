@@ -535,6 +535,7 @@
 	MTCall *call = self.delegate.call;
 	call.lattitude = [[[NSDecimalNumber alloc] initWithDouble:selectPositionMapViewController.point.latitude] autorelease];
 	call.longitude = [[[NSDecimalNumber alloc] initWithDouble:selectPositionMapViewController.point.longitude] autorelease];
+	call.locationAquiredValue = YES;
 	
 	[self.delegate save];
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];

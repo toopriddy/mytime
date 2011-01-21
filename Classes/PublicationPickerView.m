@@ -98,7 +98,6 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"Live With Jehovah's Day in Mind", @"Book Publication Name (jd)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Let Your Kingdom Come", @"Book Publication Name (kc)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Listen to the Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Learn From the Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Life Does Have A Purpose", @"Book Publication Name (lp)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Live Forever in Paridise on Earth", @"Book Publication Name (pe)"),   PublicationTypeBook}
 ,   {NSLocalizedString(@"Nations Shall Know I am Jehovah", @"Book Publication Name (kj)"),   PublicationTypeBook}
