@@ -310,6 +310,7 @@
 		902866600ECF757A0076BCBD /* MonthChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthChooserViewController.m; sourceTree = "<group>"; };
 		9029C73512D6CFAE0034A227 /* tutorials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials.png; sourceTree = "<group>"; };
 		9029C74C12D6D2EF0034A227 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		902BA49E12E8B7AA005793DD /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = "../mytime-2.9.0/Russian.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
@@ -1258,6 +1259,7 @@
 				Slovak,
 				Norwegian,
 				Korean,
+				Russian,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1568,6 +1570,7 @@
 				9053E0580E8DDD7100BA35F7 /* Italian */,
 				90AEB40D0E9C218A00943E6A /* Japanese */,
 				9064D8B40ED11A4900A0FBBB /* Portuguese */,
+				902BA49E12E8B7AA005793DD /* Russian */,
 				9053E06F0E8DDDD400BA35F7 /* Spanish */,
 				903477630E8CAA0100BB6F2D /* Swedish */,
 				90E759350FE4426900690CEE /* Slovak */,
