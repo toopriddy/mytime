@@ -4,6 +4,7 @@
 #import <CoreData/CoreData.h>
 
 
+@class MTDisplayRule;
 @class MTTimeType;
 @class MTStatisticsAdjustment;
 @class MTBulkPlacement;
@@ -89,6 +90,11 @@
 
 
 
+@property (nonatomic, retain) NSSet* displayRules;
+- (NSMutableSet*)displayRulesSet;
+
+
+
 @property (nonatomic, retain) NSSet* timeTypes;
 - (NSMutableSet*)timeTypesSet;
 
@@ -127,6 +133,11 @@
 @end
 
 @interface _MTUser (CoreDataGeneratedAccessors)
+
+- (void)addDisplayRules:(NSSet*)value_;
+- (void)removeDisplayRules:(NSSet*)value_;
+- (void)addDisplayRulesObject:(MTDisplayRule*)value_;
+- (void)removeDisplayRulesObject:(MTDisplayRule*)value_;
 
 - (void)addTimeTypes:(NSSet*)value_;
 - (void)removeTimeTypes:(NSSet*)value_;
@@ -204,6 +215,11 @@
 - (NSString*)primitivePublisherType;
 - (void)setPrimitivePublisherType:(NSString*)value;
 
+
+
+
+- (NSMutableSet*)primitiveDisplayRules;
+- (void)setPrimitiveDisplayRules:(NSMutableSet*)value;
 
 
 

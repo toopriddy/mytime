@@ -494,10 +494,14 @@
 		[self.delegate save];
 		[[self.delegate navigationController] popViewControllerAnimated:NO];
 		
-		CLLocationCoordinate2D location = {[call.longitude doubleValue], [call.lattitude doubleValue]};
-
+		CLLocationCoordinate2D location;
+		location.latitude = [call.lattitude doubleValue];
+		location.longitude = [call.longitude doubleValue];
+		
 		MTSettings *settings = [MTSettings settings];
-		CLLocationCoordinate2D defaultPosition = {settings.lastLongitudeValue, settings.lastLattitudeValue};
+		CLLocationCoordinate2D defaultPosition;
+		defaultPosition.latitude = settings.lastLattitudeValue;
+		defaultPosition.longitude = settings.lastLongitudeValue;
 		
 		SelectPositionMapViewController *controller = [[[SelectPositionMapViewController alloc] initWithPosition:(call.locationAquiredValue ? &location : nil) defaultPosition:defaultPosition] autorelease];
 		controller.delegate = self;

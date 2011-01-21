@@ -1,5 +1,6 @@
 #import "MTReturnVisit.h"
 #import "MTCall.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 
 #include "PSRemoveLocalizedString.h"
 NSString * const CallReturnVisitTypeTransferedStudy = NSLocalizedString(@"Transfered Study", @"return visit type name when this call is transfered from another witness");
@@ -40,10 +41,22 @@ NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home"
 	if([keyPath isEqual:@"date"]) 
 	{
 		id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-		if(newValue != [NSNull null] && 
-		   (newValue == [newValue laterDate:self.call.mostRecentReturnVisitDate] || [[self primitiveDate] isEqual:self.call.mostRecentReturnVisitDate]))
+		id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
+		if(newValue != [NSNull null] && newValue == [newValue laterDate:self.call.mostRecentReturnVisitDate])
 		{
-		   self.call.mostRecentReturnVisitDate = newValue;
+			self.call.mostRecentReturnVisitDate = newValue;
+		}
+		else
+		{
+			// since this was the previous newest, lookup and see what the latest is
+			NSArray *returnVisits = [self.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
+																	   propertiesToFetch:[NSArray arrayWithObject:@"date"]
+																	 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]
+																		   withPredicate:@"(call == %@)", self.call];
+			if(returnVisits.count)
+			{
+				self.call.mostRecentReturnVisitDate = [[returnVisits objectAtIndex:0] date];
+			}
 		}
     }
 }
