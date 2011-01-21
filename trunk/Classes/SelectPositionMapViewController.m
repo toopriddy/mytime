@@ -89,6 +89,7 @@
 		pointInitalized = position != nil;
 		if(position)
 		{
+			markerMoved = YES; // if the user had already selected the position, then dont move it around
 			point = *position;
 		}
 		else

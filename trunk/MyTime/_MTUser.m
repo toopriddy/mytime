@@ -123,6 +123,17 @@
 
 
 
+@dynamic displayRules;
+
+	
+- (NSMutableSet*)displayRulesSet {
+	[self willAccessValueForKey:@"displayRules"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"displayRules"];
+	[self didAccessValueForKey:@"displayRules"];
+	return result;
+}
+	
+
 @dynamic timeTypes;
 
 	
