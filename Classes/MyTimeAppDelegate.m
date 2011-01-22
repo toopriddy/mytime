@@ -694,7 +694,7 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 		[string appendFormat:@"%@, %@<br>\n", call.lattitude, call.longitude];
 	}
 	NSString *lookupType = call.locationLookupType;
-	[string appendFormat:@"%@<br>\n", [[NSBundle mainBundle] localizedStringForKey:lookupType value:lookupType table:nil]];
+	[string appendFormat:@"%@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:lookupType value:lookupType table:nil]];
 	
 	// Add Metadata
 	// they had an array of publications, lets check them too

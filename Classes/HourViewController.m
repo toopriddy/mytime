@@ -83,7 +83,7 @@
 	{
 		coreDataHasChangeContentBug = !isIOS4OrGreater();
 		self.typeName = typeName;
-		self.title = self.type.name;
+		self.title = [[PSLocalization localizationBundle] localizedStringForKey:self.type.name value:self.type.name table:@""];
 		self.tabBarItem.image = [UIImage imageNamed:[self.type.imageFileName stringByAppendingString:@".png"]];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
 	}
