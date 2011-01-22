@@ -36,12 +36,14 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 298064435;
-			PBXWorkspaceStateSaveDate = 298064435;
+			PBXPerProjectTemplateStateSaveDate = 317410293;
+			PBXWorkspaceStateSaveDate = 317410293;
 		};
 		perUserProjectItems = {
-			9073FA6011C41A440007FC32 /* PBXTextBookmark */ = 9073FA6011C41A440007FC32 /* PBXTextBookmark */;
-			90F6B5C71181629400519165 /* PBXTextBookmark */ = 90F6B5C71181629400519165 /* PBXTextBookmark */;
+			902BA88912EB2D17005793DD = 902BA88912EB2D17005793DD /* PBXTextBookmark */;
+			902BA8BB12EB3459005793DD = 902BA8BB12EB3459005793DD /* PBXTextBookmark */;
+			902BA8BC12EB3459005793DD = 902BA8BC12EB3459005793DD /* PBXTextBookmark */;
+			902BA8BE12EB3459005793DD = 902BA8BE12EB3459005793DD /* PBXTextBookmark */;
 		};
 		sourceControlManager = 90A799CE0F22A89200365D96 /* Source Control */;
 		userBuildSettings = {
@@ -49,9 +51,9 @@
 	};
 	08FB7796FE84155DC02AAC07 /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {981, 2450}}";
-			sepNavSelRange = "{3413, 0}";
-			sepNavVisRange = "{1361, 1102}";
+			sepNavIntBoundsRect = "{{0, 0}, {981, 2772}}";
+			sepNavSelRange = "{4116, 0}";
+			sepNavVisRange = "{3243, 1168}";
 			sepNavWindowFrame = "{{322, 88}, {1118, 790}}";
 		};
 	};
@@ -61,15 +63,68 @@
 			90A799C70F22A87F00365D96 /* LocalizableMerge */,
 		);
 	};
-	9073FA6011C41A440007FC32 /* PBXTextBookmark */ = {
+	902BA88912EB2D17005793DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 902BA88A12EB2D17005793DD /* NSPredicate.h */;
+		name = "NSPredicate.h: 37";
+		rLen = 150;
+		rLoc = 1525;
+		rType = 0;
+		vrLen = 1728;
+		vrLoc = 0;
+	};
+	902BA88A12EB2D17005793DD /* NSPredicate.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = NSPredicate.h;
+		path = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSPredicate.h;
+		sourceTree = "<absolute>";
+	};
+	902BA8BB12EB3459005793DD /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 124";
+		name = "main.m: 151";
 		rLen = 0;
-		rLoc = 3413;
+		rLoc = 4116;
 		rType = 0;
-		vrLen = 1102;
-		vrLoc = 1361;
+		vrLen = 1168;
+		vrLoc = 3243;
+	};
+	902BA8BC12EB3459005793DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 902BA8BD12EB3459005793DD /* Localizable.strings */;
+		rLen = 0;
+		rLoc = 9223372036854775808;
+		rType = 0;
+	};
+	902BA8BD12EB3459005793DD /* Localizable.strings */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.plist.strings;
+		name = Localizable.strings;
+		path = "/Users/bpriddy/Downloads/Slovak-3.lproj/Localizable.strings";
+		sourceTree = "<absolute>";
+	};
+	902BA8BE12EB3459005793DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 902BA8BF12EB3459005793DD /* Localizable.strings */;
+		name = "Localizable.strings: 3";
+		rLen = 70550;
+		rLoc = 74;
+		rType = 0;
+		vrLen = 3961;
+		vrLoc = 66663;
+	};
+	902BA8BF12EB3459005793DD /* Localizable.strings */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.plist.strings;
+		name = Localizable.strings;
+		path = "/Users/bpriddy/Downloads/Slovak-3.lproj/Localizable.strings";
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {5244, 20258}}";
+			sepNavSelRange = "{67380, 0}";
+			sepNavVisRange = "{66662, 3962}";
+		};
 	};
 	90A799C70F22A87F00365D96 /* LocalizableMerge */ = {
 		isa = PBXExecutable;
@@ -114,15 +169,5 @@
 	90A799CF0F22A89200365D96 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
-	};
-	90F6B5C71181629400519165 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 08FB7796FE84155DC02AAC07 /* main.m */;
-		name = "main.m: 124";
-		rLen = 0;
-		rLoc = 3413;
-		rType = 0;
-		vrLen = 1092;
-		vrLoc = 1366;
 	};
 }

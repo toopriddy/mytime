@@ -151,6 +151,18 @@ static const PublicationInformation PUBLICATIONS[] = {
 ,   {NSLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name (9203)"),   PublicationTypeDVDBook}
 ,   {NSLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name (9229)"),   PublicationTypeDVDBook}
 
+,   {NSLocalizedString(@"DVD: Warning Examples for Our Day and Respect Jehovah's Authority", @"DVD Publication Name (dvwra-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Jehovah's Witnesses Stand Firm Against Nazi Assault", @"DVD Publication Name (dvfi-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faithful Under Trials and Purple Triangles", @"DVD Publication Name (dvutp-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: The the Ends of the Earth and United by Divine Teaching", @"DVD Publication Name (dvedt-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Young People Ask - How Can I Make Real Friends?", @"DVD Publication Name (dvfe-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Young People Ask - What Will I Do With My Life?", @"DVD Publication Name (dvyf-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: The Bible - A Book of Fact and Prophecy", @"DVD Publication Name (dvbbl-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: The Wonders of Creation Reveal God's Glory", @"DVD Publication Name (dvwc-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Organized to Share Good News and Whole Association of Brothers", @"DVD Publication Name (dvjwa-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faith in Action, Part 1: Out of Darkness", @"DVD Publication Name (dvfa1-DVE)"),   PublicationTypeDVDBook}
+,   {NSLocalizedString(@"DVD: Transfusion Alternatives - Documentary Series", @"DVD Publication Name (dvalt-DVE)"),   PublicationTypeDVDBook}
+		
 ,   {NSLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name (9221)"),   PublicationTypeDVDBrochure}
 ,   {NSLocalizedString(@"DVD: Worship God", @"DVD Publication Name (9213)"),   PublicationTypeDVDBrochure}
 ,   {NSLocalizedString(@"DVD: God's Friend", @"DVD Publication Name (9211)"),   PublicationTypeDVDBrochure}
