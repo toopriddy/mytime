@@ -62,8 +62,20 @@ int main (int argc, const char * argv[])
 			NSArray *tempArray = [line componentsSeparatedByString:@" = "];
 			if(tempArray.count != 2)
 			{
-				NSLog(@"ERROR: there is an equal sign in the text and this breaks this merge utility");
-				return -1;
+				NSArray *tempArray = [line componentsSeparatedByString:@"="];
+				if(tempArray.count != 2)
+				{
+					NSArray *tempArray = [line componentsSeparatedByString:@" ="];
+					if(tempArray.count != 2)
+					{
+						NSArray *tempArray = [line componentsSeparatedByString:@"= "];
+						if(tempArray.count != 2)
+						{
+							NSLog(@"ERROR: there is an equal sign in the text and this breaks this merge utility");
+						}
+						return -1;
+					}
+				}
 			}
 			[entry setObject:[tempArray objectAtIndex:0] forKey:@"first"];
 			[entry setObject:[tempArray objectAtIndex:1] forKey:@"second"];
@@ -121,17 +133,36 @@ int main (int argc, const char * argv[])
 			NSArray *tempArray = [line componentsSeparatedByString:@" = "];
 			if(tempArray.count != 2)
 			{
-				NSLog(@"ERROR: there is an equal sign in the text in %@:%d and this breaks this merge utility", mergeToFilename, lineNumber);
-				return -1;
+				NSArray *tempArray = [line componentsSeparatedByString:@"="];
+				if(tempArray.count != 2)
+				{
+					NSArray *tempArray = [line componentsSeparatedByString:@" ="];
+					if(tempArray.count != 2)
+					{
+						NSArray *tempArray = [line componentsSeparatedByString:@"= "];
+						if(tempArray.count != 2)
+						{
+							NSLog(@"ERROR: there is an equal sign in the text in %@:%d and this breaks this merge utility", mergeToFilename, lineNumber);
+						}
+						return -1;
+					}
+				}
 			}
 			int index = [names indexOfObject:[tempArray objectAtIndex:0]];
 			if(index != NSNotFound)
 			{
 				NSString *value = [tempArray objectAtIndex:1];
-//				NSLog(@"found it at %d as %@", index, value);
+				//				NSLog(@"found it at %d as %@", index, value);
 				entry = [baseArray objectAtIndex:index];
-				[entry setObject:value forKey:@"second"];
-				[entry setObject:@"" forKey:@"found"];
+				if([entry objectForKey:@"found"] == nil)
+				{
+					[entry setObject:value forKey:@"second"];
+					[entry setObject:@"" forKey:@"found"];
+				}
+				else
+				{
+					NSLog(@"Found duplicate entry for %@", [tempArray objectAtIndex:0]);
+				}
 			}
 			else
 			{
