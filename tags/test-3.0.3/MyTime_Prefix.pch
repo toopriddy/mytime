@@ -1,0 +1,18 @@
+//
+// Prefix header for all source files of the 'MyTime' target in the 'MyTime' project
+//
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+
+extern int debugging;
+
+#define DEBUG(a) if(debugging) { a }
+#define VERBOSE(a) if(debugging > 1) { a }
+#define VERY_VERBOSE(a) if(debugging > 2) { a }
+
+#define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
+
+extern BOOL isIOS4OrGreater(void);
