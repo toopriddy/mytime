@@ -393,6 +393,8 @@
 		902BA82412E949FF005793DD /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
 		902BA82512E949FF005793DD /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
 		902BA96A12EB4DB4005793DD /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		902BA97F12EB5810005793DD /* DisplayRulesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayRulesViewController.h; sourceTree = "<group>"; };
+		902BA98012EB5810005793DD /* DisplayRulesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayRulesViewController.m; sourceTree = "<group>"; };
 		902FC4970E46B086006E39A8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		9032C7520F30DACA005FA8D0 /* Geocache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocache.h; sourceTree = "<group>"; };
 		9032C7530F30DACA005FA8D0 /* Geocache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocache.m; sourceTree = "<group>"; };
@@ -1165,6 +1167,8 @@
 				907A23150ECA82A600BE38DD /* MetadataViewController.m */,
 				907CDF3D103F9F9D00236342 /* QuickNotesViewController.h */,
 				907CDF3E103F9F9D00236342 /* QuickNotesViewController.m */,
+				902BA97F12EB5810005793DD /* DisplayRulesViewController.h */,
+				902BA98012EB5810005793DD /* DisplayRulesViewController.m */,
 			);
 			name = CallViews;
 			sourceTree = "<group>";
@@ -1670,7 +1674,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E79F51DB-1B0E-42A5-9150-08F36E89742B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1D862032-A100-4D7D-830B-3B35FBE0F2F9";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv7 armv6";
