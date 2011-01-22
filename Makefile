@@ -21,7 +21,7 @@ all: genstrings
 
 genstrings:
 	rm -f en_US.lproj/Localizable.strings
-	genstrings Classes/*.m Classes/*.h -s AlternateLocalizedString -o en_US.lproj/
+	genstrings Classes/*.m Classes/*.h MyTime/*.m MyTime/*.h -s AlternateLocalizedString -o en_US.lproj/
 	cp en_US.lproj/Localizable.strings English.lproj/
 
 merge:
