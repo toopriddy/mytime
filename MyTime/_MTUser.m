@@ -156,6 +156,10 @@
 }
 	
 
+@dynamic currentDisplayRule;
+
+	
+
 @dynamic bulkPlacements;
 
 	

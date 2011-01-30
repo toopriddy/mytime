@@ -9,6 +9,8 @@
 
 
 
+
+
 @interface MTSorterID : NSManagedObjectID {}
 @end
 
@@ -17,6 +19,22 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTSorterID*)objectID;
+
+
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *type;
+
+@property short typeValue;
+- (short)typeValue;
+- (void)setTypeValue:(short)value_;
+
+//- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -49,6 +67,17 @@
 @end
 
 @interface _MTSorter (CoreDataGeneratedPrimitiveAccessors)
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+- (NSNumber*)primitiveType;
+- (void)setPrimitiveType:(NSNumber*)value;
+
+- (short)primitiveTypeValue;
+- (void)setPrimitiveTypeValue:(short)value_;
+
 
 - (NSString*)primitivePath;
 - (void)setPrimitivePath:(NSString*)value;

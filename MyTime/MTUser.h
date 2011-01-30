@@ -12,6 +12,7 @@ extern NSString *const MTNotificationUserChanged;
 @interface MTUser : _MTUser {}
 // Custom logic goes here.
 + (MTUser *)userWithName:(NSString *)name;
++ (MTUser *)userWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)moc;
 + (MTUser *)currentUser;
 + (MTUser *)currentUserInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (MTUser *)createUserInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;

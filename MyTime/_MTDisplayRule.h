@@ -4,6 +4,7 @@
 #import <CoreData/CoreData.h>
 
 
+@class MTFilter;
 @class MTSorter;
 @class MTUser;
 
@@ -24,6 +25,11 @@
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
+
+
+
+@property (nonatomic, retain) MTFilter* filters;
+//- (BOOL)validateFilters:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -53,6 +59,11 @@
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
+
+
+
+- (MTFilter*)primitiveFilters;
+- (void)setPrimitiveFilters:(MTFilter*)value;
 
 
 

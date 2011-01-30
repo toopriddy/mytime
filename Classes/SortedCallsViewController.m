@@ -456,7 +456,18 @@
 	NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
 	if(alternateIndexTitles)
 	{
-		return index;
+		NSFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
+		int i = 0;
+		int ret = 0;
+		for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
+		{
+			if([[sectionInfo name] intValue] <= index)
+			{
+				ret = i;
+			}
+			i++;
+		}
+		return ret;
 	}
 	return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];
 }
