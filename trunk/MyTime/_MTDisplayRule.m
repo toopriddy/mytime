@@ -36,6 +36,10 @@
 
 
 
+@dynamic filters;
+
+	
+
 @dynamic sorters;
 
 	

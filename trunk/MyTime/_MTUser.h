@@ -7,6 +7,7 @@
 @class MTDisplayRule;
 @class MTTimeType;
 @class MTStatisticsAdjustment;
+@class MTDisplayRule;
 @class MTBulkPlacement;
 @class MTTerritory;
 @class MTPresentation;
@@ -102,6 +103,11 @@
 
 @property (nonatomic, retain) NSSet* statisticsAdjustments;
 - (NSMutableSet*)statisticsAdjustmentsSet;
+
+
+
+@property (nonatomic, retain) MTDisplayRule* currentDisplayRule;
+//- (BOOL)validateCurrentDisplayRule:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -230,6 +236,11 @@
 
 - (NSMutableSet*)primitiveStatisticsAdjustments;
 - (void)setPrimitiveStatisticsAdjustments:(NSMutableSet*)value;
+
+
+
+- (MTDisplayRule*)primitiveCurrentDisplayRule;
+- (void)setPrimitiveCurrentDisplayRule:(MTDisplayRule*)value;
 
 
 

@@ -4,7 +4,7 @@
 #import <CoreData/CoreData.h>
 
 
-
+@class MTUser;
 
 
 
@@ -150,12 +150,6 @@
 
 
 
-@property (nonatomic, retain) NSString *currentUser;
-
-//- (BOOL)validateCurrentUser:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *lastCity;
 
 //- (BOOL)validateLastCity:(id*)value_ error:(NSError**)error_;
@@ -202,6 +196,12 @@
 
 
 
+@property (nonatomic, retain) NSString *firstViewTitle;
+
+//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *existingCallAlertSheetShown;
 
 @property BOOL existingCallAlertSheetShownValue;
@@ -212,10 +212,9 @@
 
 
 
-@property (nonatomic, retain) NSString *firstViewTitle;
 
-//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
-
+@property (nonatomic, retain) MTUser* currentUser;
+//- (BOOL)validateCurrentUser:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -302,10 +301,6 @@
 - (void)setPrimitiveBackupShouldIncludeAttachmentValue:(BOOL)value_;
 
 
-- (NSString*)primitiveCurrentUser;
-- (void)setPrimitiveCurrentUser:(NSString*)value;
-
-
 - (NSString*)primitiveLastCity;
 - (void)setPrimitiveLastCity:(NSString*)value;
 
@@ -338,6 +333,10 @@
 - (void)setPrimitiveBackupShouldCompressLinkValue:(BOOL)value_;
 
 
+- (NSString*)primitiveFirstViewTitle;
+- (void)setPrimitiveFirstViewTitle:(NSString*)value;
+
+
 - (NSNumber*)primitiveExistingCallAlertSheetShown;
 - (void)setPrimitiveExistingCallAlertSheetShown:(NSNumber*)value;
 
@@ -345,9 +344,10 @@
 - (void)setPrimitiveExistingCallAlertSheetShownValue:(BOOL)value_;
 
 
-- (NSString*)primitiveFirstViewTitle;
-- (void)setPrimitiveFirstViewTitle:(NSString*)value;
 
+
+- (MTUser*)primitiveCurrentUser;
+- (void)setPrimitiveCurrentUser:(MTUser*)value;
 
 
 @end

@@ -160,7 +160,7 @@
 			}
 			[[self retain] autorelease];
 			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
-			if(self.user = currentUser)
+			if(self.user == currentUser)
 			{
 				[MTUser setCurrentUser:nil];
 				[MTUser currentUser];

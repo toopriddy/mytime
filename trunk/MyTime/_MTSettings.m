@@ -229,13 +229,6 @@
 
 
 
-@dynamic currentUser;
-
-
-
-
-
-
 @dynamic lastCity;
 
 
@@ -347,6 +340,13 @@
 
 
 
+@dynamic firstViewTitle;
+
+
+
+
+
+
 @dynamic existingCallAlertSheetShown;
 
 
@@ -373,12 +373,9 @@
 
 
 
-@dynamic firstViewTitle;
+@dynamic currentUser;
 
-
-
-
-
+	
 
 
 

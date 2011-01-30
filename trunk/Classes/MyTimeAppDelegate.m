@@ -1301,8 +1301,6 @@ NSString *emailFormattedStringForSettings();
 	
 //	steps = 1 + 9*[[settings objectForKey:SettingsMultipleUsers] count];
 		
-	mtSettings.currentUser = [settings objectForKey:SettingsMultipleUsersCurrentUser];
-	
 	// PASSCODE
 	mtSettings.passcode = [settings objectForKey:SettingsPasscode];
 	
@@ -1590,6 +1588,8 @@ NSString *emailFormattedStringForSettings();
 		}
 	}
 
+	mtSettings.currentUser = [MTUser userWithName:[settings objectForKey:SettingsMultipleUsersCurrentUser] inManagedObjectContext:[self managedObjectContext]];
+	
 	// make sure the current user is initalized
 	[MTUser currentUser];
 	
