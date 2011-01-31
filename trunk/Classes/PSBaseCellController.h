@@ -15,6 +15,12 @@
 @private
 	NSObject *model_;
 	NSString *path_;
+	id selectionTarget_;
+	SEL selectionAction_;
+	id deleteTarget_;
+	SEL deleteAction_;
+	id insertTarget_;
+	SEL insertAction_;
 }
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, retain) NSObject *model;
@@ -29,7 +35,18 @@
 @property (nonatomic, copy) NSIndexPath *selectedRow;
 // 0 means to not go to the next row
 @property (nonatomic, assign) int selectNextRowResponderIncrement;
+@property (nonatomic, assign) BOOL movableWhileEditing;
+@property (nonatomic, assign) BOOL movable;
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+
+// selector in the form of baseCellController:(PSBaseCellController *)baseCellController tableview:(UITableView *)didSelectAtIndexPath:(NSIndexPath *)
+- (void)setSelectionTarget:(id)target action:(SEL)action;
+
+// selector in the form of - (void)baseCellController:(PSBaseCellController *)baseCellController tableView:(UITableView *)tableView deleteActionForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)setDeleteTarget:(id)target action:(SEL)action;
+
+// selector in the form of - (void)baseCellController:(PSBaseCellController *)baseCellController tableView:(UITableView *)tableView insertActionForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)setInsertTarget:(id)target action:(SEL)action;
 
 @end

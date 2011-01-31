@@ -151,7 +151,11 @@
 		case 0:
 		{
 			MTUser *currentUser = [MTUser currentUser];
-			
+			BOOL wasCurrentUser = currentUser == self.user;
+			if(wasCurrentUser)
+			{
+				[MTUser setCurrentUser:nil];
+			}
 			[self.delegate.managedObjectContext deleteObject:self.user];
 			NSError *error = nil;
 			if (![self.delegate.managedObjectContext save:&error]) 
@@ -160,9 +164,8 @@
 			}
 			[[self retain] autorelease];
 			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
-			if(self.user == currentUser)
+			if(wasCurrentUser)
 			{
-				[MTUser setCurrentUser:nil];
 				[MTUser currentUser];
 				[self.delegate updateAndReload];
 			}

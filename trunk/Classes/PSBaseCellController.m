@@ -70,6 +70,8 @@
 @synthesize selectedRow;
 @synthesize nextRowResponder;
 @synthesize selectNextRowResponderIncrement;
+@synthesize movable;
+@synthesize movableWhileEditing;
 
 - (void)dealloc
 {
@@ -81,6 +83,24 @@
 	self.selectedRow = nil;
 	
 	[super dealloc];
+}
+
+- (void)setSelectionTarget:(id)target action:(SEL)action
+{
+	selectionTarget_ = target;
+	selectionAction_ = action;
+}
+
+- (void)setDeleteTarget:(id)target action:(SEL)action
+{
+	deleteTarget_ = target;
+	deleteAction_ = action;
+}
+
+- (void)setInsertTarget:(id)target action:(SEL)action
+{
+	insertTarget_ = target;
+	insertAction_ = action;
 }
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
@@ -99,6 +119,18 @@
 	return self.nextRowResponder;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(tableView.editing)
+	{
+		return self.movableWhileEditing;
+	}
+	else
+	{
+		return self.movable;
+	}
+}
+
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return self.indentWhileEditing;
@@ -113,6 +145,46 @@
 {
 	// you should implement your own
 	assert(false);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)theEditingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(theEditingStyle == UITableViewCellEditingStyleDelete && deleteTarget_)
+	{
+		NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:[deleteTarget_ methodSignatureForSelector:deleteAction_]];
+		[invocation setTarget:deleteTarget_];
+		[invocation setSelector:deleteAction_];
+		[invocation setArgument:&self atIndex:2];
+		[invocation setArgument:&tableView atIndex:3];
+		[invocation setArgument:&theEditingStyle atIndex:4];
+		[invocation setArgument:&indexPath atIndex:5];
+		[invocation invoke];
+	}
+	else if(theEditingStyle == UITableViewCellEditingStyleInsert && insertTarget_)
+	{
+		NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:[insertTarget_ methodSignatureForSelector:insertAction_]];
+		[invocation setTarget:insertTarget_];
+		[invocation setSelector:insertAction_];
+		[invocation setArgument:&self atIndex:2];
+		[invocation setArgument:&tableView atIndex:3];
+		[invocation setArgument:&theEditingStyle atIndex:4];
+		[invocation setArgument:&indexPath atIndex:5];
+		[invocation invoke];
+	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(selectionTarget_)
+	{
+		NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:[selectionTarget_ methodSignatureForSelector:selectionAction_]];
+		[invocation setTarget:selectionTarget_];
+		[invocation setSelector:selectionAction_];
+		[invocation setArgument:&self atIndex:2];
+		[invocation setArgument:&tableView atIndex:3];
+		[invocation setArgument:&indexPath atIndex:4];
+		[invocation invoke];
+	}
 }
 
 @end

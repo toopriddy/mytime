@@ -18,7 +18,6 @@ extern NSString *const MTNotificationUserChanged;
 + (MTUser *)createUserInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (void)setCurrentUser:(MTUser *)user;
 
-- (void)moveUserAfter:(MTUser *)afterUser beforeUser:(MTUser *)beforeUser;
 - (void)initalizeUser;
 
 @end
