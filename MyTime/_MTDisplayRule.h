@@ -10,6 +10,8 @@
 
 
 
+
+
 @interface MTDisplayRuleID : NSManagedObjectID {}
 @end
 
@@ -21,9 +23,29 @@
 
 
 
+@property (nonatomic, retain) NSNumber *order;
+
+@property double orderValue;
+- (double)orderValue;
+- (void)setOrderValue:(double)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSString *name;
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *deleteable;
+
+@property BOOL deleteableValue;
+- (BOOL)deleteableValue;
+- (void)setDeleteableValue:(BOOL)value_;
+
+//- (BOOL)validateDeleteable:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -56,8 +78,22 @@
 
 @interface _MTDisplayRule (CoreDataGeneratedPrimitiveAccessors)
 
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (double)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(double)value_;
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
+- (NSNumber*)primitiveDeleteable;
+- (void)setPrimitiveDeleteable:(NSNumber*)value;
+
+- (BOOL)primitiveDeleteableValue;
+- (void)setPrimitiveDeleteableValue:(BOOL)value_;
 
 
 

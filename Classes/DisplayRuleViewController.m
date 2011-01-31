@@ -7,36 +7,39 @@
 //
 
 #import "DisplayRuleViewController.h"
+#import "SorterViewController.h"
 #import "TableViewCellController.h"
 #import "GenericTableViewSectionController.h"
 #import "MTUser.h"
 #import "MTDisplayRule.h"
+#import "MTSorter.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "PSTextFieldCellController.h"
 #import "PSLocalization.h"
 
-@interface DisplayRuleCellController : NSObject<TableViewCellController, DisplayRuleViewControllerDelegate, UIActionSheetDelegate>
+@interface SorterCellController : NSObject<TableViewCellController, DisplayRuleViewControllerDelegate, UIActionSheetDelegate>
 {
 	DisplayRuleViewController *delegate;
 	BOOL wasSelected;
 }
 @property (nonatomic, assign) DisplayRuleViewController *delegate;
-@property (nonatomic, retain) MTDisplayRule *displayRule;
+@property (nonatomic, retain) MTSorter *sorter;
 @end
-@implementation DisplayRuleCellController
+@implementation SorterCellController
 @synthesize delegate;
-@synthesize displayRule;
+@synthesize sorter;
 
-- (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
+- (void)dealloc
 {
-	NSManagedObjectContext *managedObjectContext = self.delegate.managedObjectContext;
+	self.sorter = nil;
 	
-	MTUser *currentUser = [MTUser currentUser];
-	self.user.name = newName;
-	if(currentUser == self.user)
-	{
-		[MTUser setCurrentUser:self.user];
-	}
+	[super dealloc];
+}
+
+- (void)sorterViewControllerDone:(SorterViewController *)sorterViewController
+{
+	NSManagedObjectContext *managedObjectContext = self.sorter.managedObjectContext;
 	
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
@@ -44,7 +47,7 @@
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
 	self.delegate.forceReload = YES;
-	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+	[sorterViewController.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,7 +113,7 @@
 }
 @end
 
-@interface AddDisplayRuleCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
+@interface AddSorterCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
 {
 	DisplayRuleViewController *delegate;
 	MTDisplayRule *temporaryDisplayRule;
@@ -118,7 +121,7 @@
 @property (nonatomic, retain) MTDisplayRule *temporaryDisplayRule;
 @property (nonatomic, assign) DisplayRuleViewController *delegate;
 @end
-@implementation AddDisplayRuleCellController
+@implementation AddSorterCellController
 @synthesize delegate;
 @synthesize temporaryDisplayRule;
 
@@ -232,7 +235,8 @@
 
 @implementation DisplayRuleViewController
 @synthesize delegate;
-@synthesize managedObjectContext;
+@synthesize displayRule;
+@synthesize allTextFields;
 
 - (id) init;
 {
@@ -240,7 +244,7 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
+		self.title = NSLocalizedString(@"Edit Display Rule", @"Sort Rules View title");
 		
 		self.hidesBottomBarWhenPushed = YES;
 	}
@@ -249,6 +253,9 @@
 
 - (void)dealloc 
 {
+	self.allTextFields = nil;
+	self.displayRule = nil;
+	
 	self.tableView.delegate = nil;
 	self.tableView.dataSource = nil;
 	
@@ -306,31 +313,55 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
-	
-	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
-												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
-													   withPredicate:nil];
-	
-	GenericTableViewSectionController *sectionController = [[DisplayRuleSectionController alloc] init];
-	[self.sectionControllers addObject:sectionController];
-	[sectionController release];
-	
-	for(MTDisplayRule *displayRule in displayRules)
+
 	{
-		DisplayRuleCellController *cellController = [[DisplayRuleCellController alloc] init];
-		cellController.delegate = self;
-		cellController.displayRule = displayRule;
-		[sectionController.cellControllers addObject:cellController];
-		[cellController release];
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+
+		{
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.displayRule;
+			cellController.modelPath = @"name";
+			cellController.placeholder = NSLocalizedString(@"Display Rule Name", @"This is the placeholder text in the Display Rule detail screen where you name the display rule");
+			cellController.returnKeyType = UIReturnKeyDone;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.obtainFocus = obtainFocus;
+			cellController.allTextFields = self.allTextFields;
+			obtainFocus = NO;
+			[sectionController.cellControllers addObject:cellController];
+		}
 	}
 	
-	// add the "Add Additional User" cell at the end
-	AddDisplayRuleCellController *addCellController = [[AddDisplayRuleCellController alloc] init];
-	addCellController.delegate = self;
-	[sectionController.cellControllers addObject:addCellController];
-	[addCellController release];
-	
+	// Sorters
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		sectionController.title = NSLocalizedString(@"Sort Rules", @"Section title for the Display Rule editing view");
+		[sectionController release];
+
+		NSArray *sorters = [self.displayRule.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+																		  propertiesToFetch:nil
+																		withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
+																			  withPredicate:@"displayRule == %@", self.displayRule];
+		
+		for(MTSorter *sorter in sorters)
+		{
+			SorterCellController *cellController = [[SorterCellController alloc] init];
+			cellController.delegate = self;
+			cellController.sorter = sorter;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// add the "Add Additional User" cell at the end
+		AddSorterCellController *addCellController = [[AddSorterCellController alloc] init];
+		addCellController.delegate = self;
+		[sectionController.cellControllers addObject:addCellController];
+		[addCellController release];
+	}	
 }
 
 @end

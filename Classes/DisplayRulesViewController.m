@@ -10,12 +10,14 @@
 #import "DisplayRuleViewController.h"
 #import "TableViewCellController.h"
 #import "GenericTableViewSectionController.h"
+#import "PSLabelCellController.h"
 #import "MTUser.h"
 #import "MTDisplayRule.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSLocalization.h"
 
+#if 0
 @interface DisplayRuleCellController : NSObject<TableViewCellController, DisplayRuleViewControllerDelegate, UIActionSheetDelegate>
 {
 	DisplayRulesViewController *delegate;
@@ -28,16 +30,16 @@
 @synthesize delegate;
 @synthesize displayRule;
 
+- (void)dealloc
+{
+	self.displayRule = nil;
+	
+	[super dealloc];
+}
+
 - (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
 {
 	NSManagedObjectContext *managedObjectContext = self.delegate.managedObjectContext;
-	
-	MTUser *currentUser = [MTUser currentUser];
-	self.user.name = newName;
-	if(currentUser == self.user)
-	{
-		[MTUser setCurrentUser:self.user];
-	}
 	
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
@@ -45,7 +47,7 @@
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
 	self.delegate.forceReload = YES;
-	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+	[displayRuleViewController.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -56,11 +58,11 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
-	
+	MTUser *currentUser = [MTUser currentUser];
 	cell.textLabel.text = self.displayRule.name;
 	
 	cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	cell.accessoryType = [self.delegate.selectedDisplayRule.name isEqualToString:self.displayRule.name] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = currentUser.currentDisplayRule  == self.displayRule ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;
 }
@@ -71,6 +73,11 @@
 	if(editingStyle == UITableViewCellEditingStyleDelete)
 	{
 		MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
+		BOOL wasCurrentDisplayRule = currentDisplayRule == self.displayRule;
+		MTUser *currentUser = [MTUser currentUser];
+		if(wasCurrentDisplayRule)
+			currentUser.currentDisplayRule = nil;
+		
 		[self.delegate.managedObjectContext deleteObject:self.displayRule];
 		NSError *error = nil;
 		if (![self.delegate.managedObjectContext save:&error]) 
@@ -78,11 +85,10 @@
 			[NSManagedObjectContext presentErrorDialog:error];
 		}
 		[[self retain] autorelease];
-		[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
-		if(self.displayRule = currentDisplayRule)
-		{
-			[MTUser setCurrentDisplayRule:nil];
-			[MTUser currentDisplayRule];
+		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
+		if(wasCurrentDisplayRule)
+		{			
+			[MTDisplayRule currentDisplayRule];
 			[self.delegate updateAndReload];
 		}
 	}
@@ -109,9 +115,16 @@
 		}
 	}
 }
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return self.displayRule.deleteable ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+}
+
+
 @end
 
-@interface AddDisplayRuleCellController : NSObject<TableViewCellController, MetadataEditorViewControllerDelegate>
+@interface AddDisplayRuleCellController : NSObject<TableViewCellController, DisplayRuleViewControllerDelegate>
 {
 	DisplayRulesViewController *delegate;
 	MTDisplayRule *temporaryDisplayRule;
@@ -132,12 +145,8 @@
 - (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
 {
 	NSManagedObjectContext *managedObjectContext = self.delegate.managedObjectContext;
-	MTUser *currentUser = [MTUser currentUser];
-	self.user.name = newName;
-	if(currentUser == self.user)
-	{
-		[MTUser setCurrentUser:self.user];
-	}
+	// let the MTDisplayRule sort out what is the currentDisplayRule if this is adding the first one
+	[MTDisplayRule currentDisplayRule];
 	
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
@@ -145,8 +154,8 @@
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
 	self.temporaryDisplayRule = nil;
-	self.delegate.forceReload = YES;
-	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+	[self.delegate dismissModalViewControllerAnimated:YES];
+	[self.delegate updateAndReload];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -159,7 +168,7 @@
 	}
 	cell.accessoryType = UITableViewCellAccessoryNone;
 	
-	[cell setValue:NSLocalizedString(@"Add New Sort Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view")];
+	[cell setValue:NSLocalizedString(@"Add New Display Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view")];
 	return cell;
 }
 
@@ -181,7 +190,7 @@
 - (void)navigationControlCanceled
 {
 	NSManagedObjectContext *moc = self.temporaryDisplayRule.managedObjectContext;
-	[moc deleteObject:self.temporaryStreet];
+	[moc deleteObject:self.temporaryDisplayRule];
 	self.temporaryDisplayRule = nil;
 	NSError *error = nil;
 	if(![moc save:&error])
@@ -194,11 +203,9 @@
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self.delegate resignAllFirstResponders];
-	
 	self.temporaryDisplayRule = [MTDisplayRule insertInManagedObjectContext:self.delegate.managedObjectContext];
 	self.temporaryDisplayRule.user = [MTUser currentUser];
-	NotAtHomeStreetViewController *controller = [[[DisplayRuleViewController alloc] initWithDisplayRule:self.temporaryDisplayRule newDisplayRule:YES] autorelease];
+	DisplayRuleViewController *controller = [[[DisplayRuleViewController alloc] initWithDisplayRule:self.temporaryDisplayRule newDisplayRule:YES] autorelease];
 	controller.delegate = self;
 	
 	// push the element view controller onto the navigation stack to display it
@@ -208,7 +215,7 @@
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	
-	controller.title = NSLocalizedString(@"Add Sort Rule", @"Title for the Sorted By ... area when you are editing the display rules");
+	controller.title = NSLocalizedString(@"New Display Rule", @"Title for the Sorted By ... area when you are editing the display rules");
 	[self.delegate presentModalViewController:navigationController animated:YES];
 	[temporaryBarButtonItem setAction:@selector(navigationControlCanceled)];
 	[temporaryBarButtonItem setTarget:self];
@@ -216,24 +223,13 @@
 	
 	[self.delegate retainObject:self whileViewControllerIsManaged:controller];
 }
-
-- (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
-{
-	self.temporaryDisplayRule = nil;
-	NSError *error = nil;
-	if(![self.delegate.managedObjectContext save:&error])
-	{
-		[NSManagedObjectContext presentErrorDialog:error];
-	}
-	
-	[self.delegate dismissModalViewControllerAnimated:YES];
-	[self.delegate updateAndReload];
-}
 @end
+#endif
 
 @implementation DisplayRulesViewController
 @synthesize delegate;
 @synthesize managedObjectContext;
+@synthesize temporaryDisplayRule;
 
 - (id) init;
 {
@@ -250,6 +246,7 @@
 
 - (void)dealloc 
 {
+	self.temporaryDisplayRule = nil;
 	self.tableView.delegate = nil;
 	self.tableView.dataSource = nil;
 	
@@ -304,34 +301,145 @@
 	[self navigationControlDone:nil];
 }
 
+- (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
+{
+	NSManagedObjectContext *moc = self.managedObjectContext;
+	// let the MTDisplayRule sort out what is the currentDisplayRule if this is adding the first one
+	[MTDisplayRule currentDisplayRule];
+	
+	NSError *error = nil;
+	if (![moc save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	if(self.temporaryDisplayRule)
+	{
+		self.temporaryDisplayRule = nil;
+		[self dismissModalViewControllerAnimated:YES];
+	}
+	else
+	{
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+
+	[self updateAndReload];
+}
+
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView deleteSorterAtIndexPath:(NSIndexPath *)indexPath
+{
+	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.model;
+	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
+	BOOL wasCurrentDisplayRule = currentDisplayRule == displayRule;
+	MTUser *currentUser = [MTUser currentUser];
+	if(wasCurrentDisplayRule)
+		currentUser.currentDisplayRule = nil;
+	
+	[self.managedObjectContext deleteObject:displayRule];
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	[[self retain] autorelease];
+	[self deleteDisplayRowAtIndexPath:indexPath];
+	if(wasCurrentDisplayRule)
+	{			
+		[MTDisplayRule currentDisplayRule];
+		[self updateAndReload];
+	}
+}
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView modifySorterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
+{
+	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.model;
+	if(tableView.editing)
+	{
+		DisplayRuleViewController *p = [[[DisplayRuleViewController alloc] initWithDisplayRule:displayRule newDisplayRule:NO] autorelease];
+		p.delegate = self;
+		[[self navigationController] pushViewController:p animated:YES];		
+		[self retainObject:labelCellController whileViewControllerIsManaged:p];
+	}
+	else
+	{
+		[MTDisplayRule setCurrentDisplayRule:displayRule];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[self updateWithoutReload];
+		if(self.delegate && [self.delegate respondsToSelector:@selector(displayRulesViewController:selectedDisplayRule:)])
+		{
+			[self.delegate displayRulesViewController:self selectedDisplayRule:displayRule];
+		}
+	}
+}
+
+
+- (void)addSorterNavigationControlCanceled
+{
+	NSManagedObjectContext *moc = self.temporaryDisplayRule.managedObjectContext;
+	[moc deleteObject:self.temporaryDisplayRule];
+	self.temporaryDisplayRule = nil;
+	NSError *error = nil;
+	if(![moc save:&error])
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addSorterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
+{
+	self.temporaryDisplayRule = [MTDisplayRule insertInManagedObjectContext:self.managedObjectContext];
+	self.temporaryDisplayRule.user = [MTUser currentUser];
+	DisplayRuleViewController *controller = [[[DisplayRuleViewController alloc] initWithDisplayRule:self.temporaryDisplayRule newDisplayRule:YES] autorelease];
+	controller.delegate = self;
+	
+	// push the element view controller onto the navigation stack to display it
+	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+	
+	// create a custom navigation bar button and set it to always say "back"
+	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
+	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
+	
+	controller.title = NSLocalizedString(@"New Display Rule", @"Title for the Sorted By ... area when you are editing the display rules");
+	[self presentModalViewController:navigationController animated:YES];
+	[temporaryBarButtonItem setAction:@selector(addSorterNavigationControlCanceled)];
+	[temporaryBarButtonItem setTarget:self];
+	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+	
+	[self retainObject:controller whileViewControllerIsManaged:controller];
+}
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
 	
-	NSArray *users = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
-												   propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
-													   withPredicate:nil];
+	NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+														  propertiesToFetch:[NSArray arrayWithObject:@"name"] 
+														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
+															  withPredicate:nil];
 	
-	GenericTableViewSectionController *sectionController = [[DisplayRulesSectionController alloc] init];
+	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 	
 	for(MTDisplayRule *displayRule in displayRules)
 	{
-		DisplayRuleCellController *cellController = [[DisplayRuleCellController alloc] init];
-		cellController.delegate = self;
-		cellController.displayRule = displayRule;
+		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+		cellController.model = displayRule;
+		cellController.modelPath = @"name";
+		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifySorterFromSelectionAtIndexPath:)];
+		[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteSorterAtIndexPath:)];
 		[sectionController.cellControllers addObject:cellController];
-		[cellController release];
 	}
 	
 	// add the "Add Additional User" cell at the end
-	AddDisplayRuleCellController *addCellController = [[AddDisplayRuleCellController alloc] init];
-	addCellController.delegate = self;
-	[sectionController.cellControllers addObject:addCellController];
-	[addCellController release];
-	
+	{
+		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+		cellController.title = NSLocalizedString(@"Add New Display Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
+		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
+		[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
+		[sectionController.cellControllers addObject:cellController];
+	}
 }
 
 @end

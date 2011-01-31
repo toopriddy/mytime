@@ -21,8 +21,12 @@
 {
 	NSObject<DisplayRuleViewControllerDelegate> *delegate;
 	MTDisplayRule *displayRule;
+	NSMutableSet *allTextFields;
+	BOOL obtainFocus;
 }
 @property (nonatomic, assign) NSObject<DisplayRuleViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MTDisplayRule *displayRule;
+@property (nonatomic, retain) NSMutableSet *allTextFields;
 
+- (id)initWithDisplayRule:(MTDisplayRule *)displayRule newDisplayRule:(BOOL)newDisplayRule;
 @end

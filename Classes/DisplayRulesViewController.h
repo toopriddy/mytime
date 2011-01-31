@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GenericTableViewController.h"
+#import "DisplayRuleViewController.h"
 #import <CoreData/CoreData.h>
 #import "MTUser.h"
 
@@ -20,12 +21,14 @@
 - (void)displayRulesViewController:(DisplayRulesViewController *)viewController selectedDisplayRule:(MTDisplayRule *)displayRule;
 @end
 
-@interface DisplayRulesViewController : GenericTableViewController
+@interface DisplayRulesViewController : GenericTableViewController<DisplayRuleViewControllerDelegate>
 {
 	NSObject<DisplayRulesViewControllerDelegate> *delegate;
 	NSManagedObjectContext *managedObjectContext;
+	
 }
 @property (nonatomic, assign) NSObject<DisplayRulesViewControllerDelegate> *delegate;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) MTDisplayRule *temporaryDisplayRule;
 
 @end
