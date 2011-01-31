@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "GenericTableViewController.h"
+#import "SorterViewController.h"
 #import <CoreData/CoreData.h>
-#import "MTUser.h"
+#import "MTSorter.h"
+#import "MTDisplayRule.h"
 
 @class DisplayRuleViewController;
 
@@ -17,7 +19,7 @@
 - (void)displayRuleViewControllerDone:(DisplayRuleViewController *)viewController;
 @end
 
-@interface DisplayRuleViewController : GenericTableViewController
+@interface DisplayRuleViewController : GenericTableViewController <SorterViewControllerDelegate>
 {
 	NSObject<DisplayRuleViewControllerDelegate> *delegate;
 	MTDisplayRule *displayRule;
@@ -27,6 +29,7 @@
 @property (nonatomic, assign) NSObject<DisplayRuleViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MTDisplayRule *displayRule;
 @property (nonatomic, retain) NSMutableSet *allTextFields;
+@property (nonatomic, retain) MTSorter *temporarySorter;
 
 - (id)initWithDisplayRule:(MTDisplayRule *)displayRule newDisplayRule:(BOOL)newDisplayRule;
 @end
