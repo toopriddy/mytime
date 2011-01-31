@@ -37,6 +37,8 @@
 @property (nonatomic, assign) int selectNextRowResponderIncrement;
 @property (nonatomic, assign) BOOL movableWhileEditing;
 @property (nonatomic, assign) BOOL movable;
+@property (nonatomic, assign) BOOL isViewableWhenEditing;
+@property (nonatomic, assign) BOOL isViewableWhenNotEditing;
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 
@@ -49,4 +51,5 @@
 // selector in the form of - (void)baseCellController:(PSBaseCellController *)baseCellController tableView:(UITableView *)tableView insertActionForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)setInsertTarget:(id)target action:(SEL)action;
 
+- (id)init;
 @end

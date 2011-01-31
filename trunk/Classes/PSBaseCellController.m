@@ -72,6 +72,18 @@
 @synthesize selectNextRowResponderIncrement;
 @synthesize movable;
 @synthesize movableWhileEditing;
+@synthesize isViewableWhenEditing;
+@synthesize isViewableWhenNotEditing;
+
+- (id)init
+{
+	if ( (self = [super init]) )
+	{
+		isViewableWhenEditing = YES;
+		isViewableWhenNotEditing = YES;
+	}
+	return self;
+}
 
 - (void)dealloc
 {
