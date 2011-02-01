@@ -6,4 +6,6 @@
 + (void)setCurrentDisplayRule:(MTDisplayRule *)displayRule;
 + (MTDisplayRule *)currentDisplayRule;
 + (MTDisplayRule *)currentDisplayRuleInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (void)createDefaultDisplayRulesForUser:(MTUser *)user;
++ (MTDisplayRule *)displayRuleForInternalName:(NSString *)name;
 @end

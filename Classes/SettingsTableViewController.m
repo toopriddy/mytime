@@ -29,6 +29,8 @@
 #import "MTUser.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
+#import "DisplayRulesViewController.h"
+#import "PSLabelCellController.h"
 #import "PSDateCellController.h"
 
 // base class for 
@@ -1160,6 +1162,15 @@
 	return YES;
 }
 
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView displayRulesSelectedAtIndexPath:(NSIndexPath *)indexPath
+{
+	MTSettings *settings = [MTSettings settings];
+	DisplayRulesViewController *controller = [[[DisplayRulesViewController alloc] init] autorelease];
+	controller.managedObjectContext = settings.managedObjectContext;
+	controller.editing = YES;
+	[self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
@@ -1201,6 +1212,15 @@
 			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
+		}
+		
+		// Display Rules
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.title = NSLocalizedString(@"Display Rules", @"In the Settings view this is the row that lets you configure all of the sorting/filter rules");
+			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:displayRulesSelectedAtIndexPath:)];
+			[sectionController.cellControllers addObject:cellController];
 		}
 		
 		// QuickNotes

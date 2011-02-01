@@ -4,9 +4,10 @@
 #import <CoreData/CoreData.h>
 
 
-@class MTFilter;
 @class MTSorter;
+@class MTFilter;
 @class MTUser;
+
 
 
 
@@ -23,6 +24,12 @@
 
 
 
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *order;
 
 @property double orderValue;
@@ -30,12 +37,6 @@
 - (void)setOrderValue:(double)value_;
 
 //- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -49,14 +50,24 @@
 
 
 
+@property (nonatomic, retain) NSNumber *internal;
 
-@property (nonatomic, retain) MTFilter* filters;
-//- (BOOL)validateFilters:(id*)value_ error:(NSError**)error_;
+@property BOOL internalValue;
+- (BOOL)internalValue;
+- (void)setInternalValue:(BOOL)value_;
+
+//- (BOOL)validateInternal:(id*)value_ error:(NSError**)error_;
+
 
 
 
 @property (nonatomic, retain) NSSet* sorters;
 - (NSMutableSet*)sortersSet;
+
+
+
+@property (nonatomic, retain) MTFilter* filters;
+//- (BOOL)validateFilters:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -78,15 +89,15 @@
 
 @interface _MTDisplayRule (CoreDataGeneratedPrimitiveAccessors)
 
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
 - (double)primitiveOrderValue;
 - (void)setPrimitiveOrderValue:(double)value_;
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
 
 
 - (NSNumber*)primitiveDeleteable;
@@ -96,15 +107,22 @@
 - (void)setPrimitiveDeleteableValue:(BOOL)value_;
 
 
+- (NSNumber*)primitiveInternal;
+- (void)setPrimitiveInternal:(NSNumber*)value;
 
+- (BOOL)primitiveInternalValue;
+- (void)setPrimitiveInternalValue:(BOOL)value_;
 
-- (MTFilter*)primitiveFilters;
-- (void)setPrimitiveFilters:(MTFilter*)value;
 
 
 
 - (NSMutableSet*)primitiveSorters;
 - (void)setPrimitiveSorters:(NSMutableSet*)value;
+
+
+
+- (MTFilter*)primitiveFilters;
+- (void)setPrimitiveFilters:(MTFilter*)value;
 
 
 

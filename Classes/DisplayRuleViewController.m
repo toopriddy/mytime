@@ -170,6 +170,7 @@
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.obtainFocus = obtainFocus;
 			cellController.allTextFields = self.allTextFields;
+			cellController.indentWhileEditing = NO;
 			obtainFocus = NO;
 			[sectionController.cellControllers addObject:cellController];
 		}
@@ -192,6 +193,7 @@
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.model = sorter;
 			cellController.modelPath = @"name";
+			cellController.editingStyle = UITableViewCellEditingStyleDelete;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifySorterFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteSorterAtIndexPath:)];
 			[sectionController.cellControllers addObject:cellController];
@@ -201,7 +203,7 @@
 		{
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.title = NSLocalizedString(@"Add New Sort Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
-			cellController.isViewableWhenNotEditing = NO;
+			cellController.editingStyle = UITableViewCellEditingStyleInsert;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
 			[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
 			[sectionController.cellControllers addObject:cellController];
