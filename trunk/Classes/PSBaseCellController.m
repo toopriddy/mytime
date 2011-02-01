@@ -81,6 +81,7 @@
 	{
 		isViewableWhenEditing = YES;
 		isViewableWhenNotEditing = YES;
+		indentWhileEditing = YES;
 	}
 	return self;
 }

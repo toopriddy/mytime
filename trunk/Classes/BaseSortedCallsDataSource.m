@@ -159,27 +159,21 @@ NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	switch(_sortedBy)
 	{
 		case CALLS_SORTED_BY_STREET:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_DATE:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_CITY:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_NAME:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
 			break;
 		case CALLS_SORTED_BY_DELETED:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == YES", currentUser];
 			break;
 		case CALLS_SORTED_BY_STUDY:
-			// sort by street, city, then name
 			filterPredicate = [NSPredicate predicateWithFormat:@"(user == %@) && (deletedCall == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study').@count > 0", currentUser];
 			break;
 		case CALLS_SORTED_BY_METADATA:

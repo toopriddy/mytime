@@ -27,7 +27,7 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Edit Display Rule", @"Sort Rules View title");
+		self.title = NSLocalizedString(@"Edit Sort Rule", @"Sort Rules View title");
 		self.sorter = theSorter;
 		self.hidesBottomBarWhenPushed = YES;
 	}
@@ -55,7 +55,6 @@
 - (void)loadView 
 {
 	[super loadView];
-	self.tableView.editing = YES;
 	[self updateAndReload];
 	
 	// update the button in the nav bar
@@ -65,7 +64,7 @@
 	[self.navigationItem setRightBarButtonItem:button animated:YES];
 }
 
-- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView sorterSelectedAtIndexPath:(NSIndexPath *)indexPath
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
 #warning implement me
 }
@@ -74,11 +73,25 @@
 {
 	[super constructSectionControllers];
 	
+	for(NSDictionary *group in [MTSorter sorterInformationArray])
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		sectionController.title = [group objectForKey:MTSorterGroupName];
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 		
+		for(NSDictionary *entry in [group objectForKey:MTSorterGroupArray])
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.model = entry;
+			cellController.modelPath = MTSorterEntryName;
+			if([self.sorter.path isEqualToString:[entry objectForKey:MTSorterEntryPath]])
+			{
+				cellController.accessoryType = UITableViewCellAccessoryCheckmark; 
+			}
+			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:sortSelectedAtIndexPath:)];
+			[sectionController.cellControllers addObject:cellController];
+		}
 	}
 	
 }

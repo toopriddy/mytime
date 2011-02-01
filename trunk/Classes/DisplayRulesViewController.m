@@ -217,6 +217,7 @@
 		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 		cellController.model = displayRule;
 		cellController.modelPath = @"name";
+		cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
 		[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
 		[sectionController.cellControllers addObject:cellController];
@@ -227,6 +228,7 @@
 		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 		cellController.title = NSLocalizedString(@"Add New Display Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
 		cellController.isViewableWhenNotEditing = NO;
+		cellController.editingStyle = UITableViewCellEditingStyleInsert;
 		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
 		[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
 		[sectionController.cellControllers addObject:cellController];

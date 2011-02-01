@@ -29,6 +29,13 @@
 
 
 
+@dynamic name;
+
+
+
+
+
+
 @dynamic order;
 
 
@@ -50,13 +57,6 @@
 - (void)setPrimitiveOrderValue:(double)value_ {
 	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
 }
-
-
-
-
-
-@dynamic name;
-
 
 
 
@@ -88,9 +88,31 @@
 
 
 
-@dynamic filters;
+@dynamic internal;
 
-	
+
+
+- (BOOL)internalValue {
+	NSNumber *result = [self internal];
+	return [result boolValue];
+}
+
+- (void)setInternalValue:(BOOL)value_ {
+	[self setInternal:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveInternalValue {
+	NSNumber *result = [self primitiveInternal];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveInternalValue:(BOOL)value_ {
+	[self setPrimitiveInternal:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
 
 @dynamic sorters;
 
@@ -101,6 +123,10 @@
 	[self didAccessValueForKey:@"sorters"];
 	return result;
 }
+	
+
+@dynamic filters;
+
 	
 
 @dynamic user;

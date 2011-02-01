@@ -43,6 +43,7 @@
 #import "MTUser.h"
 #import "MTCall.h"
 #import "MTReturnVisit.h"
+#import "MTDisplayRule.h"
 #import "MTBulkPlacement.h"
 #import "MTPublication.h"
 #import "MTAdditionalInformation.h"
@@ -1380,6 +1381,9 @@ NSString *emailFormattedStringForSettings();
 			[MTAdditionalInformationType initalizeOldStyleStorageDefaultAdditionalInformationTypesForUser:user];
 		}		
 		
+		// DisplayRules
+		[MTDisplayRule createDefaultDisplayRulesForUser:mtUser];
+
 		// SECRETARY SETTINGS
 		mtUser.secretaryEmailAddress = [settings objectForKey:SettingsSecretaryEmailAddress];
 		mtUser.secretaryEmailNotes = [settings objectForKey:SettingsSecretaryEmailNotes];

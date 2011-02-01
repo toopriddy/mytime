@@ -1,5 +1,6 @@
 #import "MTUser.h"
 #import "MTSettings.h"
+#import "MTDisplayRule.h"
 #import "MTAdditionalInformationType.h"
 #import "MyTimeAppDelegate.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
@@ -61,6 +62,7 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 - (void)initalizeUser
 {
 	[MTAdditionalInformationType initalizeDefaultAdditionalInformationTypesForUser:self];
+	[MTDisplayRule createDefaultDisplayRulesForUser:self];
 }
 
 + (void)setCurrentUser:(MTUser *)user
