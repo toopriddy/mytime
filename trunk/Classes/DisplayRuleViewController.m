@@ -61,7 +61,6 @@
 {
 	[super loadView];
 	self.tableView.editing = YES;
-	[self updateAndReload];
 	
 	[self navigationControlDone:nil];
 }
@@ -160,19 +159,31 @@
 		[sectionController release];
 
 		{
-			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
-			cellController.model = self.displayRule;
-			cellController.modelPath = @"name";
-			cellController.placeholder = NSLocalizedString(@"Display Rule Name", @"This is the placeholder text in the Display Rule detail screen where you name the display rule");
-			cellController.returnKeyType = UIReturnKeyDone;
-			cellController.clearButtonMode = UITextFieldViewModeAlways;
-			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
-			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
-			cellController.obtainFocus = obtainFocus;
-			cellController.allTextFields = self.allTextFields;
-			cellController.indentWhileEditing = NO;
-			obtainFocus = NO;
-			[sectionController.cellControllers addObject:cellController];
+			if(self.displayRule.deleteableValue)
+			{
+				PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+				cellController.model = self.displayRule;
+				cellController.modelPath = @"name";
+				cellController.placeholder = NSLocalizedString(@"Display Rule Name", @"This is the placeholder text in the Display Rule detail screen where you name the display rule");
+				cellController.returnKeyType = UIReturnKeyDone;
+				cellController.clearButtonMode = UITextFieldViewModeAlways;
+				cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+				cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+				cellController.obtainFocus = obtainFocus;
+				cellController.allTextFields = self.allTextFields;
+				cellController.indentWhileEditing = NO;
+				obtainFocus = NO;
+				[self addCellController:cellController toSection:sectionController];
+			}
+			else
+			{
+				PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+				cellController.model = self.displayRule;
+				cellController.indentWhileEditing = NO;
+				cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+				cellController.modelPath = @"name";
+				[self addCellController:cellController toSection:sectionController];
+			}
 		}
 	}
 	
@@ -196,7 +207,7 @@
 			cellController.editingStyle = UITableViewCellEditingStyleDelete;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifySorterFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteSorterAtIndexPath:)];
-			[sectionController.cellControllers addObject:cellController];
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		// add the "Add Sorter" cell at the end
@@ -206,7 +217,7 @@
 			cellController.editingStyle = UITableViewCellEditingStyleInsert;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
 			[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addSorterFromSelectionAtIndexPath:)];
-			[sectionController.cellControllers addObject:cellController];
+			[self addCellController:cellController toSection:sectionController];
 		}
 	}	
 }

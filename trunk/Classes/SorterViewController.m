@@ -8,6 +8,7 @@
 
 #import "SorterViewController.h"
 #import "PSLabelCellController.h"
+#import "PSSwitchCellController.h"
 #import "SorterViewController.h"
 #import "TableViewCellController.h"
 #import "GenericTableViewSectionController.h"
@@ -55,7 +56,6 @@
 - (void)loadView 
 {
 	[super loadView];
-	[self updateAndReload];
 	
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -72,6 +72,18 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
+
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		PSSwitchCellController *cellController = [[[PSSwitchCellController alloc] init] autorelease];
+		cellController.title = NSLocalizedString(@"Sort Ascending", @"Title for row in the 'Edit Sort Rule' view for the ascending switch");
+		cellController.model = self.sorter;
+		cellController.modelPath = @"ascending";
+		[self addCellController:cellController toSection:sectionController];
+	}
 	
 	for(NSDictionary *group in [MTSorter sorterInformationArray])
 	{
@@ -90,7 +102,7 @@
 				cellController.accessoryType = UITableViewCellAccessoryCheckmark; 
 			}
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:sortSelectedAtIndexPath:)];
-			[sectionController.cellControllers addObject:cellController];
+			[self addCellController:cellController toSection:sectionController];
 		}
 	}
 	

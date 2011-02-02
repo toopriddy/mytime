@@ -7,13 +7,14 @@
 @implementation MTDisplayRule
 
 // Custom logic goes here.
-+ (MTDisplayRule *)createDisplayRuleInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
++ (MTDisplayRule *)createDisplayRuleForUser:(MTUser *)user
 {
+	NSManagedObjectContext *managedObjectContext = user.managedObjectContext;
 	// first find the highest ordering index
 	double order = 0;
 	for(MTDisplayRule *displayRule in [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
 													  propertiesToFetch:[NSArray arrayWithObject:@"order"]
-														  withPredicate:nil])
+														  withPredicate:@"user == %@", user])
 	{
 		double displayRuleOrder = displayRule.orderValue;
 		if (displayRuleOrder > order)
@@ -110,16 +111,14 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 								   deletable:(BOOL)deletable 
 									internal:(BOOL)internal
 {
-	NSManagedObjectContext *moc = user.managedObjectContext;
-	MTDisplayRule *displayRule = [MTDisplayRule insertInManagedObjectContext:moc];
+	MTDisplayRule *displayRule = [MTDisplayRule createDisplayRuleForUser:user];
 	displayRule.user = user;
 	displayRule.name = name;
 	displayRule.deleteableValue = deletable;
 	displayRule.internalValue = internal;
 	for(NSSortDescriptor *sortDescriptor in sortDescriptors)
 	{
-		MTSorter *sorter = [MTSorter insertInManagedObjectContext:moc];
-		sorter.displayRule = displayRule;
+		MTSorter *sorter = [MTSorter createSorterForDisplayRule:displayRule];
 		sorter.name = [MTSorter nameForPath:sortDescriptor.key];
 		sorter.path = sortDescriptor.key;
 		sorter.ascendingValue = sortDescriptor.ascending;
