@@ -7,6 +7,7 @@ extern NSString * const MTSorterEntryName;
 
 @interface MTSorter : _MTSorter {}
 // Custom logic goes here.
++ (MTSorter *)createSorterForDisplayRule:(MTDisplayRule *)displayRule;
 + (NSArray *)sorterInformationArray;
 + (NSString *)nameForPath:(NSString *)path;
 @end

@@ -9,6 +9,7 @@
 
 
 
+
 @interface MTFilterID : NSManagedObjectID {}
 @end
 
@@ -20,15 +21,25 @@
 
 
 
-@property (nonatomic, retain) NSString *predicate;
+@property (nonatomic, retain) NSNumber *order;
 
-//- (BOOL)validatePredicate:(id*)value_ error:(NSError**)error_;
+@property double orderValue;
+- (double)orderValue;
+- (void)setOrderValue:(double)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
 @property (nonatomic, retain) NSString *name;
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *predicate;
+
+//- (BOOL)validatePredicate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -46,12 +57,19 @@
 
 @interface _MTFilter (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSString*)primitivePredicate;
-- (void)setPrimitivePredicate:(NSString*)value;
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (double)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(double)value_;
 
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
+- (NSString*)primitivePredicate;
+- (void)setPrimitivePredicate:(NSString*)value;
 
 
 

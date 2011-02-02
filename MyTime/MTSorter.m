@@ -1,4 +1,7 @@
 #import "MTSorter.h"
+#import "MTDisplayRule.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
+#import "PSLocalization.h"
 
 NSString * const MTSorterGroupName = @"groupName";
 NSString * const MTSorterGroupArray = @"array";
@@ -21,7 +24,7 @@ NSArray *globalSorterDictionary;
 		return globalSorterDictionary;
 	
 	globalSorterDictionary = 
-	[NSArray arrayWithObjects:
+	[[NSArray alloc] initWithObjects:
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Call", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [NSArray arrayWithObjects:
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"name", MTSorterEntryPath, NSLocalizedString(@"Most Return Visit Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, nil],
@@ -37,7 +40,7 @@ NSArray *globalSorterDictionary;
 	   nil], MTSorterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Return Visit", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"mostRecentReturnVisitDate", MTSorterEntryPath, NSLocalizedString(@"Most Return Visit Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"mostRecentReturnVisitDate", MTSorterEntryPath, NSLocalizedString(@"Most Recent Return Visit Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, nil],
 	   nil], MTSorterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Additional Information", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [MTSorter additionalInformationGroupArray], MTSorterGroupArray, nil],
@@ -61,5 +64,27 @@ NSArray *globalSorterDictionary;
 	
 	return nil;
 }
+
++ (MTSorter *)createSorterForDisplayRule:(MTDisplayRule *)displayRule
+{
+	// first find the highest ordering index
+	double order = 0;
+	for(MTSorter *sorter in [displayRule.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+																	  propertiesToFetch:[NSArray arrayWithObject:@"order"]
+																		  withPredicate:@"displayRule == %@", displayRule])
+	{
+		double sorterOrder = sorter.orderValue;
+		if (sorterOrder > order)
+			order = sorterOrder;
+	}
+	
+	
+	MTSorter *sorter = [NSEntityDescription insertNewObjectForEntityForName:[MTSorter entityName]
+													 inManagedObjectContext:displayRule.managedObjectContext];
+	sorter.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
+	sorter.displayRule = displayRule;
+	return sorter;
+}
+
 
 @end

@@ -86,9 +86,14 @@
 {
 	[super loadView];
 	
-	[self updateAndReload];
-	
-	[self navigationControlDone:nil];
+	if(self.editing)
+	{
+		[self navigationControlEdit:nil];
+	}
+	else
+	{
+		[self navigationControlDone:nil];
+	}
 }
 
 - (void)displayRuleViewControllerDone:(DisplayRuleViewController *)displayRuleViewController
@@ -202,36 +207,68 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
+	MTUser *currentUser = [MTUser currentUser];
 	
-	NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
-														  propertiesToFetch:[NSArray arrayWithObject:@"name"] 
-														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
-															  withPredicate:nil];
-	
-	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
-	[self.sectionControllers addObject:sectionController];
-	[sectionController release];
-	
-	for(MTDisplayRule *displayRule in displayRules)
 	{
-		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-		cellController.model = displayRule;
-		cellController.modelPath = @"name";
-		cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
-		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
-		[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
-		[sectionController.cellControllers addObject:cellController];
-	}
+		NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+															  propertiesToFetch:[NSArray arrayWithObject:@"name"] 
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
+																  withPredicate:@"internal == YES && user == %@", currentUser];
+		
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		sectionController.editingTitle = NSLocalizedString(@"MyTime Display Rules", @"");
+		sectionController.editingFooter = NSLocalizedString(@"These display rules are used in MyTime for all of the street, city, date, name, study, etc. sorted views", @"this is the description in the Display Rules view when you are editing the display rules");
+		sectionController.isViewableWhenEditing = YES;
+		sectionController.isViewableWhenNotEditing = NO;
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		for(MTDisplayRule *displayRule in displayRules)
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.model = displayRule;
+			cellController.modelPath = @"name";
+			cellController.indentWhileEditing = NO;
+			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
+			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
+			[self addCellController:cellController toSection:sectionController];
+		}
+	}	
 	
-	// add the "Add Display Rule" cell at the end
 	{
-		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-		cellController.title = NSLocalizedString(@"Add New Display Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
-		cellController.isViewableWhenNotEditing = NO;
-		cellController.editingStyle = UITableViewCellEditingStyleInsert;
-		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
-		[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
-		[sectionController.cellControllers addObject:cellController];
+		NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+															  propertiesToFetch:[NSArray arrayWithObject:@"name"] 
+															withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
+																  withPredicate:@"user == %@", currentUser];
+		
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		sectionController.editingTitle = NSLocalizedString(@"User Defined Display Rules", @"Title for the Display rules section when editing the display rules");
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		for(MTDisplayRule *displayRule in displayRules)
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.model = displayRule;
+			cellController.modelPath = @"name";
+			cellController.isViewableWhenEditing = !displayRule.internalValue;
+			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
+			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
+		// add the "Add Display Rule" cell at the end
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.title = NSLocalizedString(@"Add New Display Rule", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
+			cellController.isViewableWhenNotEditing = NO;
+			cellController.editingStyle = UITableViewCellEditingStyleInsert;
+			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
+			[cellController setInsertTarget:self action:@selector(labelCellController:tableView:addDisplayRuleFromSelectionAtIndexPath:)];
+			[self addCellController:cellController toSection:sectionController];
+		}
 	}
 }
 

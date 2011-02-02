@@ -2,7 +2,7 @@
 
 @interface MTDisplayRule : _MTDisplayRule {}
 // Custom logic goes here.
-+ (MTDisplayRule *)createDisplayRuleInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (MTDisplayRule *)createDisplayRuleForUser:(MTUser *)user;
 + (void)setCurrentDisplayRule:(MTDisplayRule *)displayRule;
 + (MTDisplayRule *)currentDisplayRule;
 + (MTDisplayRule *)currentDisplayRuleInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;

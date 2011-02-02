@@ -11,6 +11,7 @@
 
 
 
+
 @interface MTSorterID : NSManagedObjectID {}
 @end
 
@@ -41,6 +42,16 @@
 @property (nonatomic, retain) NSString *path;
 
 //- (BOOL)validatePath:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *order;
+
+@property double orderValue;
+- (double)orderValue;
+- (void)setOrderValue:(double)value_;
+
+//- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -81,6 +92,13 @@
 
 - (NSString*)primitivePath;
 - (void)setPrimitivePath:(NSString*)value;
+
+
+- (NSNumber*)primitiveOrder;
+- (void)setPrimitiveOrder:(NSNumber*)value;
+
+- (double)primitiveOrderValue;
+- (void)setPrimitiveOrderValue:(double)value_;
 
 
 - (NSNumber*)primitiveAscending;
