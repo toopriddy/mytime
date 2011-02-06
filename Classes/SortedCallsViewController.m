@@ -21,6 +21,7 @@
 #import "PSLocalization.h"
 #import "MTCall.h"
 #import "MTUser.h"
+#import "MTDisplayRule.h"
 #import "MTReturnVisit.h"
 #import "MTPublication.h"
 #import "MTAdditionalInformation.h"
@@ -128,7 +129,7 @@
 	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 } 
 
-- (void)userChanged
+- (void)reloadTableFromSourceChange
 {
 	fetchedResultsController_.delegate = nil;
 	[fetchedResultsController_ release];
@@ -161,7 +162,8 @@
 																					 action:@selector(navigationControlAdd:)] autorelease];
 			[self.navigationItem setRightBarButtonItem:button animated:NO];
 		}
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userChanged) name:MTNotificationUserChanged object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableFromSourceChange) name:MTNotificationUserChanged object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableFromSourceChange) name:MTNotificationDisplayRuleChanged object:nil];
 	}
 	return self;
 }

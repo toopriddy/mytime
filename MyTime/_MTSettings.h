@@ -196,12 +196,6 @@
 
 
 
-@property (nonatomic, retain) NSString *firstViewTitle;
-
-//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *existingCallAlertSheetShown;
 
 @property BOOL existingCallAlertSheetShownValue;
@@ -209,6 +203,12 @@
 - (void)setExistingCallAlertSheetShownValue:(BOOL)value_;
 
 //- (BOOL)validateExistingCallAlertSheetShown:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *firstViewTitle;
+
+//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -333,15 +333,15 @@
 - (void)setPrimitiveBackupShouldCompressLinkValue:(BOOL)value_;
 
 
-- (NSString*)primitiveFirstViewTitle;
-- (void)setPrimitiveFirstViewTitle:(NSString*)value;
-
-
 - (NSNumber*)primitiveExistingCallAlertSheetShown;
 - (void)setPrimitiveExistingCallAlertSheetShown:(NSNumber*)value;
 
 - (BOOL)primitiveExistingCallAlertSheetShownValue;
 - (void)setPrimitiveExistingCallAlertSheetShownValue:(BOOL)value_;
+
+
+- (NSString*)primitiveFirstViewTitle;
+- (void)setPrimitiveFirstViewTitle:(NSString*)value;
 
 
 

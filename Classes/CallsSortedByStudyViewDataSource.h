@@ -19,9 +19,5 @@
 @interface CallsSortedByStudyViewDataSource : BaseSortedCallsDataSource  
 {
 }
-
-- (id)init;
-- (void)dealloc;
-
 @end
 

@@ -15,15 +15,9 @@
 
 #import <Foundation/Foundation.h>
 #import "SortedCallsViewController.h"
-#import "MetadataPickerViewController.h"
-#import "OverlayViewController.h"
+#import "DisplayRulesViewController.h"
 
-@interface MetadataSortedCallsViewController : SortedCallsViewController <MetadataPickerViewDelegate, OverlayViewControllerDelegate>
+@interface MetadataSortedCallsViewController : SortedCallsViewController <DisplayRulesViewControllerDelegate>
 {
-	OverlayViewController *_overlay;
-	MetadataPickerViewController *_picker;
-	BOOL _myOverlay;
 }
-@property(nonatomic, retain) MetadataPickerViewController *picker;
-
 @end

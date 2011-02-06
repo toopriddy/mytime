@@ -275,7 +275,7 @@
 {
 	[super loadView];
 	
-	self.tableView.editing = YES;
+	self.editing = YES;
 	self.tableView.allowsSelectionDuringEditing = YES;
 	
 	// add + button

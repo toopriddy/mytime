@@ -1167,7 +1167,7 @@
 	MTSettings *settings = [MTSettings settings];
 	DisplayRulesViewController *controller = [[[DisplayRulesViewController alloc] init] autorelease];
 	controller.managedObjectContext = settings.managedObjectContext;
-	controller.editing = YES;
+	controller.onlyAllowEditing = YES;
 	[self.navigationController pushViewController:controller animated:YES];
 }
 

@@ -17,7 +17,8 @@
 #import "DeletedCallsSortedByStreetViewDataSource.h"
 #import "CallTableCell.h"
 #import "PSLocalization.h"
-
+#import "MTDisplayRule.h"
+#import "MTUser.h"
 
 @implementation DeletedCallsSortedByStreetViewDataSource
 
@@ -27,10 +28,12 @@
 
 // return the callsSorter used by the navigation controller and tab bar item
 
-- (NSString *)name 
+#import "PSRemoveLocalizedString.h"
+- (NSString *)unlocalizedName 
 {
 	return NSLocalizedString(@"Deleted Calls", @"Deleted calls view button title");
 }
+#import "PSAddLocalizedString.h"
 
 - (NSString *)title
 {
@@ -42,20 +45,9 @@
 	return @"deletedCalls";
 }
 
-- (void)dealloc
-{
-	DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	[super dealloc];
-}
-
-- (id)init
-{
-	[super initSortedBy:CALLS_SORTED_BY_DELETED withMetadata:nil];
-	return(self);
-}
-
 - (BOOL) showAddNewCall
 {
 	return NO;
 }
+
 @end

@@ -10,4 +10,5 @@ extern NSString * const MTSorterEntryName;
 + (MTSorter *)createSorterForDisplayRule:(MTDisplayRule *)displayRule;
 + (NSArray *)sorterInformationArray;
 + (NSString *)nameForPath:(NSString *)path;
++ (NSString *)sectionIndexPathForPath:(NSString *)path;
 @end

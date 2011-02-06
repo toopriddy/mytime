@@ -19,17 +19,16 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 #import "MetadataViewController.h"
-
-#warning fix me!
+#import "MTDisplayRule.h"
 
 @implementation CallsSortedByFilterDataSource
 
-// return the callsSorter used by the navigation controller and tab bar item
-
-- (NSString *)name 
+#import "PSRemoveLocalizedString.h"
+- (NSString *)unlocalizedName 
 {
 	return NSLocalizedString(@"Sorted By ...", @"View title");
 }
+#import "PSAddLocalizedString.h"
 
 - (NSString *)title
 {
@@ -51,57 +50,35 @@
 	return @"category";
 }
 
-- (void)dealloc
+- (NSArray *)sectionIndexTitles
 {
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	[super dealloc];
-}
-
-- (id)init
-{
-	[super initSortedBy:CALLS_SORTED_BY_METADATA withMetadata:self.sortedByMetadata];
-	return self;
-}
-
-- (NSString *)sortedByMetadata
-{
-	NSString *preferredMetadata = [[[Settings sharedInstance] userSettings] objectForKey:SettingsSortedByMetadata];
-	if(preferredMetadata == nil)
+	NSString *it = [[MTDisplayRule currentDisplayRule] sectionIndexPath];
+	if([it isEqualToString:@"dateSortedSectionIndex"])
 	{
-		NSArray *array = [MetadataViewController metadataNames];
-		if(array.count)
-			preferredMetadata = [array objectAtIndex:0];
+		return [MTCall dateSortedSectionIndexTitles];
 	}
-	return [[preferredMetadata retain] autorelease];
+	return nil;
 }
 
-- (void)setSortedByMetadata:(NSString *)metadata
+- (NSString *)sectionNameForIndex:(int)index
 {
-#warning fix me
-//	[[[Settings sharedInstance] userSettings] setObject:metadata forKey:SettingsSortedByMetadata];
-//	[[Settings sharedInstance] saveData];
-//	callsSorter.metadata = metadata;
-//	[self refreshData];
+	NSString *it = [[MTDisplayRule currentDisplayRule] sectionIndexPath];
+	if([it isEqualToString:@"dateSortedSectionIndex"])
+	{
+		return [MTCall stringForDateSortedIndex:index];
+	}
+	return nil;
 }
 
-- (BOOL)respondsToSelector:(SEL)selector
+- (NSString *)sectionNameKeyPath
 {
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
+	return [[MTDisplayRule currentDisplayRule] sectionIndexPath];
 }
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
+- (NSArray *)sortDescriptors
 {
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
+	return [[MTDisplayRule currentDisplayRule] sortDescriptors];
 }
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
-}
-
 
 
 @end

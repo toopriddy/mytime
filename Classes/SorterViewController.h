@@ -24,6 +24,7 @@
 }
 @property (nonatomic, assign) NSObject<SorterViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MTSorter *sorter;
+@property (nonatomic, copy) NSIndexPath *selectedIndexPath;
 
 - (id)initWithSorter:(MTSorter *)sorter newSorter:(BOOL)newSorter;
 @end

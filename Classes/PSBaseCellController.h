@@ -29,6 +29,8 @@
 @property (nonatomic, assign) UITableViewCellEditingStyle editingStyle;
 @property (nonatomic, assign) UITableViewCellSelectionStyle selectionStyle;
 @property (nonatomic, assign) UITableViewCellAccessoryType accessoryType;
+@property (nonatomic, retain) UIView *accessoryView;
+@property (nonatomic, retain) UIView *editingAccessoryView;
 @property (nonatomic, assign) UITableViewCellAccessoryType editingAccessoryType;
 //@property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) GenericTableViewController *tableViewController;

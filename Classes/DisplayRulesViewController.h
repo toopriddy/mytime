@@ -31,4 +31,5 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) MTDisplayRule *temporaryDisplayRule;
 
+@property (nonatomic, assign) BOOL onlyAllowEditing;
 @end
