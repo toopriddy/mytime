@@ -287,13 +287,32 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 {
 	MTUser *currentUser = [MTUser currentUser];
 	NSManagedObjectContext *moc = currentUser.managedObjectContext;
-	MTStatisticsAdjustment *it = [[moc fetchObjectsForEntityName:[MTStatisticsAdjustment entityName] 
-												   withPredicate:@"user == %@ && timestamp = %d && type == %@", currentUser, stamp, self.adjustmentName] lastObject];
+	NSArray *adjustments = [moc fetchObjectsForEntityName:[MTStatisticsAdjustment entityName] 
+											withPredicate:@"user == %@ && timestamp = %u && type == %@", currentUser, stamp, self.adjustmentName];
+	MTStatisticsAdjustment *it;
+	if(adjustments.count > 1)
+	{
+		// just in case they have more than one adjustment, fix it (this was a bug in the beta testing)
+		it = [adjustments objectAtIndex:0];
+		for(MTStatisticsAdjustment *entry in adjustments)
+		{
+			if(entry != it)
+			{
+				it.adjustmentValue += entry.adjustmentValue;
+				[it.managedObjectContext deleteObject:entry];
+			}
+		}
+	}
+	else
+	{
+		it = [adjustments lastObject];
+	}
+	
 	if(it == nil)
 	{
 		it = [MTStatisticsAdjustment insertInManagedObjectContext:moc];
 		it.user = currentUser;
-		it.timestampValue = self.timestamp;
+		it.timestampValue = stamp;
 		it.type = self.adjustmentName;
 		it.adjustmentValue = 0;
 	}
@@ -311,14 +330,14 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	return adjustment;
 }
 
-- (void)setStatisticsAdjustment:(MTStatisticsAdjustment *)adjustment difference:(int)difference andChange:(int)change
+- (void)setStatisticsAdjustment:(MTStatisticsAdjustment *)theAdjustment difference:(int)difference andChange:(int)change
 {
 	if(ps_serviceYearValue)
 		*ps_serviceYearValue += change;
 	
-	self.adjustment.adjustmentValue = difference;
+	theAdjustment.adjustmentValue = difference;
 	NSError *error = nil;
-	if(![self.adjustment.managedObjectContext save:&error])
+	if(![theAdjustment.managedObjectContext save:&error])
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
 	}

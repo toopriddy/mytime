@@ -26,7 +26,8 @@ NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleCh
 	
 	MTDisplayRule *displayRule = [NSEntityDescription insertNewObjectForEntityForName:[MTDisplayRule entityName]
 												 inManagedObjectContext:managedObjectContext];
-	displayRule.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
+	displayRule.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
+	displayRule.user = user;
 	return displayRule;
 }
 
@@ -77,6 +78,11 @@ NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleCh
 			currentUser.currentDisplayRule = currentDisplayRule;
 		}
 	}
+	else
+	{
+		currentDisplayRule = [MTDisplayRule displayRuleForInternalName:@"Street Sorted"];
+	}
+
 	return currentDisplayRule;
 }
 
@@ -214,7 +220,10 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
 															  withPredicate:@"displayRule == %@", self];
 	if(sorters.count == 0)
-		return nil;
+	{
+		// at least return something
+		return [NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES]];
+	}
 	
 	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithCapacity:sorters.count];
 	for(MTSorter *sorter in sorters)

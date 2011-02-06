@@ -55,7 +55,7 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	
 	MTUser *user = [NSEntityDescription insertNewObjectForEntityForName:[MTUser entityName]
 												 inManagedObjectContext:managedObjectContext];
-	user.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between users.
+	user.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between users.
 	return user;
 }
 

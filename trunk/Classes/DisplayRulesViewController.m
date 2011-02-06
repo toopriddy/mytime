@@ -55,6 +55,7 @@
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
+	self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
@@ -71,6 +72,7 @@
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
+	self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
 																			 target:self
@@ -95,12 +97,10 @@
 	{
 		if(self.editing)
 		{
-			self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
 			[self navigationControlEdit:nil];
 		}
 		else
 		{
-			self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
 			[self navigationControlDone:nil];
 		}
 	}
@@ -194,8 +194,7 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addDisplayRuleFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-	self.temporaryDisplayRule = [MTDisplayRule insertInManagedObjectContext:self.managedObjectContext];
-	self.temporaryDisplayRule.user = [MTUser currentUser];
+	self.temporaryDisplayRule = [MTDisplayRule createDisplayRuleForUser:[MTUser currentUser]];
 	DisplayRuleViewController *controller = [[[DisplayRuleViewController alloc] initWithDisplayRule:self.temporaryDisplayRule newDisplayRule:YES] autorelease];
 	controller.delegate = self;
 	
@@ -261,6 +260,7 @@
 		
 		for(MTDisplayRule *displayRule in displayRules)
 		{
+			NSLog(@"%@ %@", displayRule.name, displayRule.order);
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.model = displayRule;
 			cellController.modelPath = @"name";
