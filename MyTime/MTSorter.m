@@ -98,7 +98,7 @@ NSArray *globalSorterDictionary;
 	
 	MTSorter *sorter = [NSEntityDescription insertNewObjectForEntityForName:[MTSorter entityName]
 													 inManagedObjectContext:displayRule.managedObjectContext];
-	sorter.orderValue = order + 100.0; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
+	sorter.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
 	sorter.displayRule = displayRule;
 	return sorter;
 }
