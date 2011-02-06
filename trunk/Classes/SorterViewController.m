@@ -8,6 +8,7 @@
 
 #import "SorterViewController.h"
 #import "PSLabelCellController.h"
+#import "PSCheckmarkCellController.h"
 #import "PSSwitchCellController.h"
 #import "SorterViewController.h"
 #import "TableViewCellController.h"
@@ -21,6 +22,7 @@
 @implementation SorterViewController
 @synthesize delegate;
 @synthesize sorter;
+@synthesize selectedIndexPath;
 
 - (id) initWithSorter:(MTSorter *)theSorter newSorter:(BOOL)newSorter
 {
@@ -38,6 +40,7 @@
 - (void)dealloc 
 {
 	self.sorter = nil;
+	self.selectedIndexPath = nil;
 	
 	[super dealloc];
 }
@@ -50,13 +53,16 @@
 
 - (void)navigationControlDone:(id)sender 
 {
-#warning fix me
+	if(self.delegate && [self.delegate respondsToSelector:@selector(sorterViewControllerDone:)])
+	{
+		[self.delegate sorterViewControllerDone:self];
+	}
 }	
 
 - (void)loadView 
 {
 	[super loadView];
-	
+	[self.navigationItem setHidesBackButton:YES animated:YES];
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
@@ -64,9 +70,17 @@
 	[self.navigationItem setRightBarButtonItem:button animated:YES];
 }
 
-- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
+- (void)labelCellController:(PSCheckmarkCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
-#warning implement me
+	[[self.navigationItem rightBarButtonItem] setEnabled:YES];
+	self.sorter.name = labelCellController.title;
+	self.sorter.path = (NSString *)labelCellController.checkedValue;
+	self.sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:self.sorter.path];
+	if(self.selectedIndexPath)
+	{
+		[tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+	}
+	self.selectedIndexPath = indexPath;
 }
 
 - (void)constructSectionControllers
@@ -85,6 +99,7 @@
 		[self addCellController:cellController toSection:sectionController];
 	}
 	
+	int section = 1;
 	for(NSDictionary *group in [MTSorter sorterInformationArray])
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
@@ -92,20 +107,25 @@
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 		
+		int row = 0;
 		for(NSDictionary *entry in [group objectForKey:MTSorterGroupArray])
 		{
-			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-			cellController.model = entry;
-			cellController.modelPath = MTSorterEntryName;
-			if([self.sorter.path isEqualToString:[entry objectForKey:MTSorterEntryPath]])
-			{
-				cellController.accessoryType = UITableViewCellAccessoryCheckmark; 
-			}
+			PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
+			cellController.model = self.sorter;
+			cellController.modelPath = @"path";
+			cellController.title = [entry objectForKey:MTSorterEntryName];
+			cellController.checkedValue = [entry objectForKey:MTSorterEntryPath];
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:sortSelectedAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];
+			if([cellController.checkedValue isEqual:self.sorter.path])
+			{
+				self.selectedIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+			}
+			++row;
 		}
+		++section;
 	}
-	
+	[[self.navigationItem rightBarButtonItem] setEnabled:self.selectedIndexPath != nil];
 }
 
 @end

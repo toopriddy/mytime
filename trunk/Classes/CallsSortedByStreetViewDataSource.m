@@ -17,6 +17,7 @@
 #import "CallsSortedByStreetViewDataSource.h"
 #import "CallTableCell.h"
 #import "PSLocalization.h"
+#import "MTDisplayRule.h"
 
 
 @implementation CallsSortedByStreetViewDataSource
@@ -27,10 +28,12 @@
 
 // return the callsSorter used by the navigation controller and tab bar item
 
-- (NSString *)name 
+#import "PSRemoveLocalizedString.h"
+- (NSString *)unlocalizedName 
 {
 	return NSLocalizedString(@"Street Sorted", @"Street Sorted button title");
 }
+#import "PSAddLocalizedString.h"
 
 - (NSString *)title
 {
@@ -40,17 +43,5 @@
 - (NSString *)tabBarImageName
 {
 	return @"street";
-}
-
-- (void)dealloc
-{
-	DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	[super dealloc];
-}
-
-- (id)init
-{
-	[super initSortedBy:CALLS_SORTED_BY_STREET];
-	return(self);
 }
 @end

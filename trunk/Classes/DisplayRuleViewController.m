@@ -19,6 +19,53 @@
 #import "PSTextFieldCellController.h"
 #import "PSLocalization.h"
 
+
+
+@interface DisplayRuleSorterCellController : PSLabelCellController
+{
+}
+@end
+@implementation DisplayRuleSorterCellController
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	MTSorter *sorter = (MTSorter *)self.model;
+	// move the row
+	NSMutableArray *sortedArray = [NSMutableArray arrayWithArray:[sorter.displayRule.sorters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]]];
+	MTSorter *movedEntry = [[sortedArray objectAtIndex:fromIndexPath.row] retain];
+	[sortedArray removeObjectAtIndex:fromIndexPath.row];
+	[sortedArray insertObject:movedEntry atIndex:toIndexPath.row];
+	[movedEntry release];
+	
+	int i = 0;
+	for(MTSorter *entry in sortedArray)
+	{
+		entry.orderValue = i++;
+	}
+	[sorter.managedObjectContext processPendingChanges];
+	
+	// move the cellController
+	GenericTableViewSectionController *fromSectionController = [self.tableViewController.displaySectionControllers objectAtIndex:fromIndexPath.section];
+	GenericTableViewSectionController *toSectionController = [self.tableViewController.displaySectionControllers objectAtIndex:toIndexPath.section];
+	NSObject *cellController = [[fromSectionController.displayCellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.displayCellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.displayCellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+	
+	// move the cellController in the displayList (the main list and the display list are the same)
+	cellController = [[fromSectionController.cellControllers objectAtIndex:fromIndexPath.row] retain];
+	[fromSectionController.cellControllers removeObjectAtIndex:fromIndexPath.row];
+	[toSectionController.cellControllers insertObject:cellController atIndex:toIndexPath.row];
+	[cellController release];
+}
+
+@end
+
 @implementation DisplayRuleViewController
 @synthesize delegate;
 @synthesize displayRule;
@@ -34,6 +81,8 @@
 		self.title = NSLocalizedString(@"Edit Display Rule", @"Sort Rules View title");
 		self.displayRule = theDisplayRule;
 		self.hidesBottomBarWhenPushed = YES;
+		self.allTextFields = [NSMutableArray array];
+		obtainFocus = YES;
 	}
 	return self;
 }
@@ -52,17 +101,38 @@
 	return YES;
 }
 
+- (void)resignAllFirstResponders
+{
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
+}
+
+
 - (void)navigationControlDone:(id)sender 
 {
-#warning implement me
+	if(self.delegate && [self.delegate respondsToSelector:@selector(displayRuleViewControllerDone:)])
+	{
+		[self.delegate displayRuleViewControllerDone:self];
+	}
 }	
 
 - (void)loadView 
 {
 	[super loadView];
-	self.tableView.editing = YES;
+	self.editing = YES;
 	
-	[self navigationControlDone:nil];
+	[self.navigationItem setHidesBackButton:YES animated:YES];
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																			 target:self
+																			 action:@selector(navigationControlDone:)] autorelease];
+	[self.navigationItem setRightBarButtonItem:button animated:YES];
 }
 
 - (void)sorterViewControllerDone:(SorterViewController *)sorterViewController
@@ -90,6 +160,8 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView deleteSorterAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self resignAllFirstResponders];
+
 	MTSorter *sorter = (MTSorter *)labelCellController.model;
 	
 	[self.displayRule.managedObjectContext deleteObject:sorter];
@@ -105,6 +177,8 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView modifySorterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self resignAllFirstResponders];
+
 	MTSorter *sorter = (MTSorter *)labelCellController.model;
 	SorterViewController *p = [[[SorterViewController alloc] initWithSorter:sorter newSorter:NO] autorelease];
 	p.delegate = self;
@@ -128,7 +202,9 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addSorterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-	self.temporarySorter = [MTSorter insertInManagedObjectContext:self.displayRule.managedObjectContext];
+	[self resignAllFirstResponders];
+
+	self.temporarySorter = [MTSorter createSorterForDisplayRule:self.displayRule];
 	self.temporarySorter.displayRule = self.displayRule;
 	SorterViewController *controller = [[[SorterViewController alloc] initWithSorter:self.temporarySorter newSorter:YES] autorelease];
 	controller.delegate = self;
@@ -201,10 +277,11 @@
 		
 		for(MTSorter *sorter in sorters)
 		{
-			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			DisplayRuleSorterCellController *cellController = [[[DisplayRuleSorterCellController alloc] init] autorelease];
 			cellController.model = sorter;
 			cellController.modelPath = @"name";
 			cellController.editingStyle = UITableViewCellEditingStyleDelete;
+			cellController.editingAccessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:sorter.ascendingValue ? @"up.png" : @"down.png"] highlightedImage:[UIImage imageNamed:sorter.ascendingValue ? @"upSelected.png" : @"downSelected.png"]] autorelease];
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifySorterFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteSorterAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];

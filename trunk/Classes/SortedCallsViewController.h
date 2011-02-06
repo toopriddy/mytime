@@ -62,5 +62,6 @@
 
 
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource;
+- (void)reloadTableFromSourceChange;
 
 @end

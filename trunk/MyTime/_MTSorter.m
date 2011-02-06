@@ -29,13 +29,6 @@
 
 
 
-@dynamic name;
-
-
-
-
-
-
 @dynamic type;
 
 
@@ -57,6 +50,13 @@
 - (void)setPrimitiveTypeValue:(short)value_ {
 	[self setPrimitiveType:[NSNumber numberWithShort:value_]];
 }
+
+
+
+
+
+@dynamic name;
+
 
 
 
@@ -90,6 +90,13 @@
 - (void)setPrimitiveOrderValue:(double)value_ {
 	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
 }
+
+
+
+
+
+@dynamic sectionIndexPath;
+
 
 
 

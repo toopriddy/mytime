@@ -2166,13 +2166,11 @@ NSString *emailFormattedStringForSettings();
 	cityViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:cityViewController] autorelease]];
 
-#if 0
 	// CALLS SORTED BY METADATA
 	CallsSortedByFilterDataSource *filterSortedDataSource = [[[CallsSortedByFilterDataSource alloc] init] autorelease];
 	MetadataSortedCallsViewController *filterViewController = [[[MetadataSortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
 	filterViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease]];
-#endif	
 	
 	// CALLS SORTED BY NAME
 	CallsSortedByNameViewDataSource *nameSortedDataSource = [[[CallsSortedByNameViewDataSource alloc] init] autorelease];

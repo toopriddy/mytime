@@ -19,9 +19,5 @@
 @interface CallsSortedByNameViewDataSource : BaseSortedCallsDataSource  
 {
 }
-
-- (id)init;
-- (void)dealloc;
-
 @end
 

@@ -17,7 +17,8 @@
 #import "CallsSortedByStudyViewDataSource.h"
 #import "CallTableCell.h"
 #import "PSLocalization.h"
-
+#import "MTDisplayRule.h"
+#import"MTUser.h"
 
 @implementation CallsSortedByStudyViewDataSource
 
@@ -25,10 +26,12 @@
 
 // return the callsSorter used by the navigation controller and tab bar item
 
-- (NSString *)name 
+#import "PSRemoveLocalizedString.h"
+- (NSString *)unlocalizedName 
 {
 	return NSLocalizedString(@"Studies", @"View title");
 }
+#import "PSAddLocalizedString.h"
 
 - (NSString *)title
 {
@@ -50,15 +53,4 @@
 	return @"studies";
 }
 
-- (void)dealloc
-{
-    DEBUG(NSLog(@"%s: dealloc", __FILE__);)
-	[super dealloc];
-}
-
-- (id)init
-{
-	[super initSortedBy:CALLS_SORTED_BY_STUDY];
-	return self;
-}
 @end

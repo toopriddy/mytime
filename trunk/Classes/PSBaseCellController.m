@@ -65,6 +65,8 @@
 @synthesize selectionStyle;
 @synthesize accessoryType;
 @synthesize editingAccessoryType;
+@synthesize accessoryView;
+@synthesize editingAccessoryView;
 //@synthesize navigationController;
 @synthesize tableViewController;
 @synthesize selectedRow;
@@ -94,6 +96,8 @@
 //	self.navigationController = nil;
 	self.tableViewController = nil;
 	self.selectedRow = nil;
+	self.accessoryView = nil;
+	self.editingAccessoryView = nil;
 	
 	[super dealloc];
 }
@@ -169,8 +173,7 @@
 		[invocation setSelector:deleteAction_];
 		[invocation setArgument:&self atIndex:2];
 		[invocation setArgument:&tableView atIndex:3];
-		[invocation setArgument:&theEditingStyle atIndex:4];
-		[invocation setArgument:&indexPath atIndex:5];
+		[invocation setArgument:&indexPath atIndex:4];
 		[invocation invoke];
 	}
 	else if(theEditingStyle == UITableViewCellEditingStyleInsert && insertTarget_)
@@ -180,8 +183,7 @@
 		[invocation setSelector:insertAction_];
 		[invocation setArgument:&self atIndex:2];
 		[invocation setArgument:&tableView atIndex:3];
-		[invocation setArgument:&theEditingStyle atIndex:4];
-		[invocation setArgument:&indexPath atIndex:5];
+		[invocation setArgument:&indexPath atIndex:4];
 		[invocation invoke];
 	}
 }

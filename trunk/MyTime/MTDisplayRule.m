@@ -4,6 +4,8 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MTSorter.h"
 
+NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
+
 @implementation MTDisplayRule
 
 // Custom logic goes here.
@@ -120,6 +122,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	{
 		MTSorter *sorter = [MTSorter createSorterForDisplayRule:displayRule];
 		sorter.name = [MTSorter nameForPath:sortDescriptor.key];
+		sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:sortDescriptor.key];
 		sorter.path = sortDescriptor.key;
 		sorter.ascendingValue = sortDescriptor.ascending;
 	}
@@ -135,7 +138,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	// Street Sorted
 	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
 													  name:@"Street Sorted"
-										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
 												 deletable:NO
 												  internal:YES];
 	user.currentDisplayRule = displayRule;
@@ -143,35 +146,35 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	// Date Sorted
 	[MTDisplayRule createDisplayRuleWithUser:user 
 										name:@"Date Sorted"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+							 sortDescriptors:sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))))
 								   deletable:NO
 									internal:YES];
 	
 	// City Sorted
 	[MTDisplayRule createDisplayRuleWithUser:user 
 										name:@"City Sorted"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+							 sortDescriptors:sortByName(sortByStreet(sortByCity(sortDescriptors)))
 								   deletable:NO
 									internal:YES];
 	
 	// Name Sorted
 	[MTDisplayRule createDisplayRuleWithUser:user 
 										name:@"Name Sorted"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+							 sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
 								   deletable:NO
 									internal:YES];
 	
 	// Study Sorted
 	[MTDisplayRule createDisplayRuleWithUser:user 
 										name:@"Studies"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+							 sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
 								   deletable:NO
 									internal:YES];
 	
 	// Deleted Calls
 	[MTDisplayRule createDisplayRuleWithUser:user 
 										name:@"Deleted Calls"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors))) 
+							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
 								   deletable:NO
 									internal:YES];
 }
@@ -187,6 +190,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	{
 		if([displayRules count])
 		{
+			NSLog(@"%@ %@", [[displayRules lastObject] sectionIndexPath], name);
 			return [displayRules lastObject];
 		}
 		else
@@ -202,4 +206,35 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	
 	return nil;
 }
+
+- (NSArray *)sortDescriptors
+{
+	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
+														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
+															  withPredicate:@"displayRule == %@", self];
+	if(sorters.count == 0)
+		return nil;
+	
+	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithCapacity:sorters.count];
+	for(MTSorter *sorter in sorters)
+	{
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
+		[sortDescriptors addObject:sortDescriptor];
+	}
+	return sortDescriptors;
+}
+
+- (NSString *)sectionIndexPath
+{
+	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+														  propertiesToFetch:nil
+														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
+															  withPredicate:@"displayRule == %@", self];
+	if(sorters.count == 0)
+		return nil;
+
+	return [[sorters lastObject] sectionIndexPath];
+}
+
 @end

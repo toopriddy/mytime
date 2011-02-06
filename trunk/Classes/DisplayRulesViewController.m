@@ -22,6 +22,7 @@
 @synthesize delegate;
 @synthesize managedObjectContext;
 @synthesize temporaryDisplayRule;
+@synthesize onlyAllowEditing;
 
 - (id) init;
 {
@@ -29,7 +30,6 @@
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
-		self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
 		
 		self.hidesBottomBarWhenPushed = YES;
 	}
@@ -86,13 +86,23 @@
 {
 	[super loadView];
 	
-	if(self.editing)
+	if(self.onlyAllowEditing)
 	{
-		[self navigationControlEdit:nil];
+		self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
+		self.editing = YES;
 	}
 	else
 	{
-		[self navigationControlDone:nil];
+		if(self.editing)
+		{
+			self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
+			[self navigationControlEdit:nil];
+		}
+		else
+		{
+			self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
+			[self navigationControlDone:nil];
+		}
 	}
 }
 
@@ -118,6 +128,7 @@
 	}
 
 	[self updateAndReload];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationDisplayRuleChanged object:nil];
 }
 
 
@@ -159,7 +170,7 @@
 	{
 		[MTDisplayRule setCurrentDisplayRule:displayRule];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[self updateWithoutReload];
+		[self updateAndReload];
 		if(self.delegate && [self.delegate respondsToSelector:@selector(displayRulesViewController:selectedDisplayRule:)])
 		{
 			[self.delegate displayRulesViewController:self selectedDisplayRule:displayRule];
@@ -208,6 +219,7 @@
 {
 	[super constructSectionControllers];
 	MTUser *currentUser = [MTUser currentUser];
+	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	
 	{
 		NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
@@ -254,6 +266,7 @@
 			cellController.modelPath = @"name";
 			cellController.isViewableWhenEditing = !displayRule.internalValue;
 			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+			cellController.accessoryType = displayRule == currentDisplayRule ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];

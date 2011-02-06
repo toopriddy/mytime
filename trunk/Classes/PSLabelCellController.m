@@ -20,7 +20,24 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier] autorelease];
 	}
 	
-	cell.accessoryType = self.accessoryType;
+	if(self.accessoryView)
+	{
+		cell.accessoryView = self.accessoryView;
+	}
+	else
+	{
+		cell.accessoryType = self.accessoryType;
+	}
+	
+	if(self.editingAccessoryView)
+	{
+		cell.editingAccessoryView = self.editingAccessoryView;
+	}
+	else
+	{
+		cell.editingAccessoryType = self.editingAccessoryType;
+	}
+	
 	if([self.title length])
 	{
 		cell.textLabel.text = self.title;
