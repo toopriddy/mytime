@@ -103,9 +103,14 @@
 	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] sectionIndexPath];
 }
 
-- (NSArray *)sortDescriptors
+- (NSArray *)coreDataSortDescriptors
 {
-	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] sortDescriptors];
+	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] coreDataSortDescriptors];
+}
+
+- (NSArray *)allSortDescriptors
+{
+	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] allSortDescriptors];
 }
 
 

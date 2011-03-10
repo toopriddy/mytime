@@ -28,7 +28,6 @@
 	{
 		cell.accessoryType = self.accessoryType;
 	}
-	
 	if(self.editingAccessoryView)
 	{
 		cell.editingAccessoryView = self.editingAccessoryView;
@@ -37,6 +36,8 @@
 	{
 		cell.editingAccessoryType = self.editingAccessoryType;
 	}
+	
+	cell.selectionStyle = self.selectionStyle;
 	
 	if([self.title length])
 	{

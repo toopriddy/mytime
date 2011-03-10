@@ -31,6 +31,7 @@
 
 
 
+
 @end
 
 @interface _MTTerritoryHouseAttempt (CoreDataGeneratedAccessors)

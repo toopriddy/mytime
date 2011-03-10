@@ -213,12 +213,33 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return nil;
 }
 
-- (NSArray *)sortDescriptors
+- (NSArray *)allSortDescriptors
 {
 	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
 														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
 														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
 															  withPredicate:@"displayRule == %@", self];
+	if(sorters.count == 0)
+	{
+		// at least return something
+		return [NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES]];
+	}
+	
+	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithCapacity:sorters.count];
+	for(MTSorter *sorter in sorters)
+	{
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
+		[sortDescriptors addObject:sortDescriptor];
+	}
+	return sortDescriptors;
+}
+
+- (NSArray *)coreDataSortDescriptors
+{
+	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
+														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
+															  withPredicate:@"displayRule == %@ && requiresArraySorting == NO", self];
 	if(sorters.count == 0)
 	{
 		// at least return something

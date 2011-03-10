@@ -241,6 +241,7 @@
 			cellController.modelPath = @"name";
 			cellController.indentWhileEditing = NO;
 			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+			cellController.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];
@@ -267,6 +268,7 @@
 			cellController.isViewableWhenEditing = !displayRule.internalValue;
 			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 			cellController.accessoryType = displayRule == currentDisplayRule ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+			cellController.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:modifyDisplayRuleFromSelectionAtIndexPath:)];
 			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteDisplayRuleAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];

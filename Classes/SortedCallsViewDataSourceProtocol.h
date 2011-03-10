@@ -29,7 +29,8 @@
 
 // this property determines the style of table view displayed
 @property (readonly) UITableViewStyle tableViewStyle;
-@property (readonly) NSArray *sortDescriptors;
+@property (readonly) NSArray *allSortDescriptors;
+@property (readonly) NSArray *coreDataSortDescriptors;
 @property (readonly) NSPredicate *predicate;
 @property (readonly) NSString *sectionNameKeyPath;
 - (NSString *)sectionNameForIndex:(int)index;

@@ -55,14 +55,14 @@
 
 
 
-@dynamic name;
-
-
-
-
-
-
 @dynamic path;
+
+
+
+
+
+
+@dynamic name;
 
 
 
@@ -128,9 +128,37 @@
 
 
 
+@dynamic requiresArraySorting;
+
+
+
+- (BOOL)requiresArraySortingValue {
+	NSNumber *result = [self requiresArraySorting];
+	return [result boolValue];
+}
+
+- (void)setRequiresArraySortingValue:(BOOL)value_ {
+	[self setRequiresArraySorting:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveRequiresArraySortingValue {
+	NSNumber *result = [self primitiveRequiresArraySorting];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveRequiresArraySortingValue:(BOOL)value_ {
+	[self setPrimitiveRequiresArraySorting:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic displayRule;
 
 	
+
+
 
 
 
