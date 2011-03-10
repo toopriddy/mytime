@@ -424,6 +424,7 @@
 			// pop up a alert sheet to display buttons to show in google maps?
 			//http://maps.google.com/?hl=en&q=kansas+city
 			
+			
 			// make sure that we have default values for each of the address parts
 			if(streetNumber == nil)
 				streetNumber = @"";
@@ -437,7 +438,10 @@
 				city = @"";
 			if(state == nil)
 				state = @"";
-			
+
+			NSString *first = [[MTCall topLineOfAddressWithHouseNumber:streetNumber apartmentNumber:apartmentNumber street:street] stringWithEscapedCharacters];
+			NSString *second = [[MTCall bottomLineOfAddressWithCity:city state:state] stringWithEscapedCharacters];
+
 			NSString *latLong;
 			if(!call.locationAquired)
 			{
@@ -447,24 +451,16 @@
 			{
 				latLong = [NSString stringWithFormat:@"@%@,%@", call.lattitude, call.longitude];
 			}
-#if 1		
 			// open up a url
 			NSURL *url = [NSURL URLWithString:[NSString 
-											   stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@+%@+%@,+%@%@", 
+											   stringWithFormat:@"http://maps.google.com/?lh=%@&q=%@+%@%@", 
 											   NSLocalizedString(@"en", @"Google Localized Language Name"),
-											   [streetNumber stringWithEscapedCharacters], 
-											   [apartmentNumber stringWithEscapedCharacters], 
-											   [street stringWithEscapedCharacters], 
-											   [city stringWithEscapedCharacters], 
-											   [state stringWithEscapedCharacters],
+											   first, 
+											   second,
 											   latLong]];
 			DEBUG(NSLog(@"Trying to open url %@", url);)
 			// open up the google map page for this call
 			[[UIApplication sharedApplication] openURL:url];
-#else				
-			WebViewController *p = [[[WebViewController alloc] initWithTitle:@"Map" address:self.delegate.call] autorelease];
-			[[self navigationController] pushViewController:p animated:YES];
-#endif
 		}
 		[self.delegate.tableView deselectRowAtIndexPath:[self.delegate.tableView indexPathForSelectedRow] animated:YES];
 	}

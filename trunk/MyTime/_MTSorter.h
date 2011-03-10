@@ -13,6 +13,7 @@
 
 
 
+
 @interface MTSorterID : NSManagedObjectID {}
 @end
 
@@ -34,15 +35,15 @@
 
 
 
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *path;
 
 //- (BOOL)validatePath:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -72,9 +73,20 @@
 
 
 
+@property (nonatomic, retain) NSNumber *requiresArraySorting;
+
+@property BOOL requiresArraySortingValue;
+- (BOOL)requiresArraySortingValue;
+- (void)setRequiresArraySortingValue:(BOOL)value_;
+
+//- (BOOL)validateRequiresArraySorting:(id*)value_ error:(NSError**)error_;
+
+
+
 
 @property (nonatomic, retain) MTDisplayRule* displayRule;
 //- (BOOL)validateDisplayRule:(id*)value_ error:(NSError**)error_;
+
 
 
 
@@ -93,12 +105,12 @@
 - (void)setPrimitiveTypeValue:(short)value_;
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
 - (NSString*)primitivePath;
 - (void)setPrimitivePath:(NSString*)value;
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
 
 
 - (NSNumber*)primitiveOrder;
@@ -117,6 +129,13 @@
 
 - (BOOL)primitiveAscendingValue;
 - (void)setPrimitiveAscendingValue:(BOOL)value_;
+
+
+- (NSNumber*)primitiveRequiresArraySorting;
+- (void)setPrimitiveRequiresArraySorting:(NSNumber*)value;
+
+- (BOOL)primitiveRequiresArraySortingValue;
+- (void)setPrimitiveRequiresArraySortingValue:(BOOL)value_;
 
 
 

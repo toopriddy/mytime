@@ -43,6 +43,8 @@
 - (void)loadView
 {
 	[super loadView];
+	self.navigationItem.hidesBackButton = YES;
+	
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:currentDisplayRule.name

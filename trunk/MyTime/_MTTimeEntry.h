@@ -49,6 +49,7 @@
 
 
 
+
 @end
 
 @interface _MTTimeEntry (CoreDataGeneratedAccessors)

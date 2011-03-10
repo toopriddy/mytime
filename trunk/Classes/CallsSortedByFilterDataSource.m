@@ -75,9 +75,14 @@
 	return [[MTDisplayRule currentDisplayRule] sectionIndexPath];
 }
 
-- (NSArray *)sortDescriptors
+- (NSArray *)coreDataSortDescriptors
 {
-	return [[MTDisplayRule currentDisplayRule] sortDescriptors];
+	return [[MTDisplayRule currentDisplayRule] coreDataSortDescriptors];
+}
+
+- (NSArray *)allSortDescriptors
+{
+	return [[MTDisplayRule currentDisplayRule] allSortDescriptors];
 }
 
 

@@ -4,6 +4,7 @@ extern NSString * const MTSorterGroupName;
 extern NSString * const MTSorterGroupArray;
 extern NSString * const MTSorterEntryPath;
 extern NSString * const MTSorterEntryName;
+extern NSString * const MTSorterEntryRequiresArraySorting;
 
 @interface MTSorter : _MTSorter {}
 // Custom logic goes here.

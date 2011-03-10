@@ -84,6 +84,7 @@
 		isViewableWhenEditing = YES;
 		isViewableWhenNotEditing = YES;
 		indentWhileEditing = YES;
+		self.selectionStyle = UITableViewCellSelectionStyleBlue;
 	}
 	return self;
 }

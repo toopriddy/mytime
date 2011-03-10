@@ -547,7 +547,7 @@
 
 - (NSFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
 {
-	NSArray *sortDescriptors = [dataSource sortDescriptors];
+	NSArray *sortDescriptors = [dataSource coreDataSortDescriptors];
 	NSPredicate *filterPredicate = [dataSource predicate];
 	
 	// when we filter then we use a NSCompoundPredicate

@@ -1,6 +1,8 @@
 #import "MTSorter.h"
 #import "MTDisplayRule.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "MTAdditionalInformationType.h"
+#import "MTUser.h"
 #import "PSLocalization.h"
 
 NSString * const MTSorterGroupName = @"groupName";
@@ -8,6 +10,7 @@ NSString * const MTSorterGroupArray = @"array";
 NSString * const MTSorterEntryPath = @"path";
 NSString * const MTSorterEntrySectionIndexPath = @"sectionIndexPath";
 NSString * const MTSorterEntryName = @"name";
+NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 
 @implementation MTSorter
 
@@ -16,15 +19,58 @@ NSArray *globalSorterDictionary;
 
 + (NSArray *)additionalInformationGroupArray
 {
-	return [NSArray array];
+	NSMutableArray *returnArray = [NSMutableArray array];
+	MTUser *currentUser = [MTUser currentUser];
+	NSArray *types = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName] 
+															   propertiesToFetch:nil 
+															 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES]]
+																   withPredicate:@"user == %@", currentUser];
+	for(MTAdditionalInformationType *type in types)
+	{
+		NSMutableDictionary *entry = [NSMutableDictionary dictionary];
+		switch(type.typeValue)
+		{
+			case PHONE:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				break;
+			case EMAIL:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				break;
+			case URL:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				break;
+			case STRING:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				break;
+			case NOTES:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				break;
+			case CHOICE:
+				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				break;
+			case SWITCH:
+				[entry setObject:@"additionalInformation.boolean" forKey:MTSorterEntryPath];
+				break;
+			case DATE:
+				[entry setObject:@"additionalInformation.date" forKey:MTSorterEntryPath];
+				break;
+			case NUMBER:
+				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntryPath];
+				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				break;
+		}
+		[entry setObject:type.name forKey:MTSorterEntryName];
+		[entry setObject:[NSNumber numberWithBool:YES] forKey:MTSorterEntryRequiresArraySorting];
+		[returnArray addObject:entry];
+	}
+	return returnArray;
 }
 
 + (NSArray *)sorterInformationArray
 {
-	if(globalSorterDictionary)
-		return globalSorterDictionary;
-	
-	globalSorterDictionary = 
+	NSArray *returnArray = 
 	[[NSArray alloc] initWithObjects:
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Call", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [NSArray arrayWithObjects:
@@ -47,7 +93,7 @@ NSArray *globalSorterDictionary;
 	  [MTSorter additionalInformationGroupArray], MTSorterGroupArray, nil],
 	 nil];
 	
-	return globalSorterDictionary;
+	return returnArray;
 }
 
 + (NSString *)nameForPath:(NSString *)path

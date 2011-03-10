@@ -87,6 +87,7 @@
 
 
 
+
 @end
 
 @interface _MTAdditionalInformationType (CoreDataGeneratedAccessors)
