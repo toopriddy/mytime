@@ -14,8 +14,23 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 
 @implementation MTSorter
 
-NSArray *globalSorterDictionary;
-// Custom logic goes here.
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+	if([self primitiveRequiresArraySorting] == nil)
+	{
+		self.requiresArraySortingValue = NO;
+	}
+}
+
+- (void)awakeFromInsert 
+{ 
+	[super awakeFromInsert];
+	if([self primitiveRequiresArraySorting] == nil)
+	{
+		self.requiresArraySortingValue = NO;
+	}
+}
 
 + (NSArray *)additionalInformationGroupArray
 {
@@ -127,6 +142,24 @@ NSArray *globalSorterDictionary;
 	
 	return nil;
 }
+
+
++ (BOOL)requiresArraySortingForPath:(NSString *)path
+{
+	for(NSDictionary *group in [MTSorter sorterInformationArray])
+	{
+		for(NSDictionary *entry in [group objectForKey:MTSorterGroupArray])
+		{
+			if([[entry objectForKey:MTSorterEntryPath] isEqualToString:path])
+			{
+				return [[entry objectForKey:MTSorterEntryRequiresArraySorting] boolValue];
+			}
+		}
+	}
+	
+	return NO;
+}
+
 
 + (MTSorter *)createSorterForDisplayRule:(MTDisplayRule *)displayRule
 {

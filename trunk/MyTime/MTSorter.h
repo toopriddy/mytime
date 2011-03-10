@@ -12,4 +12,5 @@ extern NSString * const MTSorterEntryRequiresArraySorting;
 + (NSArray *)sorterInformationArray;
 + (NSString *)nameForPath:(NSString *)path;
 + (NSString *)sectionIndexPathForPath:(NSString *)path;
++ (BOOL)requiresArraySortingForPath:(NSString *)path;
 @end

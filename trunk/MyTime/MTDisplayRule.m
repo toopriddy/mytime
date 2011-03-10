@@ -189,11 +189,11 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 {
 	MTUser *currentUser = [MTUser currentUser];
 	BOOL tryAgain = YES;
-	NSArray *displayRules = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
-																	  propertiesToFetch:nil
-																		  withPredicate:@"internal == YES && user == %@ && name == %@", currentUser, name];
-	do 
+	while(true)
 	{
+		NSArray *displayRules = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+																		  propertiesToFetch:nil
+																			  withPredicate:@"internal == YES && user == %@ && name == %@", currentUser, name];
 		if([displayRules count])
 		{
 			NSLog(@"%@ %@", [[displayRules lastObject] sectionIndexPath], name);
@@ -208,7 +208,8 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 				continue;
 			}
 		}
-	} while(NO);
+		break;
+	}
 	
 	return nil;
 }
@@ -239,7 +240,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
 														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
 														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
-															  withPredicate:@"displayRule == %@ && requiresArraySorting == NO", self];
+															  withPredicate:@"displayRule == %@ && (requiresArraySorting == NO || requiresArraySorting == nil)", self];
 	if(sorters.count == 0)
 	{
 		// at least return something
