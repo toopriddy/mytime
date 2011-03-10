@@ -5,7 +5,6 @@
 
 
 @class MTSorter;
-@class MTFilter;
 @class MTUser;
 
 
@@ -66,11 +65,6 @@
 
 
 
-@property (nonatomic, retain) MTFilter* filters;
-//- (BOOL)validateFilters:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) MTUser* user;
 //- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
 
@@ -90,8 +84,11 @@
 
 @interface _MTDisplayRule (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveOrder;
@@ -101,11 +98,15 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
+
+
 - (NSNumber*)primitiveDeleteable;
 - (void)setPrimitiveDeleteable:(NSNumber*)value;
 
 - (BOOL)primitiveDeleteableValue;
 - (void)setPrimitiveDeleteableValue:(BOOL)value_;
+
+
 
 
 - (NSNumber*)primitiveInternal;
@@ -117,13 +118,9 @@
 
 
 
+
 - (NSMutableSet*)primitiveSorters;
 - (void)setPrimitiveSorters:(NSMutableSet*)value;
-
-
-
-- (MTFilter*)primitiveFilters;
-- (void)setPrimitiveFilters:(MTFilter*)value;
 
 
 

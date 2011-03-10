@@ -26,6 +26,21 @@
 	return (MTStatisticsAdjustmentID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"adjustmentValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"adjustment"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"timestampValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"timestamp"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 

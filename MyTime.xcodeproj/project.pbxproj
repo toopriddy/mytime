@@ -112,6 +112,7 @@
 		90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */; };
 		90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */; };
 		90B61A4C1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */; };
+		90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */; };
 		90B94D8B12FBACE80042BAF8 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B94D8A12FBACE80042BAF8 /* up.png */; };
 		90B94DAF12FD03BA0042BAF8 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B94DAE12FD03BA0042BAF8 /* down.png */; };
 		90B94DBE12FD08000042BAF8 /* upSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B94DB812FD08000042BAF8 /* upSelected.png */; };
@@ -462,6 +463,7 @@
 		90B5B6260F6F1E9800354889 /* Greek */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Greek; path = Greek.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSExtendedFetchedResultsController.h; sourceTree = "<group>"; };
 		90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSExtendedFetchedResultsController.m; sourceTree = "<group>"; };
+		90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 4.xcdatamodel"; sourceTree = "<group>"; };
 		90B8F4170E7ECD300022A01F /* German */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B94D8A12FBACE80042BAF8 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		90B94DAE12FD03BA0042BAF8 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
@@ -1656,6 +1658,7 @@
 				90B9521912FEA4520042BAF8 /* _MTTimeType.m in Sources */,
 				90B9521B12FEA4530042BAF8 /* _MTUser.m in Sources */,
 				90B61A4C1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m in Sources */,
+				90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1956,8 +1959,9 @@
 				90FD7BBC12272FED00660538 /* MyTime.xcdatamodel */,
 				902BA69312E94564005793DD /* MyTime 2.xcdatamodel */,
 				90306D7112ED325B000429E9 /* MyTime 3.xcdatamodel */,
+				90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */,
 			);
-			currentVersion = 90306D7112ED325B000429E9 /* MyTime 3.xcdatamodel */;
+			currentVersion = 90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

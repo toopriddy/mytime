@@ -51,8 +51,10 @@
 
 @interface _MTBulkPlacement (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

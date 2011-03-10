@@ -26,6 +26,21 @@
 	return (MTTerritoryID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"ownerEmailIdValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"ownerEmailId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"ownerIdValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"ownerId"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 
@@ -37,6 +52,13 @@
 
 
 @dynamic city;
+
+
+
+
+
+
+@dynamic name;
 
 
 
@@ -70,13 +92,6 @@
 
 
 @dynamic notes;
-
-
-
-
-
-
-@dynamic name;
 
 
 

@@ -65,16 +65,22 @@
 
 @interface _MTTerritoryStreet (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

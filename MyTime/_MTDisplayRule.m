@@ -26,6 +26,25 @@
 	return (MTDisplayRuleID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"orderValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"order"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"deleteableValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"deleteable"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"internalValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"internal"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 
@@ -123,10 +142,6 @@
 	[self didAccessValueForKey:@"sorters"];
 	return result;
 }
-	
-
-@dynamic filters;
-
 	
 
 @dynamic user;

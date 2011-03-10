@@ -51,6 +51,7 @@
 
 @interface _MTMultipleChoice (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
@@ -58,8 +59,11 @@
 - (void)setPrimitiveOrderValue:(int)value_;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
 
 
 

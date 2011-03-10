@@ -26,6 +26,21 @@
 	return (MTAdditionalInformationID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"booleanValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"boolean"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"numberValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"number"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 

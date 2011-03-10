@@ -75,6 +75,7 @@
 
 @interface _MTAdditionalInformation (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveBoolean;
 - (void)setPrimitiveBoolean:(NSNumber*)value;
 
@@ -82,8 +83,12 @@
 - (void)setPrimitiveBooleanValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitiveValue;
 - (void)setPrimitiveValue:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveNumber;
@@ -93,8 +98,11 @@
 - (void)setPrimitiveNumberValue:(long long)value_;
 
 
+
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

@@ -106,6 +106,7 @@
 
 @interface _MTAdditionalInformationType (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveType;
 - (void)setPrimitiveType:(NSNumber*)value;
 
@@ -113,8 +114,12 @@
 - (void)setPrimitiveTypeValue:(short)value_;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveAlwaysShown;
@@ -124,6 +129,8 @@
 - (void)setPrimitiveAlwaysShownValue:(BOOL)value_;
 
 
+
+
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
@@ -131,11 +138,14 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
+
+
 - (NSNumber*)primitiveHidden;
 - (void)setPrimitiveHidden:(NSNumber*)value;
 
 - (BOOL)primitiveHiddenValue;
 - (void)setPrimitiveHiddenValue:(BOOL)value_;
+
 
 
 

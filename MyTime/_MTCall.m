@@ -26,6 +26,29 @@
 	return (MTCallID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"dateSortedSectionIndexValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"dateSortedSectionIndex"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"locationAquisitionAttemptedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"locationAquisitionAttempted"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"deletedCallValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"deletedCall"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"locationAquiredValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"locationAquired"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 

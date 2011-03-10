@@ -65,16 +65,22 @@
 
 @interface _MTReturnVisit (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveType;
 - (void)setPrimitiveType:(NSString*)value;
 
 
+
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

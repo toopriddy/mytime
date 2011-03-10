@@ -26,6 +26,53 @@
 	return (MTSettingsID*)[super objectID];
 }
 
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"lastLongitudeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"lastLongitude"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"mainAlertSheetShownValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"mainAlertSheetShown"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"statisticsAlertSheetShownValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"statisticsAlertSheetShown"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"timeAlertSheetShownValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"timeAlertSheetShown"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"backupShouldIncludeAttachmentValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"backupShouldIncludeAttachment"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"autobackupIntervalValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"autobackupInterval"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"lastLattitudeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"lastLattitude"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"bulkLiteratureAlertSheetShownValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"bulkLiteratureAlertSheetShown"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"backupShouldCompressLinkValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"backupShouldCompressLink"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"existingCallAlertSheetShownValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"existingCallAlertSheetShown"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+
+	return keyPaths;
+}
+
 
 
 
@@ -340,6 +387,13 @@
 
 
 
+@dynamic firstViewTitle;
+
+
+
+
+
+
 @dynamic existingCallAlertSheetShown;
 
 
@@ -361,13 +415,6 @@
 - (void)setPrimitiveExistingCallAlertSheetShownValue:(BOOL)value_ {
 	[self setPrimitiveExistingCallAlertSheetShown:[NSNumber numberWithBool:value_]];
 }
-
-
-
-
-
-@dynamic firstViewTitle;
-
 
 
 

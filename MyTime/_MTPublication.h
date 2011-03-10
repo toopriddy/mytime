@@ -115,6 +115,7 @@
 
 @interface _MTPublication (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveMonth;
 - (void)setPrimitiveMonth:(NSNumber*)value;
 
@@ -122,12 +123,18 @@
 - (void)setPrimitiveMonthValue:(short)value_;
 
 
+
+
 - (NSString*)primitiveType;
 - (void)setPrimitiveType:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveOrder;
@@ -137,11 +144,15 @@
 - (void)setPrimitiveOrderValue:(short)value_;
 
 
+
+
 - (NSNumber*)primitiveDay;
 - (void)setPrimitiveDay:(NSNumber*)value;
 
 - (short)primitiveDayValue;
 - (void)setPrimitiveDayValue:(short)value_;
+
+
 
 
 - (NSNumber*)primitiveYear;
@@ -151,6 +162,8 @@
 - (void)setPrimitiveYearValue:(short)value_;
 
 
+
+
 - (NSNumber*)primitiveCount;
 - (void)setPrimitiveCount:(NSNumber*)value;
 
@@ -158,8 +171,11 @@
 - (void)setPrimitiveCountValue:(short)value_;
 
 
+
+
 - (NSString*)primitiveTitle;
 - (void)setPrimitiveTitle:(NSString*)value;
+
 
 
 

@@ -196,6 +196,12 @@
 
 
 
+@property (nonatomic, retain) NSString *firstViewTitle;
+
+//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *existingCallAlertSheetShown;
 
 @property BOOL existingCallAlertSheetShownValue;
@@ -203,12 +209,6 @@
 - (void)setExistingCallAlertSheetShownValue:(BOOL)value_;
 
 //- (BOOL)validateExistingCallAlertSheetShown:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *firstViewTitle;
-
-//- (BOOL)validateFirstViewTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -227,6 +227,7 @@
 
 @interface _MTSettings (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveLastLongitude;
 - (void)setPrimitiveLastLongitude:(NSNumber*)value;
 
@@ -234,12 +235,18 @@
 - (void)setPrimitiveLastLongitudeValue:(double)value_;
 
 
+
+
 - (NSString*)primitiveThirdViewTitle;
 - (void)setPrimitiveThirdViewTitle:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveLastStreet;
 - (void)setPrimitiveLastStreet:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveMainAlertSheetShown;
@@ -249,6 +256,8 @@
 - (void)setPrimitiveMainAlertSheetShownValue:(BOOL)value_;
 
 
+
+
 - (NSNumber*)primitiveStatisticsAlertSheetShown;
 - (void)setPrimitiveStatisticsAlertSheetShown:(NSNumber*)value;
 
@@ -256,16 +265,24 @@
 - (void)setPrimitiveStatisticsAlertSheetShownValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitiveFourthViewTitle;
 - (void)setPrimitiveFourthViewTitle:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveLastApartmentNumber;
 - (void)setPrimitiveLastApartmentNumber:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveLastState;
 - (void)setPrimitiveLastState:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveTimeAlertSheetShown;
@@ -275,24 +292,36 @@
 - (void)setPrimitiveTimeAlertSheetShownValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitivePasscode;
 - (void)setPrimitivePasscode:(NSString*)value;
+
+
 
 
 - (NSDate*)primitiveLastBackupDate;
 - (void)setPrimitiveLastBackupDate:(NSDate*)value;
 
 
+
+
 - (NSString*)primitiveSecondViewTitle;
 - (void)setPrimitiveSecondViewTitle:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveLastHouseNumber;
 - (void)setPrimitiveLastHouseNumber:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveBackupEmail;
 - (void)setPrimitiveBackupEmail:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveBackupShouldIncludeAttachment;
@@ -302,8 +331,12 @@
 - (void)setPrimitiveBackupShouldIncludeAttachmentValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitiveLastCity;
 - (void)setPrimitiveLastCity:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveAutobackupInterval;
@@ -313,11 +346,15 @@
 - (void)setPrimitiveAutobackupIntervalValue:(int)value_;
 
 
+
+
 - (NSNumber*)primitiveLastLattitude;
 - (void)setPrimitiveLastLattitude:(NSNumber*)value;
 
 - (double)primitiveLastLattitudeValue;
 - (void)setPrimitiveLastLattitudeValue:(double)value_;
+
+
 
 
 - (NSNumber*)primitiveBulkLiteratureAlertSheetShown;
@@ -327,11 +364,21 @@
 - (void)setPrimitiveBulkLiteratureAlertSheetShownValue:(BOOL)value_;
 
 
+
+
 - (NSNumber*)primitiveBackupShouldCompressLink;
 - (void)setPrimitiveBackupShouldCompressLink:(NSNumber*)value;
 
 - (BOOL)primitiveBackupShouldCompressLinkValue;
 - (void)setPrimitiveBackupShouldCompressLinkValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveFirstViewTitle;
+- (void)setPrimitiveFirstViewTitle:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveExistingCallAlertSheetShown;
@@ -340,9 +387,6 @@
 - (BOOL)primitiveExistingCallAlertSheetShownValue;
 - (void)setPrimitiveExistingCallAlertSheetShownValue:(BOOL)value_;
 
-
-- (NSString*)primitiveFirstViewTitle;
-- (void)setPrimitiveFirstViewTitle:(NSString*)value;
 
 
 

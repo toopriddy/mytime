@@ -72,20 +72,28 @@
 
 @interface _MTTerritoryHouse (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveNumber;
 - (void)setPrimitiveNumber:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveApartment;
 - (void)setPrimitiveApartment:(NSString*)value;
 
 
+
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 
