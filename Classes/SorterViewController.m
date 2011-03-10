@@ -76,6 +76,7 @@
 	self.sorter.name = labelCellController.title;
 	self.sorter.path = (NSString *)labelCellController.checkedValue;
 	self.sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:self.sorter.path];
+	self.sorter.requiresArraySortingValue = [MTSorter requiresArraySortingForPath:self.sorter.path];
 	if(self.selectedIndexPath)
 	{
 		[tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];

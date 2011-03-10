@@ -119,6 +119,8 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 		// no users exist, so create one and set it as the default user
 		MTUser *user = [NSEntityDescription insertNewObjectForEntityForName:[MTUser entityName]
 													 inManagedObjectContext:managedObjectContext];
+		
+		[user initalizeUser];
 		user.name = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
 		currentUser = user;
 		settings.currentUser = user;
