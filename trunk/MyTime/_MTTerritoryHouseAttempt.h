@@ -40,8 +40,10 @@
 
 @interface _MTTerritoryHouseAttempt (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

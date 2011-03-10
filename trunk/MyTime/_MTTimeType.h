@@ -76,12 +76,17 @@
 
 @interface _MTTimeType (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveImageFileName;
 - (void)setPrimitiveImageFileName:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveDeleteable;
@@ -91,8 +96,11 @@
 - (void)setPrimitiveDeleteableValue:(BOOL)value_;
 
 
+
+
 - (NSDate*)primitiveStartTimerDate;
 - (void)setPrimitiveStartTimerDate:(NSDate*)value;
+
 
 
 

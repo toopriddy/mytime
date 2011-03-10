@@ -183,28 +183,41 @@
 
 @interface _MTCall (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveCity;
 - (void)setPrimitiveCity:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveUppercaseFirstLetterOfName;
 - (void)setPrimitiveUppercaseFirstLetterOfName:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveApartmentNumber;
 - (void)setPrimitiveApartmentNumber:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveStreet;
 - (void)setPrimitiveStreet:(NSString*)value;
 
 
+
+
 - (NSDecimalNumber*)primitiveLongitude;
 - (void)setPrimitiveLongitude:(NSDecimalNumber*)value;
 
 
+
+
 - (NSString*)primitiveState;
 - (void)setPrimitiveState:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveDateSortedSectionIndex;
@@ -214,8 +227,12 @@
 - (void)setPrimitiveDateSortedSectionIndexValue:(short)value_;
 
 
+
+
 - (NSDate*)primitiveMostRecentReturnVisitDate;
 - (void)setPrimitiveMostRecentReturnVisitDate:(NSDate*)value;
+
+
 
 
 - (NSNumber*)primitiveLocationAquisitionAttempted;
@@ -225,20 +242,30 @@
 - (void)setPrimitiveLocationAquisitionAttemptedValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitiveHouseNumber;
 - (void)setPrimitiveHouseNumber:(NSString*)value;
+
+
 
 
 - (NSDecimalNumber*)primitiveLattitude;
 - (void)setPrimitiveLattitude:(NSDecimalNumber*)value;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveLocationLookupType;
 - (void)setPrimitiveLocationLookupType:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveDeletedCall;
@@ -248,6 +275,8 @@
 - (void)setPrimitiveDeletedCallValue:(BOOL)value_;
 
 
+
+
 - (NSNumber*)primitiveLocationAquired;
 - (void)setPrimitiveLocationAquired:(NSNumber*)value;
 
@@ -255,8 +284,11 @@
 - (void)setPrimitiveLocationAquiredValue:(BOOL)value_;
 
 
+
+
 - (NSString*)primitiveUppercaseFirstLetterOfStreet;
 - (void)setPrimitiveUppercaseFirstLetterOfStreet:(NSString*)value;
+
 
 
 

@@ -58,6 +58,7 @@
 
 @interface _MTFilter (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
@@ -65,12 +66,17 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
 - (NSString*)primitivePredicate;
 - (void)setPrimitivePredicate:(NSString*)value;
+
 
 
 

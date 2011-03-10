@@ -185,8 +185,11 @@
 
 @interface _MTUser (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSDate*)primitivePioneerStartDate;
 - (void)setPrimitivePioneerStartDate:(NSDate*)value;
+
+
 
 
 - (NSNumber*)primitiveMonthDisplayCount;
@@ -196,12 +199,18 @@
 - (void)setPrimitiveMonthDisplayCountValue:(short)value_;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveSecretaryEmailAddress;
 - (void)setPrimitiveSecretaryEmailAddress:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveOrder;
@@ -211,16 +220,23 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
+
+
 - (NSString*)primitiveSelectedSortByAdditionalInformation;
 - (void)setPrimitiveSelectedSortByAdditionalInformation:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveSecretaryEmailNotes;
 - (void)setPrimitiveSecretaryEmailNotes:(NSString*)value;
 
 
+
+
 - (NSString*)primitivePublisherType;
 - (void)setPrimitivePublisherType:(NSString*)value;
+
 
 
 

@@ -98,6 +98,7 @@
 
 @interface _MTSorter (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveType;
 - (void)setPrimitiveType:(NSNumber*)value;
 
@@ -105,12 +106,18 @@
 - (void)setPrimitiveTypeValue:(short)value_;
 
 
+
+
 - (NSString*)primitivePath;
 - (void)setPrimitivePath:(NSString*)value;
 
 
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveOrder;
@@ -120,8 +127,12 @@
 - (void)setPrimitiveOrderValue:(double)value_;
 
 
+
+
 - (NSString*)primitiveSectionIndexPath;
 - (void)setPrimitiveSectionIndexPath:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveAscending;
@@ -131,11 +142,14 @@
 - (void)setPrimitiveAscendingValue:(BOOL)value_;
 
 
+
+
 - (NSNumber*)primitiveRequiresArraySorting;
 - (void)setPrimitiveRequiresArraySorting:(NSNumber*)value;
 
 - (BOOL)primitiveRequiresArraySortingValue;
 - (void)setPrimitiveRequiresArraySortingValue:(BOOL)value_;
+
 
 
 

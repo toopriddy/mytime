@@ -58,8 +58,11 @@
 
 @interface _MTTimeEntry (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveMinutes;
@@ -69,8 +72,11 @@
 - (void)setPrimitiveMinutesValue:(long long)value_;
 
 
+
+
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
+
 
 
 

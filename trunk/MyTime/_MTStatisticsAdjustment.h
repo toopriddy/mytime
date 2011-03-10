@@ -62,6 +62,7 @@
 
 @interface _MTStatisticsAdjustment (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveAdjustment;
 - (void)setPrimitiveAdjustment:(NSNumber*)value;
 
@@ -69,8 +70,12 @@
 - (void)setPrimitiveAdjustmentValue:(long long)value_;
 
 
+
+
 - (NSString*)primitiveType;
 - (void)setPrimitiveType:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveTimestamp;
@@ -78,6 +83,7 @@
 
 - (int)primitiveTimestampValue;
 - (void)setPrimitiveTimestampValue:(int)value_;
+
 
 
 

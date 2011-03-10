@@ -62,6 +62,7 @@
 
 @interface _MTPresentation (CoreDataGeneratedPrimitiveAccessors)
 
+
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
@@ -69,8 +70,12 @@
 - (void)setPrimitiveOrderValue:(int)value_;
 
 
+
+
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveDownloaded;
@@ -78,6 +83,7 @@
 
 - (BOOL)primitiveDownloadedValue;
 - (void)setPrimitiveDownloadedValue:(BOOL)value_;
+
 
 
 
