@@ -53,4 +53,11 @@
 	return @"studies";
 }
 
+- (NSPredicate *)predicate
+{
+	MTUser *currentUser = [MTUser currentUser];
+	return [NSPredicate predicateWithFormat:@"(user == %@) && (deletedCall == NO) && SUBQUERY(returnVisits,$s,$s.type == 'Study').@count > 0", currentUser];
+}
+
+
 @end

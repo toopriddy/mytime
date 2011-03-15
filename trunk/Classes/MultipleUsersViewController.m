@@ -287,23 +287,6 @@
 @end
 
 
-@interface MultipleUsersSectionController : GenericTableViewSectionController
-{
-}
-@end
-@implementation MultipleUsersSectionController
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-	if(tableView.editing)
-		return NSLocalizedString(@"Please note that if you delete a user ALL of your data will be DELETED for that user, this includes calls, return visits, hours, EVERYTHING!", @"This is the warning message that shows up in the More->Settings->Multiple Users when you are editing the user");
-	else
-		return nil;
-}
-@end
-
-
-
 @implementation MultipleUsersViewController
 @synthesize delegate;
 @synthesize managedObjectContext;
@@ -386,7 +369,8 @@
 												 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES] ]
 													   withPredicate:nil];
 	
-	GenericTableViewSectionController *sectionController = [[MultipleUsersSectionController alloc] init];
+	GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+	sectionController.editingFooter = NSLocalizedString(@"Please note that if you delete a user ALL of your data will be DELETED for that user, this includes calls, return visits, hours, EVERYTHING!", @"This is the warning message that shows up in the More->Settings->Multiple Users when you are editing the user");
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 

@@ -55,6 +55,8 @@
 {
 	MTUser *currentUser = [MTUser currentUser];
 	return [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == NO", currentUser];
+#warning fix me to use the predicate of the MTDisplayRule
+	//	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] sectionIndexPath];
 }
 
 - (NSString *)name 

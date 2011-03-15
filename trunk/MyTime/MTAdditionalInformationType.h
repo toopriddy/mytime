@@ -1,5 +1,7 @@
 #import "_MTAdditionalInformationType.h"
 
+extern NSString * const MTNotificationAdditionalInformationTypeChanged;
+
 typedef enum {
 	// do not reorder!!! dont add in the middle!!!
 	EMAIL,

@@ -72,15 +72,21 @@
 
 - (void)labelCellController:(PSCheckmarkCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
+	NSDictionary *entry = (NSDictionary *)labelCellController.userData;
 	[[self.navigationItem rightBarButtonItem] setEnabled:YES];
-	self.sorter.name = labelCellController.title;
-	self.sorter.path = (NSString *)labelCellController.checkedValue;
-	self.sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:self.sorter.path];
-	self.sorter.requiresArraySortingValue = [MTSorter requiresArraySortingForPath:self.sorter.path];
+	self.sorter.name = [entry objectForKey:MTSorterEntryName];
+	self.sorter.path = [entry objectForKey:MTSorterEntryPath];
+	self.sorter.sectionIndexPath = [entry objectForKey:MTSorterEntrySectionIndexPath];
+	if([entry objectForKey:MTSorterEntryRequiresArraySorting])
+	{
+		self.sorter.requiresArraySortingValue = YES;
+	}
+
 	if(self.selectedIndexPath)
 	{
 		[tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 	}
+
 	self.selectedIndexPath = indexPath;
 }
 
@@ -105,6 +111,7 @@
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		sectionController.title = [group objectForKey:MTSorterGroupName];
+		sectionController.editingTitle = sectionController.title;
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 		
@@ -112,16 +119,30 @@
 		for(NSDictionary *entry in [group objectForKey:MTSorterGroupArray])
 		{
 			PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
-			cellController.model = self.sorter;
-			cellController.modelPath = @"path";
 			cellController.title = [entry objectForKey:MTSorterEntryName];
-			cellController.checkedValue = [entry objectForKey:MTSorterEntryPath];
+			cellController.userData = entry;
+			if([entry objectForKey:MTSorterEntryRequiresArraySorting])
+			{
+				cellController.model = self.sorter;
+				cellController.modelPath = @"name";
+				cellController.checkedValue = [entry objectForKey:MTSorterEntryName];
+				if([self.sorter.name isEqualToString:[entry objectForKey:MTSorterEntryName]])
+				{
+					self.selectedIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+				}
+			}
+			else
+			{
+				cellController.model = self.sorter;
+				cellController.modelPath = @"path";
+				cellController.checkedValue = [entry objectForKey:MTSorterEntryPath];
+				if([self.sorter.path isEqualToString:[entry objectForKey:MTSorterEntryPath]])
+				{
+					self.selectedIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+				}
+			}
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:sortSelectedAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];
-			if([cellController.checkedValue isEqual:self.sorter.path])
-			{
-				self.selectedIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
-			}
 			++row;
 		}
 		++section;

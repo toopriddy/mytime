@@ -227,7 +227,7 @@
 																  withPredicate:@"internal == YES && user == %@", currentUser];
 		
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
-		sectionController.editingTitle = NSLocalizedString(@"MyTime Display Rules", @"");
+		sectionController.editingTitle = NSLocalizedString(@"MyTime Display Rules", @"Title of the section when editing the display rules, this title defines the 'X Sorted' tabs' sort/display rules");
 		sectionController.editingFooter = NSLocalizedString(@"These display rules are used in MyTime for all of the street, city, date, name, study, etc. sorted views", @"this is the description in the Display Rules view when you are editing the display rules");
 		sectionController.isViewableWhenEditing = YES;
 		sectionController.isViewableWhenNotEditing = NO;

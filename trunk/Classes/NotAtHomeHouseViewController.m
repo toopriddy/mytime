@@ -669,7 +669,7 @@
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Attempts", @"Title of the section in the Not-At-Homes house view that allows you to add/edit attempts for the house");
+		sectionController.editingTitle = NSLocalizedString(@"Attempts", @"Title of the section in the Not-At-Homes house view that allows you to add/edit attempts for the house");
 		[sectionController release];
 
 		NSArray *attempts = [self.house.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouseAttempt entityName]

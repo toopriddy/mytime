@@ -76,6 +76,7 @@
 @synthesize movableWhileEditing;
 @synthesize isViewableWhenEditing;
 @synthesize isViewableWhenNotEditing;
+@synthesize userData;
 
 - (id)init
 {
@@ -99,6 +100,7 @@
 	self.selectedRow = nil;
 	self.accessoryView = nil;
 	self.editingAccessoryView = nil;
+	self.userData = nil;
 	
 	[super dealloc];
 }

@@ -433,7 +433,7 @@
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Houses", @"Title of the section in the Not-At-Homes street view that allows you to add/edit houses in the street");
+		sectionController.editingTitle = NSLocalizedString(@"Houses", @"Title of the section in the Not-At-Homes street view that allows you to add/edit houses in the street");
 		[sectionController release];
 
 		NSArray *houses = [street.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]

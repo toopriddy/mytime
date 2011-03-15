@@ -329,7 +329,7 @@
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Placements:", @"Placements Group title for the Day's Bulk Literature Placements");
+		sectionController.editingTitle = NSLocalizedString(@"Placements:", @"Placements Group title for the Day's Bulk Literature Placements");
 		[sectionController release];
 		
 		NSArray *publications = [self.bulkPlacement.managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
