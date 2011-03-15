@@ -267,7 +267,7 @@
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
-		sectionController.title = NSLocalizedString(@"Sort Rules", @"Section title for the Display Rule editing view");
+		sectionController.editingTitle = NSLocalizedString(@"Sort Rules", @"Section title for the Display Rule editing view");
 		[sectionController release];
 
 		NSArray *sorters = [self.displayRule.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]

@@ -127,8 +127,8 @@
 	if( (self = [super init]) )
 	{
 		self.title = NSLocalizedString(@"Favorites", @"this is a section label in the 'quick notes' view if you edit a call and add brand new notes.  The favorites section is where you can add your own favorite notes");
-		self.footer = NSLocalizedString(@"Add your current presentations or common notes here to be used as a template for notes for your initial/return visits", @"This text is right below the Quick notes Favoriate section describing what this section is for");
-
+		self.editingTitle = self.title;
+		self.editingFooter = NSLocalizedString(@"Add your current presentations or common notes here to be used as a template for notes for your initial/return visits", @"This text is right below the Quick notes Favoriate section describing what this section is for");
 	}
 	return self;
 }
@@ -141,13 +141,6 @@
 									  withPredicate:@"user == %@", currentUser] != 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-	if(tableView.editing)
-		return self.footer;
-	else
-		return nil;
-}
 @end
 
 /******************************************************************

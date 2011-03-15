@@ -5,6 +5,8 @@
 #import "Settings.h"
 #import "PSLocalization.h"
 
+NSString * const MTNotificationAdditionalInformationTypeChanged = @"MTNotificationAdditionalInformationTypeChanged";
+
 #include "PSRemoveLocalizedString.h"
 static MetadataInformation commonInformation[] = {
 	{NSLocalizedString(@"Email", @"Call Metadata"), EMAIL}

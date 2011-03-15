@@ -1911,6 +1911,8 @@
 		{
 			self.title = NSLocalizedString(@"Call", @"Call main title when editing an existing call");
 		}
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAndReload) name:MTNotificationAdditionalInformationTypeChanged object:nil];
     }
     
     return(self);
@@ -1919,6 +1921,8 @@
 - (void)dealloc 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	_name.delegate = nil;
     [_name release];
@@ -2271,6 +2275,7 @@
 	
 	GenericTableViewSectionController *sectionController = [[[GenericTableViewSectionController alloc] init] autorelease];
 	sectionController.title = formattedDateString;
+	sectionController.editingTitle = sectionController.title;
 	
 	// NOTES
 	{

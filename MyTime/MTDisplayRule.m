@@ -258,10 +258,11 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (NSString *)sectionIndexPath
 {
+#warning there is a problem here, we cant use the additional information for the section names!
 	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
 														  propertiesToFetch:nil
 														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
-															  withPredicate:@"displayRule == %@", self];
+															  withPredicate:@"displayRule == %@ && (requiresArraySorting == NO || requiresArraySorting == nil)", self];
 	if(sorters.count == 0)
 		return nil;
 

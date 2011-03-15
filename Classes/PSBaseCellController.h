@@ -41,6 +41,7 @@
 @property (nonatomic, assign) BOOL movable;
 @property (nonatomic, assign) BOOL isViewableWhenEditing;
 @property (nonatomic, assign) BOOL isViewableWhenNotEditing;
+@property (nonatomic, retain) NSObject *userData;
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 

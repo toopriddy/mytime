@@ -1456,6 +1456,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		sectionController.isViewableWhenEditing = NO;
 		sectionController.title = _serviceYearText;
+		sectionController.editingTitle = sectionController.title;
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 
@@ -1592,6 +1593,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		sectionController.title = title;
+		sectionController.editingTitle = sectionController.title;
 		sectionController.isViewableWhenNotEditing = section < shownMonths; // only show X number of months
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];

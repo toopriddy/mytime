@@ -208,7 +208,6 @@
 - (void)metadataCustomViewControllerDone:(MetadataCustomViewController *)metadataCustomViewController
 {
 	[self.delegate.navigationController popViewControllerAnimated:YES];
-#warning need to kick out a message that the additionalInformationType has changed and the user needs to redisplay a value
 	
 	[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -443,22 +442,6 @@
 
 @end
 
-@interface AlwaysShownSectionController : GenericTableViewSectionController
-{
-}
-@end
-@implementation AlwaysShownSectionController
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-	if(tableView.editing)
-		return self.footer;
-	else
-		return nil;
-}
-@end
-
-
 @implementation MetadataViewController
 
 @synthesize delegate;
@@ -566,9 +549,10 @@
 	GenericTableViewSectionController *sectionController;
 
 	// preferred Metadata
-	sectionController = [[AlwaysShownSectionController alloc] init];
+	sectionController = [[GenericTableViewSectionController alloc] init];
 	sectionController.title = NSLocalizedString(@"Information Always Shown", @"Title in the 'Additional Information' for the entries that will always show in every call");
-	sectionController.footer = NSLocalizedString(@"Any rows below that you move up here will always show up in your calls", @"Footer in the 'Additional Information' for the entries that will always show in every call");
+	sectionController.editingTitle = sectionController.title;
+	sectionController.editingFooter = NSLocalizedString(@"Any rows below that you move up here will always show up in your calls", @"Footer in the 'Additional Information' for the entries that will always show in every call");
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 
@@ -587,6 +571,7 @@
 	// other Metadata
 	sectionController = [[GenericTableViewSectionController alloc] init];
 	sectionController.title = NSLocalizedString(@"Other Information", @"Title in the 'Additional Information' for the entries that can be added per call");
+	sectionController.editingTitle = sectionController.title;
 	[self.sectionControllers addObject:sectionController];
 	[sectionController release];
 

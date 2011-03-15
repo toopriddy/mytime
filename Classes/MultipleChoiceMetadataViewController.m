@@ -24,34 +24,6 @@
 
 
 
-/******************************************************************
- *
- *   CHOICE SECTION
- *
- ******************************************************************/
-#pragma mark MultipleChoiceSectionController
-@interface MultipleChoiceSectionController : GenericTableViewSectionController
-{
-	MultipleChoiceMetadataViewController *delegate;
-}
-@property (nonatomic, assign) MultipleChoiceMetadataViewController *delegate;
-@end
-@implementation MultipleChoiceSectionController
-@synthesize delegate;
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-	if(tableView.editing)
-		return NSLocalizedString(@"Enter the multiple choice values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
-	else
-		return NSLocalizedString(@"Please select one option", @"This is text in the header of the screen when you try to select one of the multiple choice values");
-}
-
-@end
-
-
-
-
-
 @implementation MultipleChoiceMetadataViewController
 
 @synthesize delegate;
@@ -192,9 +164,9 @@
 	
 	// Multiple Choice section
 	{
-		MultipleChoiceSectionController *sectionController = [[MultipleChoiceSectionController alloc] init];
-
-		sectionController.delegate = self;
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		sectionController.editingFooter = NSLocalizedString(@"Enter the multiple choice values here", @"text that appears in the Call->Edit->Add Additional Information->Edit->Add Custom->Multiple Choice type area so that you can add values to your multiple choice type");
+		sectionController.footer = NSLocalizedString(@"Please select one option", @"This is text in the header of the screen when you try to select one of the multiple choice values");
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 

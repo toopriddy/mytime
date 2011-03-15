@@ -548,11 +548,14 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	self.type.typeValue = commonInformation[selected].type;
 	if(self.type.typeValue != CHOICE)
 	{
-		self.type.multipleChoices = nil;
+		for(MTMultipleChoice *choice in self.type.multipleChoices)
+		{
+			[self.type.managedObjectContext deleteObject:choice];
+		}
 	}
 	self.type.name = self.name;
 	
-#warning need to kick out a message that the additionalInformationType has changed and the user needs to redisplay a value
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationAdditionalInformationTypeChanged object:self.type];
 	
 	[self save];
 	
@@ -620,7 +623,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 					case SWITCH:
 					{
 						// need to kick off a question to the user if they really want to delete all of the information in previously used AdditionalInformation
-						UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You have changed the type of an Additional Information which is currently being, this will reset any values you are currently using in any of your calls. \nAre you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"")
+						UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"You have changed the type of an Additional Information which is currently being used, this will reset any values you are currently using in any of your calls. \nAre you sure you want to do this?", @"This message is presented when the user has changed an \"Additional Information\" type from one type to an incompatible type like a \"String\" to a \"Date\"")
 																				  delegate:self 
 																		 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel Button") 
 																	destructiveButtonTitle:NSLocalizedString(@"Yes change and reset data", @"YES button to change the type of additional information from the dialog: You have changed the type of the Additional Information, this will reset any values you are currently using in any of your calls.  Are you sure you want to do this?")
@@ -818,7 +821,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	// Type Section
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
-		sectionController.title = NSLocalizedString(@"Type", @"type of Additional Information, used as a title to the section Call->Edit->Add Additional Information->Edit->Add Custom");
+		sectionController.editingTitle = NSLocalizedString(@"Type", @"type of Additional Information, used as a title to the section Call->Edit->Add Additional Information->Edit->Add Custom");
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 
