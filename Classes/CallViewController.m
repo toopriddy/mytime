@@ -739,6 +739,10 @@
 		case STRING:
 			break;
 			
+		case NUMBER:
+			self.metadata.numberValue = [(NSNumber *)[metadataEditorViewController data] intValue];
+			break;
+			
 		case SWITCH:
 			self.metadata.booleanValue = [metadataEditorViewController boolValue];
 			break;

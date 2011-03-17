@@ -14,4 +14,7 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 - (NSArray *)allSortDescriptors;
 - (NSArray *)coreDataSortDescriptors;
 - (NSString *)sectionIndexPath;
+- (MTSorter *)sectionIndexSorter;
+- (BOOL)requiresArraySorting;
+
 @end

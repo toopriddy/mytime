@@ -2,7 +2,10 @@
 #import "MTUser.h"
 #import "MTAdditionalInformationType.h"
 #import "MTAdditionalInformation.h"
+#import "MTDisplayRule.h"
+#import "MTSorter.h"
 #import "MTReturnVisit.h"
+#import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 NSString *const MTNotificationCallChanged = @"settingsNotificationCallChanged";
 
@@ -271,5 +274,65 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
     [self didAccessValueForKey:@"dateSortedSectionIndex"];
     return [NSNumber numberWithInt:index];
 }
+
+- (NSString *)sectionIndexString
+{
+	MTSorter *sorter = [[MTDisplayRule currentDisplayRule] sectionIndexSorter];
+    [self willAccessValueForKey:@"sectionIndexString"];
+	NSString *stringToReturn = nil;
+	if(sorter)
+	{
+		if(sorter.requiresArraySortingValue)
+		{
+			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
+																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
+																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
+			for(MTAdditionalInformation *entry in additionalInformations)
+			{
+				// only interested in the first one
+				stringToReturn = entry.value;
+				break;
+			}
+		}
+		else
+		{
+			stringToReturn = [self valueForKey:sorter.path];
+		}
+
+	}
+    [self didAccessValueForKey:@"sectionIndexString"];
+    return stringToReturn;
+}
+
+- (NSNumber *)sectionIndexNumber
+{
+	MTSorter *sorter = [[MTDisplayRule currentDisplayRule] sectionIndexSorter];
+    [self willAccessValueForKey:@"sectionIndexNumber"];
+	NSNumber *valueToReturn = nil;
+	if(sorter)
+	{
+		if(sorter.requiresArraySortingValue)
+		{
+			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
+																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
+																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
+			for(MTAdditionalInformation *entry in additionalInformations)
+			{
+				// only interested in the first one
+				valueToReturn = entry.number;
+				break;
+			}
+		}
+		else
+		{
+			valueToReturn = [self valueForKey:sorter.path];
+		}
+		
+	}
+    [self didAccessValueForKey:@"sectionIndexNumber"];
+    return valueToReturn;
+}
+
+
 
 @end

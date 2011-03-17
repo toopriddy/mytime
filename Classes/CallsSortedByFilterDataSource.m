@@ -85,5 +85,11 @@
 	return [[MTDisplayRule currentDisplayRule] allSortDescriptors];
 }
 
+- (BOOL)requiresArraySorting
+{
+	return [[MTDisplayRule currentDisplayRule] requiresArraySorting];
+}
+
+
 
 @end

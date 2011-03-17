@@ -14,4 +14,6 @@ extern NSString * const MTSorterEntryRequiresArraySorting;
 + (NSString *)nameForPath:(NSString *)path;
 + (NSString *)sectionIndexPathForPath:(NSString *)path;
 + (BOOL)requiresArraySortingForPath:(NSString *)path;
+
+@property (nonatomic, readonly) SEL selector;
 @end

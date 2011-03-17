@@ -3,6 +3,7 @@
 #import "MTUser.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MTSorter.h"
+#import "AdditionalInformationSortDescriptor.h"
 
 NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
 
@@ -214,6 +215,12 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return nil;
 }
 
+- (BOOL)requiresArraySorting
+{
+	return 0 != [self.managedObjectContext countForFetchedObjectsForEntityName:[MTSorter entityName]
+																 withPredicate:@"displayRule == %@ && requiresArraySorting == YES", self];
+}
+
 - (NSArray *)allSortDescriptors
 {
 	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
@@ -229,8 +236,21 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithCapacity:sorters.count];
 	for(MTSorter *sorter in sorters)
 	{
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
-		[sortDescriptors addObject:sortDescriptor];
+		if(sorter.requiresArraySortingValue)
+		{
+			NSSortDescriptor *sortDescriptor = [[AdditionalInformationSortDescriptor alloc] initWithName:sorter.name 
+																									path:sorter.path 
+																							   ascending:sorter.ascendingValue 
+																								selector:sorter.selector];
+			[sortDescriptors addObject:sortDescriptor];
+			[sortDescriptor release];
+		}
+		else
+		{
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
+			[sortDescriptors addObject:sortDescriptor];
+			[sortDescriptor release];
+		}
 	}
 	return sortDescriptors;
 }
@@ -252,21 +272,35 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	{
 		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
 		[sortDescriptors addObject:sortDescriptor];
+		[sortDescriptor release];
 	}
 	return sortDescriptors;
 }
 
 - (NSString *)sectionIndexPath
 {
-#warning there is a problem here, we cant use the additional information for the section names!
 	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
 														  propertiesToFetch:nil
 														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
-															  withPredicate:@"displayRule == %@ && (requiresArraySorting == NO || requiresArraySorting == nil)", self];
+															  withPredicate:@"displayRule == %@", self];
 	if(sorters.count == 0)
 		return nil;
 
 	return [[sorters lastObject] sectionIndexPath];
 }
+
+- (MTSorter *)sectionIndexSorter
+{
+	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
+														  propertiesToFetch:nil
+														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
+															  withPredicate:@"displayRule == %@", self];
+	if(sorters.count == 0)
+		return nil;
+	
+	return [sorters lastObject];
+}
+
+
 
 @end

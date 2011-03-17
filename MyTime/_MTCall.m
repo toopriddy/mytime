@@ -45,6 +45,10 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"locationAquired"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"sectionIndexNumberValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"sectionIndexNumber"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
@@ -66,6 +70,13 @@
 
 
 
+@dynamic sectionIndexString;
+
+
+
+
+
+
 @dynamic apartmentNumber;
 
 
@@ -80,7 +91,7 @@
 
 
 
-@dynamic longitude;
+@dynamic mostRecentReturnVisitDate;
 
 
 
@@ -88,6 +99,13 @@
 
 
 @dynamic state;
+
+
+
+
+
+
+@dynamic longitude;
 
 
 
@@ -115,13 +133,6 @@
 - (void)setPrimitiveDateSortedSectionIndexValue:(short)value_ {
 	[self setPrimitiveDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
 }
-
-
-
-
-
-@dynamic mostRecentReturnVisitDate;
-
 
 
 
@@ -240,16 +251,31 @@
 
 
 
-@dynamic returnVisits;
+@dynamic sectionIndexNumber;
 
-	
-- (NSMutableSet*)returnVisitsSet {
-	[self willAccessValueForKey:@"returnVisits"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"returnVisits"];
-	[self didAccessValueForKey:@"returnVisits"];
-	return result;
+
+
+- (long long)sectionIndexNumberValue {
+	NSNumber *result = [self sectionIndexNumber];
+	return [result longLongValue];
 }
-	
+
+- (void)setSectionIndexNumberValue:(long long)value_ {
+	[self setSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveSectionIndexNumberValue {
+	NSNumber *result = [self primitiveSectionIndexNumber];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveSectionIndexNumberValue:(long long)value_ {
+	[self setPrimitiveSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
 
 @dynamic additionalInformation;
 
@@ -258,6 +284,17 @@
 	[self willAccessValueForKey:@"additionalInformation"];
 	NSMutableSet *result = [self mutableSetValueForKey:@"additionalInformation"];
 	[self didAccessValueForKey:@"additionalInformation"];
+	return result;
+}
+	
+
+@dynamic returnVisits;
+
+	
+- (NSMutableSet*)returnVisitsSet {
+	[self willAccessValueForKey:@"returnVisits"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"returnVisits"];
+	[self didAccessValueForKey:@"returnVisits"];
 	return result;
 }
 	

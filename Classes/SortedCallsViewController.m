@@ -27,8 +27,8 @@
 #import "MTAdditionalInformation.h"
 
 @interface SortedCallsViewController ()
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, retain) NSFetchedResultsController *searchFetchedResultsController;
+@property (nonatomic, retain) PSExtendedFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) PSExtendedFetchedResultsController *searchFetchedResultsController;
 @property (nonatomic, retain) MTCall *editingCall;
 @property (nonatomic, retain) UISearchDisplayController *mySearchDisplayController;
 @property (nonatomic, retain) UILabel *footerLabel;
@@ -312,7 +312,7 @@
 #pragma mark -
 #pragma mark Table view methods
 
-- (NSFetchedResultsController *)fetchedResultsControllerForTableView:(UITableView *)tableView
+- (PSExtendedFetchedResultsController *)fetchedResultsControllerForTableView:(UITableView *)tableView
 {
 	return tableView == tableView_ ? self.fetchedResultsController : self.searchFetchedResultsController;
 }
@@ -346,7 +346,7 @@
 	[[self navigationController] pushViewController:controller animated:YES];
 }
 
-- (void)fetchedResultsController:(NSFetchedResultsController *)fetchedResultsController configureCell:(UITableViewCell *)theCell atIndexPath:(NSIndexPath *)theIndexPath
+- (void)fetchedResultsController:(PSExtendedFetchedResultsController *)fetchedResultsController configureCell:(UITableViewCell *)theCell atIndexPath:(NSIndexPath *)theIndexPath
 {
 	CallTableCell *cell = (CallTableCell *)theCell;
 	// configure cell contents
@@ -388,7 +388,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
     NSInteger numberOfRows = 0;
-	NSFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
+	PSExtendedFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 	NSArray *sections = fetchController.sections;
     if(sections.count > 0) 
 	{
@@ -405,7 +405,7 @@
 	// Display the types' names as section headings.
 	//    return [[[fetchedResultsController sections] objectAtIndex:section] valueForKey:@"name"];
 
-	NSFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
+	PSExtendedFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 	NSArray *sections = fetchController.sections;
 	if(sections.count > 0) 
 	{
@@ -458,7 +458,7 @@
 	NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
 	if(alternateIndexTitles)
 	{
-		NSFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
+		PSExtendedFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 		int i = 0;
 		int ret = 0;
 		for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
@@ -545,7 +545,7 @@
 	}
 }
 
-- (NSFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
+- (PSExtendedFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
 {
 	NSArray *sortDescriptors = [dataSource coreDataSortDescriptors];
 	NSPredicate *filterPredicate = [dataSource predicate];
@@ -621,12 +621,18 @@
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
+	NSArray *arraySortDescriptors = nil;
+	if([dataSource requiresArraySorting])
+	{
+		arraySortDescriptors = [dataSource allSortDescriptors];
+	}
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
-																								managedObjectContext:self.managedObjectContext 
-																								  sectionNameKeyPath:[dataSource sectionNameKeyPath] 
-																										   cacheName:nil];
+    PSExtendedFetchedResultsController *aFetchedResultsController = [[PSExtendedFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																												managedObjectContext:self.managedObjectContext 
+																												  sectionNameKeyPath:[dataSource sectionNameKeyPath] 
+																														   cacheName:nil
+																													 sortDescriptors:arraySortDescriptors];
     aFetchedResultsController.delegate = self;
     
     [fetchRequest release];
@@ -646,7 +652,7 @@
     return aFetchedResultsController;
 }    
 
-- (NSFetchedResultsController *)fetchedResultsController 
+- (PSExtendedFetchedResultsController *)fetchedResultsController 
 {
     if (fetchedResultsController_ != nil) 
 	{
@@ -656,7 +662,7 @@
 	return [[fetchedResultsController_ retain] autorelease];
 }	
 
-- (NSFetchedResultsController *)searchFetchedResultsController 
+- (PSExtendedFetchedResultsController *)searchFetchedResultsController 
 {
     if (searchFetchedResultsController_ != nil) 
 	{
@@ -670,12 +676,16 @@
 #pragma mark -
 #pragma mark Fetched results controller delegate
 
+- (UITableView *)tableViewForFetchedResultsController:(NSFetchedResultsController *)controller 
+{
+	return controller == self.fetchedResultsController.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+}
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
 {
 	if(!coreDataHasChangeContentBug)
 	{
-		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 		[tableView beginUpdates];
 	}
 }
@@ -688,7 +698,7 @@
 {
 	if(!coreDataHasChangeContentBug)
 	{
-		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 		
 		switch(type) 
 		{
@@ -712,7 +722,7 @@
 {
 	if(!coreDataHasChangeContentBug)
 	{
-		UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+		UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 		
 		switch(type) 
 		{
@@ -725,7 +735,7 @@
 				break;
 				
 			case NSFetchedResultsChangeUpdate:
-				[self fetchedResultsController:controller configureCell:[tableView cellForRowAtIndexPath:theIndexPath] atIndexPath:theIndexPath];
+				[self fetchedResultsController:[self fetchedResultsControllerForTableView:tableView] configureCell:[tableView cellForRowAtIndexPath:theIndexPath] atIndexPath:theIndexPath];
 				break;
 				
 			case NSFetchedResultsChangeMove:
@@ -739,7 +749,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
-	UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+	UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 	if(coreDataHasChangeContentBug)
 	{
 		[tableView reloadData];

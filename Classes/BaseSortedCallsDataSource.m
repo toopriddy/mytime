@@ -115,5 +115,10 @@
 	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] allSortDescriptors];
 }
 
+- (BOOL)requiresArraySorting
+{
+	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] requiresArraySorting];
+}
+
 
 @end

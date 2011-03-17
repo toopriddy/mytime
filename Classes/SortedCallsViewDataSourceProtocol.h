@@ -26,6 +26,7 @@
 @property (readonly) BOOL showAddNewCall;
 @property (readonly) BOOL useNameAsMainLabel;
 @property (readonly) BOOL showDisclosureIcon;
+@property (readonly) BOOL requiresArraySorting;
 
 // this property determines the style of table view displayed
 @property (readonly) UITableViewStyle tableViewStyle;

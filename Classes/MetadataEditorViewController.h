@@ -57,6 +57,7 @@
 - (void)setPlaceholder:(NSString *)placeholder;
 - (void)navigationControlDone:(id)sender;
 
+- (NSObject *)data;
 - (NSString *)value;
 - (BOOL)boolValue;
 - (NSDate *)date;
