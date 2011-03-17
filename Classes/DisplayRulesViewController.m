@@ -261,7 +261,6 @@
 		
 		for(MTDisplayRule *displayRule in displayRules)
 		{
-			NSLog(@"%@ %@", displayRule.name, displayRule.order);
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.model = displayRule;
 			cellController.modelPath = @"name";
