@@ -46,34 +46,34 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 		switch(type.typeValue)
 		{
 			case PHONE:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
 				break;
 			case EMAIL:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
 				break;
 			case URL:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
 				break;
 			case STRING:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
-				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
+				[entry setObject:@"sectionIndexString" forKey:MTSorterEntrySectionIndexPath];
 				break;
 			case NOTES:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
 				break;
 			case CHOICE:
-				[entry setObject:@"additionalInformation.value" forKey:MTSorterEntryPath];
-				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				[entry setObject:@"value" forKey:MTSorterEntryPath];
+				[entry setObject:@"sectionIndexString" forKey:MTSorterEntrySectionIndexPath];
 				break;
 			case SWITCH:
-				[entry setObject:@"additionalInformation.boolean" forKey:MTSorterEntryPath];
+				[entry setObject:@"boolean" forKey:MTSorterEntryPath];
 				break;
 			case DATE:
-				[entry setObject:@"additionalInformation.date" forKey:MTSorterEntryPath];
+				[entry setObject:@"date" forKey:MTSorterEntryPath];
 				break;
 			case NUMBER:
-				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntryPath];
-				[entry setObject:@"additionalInformation.number" forKey:MTSorterEntrySectionIndexPath];
+				[entry setObject:@"number" forKey:MTSorterEntryPath];
+				[entry setObject:@"sectionIndexNumber" forKey:MTSorterEntrySectionIndexPath];
 				break;
 		}
 		[entry setObject:type.name forKey:MTSorterEntryName];
@@ -81,6 +81,18 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 		[returnArray addObject:entry];
 	}
 	return returnArray;
+}
+
+- (SEL)selector
+{
+	if([self.name isEqualToString:@"value"])
+	{
+		return @selector(localizedCaseInsensitiveCompare:);
+	}
+	else 
+	{
+		return @selector(compare:);
+	}
 }
 
 + (NSArray *)sorterInformationArray

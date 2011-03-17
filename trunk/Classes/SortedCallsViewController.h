@@ -18,6 +18,7 @@
 #import "CallViewController.h"
 #import "EmptyListViewController.h"
 #import <CoreData/CoreData.h>
+#import "PSExtendedFetchedResultsController.h"
 
 @interface SortedCallsViewController : UIViewController <UITableViewDelegate, 
                                                          UITableViewDataSource,
@@ -37,8 +38,8 @@
 	UILabel *footerLabel_;
 	
 	BOOL reloadData_;
-    NSFetchedResultsController *fetchedResultsController_;
-    NSFetchedResultsController *searchFetchedResultsController_;
+    PSExtendedFetchedResultsController *fetchedResultsController_;
+    PSExtendedFetchedResultsController *searchFetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 
 	// The saved state of the search UI if a memory warning removed the view.
@@ -54,7 +55,7 @@
 @property (nonatomic, retain) NSIndexPath *indexPath;
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain, readonly) PSExtendedFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, copy) NSString *savedSearchTerm;
 @property (nonatomic) NSInteger savedScopeButtonIndex;
