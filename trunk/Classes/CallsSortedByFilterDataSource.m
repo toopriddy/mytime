@@ -90,6 +90,11 @@
 	return [[MTDisplayRule currentDisplayRule] requiresArraySorting];
 }
 
+- (BOOL)sectionIndexDisplaysSingleLetter
+{
+	return ![[[MTDisplayRule currentDisplayRule] sectionIndexSorter] requiresArraySorting];
+}
+
 
 
 @end

@@ -27,6 +27,7 @@
 @property (readonly) BOOL useNameAsMainLabel;
 @property (readonly) BOOL showDisclosureIcon;
 @property (readonly) BOOL requiresArraySorting;
+@property (readonly) BOOL sectionIndexDisplaysSingleLetter;
 
 // this property determines the style of table view displayed
 @property (readonly) UITableViewStyle tableViewStyle;
