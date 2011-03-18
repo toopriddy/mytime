@@ -120,5 +120,9 @@
 	return [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] requiresArraySorting];
 }
 
+- (BOOL)sectionIndexDisplaysSingleLetter
+{
+	return YES;
+}
 
 @end

@@ -4,10 +4,15 @@
 #import "PSLocalization.h"
 
 @implementation MTSettings
+MTSettings *cachedSettings;
 
 + (MTSettings *)settings
 {
-	return [MTSettings settingsInManagedObjectContext:[[MyTimeAppDelegate sharedInstance] managedObjectContext]];
+	if(cachedSettings == nil)
+	{
+		cachedSettings = [[MTSettings settingsInManagedObjectContext:[[MyTimeAppDelegate sharedInstance] managedObjectContext]] retain];
+	}
+	return cachedSettings;
 }
 
 + (MTSettings *)settingsInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext

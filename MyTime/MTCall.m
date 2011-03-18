@@ -289,7 +289,7 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
 																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
 #else
-			NSArray *additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
+			id additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
 #endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{
@@ -322,7 +322,7 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 																				 propertiesToFetch:[NSArray arrayWithObject:@"number"]
 																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
 #else
-			NSArray *additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
+			id additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
 #endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{

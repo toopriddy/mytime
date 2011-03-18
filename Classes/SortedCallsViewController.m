@@ -435,16 +435,16 @@
 {
 	if(tableView == self.tableView)
 	{
-		NSMutableArray *array = [NSMutableArray arrayWithObject:@"{search}"];
 		NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
-		if(alternateIndexTitles)
+		if(alternateIndexTitles == nil)
 		{
-			[array addObjectsFromArray:alternateIndexTitles];
+			alternateIndexTitles = [self.fetchedResultsController sectionIndexTitles];
 		}
-		else
-		{
-			[array addObjectsFromArray:[self.fetchedResultsController sectionIndexTitles]];
-		}
+		// if it turns out that there are no section index titles then dont even show the search one
+		if(alternateIndexTitles == nil)
+			return nil;
+		NSMutableArray *array = [NSMutableArray arrayWithObject:@"{search}"];
+		[array addObjectsFromArray:alternateIndexTitles];
 
 		return array;
 	}
@@ -645,7 +645,7 @@
 																														   cacheName:nil
 																													 sortDescriptors:arraySortDescriptors];
     aFetchedResultsController.delegate = self;
-    
+    aFetchedResultsController.sectionIndexDisplaysSingleLetter = [dataSource sectionIndexDisplaysSingleLetter];
     [fetchRequest release];
     
     NSError *error = nil;

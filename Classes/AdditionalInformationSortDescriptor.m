@@ -29,7 +29,7 @@
 	MTCall *call2 = (MTCall *)object2;
 	id item1 = nil;
 	id item2 = nil;
-	NSArray *additionalInformations;
+	id additionalInformations;
 	NSString *key = self.key;
 #if 1
 	additionalInformations = [call1.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", key]];

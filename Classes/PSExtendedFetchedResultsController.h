@@ -13,6 +13,7 @@
 {
 	BOOL _coreDataHasChangeContentBug;
 	BOOL _requiresArraySorting;
+	BOOL _sectionIndexDisplaysSingleLetter;
 	NSObject< NSFetchedResultsControllerDelegate > *_delegate;
 	NSArray *_fetchedObjects;
 	NSArray *_sections;
@@ -55,6 +56,8 @@
 @property (nonatomic, retain) NSArray *sortDescriptors;
 
 @property (nonatomic, assign) BOOL requiresArraySorting;
+
+@property (nonatomic, assign) BOOL sectionIndexDisplaysSingleLetter;
 
 /* ========================================================*/
 /* ============= ACCESSING OBJECT RESULTS =================*/

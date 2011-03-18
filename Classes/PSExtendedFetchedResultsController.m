@@ -56,6 +56,7 @@
 @synthesize requiresArraySorting = _requiresArraySorting;
 @synthesize sectionNameKeyPath;
 @synthesize sortDescriptors;
+@synthesize sectionIndexDisplaysSingleLetter = _sectionIndexDisplaysSingleLetter;
 
 /* ========================================================*/
 /* ========================= INITIALIZERS ====================*/
@@ -87,6 +88,7 @@
 {
 	if( (self = [super init]) )
 	{
+		self.sectionIndexDisplaysSingleLetter = YES;
 		self.requiresArraySorting = theSortDescriptors != nil;
 		self.sectionNameKeyPath = theSectionNameKeyPath;
 		self.sortDescriptors = theSortDescriptors;
@@ -150,9 +152,7 @@
 				NSString *unknownLocalizedString = NSLocalizedString(@"Unknown", @"Sorted by ... view section header for unknown values");
 				NSString *unknownLocalizedSectionIndexTitle = NSLocalizedString(@"?", @"Sorted by ... view section index for unknown values which coresponds to the 'Unknown' section header");
 				NSMutableArray *tempSections = [NSMutableArray array];
-				self.sections = tempSections;
 				NSMutableArray *tempSectionIndexTitles = [NSMutableArray array];
-				self.sectionIndexTitles = tempSectionIndexTitles;
 				
 				PSFetchedResultsSectionInfo *sectionInfo;
 #if 0
@@ -182,11 +182,7 @@
 					if([value isKindOfClass:[NSDate class]])
 					{
 						title = [self.dateFormatter stringFromDate:value];
-						if(tempSectionIndexTitles)
-						{
-							self.sectionIndexTitles = nil;
-							tempSectionIndexTitles = nil;
-						}
+						tempSectionIndexTitles = nil;
 						sectionIndexTitle = nil;
 #warning might want to do things like date sorted						
 					}
@@ -213,8 +209,14 @@
 						}
 						else
 						{
-#warning using the first letter kinda is not nice for multiple choice							
-							sectionIndexTitle = [[title substringToIndex:1] capitalizedString];
+							if(_sectionIndexDisplaysSingleLetter)
+							{
+								sectionIndexTitle = [[title substringToIndex:1] capitalizedString];
+							}
+							else
+							{
+								sectionIndexTitle = title;
+							}
 						}
 					}
 
@@ -253,6 +255,9 @@
 					}
 					[sectionInfo.objects addObject:managedObject];
 				}
+				// set the sections and titles
+				self.sections = tempSections;
+				self.sectionIndexTitles = tempSectionIndexTitles;
 				// pickup the object count at the end
 				sectionInfo.numberOfObjects = [sectionInfo.objects count];
 			}
@@ -381,7 +386,15 @@
 				return info.indexTitle;
 			}
 		}
-		return [[sectionName substringToIndex:1] capitalizedString];
+		if(_sectionIndexDisplaysSingleLetter)
+		{
+			return [[sectionName substringToIndex:1] capitalizedString];
+		}
+		else
+		{
+			return sectionName;
+		}
+		
 	}
 	else
 	{
@@ -608,7 +621,14 @@
 		return [_delegate controller:controller sectionIndexTitleForSectionName:sectionName];
 	}
 	
-	return [[sectionName substringToIndex:1] capitalizedString];
+	if(_sectionIndexDisplaysSingleLetter)
+	{
+		return [[sectionName substringToIndex:1] capitalizedString];
+	}
+	else
+	{
+		return sectionName;
+	}
 }
 
 
