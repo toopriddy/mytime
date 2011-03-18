@@ -30,9 +30,16 @@
 	id item1 = nil;
 	id item2 = nil;
 	NSArray *additionalInformations;
+	NSString *key = self.key;
+#if 1
+	additionalInformations = [call1.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", key]];
+#else
+	NSString *path = self.path;
+	
 	additionalInformations = [call1.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																 propertiesToFetch:[NSArray arrayWithObject:self.path] 
-																	 withPredicate:@"call == %@ && type.name == %@", call1, self.key];
+																 propertiesToFetch:[NSArray arrayWithObject:path] 
+																	 withPredicate:@"call == %@ && type.name == %@", call1, key];
+#endif
 	for(MTAdditionalInformation *entry in additionalInformations)
 	{
 		// only interested in the first one
@@ -40,9 +47,13 @@
 		break;
 	}
 
+#if 1
+	additionalInformations = [call2.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", key]];
+#else
 	additionalInformations = [call2.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																 propertiesToFetch:[NSArray arrayWithObject:self.path] 
-																	 withPredicate:@"call == %@ && type.name == %@", call2, self.key];
+																 propertiesToFetch:[NSArray arrayWithObject:path] 
+																	 withPredicate:@"call == %@ && type.name == %@", call2, key];
+#endif
 	for(MTAdditionalInformation *entry in additionalInformations)
 	{
 		// only interested in the first one
@@ -50,7 +61,6 @@
 		break;
 	}
 	
-    //set a breakpoint here
 	id value;
 	if(self.ascending)
 		value = [item1 performSelector:self.selector withObject:item2];

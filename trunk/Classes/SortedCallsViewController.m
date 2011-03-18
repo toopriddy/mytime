@@ -141,6 +141,14 @@
 	reloadData_ = YES;
 }
 
+- (void)reloadTableFromCallChange
+{
+	if([dataSource requiresArraySorting])
+	{
+		[self reloadTableFromSourceChange];
+	}
+}
+
 - (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource 
 {
 	if ([self init]) 
@@ -162,6 +170,7 @@
 																					 action:@selector(navigationControlAdd:)] autorelease];
 			[self.navigationItem setRightBarButtonItem:button animated:NO];
 		}
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableFromCallChange) name:MTNotificationCallChanged object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableFromSourceChange) name:MTNotificationUserChanged object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableFromSourceChange) name:MTNotificationDisplayRuleChanged object:nil];
 	}
@@ -284,13 +293,14 @@
 	[super viewWillAppear:animated];
 
 	self.indexPath = nil;
+	[self updateEmptyView];
+
 	int callCount = self.fetchedResultsController.fetchedObjects.count;
 	if(callCount == 1)
 		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Call", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have (if there is a single call... this is the single version of the text)"), callCount];
 	else
 		self.footerLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%u Calls", @"This is the label that is at the bottom of the sorted calls view showing you how many calls you have  (if there is a more than one call... this is the plural version of the text)"), callCount];
 	
-	[self updateEmptyView];
 }
 
 - (void)viewDidAppear:(BOOL)animated 
@@ -547,6 +557,8 @@
 
 - (PSExtendedFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
 {
+	BOOL requiresArraySorting = [dataSource requiresArraySorting];
+		
 	NSArray *sortDescriptors = [dataSource coreDataSortDescriptors];
 	NSPredicate *filterPredicate = [dataSource predicate];
 	
@@ -619,10 +631,9 @@
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
+	[fetchRequest setSortDescriptors:sortDescriptors];
 	NSArray *arraySortDescriptors = nil;
-	if([dataSource requiresArraySorting])
+	if(requiresArraySorting)
 	{
 		arraySortDescriptors = [dataSource allSortDescriptors];
 	}
@@ -683,7 +694,9 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
 {
-	if(!coreDataHasChangeContentBug)
+	UITableView *tableView = [self tableViewForFetchedResultsController:controller];
+	PSExtendedFetchedResultsController *frc = [self fetchedResultsControllerForTableView:tableView];
+	if(!(coreDataHasChangeContentBug || frc.requiresArraySorting))
 	{
 		UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 		[tableView beginUpdates];
@@ -750,9 +763,10 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
 	UITableView *tableView = [self tableViewForFetchedResultsController:controller];
-	if(coreDataHasChangeContentBug)
+	PSExtendedFetchedResultsController *frc = [self fetchedResultsControllerForTableView:tableView];
+	if(coreDataHasChangeContentBug || frc.requiresArraySorting)
 	{
-		[tableView reloadData];
+		reloadData_ = YES;
 	}
 	else
 	{

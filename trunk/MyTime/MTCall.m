@@ -284,9 +284,13 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 	{
 		if(sorter.requiresArraySortingValue)
 		{
+#if 0
 			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
 																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
 																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
+#else
+			NSArray *additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
+#endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{
 				// only interested in the first one
@@ -313,9 +317,13 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 	{
 		if(sorter.requiresArraySortingValue)
 		{
+#if 0
 			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
+																				 propertiesToFetch:[NSArray arrayWithObject:@"number"]
 																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
+#else
+			NSArray *additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
+#endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{
 				// only interested in the first one

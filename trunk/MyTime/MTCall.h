@@ -13,6 +13,7 @@ extern NSString * const CallLocationTypeDoNotShow;
 	NSString *addressNumberAndStreet_;
 	NSString *addressCityAndState_;
 	BOOL registeredObservers_;
+	BOOL registeredCurrentDisplayRuleObserver_;
 }
 @property (readonly) NSString *addressNumber;
 @property (readonly) NSString *addressNumberAndStreet;
