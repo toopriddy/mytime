@@ -397,6 +397,7 @@
 			cellController.selectNextRowResponderIncrement = 1;
 			cellController.obtainFocus = self.obtainFocus;
 			cellController.allTextFields = self.allTextFields;
+			cellController.indentWhileEditing = NO;
 			self.obtainFocus = NO;
 			[sectionController.cellControllers addObject:cellController];
 		}
@@ -406,6 +407,7 @@
 			PSDateCellController *cellController = [[[PSDateCellController alloc] init] autorelease];
 			cellController.model = self.street;
 			cellController.modelPath = @"date";
+			cellController.indentWhileEditing = NO;
 			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 			{
 				[cellController setDateFormat:@"EEE, d/M/yyy h:mma"];
@@ -425,6 +427,7 @@
 			cellController.modelPath = @"notes";
 			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
 			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+			cellController.indentWhileEditing = NO;
 			[self addCellController:cellController toSection:sectionController];
 		}
 		

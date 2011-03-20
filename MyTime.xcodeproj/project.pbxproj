@@ -33,6 +33,7 @@
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
+		90140D5C133585B20073B2EF /* MyTime 6.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */; };
 		9015DCD312F6641800C31E1C /* PSLabelCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9015DCD212F6641800C31E1C /* PSLabelCellController.m */; };
 		9015DD2512F733CC00C31E1C /* DisplayRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 902BA98012EB5810005793DD /* DisplayRulesViewController.m */; };
 		9015DD2C12F7355A00C31E1C /* DisplayRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90306D6D12ED3158000429E9 /* DisplayRuleViewController.m */; };
@@ -319,6 +320,9 @@
 		9013137E0EA0773A0055D890 /* NumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewController.h; sourceTree = "<group>"; };
 		9013137F0EA0773A0055D890 /* NumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberViewController.m; sourceTree = "<group>"; };
 		901313810EA078780055D890 /* NumberViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberViewControllerDelegate.h; sourceTree = "<group>"; };
+		90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 6.xcdatamodel"; sourceTree = "<group>"; };
+		90140D5F1335A2180073B2EF /* FilterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTableViewController.h; sourceTree = "<group>"; };
+		90140D601335A2180073B2EF /* FilterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterTableViewController.m; sourceTree = "<group>"; };
 		9015DCC912F6616500C31E1C /* SorterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SorterViewController.h; sourceTree = "<group>"; };
 		9015DCCA12F6616500C31E1C /* SorterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SorterViewController.m; sourceTree = "<group>"; };
 		9015DCD112F6641800C31E1C /* PSLabelCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLabelCellController.h; sourceTree = "<group>"; };
@@ -1237,6 +1241,8 @@
 				90306D6D12ED3158000429E9 /* DisplayRuleViewController.m */,
 				9015DCC912F6616500C31E1C /* SorterViewController.h */,
 				9015DCCA12F6616500C31E1C /* SorterViewController.m */,
+				90140D5F1335A2180073B2EF /* FilterTableViewController.h */,
+				90140D601335A2180073B2EF /* FilterTableViewController.m */,
 				90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */,
 				90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */,
 			);
@@ -1668,6 +1674,7 @@
 				90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */,
 				905568AC132FD5AD006FBEF8 /* MyTime 5.xcdatamodel in Sources */,
 				9055695213312673006FBEF8 /* AdditionalInformationSortDescriptor.m in Sources */,
+				90140D5C133585B20073B2EF /* MyTime 6.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1970,8 +1977,9 @@
 				90306D7112ED325B000429E9 /* MyTime 3.xcdatamodel */,
 				90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */,
 				905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */,
+				90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */,
 			);
-			currentVersion = 905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */;
+			currentVersion = 90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -1220,7 +1220,7 @@
 			cellController.title = NSLocalizedString(@"Display Rules", @"In the Settings view this is the row that lets you configure all of the sorting/filter rules");
 			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:displayRulesSelectedAtIndexPath:)];
-			[sectionController.cellControllers addObject:cellController];
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		// QuickNotes

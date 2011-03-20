@@ -5,6 +5,7 @@
 
 
 @class MTSorter;
+@class MTFilter;
 @class MTUser;
 
 
@@ -65,6 +66,11 @@
 
 
 
+@property (nonatomic, retain) NSSet* filters;
+- (NSMutableSet*)filtersSet;
+
+
+
 @property (nonatomic, retain) MTUser* user;
 //- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
 
@@ -79,6 +85,11 @@
 - (void)removeSorters:(NSSet*)value_;
 - (void)addSortersObject:(MTSorter*)value_;
 - (void)removeSortersObject:(MTSorter*)value_;
+
+- (void)addFilters:(NSSet*)value_;
+- (void)removeFilters:(NSSet*)value_;
+- (void)addFiltersObject:(MTFilter*)value_;
+- (void)removeFiltersObject:(MTFilter*)value_;
 
 @end
 
@@ -121,6 +132,11 @@
 
 - (NSMutableSet*)primitiveSorters;
 - (void)setPrimitiveSorters:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveFilters;
+- (void)setPrimitiveFilters:(NSMutableSet*)value;
 
 
 
