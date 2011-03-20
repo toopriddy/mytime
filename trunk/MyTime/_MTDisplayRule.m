@@ -144,6 +144,17 @@
 }
 	
 
+@dynamic filters;
+
+	
+- (NSMutableSet*)filtersSet {
+	[self willAccessValueForKey:@"filters"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"filters"];
+	[self didAccessValueForKey:@"filters"];
+	return result;
+}
+	
+
 @dynamic user;
 
 	

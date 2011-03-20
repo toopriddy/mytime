@@ -621,6 +621,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.obtainFocus = self.obtainFocus;
 			cellController.allTextFields = self.allTextFields;
+			cellController.indentWhileEditing = NO;
 			self.obtainFocus = NO;
 			
 			[self addCellController:cellController toSection:sectionController];
@@ -638,6 +639,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.allTextFields = self.allTextFields;
+			cellController.indentWhileEditing = NO;
 
 			[self addCellController:cellController toSection:sectionController];
 		}
@@ -661,6 +663,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 				cellController.autocorrectionType = UITextAutocorrectionTypeNo;
 			}
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.indentWhileEditing = NO;
 			
 			[self addCellController:cellController toSection:sectionController];
 		}
@@ -672,6 +675,7 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.modelPath = @"notes";
 			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
 			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
+			cellController.indentWhileEditing = NO;
 			
 			[self addCellController:cellController toSection:sectionController];
 		}

@@ -644,6 +644,7 @@
 			PSTextViewCellController *cellController = [[[PSTextViewCellController alloc] init] autorelease];
 			cellController.model = self.house;
 			cellController.modelPath = @"notes";
+			cellController.indentWhileEditing = NO;
 			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
 			cellController.title = NSLocalizedString(@"Notes", @"Not At Homes notes view title");
 			[self addCellController:cellController toSection:sectionController];
