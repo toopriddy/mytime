@@ -57,6 +57,7 @@
 #import "MTTerritoryHouseAttempt.h"
 #import "MTTimeType.h"
 #import "MTTimeEntry.h"
+#import "MTFilter.h"
 #import "MetadataCustomViewController.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UIAlertViewQuitter.h"
