@@ -4,9 +4,10 @@
 #import <CoreData/CoreData.h>
 
 
+@class MTFilter;
+@class MTFilter;
 @class MTDisplayRule;
-@class MTFilter;
-@class MTFilter;
+
 
 
 
@@ -28,12 +29,6 @@
 
 
 
-@property (nonatomic, retain) NSString *predicateString;
-
-//- (BOOL)validatePredicateString:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *and;
 
 @property BOOL andValue;
@@ -41,6 +36,16 @@
 - (void)setAndValue:(BOOL)value_;
 
 //- (BOOL)validateAnd:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *type;
+
+@property short typeValue;
+- (short)typeValue;
+- (void)setTypeValue:(short)value_;
+
+//- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -60,16 +65,6 @@
 
 
 
-@property (nonatomic, retain) NSNumber *type;
-
-@property short typeValue;
-- (short)typeValue;
-- (void)setTypeValue:(short)value_;
-
-//- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *order;
 
 @property double orderValue;
@@ -86,15 +81,27 @@
 
 
 
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *operator;
 
-//- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
-
-
+//- (BOOL)validateOperator:(id*)value_ error:(NSError**)error_;
 
 
-@property (nonatomic, retain) MTDisplayRule* displayRule;
-//- (BOOL)validateDisplayRule:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *filterEntityName;
+
+//- (BOOL)validateFilterEntityName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, retain) MTFilter* parent;
+//- (BOOL)validateParent:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -103,8 +110,8 @@
 
 
 
-@property (nonatomic, retain) MTFilter* parent;
-//- (BOOL)validateParent:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) MTDisplayRule* displayRule;
+//- (BOOL)validateDisplayRule:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -123,17 +130,20 @@
 @interface _MTFilter (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitivePredicateString;
-- (void)setPrimitivePredicateString:(NSString*)value;
-
-
-
-
 - (NSNumber*)primitiveAnd;
 - (void)setPrimitiveAnd:(NSNumber*)value;
 
 - (BOOL)primitiveAndValue;
 - (void)setPrimitiveAndValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveType;
+- (void)setPrimitiveType:(NSNumber*)value;
+
+- (short)primitiveTypeValue;
+- (void)setPrimitiveTypeValue:(short)value_;
 
 
 
@@ -153,15 +163,6 @@
 
 
 
-- (NSNumber*)primitiveType;
-- (void)setPrimitiveType:(NSNumber*)value;
-
-- (short)primitiveTypeValue;
-- (void)setPrimitiveTypeValue:(short)value_;
-
-
-
-
 - (NSNumber*)primitiveOrder;
 - (void)setPrimitiveOrder:(NSNumber*)value;
 
@@ -177,15 +178,27 @@
 
 
 
-- (NSString*)primitiveTitle;
-- (void)setPrimitiveTitle:(NSString*)value;
+- (NSString*)primitiveOperator;
+- (void)setPrimitiveOperator:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveFilterEntityName;
+- (void)setPrimitiveFilterEntityName:(NSString*)value;
 
 
 
 
 
-- (MTDisplayRule*)primitiveDisplayRule;
-- (void)setPrimitiveDisplayRule:(MTDisplayRule*)value;
+- (MTFilter*)primitiveParent;
+- (void)setPrimitiveParent:(MTFilter*)value;
 
 
 
@@ -194,8 +207,8 @@
 
 
 
-- (MTFilter*)primitiveParent;
-- (void)setPrimitiveParent:(MTFilter*)value;
+- (MTDisplayRule*)primitiveDisplayRule;
+- (void)setPrimitiveDisplayRule:(MTDisplayRule*)value;
 
 
 @end

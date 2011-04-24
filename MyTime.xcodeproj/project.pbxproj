@@ -70,6 +70,7 @@
 		905222B51183EB790047C9DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 905222B41183EB790047C9DA /* MapKit.framework */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
 		9052CD6610868231001FFA13 /* NotAtHomeTerritoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */; };
+		9054EF4213632FBE0036F809 /* MyTime 7.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */; };
 		905568AC132FD5AD006FBEF8 /* MyTime 5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */; };
 		9055695213312673006FBEF8 /* AdditionalInformationSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9055695113312673006FBEF8 /* AdditionalInformationSortDescriptor.m */; };
 		90592CA012CC2FA300ECBFFF /* PSTextFieldCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90592C9F12CC2FA300ECBFFF /* PSTextFieldCellController.m */; };
@@ -392,6 +393,7 @@
 		9052CD6510868231001FFA13 /* NotAtHomeTerritoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotAtHomeTerritoryViewController.m; sourceTree = "<group>"; };
 		9053E0580E8DDD7100BA35F7 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		9053E06F0E8DDDD400BA35F7 /* Spanish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 7.xcdatamodel"; sourceTree = "<group>"; };
 		905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 5.xcdatamodel"; sourceTree = "<group>"; };
 		9055695013312673006FBEF8 /* AdditionalInformationSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdditionalInformationSortDescriptor.h; sourceTree = "<group>"; };
 		9055695113312673006FBEF8 /* AdditionalInformationSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdditionalInformationSortDescriptor.m; sourceTree = "<group>"; };
@@ -1675,6 +1677,7 @@
 				905568AC132FD5AD006FBEF8 /* MyTime 5.xcdatamodel in Sources */,
 				9055695213312673006FBEF8 /* AdditionalInformationSortDescriptor.m in Sources */,
 				90140D5C133585B20073B2EF /* MyTime 6.xcdatamodel in Sources */,
+				9054EF4213632FBE0036F809 /* MyTime 7.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1978,8 +1981,9 @@
 				90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */,
 				905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */,
 				90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */,
+				9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */,
 			);
-			currentVersion = 90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */;
+			currentVersion = 9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

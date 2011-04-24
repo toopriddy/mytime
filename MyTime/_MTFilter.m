@@ -33,12 +33,12 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"and"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"listValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"list"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"typeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"type"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"listValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"list"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"orderValue"]) {
@@ -48,13 +48,6 @@
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic predicateString;
-
-
 
 
 
@@ -79,6 +72,32 @@
 
 - (void)setPrimitiveAndValue:(BOOL)value_ {
 	[self setPrimitiveAnd:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic type;
+
+
+
+- (short)typeValue {
+	NSNumber *result = [self type];
+	return [result shortValue];
+}
+
+- (void)setTypeValue:(short)value_ {
+	[self setType:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveTypeValue {
+	NSNumber *result = [self primitiveType];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveTypeValue:(short)value_ {
+	[self setPrimitiveType:[NSNumber numberWithShort:value_]];
 }
 
 
@@ -118,32 +137,6 @@
 
 
 
-@dynamic type;
-
-
-
-- (short)typeValue {
-	NSNumber *result = [self type];
-	return [result shortValue];
-}
-
-- (void)setTypeValue:(short)value_ {
-	[self setType:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveTypeValue {
-	NSNumber *result = [self primitiveType];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveTypeValue:(short)value_ {
-	[self setPrimitiveType:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
 @dynamic order;
 
 
@@ -177,14 +170,28 @@
 
 
 
-@dynamic title;
+@dynamic operator;
 
 
 
 
 
 
-@dynamic displayRule;
+@dynamic name;
+
+
+
+
+
+
+@dynamic filterEntityName;
+
+
+
+
+
+
+@dynamic parent;
 
 	
 
@@ -199,7 +206,7 @@
 }
 	
 
-@dynamic parent;
+@dynamic displayRule;
 
 	
 
