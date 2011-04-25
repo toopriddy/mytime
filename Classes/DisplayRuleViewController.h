@@ -12,6 +12,7 @@
 #import <CoreData/CoreData.h>
 #import "MTSorter.h"
 #import "MTDisplayRule.h"
+#import "FilterTableViewController.h"
 
 @class DisplayRuleViewController;
 
@@ -25,11 +26,13 @@
 	MTDisplayRule *displayRule;
 	NSMutableSet *allTextFields;
 	BOOL obtainFocus;
+	FilterTableViewController *filterTableViewController_;
 }
 @property (nonatomic, assign) NSObject<DisplayRuleViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MTDisplayRule *displayRule;
 @property (nonatomic, retain) NSMutableSet *allTextFields;
 @property (nonatomic, retain) MTSorter *temporarySorter;
+@property (nonatomic, readonly) FilterTableViewController *filterTableViewController;
 
 - (id)initWithDisplayRule:(MTDisplayRule *)displayRule newDisplayRule:(BOOL)newDisplayRule;
 @end

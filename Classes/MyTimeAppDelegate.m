@@ -1606,8 +1606,8 @@ NSString *emailFormattedStringForSettings();
 	self.hud.progress = 1.0;
 	
 	
-	[managedObjectContext_ release];
-	managedObjectContext_ = nil;
+//	[managedObjectContext_ release];
+//	managedObjectContext_ = nil;
 
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	[fileManager removeItemAtPath:[Settings outOfWayFilename] error:nil];

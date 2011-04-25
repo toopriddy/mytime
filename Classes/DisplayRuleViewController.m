@@ -92,8 +92,20 @@
 	self.allTextFields = nil;
 	self.displayRule = nil;
 	self.temporarySorter = nil;
+	[filterTableViewController_ release];
 	
 	[super dealloc];
+}
+
+- (FilterTableViewController *)filterTableViewController
+{
+	if(filterTableViewController_ == nil)
+	{
+		filterTableViewController_ = [FilterTableViewController alloc];
+		filterTableViewController_.displayRule = self.displayRule;
+		filterTableViewController_.managedObjectContext = self.displayRule.managedObjectContext;
+	}
+	return filterTableViewController_;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -262,6 +274,8 @@
 			}
 		}
 	}
+	// Filters
+	[self.filterTableViewController constructSectionControllersForTableViewController:self];
 	
 	// Sorters
 	{

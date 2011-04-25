@@ -22,8 +22,7 @@ MTSettings *cachedSettings;
 
 	if(array == nil || [array count] == 0) 
 	{
-		settings = [NSEntityDescription insertNewObjectForEntityForName:[MTSettings entityName]
-												 inManagedObjectContext:managedObjectContext];
+		settings = [MTSettings insertInManagedObjectContext:managedObjectContext];
 		NSError *error = nil;
 		if (![managedObjectContext save:&error]) 
 		{
