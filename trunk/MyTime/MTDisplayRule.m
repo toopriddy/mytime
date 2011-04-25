@@ -225,24 +225,13 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (BOOL)requiresArraySorting
 {
-#if 0	
-	return 0 != [self.managedObjectContext countForFetchedObjectsForEntityName:[MTSorter entityName]
-																 withPredicate:@"displayRule == %@ && requiresArraySorting == YES", self];
-#else
 	return [[self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == YES", self]] count];
-#endif	
 }
 
 - (NSArray *)allSortDescriptors
 {
-#if 0	
-	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
-														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
-														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
-															  withPredicate:@"displayRule == %@", self];
-#else
 	NSArray *sorters = [[self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == NO || requiresArraySorting == nil", self]] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
-#endif	
+
 	if(sorters.count == 0)
 	{
 		// at least return something
@@ -273,14 +262,8 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (NSArray *)coreDataSortDescriptors
 {
-#if 0	
-	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
-														  propertiesToFetch:[NSArray arrayWithObjects:@"path", @"ascending", nil]
-														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]
-															  withPredicate:@"displayRule == %@ && (requiresArraySorting == NO || requiresArraySorting == nil)", self];
-#else
 	NSArray *sorters = [[self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == NO || requiresArraySorting == nil"]] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
-#endif	
+
 	if(sorters.count == 0)
 	{
 		// at least return something
@@ -299,14 +282,8 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (NSString *)sectionIndexPath
 {
-#if 0	
-	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
-														  propertiesToFetch:nil
-														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
-															  withPredicate:@"displayRule == %@", self];
-#else	
 	NSArray *sorters = [self.sorters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]];
-#endif	
+
 	if(sorters.count == 0)
 		return nil;
 
@@ -315,14 +292,8 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (MTSorter *)sectionIndexSorter
 {
-#if 0	
-	NSArray *sorters = [self.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
-														  propertiesToFetch:nil
-														withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]
-															  withPredicate:@"displayRule == %@", self];
-#else	
 	NSArray *sorters = [self.sorters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]];
-#endif
+
 	if(sorters.count == 0)
 		return nil;
 	

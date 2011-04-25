@@ -84,7 +84,6 @@
 		self.title = NSLocalizedString(@"Tutorials", @"'Tutorials' ButtonBar View text, Label for the title of the view that has all of the youtube howto videos");
 		self.tabBarItem.image = [UIImage imageNamed:@"tutorials.png"];
 		self.tableView.allowsSelection = NO;
-		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
 }
