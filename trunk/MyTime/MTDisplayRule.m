@@ -3,6 +3,7 @@
 #import "MTUser.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MTSorter.h"
+#import "MTFilter.h"
 #import "AdditionalInformationSortDescriptor.h"
 
 NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
@@ -10,6 +11,24 @@ NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleCh
 @implementation MTDisplayRule
 
 MTDisplayRule *g_currentDisplayRule;
+
++ (void)fixDisplayRules:(NSManagedObjectContext *)moc
+{
+	for(MTDisplayRule *displayRule in [moc fetchObjectsForEntityName:[MTDisplayRule entityName]
+												   propertiesToFetch:[NSArray arrayWithObject:@"order"]
+													   withPredicate:nil])
+	{
+		if(displayRule.filter == nil)
+		{
+			displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
+		}
+	}
+}
+
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+}
 
 // Custom logic goes here.
 + (MTDisplayRule *)createDisplayRuleForUser:(MTUser *)user
@@ -31,6 +50,9 @@ MTDisplayRule *g_currentDisplayRule;
 												 inManagedObjectContext:managedObjectContext];
 	displayRule.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
 	displayRule.user = user;
+
+	displayRule.filter = [MTFilter createFilterForDisplayRule:self];
+
 	return displayRule;
 }
 
@@ -140,6 +162,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 		sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:sortDescriptor.key];
 		sorter.path = sortDescriptor.key;
 		sorter.ascendingValue = sortDescriptor.ascending;
+#warning add MTFilter to this
 	}
 	return displayRule;
 }

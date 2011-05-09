@@ -66,8 +66,8 @@
 
 
 
-@property (nonatomic, retain) NSSet* filters;
-- (NSMutableSet*)filtersSet;
+@property (nonatomic, retain) MTFilter* filter;
+//- (BOOL)validateFilter:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -85,11 +85,6 @@
 - (void)removeSorters:(NSSet*)value_;
 - (void)addSortersObject:(MTSorter*)value_;
 - (void)removeSortersObject:(MTSorter*)value_;
-
-- (void)addFilters:(NSSet*)value_;
-- (void)removeFilters:(NSSet*)value_;
-- (void)addFiltersObject:(MTFilter*)value_;
-- (void)removeFiltersObject:(MTFilter*)value_;
 
 @end
 
@@ -135,8 +130,8 @@
 
 
 
-- (NSMutableSet*)primitiveFilters;
-- (void)setPrimitiveFilters:(NSMutableSet*)value;
+- (MTFilter*)primitiveFilter;
+- (void)setPrimitiveFilter:(MTFilter*)value;
 
 
 

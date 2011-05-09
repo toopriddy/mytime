@@ -102,7 +102,7 @@
 	if(filterTableViewController_ == nil)
 	{
 		filterTableViewController_ = [FilterTableViewController alloc];
-		filterTableViewController_.displayRule = self.displayRule;
+		filterTableViewController_.filter = self.displayRule.filter;
 		filterTableViewController_.managedObjectContext = self.displayRule.managedObjectContext;
 	}
 	return filterTableViewController_;
@@ -236,6 +236,7 @@
 	
 	[self retainObject:controller whileViewControllerIsManaged:controller];
 }
+
 
 - (void)constructSectionControllers
 {

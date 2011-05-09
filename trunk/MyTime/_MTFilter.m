@@ -29,20 +29,32 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"andValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"and"];
+	if ([key isEqualToString:@"diacriticSensitiveValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"diacriticSensitive"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"typeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"type"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"listValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"list"];
+	if ([key isEqualToString:@"caseSensitiveValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"caseSensitive"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"orderValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"order"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"listValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"list"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"andValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"and"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"notValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"not"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -52,26 +64,26 @@
 
 
 
-@dynamic and;
+@dynamic diacriticSensitive;
 
 
 
-- (BOOL)andValue {
-	NSNumber *result = [self and];
+- (BOOL)diacriticSensitiveValue {
+	NSNumber *result = [self diacriticSensitive];
 	return [result boolValue];
 }
 
-- (void)setAndValue:(BOOL)value_ {
-	[self setAnd:[NSNumber numberWithBool:value_]];
+- (void)setDiacriticSensitiveValue:(BOOL)value_ {
+	[self setDiacriticSensitive:[NSNumber numberWithBool:value_]];
 }
 
-- (BOOL)primitiveAndValue {
-	NSNumber *result = [self primitiveAnd];
+- (BOOL)primitiveDiacriticSensitiveValue {
+	NSNumber *result = [self primitiveDiacriticSensitive];
 	return [result boolValue];
 }
 
-- (void)setPrimitiveAndValue:(BOOL)value_ {
-	[self setPrimitiveAnd:[NSNumber numberWithBool:value_]];
+- (void)setPrimitiveDiacriticSensitiveValue:(BOOL)value_ {
+	[self setPrimitiveDiacriticSensitive:[NSNumber numberWithBool:value_]];
 }
 
 
@@ -111,26 +123,26 @@
 
 
 
-@dynamic list;
+@dynamic caseSensitive;
 
 
 
-- (BOOL)listValue {
-	NSNumber *result = [self list];
+- (BOOL)caseSensitiveValue {
+	NSNumber *result = [self caseSensitive];
 	return [result boolValue];
 }
 
-- (void)setListValue:(BOOL)value_ {
-	[self setList:[NSNumber numberWithBool:value_]];
+- (void)setCaseSensitiveValue:(BOOL)value_ {
+	[self setCaseSensitive:[NSNumber numberWithBool:value_]];
 }
 
-- (BOOL)primitiveListValue {
-	NSNumber *result = [self primitiveList];
+- (BOOL)primitiveCaseSensitiveValue {
+	NSNumber *result = [self primitiveCaseSensitive];
 	return [result boolValue];
 }
 
-- (void)setPrimitiveListValue:(BOOL)value_ {
-	[self setPrimitiveList:[NSNumber numberWithBool:value_]];
+- (void)setPrimitiveCaseSensitiveValue:(BOOL)value_ {
+	[self setPrimitiveCaseSensitive:[NSNumber numberWithBool:value_]];
 }
 
 
@@ -163,14 +175,73 @@
 
 
 
-@dynamic value;
-
-
-
-
-
-
 @dynamic operator;
+
+
+
+
+
+
+@dynamic filterEntityName;
+
+
+
+
+
+
+@dynamic list;
+
+
+
+- (BOOL)listValue {
+	NSNumber *result = [self list];
+	return [result boolValue];
+}
+
+- (void)setListValue:(BOOL)value_ {
+	[self setList:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveListValue {
+	NSNumber *result = [self primitiveList];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveListValue:(BOOL)value_ {
+	[self setPrimitiveList:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic and;
+
+
+
+- (BOOL)andValue {
+	NSNumber *result = [self and];
+	return [result boolValue];
+}
+
+- (void)setAndValue:(BOOL)value_ {
+	[self setAnd:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveAndValue {
+	NSNumber *result = [self primitiveAnd];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveAndValue:(BOOL)value_ {
+	[self setPrimitiveAnd:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic value;
 
 
 
@@ -184,8 +255,27 @@
 
 
 
-@dynamic filterEntityName;
+@dynamic not;
 
+
+
+- (BOOL)notValue {
+	NSNumber *result = [self not];
+	return [result boolValue];
+}
+
+- (void)setNotValue:(BOOL)value_ {
+	[self setNot:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveNotValue {
+	NSNumber *result = [self primitiveNot];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveNotValue:(BOOL)value_ {
+	[self setPrimitiveNot:[NSNumber numberWithBool:value_]];
+}
 
 
 

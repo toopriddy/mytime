@@ -17,6 +17,7 @@
 }
 @property (nonatomic, retain) NSString *placeholder;
 @property (nonatomic, assign) UIReturnKeyType returnKeyType;
+@property (nonatomic, assign) UIKeyboardType keyboardType;
 @property (nonatomic, assign) UITextFieldViewMode clearButtonMode;
 @property (nonatomic, assign) UITextAutocapitalizationType autocapitalizationType;
 @property (nonatomic, assign) UITextAutocorrectionType autocorrectionType;

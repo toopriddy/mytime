@@ -72,16 +72,23 @@
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSDictionary *entry = (NSDictionary *)labelCellController.userData;
-	[[self.navigationItem rightBarButtonItem] setEnabled:YES];
 	self.filter.name = [entry objectForKey:MTFilterEntryName];
+//	self.filter.filterEntityName = [entry objectForKey:MTFilterEntityName];
 	self.filter.path = [entry objectForKey:MTFilterEntryPath];
-	
+	self.filter.listValue = [entry objectForKey:MTFilterSubFilters] != nil;
+	self.filter.operator = @"";
+	self.filter.value = @"";
+
+	[[self.navigationItem rightBarButtonItem] setEnabled:YES];
+
 	if(self.selectedIndexPath)
 	{
 		[tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 	}
 	
 	self.selectedIndexPath = indexPath;
+	
+	[self navigationControlDone:nil];
 }
 
 - (void)constructSectionControllers

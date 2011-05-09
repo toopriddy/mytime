@@ -35,4 +35,6 @@ extern NSString * const MTFilterValuesTitles;
 + (MTFilter *)createFilterForFilter:(MTFilter *)parentFilter;
 + (MTFilter *)createFilterForDisplayRule:(MTDisplayRule *)displayRule;
 + (void)test:(NSManagedObjectContext *)moc;
+
+- (NSAttributeType)typeForPath;
 @end

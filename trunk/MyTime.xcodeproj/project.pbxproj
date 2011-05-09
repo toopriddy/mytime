@@ -30,6 +30,9 @@
 		9003EC4A0EE1E9070065F24D /* MetadataCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EC490EE1E9070065F24D /* MetadataCustomViewController.m */; };
 		9003EE2E0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */; };
 		90059C900F3A2112006DF536 /* PSUrlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 90059C8F0F3A2112006DF536 /* PSUrlString.m */; };
+		9007692B136A481800DA11B3 /* FilterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9007692A136A481800DA11B3 /* FilterDetailViewController.m */; };
+		9007699A136B5A1500DA11B3 /* PSSegmentedControlCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90076999136B5A1500DA11B3 /* PSSegmentedControlCellController.m */; };
+		90076A62136B9C3B00DA11B3 /* MyTime 8.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */; settings = {COMPILER_FLAGS = xmod; }; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
@@ -73,6 +76,8 @@
 		9054EF4213632FBE0036F809 /* MyTime 7.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */; };
 		9054F0B71364F4490036F809 /* FilterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90140D601335A2180073B2EF /* FilterTableViewController.m */; };
 		9054F0FB136503DD0036F809 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9054F0FA136503DD0036F809 /* FilterViewController.m */; };
+		9054F1D813688B890036F809 /* UITableViewSegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9054F1D713688B890036F809 /* UITableViewSegmentedControlCell.xib */; };
+		9054F24D13688C410036F809 /* UITableViewSegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9054F24C13688C410036F809 /* UITableViewSegmentedControlCell.m */; };
 		905568AC132FD5AD006FBEF8 /* MyTime 5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */; };
 		9055695213312673006FBEF8 /* AdditionalInformationSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9055695113312673006FBEF8 /* AdditionalInformationSortDescriptor.m */; };
 		90592CA012CC2FA300ECBFFF /* PSTextFieldCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90592C9F12CC2FA300ECBFFF /* PSTextFieldCellController.m */; };
@@ -212,6 +217,7 @@
 		90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */; };
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
+		90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
 		90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */; };
@@ -315,6 +321,11 @@
 		9003EE2D0EE3119E0065F24D /* UITableViewMultiTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMultiTextFieldCell.m; sourceTree = "<group>"; };
 		90059C8E0F3A2112006DF536 /* PSUrlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSUrlString.h; sourceTree = "<group>"; };
 		90059C8F0F3A2112006DF536 /* PSUrlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSUrlString.m; sourceTree = "<group>"; };
+		90076929136A481800DA11B3 /* FilterDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterDetailViewController.h; sourceTree = "<group>"; };
+		9007692A136A481800DA11B3 /* FilterDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterDetailViewController.m; sourceTree = "<group>"; };
+		90076998136B5A1500DA11B3 /* PSSegmentedControlCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSegmentedControlCellController.h; sourceTree = "<group>"; };
+		90076999136B5A1500DA11B3 /* PSSegmentedControlCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSegmentedControlCellController.m; sourceTree = "<group>"; };
+		90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 8.xcdatamodel"; sourceTree = "<group>"; };
 		9007C1FE0EE0657C00FE19D5 /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		900A21750F1461FF00BE1AF2 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		900FA5121064405500C246FE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
@@ -398,6 +409,9 @@
 		9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 7.xcdatamodel"; sourceTree = "<group>"; };
 		9054F0F9136503DD0036F809 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		9054F0FA136503DD0036F809 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		9054F1D713688B890036F809 /* UITableViewSegmentedControlCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UITableViewSegmentedControlCell.xib; sourceTree = "<group>"; };
+		9054F24B13688C410036F809 /* UITableViewSegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewSegmentedControlCell.h; sourceTree = "<group>"; };
+		9054F24C13688C410036F809 /* UITableViewSegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewSegmentedControlCell.m; sourceTree = "<group>"; };
 		905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 5.xcdatamodel"; sourceTree = "<group>"; };
 		9055695013312673006FBEF8 /* AdditionalInformationSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdditionalInformationSortDescriptor.h; sourceTree = "<group>"; };
 		9055695113312673006FBEF8 /* AdditionalInformationSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdditionalInformationSortDescriptor.m; sourceTree = "<group>"; };
@@ -651,6 +665,7 @@
 		90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewButtonCell.m; sourceTree = "<group>"; };
 		90EA4F35100275590046A2E4 /* whiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButton.png; sourceTree = "<group>"; };
 		90EA4F36100275590046A2E4 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
+		90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 9.xcdatamodel"; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
@@ -872,6 +887,7 @@
 				9045A8F80E7D6F86001B439C /* Localizable.strings */,
 				90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */,
 				90EA4CDB0FFEBBAC0046A2E4 /* UITableViewSwitchCell.xib */,
+				9054F1D713688B890036F809 /* UITableViewSegmentedControlCell.xib */,
 				90E2EDDE103BB5AA000C2032 /* SecurityView.xib */,
 				909125F6128C710B009551DC /* YouTubeTableViewCell.xib */,
 				90DE453B10FA4F780003D14B /* NotAtHomeHouseCell.xib */,
@@ -935,6 +951,8 @@
 				90A1C49712FB98BB008ED1C4 /* PSCheckmarkCellController.m */,
 				90A1C3FC12F9127D008ED1C4 /* PSSwitchCellController.h */,
 				90A1C3FD12F9127D008ED1C4 /* PSSwitchCellController.m */,
+				90076998136B5A1500DA11B3 /* PSSegmentedControlCellController.h */,
+				90076999136B5A1500DA11B3 /* PSSegmentedControlCellController.m */,
 				90592CCA12CC358F00ECBFFF /* PSDateCellController.h */,
 				90592CCB12CC358F00ECBFFF /* PSDateCellController.m */,
 				90592D6112CC44B700ECBFFF /* PSTextViewCellController.h */,
@@ -954,6 +972,8 @@
 				90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */,
 				90EA4CD80FFEBB8F0046A2E4 /* UITableViewSwitchCell.h */,
 				90EA4CD90FFEBB8F0046A2E4 /* UITableViewSwitchCell.m */,
+				9054F24B13688C410036F809 /* UITableViewSegmentedControlCell.h */,
+				9054F24C13688C410036F809 /* UITableViewSegmentedControlCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -1251,6 +1271,8 @@
 				90140D601335A2180073B2EF /* FilterTableViewController.m */,
 				9054F0F9136503DD0036F809 /* FilterViewController.h */,
 				9054F0FA136503DD0036F809 /* FilterViewController.m */,
+				90076929136A481800DA11B3 /* FilterDetailViewController.h */,
+				9007692A136A481800DA11B3 /* FilterDetailViewController.m */,
 				90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */,
 				90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */,
 			);
@@ -1494,6 +1516,7 @@
 				90B94DC112FD08000042BAF8 /* upSelected@2x.png in Resources */,
 				90B94DC212FD08000042BAF8 /* up@2x.png in Resources */,
 				90B94DC312FD08000042BAF8 /* down@2x.png in Resources */,
+				9054F1D813688B890036F809 /* UITableViewSegmentedControlCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,6 +1709,11 @@
 				9054EF4213632FBE0036F809 /* MyTime 7.xcdatamodel in Sources */,
 				9054F0B71364F4490036F809 /* FilterTableViewController.m in Sources */,
 				9054F0FB136503DD0036F809 /* FilterViewController.m in Sources */,
+				9054F24D13688C410036F809 /* UITableViewSegmentedControlCell.m in Sources */,
+				9007692B136A481800DA11B3 /* FilterDetailViewController.m in Sources */,
+				9007699A136B5A1500DA11B3 /* PSSegmentedControlCellController.m in Sources */,
+				90076A62136B9C3B00DA11B3 /* MyTime 8.xcdatamodel in Sources */,
+				90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1990,8 +2018,10 @@
 				905568AB132FD5AB006FBEF8 /* MyTime 5.xcdatamodel */,
 				90140D5B133585A60073B2EF /* MyTime 6.xcdatamodel */,
 				9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */,
+				90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */,
+				90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */,
 			);
-			currentVersion = 9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */;
+			currentVersion = 90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
