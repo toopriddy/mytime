@@ -12,13 +12,13 @@
 #import "PSSwitchCellController.h"
 #import "TableViewCellController.h"
 #import "GenericTableViewSectionController.h"
+#import "PSSegmentedControlCellController.h"
 #import "MTDisplayRule.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @implementation FilterTableViewController
 @synthesize filter = filter_;
-@synthesize displayRule;
 @synthesize tableViewController;
 @synthesize managedObjectContext;
 @synthesize temporaryFilter;
@@ -26,7 +26,6 @@
 - (void)dealloc 
 {
 	self.filter = nil;
-	self.displayRule = nil;
 	self.temporaryFilter = nil;
 	self.tableViewController = nil;
 	self.managedObjectContext = nil;
@@ -36,11 +35,12 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView deleteFilterAtIndexPath:(NSIndexPath *)indexPath
 {
-	MTFilter *filter = (MTFilter *)labelCellController.model;
+	MTFilter *filter = (MTFilter *)labelCellController.userData;
+	NSManagedObjectContext *moc = filter.managedObjectContext;
 	
-	[self.managedObjectContext deleteObject:filter];
+	[moc deleteObject:filter];
 	NSError *error = nil;
-	if (![self.managedObjectContext save:&error]) 
+	if (![moc save:&error]) 
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
@@ -48,15 +48,31 @@
 	[self.tableViewController deleteDisplayRowAtIndexPath:indexPath];
 }
 
-- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView modifyFilterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView editFilterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-	MTFilter *filter = (MTFilter *)labelCellController.model;
+	MTFilter *filter = (MTFilter *)labelCellController.userData;
 
-	FilterViewController *p = [[[FilterViewController alloc] initWithFilter:filter newFilter:NO] autorelease];
+	FilterDetailViewController *p = [[[FilterDetailViewController alloc] initWithFilter:filter newFilter:NO] autorelease];
+	p.selectedIndexPath = [[indexPath copy] autorelease];
+	p.filter = filter;
 	p.delegate = self;
 	[[self.tableViewController navigationController] pushViewController:p animated:YES];		
 	[self.tableViewController retainObject:labelCellController whileViewControllerIsManaged:p];
 }
+
+- (void)filterDetailViewControllerDone:(FilterDetailViewController *)viewController
+{
+	NSManagedObjectContext *moc = self.filter.managedObjectContext;
+	
+	NSError *error = nil;
+	if (![moc save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+
+	[self.tableViewController updateAndReload];
+}
+
 
 - (void)filterViewControllerDone:(FilterViewController *)viewController
 {
@@ -95,15 +111,8 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addFilterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-	if(self.displayRule)
-	{
-		self.temporaryFilter = [MTFilter createFilterForDisplayRule:self.displayRule];
-	}
-	else
-	{
-		self.temporaryFilter = [MTFilter createFilterForFilter:self.filter];
-		self.temporaryFilter.filterEntityName = self.filter.filterEntityName;
-	}
+	self.temporaryFilter = [MTFilter createFilterForFilter:self.filter];
+	self.temporaryFilter.filterEntityName = self.filter.filterEntityName;
 
 	FilterViewController *controller = [[[FilterViewController alloc] initWithFilter:self.temporaryFilter newFilter:YES] autorelease];
 	controller.delegate = self;
@@ -129,14 +138,21 @@
 {
 	self.tableViewController = genericTableViewController;
 
-#warning need to put a segment controll here
-
 	// Filters
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[genericTableViewController.sectionControllers addObject:sectionController];
 		sectionController.editingTitle = NSLocalizedString(@"Filter Rules", @"Section title for the Display Rule editing view");
 		[sectionController release];
+		
+		PSSegmentedControlCellController *cellController = [[[PSSegmentedControlCellController alloc] init] autorelease];
+		cellController.title = NSLocalizedString(@"Match", @"label name for the cell asking if you want to match all or just match one");
+		cellController.model = self.filter;
+		cellController.modelPath = @"and";
+		cellController.segmentedControlTitles = [NSArray arrayWithObjects:NSLocalizedString(@"All", @"label name for the cell asking if you want to match all or just match one"), NSLocalizedString(@"One", @"label name for the cell asking if you want to match all or just match one"), nil];
+		cellController.segmentedControlValues = [NSArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], nil];
+		cellController.editingStyle = UITableViewCellEditingStyleNone;
+		[genericTableViewController addCellController:cellController toSection:sectionController];
 		
 		NSArray *currentFilters = [self.filter.filters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
 		
@@ -145,8 +161,9 @@
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.title = filter.title;
 			cellController.editingStyle = UITableViewCellEditingStyleDelete;
+			cellController.userData = filter;
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:editFilterFromSelectionAtIndexPath:)];
-			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteFilterFromSelectionAtIndexPath:)];
+			[cellController setDeleteTarget:self action:@selector(labelCellController:tableView:deleteFilterAtIndexPath:)];
 			[genericTableViewController addCellController:cellController toSection:sectionController];
 		}
 		

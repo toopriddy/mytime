@@ -2135,6 +2135,9 @@ NSString *emailFormattedStringForSettings();
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+	[MTDisplayRule fixDisplayRules:self.managedObjectContext];
+
+	
 	// Create a tabbar controller and an array to contain the view controllers
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];

@@ -18,6 +18,9 @@
 
 
 
+
+
+
 @interface MTFilterID : NSManagedObjectID {}
 @end
 
@@ -29,13 +32,13 @@
 
 
 
-@property (nonatomic, retain) NSNumber *and;
+@property (nonatomic, retain) NSNumber *diacriticSensitive;
 
-@property BOOL andValue;
-- (BOOL)andValue;
-- (void)setAndValue:(BOOL)value_;
+@property BOOL diacriticSensitiveValue;
+- (BOOL)diacriticSensitiveValue;
+- (void)setDiacriticSensitiveValue:(BOOL)value_;
 
-//- (BOOL)validateAnd:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateDiacriticSensitive:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -55,13 +58,13 @@
 
 
 
-@property (nonatomic, retain) NSNumber *list;
+@property (nonatomic, retain) NSNumber *caseSensitive;
 
-@property BOOL listValue;
-- (BOOL)listValue;
-- (void)setListValue:(BOOL)value_;
+@property BOOL caseSensitiveValue;
+- (BOOL)caseSensitiveValue;
+- (void)setCaseSensitiveValue:(BOOL)value_;
 
-//- (BOOL)validateList:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCaseSensitive:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -75,15 +78,41 @@
 
 
 
-@property (nonatomic, retain) NSString *value;
-
-//- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *operator;
 
 //- (BOOL)validateOperator:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *filterEntityName;
+
+//- (BOOL)validateFilterEntityName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *list;
+
+@property BOOL listValue;
+- (BOOL)listValue;
+- (void)setListValue:(BOOL)value_;
+
+//- (BOOL)validateList:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *and;
+
+@property BOOL andValue;
+- (BOOL)andValue;
+- (void)setAndValue:(BOOL)value_;
+
+//- (BOOL)validateAnd:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *value;
+
+//- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -93,9 +122,13 @@
 
 
 
-@property (nonatomic, retain) NSString *filterEntityName;
+@property (nonatomic, retain) NSNumber *not;
 
-//- (BOOL)validateFilterEntityName:(id*)value_ error:(NSError**)error_;
+@property BOOL notValue;
+- (BOOL)notValue;
+- (void)setNotValue:(BOOL)value_;
+
+//- (BOOL)validateNot:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -130,11 +163,11 @@
 @interface _MTFilter (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveAnd;
-- (void)setPrimitiveAnd:(NSNumber*)value;
+- (NSNumber*)primitiveDiacriticSensitive;
+- (void)setPrimitiveDiacriticSensitive:(NSNumber*)value;
 
-- (BOOL)primitiveAndValue;
-- (void)setPrimitiveAndValue:(BOOL)value_;
+- (BOOL)primitiveDiacriticSensitiveValue;
+- (void)setPrimitiveDiacriticSensitiveValue:(BOOL)value_;
 
 
 
@@ -154,11 +187,11 @@
 
 
 
-- (NSNumber*)primitiveList;
-- (void)setPrimitiveList:(NSNumber*)value;
+- (NSNumber*)primitiveCaseSensitive;
+- (void)setPrimitiveCaseSensitive:(NSNumber*)value;
 
-- (BOOL)primitiveListValue;
-- (void)setPrimitiveListValue:(BOOL)value_;
+- (BOOL)primitiveCaseSensitiveValue;
+- (void)setPrimitiveCaseSensitiveValue:(BOOL)value_;
 
 
 
@@ -172,14 +205,38 @@
 
 
 
-- (NSString*)primitiveValue;
-- (void)setPrimitiveValue:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveOperator;
 - (void)setPrimitiveOperator:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveFilterEntityName;
+- (void)setPrimitiveFilterEntityName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveList;
+- (void)setPrimitiveList:(NSNumber*)value;
+
+- (BOOL)primitiveListValue;
+- (void)setPrimitiveListValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveAnd;
+- (void)setPrimitiveAnd:(NSNumber*)value;
+
+- (BOOL)primitiveAndValue;
+- (void)setPrimitiveAndValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveValue;
+- (void)setPrimitiveValue:(NSString*)value;
 
 
 
@@ -190,8 +247,11 @@
 
 
 
-- (NSString*)primitiveFilterEntityName;
-- (void)setPrimitiveFilterEntityName:(NSString*)value;
+- (NSNumber*)primitiveNot;
+- (void)setPrimitiveNot:(NSNumber*)value;
+
+- (BOOL)primitiveNotValue;
+- (void)setPrimitiveNotValue:(BOOL)value_;
 
 
 

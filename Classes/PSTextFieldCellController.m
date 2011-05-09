@@ -16,6 +16,7 @@
 @synthesize textField;
 @synthesize placeholder;
 @synthesize returnKeyType;
+@synthesize keyboardType;
 @synthesize clearButtonMode;
 @synthesize autocapitalizationType;
 @synthesize obtainFocus;

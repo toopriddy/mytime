@@ -10,8 +10,9 @@
 #import "MTFilter.h"
 #import "GenericTableViewController.h"
 #import "FilterViewController.h"
+#import "FilterDetailViewController.h"
 
-@interface FilterTableViewController : NSObject <FilterViewControllerDelegate>
+@interface FilterTableViewController : NSObject <FilterViewControllerDelegate, FilterDetailViewControllerDelegate>
 {
 	MTFilter *filter_;
 	
@@ -19,7 +20,6 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) GenericTableViewController *tableViewController;
 @property (nonatomic, retain) MTFilter *filter;
-@property (nonatomic, retain) MTDisplayRule *displayRule;
 @property (nonatomic, retain) MTFilter *temporaryFilter;
 
 - (void)constructSectionControllersForTableViewController:(GenericTableViewController *)genericTableViewController;

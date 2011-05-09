@@ -27,23 +27,15 @@ NSString *translate(NSString *value)
 // Custom logic goes here.
 
 + (MTFilter *)createFilterForDisplayRule:(MTDisplayRule *)displayRule
-{
-	// first find the highefilterst ordering index
-	double order = 0;
-	
-	for(MTFilter *filter in displayRule.filters)
-	{
-		double filterOrder = filter.orderValue;
-		if (filterOrder > order)
-			order = filterOrder;
-	}
-	
-	
+{	
 	MTFilter *filter = [NSEntityDescription insertNewObjectForEntityForName:[MTFilter entityName]
 													 inManagedObjectContext:displayRule.managedObjectContext];
-	filter.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
+	filter.orderValue = 0; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
 	filter.displayRule = displayRule;
 	filter.filterEntityName = [MTCall entityName];
+	filter.listValue = YES;
+	filter.andValue = YES;
+
 	return filter;
 }
 
@@ -221,11 +213,56 @@ NSString *translate(NSString *value)
 	return nil;
 }
 
+- (NSAttributeType)typeForPath:(NSString *)path entity:(NSEntityDescription *)entity
+{
+	NSDictionary *attributesByName = [entity attributesByName];
+	NSDictionary *relationshipsByName = [entity relationshipsByName];
+	NSArray *keys = [path componentsSeparatedByString:@"."];
+	NSString *key = path;
+	if(keys == nil || keys.count == 0)
+	{
+		key = path;
+	}
+	else
+	{
+		key = [keys objectAtIndex:0];
+	}
+	
+	for (NSString *relationshipName in [relationshipsByName allKeys]) 
+	{
+		if([relationshipName isEqualToString:key])
+		{
+			NSArray *tempPath = [keys objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1 , [keys count] - 1)]];
+			NSRelationshipDescription *relationshipDescription = [relationshipsByName objectForKey:relationshipName];
+			return [self typeForPath:[tempPath componentsJoinedByString:@"."] entity:[relationshipDescription destinationEntity]];
+		}
+	}
+	
+	for (NSString *attributeName in [attributesByName allKeys]) 
+	{
+		NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
+		// if this is a string then add quotes to the value.
+		if([attributeName isEqualToString:key])
+		{
+			return [attributeDescription attributeType];
+		}
+	}
+	assert(false);
+	return -1;
+}
+
+- (NSAttributeType)typeForPath
+{
+	NSEntityDescription *entity = [NSEntityDescription entityForName:self.filterEntityName inManagedObjectContext:self.managedObjectContext];
+	return [self typeForPath:self.path entity:entity];
+}
+
+
 - (NSString *)title 
 {
 	if(self.listValue)
 	{
-		return self.title;
+		return self.name;
 	}
 	else
 	{

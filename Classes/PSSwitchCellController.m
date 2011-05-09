@@ -17,7 +17,7 @@
 	UITableViewSwitchCell *cell = (UITableViewSwitchCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
 	if(cell == nil)
 	{
-		UIViewController *controller = [[[UIViewController alloc] initWithNibName:@"UITableViewSwitchCell" bundle:nil] autorelease];
+		UIViewController *controller = [[[UIViewController alloc] initWithNibName:identifier bundle:nil] autorelease];
 		cell = (UITableViewSwitchCell *)controller.view;
 	}
 	cell.otherTextLabel.text = self.title;
