@@ -122,6 +122,8 @@
 		90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */; };
 		90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */; };
 		90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */; };
+		90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */; };
+		90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */; };
 		90B61A4C1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */; };
 		90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */; };
 		90B94D8B12FBACE80042BAF8 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B94D8A12FBACE80042BAF8 /* up.png */; };
@@ -488,6 +490,8 @@
 		90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationPickerViewController.m; sourceTree = "<group>"; };
 		90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPositionMapViewController.m; path = Classes/SelectPositionMapViewController.m; sourceTree = SOURCE_ROOT; };
 		90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPositionMapViewController.h; path = Classes/SelectPositionMapViewController.h; sourceTree = SOURCE_ROOT; };
+		90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 10.xcdatamodel"; sourceTree = "<group>"; };
+		90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 11.xcdatamodel"; sourceTree = "<group>"; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B5B6260F6F1E9800354889 /* Greek */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Greek; path = Greek.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSExtendedFetchedResultsController.h; sourceTree = "<group>"; };
@@ -1714,6 +1718,8 @@
 				9007699A136B5A1500DA11B3 /* PSSegmentedControlCellController.m in Sources */,
 				90076A62136B9C3B00DA11B3 /* MyTime 8.xcdatamodel in Sources */,
 				90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */,
+				90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */,
+				90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2020,8 +2026,10 @@
 				9054EF4113632FBB0036F809 /* MyTime 7.xcdatamodel */,
 				90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */,
 				90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */,
+				90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */,
+				90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */,
 			);
-			currentVersion = 90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */;
+			currentVersion = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

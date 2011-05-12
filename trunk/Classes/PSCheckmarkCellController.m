@@ -11,6 +11,55 @@
 
 @implementation PSCheckmarkCellController
 @synthesize checkedValue;
+@synthesize cachedTableView;
+@synthesize cachedIndexPath;
+
+- (void)dealloc
+{
+	self.cachedTableView = nil;
+	self.cachedIndexPath = nil;
+	
+	// remove old observed object/path
+	if(self.model && [self.modelPath length])
+	{
+		[self.model removeObserver:self forKeyPath:self.modelPath];
+	}
+
+	[super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	[self.cachedTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.cachedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setModel:(NSObject *)model
+{
+	// remove old observed object/path
+	if(self.model && [self.modelPath length])
+	{
+		[self.model removeObserver:self forKeyPath:self.modelPath];
+	}
+	[super setModel:model];
+	if(self.model && [self.modelPath length])
+	{
+		[self.model addObserver:self forKeyPath:self.modelPath options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	}
+}
+
+- (void)setModelPath:(NSString *)path
+{
+	// remove old observed object/path
+	if(self.model && [self.modelPath length])
+	{
+		[self.model removeObserver:self forKeyPath:self.modelPath];
+	}
+	[super setModelPath:path];
+	if(self.model != nil && [self.modelPath length])
+	{
+		[self.model addObserver:self forKeyPath:self.modelPath options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+	}
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -20,7 +69,9 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier] autorelease];
 	}
-	
+
+	self.cachedTableView = tableView;
+	self.cachedIndexPath = indexPath;
 	cell.textLabel.text = self.title;
 	if([self.checkedValue isEqual:[self.model valueForKeyPath:self.modelPath]])
 	{

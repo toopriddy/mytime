@@ -14,4 +14,7 @@
 {
 }
 @property (nonatomic, retain) NSObject *checkedValue;
+@property (nonatomic, retain) UITableView *cachedTableView;
+@property (nonatomic, retain) NSIndexPath *cachedIndexPath;
+
 @end

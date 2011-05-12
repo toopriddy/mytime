@@ -29,20 +29,20 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"diacriticSensitiveValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"diacriticSensitive"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"typeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"type"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"caseSensitiveValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"caseSensitive"];
+	if ([key isEqualToString:@"diacriticInsensitiveValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"diacriticInsensitive"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"orderValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"order"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"caseInsensitiveValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"caseInsensitive"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"listValue"]) {
@@ -64,27 +64,8 @@
 
 
 
-@dynamic diacriticSensitive;
+@dynamic filterEntityName;
 
-
-
-- (BOOL)diacriticSensitiveValue {
-	NSNumber *result = [self diacriticSensitive];
-	return [result boolValue];
-}
-
-- (void)setDiacriticSensitiveValue:(BOOL)value_ {
-	[self setDiacriticSensitive:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveDiacriticSensitiveValue {
-	NSNumber *result = [self primitiveDiacriticSensitive];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveDiacriticSensitiveValue:(BOOL)value_ {
-	[self setPrimitiveDiacriticSensitive:[NSNumber numberWithBool:value_]];
-}
 
 
 
@@ -123,26 +104,26 @@
 
 
 
-@dynamic caseSensitive;
+@dynamic diacriticInsensitive;
 
 
 
-- (BOOL)caseSensitiveValue {
-	NSNumber *result = [self caseSensitive];
+- (BOOL)diacriticInsensitiveValue {
+	NSNumber *result = [self diacriticInsensitive];
 	return [result boolValue];
 }
 
-- (void)setCaseSensitiveValue:(BOOL)value_ {
-	[self setCaseSensitive:[NSNumber numberWithBool:value_]];
+- (void)setDiacriticInsensitiveValue:(BOOL)value_ {
+	[self setDiacriticInsensitive:[NSNumber numberWithBool:value_]];
 }
 
-- (BOOL)primitiveCaseSensitiveValue {
-	NSNumber *result = [self primitiveCaseSensitive];
+- (BOOL)primitiveDiacriticInsensitiveValue {
+	NSNumber *result = [self primitiveDiacriticInsensitive];
 	return [result boolValue];
 }
 
-- (void)setPrimitiveCaseSensitiveValue:(BOOL)value_ {
-	[self setPrimitiveCaseSensitive:[NSNumber numberWithBool:value_]];
+- (void)setPrimitiveDiacriticInsensitiveValue:(BOOL)value_ {
+	[self setPrimitiveDiacriticInsensitive:[NSNumber numberWithBool:value_]];
 }
 
 
@@ -182,8 +163,27 @@
 
 
 
-@dynamic filterEntityName;
+@dynamic caseInsensitive;
 
+
+
+- (BOOL)caseInsensitiveValue {
+	NSNumber *result = [self caseInsensitive];
+	return [result boolValue];
+}
+
+- (void)setCaseInsensitiveValue:(BOOL)value_ {
+	[self setCaseInsensitive:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveCaseInsensitiveValue {
+	NSNumber *result = [self primitiveCaseInsensitive];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveCaseInsensitiveValue:(BOOL)value_ {
+	[self setPrimitiveCaseInsensitive:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -242,6 +242,13 @@
 
 
 @dynamic value;
+
+
+
+
+
+
+@dynamic untranslatedValueTitle;
 
 
 
