@@ -21,6 +21,7 @@
 
 
 
+
 @interface MTFilterID : NSManagedObjectID {}
 @end
 
@@ -32,13 +33,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *diacriticSensitive;
+@property (nonatomic, retain) NSString *filterEntityName;
 
-@property BOOL diacriticSensitiveValue;
-- (BOOL)diacriticSensitiveValue;
-- (void)setDiacriticSensitiveValue:(BOOL)value_;
-
-//- (BOOL)validateDiacriticSensitive:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateFilterEntityName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -58,13 +55,13 @@
 
 
 
-@property (nonatomic, retain) NSNumber *caseSensitive;
+@property (nonatomic, retain) NSNumber *diacriticInsensitive;
 
-@property BOOL caseSensitiveValue;
-- (BOOL)caseSensitiveValue;
-- (void)setCaseSensitiveValue:(BOOL)value_;
+@property BOOL diacriticInsensitiveValue;
+- (BOOL)diacriticInsensitiveValue;
+- (void)setDiacriticInsensitiveValue:(BOOL)value_;
 
-//- (BOOL)validateCaseSensitive:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateDiacriticInsensitive:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -84,9 +81,13 @@
 
 
 
-@property (nonatomic, retain) NSString *filterEntityName;
+@property (nonatomic, retain) NSNumber *caseInsensitive;
 
-//- (BOOL)validateFilterEntityName:(id*)value_ error:(NSError**)error_;
+@property BOOL caseInsensitiveValue;
+- (BOOL)caseInsensitiveValue;
+- (void)setCaseInsensitiveValue:(BOOL)value_;
+
+//- (BOOL)validateCaseInsensitive:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -113,6 +114,12 @@
 @property (nonatomic, retain) NSString *value;
 
 //- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *untranslatedValueTitle;
+
+//- (BOOL)validateUntranslatedValueTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -163,11 +170,8 @@
 @interface _MTFilter (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveDiacriticSensitive;
-- (void)setPrimitiveDiacriticSensitive:(NSNumber*)value;
-
-- (BOOL)primitiveDiacriticSensitiveValue;
-- (void)setPrimitiveDiacriticSensitiveValue:(BOOL)value_;
+- (NSString*)primitiveFilterEntityName;
+- (void)setPrimitiveFilterEntityName:(NSString*)value;
 
 
 
@@ -187,11 +191,11 @@
 
 
 
-- (NSNumber*)primitiveCaseSensitive;
-- (void)setPrimitiveCaseSensitive:(NSNumber*)value;
+- (NSNumber*)primitiveDiacriticInsensitive;
+- (void)setPrimitiveDiacriticInsensitive:(NSNumber*)value;
 
-- (BOOL)primitiveCaseSensitiveValue;
-- (void)setPrimitiveCaseSensitiveValue:(BOOL)value_;
+- (BOOL)primitiveDiacriticInsensitiveValue;
+- (void)setPrimitiveDiacriticInsensitiveValue:(BOOL)value_;
 
 
 
@@ -211,8 +215,11 @@
 
 
 
-- (NSString*)primitiveFilterEntityName;
-- (void)setPrimitiveFilterEntityName:(NSString*)value;
+- (NSNumber*)primitiveCaseInsensitive;
+- (void)setPrimitiveCaseInsensitive:(NSNumber*)value;
+
+- (BOOL)primitiveCaseInsensitiveValue;
+- (void)setPrimitiveCaseInsensitiveValue:(BOOL)value_;
 
 
 
@@ -237,6 +244,12 @@
 
 - (NSString*)primitiveValue;
 - (void)setPrimitiveValue:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveUntranslatedValueTitle;
+- (void)setPrimitiveUntranslatedValueTitle:(NSString*)value;
 
 
 

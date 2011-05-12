@@ -266,7 +266,36 @@ NSString *translate(NSString *value)
 	}
 	else
 	{
-		return [NSString stringWithFormat:@"%@ %@ %@", self.name, self.operator, self.value];
+		NSString *valueTitle = self.untranslatedValueTitle;
+		if(valueTitle)
+		{
+			valueTitle = [[PSLocalization localizationBundle] localizedStringForKey:valueTitle value:valueTitle table:@""];
+		}
+		else
+		{
+			valueTitle = self.value;
+		}
+		NSString *caseFlags = @"";
+		if(self.caseInsensitiveValue && self.diacriticInsensitiveValue)
+		{
+			caseFlags = @"[cd]";
+		}
+		else if(self.diacriticInsensitiveValue)
+		{
+			caseFlags = @"[d]";
+		}
+		else if(self.caseInsensitiveValue)
+		{
+			caseFlags = @"[c]";
+		}
+		if(self.notValue)
+		{
+			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", self.name, self.operator, caseFlags, valueTitle];
+		}
+		else
+		{
+			return [NSString stringWithFormat:@"%@ %@%@ %@", self.name, self.operator, caseFlags, valueTitle];
+		}
 	}
 }
 
