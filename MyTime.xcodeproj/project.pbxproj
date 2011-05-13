@@ -124,6 +124,7 @@
 		90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */; };
 		90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */; };
 		90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */; };
+		90AE3053137C89F4002B95DB /* MyTime 12.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */; };
 		90B61A4C1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */; };
 		90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */; };
 		90B94D8B12FBACE80042BAF8 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B94D8A12FBACE80042BAF8 /* up.png */; };
@@ -492,6 +493,7 @@
 		90ADA9D50F195EB000C65E40 /* SelectPositionMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPositionMapViewController.h; path = Classes/SelectPositionMapViewController.h; sourceTree = SOURCE_ROOT; };
 		90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 10.xcdatamodel"; sourceTree = "<group>"; };
 		90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 11.xcdatamodel"; sourceTree = "<group>"; };
+		90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 12.xcdatamodel"; sourceTree = "<group>"; };
 		90AEB40D0E9C218A00943E6A /* Japanese */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B5B6260F6F1E9800354889 /* Greek */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Greek; path = Greek.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSExtendedFetchedResultsController.h; sourceTree = "<group>"; };
@@ -1720,6 +1722,7 @@
 				90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */,
 				90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */,
 				90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */,
+				90AE3053137C89F4002B95DB /* MyTime 12.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2028,8 +2031,9 @@
 				90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */,
 				90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */,
 				90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */,
+				90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */,
 			);
-			currentVersion = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */;
+			currentVersion = 90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

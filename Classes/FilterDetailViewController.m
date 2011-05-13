@@ -152,7 +152,7 @@
 		{
 			for(NSDictionary *entry in [group objectForKey:MTFilterGroupArray])
 			{
-				if([[entry objectForKey:MTFilterEntryPath] isEqualToString:self.filter.path])
+				if([[entry objectForKey:MTFilterPath] isEqualToString:self.filter.path])
 				{
 					foundEntry = entry;
 					break;
@@ -162,7 +162,7 @@
 #warning make sure you set the selectedIndexPath		
 		if(foundEntry)
 		{
-			self.title = self.filter.name;
+			self.title = [[PSLocalization localizationBundle] localizedStringForKey:self.filter.untranslatedName value:self.filter.untranslatedName table:@""];
 			NSArray *filterValues = [foundEntry objectForKey:MTFilterValues];
 			if(filterValues)
 			{
@@ -173,7 +173,7 @@
 				[sectionController release];
 				
 				int i = 0; 
-				NSArray *filterValuesTitles = [foundEntry objectForKey:MTFilterValuesTitles];
+				NSArray *filterValuesTitles = [foundEntry objectForKey:MTFilterValuesUntranslatedTitles];
 				for(NSString *value in filterValues)
 				{
 					PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
@@ -379,6 +379,7 @@
 								cellController.title = NSLocalizedString(@"Case Insensitive", @"Title for switch in the filter view to have the strings be compared in a case sensitive manor");
 								cellController.model = self.filter;
 								cellController.modelPath = @"caseInsensitive";
+								cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 								[self addCellController:cellController toSection:sectionController];
 							}
 							{
@@ -386,6 +387,7 @@
 								cellController.title = NSLocalizedString(@"Diacritic Insensitive", @"Title for switch in the filter view to have the strings be compared in a diacritic sensitive manor");
 								cellController.model = self.filter;
 								cellController.modelPath = @"diacriticInsensitive";
+								cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 								[self addCellController:cellController toSection:sectionController];
 							}
 						}
@@ -397,11 +399,19 @@
 						[self.sectionControllers addObject:sectionController];
 						[sectionController release];
 						
+						if([self.filter.operator length] == 0)
+						{
+							self.filter.operator = @"==";
+							self.filter.value = @"NO";
+						}
+						
 						{
 							PSSwitchCellController *cellController = [[[PSSwitchCellController alloc] init] autorelease];
-							cellController.title = NSLocalizedString(@"Match With", @"Title for switch in the filter view to match the switch value");
+							cellController.title = [[PSLocalization localizationBundle] localizedStringForKey:self.filter.untranslatedName value:self.filter.untranslatedName table:nil];
 							cellController.model = self.filter;
-							cellController.modelPath = @"caseSensitive";
+							cellController.modelPath = @"value";
+							cellController.modelValueIsString = YES;
+							cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 							[self addCellController:cellController toSection:sectionController];
 						}
 						break;
@@ -499,6 +509,7 @@
 				cellController.title = NSLocalizedString(@"Invert Logic", @"Title for switch in the filter view to change the logical result of the filter to the logical alternate value TRUE->FALSE or FALSE->TRUE");
 				cellController.model = self.filter;
 				cellController.modelPath = @"not";
+				cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 				[self addCellController:cellController toSection:sectionController];
 			}
 			

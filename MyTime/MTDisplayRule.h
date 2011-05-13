@@ -13,7 +13,6 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc;
 
-
 - (NSArray *)allSortDescriptors;
 - (NSArray *)coreDataSortDescriptors;
 - (NSString *)sectionIndexPath;

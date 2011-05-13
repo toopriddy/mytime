@@ -3,13 +3,13 @@
 extern NSString * const MTFilterGroupName;
 extern NSString * const MTFilterGroupArray;
 
-extern NSString * const MTFilterEntryName;
+extern NSString * const MTFilterUntranslatedName;
 extern NSString * const MTFilterEntityName;
-extern NSString * const MTFilterEntryPath;
-extern NSString * const MTFilterEntrySectionIndexPath;
+extern NSString * const MTFilterPath;
+extern NSString * const MTFilterSectionIndexPath;
 extern NSString * const MTFilterSubFilters;
 extern NSString * const MTFilterValues;
-extern NSString * const MTFilterValuesTitles;
+extern NSString * const MTFilterValuesUntranslatedTitles;
 
 
 

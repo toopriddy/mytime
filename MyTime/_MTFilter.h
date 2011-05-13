@@ -123,9 +123,9 @@
 
 
 
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *untranslatedName;
 
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateUntranslatedName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -254,8 +254,8 @@
 
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSString*)primitiveUntranslatedName;
+- (void)setPrimitiveUntranslatedName:(NSString*)value;
 
 
 

@@ -10,6 +10,7 @@
 
 
 @implementation PSSwitchCellController
+@synthesize modelValueIsString;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -23,13 +24,22 @@
 	cell.otherTextLabel.text = self.title;
 	cell.booleanSwitch.on = [[self.model valueForKeyPath:self.modelPath] boolValue];
 	cell.delegate = self;
+	cell.selectionStyle = self.selectionStyle;
 	
 	return cell;
 }
 
 - (void)uiTableViewSwitchCellChanged:(UITableViewSwitchCell *)uiTableViewSwitchCell;
 {
-	[self.model setValue:[NSNumber numberWithBool:uiTableViewSwitchCell.booleanSwitch.on] forKey:self.modelPath];
+	if(self.modelValueIsString)
+	{
+		[self.model setValue:(uiTableViewSwitchCell.booleanSwitch.on ? @"YES" : @"NO") forKey:self.modelPath];
+	}
+	else
+	{
+		[self.model setValue:[NSNumber numberWithBool:uiTableViewSwitchCell.booleanSwitch.on] forKey:self.modelPath];
+	}
+
 }
 
 @end

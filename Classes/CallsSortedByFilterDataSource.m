@@ -70,6 +70,12 @@
 	return nil;
 }
 
+- (NSPredicate *)predicate
+{
+	return [[[MTDisplayRule currentDisplayRule] filter] predicate];
+}
+
+
 - (NSString *)sectionNameKeyPath
 {
 	return [[MTDisplayRule currentDisplayRule] sectionIndexPath];

@@ -13,5 +13,5 @@
 @interface PSSwitchCellController : PSBaseCellController<UITableViewSwitchCellDelegate>
 {
 }
-
+@property (nonatomic, assign) BOOL modelValueIsString;
 @end
