@@ -974,7 +974,19 @@
 					case PHONE:
 						if(value)
 						{
-							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", value]]];
+							// remove invalid characters and formatting before calling
+							unichar one;
+							NSMutableString *parsedValue = [NSMutableString string];
+							int length = [value length];
+							for(int i = 0; i < length; i++)
+							{
+								one = [value characterAtIndex:i];
+								if(isdigit(one) || one == '+' || one == ',' || one == '*')
+								{
+									[parsedValue appendFormat:@"%c", one];
+								}
+							}
+							[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", parsedValue]]];
 							[tableView deselectRowAtIndexPath:indexPath animated:YES];
 						}
 						break;

@@ -1,20 +1,23 @@
 #import "MTFilter.h"
 #import "MTDisplayRule.h"
 #import "MTCall.h"
+#import "MTUser.h"
 #import "MTReturnVisit.h"
 #import "PSLocalization.h"
+
+#define AlternateLocalizedString(key, comment) (key)
 
 NSString * const MTFilterGroupName = @"group";
 NSString * const MTFilterGroupArray = @"array";
 
-NSString * const MTFilterEntryName = @"title";
+NSString * const MTFilterUntranslatedName = @"title";
 NSString * const MTFilterEntityName = @"entityName";
-NSString * const MTFilterEntryPath = @"path";
-NSString * const MTFilterEntrySectionIndexPath = @"sectionIndexPath";
+NSString * const MTFilterPath = @"path";
+NSString * const MTFilterSectionIndexPath = @"sectionIndexPath";
 NSString * const MTFilterSubFilters = @"filters";
 NSString * const MTFilterType = @"type";
 NSString * const MTFilterValues = @"values";
-NSString * const MTFilterValuesTitles = @"valueTitles";
+NSString * const MTFilterValuesUntranslatedTitles = @"valueTitles";
 
 NSString *translate(NSString *value)
 {
@@ -67,9 +70,9 @@ NSString *translate(NSString *value)
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Return Visit", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"type", MTFilterEntryPath, NSLocalizedString(@"Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, [NSArray arrayWithObjects:CallReturnVisitTypeInitialVisit, CallReturnVisitTypeReturnVisit, CallReturnVisitTypeStudy, CallReturnVisitTypeNotAtHome, CallReturnVisitTypeTransferedStudy, CallReturnVisitTypeTransferedNotAtHome, CallReturnVisitTypeTransferedInitialVisit, CallReturnVisitTypeTransferedReturnVisit, nil], MTFilterValues, [NSArray arrayWithObjects:translate(CallReturnVisitTypeInitialVisit), translate(CallReturnVisitTypeReturnVisit), translate(CallReturnVisitTypeStudy), translate(CallReturnVisitTypeNotAtHome), translate(CallReturnVisitTypeTransferedStudy), translate(CallReturnVisitTypeTransferedNotAtHome), translate(CallReturnVisitTypeTransferedInitialVisit), translate(CallReturnVisitTypeTransferedReturnVisit), nil], MTFilterValuesTitles, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"date", MTFilterEntryPath, NSLocalizedString(@"Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"notes", MTFilterEntryPath, NSLocalizedString(@"Notes", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"type", MTFilterPath, AlternateLocalizedString(@"Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [NSArray arrayWithObjects:CallReturnVisitTypeInitialVisit, CallReturnVisitTypeReturnVisit, CallReturnVisitTypeStudy, CallReturnVisitTypeNotAtHome, CallReturnVisitTypeTransferedStudy, CallReturnVisitTypeTransferedNotAtHome, CallReturnVisitTypeTransferedInitialVisit, CallReturnVisitTypeTransferedReturnVisit, nil], MTFilterValues, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"date", MTFilterPath, AlternateLocalizedString(@"Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"notes", MTFilterPath, AlternateLocalizedString(@"Notes", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
 	 nil];
 	
@@ -84,23 +87,25 @@ NSString *translate(NSString *value)
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Call", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"name", MTFilterEntryPath, @"uppercaseFirstLetterOfName", MTFilterEntrySectionIndexPath, NSLocalizedString(@"Name", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationLookupType", MTFilterEntryPath, NSLocalizedString(@"Location Lookup Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, [NSArray arrayWithObjects:CallLocationTypeGoogleMaps, CallLocationTypeManual, CallLocationTypeDoNotShow, nil], MTFilterValues, [NSArray arrayWithObjects:translate(CallLocationTypeGoogleMaps), translate(CallLocationTypeManual), translate(CallLocationTypeDoNotShow), nil], MTFilterValuesTitles, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"name", MTFilterPath, @"uppercaseFirstLetterOfName", MTFilterSectionIndexPath, AlternateLocalizedString(@"Name", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationLookupType", MTFilterPath, AlternateLocalizedString(@"Location Lookup Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [NSArray arrayWithObjects:CallLocationTypeGoogleMaps, CallLocationTypeManual, CallLocationTypeDoNotShow, nil], MTFilterValues, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"deletedCall", MTFilterPath, AlternateLocalizedString(@"Deleted", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationAcquired", MTFilterPath, AlternateLocalizedString(@"Location Acquired", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Address", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"houseNumber", MTFilterEntryPath, @"houseNumber", MTFilterEntrySectionIndexPath, NSLocalizedString(@"House Number", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"apartmentNumber", MTFilterEntryPath, @"apartmentNumber", MTFilterEntrySectionIndexPath, NSLocalizedString(@"Apt/Floor", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"street", MTFilterEntryPath, @"uppercaseFirstLetterOfStreet", MTFilterEntrySectionIndexPath, NSLocalizedString(@"Street", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"city", MTFilterEntryPath, @"city", MTFilterEntrySectionIndexPath, NSLocalizedString(@"City", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"state", MTFilterEntryPath, @"state", MTFilterEntrySectionIndexPath, NSLocalizedString(@"State or Country", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"houseNumber", MTFilterPath, @"houseNumber", MTFilterSectionIndexPath, AlternateLocalizedString(@"House Number", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"apartmentNumber", MTFilterPath, @"apartmentNumber", MTFilterSectionIndexPath, AlternateLocalizedString(@"Apt/Floor", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"street", MTFilterPath, @"uppercaseFirstLetterOfStreet", MTFilterSectionIndexPath, AlternateLocalizedString(@"Street", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"city", MTFilterPath, @"city", MTFilterSectionIndexPath, AlternateLocalizedString(@"City", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"state", MTFilterPath, @"state", MTFilterSectionIndexPath, AlternateLocalizedString(@"State or Country", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Return Visit", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"mostRecentReturnVisitDate", MTFilterEntryPath, @"dateSortedSectionIndex", MTFilterEntrySectionIndexPath, NSLocalizedString(@"Most Recent Return Visit Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"returnVisits", MTFilterEntryPath, NSLocalizedString(@"Return Visit Information", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterEntryName, [self displayEntriesForReturnVisits], MTFilterSubFilters, [MTReturnVisit entityName], MTFilterEntityName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"mostRecentReturnVisitDate", MTFilterPath, @"dateSortedSectionIndex", MTFilterSectionIndexPath, AlternateLocalizedString(@"Most Recent Return Visit Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"returnVisits", MTFilterPath, AlternateLocalizedString(@"Return Visit Information", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [self displayEntriesForReturnVisits], MTFilterSubFilters, [MTReturnVisit entityName], MTFilterEntityName, nil],
 	   nil], MTFilterGroupArray, nil],
 	 nil];
 	
@@ -206,7 +211,7 @@ NSString *translate(NSString *value)
 		if([attributeName isEqualToString:key])
 		{
 			// placeholder for the value
-			return [NSString stringWithFormat:@"%@ %@ %%@", *tempVariable, operator];
+			return [NSString stringWithFormat:@"%@ %@ \"%%@\"", *tempVariable, operator];
 		}
 	}
 	assert(false);
@@ -257,12 +262,21 @@ NSString *translate(NSString *value)
 	return [self typeForPath:self.path entity:entity];
 }
 
+- (void)setList:(NSNumber *)list
+{
+	[self willChangeValueForKey:@"list"];
+	[self setPrimitiveList:list];
+	[self didChangeValueForKey:@"list"];
+	if([list boolValue])
+		self.operator = @"> 0";
+}
 
 - (NSString *)title 
 {
+	NSString *translatedName = [[PSLocalization localizationBundle] localizedStringForKey:self.untranslatedName value:self.untranslatedName table:@""];
 	if(self.listValue)
 	{
-		return self.name;
+		return translatedName;
 	}
 	else
 	{
@@ -290,41 +304,67 @@ NSString *translate(NSString *value)
 		}
 		if(self.notValue)
 		{
-			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", self.name, self.operator, caseFlags, valueTitle];
+			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", translatedName, self.operator, caseFlags, valueTitle];
 		}
 		else
 		{
-			return [NSString stringWithFormat:@"%@ %@%@ %@", self.name, self.operator, caseFlags, valueTitle];
+			return [NSString stringWithFormat:@"%@ %@%@ %@", translatedName, self.operator, caseFlags, valueTitle];
 		}
 	}
 }
 
 - (NSString *)predicateStringWithTempVariable:(NSString *)tempVariable
 {
+	// if the operator has not been specified then this is not an initialized MTFilter
+	if(!self.listValue && (self.operator == nil || [self.operator length] == 0))
+	{
+		return @"";
+	}
 	NSMutableString *output = [NSMutableString string];
 	NSString *newTempVariable = tempVariable == nil ? nil : [[tempVariable copy] autorelease];
-	NSString *ourPredicateString = [MTFilter predicateStringFromPath:self.path 
-															  entity:[NSEntityDescription entityForName:self.filterEntityName inManagedObjectContext:self.managedObjectContext]
-															operator:self.operator
-													subqueryOperator:self.operator 
-														tempVariable:&newTempVariable 
-															  isList:self.listValue];
+	NSString *ourPredicateString;
+	
+	// if this is the filter attached directly to the display rule then we just need to aggregate all the predicates togeather
+	if(self.displayRule)
+	{
+		ourPredicateString = @"%@";
+	}
+	else
+	{
+		ourPredicateString = [MTFilter predicateStringFromPath:self.path 
+														entity:[NSEntityDescription entityForName:self.parent.filterEntityName inManagedObjectContext:self.managedObjectContext]
+													  operator:self.operator
+											  subqueryOperator:@"> 0"
+												  tempVariable:&newTempVariable 
+														isList:self.listValue];
+	}
+	
 	if(self.listValue)
 	{
 		[output appendString:@"("];
 		BOOL isFirst = YES;
 		for(MTFilter *filter in self.filters)
 		{
+			// if the filter has no values within it then skip it
+			NSString *newPredicateString = [filter predicateStringWithTempVariable:newTempVariable];
+			if([newPredicateString length] == 0)
+			{
+				continue;
+			}
 			if(isFirst == NO)
 			{
 				[output appendString:(self.andValue ? @" AND " : @" OR ")];
 			}
 			isFirst = NO;
-			NSString *newPredicateString = [filter predicateStringWithTempVariable:newTempVariable];
 			newPredicateString = [NSString stringWithFormat:newPredicateString, filter.value];
 			[output appendString:newPredicateString];
 		}
 		[output appendString:@")"];
+		// if we have no output then let the callers know
+		if(isFirst)
+		{
+			return @"";
+		}
 		output = [NSString stringWithFormat:ourPredicateString, output];
 	}
 	else
@@ -336,14 +376,19 @@ NSString *translate(NSString *value)
 
 - (NSPredicate *)predicate
 {
-	return [NSPredicate predicateWithFormat:[self predicateStringWithTempVariable:nil]];
+	NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user == %@", [MTUser currentUser]];
+	NSString *tempString = [self predicateStringWithTempVariable:nil];
+
+	if(tempString == nil || [tempString length] == 0)
+		return userPredicate;
+	
+	return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:userPredicate, [NSPredicate predicateWithFormat:tempString], nil]];
 }
 
 - (NSString *)predicateString
 {
 	return [self predicateStringWithTempVariable:nil];
 }
-
 
 + (void)test:(NSManagedObjectContext *)moc
 {

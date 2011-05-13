@@ -72,9 +72,13 @@
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView sortSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSDictionary *entry = (NSDictionary *)labelCellController.userData;
-	self.filter.name = [entry objectForKey:MTFilterEntryName];
-//	self.filter.filterEntityName = [entry objectForKey:MTFilterEntityName];
-	self.filter.path = [entry objectForKey:MTFilterEntryPath];
+	self.filter.untranslatedName = [entry objectForKey:MTFilterUntranslatedName];
+	NSString *entityName = [entry objectForKey:MTFilterEntityName];
+	if(entityName)
+	{
+		self.filter.filterEntityName = entityName;
+	}
+	self.filter.path = [entry objectForKey:MTFilterPath];
 	self.filter.listValue = [entry objectForKey:MTFilterSubFilters] != nil;
 	self.filter.operator = @"";
 	self.filter.value = @"";
@@ -109,8 +113,7 @@
 		{
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
 			cellController.userData = entry;
-			cellController.model = entry;
-			cellController.modelPath = MTFilterEntryName;
+			cellController.title = [[PSLocalization localizationBundle] localizedStringForKey:[entry objectForKey:MTFilterUntranslatedName] value:[entry objectForKey:MTFilterUntranslatedName] table:nil];
 			[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:sortSelectedAtIndexPath:)];
 			[self addCellController:cellController toSection:sectionController];
 			++row;

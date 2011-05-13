@@ -255,7 +255,7 @@
 
 
 
-@dynamic name;
+@dynamic untranslatedName;
 
 
 
