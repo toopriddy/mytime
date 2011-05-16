@@ -31,6 +31,10 @@ extern NSString * const MTFilterValuesUntranslatedTitles;
 + (NSArray *)displayEntriesForCalls;
 + (NSArray *)displayEntriesForEntityName:(NSString *)entityName;
 
++ (void)addDeletedFilter:(MTFilter *)filter deleted:(BOOL)deleted;
++ (void)addStudiesFilter:(MTFilter *)filter;
+
+
 // Custom logic goes here.
 + (MTFilter *)createFilterForFilter:(MTFilter *)parentFilter;
 + (MTFilter *)createFilterForDisplayRule:(MTDisplayRule *)displayRule;

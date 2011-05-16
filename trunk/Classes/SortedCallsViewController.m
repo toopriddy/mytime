@@ -143,9 +143,9 @@
 
 - (void)reloadTableFromCallChange
 {
-#warning if the user changes the call for the filtered view controller the change might not show up
-	
-	if([dataSource requiresArraySorting])
+// TODO: is this a performance penalty?
+// if the user changes the call for the filtered view controller the change might not show up
+//	if([dataSource requiresArraySorting])
 	{
 		[self reloadTableFromSourceChange];
 	}

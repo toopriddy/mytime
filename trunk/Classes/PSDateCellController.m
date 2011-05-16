@@ -12,6 +12,7 @@
 @implementation PSDateCellController
 @synthesize dateFormat;
 @synthesize datePickerMode;
+@synthesize modelValueIsString;
 
 - (id)init
 {
@@ -20,6 +21,23 @@
 		datePickerMode = UIDatePickerModeDateAndTime;
 	}
 	return self;
+}
+- (NSDate *)modelDate
+{
+	id date = [self.model valueForKeyPath:self.modelPath];
+	if(self.modelValueIsString)
+	{
+		if([date length] == 0)
+		{
+			date = [NSDate date];
+			[self.model setValue:[NSString stringWithFormat:@"%f", [date timeIntervalSinceReferenceDate]] forKeyPath:self.modelPath];
+		}
+		else
+		{
+			date = [NSDate dateWithTimeIntervalSinceReferenceDate:[date doubleValue]];
+		}
+	}
+	return date;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -38,17 +56,18 @@
 	assert(self.dateFormat.length != 0); // you forgot to include a date format
 	[dateFormatter setDateFormat:self.dateFormat];
 	cell.accessoryType = self.accessoryType;
+
+	NSDate *date = [self modelDate];
 	if([self.title length])
 	{
 		cell.textLabel.text = self.title;
-		cell.detailTextLabel.text = [dateFormatter stringFromDate:[self.model valueForKeyPath:self.modelPath]];
+		cell.detailTextLabel.text = [dateFormatter stringFromDate:date];
 	}
 	else
 	{
-		cell.textLabel.text = [dateFormatter stringFromDate:[self.model valueForKeyPath:self.modelPath]];
+		cell.textLabel.text = [dateFormatter stringFromDate:date];
 		cell.detailTextLabel.text = @"";
 	}
-
 
 	return cell;
 }
@@ -57,8 +76,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	self.selectedRow = indexPath;
-	// make the new call view 
-	DatePickerViewController *p = [[[DatePickerViewController alloc] initWithDate:[self.model valueForKeyPath:self.modelPath]] autorelease];
+	NSDate *date = [self modelDate];
+	DatePickerViewController *p = [[[DatePickerViewController alloc] initWithDate:date] autorelease];
 	p.delegate = self;
 	p.datePickerMode = self.datePickerMode;
 	[self.tableViewController.navigationController pushViewController:p animated:YES];		
@@ -67,7 +86,14 @@
 
 - (void)datePickerViewControllerDone:(DatePickerViewController *)datePickerViewController
 {
-	[self.model setValue:[datePickerViewController date] forKeyPath:self.modelPath];
+	if(self.modelValueIsString)
+	{
+		[self.model setValue:[NSString stringWithFormat:@"%f", [[datePickerViewController date] timeIntervalSinceReferenceDate]] forKeyPath:self.modelPath];
+	}
+	else
+	{
+		[self.model setValue:[datePickerViewController date] forKeyPath:self.modelPath];
+	}
 	
 	[self.tableViewController.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedRow] withRowAnimation:UITableViewRowAnimationFade];
 	[self.tableViewController.navigationController popViewControllerAnimated:YES];

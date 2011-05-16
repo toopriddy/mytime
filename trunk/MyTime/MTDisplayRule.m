@@ -4,6 +4,7 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MTSorter.h"
 #import "MTFilter.h"
+#import "MTCall.h"
 #import "AdditionalInformationSortDescriptor.h"
 
 NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
@@ -14,6 +15,8 @@ MTDisplayRule *g_currentDisplayRule;
 
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc
 {
+	// fix for MyTime < 3.0 to create the filters on the Beta tester's phones
+	BOOL deleteInternal = NO;
 	for(MTDisplayRule *displayRule in [moc fetchObjectsForEntityName:[MTDisplayRule entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"order"]
 													   withPredicate:nil])
@@ -21,7 +24,22 @@ MTDisplayRule *g_currentDisplayRule;
 		if(displayRule.filter == nil)
 		{
 			displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
+			if(displayRule.internalValue)
+			{
+				deleteInternal = YES;
+			}
 		}
+	}
+	if(deleteInternal)
+	{
+		[self deleteDefaultDisplayRules];
+	}
+
+	NSArray *calls = [moc fetchObjectsForEntityName:[MTCall entityName]
+									  withPredicate:nil];
+	for(MTCall *call in calls)
+	{
+		NSLog(@"%@ locateion:%@ deleted:%@", call.name, call.locationAquired, call.deletedCall);
 	}
 }
 
@@ -51,7 +69,7 @@ MTDisplayRule *g_currentDisplayRule;
 	displayRule.orderValue = order + 1; // we are using the order to seperate calls and when reordering these will be mobed halfway between displayRules.
 	displayRule.user = user;
 
-	displayRule.filter = [MTFilter createFilterForDisplayRule:self];
+	displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
 
 	return displayRule;
 }
@@ -162,9 +180,28 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 		sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:sortDescriptor.key];
 		sorter.path = sortDescriptor.key;
 		sorter.ascendingValue = sortDescriptor.ascending;
-#warning add MTFilter to this
 	}
+	displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
 	return displayRule;
+}
+
++ (void)deleteDefaultDisplayRules
+{
+	MTUser *currentUser = [MTUser currentUser];
+	NSArray *displayRules = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+																	  propertiesToFetch:nil
+																		  withPredicate:@"internal == YES", currentUser];
+	for(MTDisplayRule *displayRule in displayRules)
+	{
+		[currentUser.managedObjectContext deleteObject:displayRule];
+	}
+	NSArray *users = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
+															   propertiesToFetch:nil
+																   withPredicate:nil];
+	for(MTUser *user in users)
+	{
+		[self createDefaultDisplayRulesForUser:user];
+	}
 }
 
 + (void)createDefaultDisplayRulesForUser:(MTUser *)user
@@ -179,42 +216,49 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
 												 deletable:NO
 												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
 	user.currentDisplayRule = displayRule;
 
 	// Date Sorted
-	[MTDisplayRule createDisplayRuleWithUser:user 
-										name:@"Date Sorted"
-							 sortDescriptors:sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))))
-								   deletable:NO
-									internal:YES];
+	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
+													  name:@"Date Sorted"
+										   sortDescriptors:sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))))
+												 deletable:NO
+												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
 	
 	// City Sorted
-	[MTDisplayRule createDisplayRuleWithUser:user 
-										name:@"City Sorted"
-							 sortDescriptors:sortByName(sortByStreet(sortByCity(sortDescriptors)))
-								   deletable:NO
-									internal:YES];
+	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
+													  name:@"City Sorted"
+										   sortDescriptors:sortByName(sortByStreet(sortByCity(sortDescriptors)))
+												 deletable:NO
+												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
 	
 	// Name Sorted
-	[MTDisplayRule createDisplayRuleWithUser:user 
-										name:@"Name Sorted"
-							 sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
-								   deletable:NO
-									internal:YES];
+	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
+													  name:@"Name Sorted"
+										   sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
+												 deletable:NO
+												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
 	
 	// Study Sorted
-	[MTDisplayRule createDisplayRuleWithUser:user 
-										name:@"Studies"
-							 sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
-								   deletable:NO
-									internal:YES];
+	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
+													  name:@"Studies"
+										   sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
+												 deletable:NO
+												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	[MTFilter addStudiesFilter:displayRule.filter];
 	
 	// Deleted Calls
-	[MTDisplayRule createDisplayRuleWithUser:user 
-										name:@"Deleted Calls"
-							 sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
-								   deletable:NO
-									internal:YES];
+	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
+													  name:@"Deleted Calls"
+										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
+												 deletable:NO
+												  internal:YES];
+	[MTFilter addDeletedFilter:displayRule.filter deleted:YES];
 }
 
 + (MTDisplayRule *)displayRuleForInternalName:(NSString *)name
@@ -228,8 +272,14 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 																			  withPredicate:@"internal == YES && user == %@ && name == %@", currentUser, name];
 		if([displayRules count])
 		{
-			NSLog(@"%@ %@", [[displayRules lastObject] sectionIndexPath], name);
-			return [displayRules lastObject];
+			// check to see if the filters have been created yet or not.
+			MTDisplayRule *displayRule = [displayRules lastObject];
+			if(displayRule.filter == nil)
+			{
+			}
+			
+//			NSLog(@"%@ %@", [[displayRules lastObject] sectionIndexPath], name);
+			return displayRule;
 		}
 		else
 		{

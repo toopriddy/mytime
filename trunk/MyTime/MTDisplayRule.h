@@ -11,6 +11,8 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 + (void)createDefaultDisplayRulesForUser:(MTUser *)user;
 + (MTDisplayRule *)displayRuleForInternalName:(NSString *)name;
 
++ (void)deleteDefaultDisplayRules;
+
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc;
 
 - (NSArray *)allSortDescriptors;

@@ -16,4 +16,9 @@
 	return [self compare:other options:(NSNumericSearch | NSCaseInsensitiveSearch)];
 }
 
+- (NSTimeInterval)timeIntervalSinceReferenceDate
+{
+	return [self intValue];
+}
+
 @end

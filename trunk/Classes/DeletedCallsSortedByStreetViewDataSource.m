@@ -50,11 +50,4 @@
 	return NO;
 }
 
-- (NSPredicate *)predicate
-{
-	MTUser *currentUser = [MTUser currentUser];
-	return [NSPredicate predicateWithFormat:@"user == %@ && deletedCall == YES", currentUser];
-}
-
-
 @end
