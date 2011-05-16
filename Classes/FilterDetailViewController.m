@@ -428,7 +428,8 @@
 							cellController.model = self.filter;
 							cellController.modelPath = @"value";
 							cellController.title = NSLocalizedString(@"Value", @"Label for filter view for the date value to match with");
-							cellController.datePickerMode = UIDatePickerModeDate;
+							cellController.datePickerMode = UIDatePickerModeDateAndTime;
+							cellController.modelValueIsString = YES;
 							if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 							{
 								[cellController setDateFormat:@"d/M/yyy"];

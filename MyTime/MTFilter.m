@@ -62,6 +62,37 @@ NSString *translate(NSString *value)
 	return filter;
 }
 
++ (void)addStudiesFilter:(MTFilter *)filter
+{
+	MTFilter *newFilter = [MTFilter createFilterForFilter:filter];
+	newFilter.listValue = YES;
+	newFilter.filterEntityName = [MTReturnVisit entityName];
+	newFilter.andValue = YES;
+	newFilter.untranslatedName = @"User";
+	newFilter.path = @"returnVisits";
+	newFilter.untranslatedName = AlternateLocalizedString(@"Return Visit Information", @"Title for the Display Rules 'pick a sort rule' screen");
+
+	newFilter = [MTFilter createFilterForFilter:newFilter];
+	newFilter.listValue = NO;
+	newFilter.filterEntityName = [MTReturnVisit entityName];
+	newFilter.untranslatedName = AlternateLocalizedString(@"Type", @"Title for the Display Rules 'pick a sort rule' screen");
+	newFilter.path = @"type";
+	newFilter.operator = @"==";
+	newFilter.untranslatedValueTitle = CallReturnVisitTypeStudy;
+	newFilter.value = CallReturnVisitTypeStudy;
+}
+
++ (void)addDeletedFilter:(MTFilter *)filter deleted:(BOOL)deleted
+{
+	MTFilter *newFilter = [MTFilter createFilterForFilter:filter];
+	newFilter.listValue = NO;
+	newFilter.filterEntityName = [MTCall entityName];
+	newFilter.untranslatedName = AlternateLocalizedString(@"Deleted", @"Title for the Display Rules 'pick a sort rule' screen");
+	newFilter.path = @"deletedCall";
+	newFilter.operator = @"==";
+	newFilter.value = deleted ? @"YES" : @"NO";
+}
+
 + (NSArray *)displayEntriesForReturnVisits
 {
 	NSString *entityName = [MTReturnVisit entityName];
@@ -90,7 +121,7 @@ NSString *translate(NSString *value)
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"name", MTFilterPath, @"uppercaseFirstLetterOfName", MTFilterSectionIndexPath, AlternateLocalizedString(@"Name", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationLookupType", MTFilterPath, AlternateLocalizedString(@"Location Lookup Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [NSArray arrayWithObjects:CallLocationTypeGoogleMaps, CallLocationTypeManual, CallLocationTypeDoNotShow, nil], MTFilterValues, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"deletedCall", MTFilterPath, AlternateLocalizedString(@"Deleted", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationAcquired", MTFilterPath, AlternateLocalizedString(@"Location Acquired", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationAquired", MTFilterPath, AlternateLocalizedString(@"Location Aquired", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Address", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
@@ -210,8 +241,39 @@ NSString *translate(NSString *value)
 		// if this is a string then add quotes to the value.
 		if([attributeName isEqualToString:key])
 		{
+			NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
+			NSAttributeType type = attributeDescription.attributeType;
+			BOOL quotesNeeded;
+			switch(type)
+			{
+				case NSUndefinedAttributeType:
+				case NSInteger16AttributeType:
+				case NSInteger32AttributeType:
+				case NSInteger64AttributeType:
+				case NSDecimalAttributeType:
+				case NSDoubleAttributeType:
+				case NSFloatAttributeType:
+				case NSBooleanAttributeType:
+				case NSBinaryDataAttributeType:
+				case NSTransformableAttributeType:
+				case NSObjectIDAttributeType:
+					quotesNeeded = NO;
+					break;
+				default:
+				case NSDateAttributeType:
+				case NSStringAttributeType:
+					quotesNeeded = YES;
+					break;
+			}
 			// placeholder for the value
-			return [NSString stringWithFormat:@"%@ %@ \"%%@\"", *tempVariable, operator];
+			if(quotesNeeded)
+			{
+				return [NSString stringWithFormat:@"%@ %@ \"%%@\"", *tempVariable, operator];
+			}
+			else
+			{
+				return [NSString stringWithFormat:@"%@ %@ %%@", *tempVariable, operator];
+			}
 		}
 	}
 	assert(false);
@@ -287,7 +349,28 @@ NSString *translate(NSString *value)
 		}
 		else
 		{
-			valueTitle = self.value;
+			if([self typeForPath] == NSDateAttributeType)
+			{
+				NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:[self.value doubleValue]];
+				// create dictionary entry for This Return Visit
+				[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
+				NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+				[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+				if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+				{
+					[dateFormatter setDateFormat:@"d/M/yyy"];
+				}
+				else
+				{
+					[dateFormatter setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+				}
+				
+				valueTitle = [dateFormatter stringFromDate:date];
+			}
+			else
+			{
+				valueTitle = self.value;
+			}
 		}
 		NSString *caseFlags = @"";
 		if(self.caseInsensitiveValue && self.diacriticInsensitiveValue)
@@ -381,6 +464,8 @@ NSString *translate(NSString *value)
 
 	if(tempString == nil || [tempString length] == 0)
 		return userPredicate;
+	
+	NSLog(@"Predicate: %@", tempString);
 	
 	return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:userPredicate, [NSPredicate predicateWithFormat:tempString], nil]];
 }

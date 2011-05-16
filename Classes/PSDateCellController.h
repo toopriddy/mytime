@@ -15,5 +15,6 @@
 }
 @property (nonatomic, copy) NSString *dateFormat;
 @property (nonatomic, assign) UIDatePickerMode datePickerMode;
+@property (nonatomic, assign) BOOL modelValueIsString;
 
 @end
