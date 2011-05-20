@@ -78,7 +78,8 @@ MTDisplayRule *g_currentDisplayRule;
 {
 	MTUser *currentUser = [MTUser currentUser];
 	currentUser.currentDisplayRule = displayRule;
-	[g_currentDisplayRule release];
+	[currentUser.managedObjectContext processPendingChanges];
+	[g_currentDisplayRule autorelease];
 	g_currentDisplayRule = [displayRule retain];
 	
 	NSError *error = nil;
