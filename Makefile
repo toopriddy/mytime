@@ -16,6 +16,7 @@ Slovak.lproj \
 Norwegian.lproj \
 Korean.lproj \
 Russian.lproj \
+Finnish.lproj \
 
 
 all: genstrings
