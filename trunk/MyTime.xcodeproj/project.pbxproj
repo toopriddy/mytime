@@ -32,7 +32,6 @@
 		90059C900F3A2112006DF536 /* PSUrlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 90059C8F0F3A2112006DF536 /* PSUrlString.m */; };
 		9007692B136A481800DA11B3 /* FilterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9007692A136A481800DA11B3 /* FilterDetailViewController.m */; };
 		9007699A136B5A1500DA11B3 /* PSSegmentedControlCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90076999136B5A1500DA11B3 /* PSSegmentedControlCellController.m */; };
-		90076A62136B9C3B00DA11B3 /* MyTime 8.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */; settings = {COMPILER_FLAGS = xmod; }; };
 		9007C1FF0EE0657C00FE19D5 /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9007C1FE0EE0657C00FE19D5 /* redButton.png */; };
 		900FA5141064405500C246FE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FA5131064405500C246FE /* SettingsTableViewController.m */; };
 		901313800EA0773A0055D890 /* NumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013137F0EA0773A0055D890 /* NumberViewController.m */; };
@@ -122,8 +121,6 @@
 		90ADA83D0F19278400C65E40 /* MapViewCallDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ADA83C0F19278400C65E40 /* MapViewCallDetail.xib */; };
 		90ADA9880F194DBF00C65E40 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9870F194DBF00C65E40 /* LocationPickerViewController.m */; };
 		90ADA9D60F195EB000C65E40 /* SelectPositionMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ADA9D40F195EB000C65E40 /* SelectPositionMapViewController.m */; };
-		90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */; };
-		90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */; };
 		90AE3053137C89F4002B95DB /* MyTime 12.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */; };
 		90B61A4C1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */; };
 		90B61BEF1328658900DF09E0 /* MyTime 4.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90B61BEC1328654C00DF09E0 /* MyTime 4.xcdatamodel */; };
@@ -177,6 +174,10 @@
 		90B9521712FEA4520042BAF8 /* _MTTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B9521612FEA4520042BAF8 /* _MTTimeEntry.m */; };
 		90B9521912FEA4520042BAF8 /* _MTTimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B9521812FEA4520042BAF8 /* _MTTimeType.m */; };
 		90B9521B12FEA4530042BAF8 /* _MTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B9521A12FEA4530042BAF8 /* _MTUser.m */; };
+		90B964FE1385F93000C2BDAB /* MyTime 11.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE3007137C5229002B95DB /* MyTime 11.xcdatamodel */; };
+		90B964FF1385F93100C2BDAB /* MyTime 10.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90AE2FDB137C4E42002B95DB /* MyTime 10.xcdatamodel */; };
+		90B965001385F93200C2BDAB /* MyTime 9.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */; };
+		90B965011385F93200C2BDAB /* MyTime 8.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90076A61136B9C3900DA11B3 /* MyTime 8.xcdatamodel */; };
 		90C0DAF40EA4451A00C47183 /* ReturnVisitTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */; };
 		90C148830E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C148820E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.m */; };
 		90C148D50E3B926E00C6EDAF /* CallsSortedByDateViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C148D40E3B926E00C6EDAF /* CallsSortedByDateViewDataSource.m */; };
@@ -220,7 +221,6 @@
 		90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */; };
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
-		90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
 		90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */; };
@@ -1718,11 +1718,11 @@
 				9054F24D13688C410036F809 /* UITableViewSegmentedControlCell.m in Sources */,
 				9007692B136A481800DA11B3 /* FilterDetailViewController.m in Sources */,
 				9007699A136B5A1500DA11B3 /* PSSegmentedControlCellController.m in Sources */,
-				90076A62136B9C3B00DA11B3 /* MyTime 8.xcdatamodel in Sources */,
-				90EFC5021377365F006BFE9F /* MyTime 9.xcdatamodel in Sources */,
-				90AE2FDD137C4E52002B95DB /* MyTime 10.xcdatamodel in Sources */,
-				90AE3008137C524E002B95DB /* MyTime 11.xcdatamodel in Sources */,
 				90AE3053137C89F4002B95DB /* MyTime 12.xcdatamodel in Sources */,
+				90B964FE1385F93000C2BDAB /* MyTime 11.xcdatamodel in Sources */,
+				90B964FF1385F93100C2BDAB /* MyTime 10.xcdatamodel in Sources */,
+				90B965001385F93200C2BDAB /* MyTime 9.xcdatamodel in Sources */,
+				90B965011385F93200C2BDAB /* MyTime 8.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1830,7 +1830,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1D862032-A100-4D7D-830B-3B35FBE0F2F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2FD4BB17-F51E-494A-8588-4A63DEAD92BE";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv7 armv6";

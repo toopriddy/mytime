@@ -137,11 +137,14 @@
 	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.model;
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	BOOL wasCurrentDisplayRule = currentDisplayRule == displayRule;
-	MTUser *currentUser = [MTUser currentUser];
 	if(wasCurrentDisplayRule)
-		currentUser.currentDisplayRule = nil;
+	{
+		[MTDisplayRule setCurrentDisplayRule:nil];
+	}
 	
 	[self.managedObjectContext deleteObject:displayRule];
+	[MTDisplayRule currentDisplayRule];
+	
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
@@ -151,7 +154,6 @@
 	[self deleteDisplayRowAtIndexPath:indexPath];
 	if(wasCurrentDisplayRule)
 	{			
-		[MTDisplayRule currentDisplayRule];
 		[self updateAndReload];
 	}
 }
