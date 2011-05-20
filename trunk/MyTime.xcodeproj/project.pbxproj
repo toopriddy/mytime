@@ -588,6 +588,7 @@
 		90B9522D12FEA45A0042BAF8 /* _MTTimeEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeEntry.h; sourceTree = "<group>"; };
 		90B9522E12FEA45A0042BAF8 /* _MTTimeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTTimeType.h; sourceTree = "<group>"; };
 		90B9522F12FEA45A0042BAF8 /* _MTUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MTUser.h; sourceTree = "<group>"; };
+		90B96589138613AE00C2BDAB /* Finnish */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 10; name = Finnish; path = Finnish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C0DAF20EA4451A00C47183 /* ReturnVisitTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnVisitTypeViewController.h; sourceTree = "<group>"; };
 		90C0DAF30EA4451A00C47183 /* ReturnVisitTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnVisitTypeViewController.m; sourceTree = "<group>"; };
 		90C148810E3B8F6E00C6EDAF /* CallsSortedByCityViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallsSortedByCityViewDataSource.h; sourceTree = "<group>"; };
@@ -1406,6 +1407,7 @@
 				Norwegian,
 				Korean,
 				Russian,
+				Finnish,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1763,6 +1765,7 @@
 				908AC5EB10CD489900922E02 /* Norwegian */,
 				90196F0B11345DC6005F0621 /* Korean */,
 				902BA96A12EB4DB4005793DD /* Russian */,
+				90B96589138613AE00C2BDAB /* Finnish */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
