@@ -14,7 +14,7 @@
 {
 @private
 	NSObject *model_;
-	NSString *path_;
+	NSString *modelPath_;
 	id selectionTarget_;
 	SEL selectionAction_;
 	id deleteTarget_;
@@ -33,7 +33,7 @@
 @property (nonatomic, retain) UIView *editingAccessoryView;
 @property (nonatomic, assign) UITableViewCellAccessoryType editingAccessoryType;
 //@property (nonatomic, retain) UINavigationController *navigationController;
-@property (nonatomic, retain) GenericTableViewController *tableViewController;
+@property (nonatomic, assign) GenericTableViewController *tableViewController;
 @property (nonatomic, copy) NSIndexPath *selectedRow;
 // 0 means to not go to the next row
 @property (nonatomic, assign) int selectNextRowResponderIncrement;

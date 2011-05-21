@@ -74,7 +74,7 @@
 
 - (id) initWithDisplayRule:(MTDisplayRule *)theDisplayRule newDisplayRule:(BOOL)newDisplayRule
 {
-	if ([super initWithStyle:UITableViewStyleGrouped]) 
+	if ((self = [super initWithStyle:UITableViewStyleGrouped])) 
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
@@ -82,13 +82,17 @@
 		self.displayRule = theDisplayRule;
 		self.hidesBottomBarWhenPushed = YES;
 		self.allTextFields = [NSMutableArray array];
-		obtainFocus = YES;
+
+		obtainFocus = self.displayRule.name.length == 0;
+		[self.displayRule addObserver:self forKeyPath:@"name" options:0 /*NSKeyValueObservingOptionNew*/ context:nil]; 
+		
 	}
 	return self;
 }
 
 - (void)dealloc 
 {
+	[self.displayRule removeObserver:self forKeyPath:@"name"]; 
 	self.allTextFields = nil;
 	self.displayRule = nil;
 	self.temporarySorter = nil;
@@ -96,6 +100,12 @@
 	
 	[super dealloc];
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	[self.navigationItem.rightBarButtonItem setEnabled:(self.displayRule.name.length > 0)];
+}
+
 
 - (FilterTableViewController *)filterTableViewController
 {
@@ -145,6 +155,7 @@
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:YES];
+	[self.navigationItem.rightBarButtonItem setEnabled:(self.displayRule.name.length > 0)];
 }
 
 - (void)sorterViewControllerDone:(SorterViewController *)sorterViewController
@@ -247,32 +258,30 @@
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
 
+		if(self.displayRule.deleteableValue)
 		{
-			if(self.displayRule.deleteableValue)
-			{
-				PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
-				cellController.model = self.displayRule;
-				cellController.modelPath = @"name";
-				cellController.placeholder = NSLocalizedString(@"Display Rule Name", @"This is the placeholder text in the Display Rule detail screen where you name the display rule");
-				cellController.returnKeyType = UIReturnKeyDone;
-				cellController.clearButtonMode = UITextFieldViewModeAlways;
-				cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
-				cellController.selectionStyle = UITableViewCellSelectionStyleNone;
-				cellController.obtainFocus = obtainFocus;
-				cellController.allTextFields = self.allTextFields;
-				cellController.indentWhileEditing = NO;
-				obtainFocus = NO;
-				[self addCellController:cellController toSection:sectionController];
-			}
-			else
-			{
-				PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-				cellController.model = self.displayRule;
-				cellController.indentWhileEditing = NO;
-				cellController.selectionStyle = UITableViewCellSelectionStyleNone;
-				cellController.modelPath = @"name";
-				[self addCellController:cellController toSection:sectionController];
-			}
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self.displayRule;
+			cellController.modelPath = @"name";
+			cellController.placeholder = NSLocalizedString(@"Display Rule Name", @"This is the placeholder text in the Display Rule detail screen where you name the display rule");
+			cellController.returnKeyType = UIReturnKeyDone;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.obtainFocus = obtainFocus;
+			cellController.allTextFields = self.allTextFields;
+			cellController.indentWhileEditing = NO;
+			obtainFocus = NO;
+			[self addCellController:cellController toSection:sectionController];
+		}
+		else
+		{
+			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+			cellController.model = self.displayRule;
+			cellController.indentWhileEditing = NO;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.modelPath = @"name";
+			[self addCellController:cellController toSection:sectionController];
 		}
 	}
 	// Filters

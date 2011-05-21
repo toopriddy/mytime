@@ -24,9 +24,10 @@
 @synthesize temporaryDisplayRule;
 @synthesize onlyAllowEditing;
 
+
 - (id) init;
 {
-	if ([super initWithStyle:UITableViewStyleGrouped]) 
+	if((self = [super initWithStyle:UITableViewStyleGrouped])) 
 	{
 		// set the title, and tab bar images from the dataSource
 		// object. 
@@ -213,7 +214,7 @@
 	[temporaryBarButtonItem setTarget:self];
 	controller.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
 	
-	[self retainObject:controller whileViewControllerIsManaged:controller];
+	[self retainObject:labelCellController whileViewControllerIsManaged:controller];
 }
 
 - (void)constructSectionControllers

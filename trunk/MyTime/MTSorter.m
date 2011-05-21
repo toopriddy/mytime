@@ -120,7 +120,7 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 	  [MTSorter additionalInformationGroupArray], MTSorterGroupArray, nil],
 	 nil];
 	
-	return returnArray;
+	return [returnArray autorelease];
 }
 
 + (NSString *)nameForPath:(NSString *)path

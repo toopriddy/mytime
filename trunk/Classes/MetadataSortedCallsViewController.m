@@ -24,7 +24,12 @@
 {
 	[self reloadTableFromSourceChange];
 	[self.navigationController popViewControllerAnimated:YES];
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:displayRule.name
+	NSString *name = displayRule.name;
+	if([name length] == 0)
+	{
+		name = NSLocalizedString(@"Display Rule", @"Title of button on the Sorted By... view if the user put in a display rule that does not have a name");
+	}
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:name
 																style:UIBarButtonItemStyleBordered 
 															   target:self 
 															   action:@selector(changeMetadata)] autorelease];
@@ -47,7 +52,12 @@
 	
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	// update the button in the nav bar
-	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:currentDisplayRule.name
+	NSString *name = currentDisplayRule.name;
+	if([name length] == 0)
+	{
+		name = NSLocalizedString(@"Display Rule", @"Title of button on the Sorted By... view if the user put in a display rule that does not have a name");
+	}
+	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:name
 																style:UIBarButtonItemStyleBordered 
 															   target:self 
 															   action:@selector(changeMetadata)] autorelease];

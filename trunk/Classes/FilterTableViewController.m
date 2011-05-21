@@ -98,6 +98,7 @@
 
 - (void)addFilterNavigationControlCanceled
 {
+	[self.tableViewController dismissModalViewControllerAnimated:YES];
 	NSManagedObjectContext *moc = self.temporaryFilter.managedObjectContext;
 	[moc deleteObject:self.temporaryFilter];
 	self.temporaryFilter = nil;
@@ -106,7 +107,6 @@
 	{
 		[NSManagedObjectContext presentErrorDialog:error];
 	}
-	[self.tableViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addFilterFromSelectionAtIndexPath:(NSIndexPath *)indexPath

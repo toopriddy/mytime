@@ -272,6 +272,7 @@
 				
 				// there is only one section
 				self.sections = [NSArray arrayWithObject:sectionInfo];
+				[sectionInfo release];
 			}
 		}
 		return _fetchedObjects;

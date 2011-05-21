@@ -18,7 +18,7 @@
 	
 }
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) GenericTableViewController *tableViewController;
+@property (nonatomic, assign) GenericTableViewController *tableViewController;
 @property (nonatomic, retain) MTFilter *filter;
 @property (nonatomic, retain) MTFilter *temporaryFilter;
 

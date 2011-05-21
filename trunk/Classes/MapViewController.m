@@ -128,6 +128,7 @@
 	
 	[self.view addSubview:_mapView];
 	
+	bool haveRegion = NO;
 	MKCoordinateRegion region;
 	
 	if(_call)
@@ -137,6 +138,7 @@
 			MapViewCallAnnotation *marker = [[[MapViewCallAnnotation alloc] initWithCall:_call] autorelease];
 			[_mapView addAnnotation:marker];
 			region = MKCoordinateRegionMake(marker.coordinate , MKCoordinateSpanMake(0.001 , 0.001));
+			haveRegion = YES;
 		}
 	}
 	else
@@ -182,15 +184,20 @@
 		region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.1; // Add a little extra space on the sides
 		
 		region = [_mapView regionThatFits:region];
+		haveRegion = YES;
 	}
 	
 	// if we were previously loaded with a region use that one
 	if(hasSavedRegion)
 	{
 		region = savedRegion;
+		haveRegion = YES;
 	}
 	
-	[_mapView setRegion:region];
+	if(haveRegion)
+	{
+		[_mapView setRegion:region];
+	}
 }
 
 - (void)didReceiveMemoryWarning 
