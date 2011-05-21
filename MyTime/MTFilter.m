@@ -107,7 +107,7 @@ NSString *translate(NSString *value)
 	   nil], MTFilterGroupArray, nil],
 	 nil];
 	
-	return returnArray;
+	return [returnArray autorelease];
 }
 
 + (NSArray *)displayEntriesForCalls
@@ -140,7 +140,7 @@ NSString *translate(NSString *value)
 	   nil], MTFilterGroupArray, nil],
 	 nil];
 	
-	return returnArray;
+	return [returnArray autorelease];
 }
 
 + (NSArray *)displayEntriesForEntityName:(NSString *)entityName

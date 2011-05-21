@@ -212,7 +212,7 @@
 	NSString * errorString = [NSString stringWithFormat:@"Unable to download story feed from web site (Error code %i:%@ )", [parseError code], parseError];
 	NSLog(@"error parsing XML: %@", errorString);
 	
-	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error loading content, you need to be connected to the internet." message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView * errorAlert = [[[UIAlertView alloc] initWithTitle:@"Error loading content, you need to be connected to the internet." message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
 	[errorAlert show];
 }
 

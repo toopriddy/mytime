@@ -30,7 +30,10 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	[self.cachedTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.cachedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+	if(self.cachedTableView && self.cachedIndexPath && [self.cachedTableView numberOfRowsInSection:self.cachedIndexPath.section] > self.cachedIndexPath.row)
+	{
+		[self.cachedTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.cachedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+	}
 }
 
 - (void)setModel:(NSObject *)model

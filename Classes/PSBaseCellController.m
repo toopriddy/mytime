@@ -93,8 +93,10 @@
 - (void)dealloc
 {
 	self.title = nil;
-	self.model = nil;
-	self.modelPath = nil;
+	[model_ release];
+	model_ = nil;
+	[modelPath_ release];
+	modelPath_ = nil;
 //	self.navigationController = nil;
 	self.tableViewController = nil;
 	self.selectedRow = nil;
