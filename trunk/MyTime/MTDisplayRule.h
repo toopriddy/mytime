@@ -21,4 +21,6 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 - (MTSorter *)sectionIndexSorter;
 - (BOOL)requiresArraySorting;
 
+- (NSString *)localizedName;
+
 @end

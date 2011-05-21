@@ -6,6 +6,7 @@
 #import "MTFilter.h"
 #import "MTCall.h"
 #import "AdditionalInformationSortDescriptor.h"
+#import "PSLocalization.h"
 
 NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
 
@@ -374,6 +375,16 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return [sorters lastObject];
 }
 
-
+- (NSString *)localizedName
+{
+	if(self.internalValue)
+	{
+		return [[PSLocalization localizationBundle] localizedStringForKey:self.name value:self.name table:nil];
+	}
+	else
+	{
+		return self.name;
+	}
+}
 
 @end

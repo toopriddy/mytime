@@ -135,7 +135,7 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView deleteDisplayRuleAtIndexPath:(NSIndexPath *)indexPath
 {
-	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.userData;
+	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.model;
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	BOOL wasCurrentDisplayRule = currentDisplayRule == displayRule;
 	if(wasCurrentDisplayRule)
@@ -161,7 +161,7 @@
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView modifyDisplayRuleFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
-	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.userData;
+	MTDisplayRule *displayRule = (MTDisplayRule *)labelCellController.model;
 	if(tableView.editing)
 	{
 		DisplayRuleViewController *p = [[[DisplayRuleViewController alloc] initWithDisplayRule:displayRule newDisplayRule:NO] autorelease];
@@ -240,8 +240,8 @@
 		for(MTDisplayRule *displayRule in displayRules)
 		{
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-			cellController.userData = displayRule;
-			cellController.title = [[PSLocalization localizationBundle] localizedStringForKey:displayRule.name value:displayRule.name table:nil];
+			cellController.model = displayRule;
+			cellController.modelPath = @"localizedName";
 			cellController.indentWhileEditing = NO;
 			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 			cellController.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -265,16 +265,8 @@
 		for(MTDisplayRule *displayRule in displayRules)
 		{
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
-			cellController.userData = displayRule;
-			if(displayRule.internalValue)
-			{
-				cellController.title = [[PSLocalization localizationBundle] localizedStringForKey:displayRule.name value:displayRule.name table:nil];
-			}
-			else
-			{
-				cellController.title = displayRule.name;
-			}
-
+			cellController.model = displayRule;
+			cellController.modelPath = @"localizedName";
 			cellController.isViewableWhenEditing = !displayRule.internalValue;
 			cellController.editingStyle = displayRule.deleteableValue ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 			cellController.accessoryType = displayRule == currentDisplayRule ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
