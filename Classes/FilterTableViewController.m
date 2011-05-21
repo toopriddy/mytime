@@ -53,7 +53,6 @@
 	MTFilter *filter = (MTFilter *)labelCellController.userData;
 
 	FilterDetailViewController *p = [[[FilterDetailViewController alloc] initWithFilter:filter newFilter:NO] autorelease];
-	p.selectedIndexPath = [[indexPath copy] autorelease];
 	p.filter = filter;
 	p.delegate = self;
 	[[self.tableViewController navigationController] pushViewController:p animated:YES];		

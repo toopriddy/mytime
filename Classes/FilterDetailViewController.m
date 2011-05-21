@@ -24,7 +24,6 @@
 @implementation FilterDetailViewController
 @synthesize delegate;
 @synthesize filter;
-@synthesize selectedIndexPath;
 @synthesize allTextFields;
 
 - (id) initWithFilter:(MTFilter *)theFilter newFilter:(BOOL)newFilter
@@ -44,7 +43,6 @@
 - (void)dealloc 
 {
 	self.filter = nil;
-	self.selectedIndexPath = nil;
 	self.allTextFields = nil;
 		
 	[super dealloc];
@@ -159,7 +157,6 @@
 				}
 			}
 		}
-#warning make sure you set the selectedIndexPath		
 		if(foundEntry)
 		{
 			self.title = [[PSLocalization localizationBundle] localizedStringForKey:self.filter.untranslatedName value:self.filter.untranslatedName table:@""];

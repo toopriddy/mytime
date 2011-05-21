@@ -26,7 +26,6 @@
 }
 @property (nonatomic, assign) NSObject<FilterDetailViewControllerDelegate> *delegate;
 @property (nonatomic, retain) MTFilter *filter;
-@property (nonatomic, copy) NSIndexPath *selectedIndexPath;
 @property (nonatomic, readonly) FilterTableViewController *filterTableViewController;
 @property (nonatomic, retain) NSMutableSet *allTextFields;
 
