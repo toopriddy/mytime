@@ -24,7 +24,7 @@
 {
 	[self reloadTableFromSourceChange];
 	[self.navigationController popViewControllerAnimated:YES];
-	NSString *name = displayRule.name;
+	NSString *name = displayRule.localizedName;
 	if([name length] == 0)
 	{
 		name = NSLocalizedString(@"Display Rule", @"Title of button on the Sorted By... view if the user put in a display rule that does not have a name");
@@ -52,7 +52,7 @@
 	
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	// update the button in the nav bar
-	NSString *name = currentDisplayRule.name;
+	NSString *name = currentDisplayRule.localizedName;
 	if([name length] == 0)
 	{
 		name = NSLocalizedString(@"Display Rule", @"Title of button on the Sorted By... view if the user put in a display rule that does not have a name");
