@@ -305,7 +305,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (NSArray *)allSortDescriptors
 {
-	NSArray *sorters = [[self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == NO || requiresArraySorting == nil", self]] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
+	NSArray *sorters = [self.sorters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
 
 	if(sorters.count == 0)
 	{
