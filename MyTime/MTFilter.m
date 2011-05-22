@@ -414,9 +414,22 @@ NSString *translate(NSString *value)
 	}
 	else
 	{
+		NSString *caseFlags = @"";
+		if(self.caseInsensitiveValue && self.diacriticInsensitiveValue)
+		{
+			caseFlags = @"[cd]";
+		}
+		else if(self.diacriticInsensitiveValue)
+		{
+			caseFlags = @"[d]";
+		}
+		else if(self.caseInsensitiveValue)
+		{
+			caseFlags = @"[c]";
+		}
 		ourPredicateString = [MTFilter predicateStringFromPath:self.path 
 														entity:[NSEntityDescription entityForName:self.parent.filterEntityName inManagedObjectContext:self.managedObjectContext]
-													  operator:self.operator
+													  operator:[NSString stringWithFormat:@"%@%@", self.operator, caseFlags]
 											  subqueryOperator:@"> 0"
 												  tempVariable:&newTempVariable 
 														isList:self.listValue];
