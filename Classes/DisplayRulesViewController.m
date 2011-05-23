@@ -56,7 +56,7 @@
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
-	self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
+	self.title = NSLocalizedString(@"Edit Rules", @"Sort Rules View title");
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
@@ -73,7 +73,7 @@
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 	[self.tableView flashScrollIndicators];
 	
-	self.title = NSLocalizedString(@"Select Sort Rule", @"Sort Rules View title");
+	self.title = NSLocalizedString(@"Select Rule", @"Sort Rules View title");
 	// update the button in the nav bar
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
 																			 target:self
@@ -91,7 +91,7 @@
 	
 	if(self.onlyAllowEditing)
 	{
-		self.title = NSLocalizedString(@"Edit Sort Rules", @"Sort Rules View title");
+		self.title = NSLocalizedString(@"Edit Rules", @"Sort Rules View title");
 		self.editing = YES;
 	}
 	else
