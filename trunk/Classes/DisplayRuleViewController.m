@@ -239,7 +239,7 @@
 	UIBarButtonItem *temporaryBarButtonItem = [[[UIBarButtonItem alloc] init] autorelease];
 	temporaryBarButtonItem.title = NSLocalizedString(@"Cancel", @"Cancel button");
 	
-	controller.title = NSLocalizedString(@"New Display Rule", @"Title for the Sorted By ... area when you are editing the display rules");
+	controller.title = NSLocalizedString(@"New Sort Rule", @"Title for the Sorted By ... area when you are editing the display rules");
 	[self presentModalViewController:navigationController animated:YES];
 	[temporaryBarButtonItem setAction:@selector(addSorterNavigationControlCanceled)];
 	[temporaryBarButtonItem setTarget:self];

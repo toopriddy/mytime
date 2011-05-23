@@ -25,6 +25,7 @@
 #import "MTReturnVisit.h"
 #import "MTPublication.h"
 #import "MTAdditionalInformation.h"
+#import "MTAdditionalInformationType.h"
 
 @interface SortedCallsViewController ()
 @property (nonatomic, retain) PSExtendedFetchedResultsController *fetchedResultsController;
@@ -530,11 +531,16 @@
 
 #pragma mark -
 #pragma mark Fetched results controller
-- (void)addPredicatesForEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+- (void)addPredicatesForEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path filterPaths:(NSArray *)filterPaths
 {
 	NSDictionary *attributesByName = [entity attributesByName];
 	for(NSString *attributeName in [attributesByName allKeys])
 	{
+		if(filterPaths && ![filterPaths containsObject:attributeName])
+		{
+			continue;
+		}
+		
 		NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
 		if(attributeDescription.attributeType == NSStringAttributeType  && !attributeDescription.isTransient)
 		{
@@ -544,17 +550,32 @@
 	}
 }
 
-- (void)addPredicatesForCollectionEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+- (void)addPredicatesForEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+{
+	[self addPredicatesForEntity:entity forSearch:searchString predicateArray:predicateArray path:path filterPaths:nil];
+}
+
+- (void)addPredicatesForCollectionEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path filterPaths:(NSArray *)filterPaths
 {
 	NSDictionary *attributesByName = [entity attributesByName];
 	for(NSString *attributeName in [attributesByName allKeys])
 	{
+		if(filterPaths && ![filterPaths containsObject:attributeName])
+		{
+			continue;
+		}
+		
 		NSAttributeDescription *attributeDescription = [attributesByName objectForKey:attributeName];
 		if(attributeDescription.attributeType == NSStringAttributeType && !attributeDescription.isTransient)
 		{
 			[predicateArray addObject:[NSPredicate predicateWithFormat:@"SUBQUERY(%K, $s, $s.%K CONTAINS[cd] %@).@count > 0", path, attributeName, searchString]];
 		}
 	}
+}
+
+- (void)addPredicatesForCollectionEntity:(NSEntityDescription *)entity forSearch:(NSString *)searchString predicateArray:(NSMutableArray *)predicateArray path:(NSString *)path
+{
+	[self addPredicatesForCollectionEntity:entity forSearch:searchString predicateArray:predicateArray path:path filterPaths:nil];
 }
 
 - (PSExtendedFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
@@ -591,6 +612,7 @@
 				break;
 			case 2: // Notes
 				[predicateArray addObject:[NSPredicate predicateWithFormat:@"SUBQUERY(returnVisits, $s, $s.notes CONTAINS[cd] %@).@count > 0", searchString]];
+				[predicateArray addObject:[NSPredicate predicateWithFormat:@"SUBQUERY(additionalInformation, $s, $s.type.type == %@ && $s.value CONTAINS[cd] %@).@count > 0", [NSNumber numberWithInt:NOTES], searchString]];
 				break;
 			case 3: // All
 				// Base call strings
@@ -602,14 +624,10 @@
 				[self addPredicatesForCollectionEntity:[MTReturnVisit entityInManagedObjectContext:self.managedObjectContext] 
 											 forSearch:searchString 
 										predicateArray:predicateArray 
-												  path:@"returnVisits"];
-#if 0
+												  path:@"returnVisits"
+										   filterPaths:[NSArray arrayWithObject:@"notes"]];
 				// return visits's publications
-				[self addPredicatesForCollectionEntity:[MTPublication entityInManagedObjectContext:self.managedObjectContext] 
-											 forSearch:searchString 
-										predicateArray:predicateArray 
-												  path:@"returnVisits.publications"];
-#endif
+				[predicateArray addObject:[NSPredicate predicateWithFormat:@"SUBQUERY(returnVisits, $s, SUBQUERY($s.publications, $p, $p.title CONTAINS[cd] %@).@count > 0).@count > 0", searchString]];
 				// additionalInformation
 				[self addPredicatesForCollectionEntity:[MTAdditionalInformation entityInManagedObjectContext:self.managedObjectContext] 
 											 forSearch:searchString 
