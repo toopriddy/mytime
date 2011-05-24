@@ -142,6 +142,7 @@
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[genericTableViewController.sectionControllers addObject:sectionController];
 		sectionController.editingTitle = NSLocalizedString(@"Filter Rules", @"Section title for the Display Rule editing view");
+		sectionController.editingFooter = NSLocalizedString(@"Use the filters to specify what is shown.  The match one or all selection can be used to logically build any filtering rule.", @"Description of what to do with the filter rules in the Display Rule editor");
 		[sectionController release];
 		
 		PSSegmentedControlCellController *cellController = [[[PSSegmentedControlCellController alloc] init] autorelease];
