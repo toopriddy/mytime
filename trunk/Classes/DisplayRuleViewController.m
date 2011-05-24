@@ -292,6 +292,7 @@
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
 		sectionController.editingTitle = NSLocalizedString(@"Sort Rules", @"Section title for the Display Rule editing view");
+		sectionController.editingFooter = NSLocalizedString(@"The first sort rule determines what is used in the index to the right of the list of calls.  The '∧' and '∨' at the end of the rows specifies an ascending or decending sort.", @"Description of what to do with the sort rules in the Display Rule editor");
 		[sectionController release];
 
 		NSArray *sorters = [self.displayRule.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName]
