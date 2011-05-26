@@ -17,6 +17,7 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSTextFieldCellController.h"
+#import "PSButtonCellController.h"
 #import "PSLocalization.h"
 
 
@@ -223,6 +224,12 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)restoreDefaults
+{
+	[self.displayRule restoreDefaults];
+	[self updateAndReload];
+}
+
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView addSorterFromSelectionAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self resignAllFirstResponders];
@@ -285,6 +292,7 @@
 		}
 	}
 	// Filters
+	self.filterTableViewController.filter = self.displayRule.filter;
 	[self.filterTableViewController constructSectionControllersForTableViewController:self];
 	
 	// Sorters
@@ -322,6 +330,26 @@
 			[self addCellController:cellController toSection:sectionController];
 		}
 	}	
+	
+	//
+	// Reset to defaults
+	if(self.displayRule.internalValue)
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		// add the "Restore to Defaults"
+		{
+			PSButtonCellController *cellController = [[[PSButtonCellController alloc] init] autorelease];
+			cellController.title = NSLocalizedString(@"Restore to Defaults", @"Button to click to add an additional sort or filter rule for the Sorted By ... view");
+			cellController.imageName = @"blueButton.png";
+			cellController.imagePressedName = @"blueButton.png";
+			[cellController setButtonTarget:self action:@selector(restoreDefaults)];
+			[self addCellController:cellController toSection:sectionController];
+		}
+	}	
+	
 }
 
 @end

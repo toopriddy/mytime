@@ -848,8 +848,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 				NSString *name = publication.title;
 				int count = publication.countValue;
 				NSString *type = publication.type;
-				if([type isEqualToString:NSLocalizedString(@"Magazine", @"Publication Type name")] ||
-				   [type isEqualToString:NSLocalizedString(@"TwoMagazine", @"Publication Type name")])
+				if([type isEqualToString:PublicationTypeMagazine] ||
+				   [type isEqualToString:PublicationTypeTwoMagazine])
 				{
 					[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d: %@", @"Short form of Bulk Magazine Placements for the Watchtower and Awake '%d: %@'"), count, name]];
 				}
@@ -857,11 +857,14 @@ NSString *emailFormattedStringForCoreDataSettings()
 				{
 					if(count == 1)
 					{
-						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"Singular form of '1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+						type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:nil];
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"'1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 					else
 					{	
-						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"Plural form of '2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+						type = [MTPublication pluralFormForPublicationType:type];
+						type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:nil];
+						[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"'1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 					}
 				}
 				[string appendString:@"<br>\n"];

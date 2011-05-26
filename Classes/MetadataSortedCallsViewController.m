@@ -20,10 +20,8 @@
 #import "PSLocalization.h"
 @implementation MetadataSortedCallsViewController
 
-- (void)displayRulesViewController:(DisplayRulesViewController *)viewController selectedDisplayRule:(MTDisplayRule *)displayRule;
+- (void)updateButtonForDisplayRule:(MTDisplayRule *)displayRule
 {
-	[self reloadTableFromSourceChange];
-	[self.navigationController popViewControllerAnimated:YES];
 	NSString *name = displayRule.localizedName;
 	if([name length] == 0)
 	{
@@ -34,6 +32,20 @@
 															   target:self 
 															   action:@selector(changeMetadata)] autorelease];
 	[self.navigationItem setLeftBarButtonItem:button];
+}
+
+- (void)reloadTableFromSourceChange
+{
+	MTUser *currentUser = [MTUser currentUser];
+	[self updateButtonForDisplayRule:currentUser.currentDisplayRule];
+	[super reloadTableFromSourceChange];
+}
+
+- (void)displayRulesViewController:(DisplayRulesViewController *)viewController selectedDisplayRule:(MTDisplayRule *)displayRule;
+{
+	[self reloadTableFromSourceChange];
+	[self.navigationController popViewControllerAnimated:YES];
+	[self updateButtonForDisplayRule:displayRule];
 }
 
 - (void)changeMetadata

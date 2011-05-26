@@ -155,6 +155,7 @@
 	[self deleteDisplayRowAtIndexPath:indexPath];
 	if(wasCurrentDisplayRule)
 	{			
+		[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationDisplayRuleChanged object:nil];
 		[self updateAndReload];
 	}
 }

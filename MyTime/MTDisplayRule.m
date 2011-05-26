@@ -17,7 +17,6 @@ MTDisplayRule *g_currentDisplayRule;
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc
 {
 	// fix for MyTime < 3.0 to create the filters on the Beta tester's phones
-	BOOL deleteInternal = NO;
 	for(MTDisplayRule *displayRule in [moc fetchObjectsForEntityName:[MTDisplayRule entityName]
 												   propertiesToFetch:[NSArray arrayWithObject:@"order"]
 													   withPredicate:nil])
@@ -27,20 +26,9 @@ MTDisplayRule *g_currentDisplayRule;
 			displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
 			if(displayRule.internalValue)
 			{
-				deleteInternal = YES;
+				[displayRule restoreDefaults];
 			}
 		}
-	}
-	if(deleteInternal)
-	{
-		[self deleteDefaultDisplayRules];
-	}
-
-	NSArray *calls = [moc fetchObjectsForEntityName:[MTCall entityName]
-									  withPredicate:nil];
-	for(MTCall *call in calls)
-	{
-		NSLog(@"%@ locateion:%@ deleted:%@", call.name, call.locationAquired, call.deletedCall);
 	}
 }
 
@@ -164,15 +152,23 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return [previousSorters arrayByAddingObject:[NSSortDescriptor psSortDescriptorWithKey:@"deleted" ascending:NO]];
 }
 
-+ (MTDisplayRule *)createDisplayRuleWithUser:(MTUser *)user 
-										name:(NSString *)name 
-							 sortDescriptors:(NSArray *)sortDescriptors 
-								   deletable:(BOOL)deletable 
-									internal:(BOOL)internal
++ (MTDisplayRule *)createDisplayRuleForUser:(MTUser *)user 
+									   name:(NSString *)name 
 {
 	MTDisplayRule *displayRule = [MTDisplayRule createDisplayRuleForUser:user];
 	displayRule.user = user;
 	displayRule.name = name;
+	displayRule.internalValue = YES;
+	return displayRule;
+}
+
++ (MTDisplayRule *)createDisplayRuleForUser:(MTUser *)user 
+									   name:(NSString *)name 
+							sortDescriptors:(NSArray *)sortDescriptors 
+								  deletable:(BOOL)deletable 
+								   internal:(BOOL)internal
+{
+	MTDisplayRule *displayRule = [MTDisplayRule createDisplayRuleForUser:user name:name];
 	displayRule.deleteableValue = deletable;
 	displayRule.internalValue = internal;
 	for(NSSortDescriptor *sortDescriptor in sortDescriptors)
@@ -187,80 +183,113 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	return displayRule;
 }
 
-+ (void)deleteDefaultDisplayRules
-{
-	MTUser *currentUser = [MTUser currentUser];
-	NSArray *displayRules = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
-																	  propertiesToFetch:nil
-																		  withPredicate:@"internal == YES", currentUser];
-	for(MTDisplayRule *displayRule in displayRules)
-	{
-		[currentUser.managedObjectContext deleteObject:displayRule];
-	}
-	NSArray *users = [currentUser.managedObjectContext fetchObjectsForEntityName:[MTUser entityName]
-															   propertiesToFetch:nil
-																   withPredicate:nil];
-	for(MTUser *user in users)
-	{
-		[self createDefaultDisplayRulesForUser:user];
-	}
-}
-
 + (void)createDefaultDisplayRulesForUser:(MTUser *)user
 {
 	MTDisplayRule *displayRule;
 	
-	NSArray *sortDescriptors = [NSArray array];
-	
 	// Street Sorted
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"Street Sorted"
-										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"Street Sorted"];
+	[displayRule restoreDefaults];
 	user.currentDisplayRule = displayRule;
-
+	
 	// Date Sorted
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"Date Sorted"
-										   sortDescriptors:sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"Date Sorted"];
+	[displayRule restoreDefaults];
 	
 	// City Sorted
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"City Sorted"
-										   sortDescriptors:sortByName(sortByStreet(sortByCity(sortDescriptors)))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"City Sorted"];
+	[displayRule restoreDefaults];
 	
 	// Name Sorted
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"Name Sorted"
-										   sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"Name Sorted"];
+	[displayRule restoreDefaults];
 	
 	// Study Sorted
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"Studies"
-										   sortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
-	[MTFilter addStudiesFilter:displayRule.filter];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"Studies"];
+	[displayRule restoreDefaults];
 	
 	// Deleted Calls
-	displayRule = [MTDisplayRule createDisplayRuleWithUser:user 
-													  name:@"Deleted Calls"
-										   sortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
-												 deletable:NO
-												  internal:YES];
-	[MTFilter addDeletedFilter:displayRule.filter deleted:YES];
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user 
+													 name:@"Deleted Calls"];
+	[displayRule restoreDefaults];
+}
+
+- (MTDisplayRule *)setSortDescriptors:(NSArray *)sortDescriptors 
+							deletable:(BOOL)deletable 
+							 internal:(BOOL)internal
+{
+	self.deleteableValue = deletable;
+	self.internalValue = internal;
+	self.sorters = nil;
+	for(NSSortDescriptor *sortDescriptor in sortDescriptors)
+	{
+		MTSorter *sorter = [MTSorter createSorterForDisplayRule:self];
+		sorter.name = [MTSorter nameForPath:sortDescriptor.key];
+		sorter.sectionIndexPath = [MTSorter sectionIndexPathForPath:sortDescriptor.key];
+		sorter.path = sortDescriptor.key;
+		sorter.ascendingValue = sortDescriptor.ascending;
+	}
+	self.filter = nil;
+	self.filter = [MTFilter createFilterForDisplayRule:self];
+	return self;
+}
+
+
+- (void)restoreDefaults
+{
+	NSMutableArray *sortDescriptors = [NSMutableArray array];
+	if([self.name isEqualToString:@"Street Sorted"])
+	{
+		[self setSortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:NO];
+	}
+	else if([self.name isEqualToString:@"Date Sorted"])
+	{
+		[self setSortDescriptors:sortByStreet(sortByCity(sortByName(sortByDate(sortDescriptors))))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:NO];
+	}
+	else if([self.name isEqualToString:@"City Sorted"])
+	{
+		[self setSortDescriptors:sortByName(sortByStreet(sortByCity(sortDescriptors)))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:NO];
+	}
+	else if([self.name isEqualToString:@"Name Sorted"])
+	{
+		[self setSortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:NO];
+	}
+	else if([self.name isEqualToString:@"Studies"])
+	{
+		[self setSortDescriptors:sortByCity(sortByStreet(sortByName(sortDescriptors)))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:NO];
+		[MTFilter addStudiesFilter:self.filter];
+	}
+	else if([self.name isEqualToString:@"Deleted Calls"])
+	{
+		[self setSortDescriptors:sortByName(sortByCity(sortByStreet(sortDescriptors)))
+					   deletable:NO
+						internal:YES];
+		[MTFilter addDeletedFilter:self.filter deleted:YES];
+	}
+	else
+	{
+		assert(NO); // this is not an internal view
+	}
 }
 
 + (MTDisplayRule *)displayRuleForInternalName:(NSString *)name

@@ -68,6 +68,7 @@
 		9045AA000E7D99A4001B439C /* EventAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A9FF0E7D99A4001B439C /* EventAgent.m */; };
 		904AF63E1170101000D497E7 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904AF63D1170101000D497E7 /* StatisticsTableViewController.m */; };
 		904E81860F5DF8E600073BC1 /* PublisherTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */; };
+		904F04C2138CB53000C3AB3E /* PSButtonCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904F04C1138CB53000C3AB3E /* PSButtonCellController.m */; };
 		904FEAFA11B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */; };
 		905222B51183EB790047C9DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 905222B41183EB790047C9DA /* MapKit.framework */; };
 		9052CD341086753F001FFA13 /* NotAtHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052CD331086753F001FFA13 /* NotAtHomeViewController.m */; };
@@ -400,6 +401,8 @@
 		904AF63D1170101000D497E7 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = StatisticsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		904E81840F5DF8E600073BC1 /* PublisherTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublisherTypeViewController.h; sourceTree = "<group>"; };
 		904E81850F5DF8E600073BC1 /* PublisherTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublisherTypeViewController.m; sourceTree = "<group>"; };
+		904F04C0138CB53000C3AB3E /* PSButtonCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSButtonCellController.h; sourceTree = "<group>"; };
+		904F04C1138CB53000C3AB3E /* PSButtonCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSButtonCellController.m; sourceTree = "<group>"; };
 		904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+PriddySoftware.h"; sourceTree = "<group>"; };
 		904FEAF911B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+PriddySoftware.m"; sourceTree = "<group>"; };
 		905222B41183EB790047C9DA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -966,6 +969,8 @@
 				90592D6212CC44B700ECBFFF /* PSTextViewCellController.m */,
 				9015DCD112F6641800C31E1C /* PSLabelCellController.h */,
 				9015DCD212F6641800C31E1C /* PSLabelCellController.m */,
+				904F04C0138CB53000C3AB3E /* PSButtonCellController.h */,
+				904F04C1138CB53000C3AB3E /* PSButtonCellController.m */,
 				90C1497D0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.h */,
 				90C1497E0E3BAAB300C6EDAF /* UITableViewTitleAndValueCell.m */,
 				905C37170E3D52DB00C8DB27 /* UITableViewTextFieldCell.h */,
@@ -1725,6 +1730,7 @@
 				90B964FF1385F93100C2BDAB /* MyTime 10.xcdatamodel in Sources */,
 				90B965001385F93200C2BDAB /* MyTime 9.xcdatamodel in Sources */,
 				90B965011385F93200C2BDAB /* MyTime 8.xcdatamodel in Sources */,
+				904F04C2138CB53000C3AB3E /* PSButtonCellController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
