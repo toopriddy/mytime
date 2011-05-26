@@ -11,15 +11,16 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 + (void)createDefaultDisplayRulesForUser:(MTUser *)user;
 + (MTDisplayRule *)displayRuleForInternalName:(NSString *)name;
 
-+ (void)deleteDefaultDisplayRules;
-
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc;
+
+- (void)restoreDefaults;
 
 - (NSArray *)allSortDescriptors;
 - (NSArray *)coreDataSortDescriptors;
 - (NSString *)sectionIndexPath;
 - (MTSorter *)sectionIndexSorter;
 - (BOOL)requiresArraySorting;
+
 
 - (NSString *)localizedName;
 

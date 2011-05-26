@@ -48,4 +48,42 @@
 	return newPublication;
 }
 
++ (NSString *)pluralFormForPublicationType:(NSString *)publicationType
+{
+	if([publicationType isEqualToString:PublicationTypeBook])
+	{
+		return PublicationTypePluralBook;
+	}
+	else if([publicationType isEqualToString:PublicationTypeDVDBible])
+	{
+		return PublicationTypePluralDVDBible;
+	}
+	else if([publicationType isEqualToString:PublicationTypeDVDBook])
+	{
+		return PublicationTypePluralDVDBook;
+	}
+	else if([publicationType isEqualToString:PublicationTypeDVDBrochure])
+	{
+		return PublicationTypePluralDVDBrochure;
+	}
+	else if([publicationType isEqualToString:PublicationTypeBrochure])
+	{
+		return PublicationTypePluralBrochure;
+	}
+	else if([publicationType isEqualToString:PublicationTypeMagazine])
+	{
+		return PublicationTypePluralMagazine;
+	}
+	else if([publicationType isEqualToString:PublicationTypeTwoMagazine])
+	{
+		return PublicationTypePluralTwoMagazine;
+	}
+	else if([publicationType isEqualToString:PublicationTypeCampaignTract])
+	{
+		return PublicationTypePluralCampaignTract;
+	}
+	return publicationType;
+}	
+	
+
 @end
