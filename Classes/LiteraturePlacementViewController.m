@@ -160,7 +160,6 @@
 		name = [[PSLocalization localizationBundle] localizedStringForKey:name value:name table:@""];
 		int count = [self.publication.count intValue];
 		NSString *type = self.publication.type;
-		type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:@""];
 		if([type isEqualToString:PublicationTypeMagazine] ||
 		   [type isEqualToString:PublicationTypeTwoMagazine])
 		{
@@ -177,7 +176,7 @@
 			{	
 				type = [MTPublication pluralFormForPublicationType:type];
 				type = [[PSLocalization localizationBundle] localizedStringForKey:type value:type table:nil];
-				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@s: %@", @"'2 Brochures: The Trinity' with the format '%d %@s: %@' notice the 's' in the middle for the plural form, the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
+				[cell setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d %@: %@", @"'1 Brochure: The Trinity' with the format '%d %@: %@', the %@ represents the Magazine, Book, or Brochure type and the %d represents the count of publications"), count, type, name]];
 			}
 		}
 		

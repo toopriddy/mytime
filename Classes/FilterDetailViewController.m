@@ -21,6 +21,27 @@
 #import "PSLocalization.h"
 #import "FilterTableViewController.h"
 
+/******************************************************************
+ *
+ *   FAVORITES
+ *
+ ******************************************************************/
+#pragma mark FAVORITES
+@interface FilterDetailViewDateSectionController : GenericTableViewSectionController
+{
+}
+@property (nonatomic, retain) MTFilter *filter;
+@end
+@implementation FilterDetailViewDateSectionController
+@synthesize filter;
+- (BOOL)isViewableWhenNotEditing
+{
+	return self.filter.operator.length < 3;
+}
+
+@end
+
+
 @implementation FilterDetailViewController
 @synthesize delegate;
 @synthesize filter;
@@ -99,6 +120,20 @@
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView operatorSelectedAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self checkDoneButton];
+	[self updateWithoutReload];
+}
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView emptyOperatorSelectedAtIndexPath:(NSIndexPath *)indexPath
+{
+	self.filter.value = @"";
+	[self checkDoneButton];
+	[self updateWithoutReload];
+}
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView stringDayOperatorSelectedAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self checkDoneButton];
+	[self updateWithoutReload];
 }
 
 - (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView specificValueSelectedAtIndexPath:(NSIndexPath *)indexPath
@@ -318,11 +353,31 @@
 								cellController.title = NSLocalizedString(@"Equals", @"Title for switch in the filter for the strings operator");
 								cellController.model = self.filter;
 								cellController.modelPath = @"operator";
-								cellController.checkedValue = @"LIKE";
+								cellController.checkedValue = @"==";
 								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:operatorSelectedAtIndexPath:)];
 								[self addCellController:cellController toSection:sectionController];
 							}
 							
+							{
+								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
+								cellController.title = NSLocalizedString(@"Wildcard Match", @"Title for switch in the filter for the strings operator");
+								cellController.model = self.filter;
+								cellController.modelPath = @"operator";
+								cellController.checkedValue = @"LIKE";
+								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:operatorSelectedAtIndexPath:)];
+								[self addCellController:cellController toSection:sectionController];
+							}
+#if 0							
+							{
+								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
+								cellController.title = NSLocalizedString(@"Empty", @"Title for switch in the filter for the strings operator");
+								cellController.model = self.filter;
+								cellController.modelPath = @"operator";
+								cellController.checkedValue = @"==";
+								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:emptyOperatorSelectedAtIndexPath:)];
+								[self addCellController:cellController toSection:sectionController];
+							}
+#endif							
 							{
 								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
 								cellController.title = NSLocalizedString(@"Contains", @"Title for switch in the filter for the strings operator");
@@ -416,9 +471,9 @@
 					case NSDateAttributeType:
 					{
 						{
-							
-							GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+							FilterDetailViewDateSectionController *sectionController = [[FilterDetailViewDateSectionController alloc] init];
 							[self.sectionControllers addObject:sectionController];
+							sectionController.filter = self.filter;
 							[sectionController release];
 							
 							PSDateCellController *cellController = [[PSDateCellController alloc] init];
@@ -429,11 +484,11 @@
 							cellController.modelValueIsString = YES;
 							if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 							{
-								[cellController setDateFormat:@"d/M/yyy"];
+								[cellController setDateFormat:@"d/M/yyy h:mma"];
 							}
 							else
 							{
-								[cellController setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+								[cellController setDateFormat:NSLocalizedString(@"M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 							}
 							
 							[self addCellController:cellController toSection:sectionController];
@@ -445,14 +500,23 @@
 							
 							{
 								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
-								cellController.title = NSLocalizedString(@"Equals", @"Title for switch in the filter for the number operator");
+								cellController.title = NSLocalizedString(@"Today", @"Title for switch in the filter for the number operator");
 								cellController.model = self.filter;
 								cellController.modelPath = @"operator";
-								cellController.checkedValue = @"==";
-								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:operatorSelectedAtIndexPath:)];
+								cellController.checkedValue = @"== Today";
+								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:stringDayOperatorSelectedAtIndexPath:)];
 								[self addCellController:cellController toSection:sectionController];
 							}
 							
+							{
+								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
+								cellController.title = NSLocalizedString(@"Yesterday", @"Title for switch in the filter for the number operator");
+								cellController.model = self.filter;
+								cellController.modelPath = @"operator";
+								cellController.checkedValue = @"== Yesterday";
+								[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:stringDayOperatorSelectedAtIndexPath:)];
+								[self addCellController:cellController toSection:sectionController];
+							}
 							{
 								PSCheckmarkCellController *cellController = [[[PSCheckmarkCellController alloc] init] autorelease];
 								cellController.title = NSLocalizedString(@"Greater Than or Equals", @"Title for switch in the filter for the number operator");

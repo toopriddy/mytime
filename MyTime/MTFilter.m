@@ -95,13 +95,14 @@ NSString *translate(NSString *value)
 
 + (NSArray *)displayEntriesForReturnVisits
 {
+	NSArray *typeArray = [NSArray arrayWithObjects:CallReturnVisitTypeInitialVisit, CallReturnVisitTypeReturnVisit, CallReturnVisitTypeStudy, CallReturnVisitTypeNotAtHome, CallReturnVisitTypeTransferedStudy, CallReturnVisitTypeTransferedNotAtHome, CallReturnVisitTypeTransferedInitialVisit, CallReturnVisitTypeTransferedReturnVisit, nil];
 	NSString *entityName = [MTReturnVisit entityName];
 	NSArray *returnArray = 
 	[[NSArray alloc] initWithObjects:
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Return Visit", @"category in the Display Rules when picking sorting rules"), MTFilterGroupName,
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"type", MTFilterPath, AlternateLocalizedString(@"Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [NSArray arrayWithObjects:CallReturnVisitTypeInitialVisit, CallReturnVisitTypeReturnVisit, CallReturnVisitTypeStudy, CallReturnVisitTypeNotAtHome, CallReturnVisitTypeTransferedStudy, CallReturnVisitTypeTransferedNotAtHome, CallReturnVisitTypeTransferedInitialVisit, CallReturnVisitTypeTransferedReturnVisit, nil], MTFilterValues, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"type", MTFilterPath, AlternateLocalizedString(@"Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, typeArray, MTFilterValues, typeArray, MTFilterValuesUntranslatedTitles, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"date", MTFilterPath, AlternateLocalizedString(@"Date", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"notes", MTFilterPath, AlternateLocalizedString(@"Notes", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
@@ -112,6 +113,7 @@ NSString *translate(NSString *value)
 
 + (NSArray *)displayEntriesForCalls
 {
+	NSArray *locationLookupArray = [NSArray arrayWithObjects:CallLocationTypeGoogleMaps, CallLocationTypeManual, CallLocationTypeDoNotShow, nil];
 	NSString *entityName = [MTCall entityName];
 	NSArray *returnArray = 
 	[[NSArray alloc] initWithObjects:
@@ -119,7 +121,7 @@ NSString *translate(NSString *value)
 	  entityName, MTFilterEntityName,
 	  [NSArray arrayWithObjects:
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"name", MTFilterPath, @"uppercaseFirstLetterOfName", MTFilterSectionIndexPath, AlternateLocalizedString(@"Name", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationLookupType", MTFilterPath, AlternateLocalizedString(@"Location Lookup Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, [NSArray arrayWithObjects:CallLocationTypeGoogleMaps, CallLocationTypeManual, CallLocationTypeDoNotShow, nil], MTFilterValues, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationLookupType", MTFilterPath, AlternateLocalizedString(@"Location Lookup Type", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, locationLookupArray, MTFilterValues, locationLookupArray, MTFilterValuesUntranslatedTitles, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"deletedCall", MTFilterPath, AlternateLocalizedString(@"Deleted", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"locationAquired", MTFilterPath, AlternateLocalizedString(@"Location Aquired", @"Title for the Display Rules 'pick a sort rule' screen"), MTFilterUntranslatedName, nil],
 	   nil], MTFilterGroupArray, nil],
@@ -343,29 +345,39 @@ NSString *translate(NSString *value)
 	else
 	{
 		NSString *valueTitle = self.untranslatedValueTitle;
+		NSString *operator = self.operator;
 		if(valueTitle)
 		{
 			valueTitle = [[PSLocalization localizationBundle] localizedStringForKey:valueTitle value:valueTitle table:@""];
 		}
 		else
 		{
-			if([self typeForPath] == NSDateAttributeType)
+			if([self typeForPath] == NSDateAttributeType && self.value.length > 0)
 			{
-				NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:[self.value doubleValue]];
-				// create dictionary entry for This Return Visit
-				[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
-				NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-				[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-				if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
-				{
-					[dateFormatter setDateFormat:@"d/M/yyy"];
+				if([operator hasPrefix:@"== "])
+				{			
+					operator = [operator substringFromIndex:3];
+					valueTitle = [[PSLocalization localizationBundle] localizedStringForKey:operator value:operator table:nil];
+					operator = @"==";
 				}
 				else
 				{
-					[dateFormatter setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+					NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:[self.value doubleValue]];
+					// create dictionary entry for This Return Visit
+					[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
+					NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+					[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+					if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+					{
+						[dateFormatter setDateFormat:@"d/M/yyy h:mma"];
+					}
+					else
+					{
+						[dateFormatter setDateFormat:NSLocalizedString(@"M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+					}
+					
+					valueTitle = [dateFormatter stringFromDate:date];
 				}
-				
-				valueTitle = [dateFormatter stringFromDate:date];
 			}
 			else
 			{
@@ -385,13 +397,14 @@ NSString *translate(NSString *value)
 		{
 			caseFlags = @"[c]";
 		}
+		
 		if(self.notValue)
 		{
-			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", translatedName, self.operator, caseFlags, valueTitle];
+			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", translatedName, operator, caseFlags, valueTitle];
 		}
 		else
 		{
-			return [NSString stringWithFormat:@"%@ %@%@ %@", translatedName, self.operator, caseFlags, valueTitle];
+			return [NSString stringWithFormat:@"%@ %@%@ %@", translatedName, operator, caseFlags, valueTitle];
 		}
 	}
 }
@@ -405,7 +418,9 @@ NSString *translate(NSString *value)
 	}
 	NSMutableString *output = [NSMutableString string];
 	NSString *newTempVariable = tempVariable == nil ? nil : [[tempVariable copy] autorelease];
+	NSString *compareVariableName = nil;
 	NSString *ourPredicateString;
+	NSString *dateType = nil;
 	
 	// if this is the filter attached directly to the display rule then we just need to aggregate all the predicates togeather
 	if(self.displayRule)
@@ -427,9 +442,15 @@ NSString *translate(NSString *value)
 		{
 			caseFlags = @"[c]";
 		}
+		NSString *operator = self.operator;
+		if([operator hasPrefix:@"== "])
+		{			
+			dateType = [operator substringFromIndex:3];
+			operator = @"BETWEEN";
+		}
 		ourPredicateString = [MTFilter predicateStringFromPath:self.path 
 														entity:[NSEntityDescription entityForName:self.parent.filterEntityName inManagedObjectContext:self.managedObjectContext]
-													  operator:[NSString stringWithFormat:@"%@%@", self.operator, caseFlags]
+													  operator:[NSString stringWithFormat:@"%@%@", operator, caseFlags]
 											  subqueryOperator:@"> 0"
 												  tempVariable:&newTempVariable 
 														isList:self.listValue];
@@ -437,6 +458,10 @@ NSString *translate(NSString *value)
 	
 	if(self.listValue)
 	{
+		if(self.notValue)
+		{
+			[output appendString:@"!"];
+		}
 		[output appendString:@"("];
 		BOOL isFirst = YES;
 		for(MTFilter *filter in self.filters)
@@ -465,7 +490,41 @@ NSString *translate(NSString *value)
 	}
 	else
 	{
-		output = (id)[NSString stringWithFormat:ourPredicateString, self.value];
+		id value = self.value;
+		if(dateType)
+		{
+			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:[NSDate date]];
+			// set the default publication to be the watchtower this month and year
+			NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+			NSDate *date = [gregorian dateFromComponents:dateComponents];
+			NSDate *todayStart = date;
+			NSDate *todayEnd = [NSDate dateWithTimeInterval:(60*60*24 - 1) sinceDate:date];
+			NSDate *yesterdayStart = [NSDate dateWithTimeInterval:-(60*60*24) sinceDate:date];
+			if([dateType isEqualToString:@"Today"])
+			{
+				ourPredicateString = @"%@";
+				value = [NSString stringWithFormat:@"%@ >= \"%f\" && %@ < \"%f\"", newTempVariable, [todayStart timeIntervalSinceReferenceDate], newTempVariable, [todayEnd timeIntervalSinceReferenceDate]];
+			}
+			else if([dateType isEqualToString:@"Yesterday"])
+			{
+				ourPredicateString = @"%@";
+				value = [NSString stringWithFormat:@"%@ >= \"%f\" && %@ < \"%f\"", newTempVariable, [yesterdayStart timeIntervalSinceReferenceDate], newTempVariable, [todayStart timeIntervalSinceReferenceDate]];
+			}
+		}
+		else if([value length] == 0)
+		{
+			ourPredicateString = @"%@";
+			value = [NSString stringWithFormat:@"%@ == \"\" || %@ == nil", newTempVariable, newTempVariable];
+		}
+		
+		if(self.notValue)
+		{
+			[output appendFormat:@"!(%@)", [NSString stringWithFormat:ourPredicateString, value]];
+		}
+		else
+		{
+			output = (id)[NSString stringWithFormat:ourPredicateString, value];
+		}
 	}
 	return output;
 }
@@ -479,7 +538,7 @@ NSString *translate(NSString *value)
 		return userPredicate;
 	
 	NSLog(@"Predicate: %@", tempString);
-	
+
 	return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:userPredicate, [NSPredicate predicateWithFormat:tempString], nil]];
 }
 
