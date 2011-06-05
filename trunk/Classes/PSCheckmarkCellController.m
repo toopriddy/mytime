@@ -30,9 +30,9 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if(self.cachedTableView && self.cachedIndexPath && [self.cachedTableView numberOfRowsInSection:self.cachedIndexPath.section] > self.cachedIndexPath.row)
+	if(isChecked && ![self.checkedValue isEqual:[self.model valueForKeyPath:self.modelPath]])
 	{
-		[self.cachedTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.cachedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+		[self.cachedTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[self.tableViewController indexPathOfDisplayCellController:self]] withRowAnimation:UITableViewRowAnimationNone];
 	}
 }
 
@@ -79,10 +79,12 @@
 	if([self.checkedValue isEqual:[self.model valueForKeyPath:self.modelPath]])
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		isChecked = YES;
 	}
 	else
 	{
 		cell.accessoryType = UITableViewCellAccessoryNone;
+		isChecked = NO;
 	}
 	
 	return cell;
@@ -93,6 +95,7 @@
 	[self.model setValue:[[self.checkedValue copy] autorelease] forKey:self.modelPath];
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	isChecked = YES;
 
 	[super tableView:tableView didSelectRowAtIndexPath:indexPath];
 

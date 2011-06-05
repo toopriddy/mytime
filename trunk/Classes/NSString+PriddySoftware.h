@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSNumber (PriddySoftrware) 
+@end
 
 @interface NSString (PriddySoftrware) 
 

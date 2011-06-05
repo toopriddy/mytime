@@ -1286,7 +1286,7 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
-		
+#if 0		
 		// Pioneer Start Date
 		{
 			PSDateCellController *cellController = [[PSDateCellController alloc] init];
@@ -1305,7 +1305,7 @@
 			
 			[self addCellController:cellController toSection:sectionController];
 		}
-		
+#endif		
 		// Passcode
 		{
 			PasscodeCellController *cellController = [[PasscodeCellController alloc] init];

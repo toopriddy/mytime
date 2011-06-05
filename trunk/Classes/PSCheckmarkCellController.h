@@ -12,6 +12,7 @@
 
 @interface PSCheckmarkCellController : PSBaseCellController
 {
+	BOOL isChecked;
 }
 @property (nonatomic, retain) NSObject *checkedValue;
 @property (nonatomic, retain) UITableView *cachedTableView;

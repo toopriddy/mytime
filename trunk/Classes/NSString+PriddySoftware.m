@@ -8,6 +8,14 @@
 
 #import "NSString+PriddySoftware.h"
 
+@implementation NSNumber (PriddySoftrware)
+- (NSTimeInterval)timeIntervalSinceReferenceDate
+{
+	return [self doubleValue];
+}
+
+@end
+
 
 @implementation NSString (PriddySoftrware)
 
@@ -18,7 +26,7 @@
 
 - (NSTimeInterval)timeIntervalSinceReferenceDate
 {
-	return [self intValue];
+	return [self doubleValue];
 }
 
 @end

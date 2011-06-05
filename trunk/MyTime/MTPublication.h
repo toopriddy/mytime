@@ -13,16 +13,16 @@
 #define PublicationTypeTract			AlternateLocalizedString(@"Tract", @"Publication Type name")
 #define PublicationTypeCampaignTract	AlternateLocalizedString(@"Campaign Tract", @"Publication Type name")
 
-#define PublicationTypePluralDVDBible			AlternateLocalizedString(@"Bible DVDs", @"Publication Type name")
-#define PublicationTypePluralDVDBook			AlternateLocalizedString(@"DVDs", @"Publication Type name")
-#define PublicationTypePluralDVDBrochure		AlternateLocalizedString(@"DVD Brochures", @"Publication Type name")
-#define PublicationTypePluralDVDNotCount		AlternateLocalizedString(@"DVDs (not counted)", @"Publication Type name") 
-#define PublicationTypePluralBook				AlternateLocalizedString(@"Books", @"Publication Type name")
-#define PublicationTypePluralBrochure			AlternateLocalizedString(@"Brochures", @"Publication Type name")
-#define PublicationTypePluralTwoMagazine		AlternateLocalizedString(@"Magazines", @"Publication Type name")
-#define PublicationTypePluralMagazine			AlternateLocalizedString(@"Magazines", @"Publication Type name")
-#define PublicationTypePluralTract			AlternateLocalizedString(@"Tracts", @"Publication Type name")
-#define PublicationTypePluralCampaignTract	AlternateLocalizedString(@"Campaign Tracts", @"Publication Type name")
+#define PublicationTypePluralDVDBible			AlternateLocalizedString(@"Bible DVDs", @"Plural Publication Type name")
+#define PublicationTypePluralDVDBook			AlternateLocalizedString(@"DVDs", @"Plural Publication Type name")
+#define PublicationTypePluralDVDBrochure		AlternateLocalizedString(@"DVD Brochures", @"Plural Publication Type name")
+#define PublicationTypePluralDVDNotCount		AlternateLocalizedString(@"DVDs (not counted)", @"Plural Publication Type name") 
+#define PublicationTypePluralBook				AlternateLocalizedString(@"Books", @"Plural Publication Type name")
+#define PublicationTypePluralBrochure			AlternateLocalizedString(@"Brochures", @"Plural Publication Type name")
+#define PublicationTypePluralTwoMagazine		AlternateLocalizedString(@"Magazines", @"Plural Publication Type name")
+#define PublicationTypePluralMagazine			AlternateLocalizedString(@"Magazines", @"Plural Publication Type name")
+#define PublicationTypePluralTract			AlternateLocalizedString(@"Tracts", @"Plural Publication Type name")
+#define PublicationTypePluralCampaignTract	AlternateLocalizedString(@"Campaign Tracts", @"Plural Publication Type name")
 
 
 @class MTReturnVisit;

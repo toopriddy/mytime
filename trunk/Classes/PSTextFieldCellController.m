@@ -27,6 +27,7 @@
 {
 	if(self.textField)
 	{
+		self.textField.delegate = nil;
 		[[NSNotificationCenter defaultCenter] removeObserver:self
 														name:UITextFieldTextDidChangeNotification
 													  object:self.textField];

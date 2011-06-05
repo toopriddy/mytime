@@ -969,7 +969,15 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	
 	MTUser *currentUser = [MTUser currentUser];
 	NSManagedObjectContext *moc = currentUser.managedObjectContext;
-	
+
+	int pioneerStartTimestamp = 0;
+#if 0
+	if(currentUser.pioneerStartDate != nil)
+	{
+		NSDateComponents *pioneerStartDateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:];
+		pioneerStartTimestamp = [dateComponents year] * 100 + [dateComponents month];
+	}
+#endif	
 	NSDateComponents *startOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
 	[startOfDataCollectionComponents setMonth:_thisMonth];
 	[startOfDataCollectionComponents setYear:_thisYear - 1];
@@ -1070,7 +1078,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				*serviceYearValue += value;
+				if(pioneerStartTimestamp > adjustment.timestampValue)
+				{
+					*serviceYearValue += value;
+				}
 			}
 		}
 		[pool drain];
