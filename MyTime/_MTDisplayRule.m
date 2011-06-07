@@ -107,6 +107,13 @@
 
 
 
+@dynamic additionalInformationTypeUuid;
+
+
+
+
+
+
 @dynamic internal;
 
 

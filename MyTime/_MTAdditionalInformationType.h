@@ -14,6 +14,7 @@
 
 
 
+
 @interface MTAdditionalInformationTypeID : NSManagedObjectID {}
 @end
 
@@ -58,6 +59,12 @@
 - (void)setOrderValue:(double)value_;
 
 //- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *uuid;
+
+//- (BOOL)validateUuid:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -136,6 +143,12 @@
 
 - (double)primitiveOrderValue;
 - (void)setPrimitiveOrderValue:(double)value_;
+
+
+
+
+- (NSString*)primitiveUuid;
+- (void)setPrimitiveUuid:(NSString*)value;
 
 
 

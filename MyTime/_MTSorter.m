@@ -151,6 +151,13 @@
 
 
 
+@dynamic additionalInformationTypeUuid;
+
+
+
+
+
+
 @dynamic requiresArraySorting;
 
 

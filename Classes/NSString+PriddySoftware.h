@@ -14,4 +14,5 @@
 @interface NSString (PriddySoftrware) 
 
 - (NSComparisonResult)numericalCaseInsensitiveCompare:(NSString *)other;
++ (NSString *)stringFromGeneratedUUID;
 @end

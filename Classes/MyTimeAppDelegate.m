@@ -1396,8 +1396,6 @@ NSString *emailFormattedStringForSettings();
 			mtUser.publisherType = [user objectForKey:SettingsPublisherType];
 		if([user objectForKey:SettingsMonthDisplayCount])
 			mtUser.monthDisplayCount = [user objectForKey:SettingsMonthDisplayCount];
-		if([user objectForKey:SettingsSortedByMetadata])
-			mtUser.selectedSortByAdditionalInformation = [user objectForKey:SettingsSortedByMetadata];
 		
 		// METADATA
 		double metadataOrder = 100;
@@ -2139,6 +2137,7 @@ NSString *emailFormattedStringForSettings();
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 	[MTDisplayRule fixDisplayRules:self.managedObjectContext];
+	[MTAdditionalInformationType fixAdditionalInformationTypes:self.managedObjectContext];
 
 	
 	// Create a tabbar controller and an array to contain the view controllers

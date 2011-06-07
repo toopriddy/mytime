@@ -22,6 +22,7 @@
 #import "MTAdditionalInformation.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
+#import "MTSorter.h"
 #import "PSLocalization.h"
 
 #include "PSRemoveLocalizedString.h"
@@ -556,6 +557,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	self.type.name = self.name;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationAdditionalInformationTypeChanged object:self.type];
+	[MTSorter updateSortersForAdditionalInformationType:self.type];
 	
 	[self save];
 	

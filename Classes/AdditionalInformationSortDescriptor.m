@@ -31,15 +31,7 @@
 	id item2 = nil;
 	id additionalInformations;
 	NSString *key = self.key;
-#if 1
-	additionalInformations = [call1.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", key]];
-#else
-	NSString *path = self.path;
-	
-	additionalInformations = [call1.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																 propertiesToFetch:[NSArray arrayWithObject:path] 
-																	 withPredicate:@"call == %@ && type.name == %@", call1, key];
-#endif
+	additionalInformations = [call1.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.uuid == %@", key]];
 	for(MTAdditionalInformation *entry in additionalInformations)
 	{
 		// only interested in the first one
@@ -47,13 +39,7 @@
 		break;
 	}
 
-#if 1
-	additionalInformations = [call2.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", key]];
-#else
-	additionalInformations = [call2.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																 propertiesToFetch:[NSArray arrayWithObject:path] 
-																	 withPredicate:@"call == %@ && type.name == %@", call2, key];
-#endif
+	additionalInformations = [call2.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.uuid == %@", key]];
 	for(MTAdditionalInformation *entry in additionalInformations)
 	{
 		// only interested in the first one
@@ -61,13 +47,38 @@
 		break;
 	}
 	
-	id value;
 	if(self.ascending)
-		value = [item1 performSelector:self.selector withObject:item2];
+	{
+		if(item1 == nil && item2 == nil)
+		{
+			return NSOrderedSame;
+		}
+		if(item1 == nil)
+		{
+			return NSOrderedAscending;
+		}
+		if(item2 == nil)
+		{
+			return NSOrderedDescending;
+		}
+		return (NSComparisonResult)[item1 performSelector:self.selector withObject:item2];
+	}
 	else
-		value = [item2 performSelector:self.selector withObject:item1];
-	
-	return (NSComparisonResult)value;
+	{
+		if(item1 == nil && item2 == nil)
+		{
+			return NSOrderedSame;
+		}
+		if(item2 == nil)
+		{
+			return NSOrderedAscending;
+		}
+		if(item1 == nil)
+		{
+			return NSOrderedDescending;
+		}
+		return (NSComparisonResult)[item2 performSelector:self.selector withObject:item1];
+	}
 }
 
 - (id)reversedSortDescriptor

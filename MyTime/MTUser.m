@@ -134,4 +134,8 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	return currentUser;
 }
 
+- (void)relinquish
+{
+	self.currentDisplayRule = nil;
+}
 @end

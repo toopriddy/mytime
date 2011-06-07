@@ -6,6 +6,6 @@
 - (void) awakeFromInsert 
 {
 	[super awakeFromInsert];
-	self.date = [NSDate date];
+	[self setPrimitiveDate:[NSDate date]];
 }
 @end

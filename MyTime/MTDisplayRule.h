@@ -1,4 +1,5 @@
 #import "_MTDisplayRule.h"
+@class MTAdditionalInformationType;
 
 extern NSString *const MTNotificationDisplayRuleChanged;
 
@@ -10,6 +11,8 @@ extern NSString *const MTNotificationDisplayRuleChanged;
 + (MTDisplayRule *)currentDisplayRuleInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (void)createDefaultDisplayRulesForUser:(MTUser *)user;
 + (MTDisplayRule *)displayRuleForInternalName:(NSString *)name;
+
++ (MTDisplayRule *)displayRuleForAdditionalInformationType:(MTAdditionalInformationType *)type;
 
 + (void)fixDisplayRules:(NSManagedObjectContext *)moc;
 

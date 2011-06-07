@@ -14,6 +14,7 @@
 
 
 
+
 @interface MTSorterID : NSManagedObjectID {}
 @end
 
@@ -70,6 +71,12 @@
 - (void)setAscendingValue:(BOOL)value_;
 
 //- (BOOL)validateAscending:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *additionalInformationTypeUuid;
+
+//- (BOOL)validateAdditionalInformationTypeUuid:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -140,6 +147,12 @@
 
 - (BOOL)primitiveAscendingValue;
 - (void)setPrimitiveAscendingValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveAdditionalInformationTypeUuid;
+- (void)setPrimitiveAdditionalInformationTypeUuid:(NSString*)value;
 
 
 

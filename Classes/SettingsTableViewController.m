@@ -1174,7 +1174,7 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
-	MTUser *user = [MTUser currentUser];
+//	MTUser *user = [MTUser currentUser];
 	// Donate
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
