@@ -22,7 +22,6 @@
 
 
 
-
 @interface MTUserID : NSManagedObjectID {}
 @end
 
@@ -69,12 +68,6 @@
 - (void)setOrderValue:(double)value_;
 
 //- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *selectedSortByAdditionalInformation;
-
-//- (BOOL)validateSelectedSortByAdditionalInformation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -218,12 +211,6 @@
 
 - (double)primitiveOrderValue;
 - (void)setPrimitiveOrderValue:(double)value_;
-
-
-
-
-- (NSString*)primitiveSelectedSortByAdditionalInformation;
-- (void)setPrimitiveSelectedSortByAdditionalInformation:(NSString*)value;
 
 
 

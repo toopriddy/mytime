@@ -418,7 +418,6 @@ NSString *translate(NSString *value)
 	}
 	NSMutableString *output = [NSMutableString string];
 	NSString *newTempVariable = tempVariable == nil ? nil : [[tempVariable copy] autorelease];
-	NSString *compareVariableName = nil;
 	NSString *ourPredicateString;
 	NSString *dateType = nil;
 	

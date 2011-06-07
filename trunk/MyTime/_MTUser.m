@@ -117,13 +117,6 @@
 
 
 
-@dynamic selectedSortByAdditionalInformation;
-
-
-
-
-
-
 @dynamic secretaryEmailNotes;
 
 

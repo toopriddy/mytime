@@ -13,6 +13,7 @@
 #import "PSLabelCellController.h"
 #import "MTUser.h"
 #import "MTDisplayRule.h"
+#import "MTAdditionalInformationType.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "PSLocalization.h"
@@ -223,6 +224,14 @@
 	[super constructSectionControllers];
 	MTUser *currentUser = [MTUser currentUser];
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
+
+	NSArray *additionalInformationTypes = [managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+																			withPredicate:@"user == %@", currentUser];
+	for(MTAdditionalInformationType *type in additionalInformationTypes)
+	{
+		[MTDisplayRule displayRuleForAdditionalInformationType:type];
+	}
+
 	
 	{
 		NSArray *displayRules = [managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]

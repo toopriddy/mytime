@@ -5,7 +5,9 @@
 #import "MTSorter.h"
 #import "MTFilter.h"
 #import "MTCall.h"
+#import "MTAdditionalInformationType.h"
 #import "AdditionalInformationSortDescriptor.h"
+#import "NSString+PriddySoftware.h"
 #import "PSLocalization.h"
 
 NSString *const MTNotificationDisplayRuleChanged = @"mtNotificationDisplayRuleChanged";
@@ -18,7 +20,7 @@ MTDisplayRule *g_currentDisplayRule;
 {
 	// fix for MyTime < 3.0 to create the filters on the Beta tester's phones
 	for(MTDisplayRule *displayRule in [moc fetchObjectsForEntityName:[MTDisplayRule entityName]
-												   propertiesToFetch:[NSArray arrayWithObject:@"order"]
+												   propertiesToFetch:nil
 													   withPredicate:nil])
 	{
 		if(displayRule.filter == nil)
@@ -28,6 +30,10 @@ MTDisplayRule *g_currentDisplayRule;
 			{
 				[displayRule restoreDefaults];
 			}
+		}
+		if(displayRule.additionalInformationTypeUuid == nil)
+		{
+			displayRule.additionalInformationTypeUuid = [NSString stringFromGeneratedUUID];
 		}
 	}
 }
@@ -59,6 +65,35 @@ MTDisplayRule *g_currentDisplayRule;
 	displayRule.user = user;
 
 	displayRule.filter = [MTFilter createFilterForDisplayRule:displayRule];
+
+	return displayRule;
+}
+
+// Custom logic goes here.
++ (MTDisplayRule *)displayRuleForAdditionalInformationType:(MTAdditionalInformationType *)type
+{
+	MTUser *user = type.user;
+	MTDisplayRule *displayRule;
+	NSArray *objects = [type.managedObjectContext fetchObjectsForEntityName:[MTDisplayRule entityName]
+														  propertiesToFetch:nil
+															  withPredicate:@"user == %@ && additionalInformationTypeUuid == %@", user, type.uuid];
+	if([objects count])
+	{
+		return [objects objectAtIndex:0];
+	}
+	displayRule = [MTDisplayRule createDisplayRuleForUser:user];
+	displayRule.additionalInformationTypeUuid = type.uuid;
+	displayRule.name = type.name;
+	
+	// need to add deleted calls filter
+	[MTFilter addDeletedFilter:displayRule.filter deleted:NO];
+	
+	displayRule.deleteableValue = YES;
+	displayRule.internalValue = NO;
+	displayRule.sorters = nil;
+
+	MTSorter *sorter = [MTSorter createSorterForDisplayRule:displayRule];
+	[sorter setFromAdditionalInformationType:type];
 
 	return displayRule;
 }
@@ -347,7 +382,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	{
 		if(sorter.requiresArraySortingValue)
 		{
-			NSSortDescriptor *sortDescriptor = [[AdditionalInformationSortDescriptor alloc] initWithName:sorter.name 
+			NSSortDescriptor *sortDescriptor = [[AdditionalInformationSortDescriptor alloc] initWithName:sorter.additionalInformationTypeUuid 
 																									path:sorter.path 
 																							   ascending:sorter.ascendingValue 
 																								selector:sorter.selector];

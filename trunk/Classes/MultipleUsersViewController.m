@@ -156,6 +156,7 @@
 			{
 				[MTUser setCurrentUser:nil];
 			}
+			[self.user relinquish];
 			[self.delegate.managedObjectContext deleteObject:self.user];
 			NSError *error = nil;
 			if (![self.delegate.managedObjectContext save:&error]) 

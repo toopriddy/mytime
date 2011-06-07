@@ -3,6 +3,7 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MTUser.h"
 #import "Settings.h"
+#import "NSString+PriddySoftware.h"
 #import "PSLocalization.h"
 
 NSString * const MTNotificationAdditionalInformationTypeChanged = @"MTNotificationAdditionalInformationTypeChanged";
@@ -19,6 +20,19 @@ static MetadataInformation commonInformation[] = {
 #define ORDER_INCREMENT 100.0
 @implementation MTAdditionalInformationType
 
++ (void)fixAdditionalInformationTypes:(NSManagedObjectContext *)managedObjectContext
+{
+	NSArray *objects = [managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformationType entityName]
+														 withPredicate:nil];
+	for(MTAdditionalInformationType *type in objects)
+	{
+		if(type.uuid == nil)
+		{
+			type.uuid = [NSString stringFromGeneratedUUID];
+		}
+	}
+}
+
 + (MTAdditionalInformationType *)additionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user
 {
 	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
@@ -33,7 +47,8 @@ static MetadataInformation commonInformation[] = {
 + (MTAdditionalInformationType *)insertAdditionalInformationType:(int)type name:(NSString *)name user:(MTUser *)user
 {
 	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertAdditionalInformationTypeForUser:user];
-	
+	mtAdditionalInformationType.uuid = [NSString stringFromGeneratedUUID];
+
 	mtAdditionalInformationType.typeValue = type;
 	mtAdditionalInformationType.name = name;
 	
@@ -53,6 +68,7 @@ static MetadataInformation commonInformation[] = {
 	}
 	
 	MTAdditionalInformationType *mtAdditionalInformationType = [MTAdditionalInformationType insertInManagedObjectContext:user.managedObjectContext];
+	mtAdditionalInformationType.uuid = [NSString stringFromGeneratedUUID];
 	mtAdditionalInformationType.orderValue = order + ORDER_INCREMENT;
 	mtAdditionalInformationType.alwaysShownValue = NO;
 	mtAdditionalInformationType.user = user;
@@ -94,5 +110,10 @@ static MetadataInformation commonInformation[] = {
 	}
 }
 
+- (void) awakeFromInsert 
+{
+	[super awakeFromInsert];
+	[self setPrimitiveUuid:[NSString stringFromGeneratedUUID]];
+}
 
 @end

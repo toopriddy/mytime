@@ -10,6 +10,7 @@ NSString * const MTSorterGroupArray = @"array";
 NSString * const MTSorterEntryPath = @"path";
 NSString * const MTSorterEntrySectionIndexPath = @"sectionIndexPath";
 NSString * const MTSorterEntryName = @"name";
+NSString * const MTSorterEntryUUID = @"uuid";
 NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 
 @implementation MTSorter
@@ -28,7 +29,7 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 	[super awakeFromInsert];
 	if([self primitiveRequiresArraySorting] == nil)
 	{
-		self.requiresArraySortingValue = NO;
+		[self setPrimitiveRequiresArraySortingValue:NO];
 	}
 }
 
@@ -76,11 +77,64 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 				[entry setObject:@"sectionIndexNumber" forKey:MTSorterEntrySectionIndexPath];
 				break;
 		}
+		[entry setObject:type.uuid forKey:MTSorterEntryUUID];
 		[entry setObject:type.name forKey:MTSorterEntryName];
 		[entry setObject:[NSNumber numberWithBool:YES] forKey:MTSorterEntryRequiresArraySorting];
 		[returnArray addObject:entry];
 	}
 	return returnArray;
+}
+
++ (void)updateSortersForAdditionalInformationType:(MTAdditionalInformationType *)type
+{
+	NSArray *sorters = [type.managedObjectContext fetchObjectsForEntityName:[MTSorter entityName] 
+															   propertiesToFetch:nil 
+																   withPredicate:@"additionalInformationTypeUuid == %@", type.uuid];
+	for(MTSorter *sorter in sorters)
+	{
+		[sorter setFromAdditionalInformationType:type];
+	}
+}
+
+
+- (void)setFromAdditionalInformationType:(MTAdditionalInformationType *)type
+{
+	switch(type.typeValue)
+	{
+		case PHONE:
+			self.path = @"value";
+			break;
+		case EMAIL:
+			self.path = @"value";
+			break;
+		case URL:
+			self.path = @"value";
+			break;
+		case STRING:
+			self.path = @"value";
+			self.sectionIndexPath = @"sectionIndexString";
+			break;
+		case NOTES:
+			self.path = @"value";
+			break;
+		case CHOICE:
+			self.path = @"value";
+			self.sectionIndexPath = @"sectionIndexString";
+			break;
+		case SWITCH:
+			self.path = @"boolean";
+			break;
+		case DATE:
+			self.path = @"date";
+			break;
+		case NUMBER:
+			self.path = @"number";
+			self.sectionIndexPath = @"sectionIndexNumber";
+			break;
+	}
+	self.additionalInformationTypeUuid = type.uuid;
+	self.name = type.name;
+	self.requiresArraySortingValue = YES;
 }
 
 - (SEL)selector

@@ -75,6 +75,7 @@
 	NSDictionary *entry = (NSDictionary *)labelCellController.userData;
 	[[self.navigationItem rightBarButtonItem] setEnabled:YES];
 	self.sorter.name = [entry objectForKey:MTSorterEntryName];
+	self.sorter.additionalInformationTypeUuid = [entry objectForKey:MTSorterEntryUUID];
 	self.sorter.path = [entry objectForKey:MTSorterEntryPath];
 	self.sorter.sectionIndexPath = [entry objectForKey:MTSorterEntrySectionIndexPath];
 	if([entry objectForKey:MTSorterEntryRequiresArraySorting])
@@ -126,7 +127,7 @@
 				cellController.model = self.sorter;
 				cellController.modelPath = @"name";
 				cellController.checkedValue = [entry objectForKey:MTSorterEntryName];
-				if([self.sorter.name isEqualToString:[entry objectForKey:MTSorterEntryName]])
+				if([self.sorter.additionalInformationTypeUuid isEqualToString:[entry objectForKey:MTSorterEntryUUID]])
 				{
 					self.selectedIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
 				}

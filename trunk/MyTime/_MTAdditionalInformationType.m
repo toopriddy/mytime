@@ -137,6 +137,13 @@
 
 
 
+@dynamic uuid;
+
+
+
+
+
+
 @dynamic hidden;
 
 

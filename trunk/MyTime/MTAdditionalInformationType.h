@@ -30,4 +30,6 @@ typedef struct
 + (MTAdditionalInformationType *)insertAdditionalInformationTypeForUser:(MTUser *)user;
 + (void)initalizeDefaultAdditionalInformationTypesForUser:(MTUser *)user;
 + (void)initalizeOldStyleStorageDefaultAdditionalInformationTypesForUser:(NSMutableDictionary *)user;
+
++ (void)fixAdditionalInformationTypes:(NSManagedObjectContext *)managedObjectContext;
 @end

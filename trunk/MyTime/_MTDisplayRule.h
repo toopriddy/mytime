@@ -13,6 +13,7 @@
 
 
 
+
 @interface MTDisplayRuleID : NSManagedObjectID {}
 @end
 
@@ -47,6 +48,12 @@
 - (void)setDeleteableValue:(BOOL)value_;
 
 //- (BOOL)validateDeleteable:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *additionalInformationTypeUuid;
+
+//- (BOOL)validateAdditionalInformationTypeUuid:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -111,6 +118,12 @@
 
 - (BOOL)primitiveDeleteableValue;
 - (void)setPrimitiveDeleteableValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveAdditionalInformationTypeUuid;
+- (void)setPrimitiveAdditionalInformationTypeUuid:(NSString*)value;
 
 
 

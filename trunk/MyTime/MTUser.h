@@ -19,5 +19,6 @@ extern NSString *const MTNotificationUserChanged;
 + (void)setCurrentUser:(MTUser *)user;
 
 - (void)initalizeUser;
+- (void)relinquish;
 
 @end

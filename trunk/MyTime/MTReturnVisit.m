@@ -26,7 +26,7 @@ NSString * const CallReturnVisitTypeNotAtHome = NSLocalizedString(@"Not At Home"
 {
 	[super awakeFromInsert];
 	[self addMyObservers];
-	self.date = [NSDate date];
+	[self setPrimitiveDate:[NSDate date]];
 }
 
 - (void)awakeFromFetch
