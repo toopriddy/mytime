@@ -23,7 +23,7 @@
 
 /******************************************************************
  *
- *   FAVORITES
+ *   For Dates, to remove the value field
  *
  ******************************************************************/
 #pragma mark FAVORITES
@@ -39,6 +39,29 @@
 	return self.filter.operator.length < 3;
 }
 
+@end
+
+/******************************************************************
+ *
+ *   String
+ *
+ ******************************************************************/
+#pragma mark FAVORITES
+@interface FilterDetailViewStringSectionController : GenericTableViewSectionController
+{
+}
+@property (nonatomic, retain) MTFilter *filter;
+@end
+@implementation FilterDetailViewStringSectionController
+@synthesize filter;
+- (NSString *)footer
+{
+	if([filter.operator isEqualToString:@"LIKE"])
+	{
+		return NSLocalizedString(@"Use * to match any number of characters and use ? to match any one character.", @"This is the help that appears in the Filter Detail view when you choose something like Name to filter on and then you choose the wildcard match");
+	}
+	return nil;
+}
 @end
 
 
@@ -326,7 +349,8 @@
 						
 						{
 							
-							GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+							FilterDetailViewStringSectionController *sectionController = [[FilterDetailViewStringSectionController alloc] init];
+							sectionController.filter = self.filter;
 							[self.sectionControllers addObject:sectionController];
 							[sectionController release];
 							
