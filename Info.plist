@@ -37,7 +37,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3.0.11</string>
+	<string>3.0.12</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIPrerenderedIcon</key>
@@ -78,7 +78,7 @@
 			<string>http://mytime.googlecode.com</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.xml</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeTagSpecification</key>
 			<dict>
