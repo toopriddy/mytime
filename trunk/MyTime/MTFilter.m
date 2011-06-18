@@ -515,6 +515,11 @@ NSString *translate(NSString *value)
 			ourPredicateString = @"%@";
 			value = [NSString stringWithFormat:@"%@ == \"\" || %@ == nil", newTempVariable, newTempVariable];
 		}
+		else
+		{
+			value = [value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+		}
+
 		
 		if(self.notValue)
 		{
