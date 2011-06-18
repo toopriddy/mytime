@@ -385,6 +385,7 @@ NSString *translate(NSString *value)
 			}
 		}
 		NSString *caseFlags = @"";
+#if 0
 		if(self.caseInsensitiveValue && self.diacriticInsensitiveValue)
 		{
 			caseFlags = @"[cd]";
@@ -397,7 +398,7 @@ NSString *translate(NSString *value)
 		{
 			caseFlags = @"[c]";
 		}
-		
+#endif		
 		if(self.notValue)
 		{
 			return [NSString stringWithFormat:@"!(%@ %@%@ %@)", translatedName, operator, caseFlags, valueTitle];
