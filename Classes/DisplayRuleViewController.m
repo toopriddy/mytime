@@ -287,7 +287,7 @@
 			cellController.model = self.displayRule;
 			cellController.indentWhileEditing = NO;
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
-			cellController.modelPath = @"name";
+			cellController.modelPath = @"localizedName";
 			[self addCellController:cellController toSection:sectionController];
 		}
 	}
