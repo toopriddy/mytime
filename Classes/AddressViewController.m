@@ -98,7 +98,8 @@
 		self.street = theStreet;
 		self.city = theCity;
 		self.state = theState;
-		showReverseGeocoding = askAboutReverseGeocoding;
+		shouldAskAboutReverseGeocoding = askAboutReverseGeocoding;
+		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager locationServicesEnabled];
 	}
 	return self;
 }
@@ -290,40 +291,6 @@
 		[theTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 	}
 }
-
-#if 0
-- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if(selected)
-	{
-		if(cell == self.streetNumberAndApartmentCell)
-		{
-//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-		}
-	}
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-    DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	if(selected)
-	{
-		if(cell == self.streetCell)
-		{
-//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-		}
-		else if(cell == self.cityCell)
-		{
-//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-		}
-		else if(cell == self.stateCell)
-		{
-//			[theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-		}
-	}
-}
-#endif
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
 {
@@ -533,6 +500,7 @@
 	}
 	if(self.geocoder)
 	{
+		shouldAskAboutReverseGeocoding = NO;
 		[streetNumberAndApartmentCell textFieldAtIndex:0].text = [self.placemark subThoroughfare];
 		streetCell.textField.text = [self.placemark thoroughfare];
 		NSString *cityName = [placemark locality];
@@ -562,9 +530,12 @@
 	
 	if(wasShowingReverseGeocoding)
 	{
-		showReverseGeocoding = YES;
+		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager locationServicesEnabled];
 		wasShowingReverseGeocoding = NO;
-		[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+		if(showReverseGeocoding)
+		{
+			[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+		}
 		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
 	}
 }

@@ -124,7 +124,10 @@
 	self.mapView = [[[MKMapView alloc] initWithFrame:self.view.bounds] autorelease];
 	_mapView.delegate = self;
 	_mapView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	_mapView.showsUserLocation = YES;
+	if([CLLocationManager locationServicesEnabled])
+	{
+		_mapView.showsUserLocation = YES;
+	}
 	
 	[self.view addSubview:_mapView];
 	
@@ -242,13 +245,19 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	self.mapView.showsUserLocation = NO;
+	if([CLLocationManager locationServicesEnabled])
+	{
+		self.mapView.showsUserLocation = NO;
+	}
 	_shouldReloadMarkers = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	self.mapView.showsUserLocation = YES;
+	if([CLLocationManager locationServicesEnabled])
+	{
+		self.mapView.showsUserLocation = YES;
+	}
 	
 	if(_reloadMapView)
 	{

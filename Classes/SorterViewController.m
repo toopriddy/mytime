@@ -101,6 +101,7 @@
 		[sectionController release];
 		
 		PSSwitchCellController *cellController = [[[PSSwitchCellController alloc] init] autorelease];
+		cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 		cellController.title = NSLocalizedString(@"Sort Ascending", @"Title for row in the 'Edit Sort Rule' view for the ascending switch");
 		cellController.model = self.sorter;
 		cellController.modelPath = @"ascending";

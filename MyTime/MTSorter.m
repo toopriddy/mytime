@@ -68,6 +68,7 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 				break;
 			case SWITCH:
 				[entry setObject:@"boolean" forKey:MTSorterEntryPath];
+				[entry setObject:@"sectionIndexBoolean" forKey:MTSorterEntrySectionIndexPath];
 				break;
 			case DATE:
 				[entry setObject:@"date" forKey:MTSorterEntryPath];
@@ -123,6 +124,7 @@ NSString * const MTSorterEntryRequiresArraySorting = @"requiresArraySorting";
 			break;
 		case SWITCH:
 			self.path = @"boolean";
+			self.sectionIndexPath = @"sectionIndexBoolean";
 			break;
 		case DATE:
 			self.path = @"date";

@@ -20,6 +20,7 @@
 #import "PSLocalization.h"
 #import "MetadataViewController.h"
 #import "MTDisplayRule.h"
+#import "MTSorter.h"
 
 @implementation CallsSortedByFilterDataSource
 
@@ -52,10 +53,25 @@
 
 - (NSArray *)sectionIndexTitles
 {
-	NSString *it = [[MTDisplayRule currentDisplayRule] sectionIndexPath];
+	MTSorter *sorter = [[MTDisplayRule currentDisplayRule] sectionIndexSorter];
+	NSString *it = [sorter sectionIndexPath];
 	if([it isEqualToString:@"dateSortedSectionIndex"])
 	{
-		return [MTCall dateSortedSectionIndexTitles];
+		NSArray *array = [MTCall dateSortedSectionIndexTitles];
+		if(!sorter.ascendingValue)
+		{
+			array = [[array reverseObjectEnumerator] allObjects];
+		}
+		return array;
+	}
+	else if([it isEqualToString:@"sectionIndexBoolean"])
+	{
+		NSArray *array = [MTCall booleanSortedSectionIndexTitles];
+		if(!sorter.ascendingValue)
+		{
+			array = [[array reverseObjectEnumerator] allObjects];
+		}
+		return array;
 	}
 	return nil;
 }
@@ -67,6 +83,10 @@
 	{
 		return [MTCall stringForDateSortedIndex:index];
 	}
+	else if([it isEqualToString:@"sectionIndexBoolean"])
+	{
+		return [MTCall stringForBooleanSortedIndex:index];
+	}
 	return nil;
 }
 
@@ -74,7 +94,6 @@
 {
 	return [[[MTDisplayRule currentDisplayRule] filter] predicate];
 }
-
 
 - (NSString *)sectionNameKeyPath
 {
@@ -94,6 +113,11 @@
 - (BOOL)requiresArraySorting
 {
 	return [[MTDisplayRule currentDisplayRule] requiresArraySorting];
+}
+
+- (BOOL)sectionIndexTitlesAscending
+{
+	return [[[MTDisplayRule currentDisplayRule] sectionIndexSorter] ascendingValue];
 }
 
 - (BOOL)sectionIndexDisplaysSingleLetter

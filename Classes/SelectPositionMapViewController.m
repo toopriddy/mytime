@@ -169,14 +169,24 @@
 				self.marker = [[[SelectPositionAnnotation alloc] initWithCoordinate:point] autorelease];
 				[self.mapView addAnnotation:self.marker];
 			}
-			self.marker.title = NSLocalizedString(@"Acquiring Location...", @"title for the marker when you have to manually set the location for a call");
+			if([CLLocationManager locationServicesEnabled])
+			{
+				self.marker.title = NSLocalizedString(@"Acquiring Location...", @"title for the marker when you have to manually set the location for a call");
+			}
+			else
+			{
+				self.marker.title = NSLocalizedString(@"Move me", @"title for the marker when you have to manually set the location for a call");
+			}
+
 			[self.mapView selectAnnotation:self.marker animated:YES];
 			[self.mapView setRegion:MKCoordinateRegionMake(point , MKCoordinateSpanMake(0.001 , 0.001)) animated:YES];
 		}
 	}
 
-	self.mapView.showsUserLocation = YES;
-
+	if([CLLocationManager locationServicesEnabled])
+	{
+		self.mapView.showsUserLocation = YES;
+	}
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self

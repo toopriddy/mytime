@@ -1886,7 +1886,7 @@
 		
 		self.hidesBottomBarWhenPushed = YES;
 		
-        DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
+//        DEBUG(NSLog(@"CallView 2initWithFrame:call:%@", call);)
 
 		_setFirstResponderGroup = -1;
 		
@@ -1901,10 +1901,13 @@
 
 			// create a location manager and start getting updates for the location so that we can quickly 
 			// obtain the location in the address view
-			self.locationManager = [[[CLLocationManager alloc] init] autorelease];
-			self.locationManager.delegate = self; // Tells the location manager to send updates to this object
-			self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-			[self.locationManager startUpdatingLocation];
+			if([CLLocationManager locationServicesEnabled])
+			{
+				self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+				self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+				self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+				[self.locationManager startUpdatingLocation];
+			}
 		}
 		else
 		{
