@@ -471,17 +471,34 @@
 	NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
 	if(alternateIndexTitles)
 	{
+		BOOL ascending = [self.dataSource sectionIndexTitlesAscending];
 		PSExtendedFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 		int i = 0;
 		int ret = 0;
-		for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
+		if(ascending)
 		{
-			if([[sectionInfo name] intValue] <= index)
+			for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
 			{
-				ret = i;
+				if([[sectionInfo name] intValue] <= index)
+				{
+					ret = i;
+				}
+				i++;
 			}
-			i++;
 		}
+		else
+		{
+			index = [alternateIndexTitles count] - 1 - index;
+			for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
+			{
+				if([[sectionInfo name] intValue] >= index)
+				{
+					ret = i;
+				}
+				i++;
+			}
+		}
+
 		return ret;
 	}
 	return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];

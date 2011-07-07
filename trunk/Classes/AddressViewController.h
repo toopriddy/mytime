@@ -44,6 +44,7 @@
 	
 	BOOL showReverseGeocoding;
 	BOOL wasShowingReverseGeocoding;
+	BOOL shouldAskAboutReverseGeocoding;
 	UIAlertView *locationMessage;
 	
 	CLLocationManager *locationManager;

@@ -422,10 +422,10 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 - (NSString *)sectionIndexPath
 {
 	NSArray *sorters = [self.sorters sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:NO]]];
-
+	
 	if(sorters.count == 0)
 		return nil;
-
+	
 	return [[sorters lastObject] sectionIndexPath];
 }
 

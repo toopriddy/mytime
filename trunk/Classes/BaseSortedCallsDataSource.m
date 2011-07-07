@@ -19,6 +19,7 @@
 #import "MTCall.h"
 #import "MTUser.h"
 #import "MTDisplayRule.h"
+#import "MTSorter.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
 
@@ -99,6 +100,11 @@
 		return [MTCall stringForDateSortedIndex:index];
 	}
 	return nil;
+}
+
+- (BOOL)sectionIndexTitlesAscending
+{
+	return [[[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] sectionIndexSorter] ascendingValue];
 }
 
 - (NSString *)sectionNameKeyPath

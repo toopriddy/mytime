@@ -54,6 +54,10 @@
 	{
 		return PublicationTypePluralBook;
 	}
+	else if([publicationType isEqualToString:PublicationTypeDVDNotCount])
+	{
+		return PublicationTypePluralDVDNotCount;
+	}
 	else if([publicationType isEqualToString:PublicationTypeDVDBible])
 	{
 		return PublicationTypePluralDVDBible;
@@ -77,6 +81,10 @@
 	else if([publicationType isEqualToString:PublicationTypeTwoMagazine])
 	{
 		return PublicationTypePluralTwoMagazine;
+	}
+	else if([publicationType isEqualToString:PublicationTypeTract])
+	{
+		return PublicationTypePluralTract;
 	}
 	else if([publicationType isEqualToString:PublicationTypeCampaignTract])
 	{

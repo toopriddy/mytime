@@ -17,6 +17,7 @@ NSString * const CallLocationTypeDoNotShow = NSLocalizedString(@"Do not show in 
 
 
 NSArray *dateSortedSectionIndexTitlesSingleton = nil;
+NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 
 @implementation MTCall
 
@@ -241,6 +242,25 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 	return [[[self class] dateSortedSectionIndexTitles] objectAtIndex:index];
 }
 
+
++ (NSArray *)booleanSortedSectionIndexTitles
+{
+	if(booleanSortedSectionIndexTitlesSingleton)
+	{
+		return booleanSortedSectionIndexTitlesSingleton;
+	}
+	booleanSortedSectionIndexTitlesSingleton = [[NSArray arrayWithObjects:
+											  NSLocalizedString(@"OFF", @"section title for calls older than this time interval"), 
+											  NSLocalizedString(@"ON", @"section title for calls older than this time interval"),
+											  nil] retain];
+	return booleanSortedSectionIndexTitlesSingleton;
+}
+
++ (NSString *)stringForBooleanSortedIndex:(int)index
+{
+	return [[[self class] booleanSortedSectionIndexTitles] objectAtIndex:index];
+}
+
 - (NSNumber *)dateSortedSectionIndex
 {
     [self willAccessValueForKey:@"dateSortedSectionIndex"];
@@ -284,13 +304,7 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 	{
 		if(sorter.requiresArraySortingValue)
 		{
-#if 0
-			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																				 propertiesToFetch:[NSArray arrayWithObject:@"value"]
-																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
-#else
 			id additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
-#endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{
 				// only interested in the first one
@@ -317,13 +331,7 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
 	{
 		if(sorter.requiresArraySortingValue)
 		{
-#if 0
-			NSArray *additionalInformations = [self.managedObjectContext fetchObjectsForEntityName:[MTAdditionalInformation entityName]
-																				 propertiesToFetch:[NSArray arrayWithObject:@"number"]
-																					 withPredicate:@"call == %@ && type.name == %@", self, sorter.name];
-#else
 			id additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
-#endif			
 			for(MTAdditionalInformation *entry in additionalInformations)
 			{
 				// only interested in the first one
@@ -340,6 +348,34 @@ NSArray *dateSortedSectionIndexTitlesSingleton = nil;
     [self didAccessValueForKey:@"sectionIndexNumber"];
     return valueToReturn;
 }
+
+- (NSNumber *)sectionIndexBoolean
+{
+	MTSorter *sorter = [[MTDisplayRule currentDisplayRule] sectionIndexSorter];
+    [self willAccessValueForKey:@"sectionIndexBoolean"];
+	NSNumber *valueToReturn = nil;
+	if(sorter)
+	{
+		if(sorter.requiresArraySortingValue)
+		{
+			id additionalInformations = [self.additionalInformation filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"type.name == %@", sorter.name]];
+			for(MTAdditionalInformation *entry in additionalInformations)
+			{
+				// only interested in the first one
+				valueToReturn = entry.boolean;
+				break;
+			}
+		}
+		else
+		{
+			valueToReturn = [self valueForKey:sorter.path];
+		}
+		
+	}
+    [self didAccessValueForKey:@"sectionIndexBoolean"];
+    return valueToReturn;
+}
+
 
 
 
