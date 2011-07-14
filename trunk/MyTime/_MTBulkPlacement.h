@@ -9,6 +9,7 @@
 
 
 
+
 @interface MTBulkPlacementID : NSManagedObjectID {}
 @end
 
@@ -17,6 +18,12 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MTBulkPlacementID*)objectID;
+
+
+
+@property (nonatomic, retain) NSString *notes;
+
+//- (BOOL)validateNotes:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -50,6 +57,12 @@
 @end
 
 @interface _MTBulkPlacement (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveNotes;
+- (void)setPrimitiveNotes:(NSString*)value;
+
+
 
 
 - (NSDate*)primitiveDate;

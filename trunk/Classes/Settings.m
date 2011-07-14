@@ -260,11 +260,11 @@ NSString *emailFormattedStringForTimeEntry(NSDictionary *timeEntry)
 	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 	if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 	{
-		[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+		[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
 	}
 	else
 	{
-		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+		[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 	}
 	
 	[string appendString:[NSString stringWithFormat:@"%@ ", [dateFormatter stringFromDate:date]]];
@@ -308,11 +308,11 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 		if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 		{
-			[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
 		}
 		else
 		{
-			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 		}
 		
 		[string appendString:[NSString stringWithFormat:@"%@<br>\n", [dateFormatter stringFromDate:date]]];
@@ -355,11 +355,11 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 				[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 				if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 				{
-					[dateFormatter setDateFormat:@"EEE, d/M/yyy"];
+					[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
 				}
 				else
 				{
-					[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+					[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 				}
 				[string appendString:[NSString stringWithFormat:@" %@<br>\n", [dateFormatter stringFromDate:date]]];
 				[date release];
@@ -526,7 +526,7 @@ NSString *emailFormattedStringForSettings()
 			}
 			else
 			{
-				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:date]]];
 			for(NSDictionary *publication in [bulkPlacement objectForKey:BulkLiteratureArray])
