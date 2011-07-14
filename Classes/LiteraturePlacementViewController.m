@@ -19,6 +19,7 @@
 #import "PublicationViewController.h"
 #import "PublicationTypeViewController.h"
 #import "PSDateCellController.h"
+#import "PSTextViewCellController.h"
 #import "MTPublication.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "PSLocalization.h"
@@ -315,6 +316,7 @@
 			PSDateCellController *cellController = [[[PSDateCellController alloc] init] autorelease];
 			cellController.model = self.bulkPlacement;
 			cellController.modelPath = @"date";
+			cellController.indentWhileEditing = NO;
 			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 			{
 				[cellController setDateFormat:@"EEE, d/M/yyy h:mma"];
@@ -324,6 +326,17 @@
 				[cellController setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
 			
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
+		{
+			// Notes
+			PSTextViewCellController *cellController = [[[PSTextViewCellController alloc] init] autorelease];
+			cellController.model = self.bulkPlacement;
+			cellController.modelPath = @"notes";
+			cellController.placeholder = NSLocalizedString(@"Add Notes", @"Placeholder for adding notes in the Not At Home views");
+			cellController.title = NSLocalizedString(@"Notes", @"Bulk placements notes view title");
+			cellController.indentWhileEditing = NO;
 			[self addCellController:cellController toSection:sectionController];
 		}
 	}

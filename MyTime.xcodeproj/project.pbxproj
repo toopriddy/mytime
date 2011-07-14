@@ -225,6 +225,7 @@
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
+		90F1778313CFA425001EDE92 /* MyTime 15.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
 		90F6B50411814F9500519165 /* StatisticsCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B50311814F9500519165 /* StatisticsCallsTableViewController.m */; };
 		90FBE8750E39884700FD8014 /* CallsSortedByStreetViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FBE8740E39884700FD8014 /* CallsSortedByStreetViewDataSource.m */; };
@@ -682,6 +683,7 @@
 		90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 9.xcdatamodel"; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 15.xcdatamodel"; sourceTree = "<group>"; };
 		90F4D2120E76348C0017F83F /* UITableViewTextFieldCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewTextFieldCellDelegate.h; sourceTree = "<group>"; };
 		90F6B288117EBB6400519165 /* HourPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerView.h; sourceTree = "<group>"; };
 		90F6B289117EBB6400519165 /* HourPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerView.m; sourceTree = "<group>"; };
@@ -1722,6 +1724,7 @@
 				904F04C2138CB53000C3AB3E /* PSButtonCellController.m in Sources */,
 				9027C169139C6D17003F1D6D /* MyTime 13.xcdatamodel in Sources */,
 				9027C294139DB003003F1D6D /* MyTime 14.xcdatamodel in Sources */,
+				90F1778313CFA425001EDE92 /* MyTime 15.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1830,7 +1833,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2FD4BB17-F51E-494A-8588-4A63DEAD92BE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7C752A6F-8A51-412D-9EB3-DCF3595A4EC3";
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				VALID_ARCHS = "armv7 armv6";
@@ -2034,8 +2037,9 @@
 				90AE3052137C89E8002B95DB /* MyTime 12.xcdatamodel */,
 				9027C168139C6D15003F1D6D /* MyTime 13.xcdatamodel */,
 				9027C259139D7A7B003F1D6D /* MyTime 14.xcdatamodel */,
+				90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */,
 			);
-			currentVersion = 9027C259139D7A7B003F1D6D /* MyTime 14.xcdatamodel */;
+			currentVersion = 90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

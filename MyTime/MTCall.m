@@ -250,8 +250,9 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 		return booleanSortedSectionIndexTitlesSingleton;
 	}
 	booleanSortedSectionIndexTitlesSingleton = [[NSArray arrayWithObjects:
-											  NSLocalizedString(@"OFF", @"section title for calls older than this time interval"), 
-											  NSLocalizedString(@"ON", @"section title for calls older than this time interval"),
+												 NSLocalizedString(@"?", @"Sorted by ... view section index for unknown values which coresponds to the 'Unknown' section header"),
+												 NSLocalizedString(@"OFF", @"section title for calls older than this time interval"), 
+												 NSLocalizedString(@"ON", @"section title for calls older than this time interval"),
 											  nil] retain];
 	return booleanSortedSectionIndexTitlesSingleton;
 }
