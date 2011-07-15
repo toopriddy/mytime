@@ -838,6 +838,14 @@ NSString *emailFormattedStringForCoreDataSettings()
 				[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", [dateFormatter stringFromDate:bulkPlacement.date]]];
+			NSString *notes = bulkPlacement.notes;
+			if(notes && notes.length)
+			{
+				notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+				notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+				[string appendString:notes];
+				[string appendString:@"<br>\n"];
+			}
 			
 			NSArray *publications = [managedObjectContext fetchObjectsForEntityName:[MTPublication entityName]
 																  propertiesToFetch:nil 
@@ -2144,18 +2152,16 @@ NSString *emailFormattedStringForSettings();
 	self.tabBarController = [[[UITabBarController alloc] init] autorelease];
 	NSMutableArray *localViewControllersArray = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
 	
-	// CALLS SORTED BY STREET
-	CallsSortedByStreetViewDataSource *streetSortedDataSource = [[[CallsSortedByStreetViewDataSource alloc] init] autorelease];
-	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
-	streetViewController.managedObjectContext = self.managedObjectContext;
-	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:streetViewController] autorelease]];
-
-	// CALLS SORTED BY DATE
-	CallsSortedByDateViewDataSource *dateSortedDataSource = [[[CallsSortedByDateViewDataSource alloc] init] autorelease];
-	SortedCallsViewController *dateViewController = [[[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource] autorelease];
-	dateViewController.managedObjectContext = self.managedObjectContext;
-	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
-
+	// CALLS SORTED BY METADATA
+	CallsSortedByFilterDataSource *filterSortedDataSource = [[[CallsSortedByFilterDataSource alloc] init] autorelease];
+	MetadataSortedCallsViewController *filterViewController = [[[MetadataSortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
+	filterViewController.managedObjectContext = self.managedObjectContext;
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease]];
+	
+	// MAPPED CALLS
+	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
+	
 	// HOURS
 	HourViewController *hourViewController = [[[HourViewController alloc] initWithTimeTypeName:[[MTTimeType hoursType] name]] autorelease];
 	hourViewController.managedObjectContext = self.managedObjectContext;
@@ -2166,17 +2172,23 @@ NSString *emailFormattedStringForSettings();
 //	StatisticsViewController *statisticsViewController = [[[StatisticsViewController alloc] init] autorelease];
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:statisticsViewController] autorelease]];
 
+	// CALLS SORTED BY STREET
+	CallsSortedByStreetViewDataSource *streetSortedDataSource = [[[CallsSortedByStreetViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *streetViewController = [[[SortedCallsViewController alloc] initWithDataSource:streetSortedDataSource] autorelease];
+	streetViewController.managedObjectContext = self.managedObjectContext;
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:streetViewController] autorelease]];
+	
 	// CALLS SORTED BY CITY
 	CallsSortedByCityViewDataSource *citySortedDataSource = [[[CallsSortedByCityViewDataSource alloc] init] autorelease];
 	SortedCallsViewController *cityViewController = [[[SortedCallsViewController alloc] initWithDataSource:citySortedDataSource] autorelease];
 	cityViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:cityViewController] autorelease]];
 
-	// CALLS SORTED BY METADATA
-	CallsSortedByFilterDataSource *filterSortedDataSource = [[[CallsSortedByFilterDataSource alloc] init] autorelease];
-	MetadataSortedCallsViewController *filterViewController = [[[MetadataSortedCallsViewController alloc] initWithDataSource:filterSortedDataSource] autorelease];
-	filterViewController.managedObjectContext = self.managedObjectContext;
-	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease]];
+	// CALLS SORTED BY DATE
+	CallsSortedByDateViewDataSource *dateSortedDataSource = [[[CallsSortedByDateViewDataSource alloc] init] autorelease];
+	SortedCallsViewController *dateViewController = [[[SortedCallsViewController alloc] initWithDataSource:dateSortedDataSource] autorelease];
+	dateViewController.managedObjectContext = self.managedObjectContext;
+	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:dateViewController] autorelease]];
 	
 	// CALLS SORTED BY NAME
 	CallsSortedByNameViewDataSource *nameSortedDataSource = [[[CallsSortedByNameViewDataSource alloc] init] autorelease];
@@ -2196,10 +2208,6 @@ NSString *emailFormattedStringForSettings();
 	deletedCallsStreetViewController.managedObjectContext = self.managedObjectContext;
 	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:deletedCallsStreetViewController] autorelease]];
 
-	// ALL CALLS WEB VIEW
-	MapViewController *mapViewController = [[[MapViewController alloc] initWithTitle:NSLocalizedString(@"Mapped Calls", @"Mapped calls view title")] autorelease];
-	[localViewControllersArray addObject:[[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease]];
-	
 	// NOT AT HOMES
 	NotAtHomeViewController *notAtHomeViewController = [[[NotAtHomeViewController alloc] init] autorelease];
 	notAtHomeViewController.managedObjectContext = self.managedObjectContext;
