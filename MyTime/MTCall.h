@@ -26,7 +26,8 @@ extern NSString * const CallLocationTypeDoNotShow;
 + (NSString *)stringForDateSortedIndex:(int)index;
 
 + (NSArray *)booleanSortedSectionIndexTitles;
-+ (NSString *)stringForBooleanSortedIndex:(int)index;
++ (NSString *)stringForBooleanSortedValue:(NSString *)value;
++ (NSString *)indexStringForBooleanSortedValue:(NSString *)value;
 
 
 - (void)initializeNewCall;

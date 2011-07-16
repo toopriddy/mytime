@@ -70,13 +70,15 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	MTSettings *settings = [MTSettings settings];
 	settings.currentUser = user;
 	
-	NSError *error = nil;
-	if (![settings.managedObjectContext save:&error]) 
+	if(user != nil)
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
+		NSError *error = nil;
+		if (![settings.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
+		[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
+	}	
 }
 
 + (MTUser *)currentUser
@@ -120,17 +122,17 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 		MTUser *user = [NSEntityDescription insertNewObjectForEntityForName:[MTUser entityName]
 													 inManagedObjectContext:managedObjectContext];
 		
-		[user initalizeUser];
 		user.name = NSLocalizedString(@"Default User", @"Multiple Users: the default user name when the user has not entered a name for themselves");
 		currentUser = user;
 		settings.currentUser = user;
-		
-		NSError *error = nil;
-		if (![managedObjectContext save:&error]) 
-		{
-			[NSManagedObjectContext presentErrorDialog:error];
-		}
+		[user initalizeUser];
 	}
+	NSError *error = nil;
+	if (![managedObjectContext save:&error]) 
+	{
+		[NSManagedObjectContext presentErrorDialog:error];
+	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
 	return currentUser;
 }
 

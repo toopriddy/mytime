@@ -154,10 +154,12 @@
 			BOOL wasCurrentUser = currentUser == self.user;
 			if(wasCurrentUser)
 			{
+				[MTDisplayRule setCurrentDisplayRule:nil];
 				[MTUser setCurrentUser:nil];
 			}
 			[self.user relinquish];
 			[self.delegate.managedObjectContext deleteObject:self.user];
+			[MTUser currentUser];
 			NSError *error = nil;
 			if (![self.delegate.managedObjectContext save:&error]) 
 			{
@@ -167,7 +169,6 @@
 			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
 			if(wasCurrentUser)
 			{
-				[MTUser currentUser];
 				[self.delegate updateAndReload];
 			}
 			break;

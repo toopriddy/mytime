@@ -92,14 +92,19 @@
 	return nil;
 }
 
-- (NSString *)sectionNameForIndex:(int)index
+- (NSString *)sectionNameForValue:(NSString *)index
 {
 	NSString *it = [[MTDisplayRule displayRuleForInternalName:[self unlocalizedName]] sectionIndexPath];
 	if([it isEqualToString:@"dateSortedSectionIndex"])
 	{
-		return [MTCall stringForDateSortedIndex:index];
+		return [MTCall stringForDateSortedIndex:[index intValue]];
 	}
 	return nil;
+}
+
+- (NSString *)sectionIndexNameForValue:(NSString *)index
+{
+	return [self sectionNameForValue:index];
 }
 
 - (BOOL)sectionIndexTitlesAscending

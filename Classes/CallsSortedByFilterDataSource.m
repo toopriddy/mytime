@@ -76,19 +76,34 @@
 	return nil;
 }
 
-- (NSString *)sectionNameForIndex:(int)index
+- (NSString *)sectionNameForValue:(NSString *)index
 {
 	NSString *it = [[MTDisplayRule currentDisplayRule] sectionIndexPath];
 	if([it isEqualToString:@"dateSortedSectionIndex"])
 	{
-		return [MTCall stringForDateSortedIndex:index];
+		return [MTCall stringForDateSortedIndex:[index intValue]];
 	}
 	else if([it isEqualToString:@"sectionIndexBoolean"])
 	{
-		return [MTCall stringForBooleanSortedIndex:index];
+		return [MTCall stringForBooleanSortedValue:index];
 	}
 	return nil;
 }
+
+- (NSString *)sectionIndexNameForValue:(NSString *)index
+{
+	NSString *it = [[MTDisplayRule currentDisplayRule] sectionIndexPath];
+	if([it isEqualToString:@"dateSortedSectionIndex"])
+	{
+		return [MTCall stringForDateSortedIndex:[index intValue]];
+	}
+	else if([it isEqualToString:@"sectionIndexBoolean"])
+	{
+		return [MTCall indexStringForBooleanSortedValue:index];
+	}
+	return nil;
+}
+
 
 - (NSPredicate *)predicate
 {
@@ -124,6 +139,7 @@
 {
 	return ![[[MTDisplayRule currentDisplayRule] sectionIndexSorter] requiresArraySorting];
 }
+
 
 
 
