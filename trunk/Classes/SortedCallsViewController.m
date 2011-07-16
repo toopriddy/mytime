@@ -424,7 +424,8 @@
 	{
 		id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
 		NSString *name;
-		if(( name = [self.dataSource sectionNameForIndex:[[sectionInfo name] intValue]]))
+		
+		if(( name = [self.dataSource sectionNameForValue:[sectionInfo name]]))
 		{
 			return name;
 		}
@@ -471,29 +472,30 @@
 	NSArray *alternateIndexTitles = [self.dataSource sectionIndexTitles];
 	if(alternateIndexTitles)
 	{
-		BOOL ascending = [self.dataSource sectionIndexTitlesAscending];
+		NSArray *sectionIndexes = [self.dataSource sectionIndexTitles];
 		PSExtendedFetchedResultsController *fetchController = [self fetchedResultsControllerForTableView:tableView];
 		int i = 0;
 		int ret = 0;
-		if(ascending)
+		int indexIndex;
+		for(indexIndex = 0; indexIndex < index; ++indexIndex)
 		{
+			i = 0;
+			NSString *indexName = [sectionIndexes objectAtIndex:indexIndex];
 			for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
 			{
-				if([[sectionInfo name] intValue] <= index)
+				NSString *name = [self.dataSource sectionIndexNameForValue:[sectionInfo name]];
+
+				// at least it should be this one, move the index to return up
+				if([indexName isEqualToString:name])
 				{
 					ret = i;
 				}
-				i++;
-			}
-		}
-		else
-		{
-			index = [alternateIndexTitles count] - 1 - index;
-			for(id<NSFetchedResultsSectionInfo> sectionInfo in fetchController.sections)
-			{
-				if([[sectionInfo name] intValue] >= index)
+				
+				// if we get an exact match we know which section so return that one
+				if([name isEqualToString:title])
 				{
 					ret = i;
+					return ret;
 				}
 				i++;
 			}

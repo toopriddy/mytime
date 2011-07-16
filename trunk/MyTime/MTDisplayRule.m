@@ -106,10 +106,13 @@ MTDisplayRule *g_currentDisplayRule;
 	[g_currentDisplayRule autorelease];
 	g_currentDisplayRule = [displayRule retain];
 	
-	NSError *error = nil;
-	if (![currentUser.managedObjectContext save:&error]) 
+	if(g_currentDisplayRule != nil)
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+		NSError *error = nil;
+		if (![currentUser.managedObjectContext save:&error]) 
+		{
+			[NSManagedObjectContext presentErrorDialog:error];
+		}
 	}
 }
 

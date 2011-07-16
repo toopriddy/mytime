@@ -36,7 +36,8 @@
 @property (readonly) NSArray *coreDataSortDescriptors;
 @property (readonly) NSPredicate *predicate;
 @property (readonly) NSString *sectionNameKeyPath;
-- (NSString *)sectionNameForIndex:(int)index;
+- (NSString *)sectionNameForValue:(NSString *)index;
+- (NSString *)sectionIndexNameForValue:(NSString *)index;
 - (NSArray *)sectionIndexTitles;
 
 @end

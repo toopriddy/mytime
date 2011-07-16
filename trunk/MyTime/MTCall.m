@@ -257,9 +257,30 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	return booleanSortedSectionIndexTitlesSingleton;
 }
 
-+ (NSString *)stringForBooleanSortedIndex:(int)index
++ (NSString *)stringForBooleanSortedValue:(NSString *)value
 {
-	return [[[self class] booleanSortedSectionIndexTitles] objectAtIndex:index];
+	if([value isEqualToString:@"1"])
+	{
+		return NSLocalizedString(@"ON", @"section title for calls older than this time interval");
+	}
+	else if([value isEqualToString:@"0"])
+	{
+		return NSLocalizedString(@"OFF", @"section title for calls older than this time interval");
+	}
+	return NSLocalizedString(@"Unknown", @"Sorted by ... view section header for unknown values");
+}
+
++ (NSString *)indexStringForBooleanSortedValue:(NSString *)value
+{
+	if([value isEqualToString:@"1"])
+	{
+		return NSLocalizedString(@"ON", @"section title for calls older than this time interval");
+	}
+	else if([value isEqualToString:@"0"])
+	{
+		return NSLocalizedString(@"OFF", @"section title for calls older than this time interval");
+	}
+	return NSLocalizedString(@"?", @"Sorted by ... view section index for unknown values which coresponds to the 'Unknown' section header");
 }
 
 - (NSNumber *)dateSortedSectionIndex
