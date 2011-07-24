@@ -45,6 +45,14 @@
 	return top;
 }
 
+- (void)setTitle:(NSString *)title
+{
+}
+
+- (void)setSubtitle:(NSString *)title
+{
+}
+
 - (NSString *)subtitle
 {
 	return _call.name;

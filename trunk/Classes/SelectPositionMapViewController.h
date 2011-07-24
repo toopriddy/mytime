@@ -31,7 +31,7 @@
 }
 // Center latitude and longitude of the annotion view.
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, copy) NSString *title;
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
 @end
 

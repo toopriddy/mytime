@@ -28,8 +28,8 @@
 }
 // Center latitude and longitude of the annotion view.
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, readonly) NSString *title;
-@property (nonatomic, readonly) NSString *subtitle;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, readonly) MTCall *call;
 @property (nonatomic, assign) BOOL animatesDrop;
 - (id)initWithCall:(MTCall *)call;

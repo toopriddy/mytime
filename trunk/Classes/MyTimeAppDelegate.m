@@ -123,7 +123,7 @@ BOOL isIOS4OrGreater(void)
 NSData *allocNSDataFromNSStringByteString(NSString *data)
 {
 	int length = data.length;
-	if(length & 1 != 0)
+	if((length & 1) != 0)
 	{
 		// odd number of bytes
 		return nil;
@@ -498,6 +498,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				}
 			}
 			break;
+        default:
+            break;
 	}
 }
 
@@ -1366,17 +1368,17 @@ NSString *emailFormattedStringForSettings();
 	for(NSDictionary *user in [settings objectForKey:SettingsMultipleUsers])
 	{
 		steps++; // for metadata;
-		steps += [[user objectForKey:SettingsBulkLiterature] count];
+		steps += [(NSArray *)[user objectForKey:SettingsBulkLiterature] count];
 		NSString *callArray[2] = {SettingsCalls, SettingsDeletedCalls};
 		for(int i = 0; i < 2; i++)
 		{
-			steps += [[user objectForKey:callArray[i]] count];
+			steps += [(NSArray *)[user objectForKey:callArray[i]] count];
 		}
-		steps += [[user objectForKey:SettingsQuickNotes] count];
-		steps += [[user objectForKey:SettingsNotAtHomeTerritories] count];
-		steps += [[user objectForKey:SettingsTimeEntries] count];
-		steps += [[user objectForKey:SettingsRBCTimeEntries] count];
-		steps += [[user objectForKey:SettingsStatisticsAdjustments] count];
+		steps += [(NSArray *)[user objectForKey:SettingsQuickNotes] count];
+		steps += [(NSArray *)[user objectForKey:SettingsNotAtHomeTerritories] count];
+		steps += [(NSArray *)[user objectForKey:SettingsTimeEntries] count];
+		steps += [(NSArray *)[user objectForKey:SettingsRBCTimeEntries] count];
+		steps += [(NSArray *)[user objectForKey:SettingsStatisticsAdjustments] count];
 	}
 
 	self.hud.progress = self.hud.progress + 1.0/steps;
