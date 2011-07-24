@@ -971,13 +971,12 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSManagedObjectContext *moc = currentUser.managedObjectContext;
 
 	int pioneerStartTimestamp = 0;
-#if 0
 	if(currentUser.pioneerStartDate != nil)
 	{
-		NSDateComponents *pioneerStartDateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:];
-		pioneerStartTimestamp = [dateComponents year] * 100 + [dateComponents month];
+		NSDateComponents *pioneerStartDateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:currentUser.pioneerStartDate];
+		pioneerStartTimestamp = [pioneerStartDateComponents year] * 100 + [pioneerStartDateComponents month];
 	}
-#endif	
+
 	NSDateComponents *startOfDataCollectionComponents = [[[NSDateComponents alloc] init] autorelease];
 	[startOfDataCollectionComponents setMonth:_thisMonth];
 	[startOfDataCollectionComponents setYear:_thisYear - 1];
@@ -1078,7 +1077,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				if(pioneerStartTimestamp > adjustment.timestampValue)
+				if(pioneerStartTimestamp <= adjustment.timestampValue)
 				{
 					*serviceYearValue += value;
 				}
@@ -1100,7 +1099,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
-			
+			int timestamp = year * 100 + month;
 			int offset = -1;
 			if(year == _thisYear && 
 			   month <= _thisMonth)
@@ -1121,7 +1120,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				_serviceYearMinutes += minutes;
+				if(pioneerStartTimestamp <= timestamp)
+				{
+                    _serviceYearMinutes += minutes;
+				}
 			}
 		}
 		[pool drain];
@@ -1140,6 +1142,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
+			int timestamp = year * 100 + month;
 			
 			int offset = -1;
 			if(year == _thisYear && 
@@ -1162,7 +1165,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 			   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 			{
-				_serviceYearQuickBuildMinutes += minutes;
+				if(pioneerStartTimestamp <= timestamp)
+				{
+                    _serviceYearQuickBuildMinutes += minutes;
+                }
 			}
 		}
 		[pool drain];
@@ -1184,7 +1190,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
-			
+            int timestamp = year * 100 + month;
+
 			if(year == _thisYear && 
 			   month <= _thisMonth)
 			{
@@ -1211,7 +1218,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearBooks += number;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearBooks += number;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeBrochure] || 
@@ -1221,7 +1231,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearBrochures += number;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearBrochures += number;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeMagazine])
@@ -1230,7 +1243,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearMagazines += number;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearMagazines += number;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeTwoMagazine])
@@ -1239,7 +1255,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearMagazines += number*2;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearMagazines += number*2;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeCampaignTract])
@@ -1248,7 +1267,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearCampaignTracts += number;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearCampaignTracts += number;
+                            }
 						}
 					}
 				}
@@ -1261,6 +1283,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	{
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		NSMutableArray *studies = [NSMutableArray arrayWithObjects:[NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], nil];
+		NSMutableArray *tempServiceYearStudies = [NSMutableArray arrayWithObjects:[NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], [NSMutableSet set], nil];
 		NSArray *returnVisits = [moc fetchObjectsForEntityName:[MTReturnVisit entityName]
 												 withPredicate:@"call.user == %@ && date > %@ && date < %@", currentUser, startOfDataCollection, endOfDataCollection];
 		
@@ -1269,7 +1292,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:returnVisit.date];
 			int month = [dateComponents month];
 			int year = [dateComponents year];
-			
+            int timestamp = year * 100 + month;
+
 			int offset = -1;
 			
 			if(year == _thisYear && 
@@ -1302,13 +1326,20 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 				   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 				{
-					_serviceYearReturnVisits++;
+                    if(pioneerStartTimestamp <= timestamp)
+                    {
+                        _serviceYearReturnVisits++;
+                    }
 				}
 			}
 			
 			if(isStudy)
 			{
 				[[studies objectAtIndex:offset] addObject:returnVisit.call];
+                if(pioneerStartTimestamp <= timestamp)
+                {
+                    [[tempServiceYearStudies objectAtIndex:offset] addObject:returnVisit.call];
+                }
 			}
 			
 			if(!isTransfer)
@@ -1325,7 +1356,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearBooks++;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearBooks++;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeBrochure] ||
@@ -1335,7 +1369,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearBrochures++;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearBrochures++;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeMagazine])
@@ -1344,7 +1381,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearMagazines++;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearMagazines++;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeTwoMagazine])
@@ -1353,7 +1393,10 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearMagazines += 2;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearMagazines += 2;
+                            }
 						}
 					}
 					else if([type isEqualToString:PublicationTypeCampaignTract])
@@ -1362,26 +1405,37 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 						if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 						   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 						{
-							_serviceYearCampaignTracts++;
+                            if(pioneerStartTimestamp <= timestamp)
+                            {
+                                _serviceYearCampaignTracts++;
+                            }
 						}
 					}
 				}
 			}
 		}
 		int offset = 0;
-		NSMutableSet *serviceYearStudies = [NSMutableSet set];
 		for(NSSet *calls in studies)
 		{
 			int count = calls.count;
 			if(count)
 			{
 				_bibleStudies[offset] += count;
-				_individualCalls[offset] = [[calls allObjects] retain];
-				
+				_individualCalls[offset] = (id)[[calls allObjects] retain];
+			}
+			offset++;
+        }
+        offset = 0;
+		NSMutableSet *serviceYearStudies = [NSMutableSet set];
+		for(NSSet *calls in tempServiceYearStudies)
+        {
+			int count = calls.count;
+			if(count)
+			{
 				if( (newServiceYear && offset <= (_thisMonth - 9)) || // newServiceYear means that the months that are added are above the current month
 				   (!newServiceYear && _thisMonth + 4 > offset)) // !newServiceYear means that we are in months before September, just add them if their offset puts them after september
 				{
-					_serviceYearBibleStudies++;
+					_serviceYearBibleStudies += count;
 					[serviceYearStudies unionSet:calls];
 				}
 			}
