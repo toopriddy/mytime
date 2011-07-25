@@ -643,7 +643,8 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		NSArray *houses = [territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]
 																   propertiesToFetch:nil 
 																 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"number" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																					  [NSSortDescriptor psSortDescriptorWithKey:@"apartment" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
+																					  [NSSortDescriptor psSortDescriptorWithKey:@"apartment" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+                                                                                      [NSSortDescriptor psSortDescriptorWithKey:@"notes" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
 																	   withPredicate:@"street == %@", street];
 		for(MTTerritoryHouse *house in houses)
 		{
@@ -719,7 +720,10 @@ NSString *emailFormattedStringForCoreDataCall(MTCall *call)
 	
 	NSArray *returnVisits = [call.managedObjectContext fetchObjectsForEntityName:[MTReturnVisit entityName]
 															   propertiesToFetch:nil 
-															 withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO] ]
+															 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO], 
+                                                                                  [NSSortDescriptor psSortDescriptorWithKey:@"notes" ascending:NO], 
+                                                                                  [NSSortDescriptor psSortDescriptorWithKey:@"type" ascending:NO], 
+                                                                                  nil]
 																   withPredicate:@"(call == %@)", call];
 	
 	for(MTReturnVisit *visit in returnVisits)
@@ -1168,7 +1172,7 @@ NSString *emailFormattedStringForSettings();
 		mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
 		if([returnVisit objectForKey:CallReturnVisitType])
 			mtReturnVisit.type = [returnVisit objectForKey:CallReturnVisitType];
-		
+
 		// lets translate the initial visit which is classified as a return visit into an Initial Visit
 		if(first)
 		{

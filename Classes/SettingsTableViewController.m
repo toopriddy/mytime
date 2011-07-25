@@ -1294,6 +1294,7 @@
 			cellController.modelPath = @"pioneerStartDate";
 			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
 			cellController.datePickerMode = UIDatePickerModeDate;
+			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
 			{
 				[cellController setDateFormat:@"d/M/yyy"];

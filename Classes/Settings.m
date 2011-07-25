@@ -329,7 +329,8 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 		
 		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
 		for(NSMutableDictionary *house in [[street objectForKey:NotAtHomeTerritoryHouses] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseNumber ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																													   [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseApartment ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]])
+																													   [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseApartment ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+                                                                                                                       [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseNotes ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],nil]])
 		{
 			NSMutableString *top = [[NSMutableString alloc] init];
 			[Settings formatStreetNumber:[house objectForKey:NotAtHomeTerritoryHouseNumber]
@@ -347,7 +348,7 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 				[string appendFormat:@"<br>\n"];
 			}
 			[string appendString:[NSString stringWithFormat:@"%@:<br>\n", NSLocalizedString(@"Attempts", @"used as a label when emailing not at homes")]];
-			for(NSDate *attempt in [[[house objectForKey:NotAtHomeTerritoryHouseAttempts] sortedArrayUsingSelector:@selector(compare:)] reverseObjectEnumerator])
+            for(NSDate *attempt in [[[house objectForKey:NotAtHomeTerritoryHouseAttempts] sortedArrayUsingSelector:@selector(compare:)] reverseObjectEnumerator])
 			{
 				NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[attempt timeIntervalSinceReferenceDate]];	
 				// create dictionary entry for This Return Visit
@@ -423,7 +424,9 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 	}
 	[string appendString:@"\n"];
 	
-	NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO]]];
+	NSArray *returnVisits = [[call objectForKey:CallReturnVisits] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:CallReturnVisitDate ascending:NO], 
+                                                                                               [NSSortDescriptor psSortDescriptorWithKey:CallReturnVisitNotes ascending:NO], 
+                                                                                               [NSSortDescriptor psSortDescriptorWithKey:CallReturnVisitType ascending:NO], nil]];
 		
 	for(NSDictionary *visit in returnVisits)
 	{
@@ -450,7 +453,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		{
 			if([value isEqualToString:CallReturnVisitTypeReturnVisit])
 			{
-				value = CallReturnVisitTypeInitialVisit;
+//				value = CallReturnVisitTypeInitialVisit;
 			}
 		}
 		[string appendString:[NSString stringWithFormat:@"%@: %@<br>\n", [[PSLocalization localizationBundle] localizedStringForKey:value value:value table:@""], formattedDateString]];
