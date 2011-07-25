@@ -16,6 +16,7 @@
 #import "MultipleUsersViewController.h"
 #import "TableViewCellController.h"
 #import "MTUser.h"
+#import "MTDisplayRule.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "GenericTableViewSectionController.h"
