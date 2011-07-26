@@ -118,6 +118,7 @@
 		90A1C49812FB98BB008ED1C4 /* PSCheckmarkCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A1C49712FB98BB008ED1C4 /* PSCheckmarkCellController.m */; };
 		90A6036A117CCE50004E8D9A /* HourPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A60369117CCE50004E8D9A /* HourPickerViewController.m */; };
 		90A604A2117D58CD004E8D9A /* libGenericTableViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6040C117D508D004E8D9A /* libGenericTableViewController.a */; };
+		90AD9F7613DF47EC004D7702 /* NSSet+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD9F7513DF47EC004D7702 /* NSSet+PriddySoftware.m */; };
 		90ADA7CB0F1877AB00C65E40 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7CA0F1877AB00C65E40 /* CoreLocation.framework */; };
 		90ADA7CF0F1877B300C65E40 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7CE0F1877B300C65E40 /* QuartzCore.framework */; };
 		90ADA7D30F1877C100C65E40 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADA7D20F1877C100C65E40 /* libsqlite3.dylib */; };
@@ -490,6 +491,8 @@
 		90A60368117CCE50004E8D9A /* HourPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourPickerViewController.h; sourceTree = "<group>"; };
 		90A60369117CCE50004E8D9A /* HourPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourPickerViewController.m; sourceTree = "<group>"; };
 		90A60407117D508D004E8D9A /* GenericTableViewController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GenericTableViewController.xcodeproj; path = GenericTableViewController/GenericTableViewController.xcodeproj; sourceTree = "<group>"; };
+		90AD9F7413DF47EC004D7702 /* NSSet+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+PriddySoftware.h"; sourceTree = "<group>"; };
+		90AD9F7513DF47EC004D7702 /* NSSet+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+PriddySoftware.m"; sourceTree = "<group>"; };
 		90ADA7640F18757800C65E40 /* en_UK */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en_UK; path = en_UK.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		90ADA7CA0F1877AB00C65E40 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		90ADA7CE0F1877B300C65E40 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -835,6 +838,8 @@
 				90DE42D010F8F9320003D14B /* NSObject+PriddySoftware.m */,
 				90E526AD116D886100D5EFBD /* NSData+PSCompress.h */,
 				90E526AE116D886100D5EFBD /* NSData+PSCompress.m */,
+				90AD9F7413DF47EC004D7702 /* NSSet+PriddySoftware.h */,
+				90AD9F7513DF47EC004D7702 /* NSSet+PriddySoftware.m */,
 				90CCEEDD12451813003A3367 /* NSString+PriddySoftware.h */,
 				90CCEEDE12451813003A3367 /* NSString+PriddySoftware.m */,
 				904FEAF811B0C78E00DED4F2 /* NSManagedObjectContext+PriddySoftware.h */,
@@ -1725,6 +1730,7 @@
 				9027C169139C6D17003F1D6D /* MyTime 13.xcdatamodel in Sources */,
 				9027C294139DB003003F1D6D /* MyTime 14.xcdatamodel in Sources */,
 				90F1778313CFA425001EDE92 /* MyTime 15.xcdatamodel in Sources */,
+				90AD9F7613DF47EC004D7702 /* NSSet+PriddySoftware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1826,6 +1832,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1869,6 +1876,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Priddy";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1946,6 +1954,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = __DEBUGGING__;
@@ -1968,6 +1977,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

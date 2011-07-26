@@ -193,9 +193,17 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *value = self.street;
 	NSString *stringToReturn = @"";
 	if([value length])
+	{
+		if(islower([[value substringToIndex:1] characterAtIndex:0]))
+		{
+			NSLog(@"fount it");
+		}
 		stringToReturn = [[value substringToIndex:1] uppercaseString];
+	}
 	else
+	{
 		stringToReturn = @"#";
+	}
 
     [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
     return stringToReturn;
