@@ -194,10 +194,6 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *stringToReturn = @"";
 	if([value length])
 	{
-		if(islower([[value substringToIndex:1] characterAtIndex:0]))
-		{
-			NSLog(@"fount it");
-		}
 		stringToReturn = [[value substringToIndex:1] uppercaseString];
 	}
 	else
