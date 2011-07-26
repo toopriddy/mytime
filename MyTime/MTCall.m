@@ -193,7 +193,7 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *value = self.street;
 	NSString *stringToReturn = @"";
 	if([value length])
-		stringToReturn = [[value uppercaseString] substringToIndex:1];
+		stringToReturn = [[value substringToIndex:1] uppercaseString];
 	else
 		stringToReturn = @"#";
 
@@ -207,7 +207,7 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *value = self.name;
 	NSString *stringToReturn = @"";
 	if([value length])
-		stringToReturn = [[value uppercaseString] substringToIndex:1];
+		stringToReturn = [[value substringToIndex:1] uppercaseString];
 	else
 		stringToReturn = @"#";
 	

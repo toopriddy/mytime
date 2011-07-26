@@ -8,6 +8,7 @@ extern NSString * const MTSorterEntryName;
 extern NSString * const MTSorterEntryUUID;
 extern NSString * const MTSorterEntrySectionIndexPath;
 extern NSString * const MTSorterEntryRequiresArraySorting;
+extern NSString * const MTSorterEntryRequiresLocalizedCaseInsensitiveCompare;
 
 @interface MTSorter : _MTSorter {}
 // Custom logic goes here.
@@ -16,6 +17,7 @@ extern NSString * const MTSorterEntryRequiresArraySorting;
 + (NSString *)nameForPath:(NSString *)path;
 + (NSString *)sectionIndexPathForPath:(NSString *)path;
 + (BOOL)requiresArraySortingForPath:(NSString *)path;
++ (BOOL)requiresLocalizedCaseInsensitiveCompareForPath:(NSString *)path;
 
 + (void)updateSortersForAdditionalInformationType:(MTAdditionalInformationType *)type;
 

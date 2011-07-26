@@ -394,7 +394,7 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 		}
 		else
 		{
-			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue selector:sorter.selector];
 			[sortDescriptors addObject:sortDescriptor];
 			[sortDescriptor release];
 		}
@@ -409,13 +409,13 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 	if(sorters.count == 0)
 	{
 		// at least return something
-		return [NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES]];
+		return [NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
 	}
 	
 	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithCapacity:sorters.count];
 	for(MTSorter *sorter in sorters)
 	{
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue];
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sorter.path ascending:sorter.ascendingValue  selector:sorter.selector];
 		[sortDescriptors addObject:sortDescriptor];
 		[sortDescriptor release];
 	}
