@@ -404,7 +404,8 @@ static NSArray *sortByDeletedFlag(NSArray *previousSorters)
 
 - (NSArray *)coreDataSortDescriptors
 {
-	NSArray *sorters = [[self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == NO || requiresArraySorting == nil"]] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
+	NSSet *filteredSet = [self.sorters filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"requiresArraySorting == NO || requiresArraySorting == nil"]];
+	NSArray *sorters = [filteredSet sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"order" ascending:YES]]];
 
 	if(sorters.count == 0)
 	{
