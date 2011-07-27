@@ -10,7 +10,10 @@ You *_MUST_* make sure that all of the following critera are true before proceed
 
   # read the instructions above
   # Save off the old version of !MyTime in your iTunes library.  
-    # Open your iTunes library and go to the "Mobile Applications" folder
+    # Open your iTunes library and go to the "Mobile Applications" folder, this might be in a couple of locations:
+      # *OSX:* ~/Music/iTunes/Mobile Applications"
+      # *XP:* My Documents\My Music\iTunes\Mobile Applications"
+      # *Vista/Windows 7:* My Documents\My Music\iTunes\Mobile Applications"
     # copy "!MyTime <version number>.ipa" to your desktop (where <version number> is something like 2.9.0)
   # Now sync your iPhone with iTunes
   # Now if you are trying to get your old data from before !MyTime 3.1.0 to restore back to !MyTime-2.9.0 use the [http://code.google.com/p/!MyTime/wiki/iTunesBackup instructions here] to retrieve the "oldrecords.plist" and go ahead while you are at it and get the "!MyTime.sqlite" file
