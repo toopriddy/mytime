@@ -510,7 +510,8 @@ NSString *emailFormattedStringForSettings()
 		
 		// quickbuild
 		[string appendString:NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
-		for(NSDictionary *timeEntry in [userSettings objectForKey:SettingsRBCTimeEntries])
+		for(NSDictionary *timeEntry in [[userSettings objectForKey:SettingsRBCTimeEntries] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:SettingsTimeEntryDate ascending:NO], 
+																														[NSSortDescriptor psSortDescriptorWithKey:SettingsTimeEntryMinutes ascending:NO], nil]])
 		{
 			[string appendString:emailFormattedStringForTimeEntry(timeEntry)];
 		}
