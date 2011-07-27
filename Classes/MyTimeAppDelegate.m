@@ -817,7 +817,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 		[string appendString:NSLocalizedString(@"<h2>RBC Hours:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		NSArray *rbcTimeEntries = [managedObjectContext fetchObjectsForEntityName:[MTTimeEntry entityName]
 																propertiesToFetch:nil 
-															  withSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO] ]
+															  withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"date" ascending:NO],
+																											[NSSortDescriptor psSortDescriptorWithKey:@"minutes" ascending:NO], nil ]
 																	withPredicate:@"type == %@", [MTTimeType rbcTypeForUser:user]];
 		for(MTTimeEntry *timeEntry in rbcTimeEntries)
 		{
