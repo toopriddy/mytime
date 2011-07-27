@@ -1,37 +1,37 @@
-#summary Instructions on how to downgrade MyTime (or any iOS application)
+#summary Instructions on how to downgrade !MyTime (or any iOS application)
 
 = READ ME FIRST! =
 You *_MUST_* make sure that all of the following critera are true before proceeding, you could loose all of your application data otherwise:
-  * You have not synced your iPhone with iTunes since you updated MyTime
-  * Your iTunes library has the older version of MyTime in it (go to the "Applications" entry in iTunes and right click MyTime and select "Get Info" and verify the version number)
+  * You have not synced your iPhone with iTunes since you updated !MyTime
+  * Your iTunes library has the older version of !MyTime in it (go to the "Applications" entry in iTunes and right click !MyTime and select "Get Info" and verify the version number)
 
 
-= Instructinos =
+= Instructions =
 
   # read the instructions above
-  # Save off the old version of MyTime in your iTunes library.  
+  # Save off the old version of !MyTime in your iTunes library.  
     # Open your iTunes library and go to the "Mobile Applications" folder
-    # copy "MyTime <version number>.ipa" to your desktop (where <version number> is something like 2.9.0)
+    # copy "!MyTime <version number>.ipa" to your desktop (where <version number> is something like 2.9.0)
   # Now sync your iPhone with iTunes
-  # Now if you are trying to get your old data from before MyTime 3.1.0 to restore back to MyTime-2.9.0 use the [http://code.google.com/p/mytime/wiki/iTunesBackup instructions here] to retrieve the "oldrecords.plist" and go ahead while you are at it and get the "MyTime.sqlite" file
-  # Now on your iPhone delete MyTime *MAKE SURE YOU HAVE COMPLETED THE STEPS ABOVE*
-  # Now on your computer in iTunes delete MyTime
+  # Now if you are trying to get your old data from before !MyTime 3.1.0 to restore back to !MyTime-2.9.0 use the [http://code.google.com/p/!MyTime/wiki/iTunesBackup instructions here] to retrieve the "oldrecords.plist" and go ahead while you are at it and get the "!MyTime.sqlite" file
+  # Now on your iPhone delete !MyTime *MAKE SURE YOU HAVE COMPLETED THE STEPS ABOVE*
+  # Now on your computer in iTunes delete !MyTime
   # Sync your iPhone by right clicking your iPhone in iTunes and selecting "Sync"
-  # Now drag that "MyTime <version number>.ipa" file that we put on the desktop into iTunes (drag it to where the "LIBRARY" text appears and your cursor will get a plus sign on it)
-  # MyTime should now appear in your "Applications" entry in iTunes. You should right click MyTime and select "Get Info" to verify that it is the previous version
+  # Now drag that "!MyTime <version number>.ipa" file that we put on the desktop into iTunes (drag it to where the "LIBRARY" text appears and your cursor will get a plus sign on it)
+  # !MyTime should now appear in your "Applications" entry in iTunes. You should right click !MyTime and select "Get Info" to verify that it is the previous version
   # in ITunes right click your iPhone and select "Sync"
-  # verify that MyTime is on your iPhone
-  # If you are downgrading to MyTime < 3.0 then
-    # Find that "oldrecords.plist" file that we saved a couple of steps ago and rename the file to "oldrecords.mytimedata",
-    # now create an email and attach this newly renamed file "oldrecords.mytimedata"
+  # verify that !MyTime is on your iPhone
+  # If you are downgrading to !MyTime < 3.0 then
+    # Find that "oldrecords.plist" file that we saved a couple of steps ago and rename the file to "oldrecords.!MyTimedata",
+    # now create an email and attach this newly renamed file "oldrecords.!MyTimedata"
     # send this email to the account that is on your iPhone
-    # on your iPhone open up your email and press on the "oldrecords.mytimedata" attachment, it will ask you if you want to open this file in MyTime... press on "open in mytime"
-    # mytime will ask you if you want to restore the file, press on "restore backup", and press "ok" on the prompt telling you to restart MyTime
-    # restart MyTime, your data should be there and you should be running the old version of MyTime
-  # If you are downgrading to MyTime  > 3.0 then
-    # Find that "MyTime.sqlite" file that we saved a couple of steps ago and rename the file to "MyTime.mytimedb",
-    # now create an email and attach this newly renamed file "oldrecords.mytimedb"
+    # on your iPhone open up your email and press on the "oldrecords.!MyTimedata" attachment, it will ask you if you want to open this file in !MyTime... press on "open in !MyTime"
+    # !MyTime will ask you if you want to restore the file, press on "restore backup", and press "ok" on the prompt telling you to restart !MyTime
+    # restart !MyTime, your data should be there and you should be running the old version of !MyTime
+  # If you are downgrading to !MyTime  > 3.0 then
+    # Find that "!MyTime.sqlite" file that we saved a couple of steps ago and rename the file to "!MyTime.!MyTimedb",
+    # now create an email and attach this newly renamed file "oldrecords.!MyTimedb"
     # send this email to the account that is on your iPhone
-    # on your iPhone open up your email and press on the "oldrecords.mytimedb" attachment, it will ask you if you want to open this file in MyTime... press on "open in mytime"
-    # mytime will ask you if you want to restore the file, press on "restore backup", and press "ok" on the prompt telling you to restart MyTime
-    # restart MyTime, your data should be there and you should be running the old version of MyTime
+    # on your iPhone open up your email and press on the "oldrecords.!MyTimedb" attachment, it will ask you if you want to open this file in !MyTime... press on "open in !MyTime"
+    # !MyTime will ask you if you want to restore the file, press on "restore backup", and press "ok" on the prompt telling you to restart !MyTime
+    # restart !MyTime, your data should be there and you should be running the old version of !MyTime
