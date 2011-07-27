@@ -325,12 +325,12 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>902BA8BE12EB3459005793DD</string>
+										<string>90AD9FDF13DF707A004D7702</string>
 										<key>history</key>
 										<array>
 											<string>902BA88912EB2D17005793DD</string>
 											<string>902BA8BB12EB3459005793DD</string>
-											<string>902BA8BC12EB3459005793DD</string>
+											<string>902BA8BE12EB3459005793DD</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -344,18 +344,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1042, 579}}</string>
+								<string>{{0, 0}, {1042, 573}}</string>
 								<key>RubberWindowFrame</key>
 								<string>348 193 1249 835 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>579pt</string>
+							<string>573pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>210pt</string>
+							<string>216pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -369,7 +369,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1042, 183}}</string>
+										<string>{{10, 27}, {1042, 189}}</string>
+										<key>RubberWindowFrame</key>
+										<string>348 193 1249 835 0 0 1680 1028 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -424,8 +426,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1042, 183}}</string>
-										<key>RubberWindowFrame</key>
-										<string>348 193 1249 835 0 0 1680 1028 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -453,11 +453,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>902BA88D12EB2D17005793DD</string>
+				<string>90AD9FE113DF707A004D7702</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>902BA88E12EB2D17005793DD</string>
+				<string>90AD9FE213DF707A004D7702</string>
 				<string>90A799F80F22C08500365D96</string>
-				<string>902BA88F12EB2D17005793DD</string>
+				<string>90AD9FE313DF707A004D7702</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
