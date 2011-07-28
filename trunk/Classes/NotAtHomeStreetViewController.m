@@ -150,7 +150,8 @@
 		NSError *error = nil;
 		if(![self.delegate.street.managedObjectContext save:&error])
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 		
 		[[self retain] autorelease];
@@ -166,7 +167,8 @@
 	NSError *error = nil;
 	if(![self.delegate.street.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	[[self retain] autorelease];
@@ -179,7 +181,8 @@
 	NSError *error = nil;
 	if(![self.delegate.street.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 
 	[self.delegate.navigationController popViewControllerAnimated:YES];
@@ -275,7 +278,8 @@
 	NSError *error = nil;
 	if(![self.delegate.street.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	[self.delegate dismissModalViewControllerAnimated:YES];
 	[self.delegate updateAndReload];
@@ -286,7 +290,8 @@
 	NSError *error = nil;
 	if(![self.delegate.street.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }

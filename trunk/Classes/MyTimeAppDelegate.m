@@ -64,12 +64,22 @@
 
 BOOL isIOS4OrGreater(void)
 {
-	NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"4.0" options: NSNumericSearch];
-	if (order == NSOrderedSame || order == NSOrderedDescending) {
-		return YES;
-	} else {
-		return NO;
+	static BOOL result = NO;
+	static BOOL initalized = NO;
+	if(!initalized)
+	{
+		initalized = YES;
+		NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"4.0" options: NSNumericSearch];
+		if (order == NSOrderedSame || order == NSOrderedDescending) 
+		{
+			result = YES;
+		} 
+		else 
+		{
+			result = NO;
+		}
 	}
+	return result;
 }
 
 @interface MyTimeAppDelegate ()
@@ -291,7 +301,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					NSError *error = nil;
 					if (![self.managedObjectContext save:&error]) 
 					{
-						[NSManagedObjectContext presentErrorDialog:error];
+						NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+						[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 					}
 					
 					// kick off the geocoder if not already done
@@ -332,7 +343,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					NSError *error = nil;
 					if (![self.managedObjectContext save:&error]) 
 					{
-						[NSManagedObjectContext presentErrorDialog:error];
+						NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+						[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 					}
 					
 					self.dataToImport = nil;
@@ -365,7 +377,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					NSError *error = nil;
 					if (![self.managedObjectContext save:&error]) 
 					{
-						[NSManagedObjectContext presentErrorDialog:error];
+						NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+						[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 					}
 					
 					self.dataToImport = nil;
@@ -533,7 +546,8 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 		NSError *error = nil;
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	}
 
@@ -1095,6 +1109,8 @@ NSString *emailFormattedStringForCoreDataSettings()
 	return mailView;
 }
 
+
+
 NSString *emailFormattedStringForSettings();
 
 - (BOOL)verifyCoreDataConversion
@@ -1264,7 +1280,8 @@ NSString *emailFormattedStringForSettings();
 	error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 	}
 	
 	return mtCall;
@@ -1366,7 +1383,8 @@ NSString *emailFormattedStringForSettings();
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 	}
 
 	double steps = 1.0;
@@ -1457,7 +1475,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 		self.hud.progress = self.hud.progress + 1.0/steps;
 		
@@ -1485,7 +1504,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	
 		// CALLS
@@ -1517,7 +1537,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	
 		// QUICK NOTES
@@ -1533,7 +1554,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	
 		// TERRITORY
@@ -1547,7 +1569,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	
 		// HOURS
@@ -1565,7 +1588,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 
 		// RBC HOURS
@@ -1583,7 +1607,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 
 		// STATISTICS ADJUSTMENTS
@@ -1605,7 +1630,8 @@ NSString *emailFormattedStringForSettings();
 		error = nil;
 		if (![self.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	}
 
@@ -1726,7 +1752,8 @@ NSString *emailFormattedStringForSettings();
 	{
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
         } 
     }
 	
@@ -1743,7 +1770,8 @@ NSString *emailFormattedStringForSettings();
 	{
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
         } 
     }
 }
@@ -2278,7 +2306,8 @@ NSString *emailFormattedStringForSettings();
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 	}
 	
 	
@@ -2318,7 +2347,8 @@ NSString *emailFormattedStringForSettings();
 		NSError *error = nil;
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	}
 	
@@ -2332,7 +2362,8 @@ NSString *emailFormattedStringForSettings();
 			NSError *error = nil;
 			if (![settings.managedObjectContext save:&error]) 
 			{
-				[NSManagedObjectContext presentErrorDialog:error];
+				NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 			}
 			
 			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
@@ -2350,7 +2381,7 @@ NSString *emailFormattedStringForSettings();
 			}
 		}
 	}
-
+	
 	// kick off the Geocache lookup
 	[[Geocache sharedInstance] setWindow:window];
 
@@ -2415,7 +2446,8 @@ NSString *emailFormattedStringForSettings();
 		NSError *error = nil;
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	}
 }
@@ -2508,7 +2540,8 @@ NSString *emailFormattedStringForSettings();
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
     }    
 	
     return persistentStoreCoordinator_;

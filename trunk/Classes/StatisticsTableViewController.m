@@ -339,7 +339,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSError *error = nil;
 	if(![theAdjustment.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 }
 
@@ -397,9 +398,9 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	if(cell == nil)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
+	cell.selectionStyle = tableView.editing ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
 	cell.textLabel.text = self.title;
 	int hours = self.array[self.section] / 60;
 	int minutes = self.array[self.section] % 60;
@@ -664,7 +665,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSError *error = nil;
 	if(![currentUser.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	
 	NSArray *selectedMonths = monthChooserViewController.selected;

@@ -191,7 +191,8 @@
 	NSError *error = nil;
 	if(![self.delegate.house.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	return YES;
@@ -221,7 +222,8 @@
 	NSError *error = nil;
 	if(![self.delegate.house.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	return YES;
@@ -308,7 +310,8 @@
 		NSError *error = nil;
 		if(![self.delegate.house.managedObjectContext save:&error])
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 		
 		[[self retain] autorelease];
@@ -324,7 +327,8 @@
 	NSError *error = nil;
 	if(![self.delegate.house.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	[[self retain] autorelease];
@@ -403,7 +407,8 @@
 	NSError *error = nil;
 	if(![self.delegate.house.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	[[self retain] autorelease];
@@ -483,7 +488,8 @@
 	NSError *error = nil;
 	if(![self.delegate.house.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	if(![call.locationLookupType isEqualToString:CallLocationTypeManual])

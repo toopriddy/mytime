@@ -111,7 +111,8 @@
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	self.delegate.forceReload = YES;
 	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
@@ -164,7 +165,8 @@
 			NSError *error = nil;
 			if (![self.delegate.managedObjectContext save:&error]) 
 			{
-				[NSManagedObjectContext presentErrorDialog:error];
+				NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 			}
 			[[self retain] autorelease];
 			[self.delegate deleteDisplayRowAtIndexPath:[NSIndexPath indexPathForRow:actionSheet.tag inSection:0]];
@@ -274,7 +276,8 @@
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 
 	MultipleUsersCellController *cellController = [[[MultipleUsersCellController alloc] init] autorelease];

@@ -85,7 +85,8 @@
 	NSError *error = nil;
 	if(![self.additionalInformationType.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	[self.delegate deleteDisplayRowAtIndexPath:self.indexPath];
 }
@@ -151,7 +152,8 @@
 		NSError *error = nil;
 		if(![self.additionalInformationType.managedObjectContext save:&error])
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 	}
 }
@@ -171,7 +173,8 @@
 	NSError *error = nil;
 	if(![self.additionalInformationType.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 }
 
@@ -263,7 +266,8 @@
 			NSError *error = nil;
 			if(![self.additionalInformationType.managedObjectContext save:&error])
 			{
-				[NSManagedObjectContext presentErrorDialog:error];
+				NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 			}
 			
 			// Notify that we added the metadata to all of the calls
@@ -342,7 +346,8 @@
 	NSError *error = nil;
 	if(![self.additionalInformationType.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 }
 @end

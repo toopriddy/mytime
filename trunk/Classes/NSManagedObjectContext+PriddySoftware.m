@@ -7,6 +7,17 @@
 //
 
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "MyTimeAppDelegate.h"
+
+@interface MailCloser : NSObject< MFMailComposeViewControllerDelegate>
+@end
+@implementation MailCloser
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+	[controller dismissModalViewControllerAnimated:YES];
+}
+@end
+
 
 @implementation NSSortDescriptor(PriddySoftware)
 + (id)psSortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending
@@ -201,6 +212,58 @@
     
     return results;
 }
+
++ (void)sendCoreDataSaveFailureEmailWithNavigationController:(UINavigationController *)navigationController error:(NSError *)error
+{
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"MyTime Runtime Error", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	[string appendString:NSLocalizedString(@"MyTime encountered an error which would normally cause a crash.<br><br>Please send this email to the author of MyTime so that your problem can be fixed and if there is any dammage to your data it can be repaired.  The author of MyTime will try to respond quickly to your problem.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected an error<br><br>", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
+	
+	NSMutableString *path = [NSMutableString string];
+	NSArray *controllers = [navigationController viewControllers];
+	UIViewController *lastObject = [controllers lastObject];
+	for(UIViewController *controller in controllers)
+	{
+		if(controller == lastObject)
+		{
+			[path appendFormat:@"%@", controller.title];
+		}
+		else
+		{
+			[path appendFormat:@"%@ -> ", controller.title];
+		}
+	}
+	[string appendFormat:NSLocalizedString(@"<h2>Navigation Path:</h2>%@<br><br><br><h2>Crash Explanation:</h2><pre>%@</pre><br><h2>Crash Details:</h2><pre>%@</pre><br><br><br>", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing"), path, error, [error userInfo]];
+	
+	// attach the old records file
+	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[MyTimeAppDelegate storeFileAndPath]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];
+	
+	[mailView setToRecipients:[NSArray arrayWithObject:@"toopriddy@gmail.com"]];
+	
+	[string appendString:@"</body></html>"];
+	[mailView setMessageBody:string isHTML:YES];
+	[string release];
+	
+	if(navigationController == nil)
+	{
+		MyTimeAppDelegate *appDelegate = [MyTimeAppDelegate sharedInstance];
+		if(appDelegate.modalNavigationController == nil)
+		{
+			appDelegate.modalNavigationController = [[[UINavigationController alloc] init] autorelease];
+			[appDelegate.window addSubview:appDelegate.modalNavigationController.view];
+		}			
+		navigationController = appDelegate.modalNavigationController;
+	}
+	
+	if(navigationController)
+	{
+		mailView.mailComposeDelegate = [[MailCloser alloc] init];
+		[navigationController presentModalViewController:mailView animated:YES];
+	}
+}
+
 
 + (void)presentErrorDialog:(NSError *)error
 {

@@ -18,6 +18,7 @@
 #import "MTUser.h"
 #import "MTReturnVisit.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "CLLocationManager+PriddySoftware.h"
 
 
 @implementation MapViewCallAnnotation
@@ -132,7 +133,7 @@
 	self.mapView = [[[MKMapView alloc] initWithFrame:self.view.bounds] autorelease];
 	_mapView.delegate = self;
 	_mapView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	if([CLLocationManager locationServicesEnabled])
+	if([CLLocationManager psLocationServicesEnabled])
 	{
 		_mapView.showsUserLocation = YES;
 	}
@@ -253,7 +254,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	if([CLLocationManager locationServicesEnabled])
+	if([CLLocationManager psLocationServicesEnabled])
 	{
 		self.mapView.showsUserLocation = NO;
 	}
@@ -262,7 +263,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	if([CLLocationManager locationServicesEnabled])
+	if([CLLocationManager psLocationServicesEnabled])
 	{
 		self.mapView.showsUserLocation = YES;
 	}

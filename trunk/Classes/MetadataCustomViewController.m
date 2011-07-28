@@ -661,7 +661,8 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	NSError *error = nil;
 	if(![self.type.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 }
 

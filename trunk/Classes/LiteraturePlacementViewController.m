@@ -80,7 +80,8 @@
 		NSError *error = nil;
 		if(![self.publication.managedObjectContext save:&error])
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 		
 		[[self retain] autorelease];
@@ -117,7 +118,8 @@
 	NSError *error = nil;
 	if(![editedPublication.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	if(newPublication)

@@ -66,7 +66,8 @@
 	NSError *error = nil;
 	if(![self.additionalInformation.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	
 	if(delegate && [delegate respondsToSelector:@selector(multipleChoiceMetadataViewControllerDone:)])
@@ -123,7 +124,8 @@
 	NSError *error = nil;
 	if(![self.additionalInformation.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	self.editing = NO;
 }	

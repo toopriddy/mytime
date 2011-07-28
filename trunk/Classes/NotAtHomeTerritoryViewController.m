@@ -233,7 +233,8 @@
 	NSError *error = nil;
 	if(![self.delegate.territory.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 
 	[self.delegate.navigationController popViewControllerAnimated:YES];
@@ -260,7 +261,8 @@
 		NSError *error = nil;
 		if(![self.delegate.territory.managedObjectContext save:&error])
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 		[[self retain] autorelease];
 		[self.delegate deleteDisplayRowAtIndexPath:indexPath];
@@ -311,7 +313,8 @@
 	NSError *error = nil;
 	if(![self.delegate.territory.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	[self.delegate dismissModalViewControllerAnimated:YES];
 }
@@ -350,7 +353,8 @@
 	NSError *error = nil;
 	if(![self.delegate.territory.managedObjectContext save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	[self.delegate dismissModalViewControllerAnimated:YES];

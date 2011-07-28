@@ -15,6 +15,7 @@
 
 #import "SelectPositionMapViewController.h"
 #import "CallViewController.h"
+#import "CLLocationManager+PriddySoftware.h"
 #import "PSLocalization.h"
 
 @implementation SelectPositionAnnotation
@@ -169,7 +170,7 @@
 				self.marker = [[[SelectPositionAnnotation alloc] initWithCoordinate:point] autorelease];
 				[self.mapView addAnnotation:self.marker];
 			}
-			if([CLLocationManager locationServicesEnabled])
+			if([CLLocationManager psLocationServicesEnabled])
 			{
 				self.marker.title = NSLocalizedString(@"Acquiring Location...", @"title for the marker when you have to manually set the location for a call");
 			}
@@ -183,7 +184,7 @@
 		}
 	}
 
-	if([CLLocationManager locationServicesEnabled])
+	if([CLLocationManager psLocationServicesEnabled])
 	{
 		self.mapView.showsUserLocation = YES;
 	}
