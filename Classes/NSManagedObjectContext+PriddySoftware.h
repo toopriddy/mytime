@@ -35,4 +35,6 @@
 
 + (void)presentErrorDialog:(NSError *)error;
 
++ (void)sendCoreDataSaveFailureEmailWithNavigationController:(UINavigationController *)navigationController error:(NSError *)error;
+
 @end

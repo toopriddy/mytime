@@ -117,7 +117,8 @@
 	NSError *error = nil;
 	if (![moc save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	if(self.temporaryDisplayRule)
 	{
@@ -150,7 +151,8 @@
 	NSError *error = nil;
 	if (![self.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	[[self retain] autorelease];
 	[self deleteDisplayRowAtIndexPath:indexPath];
@@ -192,7 +194,8 @@
 	NSError *error = nil;
 	if(![moc save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 	[self dismissModalViewControllerAnimated:YES];
 }

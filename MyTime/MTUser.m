@@ -75,7 +75,8 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 		NSError *error = nil;
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 		[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
 	}	
@@ -130,7 +131,8 @@ NSString *const MTNotificationUserChanged = @"settingsNotificationUserChanged";
 	NSError *error = nil;
 	if (![managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 	}
 	[[NSNotificationCenter defaultCenter] postNotificationName:MTNotificationUserChanged object:nil];
 	return currentUser;

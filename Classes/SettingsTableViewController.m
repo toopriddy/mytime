@@ -119,7 +119,7 @@
  *
  ******************************************************************/
 #pragma mark EnablePopupsCellController
-@interface EnablePopupsCellController : NSObject<TableViewCellController>
+@interface EnablePopupsCellController : SettingsCellController<TableViewCellController>
 {
 }
 @end
@@ -151,8 +151,8 @@
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -219,8 +219,8 @@
 	NSError *error = nil;
 	if (![user.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -321,8 +321,8 @@
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
@@ -378,8 +378,8 @@
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 }
@@ -425,8 +425,8 @@
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 }
@@ -501,8 +501,8 @@
 	NSError *error = nil;
 	if (![settings.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -564,8 +564,8 @@
 	NSError *error = nil;
 	if (![currentUser.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
 	if(selectedRow)
@@ -626,8 +626,8 @@
 	NSError *error = nil;
 	if (![currentUser.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
@@ -692,8 +692,8 @@
 	NSError *error = nil;
 	if (![currentUser.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
-		abort();
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 	}
 	
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
@@ -839,8 +839,8 @@
 		NSError *error = nil;
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
-			abort();
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
 		}
 	}
 	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
@@ -1318,6 +1318,7 @@
 		// Re-enable popups
 		{
 			EnablePopupsCellController *cellController = [[EnablePopupsCellController alloc] init];
+			cellController.delegate = self;
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}

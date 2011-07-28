@@ -42,7 +42,8 @@
 	NSError *error = nil;
 	if (![moc save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.tableViewController.navigationController error:error];
 	}
 	[[self retain] autorelease];
 	[self.tableViewController deleteDisplayRowAtIndexPath:indexPath];
@@ -66,7 +67,8 @@
 	NSError *error = nil;
 	if (![moc save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.tableViewController.navigationController error:error];
 	}
 
 	[self.tableViewController updateAndReload];
@@ -80,7 +82,8 @@
 	NSError *error = nil;
 	if (![moc save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.tableViewController.navigationController error:error];
 	}
 	if(self.temporaryFilter)
 	{
@@ -104,7 +107,8 @@
 	NSError *error = nil;
 	if(![moc save:&error])
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.tableViewController.navigationController error:error];
 	}
 }
 

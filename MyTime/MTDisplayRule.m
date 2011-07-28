@@ -111,7 +111,8 @@ MTDisplayRule *g_currentDisplayRule;
 		NSError *error = nil;
 		if (![currentUser.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 		}
 	}
 }

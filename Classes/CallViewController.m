@@ -49,6 +49,7 @@
 #import "MTPublication.h"
 #import "MTSettings.h"
 #import "NSManagedObjectContext+PriddySoftware.h"
+#import "CLLocationManager+PriddySoftware.h"
 
 #define PLACEMENT_OBJECT_COUNT 2
 
@@ -1901,7 +1902,7 @@
 
 			// create a location manager and start getting updates for the location so that we can quickly 
 			// obtain the location in the address view
-			if([CLLocationManager locationServicesEnabled])
+			if([CLLocationManager psLocationServicesEnabled])
 			{
 				self.locationManager = [[[CLLocationManager alloc] init] autorelease];
 				self.locationManager.delegate = self; // Tells the location manager to send updates to this object
@@ -1966,7 +1967,8 @@
 	[_call.managedObjectContext processPendingChanges];
 	if (![_call.managedObjectContext save:&error]) 
 	{
-		[NSManagedObjectContext presentErrorDialog:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
 }
 
@@ -2102,7 +2104,8 @@
 		[settings.managedObjectContext processPendingChanges];
 		if (![settings.managedObjectContext save:&error]) 
 		{
-			[NSManagedObjectContext presentErrorDialog:error];
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 		}
 		
 		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];

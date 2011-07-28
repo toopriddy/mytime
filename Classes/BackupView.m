@@ -268,7 +268,8 @@
 			NSError *error = nil;
 			if(![moc save:&error])
 			{
-				[NSManagedObjectContext presentErrorDialog:error];
+				NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
 			}
 			NSData *data = [fileManager contentsAtPath:[MyTimeAppDelegate storeFileAndPath]];
 			self.title = NSLocalizedString(@"Sending Settings to the Backup Application", @"initial message when trying to transfer backup files");

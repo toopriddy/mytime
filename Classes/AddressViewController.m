@@ -18,6 +18,7 @@
 #import "MTSettings.h"
 #import "MTCall.h"
 #import "UITableViewTitleAndValueCell.h"
+#import "CLLocationManager+PriddySoftware.h"
 #import "PSLocalization.h"
 
 #define REVERSE_GEOCODING_ACCURACY 80
@@ -99,7 +100,7 @@
 		self.city = theCity;
 		self.state = theState;
 		shouldAskAboutReverseGeocoding = askAboutReverseGeocoding;
-		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager locationServicesEnabled];
+		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager psLocationServicesEnabled];
 	}
 	return self;
 }
@@ -530,7 +531,7 @@
 	
 	if(wasShowingReverseGeocoding)
 	{
-		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager locationServicesEnabled];
+		showReverseGeocoding = shouldAskAboutReverseGeocoding && [CLLocationManager psLocationServicesEnabled];
 		wasShowingReverseGeocoding = NO;
 		if(showReverseGeocoding)
 		{
