@@ -24,6 +24,7 @@ You *_MUST_* make sure that all of the following critera are true before proceed
   # !MyTime should now appear in your "Applications" entry in iTunes. You should right click !MyTime and select "Get Info" to verify that it is the previous version
   # in ITunes right click your iPhone and select "Sync"
   # verify that !MyTime is on your iPhone
+  # if you are using Windows then you might have to show the file extensions to proceed, follow the instructions at [http://support.microsoft.com/kb/865219 here to show filename extensions]
   # If you are downgrading to !MyTime < 3.0 then
     # Find that "oldrecords.plist" file that we saved a couple of steps ago and rename the file to "oldrecords.!MyTimedata",
     # now create an email and attach this newly renamed file "oldrecords.!MyTimedata"
