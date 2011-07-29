@@ -443,6 +443,8 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		{
 			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 		}
+		if(date == nil)
+			date = [NSDate dateWithTimeIntervalSince1970:0];
 		NSString *formattedDateString = [NSString stringWithString:[dateFormatter stringFromDate:date]];			
 		
 		value = [visit objectForKey:CallReturnVisitType];
