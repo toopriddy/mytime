@@ -213,8 +213,20 @@
     return results;
 }
 
++ (void)sendCoreDataSaveFailureEmailWithError:(NSError *)error
+{
+	[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:(NSError *)error];
+}
+
 + (void)sendCoreDataSaveFailureEmailWithNavigationController:(UINavigationController *)navigationController error:(NSError *)error
 {
+	NSThread *thread = [NSThread currentThread];
+	if(thread != [NSThread mainThread])
+	{
+		// we have to ship this off to another thread.
+		[NSManagedObjectContext performSelectorOnMainThread:@selector(sendCoreDataSaveFailureEmailWithError:) withObject:error waitUntilDone:YES];
+		return;
+	}
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"MyTime Runtime Error", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
 	

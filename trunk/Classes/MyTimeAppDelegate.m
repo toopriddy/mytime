@@ -1184,6 +1184,8 @@ NSString *emailFormattedStringForSettings();
 	{
 		MTReturnVisit *mtReturnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 		mtReturnVisit.date = [returnVisit objectForKey:CallReturnVisitDate];
+		if(mtReturnVisit.date == nil)
+			mtReturnVisit.date = [NSDate dateWithTimeIntervalSince1970:0];
 		mtReturnVisit.call = mtCall;
 		NSLog(@"%@", mtReturnVisit.date);
 		mtReturnVisit.notes = [returnVisit objectForKey:CallReturnVisitNotes];
