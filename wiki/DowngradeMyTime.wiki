@@ -39,3 +39,29 @@ You *_MUST_* make sure that all of the following critera are true before proceed
     # on your iPhone open up your email and press on the "oldrecords.!MyTimedb" attachment, it will ask you if you want to open this file in !MyTime... press on "open in !MyTime"
     # !MyTime will ask you if you want to restore the file, press on "restore backup", and press "ok" on the prompt telling you to restart !MyTime
     # restart !MyTime, your data should be there and you should be running the old version of !MyTime
+
+= If you have already Synced with iTunes =
+If you have already synced with iTunes then you have two options:
+  # Hopefully you have another device that syncs with the same iTunes account which has not upgraded MyTime
+  # You have a backup software (Time Machine on a Mac) which has a backup of your iTunes application directory to restore from
+
+*You have another Device*
+  # These are instructions for if you have another device that does not have the latest version of MyTime.  You MUST have an email backup or a backup of your mytime data file to proceed.
+  # Open iTunes on your computer, and delete MyTime from the applications 
+  # sync your other iDevice that has the old MyTime
+  # right click your iDevice in iTunes and select "Transfer Purchases"
+  # now on your iPhone that you want to downgrade to an earlier version of MyTime, delete MyTime from the iPhone
+  # now sync your iPhone with iTunes, this will put the older version of MyTime on your iPhone
+  # you can now restore from your backup file to get your data back
+
+*You have backup software*
+  # Open your backup software to the iTunes "Mobile Applications" folder, this might be in a couple of locations:
+    # *OSX:* ~/Music/iTunes/Mobile Applications
+    # *XP:* My Documents\My Music\iTunes\Mobile Applications
+    # *Vista/Windows 7:* My Documents\My Music\iTunes\Mobile Applications
+  # copy "!MyTime <version number>.ipa" to your desktop (where <version number> is something like 2.9.0)
+  # now delete MyTime from your iTunes library on your computer
+  # now drag the MyTime<version number>.ipa file that you saved on your desktop into the iTunes Library
+  # Make sure you have a valid email backup and delete MyTime from your iPhone
+  # sync your iPhone with iTunes which will copy the old version of MyTime to your iPhone
+  # you can now restore from your backup file to get your data back
