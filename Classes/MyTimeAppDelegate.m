@@ -82,6 +82,22 @@ BOOL isIOS4OrGreater(void)
 	return result;
 }
 
+BOOL isSmsAvaliable(void)
+{
+    Class messageClass = NSClassFromString(@"MFMessageComposeViewController");
+    
+    if(messageClass != nil) 
+	{
+        // Check whether the current device is configured for sending SMS messages
+        if([messageClass canSendText]) 
+		{
+            return YES;
+		}
+	}
+	return NO;
+}
+
+
 @interface MyTimeAppDelegate ()
 - (void)displaySecurityViewController;
 + (NSString *)storeFileAndPath;
@@ -475,6 +491,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 				// send email backup
 				case 1:
 				{
+					if([MFMailComposeViewController canSendMail] == NO)
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+						[alertSheet show];
+						break;
+					}
 					MFMailComposeViewController *mailView = [MyTimeAppDelegate sendEmailBackup];
 					mailView.mailComposeDelegate = self;
 					[self.modalNavigationController.visibleViewController presentModalViewController:mailView animated:YES];
@@ -490,6 +513,13 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 					[self.hud hide:YES];
 
 					forceEmail = YES;
+					if([MFMailComposeViewController canSendMail] == NO)
+					{
+						UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+						alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+						[alertSheet show];
+						return;
+					}
 					MFMailComposeViewController *mailView = [self sendCoreDataConvertFailureEmail];
 					mailView.mailComposeDelegate = self;
 
@@ -2140,6 +2170,15 @@ NSString *emailFormattedStringForSettings();
 #endif		
 	if([defaults boolForKey:UserDefaultsEmailBackupInstantly])
 	{
+		if([MFMailComposeViewController canSendMail] == NO)
+		{
+			UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+			alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+			[alertSheet show];
+			// make the window visible
+			[window makeKeyAndVisible];
+			return;
+		}
 		[defaults setBool:NO forKey:UserDefaultsEmailBackupInstantly];
 		MFMailComposeViewController *mailView = [MyTimeAppDelegate sendEmailBackup];
 		mailView.mailComposeDelegate = self;

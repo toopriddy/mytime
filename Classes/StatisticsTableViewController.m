@@ -56,7 +56,7 @@ NSString * const StatisticsTypeReturnVisits = @"Return Visits";
 NSString * const StatisticsTypeBibleStudies = @"Bible Studies";
 NSString * const StatisticsTypeCampaignTracts = @"Campaign Tracts";
 NSString * const StatisticsTypeRBCHours = @"RBC Hours";
-													
+
 /******************************************************************
  *
  *   ServiceYearStatisticsCellController
@@ -571,45 +571,60 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
-- (void)sendEmailUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result 
 {
-	// add notes if there are any
-	int index;
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark -
+#pragma mark Compose Mail/SMS
+
+- (NSString *)generateMessageBodyUsingHtml:(BOOL)useHtml monthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
+{
 	MTUser *currentUser = [MTUser currentUser];
-	NSString *emailAddress = currentUser.secretaryEmailAddress;
-	if(emailAddress == nil || emailAddress.length == 0)
-		return;
-	
-	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
-	[mailView setSubject:NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report")];
-	if(emailAddress && emailAddress.length)
+	NSMutableString *string = [[[NSMutableString alloc] init] autorelease];
+	if(useHtml)
 	{
-		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+		[string appendString:@"<html><body>"];
 	}
-	
-	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
-	
+	NSString *crString = useHtml ? @"<br>" : @"\n";
 	NSString *notes = currentUser.secretaryEmailNotes;
 	if([notes length])
 	{
-		notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
-		notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+		if(useHtml)
+		{
+			notes = [notes stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+			notes = [notes stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+		}
 		[string appendString:notes];
-		[string appendFormat:@"<br><br>"];
+		[string appendFormat:@"%@%@", crString, crString];
 	}
 	
-	for(index = 0; index < [selectedMonths count]; ++index)
+	BOOL first = YES;
+	for(int index = 0; index < [selectedMonths count]; ++index)
 	{
 		if([[selectedMonths objectAtIndex:index] boolValue])
 		{
-			[string appendString:@"<h3>"];
-			[string appendString:[NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:<br>", @"Text used in the email that is sent to the congregation secretary, the <br> you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]]];
-			[string appendString:@"</h3>"];
-			
+			if(!first)
+			{
+				[string appendFormat:@"%@%@", crString, crString];
+			}
+			first = NO;
+			NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@ Field Service Activity Report:<br>", @"Text used in the email that is sent to the congregation secretary, the <br> you see in the text are RETURN KEYS so that you can space multiple months apart from eachother"), [monthNames objectAtIndex:index]];
+			if(useHtml)
+			{
+				[string appendString:@"<h3>"];
+				[string appendString:title];
+				[string appendString:@"</h3>"];
+			}
+			else
+			{
+				[string appendString:[title stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"]];
+			}
 			// BOOKS
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Books", @"Publication Type name"), _books[index]]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Books", @"Publication Type name"), _books[index], crString]];
 			// BROCHURES
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index]]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Brochures", @"Publication Type name"), _brochures[index], crString]];
 			// HOURS
 			NSString *count = @"0";
 			int hours = _minutes[index] / 60;
@@ -620,17 +635,17 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 				count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
 			else if(minutes)
 				count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-			[string appendString:[NSString stringWithFormat:@"%@: %@<br>", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count]];
+			[string appendString:[NSString stringWithFormat:@"%@: %@%@", NSLocalizedString(@"Hours", @"'Hours' ButtonBar View text, Label for the amount of hours spend in the ministry, and Expanded name when on the More view"), count, crString]];
 			
 			// MAGAZINES
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index]]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Magazines", @"Publication Type name"), _magazines[index], crString]];
 			// RETURN VISITS
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View"), _returnVisits[index]]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Return Visits", @"Return Visits label on the Statistics View"), _returnVisits[index], crString]];
 			// STUDIES
-			[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View"), _bibleStudies[index]]];
+			[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Bible Studies", @"Bible Studies label on the Statistics View"), _bibleStudies[index], crString]];
 			// CAMPAIGN TRACTS
 			if(_campaignTracts[index])
-				[string appendString:[NSString stringWithFormat:@"%@: %d<br>", NSLocalizedString(@"Campaign Tracts", @"Publication Type name"), _campaignTracts[index]]];
+				[string appendString:[NSString stringWithFormat:@"%@: %d%@", NSLocalizedString(@"Campaign Tracts", @"Publication Type name"), _campaignTracts[index], crString]];
 			// QUICKBUILD TIME
 			if(_quickBuildMinutes[index])
 			{
@@ -643,25 +658,114 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 					count = [NSString stringWithFormat:@"%d %@", hours, hours == 1 ? NSLocalizedString(@"hour", @"Singular form of the word hour") : NSLocalizedString(@"hours", @"Plural form of the word hours")];
 				else if(minutes)
 					count = [NSString stringWithFormat:@"%d %@", minutes, minutes == 1 ? NSLocalizedString(@"minute", @"Singular form of the word minute") : NSLocalizedString(@"minutes", @"Plural form of the word minutes")];
-				[string appendString:[NSString stringWithFormat:@"%@: %@<br>", NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count]];
+				[string appendString:[NSString stringWithFormat:@"%@: %@%@", NSLocalizedString(@"RBC Hours", @"'RBC Hours' ButtonBar View text, Label for the amount of hours spent doing quick builds"), count, crString]];
 			}
-			[string appendString:@"<br><br>"];
 		}
 	}
 	
-	[string appendString:@"</body></html>"];
-	[mailView setMessageBody:string isHTML:YES];
+	if(useHtml)
+	{
+		[string appendString:@"</body></html>"];
+	}
+	return string;
+}
+
+// Displays an SMS composition interface inside the application. 
+-(void)sendSmsUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
+{
+	// add notes if there are any
+	MTUser *currentUser = [MTUser currentUser];
+
+	NSString *telephoneNumber = currentUser.secretaryTelephoneNumber;
+	if(telephoneNumber)
+	{
+		// remove invalid characters and formatting before calling
+		unichar one;
+		NSMutableString *parsedValue = [NSMutableString string];
+		int length = [telephoneNumber length];
+		for(int i = 0; i < length; i++)
+		{
+			one = [telephoneNumber characterAtIndex:i];
+			if(isdigit(one) || one == '+' || one == ',' || one == '*' || one == ' ')
+			{
+				[parsedValue appendFormat:@"%c", one];
+			}
+		}
+		telephoneNumber = parsedValue;
+	}		
+	if(telephoneNumber == nil || telephoneNumber.length == 0)
+		return;
+	
+	MFMessageComposeViewController *messageView = [[[MFMessageComposeViewController alloc] init] autorelease];
+	if(telephoneNumber && telephoneNumber.length)
+	{
+		[messageView setRecipients:[telephoneNumber componentsSeparatedByString:@" "]];
+	}
+	
+	messageView.body = [self generateMessageBodyUsingHtml:NO monthNames:monthNames selectedMonths:selectedMonths];
+	messageView.messageComposeDelegate = self;
+	[self.navigationController presentModalViewController:messageView animated:YES];
+}
+
+- (void)sendEmailUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
+{
+	// add notes if there are any
+	MTUser *currentUser = [MTUser currentUser];
+	NSString *emailAddress = currentUser.secretaryEmailAddress;
+	if(emailAddress == nil || emailAddress.length == 0)
+		return;
+	
+	if([MFMailComposeViewController canSendMail] == NO)
+	{
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+		[alertSheet show];
+		return;
+	}
+	
+	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailView setSubject:NSLocalizedString(@"Field Service Activity Report", @"Subject text for the email that is sent for the Field Service Activity report")];
+	if(emailAddress && emailAddress.length)
+	{
+		[mailView setToRecipients:[emailAddress componentsSeparatedByString:@" "]];
+	}
+	
+	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
+	
+
+	[mailView setMessageBody:[self generateMessageBodyUsingHtml:YES monthNames:monthNames selectedMonths:selectedMonths] isHTML:YES];
 	[string release];
 	[mailView setMailComposeDelegate:self];
 	[self.navigationController presentModalViewController:mailView animated:YES];
 	
 }
 
+- (void)sendReportUsingMonthNames:(NSArray *)monthNames selectedMonths:(NSArray *)selectedMonths  
+{
+	MTUser *currentUser = [MTUser currentUser];
+	if(isSmsAvaliable() && currentUser.sendReportUsingSmsValue)
+	{
+		[self sendSmsUsingMonthNames:monthNames selectedMonths:selectedMonths];
+	}
+	else
+	{
+		[self sendEmailUsingMonthNames:monthNames selectedMonths:selectedMonths];
+	}
+}
+
 - (void)monthChooserViewControllerSendEmail:(MonthChooserViewController *)monthChooserViewController
 {
 	NSString *emailAddress = monthChooserViewController.emailAddress.textField.text;
 	MTUser *currentUser = [MTUser currentUser];
-	currentUser.secretaryEmailAddress = emailAddress;
+	if(isSmsAvaliable() && currentUser.sendReportUsingSmsValue)
+	{
+		currentUser.secretaryTelephoneNumber = emailAddress;
+	}
+	else
+	{
+		currentUser.secretaryEmailAddress = emailAddress;
+	}
+
 	NSError *error = nil;
 	if(![currentUser.managedObjectContext save:&error])
 	{
@@ -672,7 +776,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 	NSArray *selectedMonths = monthChooserViewController.selected;
 	NSArray *monthNames = monthChooserViewController.months;
 	
-	[self sendEmailUsingMonthNames:monthNames selectedMonths:selectedMonths];
+	[self sendReportUsingMonthNames:monthNames selectedMonths:selectedMonths];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)button
@@ -728,7 +832,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 			{
 				[array addObject:[NSNumber numberWithBool:(monthGuess == i)]];
 			}
-			[self sendEmailUsingMonthNames:months selectedMonths:array];
+			[self sendReportUsingMonthNames:months selectedMonths:array];
 		}
 	}
 	else
@@ -861,8 +965,8 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 												   delegate:self
 										  cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 								     destructiveButtonTitle:nil
-										  otherButtonTitles:NSLocalizedString(@"Pick Months To Email", @"Statistics button to allow you to pick months to email to the congregation secretary")
-						,[NSString stringWithFormat:NSLocalizedString(@"Email %@ Report", @"This is text used in the statistics view where you click on the 'ActionSheet' button and it asks you what you want to do to email your congregation secretary your statistics where %@ is the placeholder for the month"), monthGuess]
+										  otherButtonTitles:NSLocalizedString(@"Pick Months To Send", @"Statistics button to allow you to pick months to send to the congregation secretary")
+						,[NSString stringWithFormat:NSLocalizedString(@"Send %@ Report", @"This is text used in the statistics view where you click on the 'ActionSheet' button and it asks you what you want to do to send your congregation secretary your statistics where %@ is the placeholder for the month"), monthGuess]
 						,nil] autorelease];
 	}
 	else
@@ -871,7 +975,7 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 												   delegate:self
 										  cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")
 									 destructiveButtonTitle:nil
-										  otherButtonTitles:NSLocalizedString(@"Pick Months To Email", @"Statistics button to allow you to pick months to email to the congregation secretary")
+										  otherButtonTitles:NSLocalizedString(@"Pick Months To Send", @"Statistics button to allow you to pick months to send to the congregation secretary")
 						,nil] autorelease];
 	}
 	_emailActionSheet = YES;

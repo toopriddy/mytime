@@ -12,5 +12,5 @@
 @interface PSLabelCellController : PSBaseCellController
 {
 }
-
+@property (nonatomic, assign) BOOL hideModelValue;
 @end

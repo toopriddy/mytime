@@ -31,7 +31,9 @@
 #import "MyTimeAppDelegate.h"
 #import "DisplayRulesViewController.h"
 #import "PSLabelCellController.h"
+#import "PSSwitchCellController.h"
 #import "PSDateCellController.h"
+#import "PSMultipleChoiceCellController.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -553,6 +555,7 @@
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Secretary's Email", @"More->Settings view publisher type setting title") type:EMAIL data:value value:value] autorelease];
 	viewController.delegate = self;
 	viewController.tag = indexPath.row;
+	viewController.footer = NSLocalizedString(@"Enter multiple email addresses by seperating each address by a space", @"Footer sentance in the More->Settings->Secretary's Email view, letting the user know that they can enter in multiple email addresses");
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
 	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
 }
@@ -561,6 +564,69 @@
 {
 	MTUser *currentUser = [MTUser currentUser];
 	currentUser.secretaryEmailAddress = [metadataEditorViewController value];
+	NSError *error = nil;
+	if (![currentUser.managedObjectContext save:&error]) 
+	{
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
+	}
+	NSIndexPath *selectedRow = [self.delegate.tableView indexPathForSelectedRow];
+	if(selectedRow)
+	{
+		[self.delegate.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedRow] withRowAnimation:UITableViewRowAnimationFade];
+	}
+	else
+	{
+		self.delegate.forceReload = YES;
+	}
+	[metadataEditorViewController.navigationController popViewControllerAnimated:YES];
+}
+@end
+
+/******************************************************************
+ *
+ *   SecretaryEmailCellController
+ *
+ ******************************************************************/
+#pragma mark SecretaryTelephoneNumberCellController
+@interface SecretaryTelephoneNumberCellController : SettingsCellController <MetadataEditorViewControllerDelegate>
+{
+}
+@end
+@implementation SecretaryTelephoneNumberCellController
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *commonIdentifier = @"SecretaryEmailCell";
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
+	if(cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
+	}
+	
+	cell.textLabel.text = NSLocalizedString(@"Secretary's Telephone", @"More->Settings title");
+	NSString *value = [[MTUser currentUser] secretaryTelephoneNumber];
+	cell.detailTextLabel.text = value;
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *value = [[MTUser currentUser] secretaryTelephoneNumber];
+	
+	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Secretary's Telephone", @"More->Settings title") type:PHONE data:value value:value] autorelease];
+	viewController.delegate = self;
+	viewController.tag = indexPath.row;
+	[[self.delegate navigationController] pushViewController:viewController animated:YES];
+	[self.delegate retainObject:self whileViewControllerIsManaged:viewController];
+}
+
+- (void)metadataEditorViewControllerDone:(MetadataEditorViewController *)metadataEditorViewController
+{
+	MTUser *currentUser = [MTUser currentUser];
+	currentUser.secretaryTelephoneNumber = [metadataEditorViewController value];
 	NSError *error = nil;
 	if (![currentUser.managedObjectContext save:&error]) 
 	{
@@ -1035,6 +1101,13 @@
 	{
 		case 0: // Yes, email toopriddy@gmail.com
 		{
+			if([MFMailComposeViewController canSendMail] == NO)
+			{
+				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+				alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+				[alertSheet show];
+				return;
+			}
 			MFMailComposeViewController *mailView = [MyTimeAppDelegate sendEmailBackup];
 			mailView.mailComposeDelegate = self;
 			[self retain];
@@ -1043,6 +1116,13 @@
 		}
 		case 1: // No, take me to the website
 		{
+			if([MFMailComposeViewController canSendMail] == NO)
+			{
+				UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+				alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+				[alertSheet show];
+				return;
+			}
 			MFMailComposeViewController *mailView = [MyTimeAppDelegate sendPrintableEmailBackup];
 			mailView.mailComposeDelegate = self;
 			[self retain];
@@ -1206,14 +1286,6 @@
 		sectionController.title = NSLocalizedString(@"Settings", @"'Settings' ButtonBar View text and Statistics View Title");
 		[sectionController release];
 		
-		// Number of months shown in statistics view
-		{
-			MonthsDisplayedCellController *cellController = [[MonthsDisplayedCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
 		// Display Rules
 		{
 			PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
@@ -1231,82 +1303,6 @@
 			[cellController release];
 		}
 		
-		// Backup Address
-		{
-			BackupEmailAddressCellController *cellController = [[BackupEmailAddressCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
-		// Backup Dont Include Attachment
-		{
-			BackupEmailIncludeAttachmentCellController *cellController = [[BackupEmailIncludeAttachmentCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
-		// Compress Backup Link
-		{
-			BackupEmailUncompressedLinkCellController *cellController = [[BackupEmailUncompressedLinkCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-
-		// Number of months shown in statistics view
-		{
-			EmailBackupIntervalCellController *cellController = [[EmailBackupIntervalCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}		
-		
-		// Secretary Email
-		{
-			SecretaryEmailCellController *cellController = [[SecretaryEmailCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
-		// Secretary Email Notes
-		{
-			SecretaryEmailNotesCellController *cellController = [[SecretaryEmailNotesCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-		
-		// publisher type
-		{
-			PublisherTypeCellController *cellController = [[PublisherTypeCellController alloc] init];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
-		}
-#if 1
-		// Pioneer Start Date
-		{
-			PSDateCellController *cellController = [[PSDateCellController alloc] init];
-			cellController.model = user;
-			cellController.modelPath = @"pioneerStartDate";
-			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
-			cellController.datePickerMode = UIDatePickerModeDate;
-			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
-			{
-				[cellController setDateFormat:@"d/M/yyy"];
-			}
-			else
-			{
-				[cellController setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
-			}
-			
-			[self addCellController:cellController toSection:sectionController];
-		}
-#endif		
 		// Passcode
 		{
 			PasscodeCellController *cellController = [[PasscodeCellController alloc] init];
@@ -1337,6 +1333,111 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+	}
+	
+	// Statistics view
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		sectionController.title = NSLocalizedString(@"Statistics", @"'Statistics' ButtonBar View text and Statistics View Title");
+		[sectionController release];
+
+		// Number of months shown in statistics view
+		{
+			MonthsDisplayedCellController *cellController = [[MonthsDisplayedCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// publisher type
+		{
+			PublisherTypeCellController *cellController = [[PublisherTypeCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// Pioneer Start Date
+		{
+			PSDateCellController *cellController = [[PSDateCellController alloc] init];
+			cellController.model = user;
+			cellController.modelPath = @"pioneerStartDate";
+			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
+			cellController.datePickerMode = UIDatePickerModeDate;
+			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			if([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_GB"])
+			{
+				[cellController setDateFormat:@"d/M/yyy"];
+			}
+			else
+			{
+				[cellController setDateFormat:NSLocalizedString(@"M/d/yyy", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
+			}
+			
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
+	}		
+		
+	// Field Service Report
+	{
+		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		sectionController.title = NSLocalizedString(@"Field Service Report", @"Settings Section Name");
+		[sectionController release];
+		
+		// Send using SMS
+		if(isSmsAvaliable())
+		{
+			if(user.sendReportUsingSms == nil)
+			{
+				user.sendReportUsingSmsValue = NO;
+			}
+			PSMultipleChoiceCellController *cellController = [[[PSMultipleChoiceCellController alloc] init] autorelease];
+			cellController.choices = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:
+																										  [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Send report using email", @"Choice to send the Field Service Report using email"), PSMultipleChoiceOptionsLabel, [NSNumber numberWithBool:NO], PSMultipleChoiceOptionsValue, nil],
+																										  [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Send report using SMS", @"Choice to send the Field Service Report using SMS"), PSMultipleChoiceOptionsLabel, [NSNumber numberWithBool:YES], PSMultipleChoiceOptionsValue, nil], 
+																										  nil], PSMultipleChoiceOptions, 
+															   NSLocalizedString(@"Please make sure your congregation secretary is willing to accept SMS messages", @"More->Settings->Send field service report using... message to the publisher to be considerate of the secretary who might not accept SMS messages"), PSMultipleChoiceFooter, nil]];
+			cellController.model = user;
+			cellController.modelPath = @"sendReportUsingSms";
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			[self addCellController:cellController toSection:sectionController];
+		}
+		else
+		{
+			// make sure that if they cant do it that we dont allow them to
+			user.sendReportUsingSmsValue = NO;
+		}
+		
+		
+		// Secretary Email
+		{
+			SecretaryEmailCellController *cellController = [[SecretaryEmailCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// Secretary Telephone Number
+		if(isSmsAvaliable())
+		{
+			SecretaryTelephoneNumberCellController *cellController = [[SecretaryTelephoneNumberCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// Secretary Email Notes
+		{
+			SecretaryEmailNotesCellController *cellController = [[SecretaryEmailNotesCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
 	}
 	
 	// Contact Information
@@ -1382,6 +1483,38 @@
 		[self.sectionControllers addObject:sectionController];
 		sectionController.title = NSLocalizedString(@"Backup", @"More View Table Group Title");
 		[sectionController release];
+		
+		// Email Backup Interval
+		{
+			EmailBackupIntervalCellController *cellController = [[EmailBackupIntervalCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}		
+		
+		// Backup Address
+		{
+			BackupEmailAddressCellController *cellController = [[BackupEmailAddressCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// Backup Dont Include Attachment
+		{
+			BackupEmailIncludeAttachmentCellController *cellController = [[BackupEmailIncludeAttachmentCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
+		
+		// Compress Backup Link
+		{
+			BackupEmailUncompressedLinkCellController *cellController = [[BackupEmailUncompressedLinkCellController alloc] init];
+			cellController.delegate = self;
+			[sectionController.cellControllers addObject:cellController];
+			[cellController release];
+		}
 		
 		// Email backup
 		{

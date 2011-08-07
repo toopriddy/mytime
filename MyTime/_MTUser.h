@@ -22,6 +22,8 @@
 
 
 
+
+
 @interface MTUserID : NSManagedObjectID {}
 @end
 
@@ -36,6 +38,12 @@
 @property (nonatomic, retain) NSDate *pioneerStartDate;
 
 //- (BOOL)validatePioneerStartDate:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secretaryTelephoneNumber;
+
+//- (BOOL)validateSecretaryTelephoneNumber:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -68,6 +76,16 @@
 - (void)setOrderValue:(double)value_;
 
 //- (BOOL)validateOrder:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *sendReportUsingSms;
+
+@property BOOL sendReportUsingSmsValue;
+- (BOOL)sendReportUsingSmsValue;
+- (void)setSendReportUsingSmsValue:(BOOL)value_;
+
+//- (BOOL)validateSendReportUsingSms:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -185,6 +203,12 @@
 
 
 
+- (NSString*)primitiveSecretaryTelephoneNumber;
+- (void)setPrimitiveSecretaryTelephoneNumber:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveMonthDisplayCount;
 - (void)setPrimitiveMonthDisplayCount:(NSNumber*)value;
 
@@ -211,6 +235,15 @@
 
 - (double)primitiveOrderValue;
 - (void)setPrimitiveOrderValue:(double)value_;
+
+
+
+
+- (NSNumber*)primitiveSendReportUsingSms;
+- (void)setPrimitiveSendReportUsingSms:(NSNumber*)value;
+
+- (BOOL)primitiveSendReportUsingSmsValue;
+- (void)setPrimitiveSendReportUsingSmsValue:(BOOL)value_;
 
 
 

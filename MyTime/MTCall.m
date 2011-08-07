@@ -187,6 +187,26 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	return addressCityAndState_;
 }
 
+- (NSString *)normalizedStreet 
+{
+    [self willAccessValueForKey:@"normalizedStreet"];
+	NSString *value = self.street;
+	NSString *stringToReturn = [[[value decomposedStringWithCanonicalMapping] componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];	
+	NSLog(@"%@", stringToReturn);
+    [self didAccessValueForKey:@"normalizedStreet"];
+    return stringToReturn;
+}
+
+- (NSString *)normalizedName
+{
+    [self willAccessValueForKey:@"normalizedName"];
+	NSString *value = self.name;
+	NSString *stringToReturn = [[[value decomposedStringWithCanonicalMapping] componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];	
+	NSLog(@"%@", stringToReturn);
+    [self didAccessValueForKey:@"normalizedName"];
+    return stringToReturn;
+}
+
 - (NSString *)uppercaseFirstLetterOfStreet 
 {
     [self willAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
@@ -194,13 +214,13 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *stringToReturn = @"";
 	if([value length])
 	{
-		stringToReturn = [[value substringToIndex:1] uppercaseString];
+//		stringToReturn = [[[[value substringToIndex:1] decomposedStringWithCanonicalMapping] substringToIndex:1] uppercaseString];
+		stringToReturn = [[value substringToIndex:1]  uppercaseString];
 	}
 	else
 	{
 		stringToReturn = @"#";
 	}
-
     [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
     return stringToReturn;
 }
@@ -211,9 +231,14 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *value = self.name;
 	NSString *stringToReturn = @"";
 	if([value length])
-		stringToReturn = [[value substringToIndex:1] uppercaseString];
+	{
+		stringToReturn = [[[[value substringToIndex:1] decomposedStringWithCanonicalMapping] substringToIndex:1] uppercaseString];
+//		stringToReturn = [[value substringToIndex:1]  uppercaseString];
+	}
 	else
+	{
 		stringToReturn = @"#";
+	}
 	
     [self didAccessValueForKey:@"uppercaseFirstLetterOfName"];
     return stringToReturn;
