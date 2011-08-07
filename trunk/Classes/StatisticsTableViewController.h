@@ -23,7 +23,8 @@
 
 @interface StatisticsTableViewController : GenericTableViewController <MonthChooserViewControllerDelegate,
                                                                        UIActionSheetDelegate,
-                                                                       MFMailComposeViewControllerDelegate> 
+                                                                       MFMailComposeViewControllerDelegate, 
+                                                                       MFMessageComposeViewControllerDelegate> 
 {
 	int _serviceYearBooks;
 	int _serviceYearBrochures;

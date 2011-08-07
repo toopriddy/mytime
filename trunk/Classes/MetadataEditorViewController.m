@@ -72,6 +72,7 @@
 @synthesize theTableView = _theTableView;
 @synthesize textView = _textView;
 @synthesize cellViewController = _cellViewController;
+@synthesize footer;
 
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)type
 {
@@ -214,6 +215,7 @@
 - (void)dealloc 
 {
 	self.delegate = nil;
+	self.footer = nil;
 	self.textFieldCell = nil;
 	self.containerView = nil;
 	self.theTableView = nil;
@@ -402,6 +404,11 @@
     VERBOSE(NSLog(@"tableView: cellForRow:%d inSection:%d", row, section);)
 	
 	return _textFieldCell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	return self.footer;
 }
 
 - (NSObject *)data

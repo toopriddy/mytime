@@ -50,7 +50,7 @@
 }
 @property (nonatomic, assign) int tag;
 @property (nonatomic, assign) id<MetadataEditorViewControllerDelegate> delegate;
-
+@property (nonatomic, copy) NSString *footer;
 
 - (id)initWithName:(NSString *)name type:(MetadataType)type data:(NSObject *)data value:(NSString *)value;
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)type;

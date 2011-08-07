@@ -99,10 +99,22 @@
 
 	self.emailAddress = [[[UITableViewTextFieldCell alloc] init] autorelease];
 	_emailAddress.delegate = self;
-	_emailAddress.textField.text = [[MTUser currentUser] secretaryEmailAddress];
-	_emailAddress.textField.keyboardType = UIKeyboardTypeEmailAddress;
-	_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's email address", @"email address for the congregation secretary");
-	_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	MTUser *currentUser = [MTUser currentUser];
+	if(isSmsAvaliable() && currentUser.sendReportUsingSmsValue)
+	{
+		_emailAddress.textField.text = [[MTUser currentUser] secretaryTelephoneNumber];
+		_emailAddress.textField.keyboardType = UIKeyboardTypePhonePad;
+		_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's Telephone", @"phone number for the congregation secretary");
+		_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	}
+	else
+	{
+		_emailAddress.textField.text = [[MTUser currentUser] secretaryEmailAddress];
+		_emailAddress.textField.keyboardType = UIKeyboardTypeEmailAddress;
+		_emailAddress.textField.placeholder = NSLocalizedString(@"Secretary's Email", @"email address for the congregation secretary");
+		_emailAddress.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	}
+
 	
 	// add + button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send button like the send button in the email program, to send your field service activity report to the congregation secretary") 

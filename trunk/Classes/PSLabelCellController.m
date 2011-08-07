@@ -10,6 +10,7 @@
 
 
 @implementation PSLabelCellController
+@synthesize hideModelValue;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -42,11 +43,17 @@
 	if([self.title length])
 	{
 		cell.textLabel.text = self.title;
-		cell.detailTextLabel.text = [self.model valueForKeyPath:self.modelPath];
+		if(!self.hideModelValue)
+		{
+			cell.detailTextLabel.text = [self.model valueForKeyPath:self.modelPath];
+		}
 	}
 	else
 	{
-		cell.textLabel.text = [self.model valueForKeyPath:self.modelPath];
+		if(!self.hideModelValue)
+		{
+			cell.textLabel.text = [self.model valueForKeyPath:self.modelPath];
+		}
 		cell.detailTextLabel.text = @"";
 	}
 	

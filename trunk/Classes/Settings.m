@@ -439,7 +439,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		{
 			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
 		}
-		else
+		
 		{
 			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 		}

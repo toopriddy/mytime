@@ -37,6 +37,10 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"order"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"sendReportUsingSmsValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"sendReportUsingSms"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
@@ -45,6 +49,13 @@
 
 
 @dynamic pioneerStartDate;
+
+
+
+
+
+
+@dynamic secretaryTelephoneNumber;
 
 
 
@@ -111,6 +122,32 @@
 
 - (void)setPrimitiveOrderValue:(double)value_ {
 	[self setPrimitiveOrder:[NSNumber numberWithDouble:value_]];
+}
+
+
+
+
+
+@dynamic sendReportUsingSms;
+
+
+
+- (BOOL)sendReportUsingSmsValue {
+	NSNumber *result = [self sendReportUsingSms];
+	return [result boolValue];
+}
+
+- (void)setSendReportUsingSmsValue:(BOOL)value_ {
+	[self setSendReportUsingSms:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveSendReportUsingSmsValue {
+	NSNumber *result = [self primitiveSendReportUsingSms];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveSendReportUsingSmsValue:(BOOL)value_ {
+	[self setPrimitiveSendReportUsingSms:[NSNumber numberWithBool:value_]];
 }
 
 

@@ -247,7 +247,32 @@
 			[path appendFormat:@"%@ -> ", controller.title];
 		}
 	}
-	[string appendFormat:NSLocalizedString(@"<h2>Navigation Path:</h2>%@<br><br><br><h2>Crash Explanation:</h2><pre>%@</pre><br><h2>Crash Details:</h2><pre>%@</pre><br><br><br>", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing"), path, error, [error userInfo]];
+	NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+	[string appendFormat:@"<h2>Navigation Path:</h2>%@<br><br><br><h2>Crash Explanation:</h2><pre>%@</pre><h2>Error Details:</h2><pre>%@</pre><br><h2>Crash Details:</h2>", path, [error localizedDescription], error];
+	if(detailedErrors != nil && [detailedErrors count] > 0) 
+	{
+		int count = 0;
+		for(NSError *detailedError in detailedErrors) 
+		{
+			NSDictionary *userInfo = [detailedError userInfo];
+			[string appendFormat:@"<h3>Error %u:</h3>", count++];
+			[string appendFormat:@"<h4>NSLocalizedDescription</h4><pre>%@</pre>", [userInfo valueForKey:NSLocalizedDescriptionKey]];
+			[string appendFormat:@"<h4>NSValidationErrorObject</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorObject"]];
+			[string appendFormat:@"<h4>NSValidationErrorKey</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorKey"]];
+			[string appendFormat:@"<h4>NSValidationErrorPredicate</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorPredicate"]];
+			[string appendFormat:@"<h4>All</h4><pre>%@</pre><br>", userInfo];
+		}
+	}
+	else 
+	{
+		NSDictionary *userInfo = [error userInfo];
+		[string appendFormat:@"<h4>NSLocalizedDescription</h4><pre>%@</pre>", [userInfo valueForKey:NSLocalizedDescriptionKey]];
+		[string appendFormat:@"<h4>NSValidationErrorObject</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorObject"]];
+		[string appendFormat:@"<h4>NSValidationErrorKey</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorKey"]];
+		[string appendFormat:@"<h4>NSValidationErrorPredicate</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorPredicate"]];
+		[string appendFormat:@"<h4>All</h4><pre>%@</pre><br>", userInfo];
+	}
+	
 	
 	// attach the old records file
 	[mailView addAttachmentData:[[NSFileManager defaultManager] contentsAtPath:[MyTimeAppDelegate storeFileAndPath]] mimeType:@"mytime/sqlite" fileName:@"backup.mytimedb"];

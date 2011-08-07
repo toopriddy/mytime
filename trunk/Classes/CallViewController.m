@@ -2369,6 +2369,13 @@
 
 - (BOOL)emailCallToUser
 {
+	if([MFMailComposeViewController canSendMail] == NO)
+	{
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		alertSheet.title = NSLocalizedString(@"You must setup email on this device to be able to send an email.  Open the Mail application and setup your email account", @"This is a message displayed when the user does not have email setup on their iDevice");
+		[alertSheet show];
+		return NO;
+	}
 	MFMailComposeViewController *mailView = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailView setSubject:NSLocalizedString(@"MyTime Call, open this on your iPhone/iTouch", @"Subject text for the email that is sent for sending the details of a call to another witness")];
 	
