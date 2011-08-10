@@ -480,6 +480,7 @@ NSData *allocNSDataFromNSStringByteString(NSString *data)
 			}
 			break;
 		case AUTO_BACKUP:
+			_actionSheetType = NORMAL_STARTUP;
 			switch(button)
 			{
 				// dont email backup
@@ -1774,6 +1775,10 @@ NSString *emailFormattedStringForSettings();
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+	if(_actionSheetType != AUTO_BACKUP && !displayingSecurityViewController)
+	{
+		[self checkAutoBackup];
+	}
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

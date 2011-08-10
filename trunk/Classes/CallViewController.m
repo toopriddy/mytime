@@ -417,8 +417,8 @@
 	{
 		// if they have not initialized the address then dont show the map program
 		// if they have initalized a latLong then include that
-		if(!(street.length == 0 &&
-			 city.length == 0 &&
+		if(!(street.length == 0 ||
+			 city.length == 0 ||
 			 state.length == 0) ||
 		   call.locationAquired)
 		{

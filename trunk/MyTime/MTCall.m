@@ -214,10 +214,12 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *stringToReturn = @"";
 	if([value length])
 	{
-//		stringToReturn = [[[[value substringToIndex:1] decomposedStringWithCanonicalMapping] substringToIndex:1] uppercaseString];
-		stringToReturn = [[value substringToIndex:1]  uppercaseString];
+		NSString *oneCharacter = [value substringToIndex:1];
+		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
+		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
 	}
-	else
+	if([stringToReturn length] == 0)
 	{
 		stringToReturn = @"#";
 	}
@@ -232,10 +234,12 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	NSString *stringToReturn = @"";
 	if([value length])
 	{
-		stringToReturn = [[[[value substringToIndex:1] decomposedStringWithCanonicalMapping] substringToIndex:1] uppercaseString];
-//		stringToReturn = [[value substringToIndex:1]  uppercaseString];
+		NSString *oneCharacter = [value substringToIndex:1];
+		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
+		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
 	}
-	else
+	if([stringToReturn length] == 0)
 	{
 		stringToReturn = @"#";
 	}

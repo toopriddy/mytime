@@ -48,7 +48,7 @@
 			[_selected addObject:[NSNumber numberWithBool:NO]];
 		}
 		// set the title, and tab bar images from the dataSource
-		self.title = NSLocalizedString(@"Email Report", @"Months to email Information title");
+		self.title = NSLocalizedString(@"Send Report", @"Months to email Information title");
 		self.hidesBottomBarWhenPushed = YES;
 	}
 	return self;
@@ -178,6 +178,7 @@
 					[_emailAddress.textField resignFirstResponder];
 					// make the new call view 
 					NotesViewController *p = [[[NotesViewController alloc] initWithNotes:[[MTUser currentUser] secretaryEmailNotes]] autorelease];
+					p.title = NSLocalizedString(@"Notes for Secretary", @"More->Settings view notes to include in the message to the secretary");
 
 					p.delegate = self;
 

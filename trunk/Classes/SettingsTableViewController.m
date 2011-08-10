@@ -667,7 +667,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	
-	cell.textLabel.text = NSLocalizedString(@"Notes for Secretary", @"More->Settings view publisher type setting title");
+	cell.textLabel.text = NSLocalizedString(@"Notes for Secretary", @"More->Settings view notes to include in the message to the secretary");
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
 	return cell;
