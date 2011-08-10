@@ -37,7 +37,7 @@
 		allowSelectionWhenEditing = YES;
 		allowSelectionWhenNotEditing = YES;
 		
-		VERBOSE(NSLog(@"%s: %s %p %p %p", __FILE__, __FUNCTION__, self, titleLabel, valueLabel);)
+//		VERBOSE(NSLog(@"%s: %s %p %p %p", __FILE__, __FUNCTION__, self, titleLabel, valueLabel);)
 		titleLabel = nil;
 		valueLabel = nil;
 		self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
@@ -224,26 +224,5 @@
 		[valueLabel setFrame:frame];
 	}
 }
-
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s self=%p", __FILE__, selector, self);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s self=%p", __FILE__, selector, self);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s self=%p", __FILE__, [invocation selector], self);)
-    [super forwardInvocation:invocation];
-}
-
-
 
 @end

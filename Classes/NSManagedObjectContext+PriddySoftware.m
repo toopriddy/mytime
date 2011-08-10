@@ -340,6 +340,14 @@
 	NSDictionary *attributesByName = [[managedObject entity] attributesByName];
 	NSDictionary *relationshipsByName = [[managedObject entity] relationshipsByName];
 	NSMutableDictionary *valuesDictionary = [[managedObject dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
+	NSEntityDescription *entityDescription = [managedObject entity];
+	for(NSString *name in [attributesByName allKeys])
+	{
+		if([[[entityDescription attributesByName] objectForKey:name] isTransient])
+		{
+			[valuesDictionary removeObjectForKey:name];
+		}
+	}
 	[valuesDictionary setObject:[[managedObject entity] name] forKey:@"ManagedObjectName"];
 	visitedObjects = [NSMutableArray arrayWithArray:visitedObjects];
 	[visitedObjects addObject:managedObject];
@@ -433,9 +441,14 @@
 	NSArray *attributeNames = [[entityDescription attributesByName] allKeys];
 	for(NSString *name in attributeNames)
 	{
+		if([[[entityDescription attributesByName] objectForKey:name] isTransient])
+		{
+			continue;
+		}
 		NSObject *value = [structureDictionary objectForKey:name];
 		if(value && ![value isKindOfClass:[NSNull class]])
 		{
+			
 			[managedObject setValue:value forKey:name];
 		}
 	}
