@@ -211,7 +211,10 @@
 						{
 							if(_sectionIndexDisplaysSingleLetter)
 							{
-								sectionIndexTitle = [[title substringToIndex:1] capitalizedString];
+								NSString *oneCharacter = [title substringToIndex:1];
+								NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+								NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
+								sectionIndexTitle = [[asciiString substringToIndex:1] uppercaseString];
 							}
 							else
 							{

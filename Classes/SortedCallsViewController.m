@@ -694,7 +694,14 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
     }
-    
+#if 0    
+	for(MTCall *call in aFetchedResultsController.fetchedObjects)
+	{
+		call.name = call.street;
+		call.city = call.street;
+		call.state = call.street;
+	}
+#endif	
     return aFetchedResultsController;
 }    
 

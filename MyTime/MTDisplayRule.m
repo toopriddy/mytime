@@ -35,6 +35,19 @@ MTDisplayRule *g_currentDisplayRule;
 		{
 			displayRule.additionalInformationTypeUuid = [NSString stringFromGeneratedUUID];
 		}
+		
+		// fix the city and state sorters
+		for(MTSorter *sorter in displayRule.sorters)
+		{
+			if([sorter.sectionIndexPath isEqualToString:@"city"])
+			{
+				sorter.sectionIndexPath = @"uppercaseFirstLetterOfCity";
+			}
+			else if([sorter.sectionIndexPath isEqualToString:@"state"])
+			{
+				sorter.sectionIndexPath = @"uppercaseFirstLetterOfState";
+			}
+		}
 	}
 }
 
