@@ -102,6 +102,7 @@
 		90674D350F1ABBB800D524C0 /* GeocacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90674D330F1ABBB800D524C0 /* GeocacheViewController.m */; };
 		90742DA610E340BD004FAA60 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90742DA510E340BD004FAA60 /* AddressBookUI.framework */; };
 		90742DFC10E34956004FAA60 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90742DFB10E34956004FAA60 /* AddressBook.framework */; };
+		9079BE2A13F379970075B033 /* MyTime 18.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */; };
 		907A23160ECA82A600BE38DD /* MetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A23150ECA82A600BE38DD /* MetadataViewController.m */; };
 		907A235C0ECA902B00BE38DD /* MetadataEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A235B0ECA902B00BE38DD /* MetadataEditorViewController.m */; };
 		907BEA110FB212DA00178ED6 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 907BEA100FB212DA00178ED6 /* OverlayViewController.m */; };
@@ -470,6 +471,7 @@
 		90674D340F1ABBB800D524C0 /* GeocacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocacheViewController.h; sourceTree = "<group>"; };
 		90742DA510E340BD004FAA60 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		90742DFB10E34956004FAA60 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 18.xcdatamodel"; sourceTree = "<group>"; };
 		907A23140ECA82A600BE38DD /* MetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataViewController.h; sourceTree = "<group>"; };
 		907A23150ECA82A600BE38DD /* MetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetadataViewController.m; sourceTree = "<group>"; };
 		907A235A0ECA902B00BE38DD /* MetadataEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataEditorViewController.h; sourceTree = "<group>"; };
@@ -1755,6 +1757,7 @@
 				90DDB81113EE1D5F0005D867 /* PSMultipleChoiceViewController.m in Sources */,
 				90DDB8D313EE370F0005D867 /* MyTime 16.xcdatamodel in Sources */,
 				90DDB8D713EE37320005D867 /* MyTime 17.xcdatamodel in Sources */,
+				9079BE2A13F379970075B033 /* MyTime 18.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2074,8 +2077,9 @@
 				90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */,
 				901380C513ECE430000B0DCF /* MyTime 16.xcdatamodel */,
 				90DDB8D613EE37300005D867 /* MyTime 17.xcdatamodel */,
+				9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */,
 			);
-			currentVersion = 90DDB8D613EE37300005D867 /* MyTime 17.xcdatamodel */;
+			currentVersion = 9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

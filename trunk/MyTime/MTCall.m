@@ -248,6 +248,46 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
     return stringToReturn;
 }
 
+- (NSString *)uppercaseFirstLetterOfCity
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfCity"];
+	NSString *value = self.city;
+	NSString *stringToReturn = @"";
+	if([value length])
+	{
+		NSString *oneCharacter = [value substringToIndex:1];
+		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
+		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
+	}
+	if([stringToReturn length] == 0)
+	{
+		stringToReturn = @"#";
+	}
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfCity"];
+    return stringToReturn;
+}
+
+- (NSString *)uppercaseFirstLetterOfState
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfState"];
+	NSString *value = self.state;
+	NSString *stringToReturn = @"";
+	if([value length])
+	{
+		NSString *oneCharacter = [value substringToIndex:1];
+		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
+		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
+	}
+	if([stringToReturn length] == 0)
+	{
+		stringToReturn = @"#";
+	}
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfState"];
+    return stringToReturn;
+}
+
 #define DAY_INTERVAL (60 * 60 * 24)
 #define WEEK_INTERVAL (DAY_INTERVAL * 7)
 #define MONTH_INTERVAL (WEEK_INTERVAL * 4)

@@ -2225,7 +2225,25 @@ NSString *emailFormattedStringForSettings();
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	[MTDisplayRule fixDisplayRules:self.managedObjectContext];
+	NSPersistentStore *ps = [self.persistentStoreCoordinator.persistentStores objectAtIndex:0];
+	NSDictionary *metadata = [self.persistentStoreCoordinator metadataForPersistentStore:ps];
+	if([metadata valueForKey:@"PSDisplayRuleFix"] == nil)
+	{
+		NSMutableDictionary *newMetadata = [[metadata mutableCopy] autorelease];
+		[MTDisplayRule fixDisplayRules:self.managedObjectContext];
+
+		NSError *error;
+		if (![self.managedObjectContext save:&error]) 
+		{
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:nil error:error];
+		}
+		else
+		{
+			[newMetadata setValue:@"1" forKey:@"PSDisplayRuleFix"];
+			[self.persistentStoreCoordinator setMetadata:newMetadata forPersistentStore:ps];
+		}
+	}
 	[MTAdditionalInformationType fixAdditionalInformationTypes:self.managedObjectContext];
 
 	

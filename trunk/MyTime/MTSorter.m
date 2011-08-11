@@ -136,6 +136,7 @@ NSString * const MTSorterEntryRequiresLocalizedCaseInsensitiveCompare = @"requir
 			break;
 		case DATE:
 			self.path = @"date";
+			self.sectionIndexPath = @"date";
 			break;
 		case NUMBER:
 			self.path = @"number";
@@ -170,11 +171,11 @@ NSString * const MTSorterEntryRequiresLocalizedCaseInsensitiveCompare = @"requir
 	   nil], MTSorterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Address", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [NSArray arrayWithObjects:
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"houseNumber", MTSorterEntryPath, @"houseNumber", MTSorterEntrySectionIndexPath, NSLocalizedString(@"House Number", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"apartmentNumber", MTSorterEntryPath, @"apartmentNumber", MTSorterEntrySectionIndexPath, NSLocalizedString(@"Apt/Floor", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"houseNumber", MTSorterEntryPath, NSLocalizedString(@"House Number", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"apartmentNumber", MTSorterEntryPath, NSLocalizedString(@"Apt/Floor", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
 	   [NSDictionary dictionaryWithObjectsAndKeys:@"street", MTSorterEntryPath, @"uppercaseFirstLetterOfStreet", MTSorterEntrySectionIndexPath, NSLocalizedString(@"Street", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"city", MTSorterEntryPath, @"city", MTSorterEntrySectionIndexPath, NSLocalizedString(@"City", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
-	   [NSDictionary dictionaryWithObjectsAndKeys:@"state", MTSorterEntryPath, @"state", MTSorterEntrySectionIndexPath, NSLocalizedString(@"State or Country", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"city", MTSorterEntryPath, @"uppercaseFirstLetterOfCity", MTSorterEntrySectionIndexPath, NSLocalizedString(@"City", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
+	   [NSDictionary dictionaryWithObjectsAndKeys:@"state", MTSorterEntryPath, @"uppercaseFirstLetterOfState", MTSorterEntrySectionIndexPath, NSLocalizedString(@"State or Country", @"Title for the Display Rules 'pick a sort rule' screen"), MTSorterEntryName, [NSNumber numberWithBool:YES], MTSorterEntryRequiresLocalizedCaseInsensitiveCompare, nil],
 	   nil], MTSorterGroupArray, nil],
 	 [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Return Visit", @"category in the Display Rules when picking sorting rules"), MTSorterGroupName,
 	  [NSArray arrayWithObjects:

@@ -39,6 +39,12 @@
 
 
 
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *ownerEmailId;
 
 @property long long ownerEmailIdValue;
@@ -52,12 +58,6 @@
 @property (nonatomic, retain) NSString *notes;
 
 //- (BOOL)validateNotes:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -121,6 +121,12 @@
 
 
 
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveOwnerEmailId;
 - (void)setPrimitiveOwnerEmailId:(NSNumber*)value;
 
@@ -132,12 +138,6 @@
 
 - (NSString*)primitiveNotes;
 - (void)setPrimitiveNotes:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
 
 
 
