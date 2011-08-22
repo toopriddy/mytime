@@ -9,6 +9,8 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
 
+extern int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *newp, size_t newlen);
+
 @interface MailCloser : NSObject< MFMailComposeViewControllerDelegate>
 @end
 @implementation MailCloser
@@ -272,6 +274,15 @@
 		[string appendFormat:@"<h4>NSValidationErrorPredicate</h4><pre>%@</pre>", [userInfo valueForKey:@"NSValidationErrorPredicate"]];
 		[string appendFormat:@"<h4>All</h4><pre>%@</pre><br>", userInfo];
 	}
+	[string appendFormat:@"<br><b>MyTime Version:</b>%@<br>", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+	[string appendFormat:@"<b>iOS Version:</b>%@<br>", [[UIDevice currentDevice] systemVersion] ];
+	
+	size_t size;  
+	sysctlbyname("hw.machine", NULL, &size, NULL, 0);  
+	char *machine = malloc(size);  
+	sysctlbyname("hw.machine", machine, &size, NULL, 0);  
+	[string appendFormat:@"<b>iDevice type:</b>%s<br>", machine];
+	free(machine);  
 	
 	
 	// attach the old records file

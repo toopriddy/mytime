@@ -1181,7 +1181,7 @@
  *
  ******************************************************************/
 #pragma mark MyTimeWebserverCellController
-@interface MyTimeWebserverCellController : NSObject<TableViewCellController>
+@interface MyTimeWebserverCellController : SettingsCellController<TableViewCellController>
 {
 }
 @end
@@ -1202,6 +1202,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	// save before starting the webserver
+	MTSettings *settings = [MTSettings settings];
+	NSError *error = nil;
+	if (![settings.managedObjectContext save:&error]) 
+	{
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.delegate.navigationController error:error];
+	}
+
 	MyTimeWebServerView *view = [[[MyTimeWebServerView alloc] init] autorelease];
 	[view show];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -1254,7 +1263,7 @@
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
-	MTUser *user = [MTUser currentUser];
+	MTUser *currentUser = [MTUser currentUser];
 	// Donate
 	{
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
@@ -1333,6 +1342,17 @@
 			[sectionController.cellControllers addObject:cellController];
 			[cellController release];
 		}
+		
+		if([currentUser.name isEqualToString:@"Brent Priddy"])
+		{
+			NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+			PSSwitchCellController *cellController = [[[PSSwitchCellController alloc] init] autorelease];
+			cellController.title = @"Bypass Passcode";
+			cellController.model = userDefaults;
+			cellController.modelPath = @"PSBypassPasscode";
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			[self addCellController:cellController toSection:sectionController];
+		}
 	}
 	
 	// Statistics view
@@ -1361,7 +1381,7 @@
 		// Pioneer Start Date
 		{
 			PSDateCellController *cellController = [[PSDateCellController alloc] init];
-			cellController.model = user;
+			cellController.model = currentUser;
 			cellController.modelPath = @"pioneerStartDate";
 			cellController.title = NSLocalizedString(@"Pioneer Start Date", @"Label for More->Settings pioneer start date used to start calculating the statistics");
 			cellController.datePickerMode = UIDatePickerModeDate;
@@ -1390,9 +1410,9 @@
 		// Send using SMS
 		if(isSmsAvaliable())
 		{
-			if(user.sendReportUsingSms == nil)
+			if(currentUser.sendReportUsingSms == nil)
 			{
-				user.sendReportUsingSmsValue = NO;
+				currentUser.sendReportUsingSmsValue = NO;
 			}
 			PSMultipleChoiceCellController *cellController = [[[PSMultipleChoiceCellController alloc] init] autorelease];
 			cellController.choices = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:
@@ -1400,7 +1420,7 @@
 																										  [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Send report using SMS", @"Choice to send the Field Service Report using SMS"), PSMultipleChoiceOptionsLabel, [NSNumber numberWithBool:YES], PSMultipleChoiceOptionsValue, nil], 
 																										  nil], PSMultipleChoiceOptions, 
 															   NSLocalizedString(@"Please make sure your congregation secretary is willing to accept SMS messages", @"More->Settings->Send field service report using... message to the publisher to be considerate of the secretary who might not accept SMS messages"), PSMultipleChoiceFooter, nil]];
-			cellController.model = user;
+			cellController.model = currentUser;
 			cellController.modelPath = @"sendReportUsingSms";
 			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 			cellController.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -1409,7 +1429,7 @@
 		else
 		{
 			// make sure that if they cant do it that we dont allow them to
-			user.sendReportUsingSmsValue = NO;
+			currentUser.sendReportUsingSmsValue = NO;
 		}
 		
 		
