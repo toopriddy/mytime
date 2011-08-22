@@ -685,13 +685,10 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		}
 		
 		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
-		NSArray *houses = [territory.managedObjectContext fetchObjectsForEntityName:[MTTerritoryHouse entityName]
-																   propertiesToFetch:nil 
-																 withSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"number" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-																					  [NSSortDescriptor psSortDescriptorWithKey:@"apartment" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
-                                                                                      [NSSortDescriptor psSortDescriptorWithKey:@"notes" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]
-																	   withPredicate:@"street == %@", street];
-		for(MTTerritoryHouse *house in houses)
+		for(MTTerritoryHouse *house in [street.houses sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"number" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																				   [NSSortDescriptor psSortDescriptorWithKey:@"apartment" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+																				   [NSSortDescriptor psSortDescriptorWithKey:@"notes" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
+																				   [NSSortDescriptor psSortDescriptorWithKey:@"hashedOrder" ascending:YES], nil]])
 		{
 			NSString *top = [MTCall topLineOfAddressWithHouseNumber:house.number apartmentNumber:house.apartment street:nil];
 			
@@ -2209,7 +2206,7 @@ NSString *emailFormattedStringForSettings();
 - (void)displaySecurityViewController
 {
 	NSString *passcode = [[MTSettings settings] passcode];
-	if(passcode.length && !displayingSecurityViewController)
+	if(passcode.length && !displayingSecurityViewController && ![[NSUserDefaults standardUserDefaults] boolForKey:@"PSBypassPasscode"])
 	{
 		displayingSecurityViewController = YES;
 		SecurityViewController *securityView = [[[SecurityViewController alloc] initWithNibName:@"SecurityView" bundle:[NSBundle mainBundle]] autorelease];

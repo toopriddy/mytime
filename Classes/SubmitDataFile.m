@@ -17,6 +17,7 @@
 #import "HTTPServer.h"
 #import "MyTimeAppDelegate.h"
 #import "UIAlertViewQuitter.h"
+#import "Settings.h"
 
 @implementation SubmitDataFile
 
@@ -68,25 +69,41 @@
 	{
 		if([@"file" isEqualToString:[entry objectForKey:MultipartVariableName]])
 		{
-			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-			
-			NSString *filename = [MyTimeAppDelegate storeFileAndPath];
-			NSFileManager *fileManager = [NSFileManager defaultManager];
-			NSString *directory = [paths objectAtIndex:0];
-			if(![fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])
+			// try the old format and then assume it is the new format
+			NSMutableDictionary *dictionary = nil;
+			NSData *data = [[NSData alloc] initWithContentsOfFile:[entry objectForKey:MultipartVariableTempFilename]];
+			NSString *err = nil;
+			NSPropertyListFormat format;
+			@try
 			{
-				errorString = [NSString stringWithFormat:@"could not create directory at %@", directory];
-				NSLog(@"%@", errorString);
+				dictionary = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&err];
+				if(err)
+				{
+					dictionary = nil;
+				}
+			}
+			@catch (NSException *e) 
+			{
+				dictionary = nil;
+			}
+			
+			
+			if(dictionary)
+			{
+				[dictionary writeToFile:[Settings filename] atomically: YES];
 			}
 			else
 			{
-				directory = [directory stringByAppendingPathComponent:filename];
-				[fileManager removeItemAtPath:directory error:nil];
-				if(![fileManager moveItemAtPath:[entry objectForKey:MultipartVariableTempFilename] toPath:directory error:nil])
+				NSString *filename = [MyTimeAppDelegate storeFileAndPath];
+				NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+				BOOL exists = [fileManager fileExistsAtPath:filename];
+				if(exists && ![fileManager removeItemAtPath:filename error:nil])
 				{
-					NSLog(@"did not write file");
+					NSLog(@"deleted file");
 				}
+				[data writeToFile:filename atomically:YES];
 			}
+			[data release];
 			reallyQuit = YES;
 		}
 	}

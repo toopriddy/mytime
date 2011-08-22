@@ -327,10 +327,29 @@ NSString *emailFormattedStringForNotAtHomeTerritory(NSDictionary *territory)
 			[string appendFormat:@"<br><br>\n"];
 		}
 		
+		for(NSMutableDictionary *house in [street objectForKey:NotAtHomeTerritoryHouses])
+		{
+			NSUInteger hash = 0;
+			NSString *notes = [house objectForKey:NotAtHomeTerritoryHouseNotes];
+			NSString *number = [house objectForKey:NotAtHomeTerritoryHouseNumber];
+			NSString *apartment = [house objectForKey:NotAtHomeTerritoryHouseApartment];
+			hash += [notes hash];
+			hash += [number hash];
+			hash += [apartment hash];
+			
+			for(NSDate *attempt in [house objectForKey:NotAtHomeTerritoryHouseAttempts])
+			{
+				hash += [attempt hash];
+			}
+			
+			[house setObject:[NSNumber numberWithUnsignedInteger:hash] forKey:@"hashedOrder"];
+		}
+		
 		[string appendString:[NSString stringWithFormat:@"<h4>%@:</h4>\n", NSLocalizedString(@"Houses", @"used as a label when emailing not at homes")]];
 		for(NSMutableDictionary *house in [[street objectForKey:NotAtHomeTerritoryHouses] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseNumber ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
 																													   [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseApartment ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], 
-                                                                                                                       [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseNotes ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],nil]])
+                                                                                                                       [NSSortDescriptor psSortDescriptorWithKey:NotAtHomeTerritoryHouseNotes ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+																													   [NSSortDescriptor psSortDescriptorWithKey:@"hashedOrder" ascending:YES],nil]])
 		{
 			NSMutableString *top = [[NSMutableString alloc] init];
 			[Settings formatStreetNumber:[house objectForKey:NotAtHomeTerritoryHouseNumber]
@@ -439,7 +458,7 @@ NSString *emailFormattedStringForCall(NSDictionary *call)
 		{
 			[dateFormatter setDateFormat:@"EEE, d/M/yyy h:mma"];
 		}
-		
+		else
 		{
 			[dateFormatter setDateFormat:NSLocalizedString(@"EEE, M/d/yyy h:mma", @"localized date string string using http://unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns as a guide to how to format the date")];
 		}

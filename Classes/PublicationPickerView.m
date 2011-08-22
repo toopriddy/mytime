@@ -53,187 +53,218 @@ typedef struct {
 
 #include "PSRemoveLocalizedString.h"
 static const PublicationInformation PUBLICATIONS[] = {
-/* do not reorder this or if you add, then adjust yearbook */
-    {NSLocalizedString(@"W & A", @"Both Magizines (w and g)"),       PublicationTypeMagazine}
-,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
-,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
-,	{NSLocalizedString(@"Study Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+	/* do not reorder this or if you add, then adjust yearbook */
+		{NSLocalizedString(@"W & A", @"Both Magizines (w and g)"),       PublicationTypeMagazine}
+	,	{NSLocalizedString(@"Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+	,   {NSLocalizedString(@"Awake", @"Magizine Publication Name (g)"),       PublicationTypeMagazine}
+	,	{NSLocalizedString(@"Study Watchtower", @"Magizine Publication Name (w)"),     PublicationTypeMagazine}
+	
+	/* do not reorder this or if you add, then adjust yearbook */
+	,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
+	,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
+	,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeCampaignTract}
+	
+	/* do not reorder this or if you add, then adjust yearbook */
+	,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
+	/* do not reorder this or if you add, then adjust yearbook */
+	,   {NSLocalizedString(@"Bible Teach", @"Book Publication Name (bh)"),   PublicationTypeBook}
+	/* do not reorder this or if you add, then adjust yearbook */
+	,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
+	/* do not reorder this or if you add, then adjust yearbook */
+	,   {NSLocalizedString(@"Yearbook", @"Book Publication Name (yb)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Bearing Witness", @"Book Publication Name (bt)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Evolution or Creation", @"Book Publication Name (ce)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"My Follower", @"Book Publication Name (cf)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Creator", @"Book Publication Name (ct)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Daniel's Prophecy", @"Book Publication Name (dp)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Family Happiness", @"Book Publication Name (fy)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"God's Word", @"Book Publication Name (gm)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Greatest Man Who Ever Lived", @"Book Publication Name (gt)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name (ip-1)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name (ip-2)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Insight, Volume 1", @"Book Publication Name (it-1)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Insight, Volume 2", @"Book Publication Name (it-2)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Jehovah's Day", @"Book Publication Name (jd)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Jeremiah", @"Book Publication Name (jr)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Proclaimers", @"Book Publication Name (jv)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Knowledge", @"Book Publication Name (kl)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Learn From the Great Teacher", @"Book Publication Name (lr)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Sing Praises", @"Book Publication Name (Ssb)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Keep Yourselves in Gods Love", @"Book Publication Name (lv)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"My Book of Bible Stories", @"Book Publication Name (my)"),       PublicationTypeBook}
+	,   {NSLocalizedString(@"Revelation Climax", @"Book Publication Name (re)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Reasoning", @"Book Publication Name (rs)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Mankind's Search for God", @"Book Publication Name (sh)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Sing to Jehovah", @"Book Publication Name (sn)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Listen to the Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Worship God", @"Book Publication Name (wt)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Young People Ask 1", @"Book Publication Name (yp)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Young People Ask 2", @"Book Publication Name (yp2)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
+	// for Africans
+	,   {NSLocalizedString(@"The Road to Everlasting Life—Have You Found It?", @"Book Publication Name (6648)"),   PublicationTypeBook}
+	// For Buddhists
+	,   {NSLocalizedString(@"The Pathway to Peace and Happiness", @"Book Publication Name (6653)"),   PublicationTypeBook}
+	// no longer in the list
+	,   {NSLocalizedString(@"Commentary on James", @"Book Publication Name (cj)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Family Life", @"Book Publication Name (fl)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"God's Eternal Purpose", @"Book Publication Name (po)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"God's Kingdom Has Approached", @"Book Publication Name (ka)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Good News to Make You Happy", @"Book Publication Name (gh)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Happiness-How to Find It", @"Book Publication Name (hp)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Holy Spirit", @"Book Publication Name (hs)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Is This Life All There Is?", @"Book Publication Name (ts)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Let Your Kingdom Come", @"Book Publication Name (kc)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Life Does Have A Purpose", @"Book Publication Name (lp)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Live Forever in Paridise on Earth", @"Book Publication Name (pe)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Nations Shall Know I am Jehovah", @"Book Publication Name (kj)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Man's Salvation", @"Book Publication Name (sl)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Ministry School", @"Book Publication Name (sg)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Organized To Do Jehovah's Will", @"Book Publication Name (od)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Our Incoming World Government", @"Book Publication Name (go)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Paradise Restored To Mandkind", @"Book Publication Name (pm)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Survival Into a New Earth", @"Book Publication Name (su)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"True Peace and Security", @"Book Publication Name (tp)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Truth That Leads to Eternal Life", @"Book Publication Name (tr)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"United in Worship", @"Book Publication Name (uw)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Worldwide Security", @"Book Publication Name (ws)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Your Youth", @"Book Publication Name (yy)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Watchtower Bound Volume", @"Book Publication Name (wvol)"),   PublicationTypeBook}
+	,   {NSLocalizedString(@"Awake Bound Volume", @"Book Publication Name (gvol)"),   PublicationTypeBook}
+	
+	,   {NSLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+	,   {NSLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name (1540)"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name (1541)"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name (1542)"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name (1543)"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Acts", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Romans", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: 1&2 Corinthians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Galatians, Ephesians, Philippians, Colossians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: 1&2 Thessalonians, 1&2 Timothy, Titus, Philemon", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	,   {NSLocalizedString(@"Bible DVD: Hebrews, James, 1&2 Peter", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
+	
+	
+	,   {NSLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+	,   {NSLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name (9232)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name (9220)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name (dvmy)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name (9202)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Great Teacher", @"DVD Publication Name ()"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Require", @"DVD Publication Name (9201)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Knowledge", @"DVD Publication Name (dvkl)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Keep Yourselves in Gods Love ", @"DVD Publication Name (?)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name (9203)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name (9229)"),   PublicationTypeDVDBook}
+	
+	,   {NSLocalizedString(@"DVD: Warning Examples for Our Day and Respect Jehovah's Authority", @"DVD Publication Name (dvwra-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Jehovah's Witnesses Stand Firm Against Nazi Assault", @"DVD Publication Name (dvfi-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faithful Under Trials and Purple Triangles", @"DVD Publication Name (dvutp-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: The the Ends of the Earth and United by Divine Teaching", @"DVD Publication Name (dvedt-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Young People Ask - How Can I Make Real Friends?", @"DVD Publication Name (dvfe-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Young People Ask - What Will I Do With My Life?", @"DVD Publication Name (dvyf-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: The Bible - A Book of Fact and Prophecy", @"DVD Publication Name (dvbbl-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: The Wonders of Creation Reveal God's Glory", @"DVD Publication Name (dvwc-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Organized to Share Good News and Whole Association of Brothers", @"DVD Publication Name (dvjwa-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faith in Action, Part 1: Out of Darkness", @"DVD Publication Name (dvfa1-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Transfusion Alternatives - Documentary Series", @"DVD Publication Name (dvalt-DVE)"),   PublicationTypeDVDBook}
+	
+	,   {NSLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name (9221)"),   PublicationTypeDVDBrochure}
+	,   {NSLocalizedString(@"DVD: Worship God", @"DVD Publication Name (9213)"),   PublicationTypeDVDBrochure}
+	,   {NSLocalizedString(@"DVD: God's Friend", @"DVD Publication Name (9211)"),   PublicationTypeDVDBrochure}
+	,   {NSLocalizedString(@"DVD: Keep on the Watch", @"DVD Publication Name (9218)"),   PublicationTypeDVDBrochure}
+	,   {NSLocalizedString(@"DVD: Spirits of the dead", @"DVD Publication Name (9216)"),   PublicationTypeDVDBrochure}
+	
+	,   {NSLocalizedString(@"DVD: Would You Like To Know the Truth?", @"DVD Publication Name (?)"),   PublicationTypeDVDNotCount}	
+	,   {NSLocalizedString(@"DVD Drama: Noah/David", @"DVD Publication Name  (9215)"),   PublicationTypeDVDNotCount}
+	,   {NSLocalizedString(@"DVD Drama: Pursue Goals", @"DVD Publication Name (9215)"),   PublicationTypeDVDNotCount}
+	,   {NSLocalizedString(@"DVD Drama: Bore Witness", @"DVD Publication Name (9224)"),   PublicationTypeDVDNotCount}
+	,   {NSLocalizedString(@"DVD Drama: Troublesome Times/Boldly Witnessing", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
+	,   {NSLocalizedString(@"DVD Drama: Submit to Authority", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
+	,   {NSLocalizedString(@"DVD Drama: Respect Authority", @"DVD Publication Name "),   PublicationTypeDVDNotCount}
+	
+	,   {NSLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
 
-/* do not reorder this or if you add, then adjust yearbook */
-,   {NSLocalizedString(@"   CAMPAIGN TRACTS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
-,   {NSLocalizedString(@"Memorial Tract", @"Campaign Tract Publication Name (mi yearly tract)"),   PublicationTypeCampaignTract}
-,   {NSLocalizedString(@"Convention Invitation", @"Campaign Tract Publication Name (?)"),   PublicationTypeCampaignTract}
-
-/* do not reorder this or if you add, then adjust yearbook */
-,   {NSLocalizedString(@"   BOOKS", @"Publication Type and Seperator in the Publication Picker"),    PublicationTypeHeading}
-/* do not reorder this or if you add, then adjust yearbook */
-,   {NSLocalizedString(@"What Does the Bible Really Teach?", @"Book Publication Name (bh)"),   PublicationTypeBook}
-/* do not reorder this or if you add, then adjust yearbook */
-,   {NSLocalizedString(@"Bible", @"Book Publication Name"),   PublicationTypeBook}
-/* do not reorder this or if you add, then adjust yearbook */
-,   {NSLocalizedString(@"Yearbook", @"Book Publication Name (yb)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"All Scripture is Inspired", @"Book Publication Name (si)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Draw Close to Jehovah", @"Book Publication Name (cl)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Concordance", @"Book Publication Name (cn)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Is there a Creator Who Cares About You?", @"Book Publication Name (ct)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Mankind's Search for God", @"Book Publication Name (sh)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Come Be My Follower", @"Book Publication Name (cf)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Commentary on James", @"Book Publication Name (cj)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Daniel's Prophecy", @"Book Publication Name (dp)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Evolution or Creation", @"Book Publication Name (ce)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Family Happiness", @"Book Publication Name (fy)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Family Life", @"Book Publication Name (fl)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"God's Word", @"Book Publication Name (gm)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"God's Eternal Purpose", @"Book Publication Name (po)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"God's Kingdom Has Approached", @"Book Publication Name (ka)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Good News to Make You Happy", @"Book Publication Name (gh)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Greatest Man Who Ever Lived", @"Book Publication Name (gt)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Happiness-How to Find It", @"Book Publication Name (hp)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Holy Spirit", @"Book Publication Name (hs)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Insight", @"Book Publication Name (it)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Isaiah's Prophecy I", @"Book Publication Name (ip-1)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Isaiah's Prophecy II", @"Book Publication Name (ip-2)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Is This Life All There Is?", @"Book Publication Name (ts)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Live With Jehovah's Day in Mind", @"Book Publication Name (jd)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Let Your Kingdom Come", @"Book Publication Name (kc)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Listen to the Great Teacher", @"Book Publication Name (te)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Life Does Have A Purpose", @"Book Publication Name (lp)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Live Forever in Paridise on Earth", @"Book Publication Name (pe)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Nations Shall Know I am Jehovah", @"Book Publication Name (kj)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Knowledge That Leads to Everlasting Life", @"Book Publication Name (kl)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Keep Yourselves in Gods Love", @"Book Publication Name (lv)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Mankind's Search for God", @"Book Publication Name (sh)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Man's Salvation", @"Book Publication Name (sl)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Ministry School", @"Book Publication Name (sg)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"My Book of Bible Stories", @"Book Publication Name (my)"),       PublicationTypeBook}
-,   {NSLocalizedString(@"Organized To Do Jehovah's Will", @"Book Publication Name (od)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Our Incoming World Government", @"Book Publication Name (go)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Paradise Restored To Mandkind", @"Book Publication Name (pm)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Proclaimers", @"Book Publication Name (jv)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Revelation Climax", @"Book Publication Name (re)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Sing Praises", @"Book Publication Name (Ssb)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Survival Into a New Earth", @"Book Publication Name (su)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"True Peace and Security", @"Book Publication Name (tp)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Truth That Leads to Eternal Life", @"Book Publication Name (tr)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"United in Worship", @"Book Publication Name (uw)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Worship the Only True God", @"Book Publication Name (wt)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Worldwide Security", @"Book Publication Name (ws)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Young People Ask 1", @"Book Publication Name (ype-1)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Young People Ask 2", @"Book Publication Name (ype-2)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Your Youth", @"Book Publication Name (yy)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Reasoning", @"Book Publication Name (rs)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Watchtower Bound Volume", @"Book Publication Name (wvol)"),   PublicationTypeBook}
-,   {NSLocalizedString(@"Awake Bound Volume", @"Book Publication Name (gvol)"),   PublicationTypeBook}
-
-,   {NSLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {NSLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name (1540)"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name (1541)"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name (1542)"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: John", @"Bible DVD Publication Name (1543)"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Acts", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Romans", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: 1&2 Corinthians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Galatians, Ephesians, Philippians, Colossians", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: 1&2 Thessalonians, 1&2 Timothy, Titus, Philemon", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-,   {NSLocalizedString(@"Bible DVD: Hebrews, James, 1&2 Peter", @"Bible DVD Publication Name"),   PublicationTypeDVDBible}
-
-
-,   {NSLocalizedString(@"   DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {NSLocalizedString(@"DVD: Bible Teach", @"DVD Publication Name (9232)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Family Happiness", @"DVD Publication Name (9220)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Bible Stories", @"DVD Publication Name (dvmy)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Greatest Man", @"DVD Publication Name (9202)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Great Teacher", @"DVD Publication Name ()"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Require", @"DVD Publication Name (9201)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Knowledge", @"DVD Publication Name (dvkl)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Keep Yourselves in Gods Love ", @"DVD Publication Name (?)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Sing Praises Vol 1&2", @"DVD Publication Name (9203)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Sing Praises Vol 3", @"DVD Publication Name (9229)"),   PublicationTypeDVDBook}
-
-,   {NSLocalizedString(@"DVD: Warning Examples for Our Day and Respect Jehovah's Authority", @"DVD Publication Name (dvwra-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Jehovah's Witnesses Stand Firm Against Nazi Assault", @"DVD Publication Name (dvfi-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faithful Under Trials and Purple Triangles", @"DVD Publication Name (dvutp-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: The the Ends of the Earth and United by Divine Teaching", @"DVD Publication Name (dvedt-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Young People Ask - How Can I Make Real Friends?", @"DVD Publication Name (dvfe-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Young People Ask - What Will I Do With My Life?", @"DVD Publication Name (dvyf-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: The Bible - A Book of Fact and Prophecy", @"DVD Publication Name (dvbbl-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: The Wonders of Creation Reveal God's Glory", @"DVD Publication Name (dvwc-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Organized to Share Good News and Whole Association of Brothers", @"DVD Publication Name (dvjwa-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faith in Action, Part 1: Out of Darkness", @"DVD Publication Name (dvfa1-DVE)"),   PublicationTypeDVDBook}
-,   {NSLocalizedString(@"DVD: Transfusion Alternatives - Documentary Series", @"DVD Publication Name (dvalt-DVE)"),   PublicationTypeDVDBook}
-		
-,   {NSLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name (9221)"),   PublicationTypeDVDBrochure}
-,   {NSLocalizedString(@"DVD: Worship God", @"DVD Publication Name (9213)"),   PublicationTypeDVDBrochure}
-,   {NSLocalizedString(@"DVD: God's Friend", @"DVD Publication Name (9211)"),   PublicationTypeDVDBrochure}
-,   {NSLocalizedString(@"DVD: Keep on the Watch", @"DVD Publication Name (9218)"),   PublicationTypeDVDBrochure}
-,   {NSLocalizedString(@"DVD: Spirits of the dead", @"DVD Publication Name (9216)"),   PublicationTypeDVDBrochure}
-
-,   {NSLocalizedString(@"DVD: Would You Like To Know the Truth?", @"DVD Publication Name (?)"),   PublicationTypeDVDNotCount}	
-,   {NSLocalizedString(@"DVD Drama: Noah/David", @"DVD Publication Name  (9215)"),   PublicationTypeDVDNotCount}
-,   {NSLocalizedString(@"DVD Drama: Pursue Goals", @"DVD Publication Name (9215)"),   PublicationTypeDVDNotCount}
-,   {NSLocalizedString(@"DVD Drama: Bore Witness", @"DVD Publication Name (9224)"),   PublicationTypeDVDNotCount}
-,   {NSLocalizedString(@"DVD Drama: Troublesome Times/Boldly Witnessing", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
-,   {NSLocalizedString(@"DVD Drama: Submit to Authority", @"DVD Publication Name (9241)"),   PublicationTypeDVDNotCount}
-,   {NSLocalizedString(@"DVD Drama: Respect Authority", @"DVD Publication Name "),   PublicationTypeDVDNotCount}
-
-,   {NSLocalizedString(@"   BROCHURES", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {NSLocalizedString(@"Blood", @"Brochures Publication Name (hb)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Book for All", @"Brochures Publication Name (ba)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"The Bible, What is its Message", @"Brochures Publication Name (bm)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Divine Name", @"Brochures Publication Name (na)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Does God Care", @"Brochures Publication Name (dg)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Doing God's Will", @"Brochures Publication Name (je)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Education", @"Brochures Publication Name (ed)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"God's Friend", @"Brochures Publication Name (gf)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Good Land", @"Brochures Publication Name (gl)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Government", @"Brochures Publication Name (bp)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Guidance of God", @"Brochures Publication Name (gu)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name (jt)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Lasting Peace", @"Brochures Publication Name (pc)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Life on Earth", @"Brochures Publication Name (le)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Look!", @"Brochures Publication Name (mn)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Good News for People of All Nations", @"Brochures Publication Name "),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"The Origin of Life", @"Brochures Publication Name (lf)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Our Problems", @"Brochures Publication Name (op)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Purpose of Life", @"Brochures Publication Name (pr)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Require", @"Brochures Publication Name (rq)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Road to Life", @"Brochures Publication Name (ol)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Satisfying Life", @"Brochures Publication Name (la)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"School", @"Brochures Publication Name (sj)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name (sp)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Trinity", @"Brochures Publication Name (ti)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Keep on the Watch!", @"Brochures Publication Name (kp)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Was Life Created?", @"Brochures Publication Name (lc)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"When Someone Dies", @"Brochures Publication Name (we)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"When We Die", @"Brochures Publication Name (ie)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"Why Worship God", @"Brochures Publication Name (wj)"),   PublicationTypeBrochure}
-,   {NSLocalizedString(@"World Without War", @"Brochures Publication Name (wi)"),   PublicationTypeBrochure}
-
-
-,   {NSLocalizedString(@"   TRACTS", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
-,   {NSLocalizedString(@"Would You Like To Know the Truth?", @"Campaign Tract Publication Name (kt)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"A Peaceful New World-Will It Come?", @"Tracts Publication Name (T-17)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Comfort for the Depressed", @"Tracts Publication Name (T-20)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Enjoy Family Life", @"Tracts Publication Name (T-21)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Does Fate Rule Our Lives", @"Tracts Publication Name (T-71)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"The Greatest Name", @"Tracts Publication Name (T-72)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Tracts Publication Name (T-74)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"What Hope for Dead Loved Ones?", @"Tracts Publication Name (T-16)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"How to Find the Road to Paradise", @"Tracts Publication Name (rp)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Do You Have an Immortal Spirit", @"Tracts Publication Name (T-25)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Tracts Publication Name (T-18)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Who Are Jehovah's Witnesses?", @"Tracts Publication Name (T-73)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Jehovah-Who Is He?", @"Tracts Publication Name (T-23)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Jesus Christ-Who Is He?", @"Tracts Publication Name (T-24)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Know the Bible", @"Tracts Publication Name (T-26)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Life in a Peaceful New World", @"Tracts Publication Name (T-15)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"All Suffering Soon to End", @"Tracts Publication Name (T-27)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name (T-14)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Who Really Rules the World?", @"Tracts Publication Name (T-22)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Why You Can Trust the Bible", @"Tracts Publication Name (T-13)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Will This World Survive?", @"Tracts Publication Name (T-19)"),   PublicationTypeTract}
-,   {NSLocalizedString(@"Your Life", @"Tracts Publication Name (yi)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"All Scripture - Authentic and Beneficial", @"Brochures Publication Name (bsi)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Blood", @"Brochures Publication Name (hb)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Book for All", @"Brochures Publication Name (ba)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Bible's Message", @"Brochures Publication Name (bm)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Bible Topics", @"Brochures Publication Name (td)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Charitable Planning", @"Brochures Publication Name (cp)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Divine Name", @"Brochures Publication Name (na)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Does God Care", @"Brochures Publication Name (dg)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Doing God's Will", @"Brochures Publication Name (je)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Education", @"Brochures Publication Name (ed)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Elementary Bible Teachings", @"Brochures Publication Name (et)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"God's Friend", @"Brochures Publication Name (gf)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Good Land", @"Brochures Publication Name (gl)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Good News for People of All Nations", @"Brochures Publication Name (6674)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Government", @"Brochures Publication Name (bp)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Guidance of God", @"Brochures Publication Name (gu)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"How to Start and Continue", @"Brochures Publication Name (hw)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Improve Ability", @"Brochures Publication Name (ht)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"In Search", @"Brochures Publication Name (sc)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Kurukshetra", @"Brochures Publication Name (ku)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name (jt)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Lasting Peace", @"Brochures Publication Name (pc)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Life on Earth", @"Brochures Publication Name (le)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Look!", @"Brochures Publication Name (Lmn)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Make Disciples", @"Brochures Publication Name (ds)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Nations", @"Brochures Publication Name (np)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Our Problems", @"Brochures Publication Name (op)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"The Origin of Life", @"Brochures Publication Name (lf)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Pathway", @"Brochures Publication Name (ph)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Path of Divine Truth", @"Brochures Publication Name (dt)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Purpose of Life", @"Brochures Publication Name (pr)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Real Faith", @"Brochures Publication Name (rk)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Reading and Writing", @"Brochures Publication Name (ay)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Require", @"Brochures Publication Name (rq)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Road to Life", @"Brochures Publication Name (ol)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Satisfying Life", @"Brochures Publication Name (la)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"School", @"Brochures Publication Name (sj)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Secure Future", @"Brochures Publication Name (fu)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Spirits of the Dead", @"Brochures Publication Name (sp)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Submission", @"Brochures Publication Name (sm)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Trinity", @"Brochures Publication Name (ti)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Keep on the Watch!", @"Brochures Publication Name (kp)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Was Life Created?", @"Brochures Publication Name (lc)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"When Someone Dies", @"Brochures Publication Name (we)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"When We Die", @"Brochures Publication Name (ie)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Why Worship God", @"Brochures Publication Name (wj)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"World Without War", @"Brochures Publication Name (wi)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Acts of Jehovah's Witnesses", @"Brochures Publication Name (ac)"),   PublicationTypeBrochure}
+	
+	,   {NSLocalizedString(@"   TRACTS", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+	,   {NSLocalizedString(@"A Peaceful New World-Will It Come?", @"Tracts Publication Name (T-17)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"All Suffering Soon to End", @"Tracts Publication Name (T-27)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Comfort for the Depressed", @"Tracts Publication Name (T-20)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Enjoy Family Life", @"Tracts Publication Name (T-21)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Do You Have an Immortal Spirit", @"Tracts Publication Name (T-25)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Does Fate Rule Our Lives", @"Tracts Publication Name (T-71)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"For Jews, What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name (T-18)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"The Greatest Name", @"Tracts Publication Name (T-72)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Hellfire-Is It Part of Divine Justice?", @"Tracts Publication Name (T-74)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Jehovah's Witnesses-What Do They Believe?", @"Tracts Publication Name (T-18)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"JW's—A Christian Community", @"Tracts Publication Name (cr)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Jehovah-Who Is He?", @"Tracts Publication Name (T-23)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Jesus Christ-Who Is He?", @"Tracts Publication Name (T-24)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Know the Bible", @"Tracts Publication Name (T-26)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Life in a Peaceful New World", @"Tracts Publication Name (T-15)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Road to Paradise", @"Tracts Publication Name (rp)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Ruled by Fate", @"Tracts Publication Name (T-81)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Trust the Creator!", @"Tracts Publication Name (T-82)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"What Do Jehovah's Witnesses Believe?", @"Tracts Publication Name (T-14)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"What Hope for Dead Loved Ones?", @"Tracts Publication Name (T-16)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Who Are Jehovah's Witnesses?", @"Tracts Publication Name (T-73)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Who Really Rules the World?", @"Tracts Publication Name (T-22)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Why You Can Trust the Bible", @"Tracts Publication Name (T-13)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Will This World Survive?", @"Tracts Publication Name (T-19)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Will Suffering Ever End?", @"Tracts Publication Name (T-75)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Would You Like To Know the Truth?", @"Campaign Tract Publication Name (kt)"),   PublicationTypeTract}
+	,   {NSLocalizedString(@"Your Life", @"Tracts Publication Name (yi)"),   PublicationTypeTract}
 };
 #include "PSAddLocalizedString.h"
 
