@@ -64,6 +64,7 @@
 		903FF23F102A050B00CC60B8 /* CSRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 903FF23D102A050B00CC60B8 /* CSRegex.m */; };
 		903FF249102A058000CC60B8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903FF248102A058000CC60B8 /* CFNetwork.framework */; };
 		903FF2E6102FDAF100CC60B8 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 903FF2E5102FDAF100CC60B8 /* index.html */; };
+		904378141409E82800E4B84B /* MyTime 19.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 904378131409E7F100E4B84B /* MyTime 19.xcdatamodel */; };
 		9045A7260E7C1423001B439C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7250E7C1423001B439C /* TCPServer.m */; };
 		9045A7290E7C1590001B439C /* BackupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9045A7280E7C1590001B439C /* BackupView.m */; };
 		9045A8FA0E7D6F86001B439C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9045A8F80E7D6F86001B439C /* Localizable.strings */; };
@@ -231,6 +232,7 @@
 		90EA4F131002709E0046A2E4 /* UITableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EA4F121002709E0046A2E4 /* UITableViewButtonCell.m */; };
 		90EA4F37100275590046A2E4 /* whiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F35100275590046A2E4 /* whiteButton.png */; };
 		90EA4F38100275590046A2E4 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EA4F36100275590046A2E4 /* blueButton.png */; };
+		90F0372B140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0372A140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m */; };
 		90F079FF0E6A0D89004A3D3C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F079FE0E6A0D89004A3D3C /* MapViewController.m */; };
 		90F1778313CFA425001EDE92 /* MyTime 15.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */; };
 		90F6B28A117EBB6400519165 /* HourPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F6B289117EBB6400519165 /* HourPickerView.m */; };
@@ -404,6 +406,7 @@
 		903FF248102A058000CC60B8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		903FF2E5102FDAF100CC60B8 /* index.html */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		90417EAB0F0EDE96007CBA7E /* Danish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Danish; path = Danish.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		904378131409E7F100E4B84B /* MyTime 19.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 19.xcdatamodel"; sourceTree = "<group>"; };
 		9045A7240E7C1423001B439C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		9045A7250E7C1423001B439C /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		9045A7270E7C1590001B439C /* BackupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupView.h; sourceTree = "<group>"; };
@@ -699,6 +702,8 @@
 		90EA4F35100275590046A2E4 /* whiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteButton.png; sourceTree = "<group>"; };
 		90EA4F36100275590046A2E4 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
 		90EFC5011377365B006BFE9F /* MyTime 9.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 9.xcdatamodel"; sourceTree = "<group>"; };
+		90F03729140759D500ECF368 /* PSLocalizedCollationSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLocalizedCollationSortDescriptor.h; sourceTree = "<group>"; };
+		90F0372A140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLocalizedCollationSortDescriptor.m; sourceTree = "<group>"; };
 		90F079FD0E6A0D89004A3D3C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		90F079FE0E6A0D89004A3D3C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90F1778213CFA423001EDE92 /* MyTime 15.xcdatamodel */ = {isa = PBXFileReference; comments = xmod; lastKnownFileType = wrapper.xcdatamodel; path = "MyTime 15.xcdatamodel"; sourceTree = "<group>"; };
@@ -1317,6 +1322,8 @@
 				9054F0FA136503DD0036F809 /* FilterViewController.m */,
 				90076929136A481800DA11B3 /* FilterDetailViewController.h */,
 				9007692A136A481800DA11B3 /* FilterDetailViewController.m */,
+				90F03729140759D500ECF368 /* PSLocalizedCollationSortDescriptor.h */,
+				90F0372A140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m */,
 				90B61A4A1326A63D00DF09E0 /* PSExtendedFetchedResultsController.h */,
 				90B61A4B1326A63D00DF09E0 /* PSExtendedFetchedResultsController.m */,
 			);
@@ -1758,6 +1765,8 @@
 				90DDB8D313EE370F0005D867 /* MyTime 16.xcdatamodel in Sources */,
 				90DDB8D713EE37320005D867 /* MyTime 17.xcdatamodel in Sources */,
 				9079BE2A13F379970075B033 /* MyTime 18.xcdatamodel in Sources */,
+				90F0372B140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m in Sources */,
+				904378141409E82800E4B84B /* MyTime 19.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1979,7 +1988,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Priddy (CCLH74RK4F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1990,7 +1999,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "897D392A-0193-4A70-A119-B33AB5FACB70";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv6";
 			};
@@ -2078,8 +2087,9 @@
 				901380C513ECE430000B0DCF /* MyTime 16.xcdatamodel */,
 				90DDB8D613EE37300005D867 /* MyTime 17.xcdatamodel */,
 				9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */,
+				904378131409E7F100E4B84B /* MyTime 19.xcdatamodel */,
 			);
-			currentVersion = 9079BE2913F379910075B033 /* MyTime 18.xcdatamodel */;
+			currentVersion = 904378131409E7F100E4B84B /* MyTime 19.xcdatamodel */;
 			path = MyTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

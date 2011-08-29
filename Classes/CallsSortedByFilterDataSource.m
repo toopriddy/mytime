@@ -137,7 +137,7 @@
 
 - (BOOL)sectionIndexDisplaysSingleLetter
 {
-	return ![[[MTDisplayRule currentDisplayRule] sectionIndexSorter] requiresArraySorting];
+	return [MTSorter sectionIndexDisplaysSingleLetterForPath:[[[MTDisplayRule currentDisplayRule] sectionIndexSorter] path]];
 }
 
 

@@ -18,6 +18,7 @@ extern NSString * const MTSorterEntryRequiresLocalizedCaseInsensitiveCompare;
 + (NSString *)sectionIndexPathForPath:(NSString *)path;
 + (BOOL)requiresArraySortingForPath:(NSString *)path;
 + (BOOL)requiresLocalizedCaseInsensitiveCompareForPath:(NSString *)path;
++ (BOOL)sectionIndexDisplaysSingleLetterForPath:(NSString *)path;
 
 + (void)updateSortersForAdditionalInformationType:(MTAdditionalInformationType *)type;
 

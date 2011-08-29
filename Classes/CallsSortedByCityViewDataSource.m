@@ -42,4 +42,11 @@
 {
 	return @"city";
 }
+
+- (BOOL)sectionIndexDisplaysSingleLetter
+{
+	return NO;
+}
+
+
 @end

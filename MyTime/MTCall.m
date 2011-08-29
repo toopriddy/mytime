@@ -21,6 +21,46 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 
 @implementation MTCall
 
++ (void)fixCalls:(NSManagedObjectContext *)moc
+{
+	// fix for MyTime < 3.0 to create the filters on the Beta tester's phones
+	for(MTCall *call in [moc fetchObjectsForEntityName:[MTCall entityName]
+									 propertiesToFetch:nil
+										 withPredicate:nil])
+	{
+		if(call.houseNumber == nil)
+		{
+			call.houseNumber = @"";
+		}
+		
+		if(call.apartmentNumber == nil)
+		{
+			call.apartmentNumber = @"";
+		}
+		
+		if(call.street == nil)
+		{
+			call.street = @"";
+		}
+		
+		if(call.city == nil)
+		{
+			call.city = @"";
+		}
+		
+		if(call.state == nil)
+		{
+			call.state = @"";
+		}
+		
+		if(call.name == nil)
+		{
+			call.name = @"";
+		}
+	}
+}
+
+
 - (void)addMyObservers
 {
 	registeredObservers_ = YES;
@@ -40,24 +80,19 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 - (void)awakeFromInsert 
 { 
 	[super awakeFromInsert];
+	self.name = @"";
+	self.apartmentNumber = @"";
+	self.houseNumber = @"";
+	self.street = @"";
+	self.city = @"";
+	self.state = @"";
 	[self addMyObservers];
 }
 
 - (void)initializeNewCall
 {
-	// lets go ahead and add the "Additional Information" always shown
-	MTUser *currentUser = [MTUser currentUser];
-	self.user = currentUser;
-	self.deletedCallValue = NO;
-	for(MTAdditionalInformationType *infoType in currentUser.additionalInformationTypes)
-	{
-		if(infoType.alwaysShownValue)
-		{
-			MTAdditionalInformation *info = [MTAdditionalInformation insertInManagedObjectContext:self.managedObjectContext];
-			info.call = self;
-			info.type = infoType;
-		}
-	}
+	[self initializeNewCallWithoutReturnVisit];
+
 	MTReturnVisit *returnVisit = [MTReturnVisit insertInManagedObjectContext:self.managedObjectContext];
 	returnVisit.call = self;
 	returnVisit.type = CallReturnVisitTypeInitialVisit;
@@ -79,6 +114,7 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 			info.type = infoType;
 		}
 	}
+	[MTCall fixCalls:self.managedObjectContext];
 }
 
 - (void)didTurnIntoFault
@@ -187,143 +223,6 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 	return addressCityAndState_;
 }
 
-- (NSString *)normalizedStreet 
-{
-    [self willAccessValueForKey:@"normalizedStreet"];
-	NSString *value = self.street;
-	NSString *stringToReturn = [[[value decomposedStringWithCanonicalMapping] componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];	
-	NSLog(@"%@", stringToReturn);
-    [self didAccessValueForKey:@"normalizedStreet"];
-    return stringToReturn;
-}
-
-- (NSString *)normalizedName
-{
-    [self willAccessValueForKey:@"normalizedName"];
-	NSString *value = self.name;
-	NSString *stringToReturn = [[[value decomposedStringWithCanonicalMapping] componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];	
-	NSLog(@"%@", stringToReturn);
-    [self didAccessValueForKey:@"normalizedName"];
-    return stringToReturn;
-}
-
-- (NSString *)uppercaseFirstLetterOfStreet 
-{
-    [self willAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
-	NSString *value = self.street;
-	NSString *stringToReturn = @"";
-	if([value length])
-	{
-#if 1
-		stringToReturn = [value substringWithRange:[value rangeOfComposedCharacterSequenceAtIndex:0]];
-		
-#else
-		NSString *oneCharacter = [value substringToIndex:1];
-		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-#endif
-	}
-	if([stringToReturn length] == 0)
-	{
-		stringToReturn = @"#";
-	}
-    [self didAccessValueForKey:@"uppercaseFirstLetterOfStreet"];
-    return stringToReturn;
-}
-
-- (NSString *)uppercaseFirstLetterOfName
-{
-    [self willAccessValueForKey:@"uppercaseFirstLetterOfName"];
-	NSString *value = self.name;
-	NSString *stringToReturn = @"";
-	if([value length])
-	{
-#if 1
-		NSString *oneCharacter = [value substringWithRange:[value rangeOfComposedCharacterSequenceAtIndex:0]];
-		NSLog(@"dec %@", [oneCharacter decomposedStringWithCanonicalMapping]);
-		NSLog(@"%@", oneCharacter);
-		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-		NSLog(@"%@", asciiString);
-		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-#else
-		NSLog(@"%@", value);
-		NSString *oneCharacter = [value substringToIndex:1];
-		NSLog(@"%@", oneCharacter);
-		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-		NSLog(@"%@", asciiString);
-		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-#error asdf
-		if([stringToReturn isEqualToString:@"?"])
-		{
-			if(![oneCharacter isEqualToString:stringToReturn])
-			{
-				NSData *asciiData = [oneCharacter dataUsingEncoding:NSNonLossyASCIIStringEncoding allowLossyConversion:YES];
-				NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-				stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-			}
-		}
-#endif
-	}
-	if([stringToReturn length] == 0)
-	{
-		stringToReturn = @"#";
-	}
-	NSLog(@"%@", stringToReturn);
-    [self didAccessValueForKey:@"uppercaseFirstLetterOfName"];
-    return stringToReturn;
-}
-
-- (NSString *)uppercaseFirstLetterOfCity
-{
-    [self willAccessValueForKey:@"uppercaseFirstLetterOfCity"];
-	NSString *value = self.city;
-	NSString *stringToReturn = @"";
-	if([value length])
-	{
-#if 1
-		stringToReturn = [value substringWithRange:[value rangeOfComposedCharacterSequenceAtIndex:0]];
-#else
-		NSString *oneCharacter = [value substringToIndex:1];
-		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-#endif
-	}
-	if([stringToReturn length] == 0)
-	{
-		stringToReturn = @"#";
-	}
-    [self didAccessValueForKey:@"uppercaseFirstLetterOfCity"];
-    return stringToReturn;
-}
-
-- (NSString *)uppercaseFirstLetterOfState
-{
-    [self willAccessValueForKey:@"uppercaseFirstLetterOfState"];
-	NSString *value = self.state;
-	NSString *stringToReturn = @"";
-	if([value length])
-	{
-#if 1
-		stringToReturn = [value substringWithRange:[value rangeOfComposedCharacterSequenceAtIndex:0]];
-#else
-		NSString *oneCharacter = [value substringToIndex:1];
-		NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-		stringToReturn = [[asciiString substringToIndex:1] uppercaseString];
-#endif
-	}
-	if([stringToReturn length] == 0)
-	{
-		stringToReturn = @"#";
-	}
-    [self didAccessValueForKey:@"uppercaseFirstLetterOfState"];
-    return stringToReturn;
-}
-
 #define DAY_INTERVAL (60 * 60 * 24)
 #define WEEK_INTERVAL (DAY_INTERVAL * 7)
 #define MONTH_INTERVAL (WEEK_INTERVAL * 4)
@@ -430,7 +329,7 @@ NSArray *booleanSortedSectionIndexTitlesSingleton = nil;
 {
 	MTSorter *sorter = [[MTDisplayRule currentDisplayRule] sectionIndexSorter];
     [self willAccessValueForKey:@"sectionIndexString"];
-	NSString *stringToReturn = nil;
+	NSString *stringToReturn = @"";
 	if(sorter)
 	{
 		if(sorter.requiresArraySortingValue)

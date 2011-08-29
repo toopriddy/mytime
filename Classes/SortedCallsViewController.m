@@ -426,6 +426,12 @@
 		id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
 		NSString *name;
 		
+		// dont bother displaying the section header if there are no rows in the section
+		if(sectionInfo.numberOfObjects == 0)
+		{
+			return nil;
+		}
+		
 		if(( name = [self.dataSource sectionNameForValue:[sectionInfo name]]))
 		{
 			return name;
@@ -600,8 +606,6 @@
 
 - (PSExtendedFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
 {
-	BOOL requiresArraySorting = [dataSource requiresArraySorting];
-		
 	NSArray *sortDescriptors = [dataSource coreDataSortDescriptors];
 	NSPredicate *filterPredicate = [dataSource predicate];
 	
@@ -671,21 +675,19 @@
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-	[fetchRequest setSortDescriptors:sortDescriptors];
-	NSArray *arraySortDescriptors = nil;
-	if(requiresArraySorting)
-	{
-		arraySortDescriptors = [dataSource allSortDescriptors];
-	}
+	NSArray *arraySortDescriptors = [dataSource allSortDescriptors];
+	BOOL sectionIndexDisplaysSingleLetter = [dataSource sectionIndexDisplaysSingleLetter];
+	[fetchRequest setSortDescriptors:[NSArray arrayWithObject:[sortDescriptors objectAtIndex:0]]];
+
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
     PSExtendedFetchedResultsController *aFetchedResultsController = [[PSExtendedFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																												managedObjectContext:self.managedObjectContext 
 																												  sectionNameKeyPath:[dataSource sectionNameKeyPath] 
 																														   cacheName:nil
-																													 sortDescriptors:arraySortDescriptors];
+																													 sortDescriptors:arraySortDescriptors
+																									sectionIndexDisplaysSingleLetter:sectionIndexDisplaysSingleLetter];
     aFetchedResultsController.delegate = self;
-    aFetchedResultsController.sectionIndexDisplaysSingleLetter = [dataSource sectionIndexDisplaysSingleLetter];
     [fetchRequest release];
     
     NSError *error = nil;
@@ -806,7 +808,7 @@
 {
 	UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 	PSExtendedFetchedResultsController *frc = [self fetchedResultsControllerForTableView:tableView];
-	if(coreDataHasChangeContentBug || frc.requiresArraySorting)
+	if(coreDataHasChangeContentBug || frc.requiresArraySorting || frc.sectionIndexDisplaysSingleLetter)
 	{
 		reloadData_ = YES;
 	}

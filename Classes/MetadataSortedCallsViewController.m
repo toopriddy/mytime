@@ -20,6 +20,15 @@
 #import "PSLocalization.h"
 @implementation MetadataSortedCallsViewController
 
+- (id)initWithDataSource:(id<SortedCallsViewDataSourceProtocol>)theDataSource 
+{
+	if( (self = [super initWithDataSource:theDataSource]) )
+	{
+		self.navigationItem.hidesBackButton = YES;
+	}
+	return self;
+}
+
 - (void)updateButtonForDisplayRule:(MTDisplayRule *)displayRule
 {
 	NSString *name = displayRule.localizedName;
@@ -60,7 +69,6 @@
 - (void)loadView
 {
 	[super loadView];
-	self.navigationItem.hidesBackButton = YES;
 	
 	MTDisplayRule *currentDisplayRule = [MTDisplayRule currentDisplayRule];
 	// update the button in the nav bar

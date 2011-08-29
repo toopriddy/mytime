@@ -39,13 +39,29 @@ MTDisplayRule *g_currentDisplayRule;
 		// fix the city and state sorters
 		for(MTSorter *sorter in displayRule.sorters)
 		{
-			if([sorter.sectionIndexPath isEqualToString:@"city"])
+			if([sorter.sectionIndexPath isEqualToString:@"uppercaseFirstLetterOfCity"])
 			{
-				sorter.sectionIndexPath = @"uppercaseFirstLetterOfCity";
+				sorter.sectionIndexPath = @"city";
 			}
-			else if([sorter.sectionIndexPath isEqualToString:@"state"])
+			else if([sorter.sectionIndexPath isEqualToString:@"uppercaseFirstLetterOfState"])
 			{
-				sorter.sectionIndexPath = @"uppercaseFirstLetterOfState";
+				sorter.sectionIndexPath = @"state";
+			}
+			else if([sorter.sectionIndexPath isEqualToString:@"uppercaseFirstLetterOfName"])
+			{
+				sorter.sectionIndexPath = @"name";
+			}
+			else if([sorter.sectionIndexPath isEqualToString:@"uppercaseFirstLetterOfStreet"])
+			{
+				sorter.sectionIndexPath = @"street";
+			}
+			else if([sorter.sectionIndexPath isEqualToString:@"date"])
+			{
+				sorter.sectionIndexPath = @"sectionIndexString";
+			}
+			else if([sorter.sectionIndexPath isEqualToString:@"sectionIndexValue"])
+			{
+				sorter.sectionIndexPath = @"sectionIndexString";
 			}
 		}
 	}
@@ -179,9 +195,18 @@ MTDisplayRule *g_currentDisplayRule;
 
 static NSArray *sortByStreet(NSArray *previousSorters)
 {
-	return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-														   [NSSortDescriptor psSortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedStandardCompare:)],
-														   [NSSortDescriptor psSortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedStandardCompare:)], nil]];
+	if(isIOS4OrGreater())
+	{
+		return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedStandardCompare:)],
+															   [NSSortDescriptor psSortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedStandardCompare:)],
+															   [NSSortDescriptor psSortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedStandardCompare:)], nil]];
+	}
+	else
+	{
+		return [previousSorters arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:@"street" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+															   [NSSortDescriptor psSortDescriptorWithKey:@"houseNumber" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
+															   [NSSortDescriptor psSortDescriptorWithKey:@"apartmentNumber" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], nil]];
+	}
 }
 
 static NSArray *sortByName(NSArray *previousSorters)
