@@ -29,24 +29,24 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"deletedCallValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"deletedCall"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"locationAquiredValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"locationAquired"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"sectionIndexNumberValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"sectionIndexNumber"];
+	if ([key isEqualToString:@"dateSortedSectionIndexValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"dateSortedSectionIndex"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"locationAquisitionAttemptedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"locationAquisitionAttempted"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"dateSortedSectionIndexValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"dateSortedSectionIndex"];
+	if ([key isEqualToString:@"sectionIndexNumberValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"sectionIndexNumber"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"deletedCallValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"deletedCall"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"locationAquiredValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"locationAquired"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -70,7 +70,134 @@
 
 
 
+@dynamic apartmentNumber;
+
+
+
+
+
+
+@dynamic street;
+
+
+
+
+
+
+@dynamic longitude;
+
+
+
+
+
+
 @dynamic state;
+
+
+
+
+
+
+@dynamic dateSortedSectionIndex;
+
+
+
+- (short)dateSortedSectionIndexValue {
+	NSNumber *result = [self dateSortedSectionIndex];
+	return [result shortValue];
+}
+
+- (void)setDateSortedSectionIndexValue:(short)value_ {
+	[self setDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveDateSortedSectionIndexValue {
+	NSNumber *result = [self primitiveDateSortedSectionIndex];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveDateSortedSectionIndexValue:(short)value_ {
+	[self setPrimitiveDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic mostRecentReturnVisitDate;
+
+
+
+
+
+
+@dynamic locationAquisitionAttempted;
+
+
+
+- (BOOL)locationAquisitionAttemptedValue {
+	NSNumber *result = [self locationAquisitionAttempted];
+	return [result boolValue];
+}
+
+- (void)setLocationAquisitionAttemptedValue:(BOOL)value_ {
+	[self setLocationAquisitionAttempted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveLocationAquisitionAttemptedValue {
+	NSNumber *result = [self primitiveLocationAquisitionAttempted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveLocationAquisitionAttemptedValue:(BOOL)value_ {
+	[self setPrimitiveLocationAquisitionAttempted:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic houseNumber;
+
+
+
+
+
+
+@dynamic sectionIndexNumber;
+
+
+
+- (long long)sectionIndexNumberValue {
+	NSNumber *result = [self sectionIndexNumber];
+	return [result longLongValue];
+}
+
+- (void)setSectionIndexNumberValue:(long long)value_ {
+	[self setSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveSectionIndexNumberValue {
+	NSNumber *result = [self primitiveSectionIndexNumber];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveSectionIndexNumberValue:(long long)value_ {
+	[self setPrimitiveSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic name;
+
+
+
+
+
+
+@dynamic locationLookupType;
 
 
 
@@ -129,178 +256,12 @@
 
 
 
-@dynamic uppercaseFirstLetterOfName;
-
-
-
-
-
-
-@dynamic houseNumber;
-
-
-
-
-
-
-@dynamic name;
-
-
-
-
-
-
-@dynamic locationLookupType;
-
-
-
-
-
-
-@dynamic uppercaseFirstLetterOfStreet;
-
-
-
-
-
-
-@dynamic mostRecentReturnVisitDate;
-
-
-
-
-
-
-@dynamic street;
-
-
-
-
-
-
 @dynamic lattitude;
 
 
 
 
 
-
-@dynamic longitude;
-
-
-
-
-
-
-@dynamic uppercaseFirstLetterOfCity;
-
-
-
-
-
-
-@dynamic sectionIndexNumber;
-
-
-
-- (long long)sectionIndexNumberValue {
-	NSNumber *result = [self sectionIndexNumber];
-	return [result longLongValue];
-}
-
-- (void)setSectionIndexNumberValue:(long long)value_ {
-	[self setSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
-}
-
-- (long long)primitiveSectionIndexNumberValue {
-	NSNumber *result = [self primitiveSectionIndexNumber];
-	return [result longLongValue];
-}
-
-- (void)setPrimitiveSectionIndexNumberValue:(long long)value_ {
-	[self setPrimitiveSectionIndexNumber:[NSNumber numberWithLongLong:value_]];
-}
-
-
-
-
-
-@dynamic apartmentNumber;
-
-
-
-
-
-
-@dynamic locationAquisitionAttempted;
-
-
-
-- (BOOL)locationAquisitionAttemptedValue {
-	NSNumber *result = [self locationAquisitionAttempted];
-	return [result boolValue];
-}
-
-- (void)setLocationAquisitionAttemptedValue:(BOOL)value_ {
-	[self setLocationAquisitionAttempted:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveLocationAquisitionAttemptedValue {
-	NSNumber *result = [self primitiveLocationAquisitionAttempted];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveLocationAquisitionAttemptedValue:(BOOL)value_ {
-	[self setPrimitiveLocationAquisitionAttempted:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic dateSortedSectionIndex;
-
-
-
-- (short)dateSortedSectionIndexValue {
-	NSNumber *result = [self dateSortedSectionIndex];
-	return [result shortValue];
-}
-
-- (void)setDateSortedSectionIndexValue:(short)value_ {
-	[self setDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveDateSortedSectionIndexValue {
-	NSNumber *result = [self primitiveDateSortedSectionIndex];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveDateSortedSectionIndexValue:(short)value_ {
-	[self setPrimitiveDateSortedSectionIndex:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
-@dynamic uppercaseFirstLetterOfState;
-
-
-
-
-
-
-@dynamic additionalInformation;
-
-	
-- (NSMutableSet*)additionalInformationSet {
-	[self willAccessValueForKey:@"additionalInformation"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"additionalInformation"];
-	[self didAccessValueForKey:@"additionalInformation"];
-	return result;
-}
-	
 
 @dynamic returnVisits;
 
@@ -309,6 +270,17 @@
 	[self willAccessValueForKey:@"returnVisits"];
 	NSMutableSet *result = [self mutableSetValueForKey:@"returnVisits"];
 	[self didAccessValueForKey:@"returnVisits"];
+	return result;
+}
+	
+
+@dynamic additionalInformation;
+
+	
+- (NSMutableSet*)additionalInformationSet {
+	[self willAccessValueForKey:@"additionalInformation"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"additionalInformation"];
+	[self didAccessValueForKey:@"additionalInformation"];
 	return result;
 }
 	

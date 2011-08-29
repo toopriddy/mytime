@@ -7,7 +7,8 @@
 //
 
 #import "PSExtendedFetchedResultsController.h"
-
+#import "PSLocalizedCollationSortDescriptor.h"
+#import "MTCall.h"
 @interface PSFetchedResultsSectionInfo : NSObject
 {
 }
@@ -45,6 +46,7 @@
 @property (nonatomic, retain, readwrite) NSArray *sectionIndexTitles;
 @property (nonatomic, retain, readwrite) NSArray *sections;
 @property (nonatomic, retain, readwrite) NSString *sectionNameKeyPath;
+@property (nonatomic, retain) UILocalizedIndexedCollation *collation;
 @end
 
 @implementation PSExtendedFetchedResultsController
@@ -57,6 +59,7 @@
 @synthesize sectionNameKeyPath;
 @synthesize sortDescriptors;
 @synthesize sectionIndexDisplaysSingleLetter = _sectionIndexDisplaysSingleLetter;
+@synthesize collation;
 
 /* ========================================================*/
 /* ========================= INITIALIZERS ====================*/
@@ -64,6 +67,7 @@
 
 - (void)dealloc
 {
+	self.collation = nil;
 	self.fetchedResultsController.delegate = nil;
 	self.fetchedResultsController = nil;
 	[_sections release];
@@ -72,6 +76,15 @@
 	self.sectionNameKeyPath = nil;
 
 	[super dealloc];
+}
+
+- (UILocalizedIndexedCollation *)collation
+{
+	if(collation == nil)
+	{
+		self.collation = [UILocalizedIndexedCollation currentCollation];
+	}
+	return collation;
 }
 
 /* Initializes an instance of NSFetchedResultsController
@@ -85,19 +98,21 @@
 		sectionNameKeyPath:(NSString *)theSectionNameKeyPath 
 				 cacheName:(NSString *)name
 		   sortDescriptors:(NSArray *)theSortDescriptors
+sectionIndexDisplaysSingleLetter:(BOOL)sectionIndexDisplaysSingleLetter
 {
 	if( (self = [super init]) )
 	{
-		self.sectionIndexDisplaysSingleLetter = YES;
-		self.requiresArraySorting = theSortDescriptors != nil;
+		_sectionIndexDisplaysSingleLetter = sectionIndexDisplaysSingleLetter;
+		
+		_requiresArraySorting = theSortDescriptors != nil;
 		self.sectionNameKeyPath = theSectionNameKeyPath;
 		self.sortDescriptors = theSortDescriptors;
-		if(self.requiresArraySorting)
-			theSectionNameKeyPath = nil;
+
 		self.fetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:theFetchRequest 
 																			 managedObjectContext:context 
-																			   sectionNameKeyPath:theSectionNameKeyPath 
+																			   sectionNameKeyPath:nil 
 																						cacheName:name] autorelease];
+		self.fetchedResultsController.delegate = self;
 	}
 	
 	return self;
@@ -106,14 +121,6 @@
 - (void)setDelegate:(NSObject<NSFetchedResultsControllerDelegate> *)delegate
 {
 	_delegate = delegate;
-	if(_requiresArraySorting)
-	{
-		self.fetchedResultsController.delegate = self;
-	}
-	else
-	{
-		self.fetchedResultsController.delegate = delegate;
-	}
 }
 
 - (NSDateFormatter *)dateFormatter
@@ -138,41 +145,83 @@
 
 - (NSArray *)fetchedObjects
 {
-	if(_requiresArraySorting)
+	if(_fetchedObjects == nil)
 	{
-		if(_fetchedObjects == nil)
+		// if there is a section name property then we need to seperate out in sections, otherwise
+		// just create one section with all objects
+		if(self.sectionNameKeyPath.length)
 		{
 			// get the objects and sort them
-			self.fetchedObjects = [[self.fetchedResultsController fetchedObjects] sortedArrayUsingDescriptors:self.sortDescriptors];
-
-			// if there is a section name property then we need to seperate out in sections, otherwise
-			// just create one section with all objects
-			if(self.sectionNameKeyPath.length)
+			NSArray *allObjects = [self.fetchedResultsController fetchedObjects];
+			
+			if(_sectionIndexDisplaysSingleLetter)
 			{
+				_fetchedObjects = [allObjects retain];
+				
+				PSFetchedResultsSectionInfo *sectionInfo;
+				self.sectionIndexTitles = [self.collation sectionTitles];
+				int sectionTitlesCount = [_sectionIndexTitles count];
+				
+				NSMutableArray *newSectionsArray = [[[NSMutableArray alloc] initWithCapacity:sectionTitlesCount] autorelease];
+				PSFetchedResultsSectionInfo *sectionsCArray[sectionTitlesCount];
+				
+				// Set up the sections array: elements are mutable arrays that will contain the time zones for that section.
+				int index = 0;
+				for(NSString *title in _sectionIndexTitles) 
+				{
+					sectionInfo = [[PSFetchedResultsSectionInfo alloc] init];
+					sectionInfo.objects = [[NSMutableArray alloc] init];
+					[sectionInfo.objects release];
+					sectionInfo.name = title;
+					sectionInfo.indexTitle = title;
+					[newSectionsArray addObject:sectionInfo];
+					sectionsCArray[index] = sectionInfo;
+					[sectionInfo release];
+					++index;
+				}
+				
+				for(NSManagedObject *managedObject in _fetchedObjects)
+				{
+					int section = [collation sectionForObject:managedObject collationStringSelector:NSSelectorFromString(sectionNameKeyPath)];
+					[sectionsCArray[section].objects addObject:managedObject];
+				}
+				
+				for(PSFetchedResultsSectionInfo *section in newSectionsArray) 
+				{
+					if((section.numberOfObjects = [section.objects count]) > 1)
+					{
+						[section.objects sortUsingDescriptors:self.sortDescriptors];
+					}
+				}
+				
+				sectionInfo = [[PSFetchedResultsSectionInfo alloc] init];
+				sectionInfo.objects = [[NSMutableArray alloc] init];
+				[sectionInfo.objects release];
+				sectionInfo.name = @"{search}";
+				sectionInfo.indexTitle = @"";
+				[newSectionsArray addObject:sectionInfo];
+				sectionsCArray[index] = sectionInfo;
+				[sectionInfo release];
+				self.sections = newSectionsArray;
+			}
+			else
+			{
+				_fetchedObjects = [[allObjects sortedArrayUsingDescriptors:self.sortDescriptors] retain];
+				
 				NSString *unknownLocalizedString = NSLocalizedString(@"Unknown", @"Sorted by ... view section header for unknown values");
 				NSString *unknownLocalizedSectionIndexTitle = NSLocalizedString(@"?", @"Sorted by ... view section index for unknown values which coresponds to the 'Unknown' section header");
 				NSMutableArray *tempSections = [NSMutableArray array];
 				NSMutableArray *tempSectionIndexTitles = [NSMutableArray array];
 				
-				PSFetchedResultsSectionInfo *sectionInfo;
-#if 0
-				sectionInfo = [[[PSFetchedResultsSectionInfo alloc] init] autorelease];
-				sectionInfo.name = @"";
-				sectionInfo.objects = [NSMutableArray array];
-				sectionInfo.indexTitle = @"{search}";
-				sectionInfo.numberOfObjects = 0;
-				[tempSections addObject:sectionInfo];
-#endif				
 				// placeholder for  the index
 				NSString *lastSectionIndexTitle = @"{search}";
-					
-				// set a section info for the first section
-				sectionInfo = [[[PSFetchedResultsSectionInfo alloc] init] autorelease];
-				sectionInfo.objects = [NSMutableArray array];
 				
+				// set a section info for the first section
+				PSFetchedResultsSectionInfo *sectionInfo = [[[PSFetchedResultsSectionInfo alloc] init] autorelease];
+				sectionInfo.objects = [NSMutableArray array];
 				// go through all of the calls and get the section index and build up the sections
 				BOOL first = YES;
-				for(NSManagedObject *managedObject in self.fetchedObjects)
+				for(NSManagedObject *managedObject in _fetchedObjects)
 				{
 					NSString *title;
 					NSString *sectionIndexTitle;
@@ -183,8 +232,8 @@
 					{
 						title = [self.dateFormatter stringFromDate:value];
 						tempSectionIndexTitles = nil;
-						sectionIndexTitle = nil;
-#warning might want to do things like date sorted						
+						sectionIndexTitle = title;
+#warning need to fix this to present the dates in the index
 					}
 					else if([value isKindOfClass:[NSNumber class]])
 					{
@@ -209,17 +258,7 @@
 						}
 						else
 						{
-							if(_sectionIndexDisplaysSingleLetter)
-							{
-								NSString *oneCharacter = [title substringToIndex:1];
-								NSData *asciiData = [oneCharacter dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-								NSString *asciiString = [[[NSString alloc] initWithData:asciiData encoding:NSASCIIStringEncoding] autorelease];
-								sectionIndexTitle = [[asciiString substringToIndex:1] uppercaseString];
-							}
-							else
-							{
-								sectionIndexTitle = title;
-							}
+							sectionIndexTitle = [self controller:(id)self sectionIndexTitleForSectionName:title];
 						}
 					}
 
@@ -264,52 +303,38 @@
 				// pickup the object count at the end
 				sectionInfo.numberOfObjects = [sectionInfo.objects count];
 			}
-			else
-			{
-				// figure out the sections, sectionIndexTitles
-				PSFetchedResultsSectionInfo *sectionInfo = [[PSFetchedResultsSectionInfo alloc] init];
-				sectionInfo.name = @"";
-				sectionInfo.objects = (NSMutableArray *)self.fetchedObjects;
-				sectionInfo.indexTitle = @"";
-				sectionInfo.numberOfObjects = [sectionInfo.objects count];
-				
-				// there is only one section
-				self.sections = [NSArray arrayWithObject:sectionInfo];
-				[sectionInfo release];
-			}
 		}
-		return _fetchedObjects;
+		else
+		{
+			// get the objects and sort them
+			NSArray *allObjects = [self.fetchedResultsController fetchedObjects];
+			_fetchedObjects = [[allObjects sortedArrayUsingDescriptors:self.sortDescriptors] retain];
+			
+			// make a dummy section info since there is only one section
+			PSFetchedResultsSectionInfo *sectionInfo = [[PSFetchedResultsSectionInfo alloc] init];
+			sectionInfo.name = @"";
+			sectionInfo.objects = (NSMutableArray *)self.fetchedObjects;
+			sectionInfo.indexTitle = @"";
+			sectionInfo.numberOfObjects = [sectionInfo.objects count];
+			
+			// there is only one section
+			self.sections = [NSArray arrayWithObject:sectionInfo];
+			[sectionInfo release];
+		}
 	}
-	else
-	{
-		return [self.fetchedResultsController fetchedObjects];
-	}
+	return _fetchedObjects;
 }
 
 - (NSArray *)sections
 {
-	if(_requiresArraySorting)
-	{
-		__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
-		return [[_sections retain] autorelease];
-	}
-	else
-	{
-		return [self.fetchedResultsController sections];
-	}
+	__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
+	return [[_sections retain] autorelease];
 }
 
 - (NSArray *)sectionIndexTitles
 {
-	if(_requiresArraySorting)
-	{
-		__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
-		return [[_sectionIndexTitles retain] autorelease];
-	}
-	else
-	{
-		return [self.fetchedResultsController sectionIndexTitles];
-	}
+	__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
+	return [[_sectionIndexTitles retain] autorelease];
 }
 
 /* Executes the fetch request on the store to get objects.
@@ -327,40 +352,26 @@
  */
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath
 {
-	if(_requiresArraySorting)
-	{
-		__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
-		return [[[self.sections objectAtIndex:indexPath.section] objects] objectAtIndex:indexPath.row];
-	}
-	else
-	{
-		return [self.fetchedResultsController objectAtIndexPath:indexPath];
-	}
+	__attribute__ ((unused)) NSArray *objects = self.fetchedObjects; // make sure that we have created the objects array
+	return [[[self.sections objectAtIndex:indexPath.section] objects] objectAtIndex:indexPath.row];
 }
 
 /* Returns the indexPath of a given object.
  */
 -(NSIndexPath *)indexPathForObject:(id)object
 {
-	if(_requiresArraySorting)
+	__attribute__ ((unused)) NSArray *objectsCache = self.fetchedObjects; // make sure that we have created the objects array
+	int section = 0;
+	for(NSArray *objects in self.sections)
 	{
-		__attribute__ ((unused)) NSArray *objectsCache = self.fetchedObjects; // make sure that we have created the objects array
-		int section = 0;
-		for(NSArray *objects in self.sections)
+		int row = [objects indexOfObject:object];
+		if(row != NSNotFound)
 		{
-			int row = [objects indexOfObject:object];
-			if(row != NSNotFound)
-			{
-				return [NSIndexPath indexPathForRow:row inSection:section];
-			}
-			++section;
+			return [NSIndexPath indexPathForRow:row inSection:section];
 		}
-		return nil;
+		++section;
 	}
-	else
-	{
-		return [self.fetchedResultsController indexPathForObject:object];
-	}
+	return nil;
 }
 
 /* ========================================================*/
@@ -376,33 +387,25 @@
  */
 - (NSString *)sectionIndexTitleForSectionName:(NSString *)sectionName
 {
-	if(_requiresArraySorting)
+	if([_delegate respondsToSelector:@selector(sectionIndexTitleForSectionName:)])
 	{
-		if([_delegate respondsToSelector:@selector(sectionIndexTitleForSectionName:)])
-		{
-			return [_delegate controller:self.fetchedResultsController sectionIndexTitleForSectionName:sectionName];
-		}
+		return [_delegate controller:self.fetchedResultsController sectionIndexTitleForSectionName:sectionName];
+	}
 
-		for(PSFetchedResultsSectionInfo *info in self.sections)
+	for(PSFetchedResultsSectionInfo *info in self.sections)
+	{
+		if([info.name isEqualToString:sectionName])
 		{
-			if([info.name isEqualToString:sectionName])
-			{
-				return info.indexTitle;
-			}
+			return info.indexTitle;
 		}
-		if(_sectionIndexDisplaysSingleLetter)
-		{
-			return [[sectionName substringToIndex:1] capitalizedString];
-		}
-		else
-		{
-			return sectionName;
-		}
-		
+	}
+	if(_sectionIndexDisplaysSingleLetter)
+	{
+		return [[sectionName substringToIndex:1] capitalizedString];
 	}
 	else
 	{
-		return [self.fetchedResultsController sectionIndexTitleForSectionName:sectionName];
+		return sectionName;
 	}
 }
 
@@ -413,7 +416,11 @@
  */
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)sectionIndex
 {
-	if(_requiresArraySorting)
+	if(_sectionIndexDisplaysSingleLetter)
+	{
+		return [self.collation sectionForObject:title collationStringSelector:@selector(description)];
+	}
+	else
 	{
 		int section = 0;
 		for(PSFetchedResultsSectionInfo *info in self.sections)
@@ -425,10 +432,6 @@
 			++section;
 		}
 		return section;
-	}
-	else
-	{
-		return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:sectionIndex];
 	}
 }
 
@@ -456,7 +459,7 @@
 	{
 		if([_delegate respondsToSelector:@selector(controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:)])
 		{
-			return [_delegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+//			return [_delegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 		}
 	}
 }
@@ -480,7 +483,7 @@
 	{
 		if([_delegate respondsToSelector:@selector(controller:didChangeSection:atIndex:forChangeType:)])
 		{
-			return [_delegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
+//			return [_delegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 		}
 	}
 }
@@ -501,113 +504,109 @@
  */
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-	if(_requiresArraySorting)
-	{
 #if 0
-		NSArray *previousSections = [[self.sections retain] autorelease];
-		NSArray *previousFetchedObjects = [[self.fetchedObjects retain] autorelease];
+	NSArray *previousSections = [[self.sections retain] autorelease];
+	NSArray *previousFetchedObjects = [[self.fetchedObjects retain] autorelease];
 #endif
-		self.fetchedObjects = nil;
-		__attribute__ ((unused)) NSArray *newFetchedObjects = self.fetchedObjects;
+	self.fetchedObjects = nil;
+	__attribute__ ((unused)) NSArray *newFetchedObjects = self.fetchedObjects;
 #if 0		
-		NSArray *newSections = self.sections;
-		// go through in reverse order DELETING sections and rows
-		NSMutableArray *possibleNewSections = [newSections mutableCopy];
-		for(PSFetchedResultsSectionInfo *newSection in possibleNewSections)
+	NSArray *newSections = self.sections;
+	// go through in reverse order DELETING sections and rows
+	NSMutableArray *possibleNewSections = [newSections mutableCopy];
+	for(PSFetchedResultsSectionInfo *newSection in possibleNewSections)
+	{
+		newSection.newSection = YES;
+	}
+	int sectionNumber = [previousSections count];
+	for(PSFetchedResultsSectionInfo *section in [previousSections reverseObjectEnumerator])
+	{
+		--sectionNumber;
+		// we first blow away any sections that need to be deleted, we dont need to 
+		// bother deleting the rows from these
+		BOOL found = NO;
+		int matchingNewSectionNumber = 0;
+		PSFetchedResultsSectionInfo *matchingNewSection = nil;
+		for(PSFetchedResultsSectionInfo *newSection in newSections)
 		{
-			newSection.newSection = YES;
+			if([newSection.name isEqualToString:section.name])
+			{
+				matchingNewSection = newSection;
+				matchingNewSection.newSection = NO;
+				break;
+			}
+			++matchingNewSectionNumber;
 		}
-		int sectionNumber = [previousSections count];
-		for(PSFetchedResultsSectionInfo *section in [previousSections reverseObjectEnumerator])
+		if(matchingNewSection == nil)
 		{
-			--sectionNumber;
-			// we first blow away any sections that need to be deleted, we dont need to 
-			// bother deleting the rows from these
-			BOOL found = NO;
-			int matchingNewSectionNumber = 0;
-			PSFetchedResultsSectionInfo *matchingNewSection = nil;
-			for(PSFetchedResultsSectionInfo *newSection in newSections)
+			DEBUG(NSLog(@"Section #%d %@ removed", sectionNumber, section.name));
+			if([_delegate respondsToSelector:@selector(controller:didChangeSection:atIndex:forChangeType:)])
 			{
-				if([newSection.name isEqualToString:section.name])
-				{
-					matchingNewSection = newSection;
-					matchingNewSection.newSection = NO;
-					break;
-				}
-				++matchingNewSectionNumber;
+				return [_delegate controller:controller didChangeSection:section atIndex:sectionNumber forChangeType:NSFetchedResultsChangeDelete];
 			}
-			if(matchingNewSection == nil)
-			{
-				DEBUG(NSLog(@"Section #%d %@ removed", sectionNumber, section.name));
-				if([_delegate respondsToSelector:@selector(controller:didChangeSection:atIndex:forChangeType:)])
-				{
-					return [_delegate controller:controller didChangeSection:section atIndex:sectionNumber forChangeType:NSFetchedResultsChangeDelete];
-				}
-				continue;
-			}
-			
-			// now lets go through the rows in this section in reverse order to remove those that are not there anymore
-			int rowNumber = section.numberOfObjects;
-			int matchingNewRowNumber = 0;
-			NSMutableArray *possibleNewObjects = [matchingNewSection.objects mutableCopy];
-			matchingNewSection.objects = possibleNewObjects;
-			[possibleNewObjects release];
-			for(NSManagedObject *object in [section.objects reverseObjectEnumerator])
-			{
-				--rowNumber;
-				if(![possibleNewObjects containsObject:object])
-				{
-					DEBUG(NSLog(@"Row #%d in Section#%d %@ removed", rowNumber, sectionNumber, section.name));
-					if([_delegate respondsToSelector:@selector(controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:)])
-					{
-						return [_delegate controller:controller 
-									 didChangeObject:object 
-										 atIndexPath:[NSIndexPath indexPathForRow:rowNumber inSection:sectionNumber] 
-									   forChangeType:NSFetchedResultsChangeDelete 
-										newIndexPath:nil];
-					}
-				}
-				else
-				{
-					// remove this out of the array so that we know what objects are new
-					[possibleNewObjects removeObject:object];
-				}
-			}
+			continue;
 		}
 		
-		NSMutableArray *viewableSections = [NSMutableArray arrayWithCapacity:self.sectionControllers.count];
-		// go through in forward order ADDING sections and rows
-		sectionNumber = 0;
-		NSEnumerator *currentDisplaySectionEnumerator = [stillViewableSections objectEnumerator];
-		GenericTableViewSectionController *currentDisplaySectionController = [currentDisplaySectionEnumerator nextObject];
-		for(GenericTableViewSectionController *sectionController in self.sectionControllers)
+		// now lets go through the rows in this section in reverse order to remove those that are not there anymore
+		int rowNumber = section.numberOfObjects;
+		int matchingNewRowNumber = 0;
+		NSMutableArray *possibleNewObjects = [matchingNewSection.objects mutableCopy];
+		matchingNewSection.objects = possibleNewObjects;
+		[possibleNewObjects release];
+		for(NSManagedObject *object in [section.objects reverseObjectEnumerator])
 		{
-			// if this is a new section, see if it needs to be added, otherwise see what has changed
-			if(![sectionController isEqual:currentDisplaySectionController])
+			--rowNumber;
+			if(![possibleNewObjects containsObject:object])
 			{
-				if([sectionController performSelector:isViewableSelector])
+				DEBUG(NSLog(@"Row #%d in Section#%d %@ removed", rowNumber, sectionNumber, section.name));
+				if([_delegate respondsToSelector:@selector(controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:)])
 				{
-					DEBUG(NSLog(@"Section #%d %@ added", sectionNumber, sectionController.title));
-					[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionNumber] withRowAnimation:insertAnimation];
-					// since we are adding this new section, update its displayCellControllers
-					[self updateSectionController:sectionController insertRows:NO insertAnimation:insertAnimation sectionNumber:sectionNumber];
-					[viewableSections addObject:sectionController];
-					sectionNumber++;
+					return [_delegate controller:controller 
+								 didChangeObject:object 
+									 atIndexPath:[NSIndexPath indexPathForRow:rowNumber inSection:sectionNumber] 
+								   forChangeType:NSFetchedResultsChangeDelete 
+									newIndexPath:nil];
 				}
 			}
 			else
 			{
-				[viewableSections addObject:sectionController];
-				
-				[self updateSectionController:sectionController insertRows:YES insertAnimation:insertAnimation sectionNumber:sectionNumber];
-				
-				currentDisplaySectionController = [currentDisplaySectionEnumerator nextObject];
-				sectionNumber++;
-			}		
+				// remove this out of the array so that we know what objects are new
+				[possibleNewObjects removeObject:object];
+			}
 		}
-#endif		
-		
 	}
+	
+	NSMutableArray *viewableSections = [NSMutableArray arrayWithCapacity:self.sectionControllers.count];
+	// go through in forward order ADDING sections and rows
+	sectionNumber = 0;
+	NSEnumerator *currentDisplaySectionEnumerator = [stillViewableSections objectEnumerator];
+	GenericTableViewSectionController *currentDisplaySectionController = [currentDisplaySectionEnumerator nextObject];
+	for(GenericTableViewSectionController *sectionController in self.sectionControllers)
+	{
+		// if this is a new section, see if it needs to be added, otherwise see what has changed
+		if(![sectionController isEqual:currentDisplaySectionController])
+		{
+			if([sectionController performSelector:isViewableSelector])
+			{
+				DEBUG(NSLog(@"Section #%d %@ added", sectionNumber, sectionController.title));
+				[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionNumber] withRowAnimation:insertAnimation];
+				// since we are adding this new section, update its displayCellControllers
+				[self updateSectionController:sectionController insertRows:NO insertAnimation:insertAnimation sectionNumber:sectionNumber];
+				[viewableSections addObject:sectionController];
+				sectionNumber++;
+			}
+		}
+		else
+		{
+			[viewableSections addObject:sectionController];
+			
+			[self updateSectionController:sectionController insertRows:YES insertAnimation:insertAnimation sectionNumber:sectionNumber];
+			
+			currentDisplaySectionController = [currentDisplaySectionEnumerator nextObject];
+			sectionNumber++;
+		}		
+	}
+#endif		
 	if([_delegate respondsToSelector:@selector(controllerDidChangeContent:)])
 	{
 		return [_delegate controllerDidChangeContent:controller];
@@ -627,7 +626,7 @@
 	
 	if(_sectionIndexDisplaysSingleLetter)
 	{
-		return [[sectionName substringToIndex:1] capitalizedString];
+		return [[self.collation sectionIndexTitles] objectAtIndex:[self.collation sectionForObject:sectionName collationStringSelector:@selector(description)]];
 	}
 	else
 	{

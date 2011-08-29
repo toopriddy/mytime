@@ -38,4 +38,10 @@
 {
 	return @"time";
 }
+
+- (BOOL)sectionIndexDisplaysSingleLetter
+{
+	return NO;
+}
+
 @end

@@ -19,6 +19,8 @@ extern NSString * const CallLocationTypeDoNotShow;
 @property (readonly) NSString *addressNumberAndStreet;
 @property (readonly) NSString *addressCityAndState;
 
++ (void)fixCalls:(NSManagedObjectContext *)moc;
+
 + (NSString *)topLineOfAddressWithHouseNumber:(NSString *)houseNumber apartmentNumber:(NSString *)apartmentNumber street:(NSString *)street;
 + (NSString *)bottomLineOfAddressWithCity:(NSString *)city state:(NSString *)state;
 

@@ -34,7 +34,8 @@
 	  managedObjectContext:(NSManagedObjectContext *)context 
 		sectionNameKeyPath:(NSString *)theSectionNameKeyPath 
 				 cacheName:(NSString *)name
-		   sortDescriptors:(NSArray *)theSortDescriptors;
+		   sortDescriptors:(NSArray *)theSortDescriptors
+sectionIndexDisplaysSingleLetter:(BOOL)sectionIndexDisplaysSingleLetter;
 
 /* Executes the fetch request on the store to get objects.
  Returns YES if successful or NO (and an error) if a problem occurred. 
@@ -57,7 +58,7 @@
 
 @property (nonatomic, assign) BOOL requiresArraySorting;
 
-@property (nonatomic, assign) BOOL sectionIndexDisplaysSingleLetter;
+@property (nonatomic, assign, readonly) BOOL sectionIndexDisplaysSingleLetter;
 
 /* ========================================================*/
 /* ============= ACCESSING OBJECT RESULTS =================*/

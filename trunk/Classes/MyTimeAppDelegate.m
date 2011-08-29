@@ -1166,12 +1166,24 @@ NSString *emailFormattedStringForSettings();
 	MTCall *mtCall = [MTCall insertInManagedObjectContext:self.managedObjectContext];
 	mtCall.user = mtUser;
 	mtCall.houseNumber = [call objectForKey:CallStreetNumber];
+	if(mtCall.houseNumber == nil)
+		mtCall.houseNumber = @"";
 	mtCall.apartmentNumber = [call objectForKey:CallApartmentNumber];
+	if(mtCall.apartmentNumber == nil)
+		mtCall.apartmentNumber = @"";
 	mtCall.street = [call objectForKey:CallStreet];
+	if(mtCall.street == nil)
+		mtCall.street = @"";
 	mtCall.city = [call objectForKey:CallCity];
+	if(mtCall.city == nil)
+		mtCall.city = @"";
 	mtCall.state = [call objectForKey:CallState];
+	if(mtCall.state == nil)
+		mtCall.state = @"";
 	mtCall.deletedCallValue = deleted;
 	mtCall.name = [call objectForKey:CallName];
+	if(mtCall.name == nil)
+		mtCall.name = @"";
 	NSString *latLong = [call objectForKey:CallLattitudeLongitude];
 	if(latLong == nil)
 	{
@@ -2218,16 +2230,19 @@ NSString *emailFormattedStringForSettings();
 	}
 }
 
+#define CURRENT_FIX_NUMBER 6
 - (void)initializeMyTimeViews
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 	NSPersistentStore *ps = [self.persistentStoreCoordinator.persistentStores objectAtIndex:0];
 	NSDictionary *metadata = [self.persistentStoreCoordinator metadataForPersistentStore:ps];
-	if([metadata valueForKey:@"PSDisplayRuleFix"] == nil)
+	if([[metadata valueForKey:@"PSDisplayRuleFix"] intValue] != CURRENT_FIX_NUMBER)
 	{
 		NSMutableDictionary *newMetadata = [[metadata mutableCopy] autorelease];
 		[MTDisplayRule fixDisplayRules:self.managedObjectContext];
+
+		[MTCall fixCalls:self.managedObjectContext];
 
 		NSError *error;
 		if (![self.managedObjectContext save:&error]) 
@@ -2237,7 +2252,7 @@ NSString *emailFormattedStringForSettings();
 		}
 		else
 		{
-			[newMetadata setValue:@"1" forKey:@"PSDisplayRuleFix"];
+			[newMetadata setValue:[NSNumber numberWithInt:CURRENT_FIX_NUMBER] forKey:@"PSDisplayRuleFix"];
 			[self.persistentStoreCoordinator setMetadata:newMetadata forPersistentStore:ps];
 		}
 	}
