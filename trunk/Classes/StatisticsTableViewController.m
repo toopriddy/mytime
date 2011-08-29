@@ -427,7 +427,11 @@ NSString * const StatisticsTypeRBCHours = @"RBC Hours";
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return indexPath;
+	if(tableView.editing || enableRounding)
+	{
+		return indexPath;
+	}
+	return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
