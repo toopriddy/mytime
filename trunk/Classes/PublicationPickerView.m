@@ -136,6 +136,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	,   {NSLocalizedString(@"Awake Bound Volume", @"Book Publication Name (gvol)"),   PublicationTypeBook}
 	
 	,   {NSLocalizedString(@"   BIBLE DVD", @"Publication Type and Seperator in the Publication Picker"),   PublicationTypeHeading}
+	,   {NSLocalizedString(@"Bible DVD: NWT - Greek Scriptures", @"Bible DVD Publication Name (1567)"),   PublicationTypeDVDBible}
 	,   {NSLocalizedString(@"Bible DVD: Matthew", @"Bible DVD Publication Name (1540)"),   PublicationTypeDVDBible}
 	,   {NSLocalizedString(@"Bible DVD: Mark", @"Bible DVD Publication Name (1541)"),   PublicationTypeDVDBible}
 	,   {NSLocalizedString(@"Bible DVD: Luke", @"Bible DVD Publication Name (1542)"),   PublicationTypeDVDBible}
@@ -170,6 +171,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	,   {NSLocalizedString(@"DVD: The Wonders of Creation Reveal God's Glory", @"DVD Publication Name (dvwc-DVE)"),   PublicationTypeDVDBook}
 	,   {NSLocalizedString(@"DVD: Organized to Share Good News and Whole Association of Brothers", @"DVD Publication Name (dvjwa-DVE)"),   PublicationTypeDVDBook}
 	,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faith in Action, Part 1: Out of Darkness", @"DVD Publication Name (dvfa1-DVE)"),   PublicationTypeDVDBook}
+	,   {NSLocalizedString(@"DVD: Jehovah's Witnesses - Faith in Action, Part 2 ", @"DVD Publication Name (dvfa2-DVE)"),   PublicationTypeDVDBook}
 	,   {NSLocalizedString(@"DVD: Transfusion Alternatives - Documentary Series", @"DVD Publication Name (dvalt-DVE)"),   PublicationTypeDVDBook}
 	
 	,   {NSLocalizedString(@"DVD: When someone you love dies", @"DVD Publication Name (9221)"),   PublicationTypeDVDBrochure}
