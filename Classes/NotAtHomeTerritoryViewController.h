@@ -34,7 +34,6 @@
 	NSMutableSet *allTextFields;
 	MTTerritory *territory;
 	id<NotAtHomeTerritoryViewControllerDelegate> delegate;
-	UITextField *owner;
 	int tag;
 	BOOL obtainFocus;
 	BOOL deleteAfterEmailing;
@@ -42,7 +41,6 @@
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, assign) int tag;
 @property (nonatomic, retain) NSMutableSet *allTextFields;
-@property (nonatomic, retain) UITextField *owner;
 @property (nonatomic, retain) MTTerritory *territory;
 @property (nonatomic, assign) id<NotAtHomeTerritoryViewControllerDelegate> delegate;
 

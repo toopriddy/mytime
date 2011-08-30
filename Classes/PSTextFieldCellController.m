@@ -9,7 +9,7 @@
 #import "PSTextFieldCellController.h"
 
 @interface PSTextFieldCellController ()
-@property (nonatomic, retain) UITextField *textField;
+@property (nonatomic, retain, readwrite) UITextField *textField;
 @end
 
 @implementation PSTextFieldCellController
@@ -22,6 +22,8 @@
 @synthesize obtainFocus;
 @synthesize allTextFields;
 @synthesize autocorrectionType;
+@synthesize rightView;
+@synthesize rightViewMode;
 
 - (void)dealloc
 {
@@ -35,6 +37,9 @@
 		[self.allTextFields removeObject:self.textField];
 		self.textField = nil;
 	}
+	self.allTextFields = nil;
+	self.placeholder = nil;
+	self.rightView = nil;
 	self.model = nil;
 	self.modelPath = nil;
 	
@@ -50,6 +55,10 @@
 													  object:self.textField];
 		
 		[self.allTextFields removeObject:self.textField];
+		if(self.rightView)
+		{
+			self.textField.rightView = nil;
+		}
 		self.textField = nil;
 	}
 	NSString *commonIdentifier = [[self class] description];
@@ -59,7 +68,12 @@
 		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier] autorelease];
 	}
 	self.textField = cell.textField;
-
+	
+	if(self.rightView)
+	{
+		cell.textField.rightView = self.rightView;
+		cell.textField.rightViewMode = self.rightViewMode;
+	}
 	cell.textField.placeholder = self.placeholder;
 	cell.textField.returnKeyType = self.returnKeyType;
 	cell.textField.clearButtonMode = self.clearButtonMode;
@@ -102,5 +116,23 @@
 - (void)handleTextFieldChanged:(NSNotification *)note 
 {
 	[self.model setValue:self.textField.text forKeyPath:self.modelPath];
+	
+	if(textChangedTarget_)
+	{
+		NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:[textChangedTarget_ methodSignatureForSelector:textChangedAction_]];
+		[invocation setTarget:textChangedTarget_];
+		[invocation setSelector:textChangedAction_];
+		[invocation setArgument:&self atIndex:2];
+		NSString *text = self.textField.text;
+		[invocation setArgument:&text atIndex:3];
+		[invocation invoke];
+	}
 }
+
+- (void)setTextChangedTarget:(id)target action:(SEL)action
+{
+	textChangedTarget_ = target;
+	textChangedAction_ = action;
+}
+
 @end

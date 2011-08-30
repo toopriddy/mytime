@@ -15,7 +15,6 @@
 
 #import <UIKit/UIKit.h>
 #import "NumberedPickerView.h"
-#import "UITableViewTextFieldCell.h"
 #import "MetadataViewController.h"
 
 @class MetadataEditorViewController;

@@ -24,6 +24,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "PSTextFieldCellController.h"
 #import "PSTextViewCellController.h"
+#import "PSPersonPickerTextFieldCellController.h"
 #import "PSLocalization.h"
 
 @interface NotAtHomeTerritoryViewController ()
@@ -46,141 +47,6 @@
 @end
 
 
-
-/******************************************************************
- *
- *   NAHTerritoryOwnerCellController
- *
- ******************************************************************/
-#pragma mark NAHTerritoryOwnerCellController
-@interface NAHTerritoryOwnerCellController : NotAtHomeTerritoryViewCellController<ABPeoplePickerNavigationControllerDelegate,
-																			   UITableViewTextFieldCellDelegate>
-{
-	UITextField *owner;
-}
-@property (nonatomic, retain) UITextField *owner;
-@end
-@implementation NAHTerritoryOwnerCellController
-@synthesize owner;
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (id)initWithTextField:(UITextField *)theOwner
-{
-	if( (self = [super init]) )
-	{
-		self.owner = theOwner;
-		NSSet *targets = [(UIButton *)self.owner.rightView allTargets];
-		for(NAHTerritoryOwnerCellController *controller in targets)
-		{
-			[(UIButton *)self.owner.rightView removeTarget:controller action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
-		}
-		[(UIButton *)self.owner.rightView addTarget:self action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
-
-	}
-	return self;
-}
-
-- (void)dealloc
-{
-	[(UIButton *)self.owner.rightView removeTarget:self action:@selector(userSelected) forControlEvents:UIControlEventTouchUpInside];
-	
-	[super dealloc];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *commonIdentifier = @"OwnerCell";
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:self.owner reuseIdentifier:commonIdentifier] autorelease];
-		cell.textField.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Territories View when you press on the Add button and enter in the territory's information");
-	}
-	cell.delegate = self;
-	cell.textField.text = [self.delegate ownerEmailAddress];
-	return cell;
-}
-
-
-- (void)userSelected
-{
-	[self.delegate.owner becomeFirstResponder];
-	[self.delegate.owner resignFirstResponder];
-	// make the new call view 
-	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-	picker.title = NSLocalizedString(@"Email Address", @"pick an email address");
-	picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
-    picker.peoplePickerDelegate = self;
-    [[self.delegate navigationController] presentModalViewController:picker animated:YES];
-	[self.delegate retainObject:self whileViewControllerIsManaged:picker];
-    [picker release];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[self.owner becomeFirstResponder];
-}
-
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	NSString *previousEmail = self.delegate.territory.ownerEmailAddress;
-	NSMutableString *emailAddress = [NSMutableString stringWithString:previousEmail ? previousEmail : @""];
-	[emailAddress replaceCharactersInRange:range withString:string];
-
-	self.delegate.territory.ownerEmailAddress = emailAddress;
-	self.delegate.territory.ownerId = nil;
-	self.delegate.territory.ownerEmailId = nil;
-
-	return YES;
-}
-
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker 
-{
-    [[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-	  shouldContinueAfterSelectingPerson:(ABRecordRef)person 
-{
-	ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-	if(ABMultiValueGetCount(emails) == 1)
-	{
-		[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
-		self.delegate.territory.ownerIdValue = ABRecordGetRecordID(person);
-		self.delegate.territory.ownerEmailIdValue = ABMultiValueGetIdentifierAtIndex(emails, 0);
-		self.delegate.territory.ownerEmailAddress = [self.delegate ownerEmailAddress];
-		
-		[self.delegate updateAndReload];
-		CFRelease(emails);
-		return NO;
-	}
-	CFRelease(emails);
-    return YES;
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
-                                property:(ABPropertyID)property
-                              identifier:(ABMultiValueIdentifier)identifier
-{
-	[[self.delegate navigationController] dismissModalViewControllerAnimated:YES];
-	self.delegate.territory.ownerIdValue = ABRecordGetRecordID(person);
-	self.delegate.territory.ownerEmailIdValue = identifier;
-	self.delegate.territory.ownerEmailAddress = [self.delegate ownerEmailAddress];
-	
-	[self.delegate updateAndReload];
-    return NO;
-}
-@end
 
 /******************************************************************
 *
@@ -367,29 +233,9 @@
 @implementation NotAtHomeTerritoryViewController
 @synthesize territory;
 @synthesize delegate;
-@synthesize owner;
 @synthesize tag;
 @synthesize allTextFields;
 @synthesize obtainFocus;
-
-- (UITextField *)owner
-{
-	if(owner == nil)
-	{
-		owner = [[UITextField alloc] init];
-		[owner setBackgroundColor:[UIColor blueColor]];
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
-//		button.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-		owner.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-		owner.returnKeyType = UIReturnKeyDone;
-		
-		owner.rightView = button;
-		owner.rightViewMode = UITextFieldViewModeAlways;
-		
-		[self.allTextFields addObject:owner];
-	}
-	return owner;
-}
 
 - (NSString *)ownerEmailAddress
 {
@@ -404,7 +250,7 @@
 		ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, [ownerId intValue]);
 		ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
 		int index = ABMultiValueGetIndexForIdentifier(emails, [ownerEmailId intValue]);
-		if(index < ABMultiValueGetCount(emails))
+		if(index > 0 && index < ABMultiValueGetCount(emails))
 		{
 			name = [(NSString *)ABMultiValueCopyValueAtIndex(emails , index) autorelease];
 		}
@@ -587,7 +433,6 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		CFRelease(addressBook);
 	}
 	self.allTextFields = nil;
-	self.owner = nil;
 	self.territory = nil;
 	
 	[super dealloc];
@@ -694,10 +539,15 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 		
 		{
 			// Territory Owner
-			NAHTerritoryOwnerCellController *cellController = [[NAHTerritoryOwnerCellController alloc] initWithTextField:self.owner];
-			cellController.delegate = self;
-			[sectionController.cellControllers addObject:cellController];
-			[cellController release];
+			PSPersonPickerTextFieldCellController *cellController = [[[PSPersonPickerTextFieldCellController alloc] init] autorelease];
+			cellController.textModel = self.territory;
+			cellController.textPath = @"ownerEmailAddress";
+			cellController.idPath = @"ownerId";
+			cellController.emailIdPath = @"ownerEmailId";
+			cellController.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Territories View when you press on the Add button and enter in the territory's information");
+			cellController.personPickerTitle = NSLocalizedString(@"Email Address", @"pick an email address");
+			cellController.indentWhileEditing = NO;
+			[self addCellController:cellController toSection:sectionController];
 		}
 	}
 	{
