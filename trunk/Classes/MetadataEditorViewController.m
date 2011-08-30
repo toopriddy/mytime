@@ -16,6 +16,7 @@
 #import "MetadataEditorViewController.h"
 #import "PSLocalization.h"
 #import "UITableViewSwitchCell.h"
+#import "UITableViewTextFieldCell.h"
 
 @interface MetadataSaveAndDone : UIResponder <UITextFieldDelegate>
 {
