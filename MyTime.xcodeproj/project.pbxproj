@@ -217,6 +217,7 @@
 		90DE47F010FAEA330003D14B /* EmptyGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 90DE47EF10FAEA330003D14B /* EmptyGradient.png */; };
 		90E087B2117413FC00C5BDEA /* StatisticsNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E087B1117413FC00C5BDEA /* StatisticsNumberCell.xib */; };
 		90E087B61174163300C5BDEA /* StatisticsNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E087B51174163300C5BDEA /* StatisticsNumberCell.m */; };
+		90E19B6D140F386000E6FD81 /* PSMultiTextFieldCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E19B6C140F386000E6FD81 /* PSMultiTextFieldCellController.m */; };
 		90E23DB213E110CC009B96CF /* CLLocationManager+PriddySoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E23DB113E110CC009B96CF /* CLLocationManager+PriddySoftware.m */; };
 		90E2EDDF103BB5AA000C2032 /* SecurityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E2EDDE103BB5AA000C2032 /* SecurityView.xib */; };
 		90E2EDE4103BBB14000C2032 /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E2EDE3103BBB14000C2032 /* SecurityViewController.m */; };
@@ -677,6 +678,8 @@
 		90E087B1117413FC00C5BDEA /* StatisticsNumberCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatisticsNumberCell.xib; sourceTree = "<group>"; };
 		90E087B41174163300C5BDEA /* StatisticsNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsNumberCell.h; sourceTree = "<group>"; };
 		90E087B51174163300C5BDEA /* StatisticsNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsNumberCell.m; sourceTree = "<group>"; };
+		90E19B6B140F386000E6FD81 /* PSMultiTextFieldCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMultiTextFieldCellController.h; sourceTree = "<group>"; };
+		90E19B6C140F386000E6FD81 /* PSMultiTextFieldCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMultiTextFieldCellController.m; sourceTree = "<group>"; };
 		90E23DB013E110CC009B96CF /* CLLocationManager+PriddySoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+PriddySoftware.h"; sourceTree = "<group>"; };
 		90E23DB113E110CC009B96CF /* CLLocationManager+PriddySoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+PriddySoftware.m"; sourceTree = "<group>"; };
 		90E2EDDE103BB5AA000C2032 /* SecurityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecurityView.xib; sourceTree = "<group>"; };
@@ -993,6 +996,8 @@
 				90592CD012CC371600ECBFFF /* PSBaseCellController.m */,
 				90592C9E12CC2FA300ECBFFF /* PSTextFieldCellController.h */,
 				90592C9F12CC2FA300ECBFFF /* PSTextFieldCellController.m */,
+				90E19B6B140F386000E6FD81 /* PSMultiTextFieldCellController.h */,
+				90E19B6C140F386000E6FD81 /* PSMultiTextFieldCellController.m */,
 				90B5F8C5140C7A4E00596798 /* PSPersonPickerTextFieldCellController.h */,
 				90B5F8C6140C7A4E00596798 /* PSPersonPickerTextFieldCellController.m */,
 				90A1C49612FB98BB008ED1C4 /* PSCheckmarkCellController.h */,
@@ -1773,6 +1778,7 @@
 				90F0372B140759D500ECF368 /* PSLocalizedCollationSortDescriptor.m in Sources */,
 				904378141409E82800E4B84B /* MyTime 19.xcdatamodel in Sources */,
 				90B5F8C7140C7A4E00596798 /* PSPersonPickerTextFieldCellController.m in Sources */,
+				90E19B6D140F386000E6FD81 /* PSMultiTextFieldCellController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

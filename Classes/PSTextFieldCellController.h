@@ -31,6 +31,7 @@
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSMutableSet *allTextFields;
 
+// form of -(void)textChangedForController:(PSTextFieldCellController *)controller text:(NSString *)text
 - (void)setTextChangedTarget:(id)target action:(SEL)action;
 
 @end
