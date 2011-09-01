@@ -25,6 +25,8 @@
 @property (nonatomic, assign) UITextAutocorrectionType autocorrectionType;
 @property (nonatomic, retain) UIView *rightView;
 @property (nonatomic, assign) UITextFieldViewMode rightViewMode;
+@property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) BOOL hideEmptyRowWhenNotEditing;
 
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSMutableSet *allTextFields;

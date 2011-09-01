@@ -37,6 +37,7 @@
 #import "MyTimeAppDelegate.h"
 #import "PSUrlString.h"
 #import "PSLocalization.h"
+#import "PSTextFieldCellController.h"
 #import "UITableViewButtonCell.h"
 #import "UITableViewSwitchCell.h"
 #import "QuickNotesViewController.h"
@@ -167,96 +168,6 @@
 }
 @end
 
-
-@interface NameCellController : CallViewCellController<UITableViewTextFieldCellDelegate>
-{
-	UITextField *_name;
-	BOOL obtainFocus;
-}
-@property (nonatomic, retain) UITextField *name;
-@property (nonatomic, assign) BOOL obtainFocus;
-@end
-@implementation NameCellController
-@synthesize name = _name;
-@synthesize obtainFocus;
-
-- (void)dealloc
-{
-	self.name = nil;
-	
-	[super dealloc];
-}
-
-- (BOOL)isViewableWhenNotEditing
-{
-	return [self.delegate.call.name length];
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return tableView.editing ? indexPath : nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return 50.0;
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:@"NameCell"];
-	if(cell == nil)
-	{
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle: UITableViewCellStyleDefault textField:_name reuseIdentifier:@"NameCell"] autorelease];
-		cell.allowSelectionWhenNotEditing = NO;
-	}
-	else
-	{
-		cell.textField = _name;
-	}
-	cell.delegate = self;
-	cell.observeEditing = YES;
-	if(tableView.editing)
-	{
-		if(self.obtainFocus)
-		{
-			[cell.textField performSelector:@selector(becomeFirstResponder)
-			 withObject:nil
-			 afterDelay:0.0000001];
-			self.obtainFocus = NO;
-		}
-		
-		//  make it where they can hit hext and go into the address view to setup the address
-		cell.nextKeyboardResponder = [[[SelectAddressView alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:0 inSection:1]] autorelease];
-	}
-	
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[_name becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
-{
-	NSString *theText = [cell.value stringByReplacingCharactersInRange:range withString:string];
-	self.delegate.call.name = theText;
-	return YES;
-}
-@end
 
 /******************************************************************
  *
@@ -1871,6 +1782,8 @@
 @synthesize delayedAddReturnVisit;
 @synthesize call = _call;
 @synthesize locationManager;
+@synthesize allTextFields;
+
 /******************************************************************
  *
  *   INIT
@@ -1882,6 +1795,7 @@
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
     if([super initWithStyle:UITableViewStyleGrouped]) 
     {
+		self.allTextFields = [NSMutableSet set];
 		_initialView = YES;
 		
 		self.hidesBottomBarWhenPushed = YES;
@@ -1950,6 +1864,7 @@
 	if(self.locationManager)
 		self.locationManager.delegate = nil;
 	self.locationManager = nil;
+	self.allTextFields = nil;
 	
 	[super dealloc];
 }
@@ -2155,10 +2070,17 @@
 	}
 }
 
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)resignAllFirstResponders
 {
-	[_name resignFirstResponder];
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
 }
 
 - (void)constructSectionControllers
@@ -2177,16 +2099,26 @@
 		sectionController.delegate = self;
 		[self.sectionControllers addObject:sectionController];
 		
-		NameCellController *cellController = [[[NameCellController alloc] init] autorelease];
-		cellController.delegate = self;
-		cellController.name = _name;
+		PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+		cellController.model = self.call;
+		cellController.modelPath = @"name";
+		cellController.placeholder = NSLocalizedString(@"Name", @"Name label for Call in editing mode");
+		cellController.returnKeyType = UIReturnKeyDone;
+		cellController.clearButtonMode = UITextFieldViewModeAlways;
+		cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+		cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+		cellController.selectNextSectionResponderIncrement = 1;
+		cellController.allowSelectionWhenNotEditing = NO;
+		cellController.hideEmptyRowWhenNotEditing = YES;
+		cellController.rowHeight = 50.0;
 		if(_setFirstResponderGroup == 0)
 		{
 			cellController.obtainFocus = YES;
 			_setFirstResponderGroup = -1;
 		}
-	
-		[sectionController.cellControllers addObject:cellController];
+		cellController.allTextFields = self.allTextFields;
+		cellController.indentWhileEditing = NO;
+		[self addCellController:cellController toSection:sectionController];
 	}
 	
 	// Address

@@ -37,6 +37,9 @@
 @property (nonatomic, copy) NSIndexPath *selectedRow;
 // 0 means to not go to the next row
 @property (nonatomic, assign) int selectNextRowResponderIncrement;
+@property (nonatomic, assign) int selectNextSectionResponderIncrement;
+@property (nonatomic, assign) CGFloat rowHeight;
+
 @property (nonatomic, assign) BOOL movableWhileEditing;
 @property (nonatomic, assign) BOOL movable;
 @property (nonatomic, assign) BOOL isViewableWhenEditing;

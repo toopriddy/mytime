@@ -50,6 +50,7 @@ NSString *localizedNameForMetadataType(MetadataType type);
 @property (nonatomic, retain) MTAdditionalInformationType *type;
 @property (nonatomic, assign) id<MetadataCustomViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSMutableString *name;
+@property (nonatomic, retain) NSMutableSet *allTextFields;
 
 /**
  * initialize this view with the address information

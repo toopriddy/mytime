@@ -213,6 +213,7 @@ static const PublicationInformation PUBLICATIONS[] = {
 	,   {NSLocalizedString(@"Jehovah's Witnesses", @"Brochures Publication Name (jt)"),   PublicationTypeBrochure}
 	,   {NSLocalizedString(@"Lasting Peace", @"Brochures Publication Name (pc)"),   PublicationTypeBrochure}
 	,   {NSLocalizedString(@"Life on Earth", @"Brochures Publication Name (le)"),   PublicationTypeBrochure}
+	,   {NSLocalizedString(@"Listen to God", @"Brochures Publication Name (ll)"),   PublicationTypeBrochure}
 	,   {NSLocalizedString(@"Look!", @"Brochures Publication Name (Lmn)"),   PublicationTypeBrochure}
 	,   {NSLocalizedString(@"Make Disciples", @"Brochures Publication Name (ds)"),   PublicationTypeBrochure}
 	,   {NSLocalizedString(@"Nations", @"Brochures Publication Name (np)"),   PublicationTypeBrochure}
