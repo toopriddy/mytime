@@ -547,6 +547,8 @@ NSString *emailFormattedStringForCoreDataNotAtHomeTerritory(MTTerritory *territo
 			cellController.placeholder = NSLocalizedString(@"Territory Owner's Email Address", @"this is the label in the Territories View when you press on the Add button and enter in the territory's information");
 			cellController.personPickerTitle = NSLocalizedString(@"Email Address", @"pick an email address");
 			cellController.indentWhileEditing = NO;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.allTextFields = self.allTextFields;
 			[self addCellController:cellController toSection:sectionController];
 		}
 	}

@@ -72,6 +72,8 @@
 @synthesize selectedRow;
 @synthesize nextRowResponder;
 @synthesize selectNextRowResponderIncrement;
+@synthesize selectNextSectionResponderIncrement;
+@synthesize rowHeight;
 @synthesize movable;
 @synthesize movableWhileEditing;
 @synthesize isViewableWhenEditing;
@@ -82,6 +84,7 @@
 {
 	if ( (self = [super init]) )
 	{
+		rowHeight = -1;
 		isViewableWhenEditing = YES;
 		isViewableWhenNotEditing = YES;
 		indentWhileEditing = YES;
@@ -127,7 +130,7 @@
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
-	if(self.selectNextRowResponderIncrement == 0)
+	if(self.selectNextRowResponderIncrement == 0 && self.selectNextSectionResponderIncrement)
 	{
 		self.nextRowResponder = nil;
 		return nil;
@@ -135,7 +138,14 @@
 	
 	if(self.nextRowResponder == nil)
 	{
-		self.nextRowResponder = [[[PSSelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:indexPath.row+self.selectNextRowResponderIncrement inSection:indexPath.section]] autorelease];
+		int row = indexPath.row+self.selectNextRowResponderIncrement;
+		int section = indexPath.section + self.selectNextRowResponderIncrement;
+		if(self.selectNextSectionResponderIncrement)
+		{
+			// if the user wants to go to the next section, then start at the first row and increment from there
+			row = self.selectNextRowResponderIncrement;
+		}
+		self.nextRowResponder = [[[PSSelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:row inSection:section]] autorelease];
 	}
 	
 	return self.nextRowResponder;
@@ -150,6 +160,18 @@
 	else
 	{
 		return self.movable;
+	}
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(self.rowHeight >= 0)
+	{
+		return self.rowHeight;
+	}
+	else
+	{
+		return tableView.rowHeight;
 	}
 }
 

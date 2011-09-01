@@ -23,6 +23,7 @@
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
 #import "MTSorter.h"
+#import "PSTextFieldCellController.h"
 #import "PSLocalization.h"
 
 #include "PSRemoveLocalizedString.h"
@@ -87,82 +88,6 @@ NSString *localizedNameForMetadataType(MetadataType type)
 {
 	return nil;
 }
-@end
-
-
-/******************************************************************
- *
- *   NAME
- *
- ******************************************************************/
-#pragma mark MetadataNameCellController
-@interface MetadataNameCellController : MetadataCustomViewCellController<UITableViewTextFieldCellDelegate>
-{
-	NSMutableString *name;
-}
-@property (nonatomic, retain) NSMutableString *name;
-@end
-@implementation MetadataNameCellController
-@synthesize name;
-
-- (void)dealloc
-{
-	self.name = nil;
-	
-	[super dealloc];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return NO;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:@"NameCell"];
-	if(cell == nil)
-	{
-		UITextField *textField = [[[UITextField alloc] init] autorelease];
-		cell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault textField:textField reuseIdentifier:@"NameCell"] autorelease];
-		textField.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
-		textField.keyboardType = UIKeyboardTypeDefault;
-		textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-	}
-	cell.textField.text = self.name;
-	cell.delegate = self;
-	cell.observeEditing = YES;
-	
-	if(self.delegate.nameNeedsFocus)
-	{
-		self.delegate.nameNeedsFocus = NO;
-		[cell.textField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
-	}
-
-	return cell;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewTextFieldCell *cell = (UITableViewTextFieldCell *)[tableView cellForRowAtIndexPath:indexPath];
-	[cell.textField becomeFirstResponder];
-	[tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (BOOL)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	[self.name replaceCharactersInRange:range withString:string];
-	self.delegate.name = self.name;
-
-	self.delegate.navigationItem.rightBarButtonItem.enabled = self.delegate.selected >= 0 && self.name.length;
-	return YES;
-}
-
 @end
 
 /******************************************************************
@@ -543,6 +468,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 @synthesize startedWithSelected;
 @synthesize type = type_;
 @synthesize newType;
+@synthesize allTextFields;
 
 - (void)setAdditionalInformationType
 {
@@ -599,8 +525,6 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	// dont save the info if the selection is not Multiple Choice
 	if(selected >= 0)
 	{
-		self.type.name = self.name;
-
 		if(!self.newType && commonInformation[selected].type !=  self.type.typeValue)
 		{
 			// TODO: need to update all of the things
@@ -647,6 +571,8 @@ NSString *localizedNameForMetadataType(MetadataType type)
 - (void)dealloc
 {
 	self.name = nil;
+	self.allTextFields = nil;
+	self.type = nil;
 	
 	[super dealloc];
 }
@@ -684,6 +610,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 			}
 		}
 		startedWithSelected = selected;
+		self.allTextFields = [NSMutableSet set];
 		
 		// set the title, and tab bar images from the dataSource
 		self.title = NSLocalizedString(@"Custom", @"Title for field in the Additional Information for the user to create their own additional information field");
@@ -723,10 +650,17 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	}
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)resignAllFirstResponders
 {
-//	[super scrollViewDidScroll:scrollView];
-	[[(UITableViewTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] resignFirstResponder];
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -744,7 +678,7 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	{
 		[[(UITableViewTextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] resignFirstResponder];
 	}
-	self.navigationItem.rightBarButtonItem.enabled = selected >= 0 && name.length;
+	self.navigationItem.rightBarButtonItem.enabled = self.selected >= 0 && self.name.length;
 }
 
 
@@ -794,6 +728,11 @@ NSString *localizedNameForMetadataType(MetadataType type)
 	[addCellController release];
 }
 
+- (void)nameUpdated:(PSTextFieldCellController *)controller text:(NSString *)text
+{
+	self.navigationItem.rightBarButtonItem.enabled = self.selected >= 0 && self.name.length;
+}
+
 - (void)constructSectionControllers
 {
 	[super constructSectionControllers];
@@ -803,12 +742,26 @@ NSString *localizedNameForMetadataType(MetadataType type)
 		GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
 		[self.sectionControllers addObject:sectionController];
 		[sectionController release];
-		
-		MetadataNameCellController *cellController = [[MetadataNameCellController alloc] init];
-		cellController.delegate = self;
-		cellController.name = self.name;
-		[sectionController.cellControllers addObject:cellController];
-		[cellController release];
+
+		PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+		cellController.model = self;
+		cellController.modelPath = @"name";
+		cellController.placeholder = NSLocalizedString(@"Enter Name Here", @"Custom Information Placeholder before the user enters in what they want to call this field, like 'Son's name' or whatever");
+		cellController.returnKeyType = UIReturnKeyDone;
+		cellController.keyboardType = UIKeyboardTypeDefault;
+		cellController.clearButtonMode = UITextFieldViewModeAlways;
+		cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+		cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+		[cellController setTextChangedTarget:self action:@selector(nameUpdated:text:)];
+		if(nameNeedsFocus)
+		{
+			cellController.obtainFocus = YES;
+			nameNeedsFocus = NO;
+		}
+
+		cellController.allTextFields = self.allTextFields;
+		cellController.indentWhileEditing = NO;
+		[self addCellController:cellController toSection:sectionController];
 	}
 	
 	// Multiple Choice section

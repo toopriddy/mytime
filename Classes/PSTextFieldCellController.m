@@ -24,6 +24,17 @@
 @synthesize autocorrectionType;
 @synthesize rightView;
 @synthesize rightViewMode;
+@synthesize allowSelectionWhenNotEditing;
+@synthesize hideEmptyRowWhenNotEditing;
+
+- (id)init
+{
+	if( (self = [super init]) )
+	{
+		self.allowSelectionWhenNotEditing = YES;
+	}
+	return self;
+}
 
 - (void)dealloc
 {
@@ -44,6 +55,15 @@
 	self.modelPath = nil;
 	
 	[super dealloc];
+}
+
+- (BOOL)isViewableWhenNotEditing
+{
+	if(self.hideEmptyRowWhenNotEditing && [[self.model valueForKey:self.modelPath] length] == 0)
+	{
+		return NO;
+	}
+	return YES;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,6 +94,12 @@
 		cell.textField.rightView = self.rightView;
 		cell.textField.rightViewMode = self.rightViewMode;
 	}
+	cell.allowSelectionWhenEditing = self.allowSelectionWhenNotEditing;
+	if(self.hideEmptyRowWhenNotEditing)
+	{
+		cell.observeEditing = YES;
+	}
+	
 	cell.textField.placeholder = self.placeholder;
 	cell.textField.returnKeyType = self.returnKeyType;
 	cell.textField.clearButtonMode = self.clearButtonMode;

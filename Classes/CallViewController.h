@@ -50,6 +50,7 @@
 @property (nonatomic, retain) NSIndexPath *currentIndexPath;
 @property (nonatomic, assign) BOOL delayedAddReturnVisit;
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) NSMutableSet *allTextFields;
 
 /**
  * initialize this view with a watchtower at the current month/year
