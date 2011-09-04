@@ -26,7 +26,7 @@
 @property (nonatomic, assign) UITextAutocorrectionType autocorrectionType;
 @property (nonatomic, retain) UIView *rightView;
 @property (nonatomic, assign) UITextFieldViewMode rightViewMode;
-@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat widthPercentage;
 @property (nonatomic, assign) BOOL obtainFocus;
 @property (nonatomic, retain) NSObject *model;
 @property (nonatomic, copy) NSString *modelPath;
@@ -41,6 +41,7 @@
 }
 @property (nonatomic, retain, readonly) NSArray *textFieldConfigurations;
 @property (nonatomic, assign) BOOL allowSelectionWhenNotEditing;
+@property (nonatomic, assign) UITableViewScrollPosition scrollPosition;
 
 @property (nonatomic, retain) NSMutableSet *allTextFields;
 

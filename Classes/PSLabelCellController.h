@@ -13,4 +13,5 @@
 {
 }
 @property (nonatomic, assign) BOOL hideModelValue;
+@property (nonatomic, assign) UITextAlignment textAlignment;
 @end

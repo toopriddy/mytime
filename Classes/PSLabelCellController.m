@@ -11,6 +11,7 @@
 
 @implementation PSLabelCellController
 @synthesize hideModelValue;
+@synthesize textAlignment;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -56,6 +57,7 @@
 		}
 		cell.detailTextLabel.text = @"";
 	}
+	cell.textLabel.textAlignment = self.textAlignment;
 	
 	return cell;
 }

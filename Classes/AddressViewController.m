@@ -19,9 +19,23 @@
 #import "MTCall.h"
 #import "UITableViewTitleAndValueCell.h"
 #import "CLLocationManager+PriddySoftware.h"
+#import "PSLabelCellController.h"
+#import "PSMultiTextFieldCellController.h"
+#import "PSTextFieldCellController.h"
 #import "PSLocalization.h"
 
 #define REVERSE_GEOCODING_ACCURACY 80
+
+@interface AddressViewController()
+@property (nonatomic, retain, readwrite) NSString *apartmentNumber;
+@property (nonatomic, retain, readwrite) NSString *streetNumber;
+@property (nonatomic, retain, readwrite) NSString *street;
+@property (nonatomic, retain, readwrite) NSString *city;
+@property (nonatomic, retain, readwrite) NSString *state;
+@property (nonatomic, assign) BOOL showReverseGeocoding;
+@property (nonatomic, assign) BOOL obtainFocus;
+@property (nonatomic, retain) NSMutableSet *allTextFields;
+@end
 
 
 @interface SaveAndDone : UIResponder <UITextFieldDelegate>
@@ -58,24 +72,78 @@
 @end
 
 
+
+/******************************************************************
+ *
+ *   Geocoder section
+ *
+ ******************************************************************/
+#pragma mark NameCellController
+
+@interface AddressGeocacheSectionController : GenericTableViewSectionController
+{
+	AddressViewController *delegate;
+}
+@property (nonatomic, assign) AddressViewController *delegate;
+@end
+@implementation AddressGeocacheSectionController
+@synthesize delegate;
+
+- (BOOL)isViewableWhenNotEditing
+{
+	return self.delegate.showReverseGeocoding;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return 5;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	UIView *view = [[[UIView alloc] init] autorelease];
+	view.backgroundColor = [UIColor clearColor];
+	
+	return view;
+}
+@end
+
+@interface AddressSectionController : GenericTableViewSectionController
+{
+}
+@end
+@implementation AddressSectionController
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return 200;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	UIView *view = [[[UIView alloc] init] autorelease];
+	view.backgroundColor = [UIColor clearColor];
+	
+	return view;
+}
+@end
+
+
+
 @implementation AddressViewController
 
 @synthesize delegate;
-@synthesize theTableView;
 @synthesize apartmentNumber;
 @synthesize streetNumber;
 @synthesize street;
 @synthesize city;
 @synthesize state;
-@synthesize streetCell;
-@synthesize cityCell;
-@synthesize stateCell;
-@synthesize streetNumberAndApartmentCell;
 @synthesize locationMessage;
 @synthesize locationManager;
 @synthesize geocoder;
 @synthesize placemark;
 @synthesize locationStartDate;
+@synthesize showReverseGeocoding;
+@synthesize obtainFocus;
+@synthesize allTextFields;
 
 - (id)init
 {
@@ -84,16 +152,13 @@
 
 - (id) initWithStreetNumber:(NSString *)theStreetNumber apartment:(NSString *)apartment street:(NSString *)theStreet city:(NSString *)theCity state:(NSString *)theState askAboutReverseGeocoding:(BOOL)askAboutReverseGeocoding;
 {
-	if ([super init]) 
+	if( (self = [super initWithStyle:UITableViewStyleGrouped]) ) 
 	{
-		theTableView = nil;
-		delegate = nil;
-		
 		// set the title, and tab bar images from the dataSource
 		// object. 
 		self.title = NSLocalizedString(@"Call Address", @"Address title for address form");
-		self.tabBarItem.image = [UIImage imageNamed:@"statistics.png"];
-
+		self.allTextFields = [NSMutableSet set];
+		self.obtainFocus = YES;
 		self.streetNumber = theStreetNumber;
 		self.apartmentNumber = apartment;
 		self.street = theStreet;
@@ -107,21 +172,11 @@
 
 - (void)dealloc 
 {
-	self.theTableView.delegate = nil;
-	self.theTableView.dataSource = nil;
-
 	self.locationManager = nil;
 	self.locationMessage = nil;
 	self.geocoder = nil;
 	self.placemark = nil;
 	self.locationStartDate = nil;
-
-	self.theTableView = nil;
-	
-    self.streetNumberAndApartmentCell = nil;
-    self.streetCell = nil;
-    self.cityCell = nil;
-    self.stateCell = nil;
 
     self.apartmentNumber = nil;
     self.streetNumber = nil;
@@ -138,16 +193,25 @@
 	return YES;
 }
 
+- (void)resignAllFirstResponders
+{
+	for(UITextField *textField in self.allTextFields)
+	{
+		[textField resignFirstResponder];
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+	[self resignAllFirstResponders];
+}
+
 - (void)navigationControlDone:(id)sender 
 {
 	VERBOSE(NSLog(@"navigationControlDone:");)
 	// go through the notes and make them resign the first responder
-	[theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:YES];
-	self.streetNumber = [streetNumberAndApartmentCell textFieldAtIndex:0].text;
-	self.apartmentNumber = [streetNumberAndApartmentCell textFieldAtIndex:1].text;
-	self.street = streetCell.textField.text;
-	self.city = cityCell.textField.text;
-	self.state = stateCell.textField.text;
+	[self resignAllFirstResponders];
+
 	if(self.streetNumber == nil)
 		self.streetNumber = @"";
 	if(self.apartmentNumber == nil)
@@ -174,230 +238,153 @@
 	[[self navigationController] popViewControllerAnimated:YES];
 }
 
+
+- (void)labelCellController:(PSLabelCellController *)labelCellController tableView:(UITableView *)tableView lookupAddressSelectedAtIndexPath:(NSIndexPath *)indexPath
+{
+	showReverseGeocoding = NO;
+	wasShowingReverseGeocoding = YES;
+	
+	self.locationStartDate = [NSDate date];
+	self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+	self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+	self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+	[self.locationManager startUpdatingLocation];
+	
+	self.locationMessage = [[[UIAlertView alloc] initWithTitle:nil
+													   message:NSLocalizedString(@"Looking up your position with Location Services", @"This is the first message you see when you make a new Call -> press on the address -> press on automatically lookup address") 
+													  delegate:self 
+											 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button") 
+											 otherButtonTitles:nil] autorelease];
+	[self.locationMessage setOpaque:NO];
+	[self.locationMessage show];
+	
+	[self resignAllFirstResponders ];
+//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	[tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+
+	[self updateWithoutReload];
+}
+
+
+- (void)constructSectionControllers
+{
+	[super constructSectionControllers];
+	
+	{
+		AddressGeocacheSectionController *sectionController = [[AddressGeocacheSectionController alloc] init];
+		sectionController.delegate = self;
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		
+		PSLabelCellController *cellController = [[[PSLabelCellController alloc] init] autorelease];
+		cellController.textAlignment = UITextAlignmentCenter;
+		cellController.title = NSLocalizedString(@"Automatically Lookup Address", @"This is a button you see when you create a new call and go to the address view for the first time, it allows the user to use google to lookup the address by the current location");
+		[cellController setSelectionTarget:self action:@selector(labelCellController:tableView:lookupAddressSelectedAtIndexPath:)];
+		[self addCellController:cellController toSection:sectionController];
+	}
+	{
+		AddressSectionController *sectionController = [[AddressSectionController alloc] init];
+		[self.sectionControllers addObject:sectionController];
+		[sectionController release];
+		// house and apartment number
+		{
+			PSMultiTextFieldCellController *cellController = [[[PSMultiTextFieldCellController alloc] initWithTextFieldCount:2] autorelease];
+			PSMultiTextFieldConfiguration *houseNumberConfig = [cellController.textFieldConfigurations objectAtIndex:0];
+			PSMultiTextFieldConfiguration *apartmentNumberConfig = [cellController.textFieldConfigurations objectAtIndex:1];
+			houseNumberConfig.model = self;
+			houseNumberConfig.modelPath = @"streetNumber";
+			houseNumberConfig.placeholder = NSLocalizedString(@"House Number", @"House Number");
+			houseNumberConfig.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+			houseNumberConfig.autocorrectionType = UITextAutocorrectionTypeNo;
+			houseNumberConfig.returnKeyType = UIReturnKeyNext;
+			houseNumberConfig.clearButtonMode = UITextFieldViewModeAlways;
+			houseNumberConfig.obtainFocus = self.obtainFocus;
+			houseNumberConfig.widthPercentage = 0.55;
+			self.obtainFocus = NO;
+
+			
+			apartmentNumberConfig.model = self;
+			apartmentNumberConfig.modelPath = @"apartmentNumber";
+			apartmentNumberConfig.placeholder = NSLocalizedString(@"Apt/Floor", @"Apartment/Floor Number");
+			apartmentNumberConfig.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+			apartmentNumberConfig.autocorrectionType = UITextAutocorrectionTypeNo;
+			apartmentNumberConfig.returnKeyType = UIReturnKeyNext;
+			apartmentNumberConfig.clearButtonMode = UITextFieldViewModeAlways;
+			apartmentNumberConfig.widthPercentage = 0.45;
+			
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.allTextFields = self.allTextFields;
+			cellController.scrollPosition = UITableViewScrollPositionMiddle;
+			[self addCellController:cellController toSection:sectionController];
+		}	
+		
+		{
+			// Street Name
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self;
+			cellController.modelPath = @"street";
+			cellController.placeholder = NSLocalizedString(@"Street", @"Street");
+			cellController.returnKeyType = UIReturnKeyNext;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.allTextFields = self.allTextFields;
+			cellController.scrollPosition = UITableViewScrollPositionMiddle;
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
+		{
+			// City
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self;
+			cellController.modelPath = @"city";
+			cellController.placeholder = NSLocalizedString(@"City", @"City");
+			cellController.returnKeyType = UIReturnKeyNext;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.selectNextRowResponderIncrement = 1;
+			cellController.allTextFields = self.allTextFields;
+			cellController.scrollPosition = UITableViewScrollPositionMiddle;
+			[self addCellController:cellController toSection:sectionController];
+		}
+		
+		{
+			// State
+			PSTextFieldCellController *cellController = [[[PSTextFieldCellController alloc] init] autorelease];
+			cellController.model = self;
+			cellController.modelPath = @"state";
+			cellController.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
+			cellController.returnKeyType = UIReturnKeyDone;
+			cellController.clearButtonMode = UITextFieldViewModeAlways;
+			cellController.autocapitalizationType = UITextAutocapitalizationTypeWords;
+			cellController.selectionStyle = UITableViewCellSelectionStyleNone;
+			cellController.scrollPosition = UITableViewScrollPositionMiddle;
+			// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
+			if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
+			{
+				cellController.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+				cellController.autocorrectionType = UITextAutocorrectionTypeNo;
+			}
+			cellController.allTextFields = self.allTextFields;
+			cellController.nextRowResponder = [[[SaveAndDone alloc] initWithAddressViewController:self] autorelease];
+			[self addCellController:cellController toSection:sectionController];
+		}
+	}	
+	
+}	
+
 - (void)loadView 
 {
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	self.theTableView = [[[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] 
-													  style:UITableViewStyleGrouped] autorelease];
+	[super loadView];
 	
-	// alow the loupe to work within text fields
-//	theTableView.scrollEnabled = NO;
-	// set the autoresizing mask so that the table will always fill the view
-	theTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	theTableView.delegate = self;
-	theTableView.dataSource = self;
-	
-	// set the tableview as the controller view
-	self.view = self.theTableView;
-
-	self.streetNumberAndApartmentCell = [[[UITableViewMultiTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMultiTextFieldCell" textFieldCount:2] autorelease];
-	streetNumberAndApartmentCell.widths = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.55], [NSNumber numberWithFloat:.45], nil];
-	streetNumberAndApartmentCell.delegate = self;
-	UITextField *streetTextField = [streetNumberAndApartmentCell textFieldAtIndex:0];
-	UITextField *apartmentTextField = [streetNumberAndApartmentCell textFieldAtIndex:1];
-	streetTextField.text = streetNumber;
-	streetTextField.placeholder = NSLocalizedString(@"House Number", @"House Number");
-	streetTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	streetTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-	streetTextField.returnKeyType = UIReturnKeyNext;
-	streetTextField.clearButtonMode = UITextFieldViewModeAlways;
-	
-	apartmentTextField.text = apartmentNumber;
-	apartmentTextField.placeholder = NSLocalizedString(@"Apt/Floor", @"Apartment/Floor Number");
-	apartmentTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	apartmentTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-	apartmentTextField.returnKeyType = UIReturnKeyNext;
-	apartmentTextField.clearButtonMode = UITextFieldViewModeAlways;
-	
-	self.streetCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
-	streetCell.textField.text = street;
-	streetCell.textField.placeholder = NSLocalizedString(@"Street", @"Street");
-	streetCell.textField.returnKeyType = UIReturnKeyNext;
-	streetCell.textField.clearButtonMode = UITextFieldViewModeAlways;
-	streetCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-	streetCell.delegate = self;
-	
-	self.cityCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
-	cityCell.textField.text = city;
-	cityCell.textField.placeholder = NSLocalizedString(@"City", @"City");
-	cityCell.textField.returnKeyType = UIReturnKeyNext;
-	cityCell.textField.clearButtonMode = UITextFieldViewModeAlways;
-	cityCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-	cityCell.delegate = self;
-	
-
-	self.stateCell = [[[UITableViewTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewTextFieldCell"] autorelease];
-	stateCell.textField.text = state;
-	stateCell.textField.placeholder = NSLocalizedString(@"State or Country", @"State or Country");
-	stateCell.textField.returnKeyType = UIReturnKeyDone;
-	stateCell.textField.clearButtonMode = UITextFieldViewModeAlways;
-	stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-	stateCell.delegate = self;
-
-	streetNumberAndApartmentCell.nextKeyboardResponder = streetCell.textField;
-	streetCell.nextKeyboardResponder = cityCell.textField;
-	cityCell.nextKeyboardResponder = stateCell.textField;
-	stateCell.nextKeyboardResponder = [[[SaveAndDone alloc] initWithAddressViewController:self] autorelease];
-	
-	// if the localization does not capitalize the state, then just leave it default to capitalize the first letter
-	if([NSLocalizedStringWithDefaultValue(@"State in all caps", @"", [NSBundle mainBundle], @"1", @"Set this to 1 if your country abbreviates the state in all capital letters, otherwise set this to 0") isEqualToString:@"1"])
-	{
-		stateCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-		stateCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-	}
-
 	// add DONE button
 	UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																			 target:self
 																			 action:@selector(navigationControlDone:)] autorelease];
 	[self.navigationItem setRightBarButtonItem:button animated:NO];
-
-	[self.theTableView reloadData];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-
-	// force the tableview to load
-	[self.theTableView reloadData];
-}
-
-- (void)viewDidLoad
-{
-	[[self.streetNumberAndApartmentCell textFieldAtIndex:0] becomeFirstResponder];
-//	[self.theTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
-}
-
-// UITableViewDataSource methods
-
-- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
-{
-	// it is only house number and apartment cell that uses this one, so lets scroll to the middle so that we will scroll up if this cell is selected
-	if(selected)
-	{
-		NSIndexPath *indexPath = [theTableView indexPathForCell:cell];
-		[theTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-	}
-}
-
-- (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
-{
-	if(selected)
-	{
-		NSIndexPath *indexPath = [theTableView indexPathForCell:cell];
-		[theTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-	}
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView  
-{
-	return showReverseGeocoding ? 2 : 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section 
-{
-	if(showReverseGeocoding)
-	{
-		switch(section)
-		{
-			case 0:
-				return 1;
-			case 1:
-				return 4;
-		}
-	}
-	else
-	{
-		return 4;
-	}
-	return 0;
-}
-
-// make the footer be as tall as the keyboard is tall when we are in landscape mode.
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-	if(showReverseGeocoding && section-- == 0)
-	{
-		return 5;
-	}
-	return 220;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-	UIView *view = [[[UIView alloc] init] autorelease];
-	view.backgroundColor = [UIColor clearColor];
-	
-	return view;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int row = [indexPath row];
-	int section = [indexPath section];
-	if(showReverseGeocoding && section-- == 0)
-	{
-		NSString *commonIdentifier = @"ReverseGeocoderCellController";
-		UITableViewTitleAndValueCell *cell = (UITableViewTitleAndValueCell *)[tableView dequeueReusableCellWithIdentifier:commonIdentifier];
-		if(cell == nil)
-		{
-			cell = [[[UITableViewTitleAndValueCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:commonIdentifier] autorelease];
-			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-		}
-		cell.valueLabel.textAlignment = UITextAlignmentCenter;
-		cell.valueLabel.text = NSLocalizedString(@"Automatically Lookup Address", @"This is a button you see when you create a new call and go to the address view for the first time, it allows the user to use google to lookup the address by the current location");
-		
-		return cell;
-	}
-    if(section == 0)
-    {
-        switch(row) 
-        {
-            // House Number
-            case 0:
-				return streetNumberAndApartmentCell;
-            case 1:
-				return streetCell;
-            case 2:
-				return cityCell;
-            case 3:
-				return stateCell;
-        }
-    }
-	return(nil);
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	int section = [indexPath section];
-	if(showReverseGeocoding && section == 0)
-	{
-		showReverseGeocoding = NO;
-		wasShowingReverseGeocoding = YES;
-
-		self.locationStartDate = [NSDate date];
-		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
-		self.locationManager.delegate = self; // Tells the location manager to send updates to this object
-		self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-		[self.locationManager startUpdatingLocation];
-
-		self.locationMessage = [[[UIAlertView alloc] initWithTitle:nil
-														   message:NSLocalizedString(@"Looking up your position with Location Services", @"This is the first message you see when you make a new Call -> press on the address -> press on automatically lookup address") 
-														  delegate:self 
-												 cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button") 
-												 otherButtonTitles:nil] autorelease];
-		[self.locationMessage setOpaque:NO];
-		[self.locationMessage show];
-		
-		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] resignFirstResponder];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-	}
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
@@ -502,8 +489,8 @@
 	if(self.geocoder)
 	{
 		shouldAskAboutReverseGeocoding = NO;
-		[streetNumberAndApartmentCell textFieldAtIndex:0].text = [self.placemark subThoroughfare];
-		streetCell.textField.text = [self.placemark thoroughfare];
+		self.streetNumber = [self.placemark subThoroughfare];
+		self.street = [self.placemark thoroughfare];
 		NSString *cityName = [placemark locality];
 		if(cityName == nil)
 			cityName = [[[placemark addressDictionary] objectForKey:@"FormattedAddressLines"] objectAtIndex:1];
@@ -511,11 +498,12 @@
 		if(stateName == nil)
 			stateName = [placemark country];
 		
-		cityCell.textField.text = cityName;
-		stateCell.textField.text = stateName;
+		self.city = cityName;
+		self.state = stateName;
 		
 		self.geocoder = nil;
 		self.placemark = nil;
+		[self updateAndReload];
 	}
 }
 
@@ -535,35 +523,12 @@
 		wasShowingReverseGeocoding = NO;
 		if(showReverseGeocoding)
 		{
-			[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+			//[self.theTableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+			[self updateWithoutReload];
 		}
-		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+		
+//		[[self.streetNumberAndApartmentCell textFieldAtIndex:0] performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
 	}
-}
-//
-//
-// UITableViewDelegate methods
-//
-//
-
-// NONE
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s respondsToSelector: %s", __FILE__, selector);)
-    return [super respondsToSelector:selector];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector
-{
-    VERY_VERBOSE(NSLog(@"%s methodSignatureForSelector: %s", __FILE__, selector);)
-    return [super methodSignatureForSelector:selector];
-}
-
-- (void)forwardInvocation:(NSInvocation*)invocation
-{
-    VERY_VERBOSE(NSLog(@"%s forwardInvocation: %s", __FILE__, [invocation selector]);)
-    [super forwardInvocation:invocation];
 }
 @end
 

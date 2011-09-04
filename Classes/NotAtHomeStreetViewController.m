@@ -403,7 +403,7 @@
 			cellController.allTextFields = self.allTextFields;
 			cellController.indentWhileEditing = NO;
 			self.obtainFocus = NO;
-			[sectionController.cellControllers addObject:cellController];
+			[self addCellController:cellController toSection:sectionController];
 		}
 		
 		{

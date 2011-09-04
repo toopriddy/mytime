@@ -279,6 +279,7 @@
 							cellController.selectionStyle = UITableViewCellSelectionStyleNone;
 							cellController.allTextFields = self.allTextFields;
 							cellController.indentWhileEditing = NO;
+							[self addCellController:cellController toSection:sectionController];
 						}
 						{
 							GenericTableViewSectionController *sectionController = [[GenericTableViewSectionController alloc] init];
