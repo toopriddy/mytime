@@ -11,30 +11,35 @@
 @interface PSSelectRowNextResponder : UIResponder
 {
 }
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) NSIndexPath *indexPath;
+@property (nonatomic, assign) GenericTableViewController *tableViewController;
+@property (nonatomic, copy) NSIndexPath *incrementIndexPath;
+@property (nonatomic, assign) NSObject <TableViewCellController> *cellController;
 
-- (id)initWithTable:(UITableView *)theTableView indexPath:(NSIndexPath *)theIndexPath;
+- (id)initWithGenericTableViewController:(GenericTableViewController *)tableViewController cellController:(NSObject <TableViewCellController> *)cellController incrementIndexPath:(NSIndexPath *)incrementIndexPath;
 @end
 
 @implementation PSSelectRowNextResponder
-@synthesize tableView;
-@synthesize indexPath;
+@synthesize tableViewController;
+@synthesize incrementIndexPath;
+@synthesize cellController;
 
 - (void)dealloc
 {
-	self.tableView = nil;
-	self.indexPath = nil;
+	self.incrementIndexPath = nil;
 	[super dealloc];
 }
 
-- (id)initWithTable:(UITableView *)theTableView indexPath:(NSIndexPath *)theIndexPath
+- (id)initWithGenericTableViewController:(GenericTableViewController *)theTableViewController cellController:(NSObject <TableViewCellController> *)theCellController incrementIndexPath:(NSIndexPath *)theIncrementIndexPath
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
 	if((self = [super init]))
 	{
-		self.tableView = theTableView;
-		self.indexPath = theIndexPath;
+		assert(theTableViewController != nil);
+		assert(theCellController != nil);
+		assert(theIncrementIndexPath != nil);
+		self.tableViewController = theTableViewController;
+		self.cellController = theCellController;
+		self.incrementIndexPath = theIncrementIndexPath;
 	}
 	return self;
 }
@@ -42,9 +47,15 @@
 - (BOOL)becomeFirstResponder 
 {
     DEBUG(NSLog(@"%s: %s", __FILE__, __FUNCTION__);)
-	[self.tableView deselectRowAtIndexPath:nil animated:NO];
-	[self.tableView selectRowAtIndexPath:self.indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-	[self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:self.indexPath];
+	[self.tableViewController.tableView deselectRowAtIndexPath:nil animated:NO];
+	NSIndexPath *currentIndexPath = [self.tableViewController indexPathOfDisplayCellController:self.cellController];
+	int row = currentIndexPath.row + incrementIndexPath.row;
+	if(incrementIndexPath.section)
+		row = incrementIndexPath.row;
+	int section = currentIndexPath.section + incrementIndexPath.section;
+	NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+	[self.tableViewController.tableView selectRowAtIndexPath:newIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+	[self.tableViewController.tableView.delegate tableView:self.tableViewController.tableView didSelectRowAtIndexPath:newIndexPath];
 	return NO;
 }
 @end
@@ -52,7 +63,6 @@
 
 
 @interface PSBaseCellController ()
-@property (nonatomic, retain) PSSelectRowNextResponder *nextRowResponder;
 @end
 
 
@@ -130,22 +140,14 @@
 
 - (UIResponder *)nextRowResponderForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
-	if(self.selectNextRowResponderIncrement == 0 && self.selectNextSectionResponderIncrement)
-	{
-		self.nextRowResponder = nil;
-		return nil;
-	}
-	
 	if(self.nextRowResponder == nil)
 	{
-		int row = indexPath.row+self.selectNextRowResponderIncrement;
-		int section = indexPath.section + self.selectNextRowResponderIncrement;
-		if(self.selectNextSectionResponderIncrement)
+		if(self.selectNextRowResponderIncrement == 0 && self.selectNextSectionResponderIncrement == 0)
 		{
-			// if the user wants to go to the next section, then start at the first row and increment from there
-			row = self.selectNextRowResponderIncrement;
+			return nil;
 		}
-		self.nextRowResponder = [[[PSSelectRowNextResponder alloc] initWithTable:tableView indexPath:[NSIndexPath indexPathForRow:row inSection:section]] autorelease];
+		
+		self.nextRowResponder = [[[PSSelectRowNextResponder alloc] initWithGenericTableViewController:self.tableViewController cellController:self incrementIndexPath:[NSIndexPath indexPathForRow:self.selectNextRowResponderIncrement inSection:self.selectNextSectionResponderIncrement]] autorelease];
 	}
 	
 	return self.nextRowResponder;

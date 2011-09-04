@@ -233,7 +233,7 @@ extern int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *new
 	[mailView setSubject:NSLocalizedString(@"MyTime Runtime Error", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
 	
 	NSMutableString *string = [[NSMutableString alloc] initWithString:@"<html><body>"];
-	[string appendString:NSLocalizedString(@"MyTime encountered an error which would normally cause a crash.<br><br>Please send this email to the author of MyTime so that your problem can be fixed and if there is any dammage to your data it can be repaired.  The author of MyTime will try to respond quickly to your problem.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected an error<br><br>", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
+	[string appendString:NSLocalizedString(@"MyTime encountered an error which would normally cause a crash.<br><br>Please send this email to the author of MyTime so that your problem can be fixed and if there is any damage to your data it can be repaired.  The author of MyTime will try to respond quickly to your problem.  <br><br>You <i>might</i> be able to use MyTime as is and see no loss of data; MyTime just detected an error<br><br>", @"Email subject line for the email that will be sent to me when mytime finds an error/crash just before crashing")];
 	
 	NSMutableString *path = [NSMutableString string];
 	NSArray *controllers = [navigationController viewControllers];

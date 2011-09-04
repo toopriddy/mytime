@@ -26,7 +26,7 @@
 @synthesize rightViewMode;
 @synthesize allowSelectionWhenNotEditing;
 @synthesize hideEmptyRowWhenNotEditing;
-
+@synthesize scrollPosition;
 - (id)init
 {
 	if( (self = [super init]) )
@@ -137,7 +137,14 @@
 
 - (void)tableViewTextFieldCell:(UITableViewTextFieldCell *)cell selected:(BOOL)selected
 {
+	// it is only house number and apartment cell that uses this one, so lets scroll to the middle so that we will scroll up if this cell is selected
+	if(self.scrollPosition != UITableViewScrollPositionNone)
+	{
+		NSIndexPath *indexPath = [self.tableViewController.tableView indexPathForCell:cell];
+		[self.tableViewController.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+	}
 }
+
 
 - (void)handleTextFieldChanged:(NSNotification *)note 
 {

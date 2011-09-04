@@ -26,7 +26,7 @@
 @synthesize autocorrectionType;
 @synthesize rightView;
 @synthesize rightViewMode;
-@synthesize width;
+@synthesize widthPercentage;
 @synthesize model;
 @synthesize modelPath;
 
@@ -78,6 +78,7 @@
 @synthesize textFieldConfigurations;
 @synthesize allTextFields;
 @synthesize allowSelectionWhenNotEditing;
+@synthesize scrollPosition;
 
 - (id)init
 {
@@ -148,6 +149,7 @@
 	{
 		cell = [[[UITableViewMultiTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commonIdentifier textFieldCount:self.textFieldConfigurations.count] autorelease];
 	}
+	cell.widths = [self.textFieldConfigurations valueForKey:@"widthPercentage"];
 	int index = 0;
 	for(PSMultiTextFieldConfiguration *config in self.textFieldConfigurations)
 	{
@@ -194,8 +196,14 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
-- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected;
+- (void)tableViewMultiTextFieldCell:(UITableViewMultiTextFieldCell *)cell textField:(UITextField *)textField selected:(BOOL)selected
 {
+	// it is only house number and apartment cell that uses this one, so lets scroll to the middle so that we will scroll up if this cell is selected
+	if(self.scrollPosition != UITableViewScrollPositionNone)
+	{
+		NSIndexPath *indexPath = [self.tableViewController.tableView indexPathForCell:cell];
+		[self.tableViewController.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+	}
 }
 
 @end

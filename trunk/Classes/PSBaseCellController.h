@@ -38,6 +38,7 @@
 // 0 means to not go to the next row
 @property (nonatomic, assign) int selectNextRowResponderIncrement;
 @property (nonatomic, assign) int selectNextSectionResponderIncrement;
+@property (nonatomic, retain) UIResponder *nextRowResponder;
 @property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, assign) BOOL movableWhileEditing;

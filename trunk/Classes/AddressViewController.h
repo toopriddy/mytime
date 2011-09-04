@@ -14,27 +14,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UITableViewTextFieldCell.h"
+#import "GenericTableViewController.h"
 #import "AddressViewControllerDelegate.h"
-#import "UITableViewMultiTextFieldCell.h"
 #import "CoreLocation/CoreLocation.h"
 #import "MapKit/MapKit.h"
 
-@interface AddressViewController : UIViewController <UITableViewDelegate, 
-                                                     UITableViewDataSource,
-													 UITableViewTextFieldCellDelegate,
-													 UITableViewMultiTextFieldCellDelegate,
-                                                     UIAlertViewDelegate,
-                                                     CLLocationManagerDelegate,
-                                                     MKReverseGeocoderDelegate> 
+@interface AddressViewController : GenericTableViewController <UIAlertViewDelegate,
+                                                               CLLocationManagerDelegate,
+                                                               MKReverseGeocoderDelegate> 
 {
 	id<AddressViewControllerDelegate> delegate;
-	UITableView *theTableView;
-
-	UITableViewMultiTextFieldCell *streetNumberAndApartmentCell;
-    UITableViewTextFieldCell *streetCell;
-    UITableViewTextFieldCell *cityCell;
-    UITableViewTextFieldCell *stateCell;
 
 	NSString *apartmentNumber;
 	NSString *streetNumber;
@@ -54,23 +43,18 @@
 	NSDate *locationStartDate;
 }
 
-@property (nonatomic,assign) id<AddressViewControllerDelegate> delegate;
-@property (nonatomic,retain) UITableView *theTableView;
-@property (nonatomic,retain) UIAlertView *locationMessage;
-@property (nonatomic,retain) CLLocationManager *locationManager;
-@property (nonatomic,retain) MKReverseGeocoder *geocoder;
-@property (nonatomic,retain) MKPlacemark *placemark;
-@property (nonatomic,retain) NSDate *locationStartDate;
+@property (nonatomic, assign) id<AddressViewControllerDelegate> delegate;
+@property (nonatomic, retain) UIAlertView *locationMessage;
+@property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) MKReverseGeocoder *geocoder;
+@property (nonatomic, retain) MKPlacemark *placemark;
+@property (nonatomic, retain) NSDate *locationStartDate;
 
-@property (nonatomic,retain) UITableViewMultiTextFieldCell *streetNumberAndApartmentCell;
-@property (nonatomic,retain) NSString *apartmentNumber;
-@property (nonatomic,retain) NSString *streetNumber;
-@property (nonatomic,retain) NSString *street;
-@property (nonatomic,retain) NSString *city;
-@property (nonatomic,retain) NSString *state;
-@property (nonatomic,retain) UITableViewTextFieldCell *streetCell;
-@property (nonatomic,retain) UITableViewTextFieldCell *cityCell;
-@property (nonatomic,retain) UITableViewTextFieldCell *stateCell;
+@property (nonatomic, retain, readonly) NSString *apartmentNumber;
+@property (nonatomic, retain, readonly) NSString *streetNumber;
+@property (nonatomic, retain, readonly) NSString *street;
+@property (nonatomic, retain, readonly) NSString *city;
+@property (nonatomic, retain, readonly) NSString *state;
 
 
 

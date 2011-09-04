@@ -508,7 +508,36 @@ NSString *emailFormattedStringForSettings()
 	{
 		// the specific user
 		[string appendString:[NSString stringWithFormat:NSLocalizedString(@"<h1>Backup data for %@:</h1>\n", @"label for sending a printable email backup.  this label is in the body of the email"), [userSettings objectForKey:SettingsMultipleUsersName]]];
-		
+
+		// fix address
+		for(NSDictionary *call in [userSettings objectForKey:SettingsCalls])
+		{
+			if([call valueForKey:CallStreet] == nil)
+			{
+				[call setValue:@"" forKey:CallStreet];
+			}
+			if([call valueForKey:CallStreetNumber] == nil)
+			{
+				[call setValue:@"" forKey:CallStreetNumber];
+			}
+			if([call valueForKey:CallApartmentNumber] == nil)
+			{
+				[call setValue:@"" forKey:CallApartmentNumber];
+			}
+			if([call valueForKey:CallCity] == nil)
+			{
+				[call setValue:@"" forKey:CallCity];
+			}
+			if([call valueForKey:CallState] == nil)
+			{
+				[call setValue:@"" forKey:CallState];
+			}
+			if([call valueForKey:CallName] == nil)
+			{
+				[call setValue:@"" forKey:CallName];
+			}
+		}
+
 		// calls
 		[string appendString:NSLocalizedString(@"<h2>Calls:</h2>\n", @"label for sending a printable email backup.  this label is in the body of the email")];
 		for(NSDictionary *call in [[userSettings objectForKey:SettingsCalls] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor psSortDescriptorWithKey:CallStreet ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
