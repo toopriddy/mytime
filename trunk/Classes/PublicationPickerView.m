@@ -103,11 +103,6 @@ static const PublicationInformation PUBLICATIONS[] = {
 	,   {NSLocalizedString(@"Worship God", @"Book Publication Name (wt)"),   PublicationTypeBook}
 	,   {NSLocalizedString(@"Young People Ask 1", @"Book Publication Name (yp)"),   PublicationTypeBook}
 	,   {NSLocalizedString(@"Young People Ask 2", @"Book Publication Name (yp2)"),   PublicationTypeBook}
-	,   {NSLocalizedString(@"Examining the Scriptures Daily", @"Book Publication Name (es)"),   PublicationTypeBook}
-	// for Africans
-	,   {NSLocalizedString(@"The Road to Everlasting Life—Have You Found It?", @"Book Publication Name (6648)"),   PublicationTypeBook}
-	// For Buddhists
-	,   {NSLocalizedString(@"The Pathway to Peace and Happiness", @"Book Publication Name (6653)"),   PublicationTypeBook}
 	// no longer in the list
 	,   {NSLocalizedString(@"Commentary on James", @"Book Publication Name (cj)"),   PublicationTypeBook}
 	,   {NSLocalizedString(@"Family Life", @"Book Publication Name (fl)"),   PublicationTypeBook}
