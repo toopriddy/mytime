@@ -618,6 +618,7 @@
 	NSString *value = [[MTUser currentUser] secretaryTelephoneNumber];
 	
 	MetadataEditorViewController *viewController = [[[MetadataEditorViewController alloc] initWithName:NSLocalizedString(@"Secretary's Telephone", @"More->Settings title") type:PHONE data:value value:value] autorelease];
+	viewController.footer = NSLocalizedString(@"Enter multiple telephone numbers by seperating each number by a space. Do not put spaces within a telephone number.", @"Footer sentance in the More->Settings->Secretary's Telephone view, letting the user know that they can enter in multiple phone numbers");
 	viewController.delegate = self;
 	viewController.tag = indexPath.row;
 	[[self.delegate navigationController] pushViewController:viewController animated:YES];
