@@ -15,7 +15,7 @@
 
 #import "SubmitTranslationFile.h"
 #import "HTTPServer.h"
-
+#import "UIAlertViewQuitter.h"
 
 @implementation SubmitTranslationFile
 
@@ -69,7 +69,7 @@
 - (void)sendPage
 {
 	NSString *errorString = nil;
-	
+	BOOL reallyQuit = NO;
 	for(NSDictionary *entry in self.variableArray)
 	{
 		if([@"file" isEqualToString:[entry objectForKey:MultipartVariableName]])
@@ -94,6 +94,11 @@
 				{
 					NSLog(@"did not write file");
 				}
+				else
+				{
+					reallyQuit = YES;
+				}
+
 			}
 		}
 	}
@@ -123,6 +128,14 @@
 		CFRelease(response);
 		CFRelease(headerData);
 		[server closeHandler:self];
+	}
+	if(reallyQuit)
+	{
+		UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
+		alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
+		[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
+		alertSheet.title = NSLocalizedString(@"Custom translation loaded, press OK to quit mytime. You will have to restart to use your new translation file", @"This message is displayed after a successful import of a call or a restore of a backup");
+		[alertSheet show];
 	}
 }
 
