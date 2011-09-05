@@ -8,6 +8,8 @@
 
 #import "NSManagedObjectContext+PriddySoftware.h"
 #import "MyTimeAppDelegate.h"
+#include <execinfo.h>
+#include <stdio.h>
 
 extern int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *newp, size_t newlen);
 
@@ -283,6 +285,17 @@ extern int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *new
 	sysctlbyname("hw.machine", machine, &size, NULL, 0);  
 	[string appendFormat:@"<b>iDevice type:</b>%s<br>", machine];
 	free(machine);  
+
+	void* callstack[128];
+	int i, frames = backtrace(callstack, 128);
+	char** strs = backtrace_symbols(callstack, frames);
+	[string appendFormat:@"<b>Backtrace:</b><br>"];
+	for (i = 0; i < frames; ++i) 
+	{
+		[string appendFormat:@"%s<br>", strs[i]];
+		NSLog(@"%s\n", strs[i]);
+	}
+	free(strs);
 	
 	
 	// attach the old records file
