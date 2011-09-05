@@ -84,6 +84,9 @@ BOOL isIOS4OrGreater(void)
 
 BOOL isSmsAvaliable(void)
 {
+#if TARGET_IPHONE_SIMULATOR
+	return YES;
+#else	
     Class messageClass = NSClassFromString(@"MFMessageComposeViewController");
     
     if(messageClass != nil) 
@@ -95,6 +98,7 @@ BOOL isSmsAvaliable(void)
 		}
 	}
 	return NO;
+#endif	
 }
 
 
