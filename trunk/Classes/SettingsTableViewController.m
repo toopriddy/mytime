@@ -34,6 +34,7 @@
 #import "PSSwitchCellController.h"
 #import "PSDateCellController.h"
 #import "PSMultipleChoiceCellController.h"
+#import "UIAlertViewQuitter.h"
 
 // base class for 
 @interface SettingsCellController : NSObject<TableViewCellController>
@@ -968,7 +969,8 @@
 	}
 	UIAlertView *alertSheet = [[[UIAlertView alloc] init] autorelease];
 	[alertSheet addButtonWithTitle:NSLocalizedString(@"OK", @"OK button")];
-	alertSheet.title = NSLocalizedString(@"Please quit MyTime to apply change", @"More->Settings->Remove Custom Translation: confirmaiton message when you have applied the 'Remove Custom Translation'");
+	alertSheet.delegate = [[UIAlertViewQuitter alloc] init];
+	alertSheet.title = NSLocalizedString(@"Custom translation removed, press OK to quit mytime. You will have to restart to use the default translation", @"More->Settings->Remove Custom Translation: confirmaiton message when you have applied the 'Remove Custom Translation'");
 	[alertSheet show];
 }
 @end
