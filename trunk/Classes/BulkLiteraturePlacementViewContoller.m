@@ -216,6 +216,7 @@ extern NSString const * const BulkLiteratureArrayDay;
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		[NSManagedObjectContext sendCoreDataSaveFailureEmailWithNavigationController:self.navigationController error:error];
 	}
+	self.temporaryBulkPlacement = nil;
 }
 
 - (void)configureCell:(UITableViewTitleAndValueCell *)cell atIndexPath:(NSIndexPath *)indexPath
