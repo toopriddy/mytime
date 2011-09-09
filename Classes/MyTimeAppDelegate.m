@@ -1368,9 +1368,19 @@ NSString *emailFormattedStringForSettings();
 	}
 	return mtTerritory;
 }
+
+- (void)setIdleTimerEnabled
+{
+	[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
+- (void)conversionDone
+{
+	stillConverting = NO;
+}
+
 - (void)convertToCoreDataStoreTask
 {
-//	double steps = 1;
 	[managedObjectContext_ release];
 	managedObjectContext_ = nil;
 	NSMutableDictionary *settings = [[Settings sharedInstance] settings];
@@ -1382,8 +1392,6 @@ NSString *emailFormattedStringForSettings();
 	
 	[[NSUserDefaults standardUserDefaults] setObject:[settings objectForKey:SettingsCurrentButtonBarName] forKey:SettingsCurrentButtonBarName];
 	
-//	steps = 1 + 9*[[settings objectForKey:SettingsMultipleUsers] count];
-		
 	// PASSCODE
 	mtSettings.passcode = [settings objectForKey:SettingsPasscode];
 	
@@ -1704,7 +1712,9 @@ NSString *emailFormattedStringForSettings();
 //		[fileManager removeItemAtPath:[Settings filename] error:nil];
 		NSLog(@"did not write file");
 	}
-	
+
+	[self performSelector:@selector(conversionDone) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+
 	if(worked)
 	{
 		[self performSelector:@selector(initializeMyTimeViews) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
@@ -1714,6 +1724,7 @@ NSString *emailFormattedStringForSettings();
 	{
 		[self performSelector:@selector(showErrorConvertingData) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
 	}
+	[self performSelector:@selector(setIdleTimerEnabled) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
 }
 
 - (void)showErrorConvertingData
@@ -1735,13 +1746,16 @@ NSString *emailFormattedStringForSettings();
 		return NO;
 	}
 
+	stillConverting = YES;
+	[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+	
 	// The hud will disable all input on the view (use the higest view possible in the view hierarchy)
     self.hud = [[MBProgressHUD alloc] initWithView:window];
 	
     // Set determinate mode
     hud.mode = MBProgressHUDModeDeterminate;
     hud.delegate = self;
-    hud.labelText = NSLocalizedString(@"Converting Data File", @"this message is presented to the user when they are upgrading their MyTime and MyTime is converting their old database file to a new one");
+    hud.labelText = NSLocalizedString(@"MyTime Converting Data File", @"this message is presented to the user when they are upgrading their MyTime and MyTime is converting their old database file to a new one");
 	hud.detailsLabelText = NSLocalizedString(@"Please wait. This might take a minute or two.", @"this message is presented to the user when they are upgrading their MyTime and MyTime is converting their old database file to a new one");
     [self.window addSubview:hud];
 
@@ -1796,6 +1810,11 @@ NSString *emailFormattedStringForSettings();
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+	if(stillConverting)
+	{
+		// we dont want to save anything while the conversion process is going on
+		exit(0);
+	}
 	// always save data before quitting
     NSError *error = nil;
     if (managedObjectContext_ != nil) 

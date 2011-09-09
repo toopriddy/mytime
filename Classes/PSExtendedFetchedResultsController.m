@@ -185,7 +185,7 @@ sectionIndexDisplaysSingleLetter:(BOOL)sectionIndexDisplaysSingleLetter
 					int section = [collation sectionForObject:managedObject collationStringSelector:NSSelectorFromString(sectionNameKeyPath)];
 					[sectionsCArray[section].objects addObject:managedObject];
 				}
-				
+
 				for(PSFetchedResultsSectionInfo *section in newSectionsArray) 
 				{
 					if((section.numberOfObjects = [section.objects count]) > 1)

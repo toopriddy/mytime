@@ -139,8 +139,8 @@ extern int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *new
 	
     NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
     [request setEntity:entity];
-	if(propertiesToFetch)
-		[request setPropertiesToFetch:propertiesToFetch];
+//	if(propertiesToFetch)
+//		[request setPropertiesToFetch:propertiesToFetch];
 	
     if (stringOrPredicate)
     {

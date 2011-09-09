@@ -61,6 +61,7 @@ typedef enum {
 	BOOL forceEmail;
 	BOOL displayingSecurityViewController;
 	MBProgressHUD *hud;
+	BOOL stillConverting;
 	
 @private
     NSManagedObjectContext *managedObjectContext_;

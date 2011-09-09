@@ -62,9 +62,8 @@ static Geocache *instance = nil;
 	}
 }
 
-- (void)setWindow:(UIWindow*)window
+- (void)lookupCallsLater
 {
-	_window = [window retain];
 	NSManagedObjectContext *managedObjectContext = [[MyTimeAppDelegate sharedInstance] managedObjectContext];
 	NSArray *calls = [managedObjectContext fetchObjectsForEntityName:[MTCall entityName]
 												   propertiesToFetch:[NSArray arrayWithObjects:@"houseNumber", @"apartmentNumber", @"street", @"city", @"state", nil] 
@@ -73,6 +72,12 @@ static Geocache *instance = nil;
 	{
 		[self lookupCall:call];
 	}
+}
+
+- (void)setWindow:(UIWindow*)window
+{
+	_window = [window retain];
+	[self performSelector:@selector(lookupCallsLater) withObject:nil afterDelay:5.0];
 }
 
 // common singleton stuff below
