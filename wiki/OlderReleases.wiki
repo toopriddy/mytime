@@ -1,5 +1,77 @@
 #summary Older release information
 
+== Changes in the 3.1.7 release==
+Approved on 9/13/2011. Submitted to apple on 9/8/2011
+  * Fix for any language that uses more than one keystroke for characters or words in text entry boxes.
+  * Fixed for crash upon startup for certain calls that have not been looked up in google maps 
+  * Fixed the idle timer to not turn off the iPhone/iPod during the data conversion process
+  * Fixed the conversion process to completely restart if the user sends MyTime to the background or quits MyTime during the conversion process.  This bug allowed users to quit the app during the conversion process which could cause data loss.
+  * Fixed restart issues for translators
+  * Added help text for the secretary telephone number to inform the user to separate telephone numbers by a space.
+  * Added publications
+  * Added additional debugging facilities 
+  * Updated conversion text to not scare the user when they first see the conversion happening (added "MyTime" to the text to let them know this is not a system thing and their phone has not been hacked).
+
+==Changes in the 3.1.4 release==
+Approved on 9/1/2011.  Submitted to apple on 8/28/2011
+  * Fix for restoring backups using the MyTime webserver.
+  * Updated the publications from the list of published publications.
+  * Finally fixed the bug that was causing crashes in views that were sorted by name, street, state, house number, or apartment number beginning with a non-english character caused crashes in many situations.
+  * City sorted views now have the index back to using the whole city name in the index.
+  * All of the indexes that are based on a single letter are now localized, I would appreciate input as to how well this is done.
+
+==Changes in the 3.1.3 release==
+Approved on 8/16/2011. Submitted to apple on 8/10/2011
+  * Fixed an issue that causes calls to not display in the Street or Name sorted view if the first character in the Street or Name stars with a character with a diacritic like ü or å
+  * Added ability to send field service report using SMS
+  * Fixed a crash when importing a transferred call
+  * Fixed incorrect notes title when picking months to send to the secretary
+  * Fixed the autobackup to work when your application is activated from the background
+
+==Bug fixes in the 3.1.1 release==
+Approved on 8/3/2011. Submitted to Apple on 7/26/2011
+  * Fixed a bug where MyTime would crash for iOS < 4.0 on any sorted calls screens
+  * Fixed a bug where if sorting by name, street, city, or state could cause a crash if every first character is not the same capitalization.
+  * Fixed performance issue with generating the Section Index
+  * Fixed issues with the false positives showing that people's data has been corrupted when it has not.
+  * Fixing pioneer start date causing the "hand modified" values in the Statistics view to not get added up correctly.
+  * Fixed service year bible study information counts.
+  * Added Pioneer Start Date to influence the calculation of the Service Year Totals
+
+==Features in the 3.1.0 release==
+Approved on 7/22/2011. Submitted to apple on 7/16/2011
+  * Completely new database, things are faster, smaller and MyTime plays nicely with background applications. 
+  * More options when searching calls 
+  * Sorted by ... view now has all of the other "X Sorted" view display rules in it, no need to have to switch between views. 
+  * You can create custom sort and filter rules for your calls 
+  * If you quit MyTime or have SMS or a call interrupt your usage, your data is saved, you just have to pick up where you left off. 
+  * Added notes to the Bulk Placements view 
+  * Added Russian Translation 
+  * Added Finnish Translation 
+
+Bugs Fixed: 
+  * Fixed a bug in the "Sorted by ..." view when sorting by notes, the notes would be all mangled on the screen 
+  * Translation issues with singular and plural wording. 
+  * Landscape viewing works again 
+  * Tutorials view now does not hide the tab bar 
+  * Any view on the More tab will automatically go back to the More list when you press on another tab, the previous behavior was confusing to users. 
+
+==Features in the 2.9.0 release==
+Approved 10/5/2010.  Submitted to apple on 9/28/2010
+  * Fixed a bug in the Mapped Calls pin color: the color would only update if you restart MyTime or if you edited a call directly from the Mapped Calls view
+  * When adding a new Call, the location services is turned on very early so that when you go to automatically lookup the address it will resolve the address much quicker.
+  * Added iPhone 4 supported icons and graphics.
+  * Fixed a bug when canceling a restore from backup
+  * Fixed a display bug in the Address view when canceling an "automatic lookup" of the address.
+  * added new Brochures lf, lc
+
+==Features in the 2.8.4 release==
+Approved 7/28/2010. Submitted 7/21/2010.  This was a release to fix bugs found in MyTime.  I have been very busy with baby stuff lately and have not had the time to spend on mytime :( 
+  * added support to make sure the iPhone does not sleep or disable the WiFi when you are using the MyTime webserver
+  * added pin colors to the map based on the number of days since the last visit. (Green < 7days, Purple < 14 days, Red > 14 days)
+  * fixed issues regarding passcode and multitasking
+  * fixed various publication bugs (yearbook displaying wrong, tracts not showing up correctly)
+
 ==Features in the submitted 2.8.2 release==
 Approved by Apple on 6/20/2010. Submitted 6/13/2010. This was an emergency submission to preempt any bugs that would be there in the iOS 4.0 release (because it messed some things up).
 * Added Convention Invitation as a campaign tract
