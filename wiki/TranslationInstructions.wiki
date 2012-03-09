@@ -17,7 +17,7 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-Use the English [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file and the [http://mytime.googlecode.com/svn/trunk/Classes/Settings.bundle/English.lproj/Root.strings Root.strings] file (or [http://mytime.googlecode.com/svn/trunk/ your language] if it exists), open and work on these files with "TextEdit" in OSX (or notepad in XP, yes I do mean notepad, StartMenu->Run->notepad.exe or you can use Wordpad, not word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
+Use the English "Localizable.strings" file I will send you and the "Root.strings" file (or if your language already exists I will send you that file), open and work on these files with "TextEdit" in OSX (or notepad in XP, yes I do mean notepad, StartMenu->Run->notepad.exe or you can use Wordpad, not word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
