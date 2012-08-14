@@ -17,7 +17,7 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-[http://priddysoftware.com/software/MyTime/translations.zip Download the translations file].  If you are adding a new language use the English "Localizable.strings" file I will send you and the "Root.strings" file in the English.lproj directory and the Settings.bundle/English.lproj directory from the zip file.  If you are helping with an existing language then look for that languages directory in the zip file. Open and work on these files with "TextEdit" in OSX (or notepad in Windows, StartMenu->Run->notepad.exe or you can use Wordpad, do not use word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  You will be sending this file back to me with your modifications so you want to keep the file in the existing format that you received it with.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
+[http://priddysoftware.com/software/!MyTime/translations.zip Download the translations file].  If you are adding a new language use the English "Localizable.strings" file I will send you and the "Root.strings" file in the English.lproj directory and the Settings.bundle/English.lproj directory from the zip file.  If you are helping with an existing language then look for that languages directory in the zip file. Open and work on these files with "TextEdit" in OSX (or notepad in Windows, StartMenu->Run->notepad.exe or you can use Wordpad, do not use word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  You will be sending this file back to me with your modifications so you want to keep the file in the existing format that you received it with.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
@@ -109,24 +109,24 @@ When you can define the format that the file is saved in, make sure it is UTF-16
 Email me, I will add the answers to this page
 
 = Update your mobileprovision file =
-If I send you a new mobileprovision file these are the instructions on how to update everything to run with the new versions of MyTime
+If I send you a new mobileprovision file these are the instructions on how to update everything to run with the new versions of !MyTime
 
   # Close down iTunes, and Xcode (if you are running them)
   # delete the files in ~/Library/MobileDevice/Provisioning Profiles/ (if you have other adhoc programs that you work with, you will know this if this is the case otherwise ignore this statement, then you need to only delete the one associated with mytime)
   # plug in and sync your iphone/ipod
-  # ON YOUR IPHONE: look in General->Profiles-> and Select any that say "MyTime AdHoc" and hit the "Remove" button
+  # ON YOUR IPHONE: look in General->Profiles-> and Select any that say "!MyTime !AdHoc" and hit the "Remove" button
   # Disconnect your iphone from your Mac
   # Quit iTunes
-  # Drag the MyTime AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
+  # Drag the !MyTime AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
   # sync your iphone with your Mac
-  # Finally drag the MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
+  # Finally drag the !MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
 
 = Test your translation =
 Requirements:
   * a wireless network that both your iPhone and your computer are on
 
-Instructions for using the MyTime webserver on a PC or Mac:
-  # in MyTime, go to More->Settings->Start MyTime Webserver
+Instructions for using the !MyTime webserver on a PC or Mac:
+  # in !MyTime, go to More->Settings->Start !MyTime Webserver
   # follow the instructions on the screen (open a web browser on your Mac or PC and enter in the URL mentioned in the popup)
   # On the webpage, look for "Load/Test Translation" and under it select the browse button to select your translation file
   # press the "Load Translation" button
@@ -134,7 +134,7 @@ Instructions for using the MyTime webserver on a PC or Mac:
   # restart mytime to see your translation at work.
   # you are able to repeat this over and over until you are satisfied with your results
 
-Instructions using MyTime Backup on a Mac:
+Instructions using !MyTime Backup on a Mac:
   # on the Mac:
   ## get the latest [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application
   ## make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
