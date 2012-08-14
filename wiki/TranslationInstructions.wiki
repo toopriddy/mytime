@@ -159,7 +159,7 @@ When you email the files, please include:
   # the language that you are translating to 
   # the version of ipa that I sent the translations with (so I know how to apply some changes that I have to do sometimes). 
 
-= Updating the Localizable.strings with the latest version =
+= (IGNORE THIS, this is only if you really need to do this) Updating the Localizable.strings with the latest version =
 If you have already submitted a translation or are in the process of translating a file and I update the [http://mytime.googlecode.com/svn/trunk/English.lproj/Localizable.strings Localizable.strings] file, this section will tell you what to do.
 
 OSX:
