@@ -12,13 +12,13 @@ Here are some rules:
 == On OSX ==
 These instructions only work if you have not encrypted your backup data
 
-*Please use iPhone Backup Extractor from http://supercrazyawesome.com for now since iPhoneRescue is not compatible with the new iTunes backup format*
-  # download http://priddysoftware.com/software/iPhoneRescue/iPhoneRescue.zip from http://priddysoftware.com/software/iPhoneRescue/
+  # download http://supercrazyawesome.com/downloads/iPhone%20Backup%20Extractor.app.zip
   # extract and run the application 
-  # Select your devices name in the first column, pay attention to the backup date
-  # then select "MyTime" from the middle list
-  # then select the "records.plist" file in the third column (if you are using MyTime > 3.1.0 you are interested in getting the "MyTime.sqlite" file)
-  # press "Save File" and save the file to your desktop
+  # Select the "Read Backups" button
+  # Pick your device
+  # Then select com.yourcompany.MyTime
+  # press "Extract" and save this to your desktop.
+  # your backup file should be in ~/Desktop/com.yourcompany.MyTime/Documents/MyTime.mytimedata
   # run the [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application and make sure that your iPhone is on the same wireless network as your Mac. (If you cant get this to work, email me your records.plist file)
   # on the iPhone, start MyTime and go to More->Settings->Backup using 'MyTime Backup'
   # on the Mac in the MyTime Backup program, select "Restore Backup" and then select the com.yourcompany.MyTime/Documents/records.plist file that was restored by the iPhone Backup Extractor application.
