@@ -18,7 +18,7 @@ These instructions only work if you have not encrypted your backup data
   # Pick your device
   # Then select com.yourcompany.MyTime
   # press "Extract" and save this to your desktop.
-  # your backup file should be in ~/Desktop/com.yourcompany.MyTime/Documents/MyTime.mytimedb
+  # your backup file should be in ~/Desktop/com.yourcompany.MyTime/Documents/MyTime.sqlite (if you dont have this file and are running a very old version of mytime you might see a "records.plist" file)
   # run the [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application and make sure that your iPhone is on the same wireless network as your Mac. (If you cant get this to work, email me your records.plist file)
   # on the iPhone, start MyTime and go to More->Settings->Backup using 'MyTime Backup'
   # on the Mac in the MyTime Backup program, select "Restore Backup" and then select the com.yourcompany.MyTime/Documents/records.plist file that was restored by the iPhone Backup Extractor application.
