@@ -1,5 +1,88 @@
 #summary Older release information
 
+== Changes in the 3.3.3 release==
+Approved on December 24, 2012. Submitted to Apple on December 17, 2012
+Sadly I cant support the iPhone 5 because it would alienate all iOS 3.1.3 and 4.2.1 devices.  I have a solution in the works.
+  * Fixed a bug in "Delete all Deleted calls" that would delete all calls, just just the deleted ones.
+  * Added "Direct Credit" switch to the custom hours categories to support hours that are direct credits over and above the monthly pioneer max.
+  * Added the ability to sort Not-at-homes in the Territory view
+
+== Changes in the 3.3.1 release==
+Approved on 10/17/2012. Submitted to Apple on 10/8/2012
+Sadly I cant support the iPhone 5 because it would alienate all iOS 3.1.3 and 4.2.1 devices.  I have a solution in the works.
+  * Fixing french translation (it currently does not work in 3.3.0)
+
+== Changes in the 3.3.0 release==
+Approved on 10/8/2012. Submitted to Apple on 9/29/2012
+Sadly I cant support the iPhone 5 because it would alienate all iOS 3.1.3 and 4.2.1 devices.  I have a solution in the works.
+  * Adding support for iOS 6
+  * Adding a new return visit now scrolls the new return visit in the viewable area
+  * If the user manually modified values in the statistics screen values will never go negative now.
+  * Added Satellite and Hybrid to the map types shown in the "Mapped Calls" tab
+  * removed autocorrection in email and URL fields within MyTime
+  * Updated DVDs and publications list
+  * Added MyTime->More->Settings->Reset to "delete" all calls
+  * Added note to make it apparent that the Statistics "Last Year's Service Year" will only be there for September
+  * Fixed various bugs
+
+== Changes in the 3.2.5 release==
+Approved 7/18/2012.  Submitted to apple on 7/6/2012.
+  * Added retina iPad artwork 
+  * Updated Japanese translation. 
+  * Fixed the Section Index titles in the Sorted By ... view to show YES/NO for a YES/NO switch instead of ON/OFF 
+  * Added Handbills for congregation meeting and bible study invitations. 
+  * Fixed an issue on 3.1.3 that causes white blocks to extend farther than the rows for any Notes field.
+  * Fixed date/time picker issues on the iPad running iOS 3.X
+
+== Changes in the 3.2.5 release==
+Approved 4/18/2012. Submitted to apple on 4/12/2012.
+  * Fixed the Accessability label for the "Address" cell in calls so that it reads the full address and not just a partial one when the user has turned Voice Over on
+  * Fixed a bug in MyTime when using old devices on iOS 3.1.3 where any table row with notes in it would display a giant white block possibly obscuring other rows.
+  * Fixed a false positive issue in the CoreData conversion process that resulted when calls have a manually configured location but the location has not been set yet.
+
+
+== Changes in the 3.2.4 release==
+
+  * Fixed a bug that caused crashes in iPad running iOS 4 even though it is fixed in iOS5
+  * Fixed iPad Hours button to be the same color as the rest of the iPad navigation buttons
+  * Fixed problem in the Hours entry on the iPad running iOS 4 that caused the user to not be able to select the current date.
+
+== Changes in the 3.2.3 release==
+Approved on 1/4/2012.  Submitted to apple on 12/22/2011.
+  * Fixed a bug that truncated house number display in the Territory view.
+  * Fixed a bug in the territory view in iOS 5 when adding a new territory the name was not showing up in the main territory list.
+  * Fixed a restore from backup issue on the iPad with iOS 5.
+
+== Changes in the 3.2.2 release==
+Approved on 12/12/2011.  Submitted to apple on 12/8/2011.
+  * Fixed bug in iOS 3.1.3 that prevented users from seeing the text in the Statistics view. 
+  * Fixed bug in iOS 3.1.3 that prevented users from seeing the text in the House View of the Territory view. 
+
+== Changes in the 3.2.1 release==
+Approved on 12/8/2011.  Submitted to apple on 12/3/2011.
+  * Fixed bug in iOS 4.2.1 and below when geocoding. This caused a crash upon starting MyTime.
+  * Fixed bug that caused special pioneer service year totals to be under pioneer rules instead of special pioneer rules.
+  * Fixed a bug that caused false positives in the data conversion checks after converting to the new MyTime database.
+  * Fixed bug in the Hours view if you have the iDevice flat and change an hour type the button disappears.
+
+== Changes in the 3.2.0 release==
+Approved on 12/2/2011.  Submitted to apple on 11/24/2011.
+  * Added support for iPad
+  * Added ability to have more than just an Hours and RBC Hours time categories
+  * RBC has now been moved under the Hours view, just press on the "Hours" button to change the category
+  * Added ability to have RBC and other time categories automatically add to the "Hours" time category up to 70 hours if you have specified that your publisher type is Pioneer.
+  * Added "Additional Information" types to the filters section of the "Display Rules"
+  * Added the ability to filter the printable email backup with the "Display Rules"
+  * By default now when you create a "Display Rule" it will have a "Deleted == NO" rule 
+  * Added the ability to add calls from the map view
+  * Fixed a bug in iOS5 that caused the Date sorted view to not work
+  * Fixed a bug in iOS5 that caused the mapped view to not update the pin colors
+  * Fixed a bug in the "setup your email settings" popup that did not have an "OK" button
+  * Fixed a bug that would cause the reverse lookup to not work for a call if you killed mytime before the reverse lookup was completed.
+  * Fixed misspellings
+  * Fixed bug where going to google maps would force it to 0,0 lattitude, longitude if the call was not reverse looked up.
+  * Improved performance of editing calls
+
 == Changes in the 3.1.7 release==
 Approved on 9/13/2011. Submitted to apple on 9/8/2011
   * Fix for any language that uses more than one keystroke for characters or words in text entry boxes.
