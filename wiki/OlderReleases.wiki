@@ -19,9 +19,9 @@ Sadly I cant support the iPhone 5 because it would alienate all iOS 3.1.3 and 4.
   * Adding a new return visit now scrolls the new return visit in the viewable area
   * If the user manually modified values in the statistics screen values will never go negative now.
   * Added Satellite and Hybrid to the map types shown in the "Mapped Calls" tab
-  * removed autocorrection in email and URL fields within MyTime
+  * removed autocorrection in email and URL fields within MyTime™
   * Updated DVDs and publications list
-  * Added MyTime->More->Settings->Reset to "delete" all calls
+  * Added MyTime™->More->Settings->Reset to "delete" all calls
   * Added note to make it apparent that the Statistics "Last Year's Service Year" will only be there for September
   * Fixed various bugs
 
@@ -37,7 +37,7 @@ Approved 7/18/2012.  Submitted to apple on 7/6/2012.
 == Changes in the 3.2.5 release==
 Approved 4/18/2012. Submitted to apple on 4/12/2012.
   * Fixed the Accessability label for the "Address" cell in calls so that it reads the full address and not just a partial one when the user has turned Voice Over on
-  * Fixed a bug in MyTime when using old devices on iOS 3.1.3 where any table row with notes in it would display a giant white block possibly obscuring other rows.
+  * Fixed a bug in MyTime™ when using old devices on iOS 3.1.3 where any table row with notes in it would display a giant white block possibly obscuring other rows.
   * Fixed a false positive issue in the CoreData conversion process that resulted when calls have a manually configured location but the location has not been set yet.
 
 
@@ -60,9 +60,9 @@ Approved on 12/12/2011.  Submitted to apple on 12/8/2011.
 
 == Changes in the 3.2.1 release==
 Approved on 12/8/2011.  Submitted to apple on 12/3/2011.
-  * Fixed bug in iOS 4.2.1 and below when geocoding. This caused a crash upon starting MyTime.
+  * Fixed bug in iOS 4.2.1 and below when geocoding. This caused a crash upon starting MyTime™.
   * Fixed bug that caused special pioneer service year totals to be under pioneer rules instead of special pioneer rules.
-  * Fixed a bug that caused false positives in the data conversion checks after converting to the new MyTime database.
+  * Fixed a bug that caused false positives in the data conversion checks after converting to the new MyTime™ database.
   * Fixed bug in the Hours view if you have the iDevice flat and change an hour type the button disappears.
 
 == Changes in the 3.2.0 release==
@@ -88,16 +88,16 @@ Approved on 9/13/2011. Submitted to apple on 9/8/2011
   * Fix for any language that uses more than one keystroke for characters or words in text entry boxes.
   * Fixed for crash upon startup for certain calls that have not been looked up in google maps 
   * Fixed the idle timer to not turn off the iPhone/iPod during the data conversion process
-  * Fixed the conversion process to completely restart if the user sends MyTime to the background or quits MyTime during the conversion process.  This bug allowed users to quit the app during the conversion process which could cause data loss.
+  * Fixed the conversion process to completely restart if the user sends MyTime™ to the background or quits MyTime™ during the conversion process.  This bug allowed users to quit the app during the conversion process which could cause data loss.
   * Fixed restart issues for translators
   * Added help text for the secretary telephone number to inform the user to separate telephone numbers by a space.
   * Added publications
   * Added additional debugging facilities 
-  * Updated conversion text to not scare the user when they first see the conversion happening (added "MyTime" to the text to let them know this is not a system thing and their phone has not been hacked).
+  * Updated conversion text to not scare the user when they first see the conversion happening (added "MyTime™" to the text to let them know this is not a system thing and their phone has not been hacked).
 
 ==Changes in the 3.1.4 release==
 Approved on 9/1/2011.  Submitted to apple on 8/28/2011
-  * Fix for restoring backups using the MyTime webserver.
+  * Fix for restoring backups using the MyTime™ webserver.
   * Updated the publications from the list of published publications.
   * Finally fixed the bug that was causing crashes in views that were sorted by name, street, state, house number, or apartment number beginning with a non-english character caused crashes in many situations.
   * City sorted views now have the index back to using the whole city name in the index.
@@ -113,7 +113,7 @@ Approved on 8/16/2011. Submitted to apple on 8/10/2011
 
 ==Bug fixes in the 3.1.1 release==
 Approved on 8/3/2011. Submitted to Apple on 7/26/2011
-  * Fixed a bug where MyTime would crash for iOS < 4.0 on any sorted calls screens
+  * Fixed a bug where MyTime™ would crash for iOS < 4.0 on any sorted calls screens
   * Fixed a bug where if sorting by name, street, city, or state could cause a crash if every first character is not the same capitalization.
   * Fixed performance issue with generating the Section Index
   * Fixed issues with the false positives showing that people's data has been corrupted when it has not.
@@ -123,11 +123,11 @@ Approved on 8/3/2011. Submitted to Apple on 7/26/2011
 
 ==Features in the 3.1.0 release==
 Approved on 7/22/2011. Submitted to apple on 7/16/2011
-  * Completely new database, things are faster, smaller and MyTime plays nicely with background applications. 
+  * Completely new database, things are faster, smaller and MyTime™ plays nicely with background applications. 
   * More options when searching calls 
   * Sorted by ... view now has all of the other "X Sorted" view display rules in it, no need to have to switch between views. 
   * You can create custom sort and filter rules for your calls 
-  * If you quit MyTime or have SMS or a call interrupt your usage, your data is saved, you just have to pick up where you left off. 
+  * If you quit MyTime™ or have SMS or a call interrupt your usage, your data is saved, you just have to pick up where you left off. 
   * Added notes to the Bulk Placements view 
   * Added Russian Translation 
   * Added Finnish Translation 
@@ -141,7 +141,7 @@ Bugs Fixed:
 
 ==Features in the 2.9.0 release==
 Approved 10/5/2010.  Submitted to apple on 9/28/2010
-  * Fixed a bug in the Mapped Calls pin color: the color would only update if you restart MyTime or if you edited a call directly from the Mapped Calls view
+  * Fixed a bug in the Mapped Calls pin color: the color would only update if you restart MyTime™ or if you edited a call directly from the Mapped Calls view
   * When adding a new Call, the location services is turned on very early so that when you go to automatically lookup the address it will resolve the address much quicker.
   * Added iPhone 4 supported icons and graphics.
   * Fixed a bug when canceling a restore from backup
@@ -149,8 +149,8 @@ Approved 10/5/2010.  Submitted to apple on 9/28/2010
   * added new Brochures lf, lc
 
 ==Features in the 2.8.4 release==
-Approved 7/28/2010. Submitted 7/21/2010.  This was a release to fix bugs found in MyTime.  I have been very busy with baby stuff lately and have not had the time to spend on mytime :( 
-  * added support to make sure the iPhone does not sleep or disable the WiFi when you are using the MyTime webserver
+Approved 7/28/2010. Submitted 7/21/2010.  This was a release to fix bugs found in MyTime™.  I have been very busy with baby stuff lately and have not had the time to spend on mytime :( 
+  * added support to make sure the iPhone does not sleep or disable the WiFi when you are using the MyTime™ webserver
   * added pin colors to the map based on the number of days since the last visit. (Green < 7days, Purple < 14 days, Red > 14 days)
   * fixed issues regarding passcode and multitasking
   * fixed various publication bugs (yearbook displaying wrong, tracts not showing up correctly)
@@ -171,7 +171,7 @@ Features already in this release:
   * Added a way to turn off the Backup Email attachment to allow yahoo email servers to process mytime backups without corrupting them.
   * Found a workaround for the yahoo email server bug where it was corrupting email backups.
   * Separated "Not at homes" from "not at home" return visit type... some languages differentiate this text and it was confusing.
-  * Completely reworked the "Statistics" view so that you can edit any of your statistics or enter in all of your information for the service year if you are new to MyTime.
+  * Completely reworked the "Statistics" view so that you can edit any of your statistics or enter in all of your information for the service year if you are new to MyTime™.
   * Added "cutesy" animations to the number picker and Hours picker to match Apple's animations for the countdown timer.
   * Added "Study Individuals" to the Service Year totals, you can also press on this and see all of the study names that you studied with
   * Added feature to per-month bible study count where you can see the names of the people you studied with.
@@ -192,7 +192,7 @@ Released on 1/30/2010. Submitted to Apple 1/22/2010.
  * Added a "Deleted Calls" view so that you can restore old calls or fix any statistics issues because of deleted calls (now you have to go to the deleted calls view to permanently delete your calls).
 
 ==Features/Bug Fixes in the 2.6.1 release==
-Released on 12/29/2009.  Submitted to Apple 12/28/2009. There was a large bug in 2.6.0 regarding heavy usage of MyTime that I could not wait to fix.
+Released on 12/29/2009.  Submitted to Apple 12/28/2009. There was a large bug in 2.6.0 regarding heavy usage of MyTime™ that I could not wait to fix.
 Features already in the development version:
   * Yearbook added (I dont know why this was not already there in the first place).
   * Watchtower/Awake set of publications added to the publication picker view
@@ -200,7 +200,7 @@ Features already in the development version:
   * Fixed localization of the publications in the "Bulk Placements" view
   * Fixed a bug in the Auto-backup feature: if you disable the backup feature it still asks you to backup, you can workaround it right now by specifying a really long time between backups.
   * updated the "Sorted By ..." icon, thanks
-  * Fixed a big memory leak bug in mytime, I had left a debug flag on that would cause high memory usage in MyTime and crashes for heavy usage of MyTime
+  * Fixed a big memory leak bug in mytime, I had left a debug flag on that would cause high memory usage in MyTime™ and crashes for heavy usage of MyTime™
 
 
 ==Features/Bug Fixes in the 2.6.0 release==
@@ -208,7 +208,7 @@ Released on 12/28/2009.  Re-Submitted to Apple on 12/19/2009 (originally submitt
 This will be called the "Please backup" release.  I have focused on making sure that your data is secure and you have ways of restoring your data no matter what happens to your iphone/ipod.
   * added Multiple Choice type in the Additional Information
   * added autobackup feature and a reminder for the user to backup their data
-  * email backups now have the backup data file in them for users who have terrible ISPs like comcast that corrupt emails.  (You can use the mytime webserver in MyTime->More->Settings->Start MyTime Webserver to load the data file)
+  * email backups now have the backup data file in them for users who have terrible ISPs like comcast that corrupt emails.  (You can use the mytime webserver in MyTime™->More->Settings->Start MyTime™ Webserver to load the data file)
   * emails now use the "in-app" email views so that you dont have to switch between mytime and the email program.
   * fixed lots of bugs
   * Norwegian translation added
@@ -243,9 +243,9 @@ Submitted to apple on 3/23/2009, I hope apple gets this thing out before Septemb
 
 
 ==Features/Bug fixes in 2.4.4==
-Submited to apple on 8/14/2009, but gave up on apple... I resubmitted including another serious bug fix (I wanted to get this out quick cause people are having problems with corrupted map caches causing crashes in MyTime)
-  * New MyTime webserver builtin to MyTime, this allows you to download/upload your backup of mytime and add hours and calls from the comfort of a real keyboard.
-  * Added a Settings Application section for MyTime so that you can clear Map Caches if it is causing your application to crash and a way to email out your backup before MyTime really gets started if there is any other reason for a crash.
+Submited to apple on 8/14/2009, but gave up on apple... I resubmitted including another serious bug fix (I wanted to get this out quick cause people are having problems with corrupted map caches causing crashes in MyTime™)
+  * New MyTime™ webserver builtin to MyTime™, this allows you to download/upload your backup of mytime and add hours and calls from the comfort of a real keyboard.
+  * Added a Settings Application section for MyTime™ so that you can clear Map Caches if it is causing your application to crash and a way to email out your backup before MyTime™ really gets started if there is any other reason for a crash.
   * Fixed a bug in transferring a call that would count magazines
 
 ==Features/Bug fixes in 2.4.1==
@@ -255,7 +255,7 @@ Submitted to apple on 7/21/2009
   * fixed a bug in the Hours and RBC view where data was not saved when changing to another user and not quitting the application
   * Updated Italian translation
   * added a way to clear the Map cache (this allows you to free up space on your iPhone or iPod Touch)
-  * added a link in the More->Settings view to take you to the YouTube documentation of MyTime
+  * added a link in the More->Settings view to take you to the YouTube documentation of MyTime™
 
 ==Features in the next 2.4.0 release:==
 Sent to apple on 7/13/2009:
@@ -283,5 +283,5 @@ Features in this release (re-submitted to apple on June 12, 2009):
   * Fixed a bug where you could not edit your return visit's name unless you scrolled the name off of the screen.
   * I got UK English dates localized, if there is any other English speaking country that does not use the US way of doing dates or addresses let me know.
   * Fixed the Address view to show "State or Country" for English speaking regions outside of the US
-  * Fixed a major memory leak that would cause a crash when doing things like adding publications to your calls. (you can work around it by quitting MyTime after extended use)
+  * Fixed a major memory leak that would cause a crash when doing things like adding publications to your calls. (you can work around it by quitting MyTime™ after extended use)
   * Fixed a bug in the secretary email where it would not get sent if your notes have an "&" in them
