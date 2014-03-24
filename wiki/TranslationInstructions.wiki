@@ -1,4 +1,4 @@
-_*If you are in a country where the work is under ban*_, please do not try to translate !MyTime and communicate with me over email.  I don't want to get you arrested because your email is being looked at by your country's government.  Most likely if you have downloaded !MyTime they might know you are a witness_
+_*If you are in a country where the work is under ban*_, please do not try to translate !MyTime™ and communicate with me over email.  I don't want to get you arrested because your email is being looked at by your country's government.  Most likely if you have downloaded !MyTime™ they might know you are a witness_
 
 
 *I want to help with the translation work, what do I do?* 
@@ -10,7 +10,7 @@ Follow the following instructions as well:
   # select your iphone/itouch device in the left hand view
   # and click on the "Serial Number" text (it will change from the serial number to a device ID),
   # now use the copy keyboard sortcut (splat-C or apple-C whatever you want to call it on OSX and CTRL+C on windows) and email me that 40 character hexidecimal string that is in your clipboard (for example, it looks like 12381239481243d1ade123498234).  You just have to paste the text into an email using splat-V on OSX and CTRL+C on windows. make sure you include what language(s) you are able to translate to.
-I can only do this for 100 people so first come first serve.  _*Please do not send me your iphone/itouch's ID string if you are not going to translate !MyTime*_
+I can only do this for 100 people so first come first serve.  _*Please do not send me your iphone/itouch's ID string if you are not going to translate !MyTime™*_
 You can then continue reading this page and start translating.
 
 = Introduction =
@@ -22,14 +22,14 @@ Use the General Translation Information to help you understand how to translate 
 = General Translation Information =
 *Basics:*
 
-[http://priddysoftware.com/software/MyTime/translations.zip Download the translations file].  If you are adding a new language use the English "Localizable.strings" file I will send you and the "Root.strings" file in the English.lproj directory and the Settings.bundle/English.lproj directory from the zip file.  If you are helping with an existing language then look for that languages directory in the zip file. Open and work on these files with "TextEdit" in OSX (or notepad in Windows, StartMenu->Run->notepad.exe or you can use Wordpad, do not use word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  You will be sending this file back to me with your modifications so you want to keep the file in the existing format that you received it with.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
+[http://priddysoftware.com/software/MyTime™/translations.zip Download the translations file].  If you are adding a new language use the English "Localizable.strings" file I will send you and the "Root.strings" file in the English.lproj directory and the Settings.bundle/English.lproj directory from the zip file.  If you are helping with an existing language then look for that languages directory in the zip file. Open and work on these files with "TextEdit" in OSX (or notepad in Windows, StartMenu->Run->notepad.exe or you can use Wordpad, do not use word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  You will be sending this file back to me with your modifications so you want to keep the file in the existing format that you received it with.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
 
 {{{
 /* Add a return visit action button */
 "Add a return visit" = "Add a return visit";
 }}}
 
-The First red line above is called a "comment" it is just used to help you know where this text is used within the !MyTime program.  Do not change this.
+The First red line above is called a "comment" it is just used to help you know where this text is used within the !MyTime™ program.  Do not change this.
 
 The Next line has two quoted sentences, do not change the first one, the first one is used by the program to lookup the translation.  The second quoted sentence is what you change.  You change this second quoted string to what is natural in your language. Like so:
 {{{
@@ -89,7 +89,7 @@ As the comment said the %1$d is the house number and the %2$@ is represented as 
 /* House number and Street represented by %1$d as the house number and %2$@ as the street name */
 "%d %@" = "%2$@ %1$d";
 }}}
-Notice how the order changed in the above text?  You will see that this is common throughout some of the translations.  As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because !MyTime will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others as represented in %1$*d*).  Without getting into programming, just move the whole word (like "%1$d") don't just change the number.
+Notice how the order changed in the above text?  You will see that this is common throughout some of the translations.  As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because !MyTime™ will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others as represented in %1$*d*).  Without getting into programming, just move the whole word (like "%1$d") don't just change the number.
 
 *Singular/Plural:*
 
@@ -114,24 +114,24 @@ When you can define the format that the file is saved in, make sure it is UTF-16
 Email me, I will add the answers to this page
 
 = Update your mobileprovision file =
-If I send you a new mobileprovision file these are the instructions on how to update everything to run with the new versions of !MyTime
+If I send you a new mobileprovision file these are the instructions on how to update everything to run with the new versions of !MyTime™
 
   # Close down iTunes, and Xcode (if you are running them)
   # delete the files in ~/Library/MobileDevice/Provisioning Profiles/ (if you have other adhoc programs that you work with, you will know this if this is the case otherwise ignore this statement, then you need to only delete the one associated with mytime)
   # plug in and sync your iphone/ipod
-  # ON YOUR IPHONE: look in General->Profiles-> and Select any that say "!MyTime !AdHoc" and hit the "Remove" button
+  # ON YOUR IPHONE: look in General->Profiles-> and Select any that say "!MyTime™ !AdHoc" and hit the "Remove" button
   # Disconnect your iphone from your Mac
   # Quit iTunes
-  # Drag the !MyTime !AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
+  # Drag the !MyTime™ !AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
   # sync your iphone with your Mac
-  # Finally drag the !MyTime application into the iTunex dock icon and press "Sync" on your iPhone to install it.
+  # Finally drag the !MyTime™ application into the iTunex dock icon and press "Sync" on your iPhone to install it.
 
 = Test your translation =
 Requirements:
   * a wireless network that both your iPhone and your computer are on
 
-Instructions for using the !MyTime webserver on a PC or Mac:
-  # in !MyTime, go to More->Settings->Start !MyTime Webserver
+Instructions for using the !MyTime™ webserver on a PC or Mac:
+  # in !MyTime™, go to More->Settings->Start !MyTime™ Webserver
   # follow the instructions on the screen (open a web browser on your Mac or PC and enter in the URL mentioned in the popup)
   # On the webpage, look for "Load/Test Translation" and under it select the browse button to select your translation file
   # press the "Load Translation" button
@@ -139,21 +139,21 @@ Instructions for using the !MyTime webserver on a PC or Mac:
   # restart mytime to see your translation at work.
   # you are able to repeat this over and over until you are satisfied with your results
 
-Instructions using !MyTime Backup on a Mac:
+Instructions using !MyTime™ Backup on a Mac:
   # on the Mac:
-  ## get the latest [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application
+  ## get the latest [http://mytime.googlecode.com/files/MyTime™%20Backup-1.2.zip MyTime™ Backup] application
   ## make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
   ## do you have the file in the appropriate directory? like ~/Desktop/French.lproj/Localizable.strings  It REALLY matters what the parent directory is and what the name of the file is.  Please do not use any other filename than Localizable.strings or a parent directory that does not match the above "<your language here>.lproj" directories
-  ## Now that you have the appropriate file and directory setup, open the new !MyTime Backup application
+  ## Now that you have the appropriate file and directory setup, open the new !MyTime™ Backup application
   # On the iPhone:
-  ## Start !MyTime
-  ## Go to More->Settings->Backup Using '!MyTime Backup'
+  ## Start !MyTime™
+  ## Go to More->Settings->Backup Using '!MyTime™ Backup'
   # On the Mac:
-  ## Notice that the !MyTime Backup application now has the buttons enabled (there is a small window with 3 buttons that started when you start !MyTime Backup)
+  ## Notice that the !MyTime™ Backup application now has the buttons enabled (there is a small window with 3 buttons that started when you start !MyTime™ Backup)
   ## click on "Send Translation"
   ## select the translation for your langauge (remember it must be named EXACTLY "<your language here>.lproj/Localizable.strings")
   # On the Iphone:
-  ## It should now tell you that you need to restart !MyTime to apply the localization. So hit the home button to quit and then you need to restart !MyTime.
+  ## It should now tell you that you need to restart !MyTime™ to apply the localization. So hit the home button to quit and then you need to restart !MyTime™.
   ## to remove your custom translation (because it might be a bit slow and use a bit more memory, go to More->Settings->Remove Custom Translation, you will have to restart to apply)
   ## you are able to repeat this over and over until you are satisfied with your results
 
@@ -193,7 +193,7 @@ Just go through the file and you will see where some words have had their spelli
 So here is a picture of where I copied the text from right to left fixing the above situation:
 http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.png
 
-Here is another example situation.  The left hand side's left quoted text ("Thanks for using !MyTime! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using !MyTime! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
+Here is another example situation.  The left hand side's left quoted text ("Thanks for using !MyTime™! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using !MyTime™! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
 
 http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.png
 
