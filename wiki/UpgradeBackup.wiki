@@ -14,13 +14,13 @@ Windows:
   # download [http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe PSCP] and save it in your c:\Windows directory
   # open up a command line terminal Start->Run and type in "cmd" and hit OK
   # Type in the following between the quotes (replace X.X.X.X with the IP address that you got above, and don't forget the period at the end)  
-{{{pscp root@X.X.X.X:/var/mobile/Library/MyTime/record.plist .}}}
+{{{pscp root@X.X.X.X:/var/mobile/Library/MyTime™/record.plist .}}}
   # enter "alpine" as the password
 _restoring a backup is as simple as reversing the period and the root@blah blah stuff, but please be careful, you don't want to overwrite your calls._
 
 OSX:
   # open up a command line terminal "Applications/Utilities/Terminal"
   # Type in the following between the quotes (replace X.X.X.X with the IP address that you got above, and don't forget the period at the end) 
-{{{scp root@X.X.X.X:/var/mobile/Library/MyTime/record.plist .}}}
+{{{scp root@X.X.X.X:/var/mobile/Library/MyTime™/record.plist .}}}
   # enter "alpine" as the password
 _restoring a backup is as simple as reversing the period and the root@blah blah stuff, but please be careful, you don't want to overwrite your calls._
