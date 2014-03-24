@@ -1,4 +1,4 @@
-#summary Extract your MyTime data from your iTunes backups
+#summary Extract your MyTime™ data from your iTunes backups
 = Extract your mytime data from your iTunes backups =
 
 Here is some info about backups from apple's website http://support.apple.com/kb/HT1766
@@ -16,13 +16,13 @@ These instructions only work if you have not encrypted your backup data
   # extract and run the application 
   # Select the "Read Backups" button
   # Pick your device
-  # Then select com.yourcompany.MyTime
+  # Then select com.yourcompany.MyTime™
   # press "Extract" and save this to your desktop.
-  # your backup file should be in ~/Desktop/com.yourcompany.MyTime/Documents/MyTime.sqlite (if you dont have this file and are running a very old version of mytime you might see a "records.plist" file)
-  # run the [http://mytime.googlecode.com/files/MyTime%20Backup-1.2.zip MyTime Backup] application and make sure that your iPhone is on the same wireless network as your Mac. (If you cant get this to work, email me your records.plist file)
-  # on the iPhone, start MyTime and go to More->Settings->Backup using 'MyTime Backup'
-  # on the Mac in the MyTime Backup program, select "Restore Backup" and then select the com.yourcompany.MyTime/Documents/records.plist file that was restored by the iPhone Backup Extractor application.
-  # hit the home button on the iPhone to quit MyTime and restart MyTime to see your data
+  # your backup file should be in ~/Desktop/com.yourcompany.MyTime™/Documents/MyTime™.sqlite (if you dont have this file and are running a very old version of mytime you might see a "records.plist" file)
+  # run the [http://mytime.googlecode.com/files/MyTime™%20Backup-1.2.zip MyTime™ Backup] application and make sure that your iPhone is on the same wireless network as your Mac. (If you cant get this to work, email me your records.plist file)
+  # on the iPhone, start MyTime™ and go to More->Settings->Backup using 'MyTime™ Backup'
+  # on the Mac in the MyTime™ Backup program, select "Restore Backup" and then select the com.yourcompany.MyTime™/Documents/records.plist file that was restored by the iPhone Backup Extractor application.
+  # hit the home button on the iPhone to quit MyTime™ and restart MyTime™ to see your data
 
 == On Windows ==
 These instructions only work if you have not encrypted your backup data
@@ -31,16 +31,16 @@ These instructions only work if you have not encrypted your backup data
   # download http://priddysoftware.com/software/iPhoneRescue/iPhoneRescue%20Windows.zip from http://priddysoftware.com/software/iPhoneRescue/
   # extract and follow the instructions on http://priddysoftware.com/software/iPhoneRescue/ as to how to run the application
   # Select your devices name in the first column, pay attention to the backup date
-  # then select "MyTime" from the middle list
-  # then select the "records.plist" file in the third column (if you are using MyTime > 3.1.0 you are interested in getting the "MyTime.sqlite" file)
+  # then select "MyTime™" from the middle list
+  # then select the "records.plist" file in the third column (if you are using MyTime™ > 3.1.0 you are interested in getting the "MyTime™.sqlite" file)
   # press "Save File" and save the file to your desktop
-  # on the iPhone, start MyTime and go to More->Settings->Start MyTime Webserver
-  # on your PC open a web browser following the onscreen instructions of MyTime
-  # you should be viewing a webpage entitled "MyTime Webserver"
+  # on the iPhone, start MyTime™ and go to More->Settings->Start MyTime™ Webserver
+  # on your PC open a web browser following the onscreen instructions of MyTime™
+  # you should be viewing a webpage entitled "MyTime™ Webserver"
   # in the "Backup/Restore" section on the "Restore Backup File" line, press the "Browse" button and open that "records.plist" file that you saved on your desktop earlier.
   # now press the "Restore Backup" button
   # wait till you see the webpage refresh (should take 0-8 seconds)
-  # hit the home button on the iPhone to quit MyTime and restart MyTime to see your data
+  # hit the home button on the iPhone to quit MyTime™ and restart MyTime™ to see your data
 
 
 == On Windows or OSX (alternative method) ==
