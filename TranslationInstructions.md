@@ -1,0 +1,202 @@
+_**If you are in a country where the work is under ban**_, please do not try to translate MyTime™ and communicate with me over email.  I don't want to get you arrested because your email is being looked at by your country's government.  Most likely if you have downloaded MyTime™ they might know you are a witness
+
+
+**I want to help with the translation work, what do I do?**
+Here are the instructions you need to follow :
+
+First, I have an email list for each language so that translators for a particular language can review and discuss translation issues.  There are only witnesses on these email lists and there are only 1-5 people on most lists.  Translators can also break up what work they want to do in pieces to reduce the translation burdeon.  Please indicate which email address you want me to add to the email list for translators.
+Follow the following instructions as well:
+  1. Sync your iphone/itouch with iTunes,
+  1. select your iphone/itouch device in the left hand view
+  1. and click on the "Serial Number" text (it will change from the serial number to a device ID),
+  1. now use the copy keyboard sortcut (splat-C or apple-C whatever you want to call it on OSX and CTRL+C on windows) and email me that 40 character hexidecimal string that is in your clipboard (for example, it looks like 12381239481243d1ade123498234).  You just have to paste the text into an email using splat-V on OSX and CTRL+C on windows. make sure you include what language(s) you are able to translate to.
+I can only do this for 100 people so first come first serve.  _**Please do not send me your iphone/itouch's ID string if you are not going to translate MyTime™**_
+You can then continue reading this page and start translating.
+
+# Introduction #
+Use the Transfer Localizable.strings section below to send the file to your iPhone/iTouch and test
+
+Use the General Translation Information to help you understand how to translate the file
+
+
+# General Translation Information #
+**Basics:**
+
+[Download the translations file](http://priddysoftware.com/software/MyTime/translations.zip).  If you are adding a new language use the English "Localizable.strings" file I will send you and the "Root.strings" file in the English.lproj directory and the Settings.bundle/English.lproj directory from the zip file.  If you are helping with an existing language then look for that languages directory in the zip file. Open and work on these files with "TextEdit" in OSX (or notepad in Windows, StartMenu->Run->notepad.exe or you can use Wordpad, do not use word).  DO NOT open this file with any RTF text editor like Word, OmniOutliner, or others.  The file that you send me is the file that I am giving you which a UTF16 formatted plain text file, please do not reformat the file or send me a different type of file.  You will be sending this file back to me with your modifications so you want to keep the file in the existing format that you received it with.  When you open the file in the approved text editors you will see that this file has many lines in the form of:
+
+```
+/* Add a return visit action button */
+"Add a return visit" = "Add a return visit";
+```
+
+The First red line above is called a "comment" it is just used to help you know where this text is used within the MyTime™ program.  Do not change this.
+
+The Next line has two quoted sentences, do not change the first one, the first one is used by the program to lookup the translation.  The second quoted sentence is what you change.  You change this second quoted string to what is natural in your language. Like so:
+```
+/* Add a return visit action button */
+"Add a return visit" = "Rückbesuch hinzufügen";
+```
+
+Please note that the only thing you change is the text inbetween the quotes.  Do not put the text on multiple lines or have it word wrap, it is supposed to be all on one line.
+
+I am trying to stay with the style of the iPhone, so if there are any buttons that it uses normally like "Edit" and "Done" in whatever other language is on your iPhone, please use those words.  Also pick words that show the meaning and do not take a lot of space. Just a warning, I am a picky person and capitalization, being formal with the text (no slang) and conveying the correct thought are very high priorities.  This program is to be used by many people, I would not like to offend anyone or stumble anyone because of this program.  I usually have a firm grasp on what is displayed on programs that I write, but since I can not translate the text into another language, I have to depend on and trust others to translate the text just like I would if I could.
+
+Watchtower publication names **MUST** be the exact names that you would see on the literature request booklet in your language that has the Item numbers for each publication (you could ask your literature attendant for a copy of the pages that have Brochures, Magacines, DVDs, Tracts, Sign language DVDs and others).
+
+**Quotations and special characters**
+
+When dealing with "special characters" you have to pay attention to a few things:
+
+\n represents a "new line" this is like you hit enter on the keyboard... you have to represent a new line with an \n
+see in the example below:
+
+```
+/* An example showing the \n special character */
+"This is text on the first line\n This is text on the second line" = "This is text on the first line\n This is text on the second line";
+```
+
+
+\" is how you would quote something within the quoted string that you have to change, notice below how it is done:
+
+```
+/* Add a return visit action button */
+"This is an example of \"text that is quoted\"" = "This is an example of \"text that is quoted\"";
+```
+
+see how when you have a quote inside the quoted string you represent it by a \" instead of just simply using a "?
+
+**Variable wording:**
+
+There are situations where you might need to reorder how things are displayed like the address:
+
+In english house number and street name are represented like:
+```
+12318 Chicamauga Tr.
+```
+
+and in German it would look like:
+```
+Franz Marc St. 12318
+```
+
+The following is an example block that you would have to modify if this was for the address:
+```
+/* House number and Street represented by %1$d as the house number and %2$@ as the street name */
+"%d %@" = "%1$d %2$@";
+```
+As the comment said the %1$d is the house number and the %2$@ is represented as the address. The above block is for English and the below text is in German.
+```
+/* House number and Street represented by %1$d as the house number and %2$@ as the street name */
+"%d %@" = "%2$@ %1$d";
+```
+Notice how the order changed in the above text?  You will see that this is common throughout some of the translations.  As you experiment with these you will see what needs to be put where (you will also see if you made a mistake because MyTime™ will crash on you).  Please be very aware of the %1$d v.s. %1$@ because the represent two completely different things.  I am suggesting that you move the %1$d as a whole and dont just change the number to change the ordering, because you need to change the number AND the argument type (d, @, s, c, and others as represented in %1$**d**).  Without getting into programming, just move the whole word (like "%1$d") don't just change the number.
+
+**Singular/Plural:**
+
+There are simple words that are included as translations purely for singular/plural versions of the words like "hours" or "hour", if you do not have a plural form of that word or it is natural to have the same word for 1 or more than one hour, minute, books, magazines, or whatever then you could just have the same translation for the plural and singular word. The Hour example is below:
+
+```
+/* Singular form of the word hour */
+"hour" = "hour";
+
+/* Plural form of the word hours */
+"hours" = "hours";
+```
+
+
+**File format:**
+
+When you can define the format that the file is saved in, make sure it is UTF-16.  If you are using TextEdit on OSX you have to do a "Save As" and then in the "Plain Text Encoding" select Unicode (utf-16)" and save the file's name as Localizable.strings
+
+
+**Questions**
+
+Email me, I will add the answers to this page
+
+# Update your mobileprovision file #
+If I send you a new mobileprovision file these are the instructions on how to update everything to run with the new versions of MyTime™
+
+  1. Close down iTunes, and Xcode (if you are running them)
+  1. delete the files in ~/Library/MobileDevice/Provisioning Profiles/ (if you have other adhoc programs that you work with, you will know this if this is the case otherwise ignore this statement, then you need to only delete the one associated with mytime)
+  1. plug in and sync your iphone/ipod
+  1. ON YOUR IPHONE: look in General->Profiles-> and Select any that say "MyTime™ AdHoc" and hit the "Remove" button
+  1. Disconnect your iphone from your Mac
+  1. Quit iTunes
+  1. Drag the MyTime™ AdHoc.mobileprovision file that I sent this week into the iTunes dock icon
+  1. sync your iphone with your Mac
+  1. Finally drag the MyTime™ application into the iTunex dock icon and press "Sync" on your iPhone to install it.
+
+# Test your translation #
+Requirements:
+  * a wireless network that both your iPhone and your computer are on
+
+Instructions for using the MyTime™ webserver on a PC or Mac:
+  1. in MyTime™, go to More->Settings->Start MyTime™ Webserver
+  1. follow the instructions on the screen (open a web browser on your Mac or PC and enter in the URL mentioned in the popup)
+  1. On the webpage, look for "Load/Test Translation" and under it select the browse button to select your translation file
+  1. press the "Load Translation" button
+  1. after it is submitted, quit mytime
+  1. restart mytime to see your translation at work.
+  1. you are able to repeat this over and over until you are satisfied with your results
+
+Instructions using MyTime™ Backup on a Mac:
+  1. on the Mac:
+  1. get the latest [MyTime™ Backup](http://mytime.googlecode.com/files/MyTime™%20Backup-1.2.zip) application
+  1. make sure that your "Localizable.strings" file is in a Directory named appropriate for your language (Croatian.lproj, Danish.lproj, Dutch.lproj, English.lproj, French.lproj, German.lproj, Greek.lproj, Italian.lproj, Japanese.lproj, Portuguese.lproj, Spanish.lproj, Swedish.lproj)  so you should have the file in some directory like ~/Desktop/French.lproj/Localizable.strings
+  1. do you have the file in the appropriate directory? like ~/Desktop/French.lproj/Localizable.strings  It REALLY matters what the parent directory is and what the name of the file is.  Please do not use any other filename than Localizable.strings or a parent directory that does not match the above "<your language here>.lproj" directories
+  1. Now that you have the appropriate file and directory setup, open the new MyTime™ Backup application
+  1. On the iPhone:
+  1. Start MyTime™
+  1. Go to More->Settings->Backup Using 'MyTime™ Backup'
+  1. On the Mac:
+  1. Notice that the MyTime™ Backup application now has the buttons enabled (there is a small window with 3 buttons that started when you start MyTime™ Backup)
+  1. click on "Send Translation"
+  1. select the translation for your langauge (remember it must be named EXACTLY "<your language here>.lproj/Localizable.strings")
+  1. On the Iphone:
+  1. It should now tell you that you need to restart MyTime™ to apply the localization. So hit the home button to quit and then you need to restart MyTime™.
+  1. to remove your custom translation (because it might be a bit slow and use a bit more memory, go to More->Settings->Remove Custom Translation, you will have to restart to apply)
+  1. you are able to repeat this over and over until you are satisfied with your results
+
+# Emailing your translation to me #
+Please send me the UTF16 formatted files like they are.  You do not have to zip/tar/zip/rar them, I do not want to install the latest blah zipping program just to unzip the files you send me.  Also I dont want to be susceptible to a breach of security because you have sent me a zip file infected with a virus/Trojan.  Please just send me the files as they are: text files.  They are small and do not take that much to send.
+When you email the files, please include:
+  1. The 2 files
+  1. the language that you are translating to
+  1. the version of ipa that I sent the translations with (so I know how to apply some changes that I have to do sometimes).
+
+# (IGNORE THIS, this is only if you really need to do this) Updating the Localizable.strings with the latest version #
+If you have already submitted a translation or are in the process of translating a file and I update the  Localizable.strings file, this section will tell you what to do.
+
+OSX:
+If you dont already have it, you can download [Changes](http://www.apple.com/downloads/macosx/development_tools/changes.html) which is a program that lets you see file differences.  Download the file, unzip it, and drag it into your /Applications directory in the finder.
+
+  1. Save off the Localizable.strings somewhere (dont overwrite the one that you have already translated.
+  1. Open Changes
+  1. From the Finder, drag The newly downloaded Localizable.strings into the Changes program in the little box  that is titled "Original"
+  1. From the Finder, drag the translation file that you have been working on into the Changes program in the little box that is titled "Modified"
+  1. Now click "Compare"
+
+You should see something like:
+![http://mytime.googlecode.com/svn/trunk/screenshots/website/changes1.png](http://mytime.googlecode.com/svn/trunk/screenshots/website/changes1.png)
+
+Notice how the following is new:
+```
+/* backup connected message */
+"Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup" = "Connected to the Backup Application.\n\nUse it to create a backup or to restore a backup";
+```
+The entire block shows up as red in the left view.
+
+I would reccomend that you highlight the Left hand additions, copy the highlighted text and then paste it where it should go on the right side (sometimes you can use the "Merge From Left button, but in the case above, that would wipe out the Concordance translation).
+
+Just go through the file and you will see where some words have had their spelling or grammar corrected, you MUST make sure that the left hand quoted text (as described at the top of this document) in the Left hand file is the same as the left hand quoted text in the right hand file.  Hopefully I have not confused you.
+
+So here is a picture of where I copied the text from right to left fixing the above situation:
+![http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.png](http://mytime.googlecode.com/svn/trunk/screenshots/website/changes2.png)
+
+Here is another example situation.  The left hand side's left quoted text ("Thanks for using MyTime™! I have spent over 200 hours and lost a...) is different from the Right side's left quoted text ("Thanks for using MyTime™! Unfortunately you will not be able to...).  All you need to do is copy the left side's left quoted text and replace the right side's left quoted text with the copy.  Then you need to make sure that the translation is still good for the Right side file's text based on what you changed.
+
+![http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.png](http://mytime.googlecode.com/svn/trunk/screenshots/website/changes3.png)
+
+When you are done modifying your translation file then just go to **file->Save Modified As...** and save it to where you want (possibly even overwriting the original file).
+
+Email me with questions or if you think that the instructions above are misleading, not accurate or could be better (make a recommendation as to how it could be better).

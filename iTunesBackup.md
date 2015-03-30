@@ -1,0 +1,79 @@
+# Extract your mytime data from your iTunes backups #
+
+Here is some info about backups from apple's website http://support.apple.com/kb/HT1766
+
+Here are some rules:
+  1. never ever setup your phone as a new phone, ALWAYS restore from a backup (even if the apple store told you to).
+  1. always keep up to date with your email backups.
+  1. sync your iPhone/iPad/iPod Touch with iTunes regularly to keep a backup of your data.
+
+
+## On OSX ##
+These instructions only work if you have not encrypted your backup data
+
+  1. download http://supercrazyawesome.com/downloads/iPhone%20Backup%20Extractor.app.zip
+  1. extract and run the application
+  1. Select the "Read Backups" button
+  1. Pick your device
+  1. Then select com.yourcompany.MyTime™
+  1. press "Extract" and save this to your desktop.
+  1. your backup file should be in ~/Desktop/com.yourcompany.MyTime™/Documents/MyTime™.sqlite (if you dont have this file and are running a very old version of mytime you might see a "records.plist" file)
+  1. run the [MyTime™ Backup](http://mytime.googlecode.com/files/MyTime™%20Backup-1.2.zip) application and make sure that your iPhone is on the same wireless network as your Mac. (If you cant get this to work, email me your records.plist file)
+  1. on the iPhone, start MyTime™ and go to More->Settings->Backup using 'MyTime™ Backup'
+  1. on the Mac in the MyTime™ Backup program, select "Restore Backup" and then select the com.yourcompany.MyTime™/Documents/records.plist file that was restored by the iPhone Backup Extractor application.
+  1. hit the home button on the iPhone to quit MyTime™ and restart MyTime™ to see your data
+
+## On Windows ##
+These instructions only work if you have not encrypted your backup data
+
+**Please use iPhone Backup Extractor from http://www.iphonebackupextractor.com/ for now since iPhoneRescue is not compatible with the new iTunes backup format**
+  1. download http://priddysoftware.com/software/iPhoneRescue/iPhoneRescue%20Windows.zip from http://priddysoftware.com/software/iPhoneRescue/
+  1. extract and follow the instructions on http://priddysoftware.com/software/iPhoneRescue/ as to how to run the application
+  1. Select your devices name in the first column, pay attention to the backup date
+  1. then select "MyTime™" from the middle list
+  1. then select the "records.plist" file in the third column (if you are using MyTime™ > 3.1.0 you are interested in getting the "MyTime™.sqlite" file)
+  1. press "Save File" and save the file to your desktop
+  1. on the iPhone, start MyTime™ and go to More->Settings->Start MyTime™ Webserver
+  1. on your PC open a web browser following the onscreen instructions of MyTime™
+  1. you should be viewing a webpage entitled "MyTime™ Webserver"
+  1. in the "Backup/Restore" section on the "Restore Backup File" line, press the "Browse" button and open that "records.plist" file that you saved on your desktop earlier.
+  1. now press the "Restore Backup" button
+  1. wait till you see the webpage refresh (should take 0-8 seconds)
+  1. hit the home button on the iPhone to quit MyTime™ and restart MyTime™ to see your data
+
+
+## On Windows or OSX (alternative method) ##
+
+  1. You will need to navigate to one of the following directories:
+    * On a Mac: ~/Library/Application Support/MobileSync/Backup/
+    * On Windows XP: open "My Computer" and go to the "Tools" menu -> Folder Options -> View -> select "Show hidden files and folders" and hit OK.
+      * From My Computer go to: c:\Documents and Settings\(username)\Application Data\Apple Computer\MobileSync\Backup\
+    * On Windows Vista: go to Control Panel > Appearance and Personalization > Folder Options > general > and make sure that "Show hidden files" is checked
+      * from the Start->Computer go to C:\Users\(username)\AppData\Roaming\Apple Computer\MobileSync\Backup\
+    * On Windows 7: go to Control Panel > Appearance and Personalization > Folder Options > general > and make sure that "Show hidden files" is checked
+      * from the Start->Computer go to C:\Users\(username)\AppData\Roaming\Apple Computer\MobileSync\Backup\
+  1. Now take a look at the directories that match the date/time stamp and zip up the ones that match (you might want to sort by the date/time by clicking on the "date" column).  Zip a directory by right-clicking the directory and go to -> Send To-> Compressed (Zipped) Folder
+  1. Now email me the zip file toopriddy@gmail.com and let me know what you are wanting and tell me the name of your iPhone/iPod
+
+
+
+
+
+
+
+
+## For iTunes < 8.2, this mostly does not work anymore ##
+
+
+This is in construction and I am verifying its accuracy
+  1. make sure that you have installed Safari from apple (see if you have a C:\Program Files\Safari directory)
+  1. download http://mobilesync-inspect.googlecode.com/files/mobilesync-inspect-Windows-r10.zip
+  1. extract and copy the mobilesync-inspect-Windows-[r10](https://code.google.com/p/mytime/source/detail?r=10)/mobilesync-inspect.exe file to the C:\Program Files\Safari directory
+  1. Go to the Start Menu->Run and type in "cmd"
+  1. in the black command window type in "cd c:\Program Files\Safari"
+  1. now type in "mobilesync-inspect list Documents/records.plist"
+  1. you should see several lines listed like: 2008-09-16 22:02:24 - 8c67ee34fdc4fc7a6f66e72d5f15f47d6d704976/00064d7fd97c54526a137a703724c8d603f3bb70.mdbackup : Documents/records.plist (557)
+  1. You are interested in the latest dated version of the output (see the date at the beginning of the output).  In my case it was the 2008-11-25 entry
+  1. type in "mobilesync-inspect extract cffc3e94279ae75f05c0093db3312c6ba629625a/e24993bfb82fcfeaed113577f7ab4fe5865934f4.mdbackup mytimedata.plist" YOU NEED TO REPLACE THE cffc3e94279ae75f05c0093db3312c6ba629625a/e24993bfb82fcfeaed113577f7ab4fe5865934f4.mdbackup WITH WHAT SHOWS UP IN THE LINE IN YOUR OUTPUT.
+  1. you should have a file in your C:\Program Files\Safari directory called "mytimedata.plist"
+  1. email me toopriddy@gmail.com the file and I will send you an email backup that you can restore from
